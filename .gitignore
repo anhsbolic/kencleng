@@ -1,0 +1,37 @@
+# --- Secrets & local env ---
+.env
+.env.local
+keys/
+*.pem
+
+# --- Go (backend/) ---
+backend/**/*.exe
+backend/**/*.test
+backend/**/*.out
+backend/bin/
+backend/tmp/
+backend/vendor/
+backend/coverage.html
+backend/coverage.out
+
+# --- Node / Next.js (frontend/) ---
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/.turbo/
+frontend/coverage/
+frontend/next-env.d.ts
+frontend/*.tsbuildinfo
+
+# --- Docker ---
+docker-compose.override.yml
+
+# --- Editor / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log

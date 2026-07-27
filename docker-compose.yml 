@@ -1,0 +1,62 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: kencleng
+      POSTGRES_PASSWORD: kencleng
+      POSTGRES_DB: kencleng
+    volumes:
+      - kencleng_pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: kencleng
+      MINIO_ROOT_PASSWORD: kencleng123
+    volumes:
+      - kencleng_miniodata:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      until mc alias set local http://minio:9000 kencleng kencleng123; do sleep 1; done;
+      mc mb -p local/kencleng-public;
+      mc mb -p local/kencleng-private;
+      mc anonymous set download local/kencleng-public;
+      "
+
+  backend:
+    build: ./backend
+    env_file: .env
+    depends_on:
+      - postgres
+      - minio
+
+  frontend:
+    build: ./frontend
+    env_file: .env
+    depends_on:
+      - backend
+
+  caddy:
+    image: caddy:2-alpine
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  kencleng_pgdata:
+  kencleng_miniodata:

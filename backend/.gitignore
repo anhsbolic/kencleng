@@ -1,0 +1,22 @@
+# Build artifacts
+bin/
+tmp/
+*.exe
+*.test
+*.out
+coverage.html
+coverage.out
+ 
+# Dependency vendoring (not used unless explicitly needed)
+vendor/
+ 
+# Local env override (root .env is the canonical one; this covers
+# someone running backend/ standalone with its own override)
+.env
+.env.local
+ 
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+ 
