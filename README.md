@@ -52,10 +52,14 @@ written, reviewed, and verified.
 
 ### Prerequisites
 
-- Docker + Docker Compose
+- Podman + Podman Compose
 - Go 1.22+
 - Node.js 20+
 - `openssl` (for generating keys)
+
+> **Note**: only infrastructure (Postgres, MinIO, Caddy) runs in
+> containers. Backend and frontend run natively on the host for
+> reliable hot reload — see `docs/kencleng-repo-setup.md` §1 and §3.2.
 
 ### Setup
 
@@ -78,9 +82,9 @@ written, reviewed, and verified.
    # ENCRYPTION_KEY and HMAC_KEY: generate each with `openssl rand -base64 32`
    ```
 
-4. Start the stack:
+4. Start the infrastructure (Postgres, MinIO, Caddy):
    ```bash
-   docker-compose up -d
+   podman-compose up -d
    ```
 
 5. Run database migrations:
@@ -88,9 +92,15 @@ written, reviewed, and verified.
    cd backend && make migrate-up
    ```
 
-6. Open the app at **http://localhost** (not `localhost:3000` — traffic
-   is routed through Caddy so the frontend and API share one origin,
-   which the auth flow depends on).
+6. Run the backend and frontend natively, in two separate terminals:
+   ```bash
+   cd backend && go run ./cmd/server
+   cd frontend && npm install && npm run dev
+   ```
+
+7. Open the app at **http://localhost** (not `localhost:3000` or
+   `:8080` directly — traffic is routed through Caddy so the frontend
+   and backend share one origin, which the auth flow depends on).
 
 ### Verifying your changes
 

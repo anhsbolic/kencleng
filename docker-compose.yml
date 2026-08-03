@@ -34,28 +34,12 @@ services:
       mc anonymous set download local/kencleng-public;
       "
 
-  backend:
-    build: ./backend
-    env_file: .env
-    depends_on:
-      - postgres
-      - minio
-
-  frontend:
-    build: ./frontend
-    env_file: .env
-    depends_on:
-      - backend
-
   caddy:
     image: caddy:2-alpine
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
     ports:
       - "80:80"
-    depends_on:
-      - backend
-      - frontend
 
 volumes:
   kencleng_pgdata:

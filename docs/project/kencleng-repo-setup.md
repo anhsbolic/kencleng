@@ -18,9 +18,15 @@
   "lowest complexity first" principle — CI/CD gets added later if
   there's a concrete need (e.g. if collaboration with other people
   starts).
-- **Docker Compose** as the only local orchestration mechanism —
-  Postgres, MinIO, backend, frontend all run through a single
-  `docker-compose.yml` at the root.
+- **Docker Compose** (via **Podman Compose** — see §3.2) as the local
+  orchestration mechanism for **infrastructure only**: Postgres,
+  MinIO, and Caddy run in containers. **Backend and frontend run
+  natively on the host** (`go run`, `npm run dev`), not in containers
+  — chosen specifically so hot reload/Fast Refresh works reliably
+  without container file-watching quirks, and so there's no
+  image-rebuild step on every dependency change. Same-origin topology
+  is preserved regardless, since it's enforced by Caddy, not by where
+  backend/frontend physically run.
 
 ## 2. Directory structure
 
@@ -103,6 +109,28 @@ the security assumptions tested in dev would differ from what actually
 applies. The proxy in local compose keeps the dev environment honest
 to the same topology as the real target.
 
+## 3.2 Podman-specific notes
+
+This project uses **Podman** (rootless) instead of Docker. Two
+consequences worth calling out explicitly:
+
+- **`docker-compose` command**: use `podman-compose` (or Podman's
+  built-in Docker-API-compatible socket with the regular
+  `docker-compose` binary, if configured that way) — the
+  `docker-compose.yml` file itself is unchanged, Podman just consumes
+  it through a compatible tool.
+- **Reaching the host from inside a container**: since backend/frontend
+  run natively on the host (not in containers — see §1), Caddy (which
+  *is* in a container) needs a way to reach them. Podman provides
+  **`host.containers.internal`** for this (analogous to Docker's
+  `host.docker.internal`), available in rootless Podman ≥ 4.7. This is
+  what `Caddyfile` in §5.4 points to.
+- If `host.containers.internal` doesn't resolve correctly in your
+  Podman setup (depends on version/network backend —
+  `slirp4netns` vs `pasta`), the fallback is running the `caddy`
+  service with `network_mode: host` — but that only works reliably on
+  native Linux, not Podman Desktop on macOS/Windows.
+
 ## 3. Placement notes (why here, not there)
 
 | Item | Location | Reason |
@@ -143,11 +171,13 @@ that, it just maps out where files live.
 
 | Item | Decision |
 |---|---|
-| Postgres | version 16 |
-| MinIO | single-node single-drive, buckets created automatically via init container (`mc`) |
+| Postgres | version 16, in container |
+| MinIO | single-node single-drive, in container, buckets created automatically via init container (`mc`) |
 | Bucket names | `kencleng-public`, `kencleng-private` |
-| Port mapping (host) | Caddy `80`, Postgres `5432`, MinIO API `9000`, MinIO Console `9001`, backend `8080` (internal, proxied), frontend `3000` (internal, proxied) |
-| Reverse proxy | Caddy (simplest config for our needs) |
+| Backend | runs natively on host (`go run ./cmd/server`), **not** in a container — for reliable hot reload |
+| Frontend | runs natively on host (`npm run dev`), **not** in a container — for reliable Fast Refresh |
+| Port mapping (host) | Caddy `80`, Postgres `5432`, MinIO API `9000`, MinIO Console `9001`, backend `8080` (native process), frontend `3000` (native process) |
+| Reverse proxy | Caddy, in container, reaching the host backend/frontend via `host.containers.internal` (Podman) — see §3.2 |
 | Volumes | named volumes, survive `docker-compose down`, only removed with `down -v` |
 | App access | `http://localhost` (via Caddy) — not `localhost:3000`/`:8080` directly, so the same-origin assumption is valid from the start |
 
@@ -156,11 +186,13 @@ that, it just maps out where files live.
 ```env
 APP_ENV=development
 
-# Database
-DATABASE_URL=postgres://kencleng:kencleng@postgres:5432/kencleng?sslmode=disable
+# Database — backend runs natively on the host, so it connects via the
+# port Postgres/MinIO containers expose to localhost, not a container
+# hostname
+DATABASE_URL=postgres://kencleng:kencleng@localhost:5432/kencleng?sslmode=disable
 
 # MinIO / S3-compatible storage
-MINIO_ENDPOINT=minio:9000
+MINIO_ENDPOINT=localhost:9000
 MINIO_ACCESS_KEY=kencleng
 MINIO_SECRET_KEY=kencleng123
 MINIO_BUCKET_PUBLIC=kencleng-public
@@ -230,46 +262,41 @@ services:
       mc anonymous set download local/kencleng-public;
       "
 
-  backend:
-    build: ./backend
-    env_file: .env
-    depends_on:
-      - postgres
-      - minio
-
-  frontend:
-    build: ./frontend
-    env_file: .env
-    depends_on:
-      - backend
-
   caddy:
     image: caddy:2-alpine
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
     ports:
       - "80:80"
-    depends_on:
-      - backend
-      - frontend
 
 volumes:
   kencleng_pgdata:
   kencleng_miniodata:
 ```
 
+> **Opsi B (decided):** `backend` and `frontend` are intentionally
+> **not** services here — they run natively on the host
+> (`go run ./cmd/server`, `npm run dev`) for reliable hot reload. Only
+> infrastructure (Postgres, MinIO, Caddy) runs in containers. See §1
+> and §3.2.
+
 ### 5.4 `Caddyfile`
 
 ```
 localhost:80 {
 	handle /api/* {
-		reverse_proxy backend:8080
+		reverse_proxy host.containers.internal:8080
 	}
 	handle {
-		reverse_proxy frontend:3000
+		reverse_proxy host.containers.internal:3000
 	}
 }
 ```
+
+`host.containers.internal` is Podman's DNS name for reaching the host
+machine from inside a container (see §3.2) — this is what lets Caddy,
+running in a container, proxy to backend/frontend running natively on
+the host.
 
 ### 5.5 `backend/Makefile` & `frontend/package.json` scripts (skeleton)
 
