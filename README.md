@@ -84,23 +84,55 @@ written, reviewed, and verified.
 
 4. Start the infrastructure (Postgres, MinIO, Caddy):
    ```bash
-   podman-compose up -d
+   make up-podman
    ```
 
-5. Run database migrations:
+5. Verify the infrastructure came up correctly (see "Verifying the
+   infrastructure setup" below) before moving on.
+
+6. Run database migrations:
    ```bash
    cd backend && make migrate-up
    ```
 
-6. Run the backend and frontend natively, in two separate terminals:
+7. Run the backend and frontend natively, in two separate terminals:
    ```bash
    cd backend && go run ./cmd/server
    cd frontend && npm install && npm run dev
    ```
 
-7. Open the app at **http://localhost** (not `localhost:3000` or
+8. Open the app at **http://localhost** (not `localhost:3000` or
    `:8080` directly — traffic is routed through Caddy so the frontend
    and backend share one origin, which the auth flow depends on).
+
+### Verifying the infrastructure setup
+
+After `make up-podman`, check that everything came up cleanly:
+
+```bash
+podman ps -a
+```
+
+You should see:
+- `postgres`, `minio`, `caddy` — status **Up**
+- `minio-init` — status **Exited (0)**. This is expected: `minio-init`
+  runs once to create the `kencleng-public`/`kencleng-private` buckets,
+  then exits — **exit code 0 means it succeeded**, it isn't meant to
+  keep running.
+
+You may see a line like `mc: <ERROR> ... connection refused` in
+`minio-init`'s logs (`podman logs kencleng_minio-init_1`) followed by
+`Added local successfully`. That's also expected — `minio-init` starts
+at roughly the same time as `minio` and retries in a loop
+(`until mc alias set ...`) until MinIO is actually ready to accept
+connections. As long as it eventually says `Added local successfully`
+and creates both buckets, the retry-then-succeed pattern is normal, not
+a failure.
+
+To visually confirm the buckets exist, open the MinIO Console at
+**http://localhost:9001** (login: `kencleng` / `kencleng123` — the
+values from `.env`) and check that `kencleng-public` and
+`kencleng-private` are both listed.
 
 ### Verifying your changes
 
