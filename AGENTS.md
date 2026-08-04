@@ -12,10 +12,10 @@ nice-to-have, even though most code here is agent-generated.
 
 ## 1. Source of truth, in order
 
-1. `docs/spec/domains/*-invariants.md` and
-   `docs/spec/threat-model/*.md` — domain-level ground truth.
-2. `docs/spec/features/*.md` — feature-level acceptance criteria,
-   which reference (not redefine) the domain docs above.
+1. `docs/spec/<domain>/invariants.md` and
+   `docs/spec/<domain>/threat-model.md` — domain-level ground truth.
+2. `docs/spec/<domain>/features/*.md` — feature-level acceptance
+   criteria, which reference (not redefine) the domain docs above.
 3. `api/openapi.yaml` — the API contract. Handler behavior must match
    it; it is hand-authored, not generated from code.
 4. `docs/project/*.md` — narrative background docs (ERD, tech stack,
@@ -115,10 +115,10 @@ Every PR that introduces or changes behavior must include:
    the specific test that proves it. A claim with no named test is
    treated as unverified.
 3. **For Tier 1 features**: a property-based or invariant test that
-   exercises the relevant `docs/spec/domains/*-invariants.md` entry,
+   exercises the relevant `docs/spec/<domain>/invariants.md` entry,
    not just a happy-path unit test.
 4. **A commit/PR description that references which feature spec file
-   this fulfills** (`docs/spec/features/<fitur>.md`).
+   this fulfills** (`docs/spec/<domain>/features/<fitur>.md`).
 
 ## 6. Reporting framing
 

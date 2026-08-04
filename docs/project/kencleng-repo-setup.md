@@ -3,7 +3,8 @@
 > Status: **Agreed** — monorepo, no CI/CD (local docker-compose only
 > for local deployment/verification).
 > Repo: https://github.com/anhsbolic/kencleng
-> Last updated: 2026-07-27
+> Last updated: 2026-08-05 (rev — `docs/spec/` layout changed to
+> domain-first, see §2.1)
 
 ## 1. Decisions
 
@@ -18,15 +19,9 @@
   "lowest complexity first" principle — CI/CD gets added later if
   there's a concrete need (e.g. if collaboration with other people
   starts).
-- **Docker Compose** (via **Podman Compose** — see §3.2) as the local
-  orchestration mechanism for **infrastructure only**: Postgres,
-  MinIO, and Caddy run in containers. **Backend and frontend run
-  natively on the host** (`go run`, `npm run dev`), not in containers
-  — chosen specifically so hot reload/Fast Refresh works reliably
-  without container file-watching quirks, and so there's no
-  image-rebuild step on every dependency change. Same-origin topology
-  is preserved regardless, since it's enforced by Caddy, not by where
-  backend/frontend physically run.
+- **Docker Compose** as the only local orchestration mechanism —
+  Postgres, MinIO, backend, frontend all run through a single
+  `docker-compose.yml` at the root.
 
 ## 2. Directory structure
 
@@ -44,10 +39,21 @@ kencleng/
 │   │   ├── kencleng-design-guidelines.md
 │   │   └── kencleng-roadmap-next-steps.md
 │   ├── spec/                     # executable spec, for the agent — see kencleng-agentic-workflow.md
-│   │   ├── domains/               # invariants per domain (account, organisasi, campaign, donation, disbursement, notification)
-│   │   ├── features/              # acceptance criteria + threat breakdown per endpoint/vertical-slice
-│   │   ├── threat-model/          # STRIDE per domain
-│   │   └── README.md              # structure & blank templates for each doc type above
+│   │   ├── README.md              # structure & blank templates for each doc type below (cross-domain, stays at spec/ root)
+│   │   ├── account/               # domain-first: everything for one domain lives together
+│   │   │   ├── invariants.md      # once per domain, stable
+│   │   │   ├── threat-model.md    # once per domain, revised on domain-level changes
+│   │   │   └── features/          # one file per endpoint/vertical-slice, grows over time
+│   │   │       ├── register-email-password.md
+│   │   │       └── ...
+│   │   ├── notification/
+│   │   │   ├── invariants.md
+│   │   │   ├── threat-model.md
+│   │   │   └── features/
+│   │   ├── organisasi/
+│   │   ├── campaign/
+│   │   ├── donation/
+│   │   └── disbursement/          # same 3-item shape (invariants.md, threat-model.md, features/) for each
 │   ├── wireframes/                # gray-box HTML/SVG, mobile + desktop
 │   └── kencleng-agentic-workflow.md  # process reference doc (lives at docs/ root, not project/ or spec/ — this is process, not product spec)
 │
@@ -90,6 +96,32 @@ kencleng/
 └── README.md                       # public-facing: what Kencleng is, how to run it locally
 ```
 
+### 2.1 `docs/spec/` layout — domain-first **[RESOLVED — 2026-08-05]**
+
+`docs/spec/<domain>/` groups all three document types (`invariants.md`,
+`threat-model.md`, `features/`) under one folder per domain, instead of
+a type-first split (`spec/domains/`, `spec/threat-model/`,
+`spec/features/` each holding files for all 6 domains mixed together).
+Reasons:
+
+- **Mirrors `backend/internal/domain/<domain>/`** — same domain name,
+  same shape, so navigating spec vs. code for a given domain uses the
+  same mental model.
+- **`features/` is the fastest-growing folder** (new file per
+  endpoint) — keeping it type-first would mean one flat folder mixing
+  feature specs from all 6 domains as the project grows; domain-first
+  keeps each domain's features isolated and easy to scope a work
+  session around.
+- `docs/spec/README.md` stays at `spec/` root — it's the shared
+  template/reference doc, not owned by any single domain.
+
+Only cost: seeing "all invariants across all domains at once" needs
+opening 6 folders instead of 1 — acceptable given there are only 6
+domains total, and cross-domain invariant references (§5.1 of
+`kencleng-agentic-workflow.md`) just point to
+`docs/spec/<domain>/invariants.md#INV-<domain>-NN` instead of the old
+path shape.
+
 ## 3.1 docker-compose scope — local dev only
 
 `docker-compose.yml` in this repo represents the **local development
@@ -108,28 +140,6 @@ looser CORS/cookie settings than what's actually used later — meaning
 the security assumptions tested in dev would differ from what actually
 applies. The proxy in local compose keeps the dev environment honest
 to the same topology as the real target.
-
-## 3.2 Podman-specific notes
-
-This project uses **Podman** (rootless) instead of Docker. Two
-consequences worth calling out explicitly:
-
-- **`docker-compose` command**: use `podman-compose` (or Podman's
-  built-in Docker-API-compatible socket with the regular
-  `docker-compose` binary, if configured that way) — the
-  `docker-compose.yml` file itself is unchanged, Podman just consumes
-  it through a compatible tool.
-- **Reaching the host from inside a container**: since backend/frontend
-  run natively on the host (not in containers — see §1), Caddy (which
-  *is* in a container) needs a way to reach them. Podman provides
-  **`host.containers.internal`** for this (analogous to Docker's
-  `host.docker.internal`), available in rootless Podman ≥ 4.7. This is
-  what `Caddyfile` in §5.4 points to.
-- If `host.containers.internal` doesn't resolve correctly in your
-  Podman setup (depends on version/network backend —
-  `slirp4netns` vs `pasta`), the fallback is running the `caddy`
-  service with `network_mode: host` — but that only works reliably on
-  native Linux, not Podman Desktop on macOS/Windows.
 
 ## 3. Placement notes (why here, not there)
 
@@ -171,13 +181,11 @@ that, it just maps out where files live.
 
 | Item | Decision |
 |---|---|
-| Postgres | version 16, in container |
-| MinIO | single-node single-drive, in container, buckets created automatically via init container (`mc`) |
+| Postgres | version 16 |
+| MinIO | single-node single-drive, buckets created automatically via init container (`mc`) |
 | Bucket names | `kencleng-public`, `kencleng-private` |
-| Backend | runs natively on host (`go run ./cmd/server`), **not** in a container — for reliable hot reload |
-| Frontend | runs natively on host (`npm run dev`), **not** in a container — for reliable Fast Refresh |
-| Port mapping (host) | Caddy `80`, Postgres `5432`, MinIO API `9000`, MinIO Console `9001`, backend `8080` (native process), frontend `3000` (native process) |
-| Reverse proxy | Caddy, in container, reaching the host backend/frontend via `host.containers.internal` (Podman) — see §3.2 |
+| Port mapping (host) | Caddy `80`, Postgres `5432`, MinIO API `9000`, MinIO Console `9001`, backend `8080` (internal, proxied), frontend `3000` (internal, proxied) |
+| Reverse proxy | Caddy (simplest config for our needs) |
 | Volumes | named volumes, survive `docker-compose down`, only removed with `down -v` |
 | App access | `http://localhost` (via Caddy) — not `localhost:3000`/`:8080` directly, so the same-origin assumption is valid from the start |
 
@@ -186,13 +194,11 @@ that, it just maps out where files live.
 ```env
 APP_ENV=development
 
-# Database — backend runs natively on the host, so it connects via the
-# port Postgres/MinIO containers expose to localhost, not a container
-# hostname
-DATABASE_URL=postgres://kencleng:kencleng@localhost:5432/kencleng?sslmode=disable
+# Database
+DATABASE_URL=postgres://kencleng:kencleng@postgres:5432/kencleng?sslmode=disable
 
 # MinIO / S3-compatible storage
-MINIO_ENDPOINT=localhost:9000
+MINIO_ENDPOINT=minio:9000
 MINIO_ACCESS_KEY=kencleng
 MINIO_SECRET_KEY=kencleng123
 MINIO_BUCKET_PUBLIC=kencleng-public
@@ -262,41 +268,46 @@ services:
       mc anonymous set download local/kencleng-public;
       "
 
+  backend:
+    build: ./backend
+    env_file: .env
+    depends_on:
+      - postgres
+      - minio
+
+  frontend:
+    build: ./frontend
+    env_file: .env
+    depends_on:
+      - backend
+
   caddy:
     image: caddy:2-alpine
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
     ports:
       - "80:80"
+    depends_on:
+      - backend
+      - frontend
 
 volumes:
   kencleng_pgdata:
   kencleng_miniodata:
 ```
 
-> **Opsi B (decided):** `backend` and `frontend` are intentionally
-> **not** services here — they run natively on the host
-> (`go run ./cmd/server`, `npm run dev`) for reliable hot reload. Only
-> infrastructure (Postgres, MinIO, Caddy) runs in containers. See §1
-> and §3.2.
-
 ### 5.4 `Caddyfile`
 
 ```
 localhost:80 {
 	handle /api/* {
-		reverse_proxy host.containers.internal:8080
+		reverse_proxy backend:8080
 	}
 	handle {
-		reverse_proxy host.containers.internal:3000
+		reverse_proxy frontend:3000
 	}
 }
 ```
-
-`host.containers.internal` is Podman's DNS name for reaching the host
-machine from inside a container (see §3.2) — this is what lets Caddy,
-running in a container, proxy to backend/frontend running natively on
-the host.
 
 ### 5.5 `backend/Makefile` & `frontend/package.json` scripts (skeleton)
 

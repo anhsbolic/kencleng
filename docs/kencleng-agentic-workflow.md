@@ -68,10 +68,16 @@ grows as development progresses).
 
 | Level | Document | Created when | Lifespan |
 |---|---|---|---|
-| Domain | `spec/domains/<domain>-invariants.md` | Once per domain, when that domain is first worked on | Stable, rarely edited |
-| Domain | `spec/threat-model/<domain>.md` | Alongside the domain invariants | Stable, revised on domain-level changes |
-| Feature | `spec/features/<fitur>.md` | Per vertical slice / endpoint | New for each feature |
+| Domain | `spec/<domain>/invariants.md` | Once per domain, when that domain is first worked on | Stable, rarely edited |
+| Domain | `spec/<domain>/threat-model.md` | Alongside the domain invariants | Stable, revised on domain-level changes |
+| Feature | `spec/<domain>/features/<fitur>.md` | Per vertical slice / endpoint | New for each feature |
 | Feature | Acceptance criteria + threat breakdown | Part of the feature spec above | New for each feature |
+
+Layout is **domain-first** — `spec/<domain>/` groups all three
+document types for one domain together, mirroring
+`backend/internal/domain/<domain>/`. See `kencleng-repo-setup.md`
+§2.1 for the full rationale. `spec/README.md` is the one file that
+stays at `spec/` root (shared template, not domain-specific).
 
 Existing documents (ERD, OpenAPI, phase docs, etc.) remain **input**
 to this spec-hardening process — they aren't replaced, but derived
@@ -130,7 +136,7 @@ simple.
 
 ## 5. Spec structure per domain/feature
 
-### 5.1 Domain invariant (`spec/domains/<domain>-invariants.md`)
+### 5.1 Domain invariant (`spec/<domain>/invariants.md`)
 
 Contents: truths that must always hold regardless of which feature is
 running. Written as statements that are **machine-checkable**, not
@@ -149,19 +155,19 @@ when an invariant spans two domains (as above — the field
 `collected_amount` belongs to `campaign`, but the concurrency-critical
 write path belongs to `donation`), it is declared **once**, in the
 invariants doc of whichever domain owns the underlying field or
-table — `campaign-invariants.md` in this example — not duplicated.
+table — `campaign/invariants.md` in this example — not duplicated.
 The other domain's invariants doc references it instead of restating
 it, so there's a single source of truth and no risk of the two
 versions drifting apart as each domain is worked on at a different
 time.
 
-### 5.2 Domain threat model (`spec/threat-model/<domain>.md`)
+### 5.2 Domain threat model (`spec/<domain>/threat-model.md`)
 
 - Actors & trust boundaries (simple data flow)
 - STRIDE per component/endpoint
 - Existing mitigations vs. knowingly accepted residual risk
 
-### 5.3 Feature spec (`spec/features/<fitur>.md`)
+### 5.3 Feature spec (`spec/<domain>/features/<fitur>.md`)
 
 Minimum template per endpoint/feature:
 
@@ -173,7 +179,7 @@ Minimum template per endpoint/feature:
 - Error case: [list]
 
 ### Applicable invariants
-- Reference to spec/domains/donation-invariants.md#ledger-consistency
+- Reference to spec/donation/invariants.md#ledger-consistency
 
 ### Threat breakdown (derived from the domain threat model)
 - Threat: double-submit race from a guest donor
@@ -336,15 +342,15 @@ Finalize, Delivery).
    doc, tech-stack docs)
 2. Confirm agent guidelines/skills are ready (`AGENTS.md`,
    `spec/README.md` template, `Makefile`/`verify.sh`)
-3. Write `spec/domains/<domain>-invariants.md`
-4. Write `spec/threat-model/<domain>.md`
+3. Write `spec/<domain>/invariants.md`
+4. Write `spec/<domain>/threat-model.md`
 5. Enumerate the task list (per endpoint/feature), assign a Tier
    (§4) and delivery KPI/metrics to each
 6. Group tasks by whether they can run in parallel or must be
    serial (see parallelization note below)
 
 **Loop, per task:**
-7. Analyze (Explore + Plan) → write `spec/features/<fitur>.md`
+7. Analyze (Explore + Plan) → write `spec/<domain>/features/<fitur>.md`
    (acceptance criteria, threat breakdown, tier, audit-log field —
    §5.3)
 8. Build (agent generates code + tests, per the tier's mode of work)
@@ -455,7 +461,7 @@ live backend.
 **Loop, per task (per page/component/flow, not necessarily 1:1 with
 backend endpoints):**
 1. Analyze (Explore + Plan) → same feature spec in
-   `spec/features/<fitur>.md` already written for the backend track
+   `spec/<domain>/features/<fitur>.md` already written for the backend track
    covers this — frontend doesn't get a separate spec doc, it
    implements against the same acceptance criteria plus
    `kencleng-ux-page-map.md` / wireframes / design guidelines

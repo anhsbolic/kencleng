@@ -374,7 +374,7 @@ Two related process gaps identified in the same session, resolved by
 extending existing templates rather than new documents:
 - **Audit log write-sites** are scattered across `organisasi`,
   `campaign`, and `disbursement` features (built long after `account`,
-  which owns the audit log table) — the `spec/features/<fitur>.md`
+  which owns the audit log table) — the `spec/<domain>/features/<fitur>.md`
   template now has a mandatory "Audit log entry?" field.
 - **Cross-domain invariants** (e.g. the donation ledger vs.
   `campaign.collected_amount`) are now explicitly owned by whichever
