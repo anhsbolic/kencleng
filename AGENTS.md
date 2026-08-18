@@ -135,6 +135,21 @@ in files unrelated to the stated task, stop and flag it rather than
 continuing — a small stated task touching many unrelated files is a
 signal something went wrong, not a sign of thoroughness.
 
+**Directory boundary.** A session started from `backend/` must not
+modify anything under `frontend/`, and vice versa — each side has its
+own `opencode.jsonc` with `references` into `docs/` and `api/` for
+shared contract material, but that's read access for context, not
+license to edit across the boundary. If a task genuinely needs changes
+on both sides (e.g. an API contract change), treat it as two separate
+sessions coordinated by a human, not one session crossing the
+boundary.
+
+**One-off playbook sessions** (`.agents/docs/*.md` — scaffold,
+tooling setup) are scoped to exactly what the playbook says, nothing
+more. In particular, a scaffold session must not touch `docs/spec/`
+even though it can read it — scaffolding is infrastructure wiring, not
+a feature, and has no business editing the feature contract.
+
 ## 8. Related docs
 
 - `docs/kencleng-agentic-workflow.md` — full process this file is
