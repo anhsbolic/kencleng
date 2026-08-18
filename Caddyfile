@@ -1,8 +1,12 @@
 localhost:80 {
+	# backend and frontend run natively on the host (not as containers in
+	# this compose network) — host.containers.internal is how a container
+	# reaches the host. This Caddy container itself is reached from the
+	# host machine via its own host-mapped port, see docker-compose.yml.
 	handle /api/* {
-		reverse_proxy backend:8080
+		reverse_proxy host.containers.internal:8090
 	}
 	handle {
-		reverse_proxy frontend:3000
+		reverse_proxy host.containers.internal:3000
 	}
 }

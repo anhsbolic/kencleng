@@ -186,21 +186,40 @@ that, it just maps out where files live.
 | Postgres | version 16 |
 | MinIO | single-node single-drive, buckets created automatically via init container (`mc`) |
 | Bucket names | `kencleng-public`, `kencleng-private` |
-| Port mapping (host) | Caddy `80`, Postgres `5432`, MinIO API `9000`, MinIO Console `9001`, backend `8080` (internal, proxied), frontend `3000` (internal, proxied) |
+| Port mapping (host) | Caddy `8080` (public entrypoint), Postgres `5435`, MinIO API `9087`, MinIO Console `9088`, backend `8090` (native, proxied — not exposed directly), frontend `3000` (native, proxied — not exposed directly) |
 | Reverse proxy | Caddy (simplest config for our needs) |
 | Volumes | named volumes, survive `docker-compose down`, only removed with `down -v` |
-| App access | `http://localhost` (via Caddy) — not `localhost:3000`/`:8080` directly, so the same-origin assumption is valid from the start |
+| App access | `http://localhost:8080` (via Caddy) — not `localhost:3000`/`:8090` directly, so the same-origin assumption is valid from the start |
+
+**Why non-default ports**: Postgres/MinIO's host-side ports are intentionally
+moved off their defaults (`5432`/`9000`/`9001`) to avoid colliding with other
+local Postgres/MinIO instances running in the same Podman/Docker environment
+— container-internal ports are unaffected, only the host-side mapping
+changes. **Backend's native port is `8090`, not `8080`** — `8080` is already
+taken by Caddy's host-side mapping, and since backend runs as a native host
+process (not a container), it shares the host's port namespace with Caddy
+and would collide with it at `8080`.
 
 ### 5.2 `.env.example`
 
 ```env
 APP_ENV=development
 
+# Backend HTTP listen port (native process on host — must not collide with
+# Caddy's host-mapped port 8080, since Caddy proxies to this port via
+# host.containers.internal, not through the same host port)
+APP_PORT=8090
+
 # Database
-DATABASE_URL=postgres://kencleng:kencleng@postgres:5432/kencleng?sslmode=disable
+# NOTE: host + host-mapped port (5435), NOT the container-internal DNS name
+# "postgres" — the backend runs natively on the host, outside the Podman
+# Compose network, so container service names don't resolve here.
+DATABASE_URL=postgres://kencleng:kencleng@localhost:5435/kencleng?sslmode=disable
 
 # MinIO / S3-compatible storage
-MINIO_ENDPOINT=minio:9000
+# Same reasoning as DATABASE_URL above — host-mapped port (9087), not the
+# container-internal name/port.
+MINIO_ENDPOINT=localhost:9087
 MINIO_ACCESS_KEY=kencleng
 MINIO_SECRET_KEY=kencleng123
 MINIO_BUCKET_PUBLIC=kencleng-public
@@ -220,7 +239,7 @@ HMAC_KEY=
 # Google OAuth
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
-GOOGLE_REDIRECT_URI=http://localhost/auth/google/callback
+GOOGLE_REDIRECT_URI=http://localhost:8080/auth/google/callback
 
 # Rate limiting
 LOGIN_LOCKOUT_THRESHOLD=5

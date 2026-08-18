@@ -68,7 +68,15 @@ make verify                  # full gate — see root docs/kencleng-agentic-work
 make migrate-up / migrate-down
 ```
 
-## 5. Related docs
+## 5. One-off operational playbooks
+
+For one-time setup work that isn't a feature (initial project scaffold,
+security-tooling config) — check `.agents/docs/README.md` for an index
+of available playbooks before improvising the approach yourself. These
+are read on-demand, not loaded into every session's context — they cover
+things that are relevant once, not on every task.
+
+## 6. Related docs
 
 - `docs/kencleng-agentic-workflow.md` — process, tiering, testing
   stages this file's conventions support.

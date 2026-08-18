@@ -1,0 +1,23 @@
+// File: backend/opencode.jsonc
+//
+// Assumes the local directory layout:
+//   kencleng-workspace/
+//   ├── kencleng/              (this repo)
+//   └── harscode-workspace/    (sibling repo, not part of kencleng)
+//
+// If harscode-workspace lives somewhere else on your machine, update
+// "path" below accordingly. This file is committed to the kencleng repo —
+// for anyone who forks kencleng without also having harscode-workspace
+// checked out as a sibling, the reference simply won't resolve; it doesn't
+// error, it's just unused. See docs/kencleng-agentic-workflow.md and this
+// project's own AGENTS.md for the parts of the workflow that don't depend
+// on harscode-workspace at all.
+{
+  "$schema": "https://opencode.ai/config.json",
+  "references": {
+    "workspace": {
+      "path": "../../harscode-workspace",
+      "description": "Generic, portable AI agent workflow guidance (code-review, testing, and pull-request phases; Go/PostgreSQL/REST-API best-practices). Secondary reference only — this project's own AGENTS.md and docs/spec/ take precedence wherever the two disagree. Read workflow/README.md as the entry point, and best-practices/index.md before applying any technology-specific checklist."
+    }
+  }
+}
