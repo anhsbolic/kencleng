@@ -118,6 +118,21 @@ components:
         minimum: 1
         maximum: 50
         default: 20
+    AdminUsersLimitParam:
+      name: limit
+      in: query
+      required: false
+      description: >
+        Max items per page. Default 20, max 20 — hard-capped lower
+        than the general LimitParam [RESOLVED — 2026-08-05, see
+        docs/spec/account/threat-model.md component 6] because every
+        row requires a decrypt operation (this endpoint bulk-exposes
+        PII), unlike most other paginated list endpoints.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 20
+        default: 20
 
     IdempotencyKeyHeader:
       name: Idempotency-Key
@@ -252,15 +267,10 @@ components:
           minLength: 8
           description: Length-only policy (NIST 800-63B style) — no character-class requirement.
 
-    RegisterResponse:
-      type: object
-      properties:
-        user_id:
-          type: string
-          format: uuid
-        message:
-          type: string
-          example: "Registrasi berhasil. Silakan cek email untuk verifikasi."
+    # RegisterResponse removed 2026-08-05 — POST /auth/register now
+    # returns GenericAcceptedMessage (anti-enumeration; see
+    # docs/spec/account/features/01-register-email-verification.md
+    # Assumption A).
 
     VerifyEmailRequest:
       type: object
@@ -378,13 +388,37 @@ components:
 
     SetPasswordRequest:
       type: object
-      description: For Google-only users adding an email_password identity.
+      description: >
+        Redesigned 2026-08-05 [RESOLVED] — this endpoint now branches
+        server-side into two behaviors depending on the caller's
+        existing identities, not on which fields are sent (see
+        docs/spec/account/features/05-account-linking.md).
+
+        Branch 1 (caller has no `email_password` identity yet —
+        Google-only): requires `email` + `password`. Creates a new,
+        unverified `email_password` identity; must be verified via
+        `POST /auth/verify-email` before it's usable. Response `202`.
+
+        Branch 2 (caller already has an `email_password` identity —
+        change password): requires `current_password` + `password`.
+        Updates the existing identity's credential in place, takes
+        effect immediately, force-revokes all existing sessions.
+        Response `200`.
       required: [password]
       properties:
+        email:
+          type: string
+          format: email
+          description: Branch 1 only. New email for the identity being added — not necessarily the account's existing `primary_email` (e.g. migrating from a personal Gmail-linked account to a work email).
+        current_password:
+          type: string
+          format: password
+          description: Branch 2 only. Confirms ownership of the existing identity before changing its password — prevents a hijacked-but-still-valid session from silently taking over the account.
         password:
           type: string
           format: password
           minLength: 8
+          description: New password, both branches. Length-only policy (NIST 800-63B style), same as registration.
 
     MfaEnrollResponse:
       type: object
@@ -433,6 +467,22 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ProviderType"
+
+    UnlinkGoogleRequest:
+      type: object
+      description: >
+        Re-authentication payload, added 2026-08-05 [RESOLVED] — see
+        docs/spec/account/features/05-account-linking.md. Always
+        possible to satisfy by the time unlink can succeed at all,
+        since INV-account-12 guarantees a verified `email_password`
+        identity exists at that point (the identity being removed is
+        always the `google` one).
+      required: [password]
+      properties:
+        password:
+          type: string
+          format: password
+          description: The caller's current email_password password, confirming this action is really them.
 
     UnlinkGoogleResponse:
       type: object
@@ -1677,6 +1727,17 @@ paths:
     post:
       tags: [account]
       summary: Register a new account (email_password)
+      description: >
+        Anti-enumeration [RESOLVED — 2026-08-05]: response is always
+        `202` with the same generic message, regardless of whether the
+        email is new, already registered-unverified, already
+        registered-verified, or already claimed by a `google`-only
+        account (see
+        docs/spec/account/features/01-register-email-verification.md).
+        The actual email sent differs by case (verification link /
+        resend-verification nudge / password-reset nudge / "this email
+        uses Google login" nudge), but the API response and response
+        time must not reveal which case occurred.
       security: []
       requestBody:
         required: true
@@ -1685,28 +1746,18 @@ paths:
             schema:
               $ref: "#/components/schemas/RegisterRequest"
       responses:
-        "201":
-          description: Account created, verification email sent.
+        "202":
+          description: >
+            Always returned regardless of the email's actual state in
+            the system — see the anti-enumeration note above.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RegisterResponse"
+                $ref: "#/components/schemas/GenericAcceptedMessage"
               example:
-                user_id: "01930f2e-7f1a-7c3a-9b1e-2f6a1c8e4d10"
-                message: "Registrasi berhasil. Silakan cek email untuk verifikasi."
+                message: "Kalau email belum terdaftar, cek inbox untuk verifikasi. Kalau sudah, cek inbox untuk instruksi lebih lanjut."
         "422":
           $ref: "#/components/responses/ValidationError"
-        "409":
-          description: Email already registered under `email_password`.
-          content:
-            application/problem+json:
-              schema:
-                $ref: "#/components/schemas/Problem"
-              example:
-                type: "https://kencleng.dev/errors/identifier-taken"
-                title: "Email Already Registered"
-                status: 409
-                detail: "Email ini sudah terdaftar. Coba login, atau minta kirim ulang email verifikasi."
         "429":
           $ref: "#/components/responses/TooManyRequests"
 
@@ -2035,8 +2086,19 @@ paths:
       tags: [account]
       summary: Unlink the Google identity from the current account
       description: >
-        Blocked if `google` is the only AuthIdentity on the account (no
-        `email_password` set up) — returns 409 in that case.
+        Requires re-authentication (`password`) [RESOLVED — 2026-08-05].
+        Blocked (409) in two distinct cases — see the two examples
+        below: (1) `google` is the only identity at all
+        (INV-account-02), or (2) another identity exists but isn't
+        verified yet (INV-account-12) — distinguished so the user
+        knows whether to *start* set-password or just *finish*
+        verifying an email they already started.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnlinkGoogleRequest"
       responses:
         "200":
           description: Unlinked.
@@ -2044,17 +2106,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UnlinkGoogleResponse"
+        "401":
+          description: Incorrect `password`.
+          $ref: "#/components/responses/Unauthorized"
         "409":
-          description: Google is the only linked identity; set a password first.
+          description: Google is the only identity, or the remaining identity isn't verified yet — see the two examples.
           content:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
-              example:
-                type: "https://kencleng.dev/errors/only-identity"
-                title: "Cannot Unlink Only Identity"
-                status: 409
-                detail: "Google adalah satu-satunya metode login Anda. Atur password dulu sebelum melepas tautan."
+              examples:
+                only_identity:
+                  summary: No other identity exists at all (INV-account-02)
+                  value:
+                    type: "https://kencleng.dev/errors/only-identity"
+                    title: "Cannot Unlink Only Identity"
+                    status: 409
+                    detail: "Google adalah satu-satunya metode login Anda. Atur email dan password dulu sebelum melepas tautan."
+                unverified_identity:
+                  summary: Another identity exists but isn't verified yet (INV-account-12)
+                  value:
+                    type: "https://kencleng.dev/errors/unverified-remaining-identity"
+                    title: "Remaining Identity Not Verified"
+                    status: 409
+                    detail: "Kamu sudah atur email dan password, tapi belum diverifikasi. Verifikasi email kamu dulu sebelum bisa melepas tautan Google."
 
   # =========================================================================
   # Account security — profile, set-password, MFA (Fitur 2, 3, 4)
@@ -2076,12 +2151,18 @@ paths:
   /account/security/set-password:
     post:
       tags: [account]
-      summary: Set a password for a Google-only account
+      summary: Add an email_password identity, or change the existing one
       description: >
-        Adds an `email_password` AuthIdentity using the account's existing
-        `primary_email`. No re-authentication required (this action
-        strengthens the account rather than weakening it). Fails if that
-        email is already claimed by another user's `email_password` identity.
+        See `SetPasswordRequest`'s description for the two branches.
+        Branch 1 (add new identity, Google-only caller): follows the
+        same anti-enumeration pattern as `/auth/register` — response
+        is generic `202` whether or not the submitted `email` is
+        already claimed by someone else (a distinct nudge email is
+        sent instead, no new identity/token created). Branch 2 (change
+        existing password): immediate `200`, wrong `current_password`
+        is `401`, not generic (this branch is not enumeration-
+        sensitive — the caller is already authenticated and acting on
+        their own known identity).
       requestBody:
         required: true
         content:
@@ -2090,7 +2171,9 @@ paths:
               $ref: "#/components/schemas/SetPasswordRequest"
       responses:
         "200":
-          description: Password set.
+          description: >
+            Branch 2 only — password changed immediately, all
+            existing sessions revoked.
           content:
             application/json:
               schema:
@@ -2098,15 +2181,23 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: "Password berhasil diatur."
+                    example: "Password berhasil diganti. Semua sesi lain telah keluar otomatis."
+        "202":
+          description: >
+            Branch 1 only — always returned regardless of whether the
+            submitted email was actually available (anti-enumeration,
+            same pattern as POST /auth/register).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericAcceptedMessage"
+              example:
+                message: "Kalau email tersedia, cek inbox untuk verifikasi."
+        "401":
+          description: Branch 2 only — incorrect `current_password`.
+          $ref: "#/components/responses/Unauthorized"
         "422":
           $ref: "#/components/responses/ValidationError"
-        "409":
-          description: Email already used by another user's email_password identity.
-          content:
-            application/problem+json:
-              schema:
-                $ref: "#/components/schemas/Problem"
 
   /account/security/mfa/enroll:
     post:
@@ -2181,10 +2272,13 @@ paths:
     get:
       tags: [account]
       summary: List users (Admin only)
-      description: Used by the Admin "kelola user" page for role assignment.
+      description: >
+        Used by the Admin "kelola user" page for role assignment.
+        Admin-only authz is checked explicitly at the handler level,
+        not only via a query filter (see AGENTS.md golden rules).
       parameters:
         - $ref: "#/components/parameters/CursorParam"
-        - $ref: "#/components/parameters/LimitParam"
+        - $ref: "#/components/parameters/AdminUsersLimitParam"
       responses:
         "200":
           description: OK
@@ -2201,8 +2295,11 @@ paths:
       summary: Assign a role (admin or kurator) to a user
       description: >
         Rejected with 409 if assigning `admin` to a user who currently
-        holds `kurator` or is an organisasi representative (mutual
-        exclusivity rule).
+        holds `kurator` or is an organization representative (mutual
+        exclusivity rule, INV-account-09/10), or if the target already
+        holds the requested role (INV-account-09's duplicate-
+        assignment case, added 2026-08-05 — see
+        docs/spec/account/features/08-role-assignment.md Assumption A).
       parameters:
         - name: userId
           in: path
@@ -2228,20 +2325,45 @@ paths:
         "404":
           $ref: "#/components/responses/NotFound"
         "409":
-          description: Role conflict (e.g. target user is already a representative and being assigned `admin`).
+          description: Role conflict — see the three examples (exclusivity or duplicate assignment).
           content:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
-              example:
-                type: "https://kencleng.dev/errors/role-conflict"
-                title: "Role Conflict"
-                status: 409
-                detail: "User ini masih menjadi representative organisasi. Lepas dari organisasi dulu sebelum jadi Admin."
+              examples:
+                admin_kurator_conflict:
+                  summary: Target already holds the other exclusive role (INV-account-09)
+                  value:
+                    type: "https://kencleng.dev/errors/role-conflict"
+                    title: "Role Conflict"
+                    status: 409
+                    detail: "User ini sudah menjadi Kurator. Lepas role Kurator dulu sebelum jadi Admin."
+                representative_conflict:
+                  summary: Target is an organization representative (INV-account-10)
+                  value:
+                    type: "https://kencleng.dev/errors/role-conflict"
+                    title: "Role Conflict"
+                    status: 409
+                    detail: "User ini masih menjadi representative organisasi. Lepas dari organisasi dulu sebelum jadi Admin."
+                duplicate_assignment:
+                  summary: Target already holds the requested role
+                  value:
+                    type: "https://kencleng.dev/errors/duplicate-role"
+                    title: "Role Already Assigned"
+                    status: 409
+                    detail: "User ini sudah punya role ini."
 
     delete:
       tags: [account]
       summary: Revoke a role from a user
+      description: >
+        Rejected with 409 in two cases, added 2026-08-05 [RESOLVED] —
+        see docs/spec/account/features/08-role-assignment.md: (1)
+        revoking `admin` from the last remaining Admin in the system
+        (INV-account-13), or (2) revoking `kurator` from a user who
+        has a `pending` row in `organization_curation_assignments`
+        (INV-account-14, cross-domain read against a table
+        `organization` owns).
       parameters:
         - name: userId
           in: path
@@ -2261,6 +2383,27 @@ paths:
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
+        "409":
+          description: Last-Admin guard, or pending-curation-assignment guard — see the two examples.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+              examples:
+                last_admin:
+                  summary: Target is the last remaining Admin (INV-account-13)
+                  value:
+                    type: "https://kencleng.dev/errors/last-admin"
+                    title: "Cannot Revoke Last Admin"
+                    status: 409
+                    detail: "Tidak bisa melepas role Admin dari satu-satunya Admin yang tersisa di sistem."
+                pending_curation:
+                  summary: Target has a pending curation assignment (INV-account-14)
+                  value:
+                    type: "https://kencleng.dev/errors/pending-curation-assignment"
+                    title: "Kurator Has Pending Assignment"
+                    status: 409
+                    detail: "User ini masih punya tugas kurasi yang pending. Selesaikan atau alihkan dulu sebelum melepas role Kurator."
 
   # ===========================================================================
   # Organisasi domain (Fitur 1, 1B, 2 of kencleng-phase1-detail.md)
