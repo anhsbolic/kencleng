@@ -10,7 +10,7 @@ This document details each step of Phase 3 (Post-Campaign) from
 concurrency-heavy transaction path, Phase 3 returns to an
 approval-chain pattern similar to Phase 1 — but the stakes are higher,
 since this is where money actually leaves the platform to an
-Organisasi.
+Organization.
  
 Same document format as Phase 1/2 (Overview / Actors / Preconditions /
 Flow / Business rules / Alternate flows / Data touched / State
@@ -29,11 +29,11 @@ duplicated here.
 Once a campaign is `closed`, the system produces a summary of the
 donation results and actively distributes it to donors, while also
 keeping it published as a public/archival summary page. **The
-Organisasi (Owner) can add a narrative to this report — this feature
+Organization (Owner) can add a narrative to this report — this feature
 is officially in v1** **[REVISED — previously an open question]**.
  
 **Actors**
-System (generates & distributes the report automatically) · Organisasi
+System (generates & distributes the report automatically) · Organization
 (Owner — adds a narrative, optional)
  
 **Preconditions**
@@ -49,7 +49,7 @@ System (generates & distributes the report automatically) · Organisasi
    `guest_email`)
 3. The summary page remains publicly accessible as an archive, even
    long after the campaign has closed
-4. **[NEW]** The organisasi's Owner can open this report page from
+4. **[NEW]** The organization's Owner can open this report page from
    their dashboard, and add/edit the narrative field
    (`report_narrative`) — freely, at any time after the campaign is
    `closed`, with no deadline or approval gate for this narrative
@@ -91,13 +91,13 @@ field, just a nullable text field that can be edited freely)
 **Security notes**
 - `guest_email` is used internally for sending notifications only,
   never exposed publicly.
-- **[NEW]** Only the Owner of the organisasi that owns the campaign
+- **[NEW]** Only the Owner of the organization that owns the campaign
   can fill in/edit the narrative — a `staff` representative can view
   the report page but cannot edit the narrative (consistent with
   Business Rule 4 in `kencleng-actors-entities.md`: sensitive actions
   are Owner-only — even though the narrative itself isn't a financial
   action, it's still treated as an official representation of the
-  organisasi to the public, so it's held to the same level as other
+  organization to the public, so it's held to the same level as other
   Owner-only actions)
 - **Markdown sanitization required at render time [RESOLVED — NEW,
   SECURITY-CRITICAL]**: since the narrative is displayed on a public
@@ -110,7 +110,7 @@ field, just a nullable text field that can be edited freely)
   has no business logic" boundary — sanitizing at render time is a
   presentation concern, not business logic
 **Open questions**
-- ~~Can the Organisasi add a narrative/story to this report, or is it
+- ~~Can the Organization add a narrative/story to this report, or is it
   purely automatic figures from the system?~~ → **resolved: yes, it's
   in v1** **[REVISED]**
 - ~~Does the narrative need a character-length limit, or does it
@@ -166,11 +166,11 @@ Request: Owner-only. Approve/reject: Admin-only.
  
 ---
  
-## 3. Fund Disbursement to the Organisasi
+## 3. Fund Disbursement to the Organization
  
 **Overview**
 Once the Admin approves, the system simulates disbursing the funds to
-the organisasi — no real bank account/transfer, per the sandbox
+the organization — no real bank account/transfer, per the sandbox
 principle (mirroring the payment simulation in Phase 2).
  
 **Actors**
@@ -183,7 +183,7 @@ System (executes the disbursement simulation)
 1. As soon as it's `approved`, the system triggers a simulated fund
    disbursement (a short delay, recorded as "transferred")
 2. `DisbursementRequest.status = disbursed`, `disbursed_at = now`
-3. The Owner & Organisasi receive a notification that the funds have
+3. The Owner & Organization receive a notification that the funds have
    been disbursed (dual channel, same as Feature 1)
 **Data touched**
 Update `DisbursementRequest.status = disbursed`, `disbursed_at`
@@ -201,7 +201,7 @@ is enough for idempotency.
 ## 4. Fund-Usage Report
  
 **Overview**
-The Organisasi (Owner) must submit a fund-usage accountability report
+The Organization (Owner) must submit a fund-usage accountability report
 once disbursement is complete — a structured format per expense
 category, not just free-form narrative. There's a submission deadline,
 and a platform-level consequence if that deadline is missed
@@ -221,7 +221,7 @@ Owner
 3. Submit → a `FundUsageReport` is created
    (`status = pending_verification`) along with child
    `FundUsageReportItem` records per category
-4. **[NEW]** As soon as the submission succeeds, if this organisasi
+4. **[NEW]** As soon as the submission succeeds, if this organization
    currently has the "overdue report" flag (see the Business Rule
    below), that flag is immediately cleared automatically — there's no
    need to wait for the Kurator's verification to finish
@@ -238,8 +238,8 @@ Owner
 - **Submission deadline [RESOLVED — NEW]**: the report must be
   submitted no later than **30 days** after `disbursed_at`
 - **Consequence of missing the deadline [RESOLVED — NEW]**: the
-  related organisasi gets flagged with `has_overdue_report` — while
-  this flag is active, the organisasi **cannot create a new
+  related organization gets flagged with `has_overdue_report` — while
+  this flag is active, the organization **cannot create a new
   campaign** (see `kencleng-phase1-detail.md` Feature 3, Campaign
   Registration — an additional validation needed to be added there
   when that detail was revised). Campaigns that are already
@@ -264,7 +264,7 @@ Owner
   submitted_at)
 - **Create** `FundUsageReportItem` (report_id, category, amount,
   description, attachment_url) — one or more per report
-- **[NEW]** Update `Organisasi.has_overdue_report` (boolean, set by
+- **[NEW]** Update `Organization.has_overdue_report` (boolean, set by
   the scheduler job, cleared automatically on submission)
 **State transition**
 `FundUsageReport.status`: *(none)* → `pending_verification`
@@ -278,7 +278,7 @@ happens directly within the same transaction as creating the
 report has already been submitted but the flag is still active.
  
 **Security notes**
-Only the Owner of the relevant organisasi can submit a report for that
+Only the Owner of the relevant organization can submit a report for that
 campaign.
  
 **Open questions**
@@ -299,7 +299,7 @@ campaign.
 **Overview**
 A Kurator (assigned by the Admin, mirroring the other curation
 patterns) reviews the fund-usage report — must recuse if they're a
-representative of the same organisasi.
+representative of the same organization.
  
 **Actors**
 Admin (assigns) · Kurator (review & decision)
@@ -328,9 +328,9 @@ Admin (assigns) · Kurator (review & decision)
    history)
  
 **Business rules / validation**
-- A Kurator who is also a representative of the organisasi that owns
+- A Kurator who is also a representative of the organization that owns
   the campaign may not be assigned (conflict of interest — same as
-  organisasi/campaign curation)
+  organization/campaign curation)
 - Only one active assignment per report at a time
 - **[NEW]** A rejection here does **not** re-trigger the
   `has_overdue_report` flag — that flag is purely about submission
@@ -341,7 +341,7 @@ Admin (assigns) · Kurator (review & decision)
   platform-level consequence if the fund-usage report is rejected
   repeatedly (as distinct from being late)": **there is no special
   consequence** beyond the normal, already-existing resubmit cycle —
-  an organisasi is free to be rejected & resubmit as many times as
+  an organization is free to be rejected & resubmit as many times as
   needed with no additional penalty, as long as it stays within the
   30-day window from the first submission. This is intentionally left
   penalty-free so an Owner isn't afraid to submit an honest report
@@ -357,7 +357,7 @@ Admin (assigns) · Kurator (review & decision)
 `rejected` → *(revision)* `pending_verification` (repeat cycle)
  
 **Concurrency & correctness notes**
-Same as organisasi/campaign curation — one active assignment per
+Same as organization/campaign curation — one active assignment per
 report prevents a race between Kurator.
  
 **Security notes**
@@ -376,7 +376,7 @@ conflict-of-interest check on the backend.
   strict match** **[RESOLVED]**
 - ~~Deadline to submit the fund-usage report after disbursement~~ →
   **resolved: 30 days** **[RESOLVED]**
-- ~~Can the organisasi add a narrative to the donation-progress report
+- ~~Can the organization add a narrative to the donation-progress report
   (Feature 1), or is it purely automatic~~ → **resolved: yes, it's in
   v1, Owner-only, with no curation gate** **[REVISED]**
 - ~~Length/format limit for the progress-report narrative (plain text
@@ -389,11 +389,11 @@ conflict-of-interest check on the backend.
   **[RESOLVED — NEW]**
 - ~~Needs a cross-reference update in `kencleng-phase1-detail.md`
   Feature 3 (Campaign Registration) to add a new validation: an
-  organisasi with `has_overdue_report = true` cannot submit a new
+  organization with `has_overdue_report = true` cannot submit a new
   campaign~~ → **resolved: the cross-reference has been added** —
   see `kencleng-phase1-detail.md` Feature 3, Preconditions &
   Business Rules **[RESOLVED — NEW]**
-- ~~Needs to add `Organisasi.has_overdue_report` to the entity/field
+- ~~Needs to add `Organization.has_overdue_report` to the entity/field
   list in the ERD (Step 3 roadmap)~~ → **resolved: already present in
   `kencleng-erd.md`** (`organizations.has_overdue_report`, boolean,
   with a partial index) **[RESOLVED]**

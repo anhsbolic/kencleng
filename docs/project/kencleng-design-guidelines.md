@@ -102,7 +102,7 @@ charitable" mood.
  
 Deliberately a different, more blue-leaning green from Primary — so
 "this is the brand/CTA" and "this succeeded" never look identical.
-Used for: donation success, verified organisasi, published campaign
+Used for: donation success, verified organization, published campaign
 status badges.
  
 | Shade | Hex | Usage |
@@ -283,7 +283,7 @@ elevation implies "this is a filled, prominent action").
   color change
 ### Badges (status indicators)
  
-Every status enum across the app (`Organisasi`/`Campaign` curation
+Every status enum across the app (`Organization`/`Campaign` curation
 status, `Donation.status`, `has_overdue_report`, etc. — see
 `kencleng-erd.md`) maps onto one of the five semantic colors, not a
 new color per status:

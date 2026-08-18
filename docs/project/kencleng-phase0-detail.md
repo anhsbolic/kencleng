@@ -330,7 +330,7 @@ bawah; tidak berlaku untuk `google` yang selalu langsung verified)
 - User dengan `AuthIdentity.verified_at = null` (hanya berlaku untuk
   provider `email_password`) tetap bisa login, tapi dibatasi
   aksesnya: tidak bisa donasi sebagai registered user, tidak bisa jadi
-  representative organisasi — endpoint terkait ini wajib cek status
+  representative organization — endpoint terkait ini wajib cek status
   verifikasi
 - MFA TOTP bersifat **opsional untuk semua role** — user memilih
   sendiri mau mengaktifkan atau tidak (lihat Fitur 3), berlaku juga
@@ -742,9 +742,9 @@ Super-admin (seed awal) · Admin (assign/revoke role ke user lain)
    lain
 **Business rules / validation**
 - User yang akan di-assign Admin **tidak boleh** sedang jadi Kurator
-  atau Representative organisasi mana pun — sistem harus validasi &
+  atau Representative organization mana pun — sistem harus validasi &
   block pelanggaran ini
-- User yang akan di-assign Kurator boleh saja representative organisasi
+- User yang akan di-assign Kurator boleh saja representative organization
   lain (konfliknya baru muncul per-assignment kurasi)
 **Data touched**
 Update role User (struktur data pasti — many-to-many User-Role vs
@@ -772,7 +772,7 @@ kedaluwarsa untuk menjaga list tetap ringkas dan DB tetap efisien
 System (trigger notifikasi) · User (melihat & mark-as-read)
  
 **Flow (happy path)**
-1. Event tertentu terjadi di sistem (organisasi verified, campaign
+1. Event tertentu terjadi di sistem (organization verified, campaign
    closed, disbursement selesai, dst) → sistem buat `Notification`
    record dengan `expires_at` (created_at + **30 hari**
    **[RESOLVED]** — lihat business rule)
@@ -784,10 +784,10 @@ System (trigger notifikasi) · User (melihat & mark-as-read)
    read
 **Business rules / validation**
 - Setiap notifikasi punya `type` (enum event, misal
-  `organisasi_verified`, `campaign_rejected`, `donation_success`,
+  `organization_verified`, `campaign_rejected`, `donation_success`,
   `campaign_closed`, `disbursement_completed`) untuk konsistensi
   template pesan. **[RESOLVED — NEW]** Diperluas buat cover seluruh
-  siklus kurasi: `admin_new_curation_item` (Admin, saat organisasi/
+  siklus kurasi: `admin_new_curation_item` (Admin, saat organization/
   campaign/laporan dana baru masuk antrian), `kurator_assigned`
   (Kurator, saat di-assign Admin ke satu item), `fund_usage_report_
   verified`/`fund_usage_report_rejected` (Owner, keputusan Kurator),
@@ -845,7 +845,7 @@ User hanya bisa melihat & mark-as-read notifikasi miliknya sendiri.
  
 **Overview**
 Layanan upload file terpusat memakai storage S3-compatible (misal
-MinIO lokal untuk sandbox), dipakai untuk dokumen legal organisasi,
+MinIO lokal untuk sandbox), dipakai untuk dokumen legal organization,
 media campaign, dan lampiran laporan penggunaan dana. Setiap form
 upload dokumen sensitif menampilkan notifikasi bahwa file tersimpan
 aman dan rahasia **[NEW]**.
@@ -854,7 +854,7 @@ aman dan rahasia **[NEW]**.
 User (upload) · System (validasi & simpan)
  
 **Preconditions**
-User authenticated (sesuai konteks upload — representative organisasi
+User authenticated (sesuai konteks upload — representative organization
 untuk dokumen legal/media campaign, Owner untuk lampiran laporan dana)
  
 **Flow (happy path)**
@@ -867,10 +867,10 @@ untuk dokumen legal/media campaign, Owner untuk lampiran laporan dana)
 4. Return reference (object key) untuk disimpan di entity terkait
 **Business rules / validation**
 - **Media campaign** → bucket publicly accessible
-- **Dokumen legal organisasi & lampiran laporan penggunaan dana** →
+- **Dokumen legal organization & lampiran laporan penggunaan dana** →
   bucket private, akses hanya lewat signed URL dengan waktu
   kedaluwarsa **5 menit** **[RESOLVED]**, terbatas untuk
-  Admin/Kurator yang berwenang (representative organisasi pemilik
+  Admin/Kurator yang berwenang (representative organization pemilik
   data tetap bisa akses miliknya sendiri — dan khusus dokumen legal,
   hanya level `owner`, bukan `staff`)
 - **Max ukuran file: 5 MB, berlaku sama untuk seluruh konteks
@@ -881,14 +881,14 @@ untuk dokumen legal/media campaign, Owner untuk lampiran laporan dana)
 - Validasi tipe file dari magic bytes, bukan hanya ekstensi/
   content-type yang dikirim client
 - **UX note**: setiap form upload dokumen non-publik (dokumen
-  legal organisasi, lampiran laporan penggunaan dana) menampilkan
+  legal organization, lampiran laporan penggunaan dana) menampilkan
   notes/popup yang menjelaskan bahwa file tersimpan aman dan bersifat
   rahasia (mengacu ke mekanisme private bucket + signed URL di atas)
   — ini murni UX reassurance, tidak mengubah mekanisme teknis yang
   sudah ada
 **Data touched**
 Create `FileUpload` (id, object_key, content_type, size, uploaded_by,
-context [misal `organisasi_legal_doc`, `campaign_media`,
+context [misal `organization_legal_doc`, `campaign_media`,
 `fund_usage_attachment`], is_public)
  
 **Security notes**
@@ -941,24 +941,24 @@ System (record otomatis setiap aksi sensitif terjadi)
  
 **Scope aksi yang dicatat** (berdasarkan yang teridentifikasi di
 Fase 1–3 dan doc ini)
-- Keputusan kurasi organisasi / campaign / laporan penggunaan dana
+- Keputusan kurasi organization / campaign / laporan penggunaan dana
   (approve/reject)
 - Force-close campaign oleh Admin
 - Approval/rejection request pencairan dana
 - Role assignment & revoke (Admin/Kurator)
 - Enable/disable MFA, account linking baru (termasuk link Google,
   dan set-password untuk Google-only user **[NEW]**)
-- **Manage representative organisasi (invite/remove/promote/demote
+- **Manage representative organization (invite/remove/promote/demote
   owner↔staff) [RESOLVED — NEW]** — ditambahkan ke scope karena aksi
-  ini menentukan siapa yang punya otoritas atas organisasi. Lihat
+  ini menentukan siapa yang punya otoritas atas organization. Lihat
   `kencleng-phase1-detail.md` Fitur "Manage Representative". **Tidak**
   diperluas ke aksi non-destruktif seperti submit awal campaign/
-  organisasi — itu udah punya trail sendiri lewat field `status`,
+  organization — itu udah punya trail sendiri lewat field `status`,
   nggak butuh audit log terpisah.
 - **Reveal PII field yang di-mask di frontend, saat dilakukan oleh
   Admin atau Kurator terhadap data pihak lain** **[NEW — lihat
   kencleng-actors-entities.md, PII Handling Note]**
-- **[NEW]** Organisasi kena/lepas flag "laporan penggunaan dana
+- **[NEW]** Organization kena/lepas flag "laporan penggunaan dana
   telat" (lihat `kencleng-phase3-detail.md` Fitur 4) — perubahan flag
   ini punya konsekuensi fungsional (blokir buat campaign baru), jadi
   masuk kategori aksi yang perlu tercatat
@@ -966,7 +966,7 @@ Fase 1–3 dan doc ini)
   (manual, wajib `decision_note`) — lihat `kencleng-phase1-detail.md`
   Fitur 5
 - **[NEW — RESOLVED 2026-07-21]** Auto-unpublish campaign akibat
-  organisasi kembali ke `pending_verification` (system-triggered,
+  organization kembali ke `pending_verification` (system-triggered,
   tanpa `decision_note` manual) — lihat `kencleng-phase1-detail.md`
   Fitur 5
 **Data touched**
@@ -1034,7 +1034,7 @@ oleh siapa pun, termasuk Admin, demi menjaga integritas catatan.
   enum, termasuk kolom `revoked_at`** **[RESOLVED — NEW, lihat ERD,
   Fitur 1 & 2B]**
 - **PII encryption-at-rest (email, NPWP) [RESOLVED — NEW, lihat ERD]**:
-  `User.primary_email`, `AuthIdentity.identifier`, `Organisasi.NPWP`,
+  `User.primary_email`, `AuthIdentity.identifier`, `Organization.NPWP`,
   `Donation.guest_email` disimpan terenkripsi + kolom hash terpisah
   untuk lookup, sesuai kepatuhan UU PDP — lihat Fitur 1. **Manajemen
   key (`ENCRYPTION_KEY`/`HMAC_KEY`, no rotation di v1) — resolved,
@@ -1059,7 +1059,7 @@ oleh siapa pun, termasuk Admin, demi menjaga integritas catatan.
   di-defer" yang sudah disebutkan di atas — belum dipakai endpoint
   manapun di v1
 - ~~Notification mechanism (email/in-app) untuk Admin/Kurator/
-  Organisasi across curation steps~~ → **resolved: extend
+  Organization across curation steps~~ → **resolved: extend
   `notifications.type` enum values (no new mechanism), dual channel
   konsisten dengan tipe lain** — lihat Fitur 6 di atas
   **[RESOLVED — NEW]**

@@ -17,8 +17,8 @@ frontend tech stack docs.
 | Entity | Description |
 |---|---|
 | **User** | Base account. Can hold multiple roles simultaneously. No profile picture in v1. |
-| **Organisasi** | A separate entity (not a role) — has its own name, legal documents, and verification status. Represents the party proposing/managing a campaign and its donation results. |
-| **OrganisasiRepresentative** | Many-to-many relation between User and Organisasi. Carries a `level`: `owner` (PIC) or `staff`. One organisasi can have many representatives; one user can represent many organisasi, **up to a maximum of 5 organisasi per user [RESOLVED — NEW, see `kencleng-phase1-detail.md` Fitur 1]**. |
+| **Organization** | A separate entity (not a role) — has its own name, legal documents, and verification status. Represents the party proposing/managing a campaign and its donation results. |
+| **OrganizationRepresentative** | Many-to-many relation between User and Organization. Carries a `level`: `owner` (PIC) or `staff`. One organization can have many representatives; one user can represent many organization, **up to a maximum of 5 organization per user [RESOLVED — NEW, see `kencleng-phase1-detail.md` Fitur 1]**. |
 | **Donation** | A single donation record. See fields below — supports both guest and registered donors. |
  
 ### Donation entity — key fields **[REVISED]**
@@ -38,15 +38,15 @@ frontend tech stack docs.
 | Role | Description | Can combine with | Cannot combine with |
 |---|---|---|---|
 | **Donatur** | Gives donations, receives donation reports (if registered) | Kurator, Representative (owner/staff) | — |
-| **Kurator** | Curates campaigns before launch; verifies fund-usage reports after disbursement | Donatur, Representative (of a **different** organisasi) | Representative of the **same** organisasi they curate (conflict of interest — must recuse) |
-| **Admin** | Platform-level administrative matters | — | Kurator, Representative of any organisasi |
+| **Kurator** | Curates campaigns before launch; verifies fund-usage reports after disbursement | Donatur, Representative (of a **different** organization) | Representative of the **same** organization they curate (conflict of interest — must recuse) |
+| **Admin** | Platform-level administrative matters | — | Kurator, Representative of any organization |
  
 ## Business Rules — Agreed
  
-1. **Kurator conflict of interest**: a kurator must recuse from curating a campaign, or verifying a fund-usage report, for any organisasi where they are also a representative.
-2. **Admin isolation**: a user with the Admin role cannot simultaneously be a Kurator or a Representative of any organisasi — prevents self-approval/bypass of curation or fund-report verification.
-3. **Organisasi must always have ≥1 Owner/PIC**: an owner cannot be removed/downgraded if it would leave the organisasi with zero owners.
-4. **Sensitive organisasi actions are Owner-only**: requesting fund disbursement, managing representatives (invite/remove), and submitting fund-usage reports are restricted to the `owner` level. `staff` can create/edit campaign drafts and view reports, but **cannot view organisasi legal documents** (Akta, SK Kemenkumham, NPWP, Izin PUB) — legal document access is Owner-only. **[RESOLVED — NEW]** Representative invite is direct-add (no accept/consent step) — full mechanism in `kencleng-phase1-detail.md` Fitur 1B.
+1. **Kurator conflict of interest**: a kurator must recuse from curating a campaign, or verifying a fund-usage report, for any organization where they are also a representative.
+2. **Admin isolation**: a user with the Admin role cannot simultaneously be a Kurator or a Representative of any organization — prevents self-approval/bypass of curation or fund-report verification.
+3. **Organization must always have ≥1 Owner/PIC**: an owner cannot be removed/downgraded if it would leave the organization with zero owners.
+4. **Sensitive organization actions are Owner-only**: requesting fund disbursement, managing representatives (invite/remove), and submitting fund-usage reports are restricted to the `owner` level. `staff` can create/edit campaign drafts and view reports, but **cannot view organization legal documents** (Akta, SK Kemenkumham, NPWP, Izin PUB) — legal document access is Owner-only. **[RESOLVED — NEW]** Representative invite is direct-add (no accept/consent step) — full mechanism in `kencleng-phase1-detail.md` Fitur 1B.
 5. **Guest donations are supported, with fully optional identity** **[REVISED]**:
    - A donation does not require a registered account.
    - `guest_name` and `guest_email` are **both optional** — a guest may
@@ -77,7 +77,7 @@ on the frontend (see `kencleng-frontend-tech-stack.md` for the shared
 masking component), with an explicit reveal toggle — masking applies
 **regardless of viewer role, including Admin**:
 - `guest_email`, `User.primary_email`
-- `NPWP` (Organisasi)
+- `NPWP` (Organization)
 - Any future banking/disbursement account details
 Revealing a masked field is expected to be recorded in the Audit Log
 (see `kencleng-phase0-detail.md`, Fitur 9) when performed by Admin or
@@ -89,7 +89,7 @@ These weren't blocking to record the actor/entity model above, and
 all 3 are now resolved (kept here for history — strikethrough per
 project convention):
  
-1. ~~Whether an organisasi's "beneficiary" can be a third party who
+1. ~~Whether an organization's "beneficiary" can be a third party who
    isn't itself a platform user/entity (e.g., a specific disaster
    victim), and if so, whether that needs its own `Beneficiary` entity
    or just a descriptive field on the campaign.~~ → **resolved: a
@@ -104,11 +104,11 @@ project convention):
    structure (each curation/verification table has its own
    independent `kurator_id`, no cross-table constraint forcing the
    same actor). **[RESOLVED]**
-3. ~~Verification/KYC process details for an Organisasi (what
+3. ~~Verification/KYC process details for an Organization (what
    documents, who reviews — admin vs kurator).~~ → **resolved**: Akta
    Notaris, SK Kemenkumham, NPWP, Izin PUB (optional) — reviewed by an
    Admin-assigned Kurator, who must recuse if they're also a
-   representative of the organisasi being reviewed. Full flow in
+   representative of the organization being reviewed. Full flow in
    `kencleng-phase1-detail.md` Fitur 1 (submission) & Fitur 2
    (curation). **[RESOLVED]**
 ## Not Yet Discussed

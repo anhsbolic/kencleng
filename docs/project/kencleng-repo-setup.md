@@ -1,5 +1,6 @@
 # Kencleng — Repo Structure & Setup
 
+> File: `docs/kencleng-repo-setup.md`
 > Status: **Agreed** — monorepo, no CI/CD (local docker-compose only
 > for local deployment/verification).
 > Repo: https://github.com/anhsbolic/kencleng
@@ -43,14 +44,15 @@ kencleng/
 │   │   ├── account/               # domain-first: everything for one domain lives together
 │   │   │   ├── invariants.md      # once per domain, stable
 │   │   │   ├── threat-model.md    # once per domain, revised on domain-level changes
-│   │   │   └── features/          # one file per endpoint/vertical-slice, grows over time
-│   │   │       ├── register-email-password.md
+│   │   │   ├── tasks.md           # once per domain — task list, tier, delivery KPI, parallel/serial grouping (§12 step 5-6)
+│   │   │   └── features/          # one file per endpoint/vertical-slice, grows over time — NN-<fitur>.md, NN = task # from tasks.md
+│   │   │       ├── 01-register-email-verification.md
 │   │   │       └── ...
 │   │   ├── notification/
 │   │   │   ├── invariants.md
 │   │   │   ├── threat-model.md
 │   │   │   └── features/
-│   │   ├── organisasi/
+│   │   ├── organization/
 │   │   ├── campaign/
 │   │   ├── donation/
 │   │   └── disbursement/          # same 3-item shape (invariants.md, threat-model.md, features/) for each
@@ -67,7 +69,7 @@ kencleng/
 │   │   └── server/
 │   │       └── main.go
 │   ├── internal/
-│   │   ├── domain/                # flat package per domain — account/, organisasi/, campaign/, donation/, disbursement/, notification/
+│   │   ├── domain/                # flat package per domain — account/, organization/, campaign/, donation/, disbursement/, notification/
 │   │   │   └── <domain>/
 │   │   │       ├── entity.go
 │   │   │       ├── repository.go

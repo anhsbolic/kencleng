@@ -33,11 +33,11 @@ Guiding principles for all decisions below:
 | Password Policy | **Length-only, min 8 characters, no complexity requirement** [RESOLVED — NEW] | Follows NIST 800-63B-style guidance: length contributes more to entropy than forced character-class rules, which tend to push users toward predictable patterns ("Password1!"). |
 | Breach-List Check | **`pwnedpasswords.com` (HaveIBeenPwned) API, k-anonymity model, fail-open on API failure** [RESOLVED — NEW] | Included as an explicit learning goal (external API integration), not just a default. Only the first 5 characters of the SHA-1 hash of the candidate password are sent — the plaintext password and full hash never leave the server. Checked at registration, password reset, and set-password (Google-only users). If the API is unreachable, the flow proceeds without the check (logged) rather than blocking — this is a defense-in-depth layer, not the primary defense, and availability of core auth flows shouldn't depend on a third-party API's uptime. See `kencleng-phase0-detail.md` Fitur 1. |
 | MFA | `pquerna/otp` (TOTP, RFC 6238) | Lightweight, standard-compliant, no framework overhead. Optional for all roles in v1. |
-| File Storage | MinIO (S3-compatible) | Used for organisasi legal documents, campaign media, and fund-usage-report attachments. Public bucket for campaign media, private bucket + signed URLs for sensitive documents. Max file size **5 MB** across all contexts (legal docs, campaign media, fund-usage attachments); signed URL expiry **5 minutes** [RESOLVED — NEW]. |
+| File Storage | MinIO (S3-compatible) | Used for organization legal documents, campaign media, and fund-usage-report attachments. Public bucket for campaign media, private bucket + signed URLs for sensitive documents. Max file size **5 MB** across all contexts (legal docs, campaign media, fund-usage attachments); signed URL expiry **5 minutes** [RESOLVED — NEW]. |
 | OAuth | `golang.org/x/oauth2` + Google's `idtoken` verification (`google.golang.org/api/idtoken` or manual JWKS verify) | "Login/Register dengan Google" is a v1-required feature. Official Go extended package, avoids pulling in a heavier third-party OAuth framework. Activates Fitur 4 (Account Linking) in `kencleng-phase0-detail.md`. `state` + `nonce` CSRF/replay protection detail: see Open Items #1 below. |
 | Config Management | `godotenv` | Simple `.env` loading, no need for heavier config libs (e.g. viper) at this scale |
 | Testing | `go test` stdlib (+ `net/http/httptest`) | `testify` and coverage tooling to be added only if/when assertion verbosity becomes a real pain point |
-| Architecture | Domain-driven monolith | Single deployable unit, internally organized by domain boundary rather than technical layer-first. **Domains resolved** [RESOLVED — Step 4]: `account`, `organisasi`, `campaign`, `donation`, `disbursement`, `notification`. Folder convention: flat package per domain (`internal/domain/<name>/{entity.go, repository.go, service.go}`), transport separated in `internal/transport/http/`, shared infra in `internal/platform/`. Full rationale in Open Items #3 below and `kencleng-roadmap-next-steps.md` Step 4. |
+| Architecture | Domain-driven monolith | Single deployable unit, internally organized by domain boundary rather than technical layer-first. **Domains resolved** [RESOLVED — Step 4]: `account`, `organization`, `campaign`, `donation`, `disbursement`, `notification`. Folder convention: flat package per domain (`internal/domain/<name>/{entity.go, repository.go, service.go}`), transport separated in `internal/transport/http/`, shared infra in `internal/platform/`. Full rationale in Open Items #3 below and `kencleng-roadmap-next-steps.md` Step 4. |
 | Error Handling | No panics for expected error paths — all errors explicitly returned | Correctness-critical for a financial flow; panics only for truly unrecoverable programmer errors |
 | Rate Limiting | `golang.org/x/time/rate` | Applied globally from the start; per-endpoint overrides (e.g. stricter limit on `/auth/*`, including OAuth callback) to be layered in later. Complemented by the persistent `login_attempts` lockout (**5 failed attempts / 15 minute window** [RESOLVED — NEW]) for brute-force protection that survives app restarts — see `kencleng-phase0-detail.md` Fitur 2C. |
 | Background Jobs / Scheduler | In-process scheduler (e.g. simple ticker-based goroutine) | Used for: campaign deadline check (Phase 2), scheduled publish (Phase 1), notification hard-delete (**weekly** [RESOLVED — NEW] — see phase0-detail.md Fitur 6). No external job queue needed yet — consistent with "start at lowest complexity." |
@@ -54,7 +54,7 @@ implementation (not generated from code).
 **Design philosophy** (agreed 2026-07-20, prior to the format decision
 above): domain/resource-driven REST as the default endpoint shape,
 with a justified composite-endpoint exception for `/campaign/[id]` —
-this page aggregates campaign + organisasi + progress data in one call
+this page aggregates campaign + organization + progress data in one call
 to avoid client-side N+1 fetches on what's effectively the platform's
 primary conversion surface.
  
@@ -162,13 +162,13 @@ before implementation:
    for app startup staying free of DB-write side effects and explicit
    control over when migrations run. **[RESOLVED — Step 4]**
 3. ~~Domain-driven monolith boundaries~~ → **resolved**: 6 domains —
-   `account`, `organisasi`, `campaign`, `donation`, `disbursement`,
+   `account`, `organization`, `campaign`, `donation`, `disbursement`,
    `notification`. See `kencleng-roadmap-next-steps.md` Step 4 for the
    full breakdown and rationale (notably: `auth` and `user` were
    considered as separate domains but merged into one `account` domain
    due to tight transactional coupling between register/login flows;
    curation/review-assignment tables live inside each reviewed domain
-   — `organisasi`, `campaign`, `disbursement` — rather than a separate
+   — `organization`, `campaign`, `disbursement` — rather than a separate
    shared `curation` domain, since the review process differs enough
    per context that a shared abstraction wasn't worth the cross-domain
    coupling; duplication of recusal/conflict-of-interest logic across

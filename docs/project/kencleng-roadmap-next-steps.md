@@ -73,7 +73,7 @@ session**, ending in full closure:
    cross-references. See "Full Open Items Closure" below.
 
 **2026-07-26 — OpenAPI spec authoring**, generated domain-by-domain
-following the 6-domain boundary from Step 4 (`account` → `organisasi` →
+following the 6-domain boundary from Step 4 (`account` → `organization` →
 `campaign` → `donation` → `disbursement` → `notification`, in dependency
 order). See "OpenAPI Spec Authoring" below.
 
@@ -157,7 +157,7 @@ beneficiary_description` text field rather than a dedicated entity —
 are now closed.
 
 ### Step 4 — Domain boundaries & migration execution strategy
-6 domains (`account`, `organisasi`, `campaign`, `donation`,
+6 domains (`account`, `organization`, `campaign`, `donation`,
 `disbursement`, `notification`), flat package-per-domain folder
 convention, `golang-migrate` CLI run manually. Full rationale in
 `kencleng-backend-tech-stack.md` Open Items #3.
@@ -223,7 +223,7 @@ session:
    DJP/Ditjen Pajak verification — Kurator still verifies legitimacy
    manually via document review. See `kencleng-phase1-detail.md`
    Fitur 1.
-7. **Org-per-user limit** → maximum 5 organisasi per user, app-level
+7. **Org-per-user limit** → maximum 5 organization per user, app-level
    check. See `kencleng-phase1-detail.md` Fitur 1 and
    `kencleng-actors-entities.md`.
 8. **Campaign registration fields** → `category` (required enum),
@@ -302,11 +302,11 @@ uniformly across all 65 endpoints:**
   of private-bucket files, where this trade-off doesn't arise.
 
 **Domain-by-domain generation order** (dependency order, matching Step
-4's boundary): `account` → `organisasi` → `campaign` → `donation` →
+4's boundary): `account` → `organization` → `campaign` → `donation` →
 `disbursement` → `notification`. Endpoint count per domain: account 20,
-organisasi 15, campaign 19 (includes the one deliberate composite
+organization 15, campaign 19 (includes the one deliberate composite
 endpoint, `GET /campaigns/{campaignId}`, aggregating campaign +
-organisasi + progress per the design philosophy in
+organization + progress per the design philosophy in
 `kencleng-backend-tech-stack.md`), donation 6, disbursement 15,
 notification 3.
 
@@ -355,12 +355,12 @@ separate development-phase tracker exists.
 
 **Domain-by-domain *coding* order**:
 ```
-account → notification → organisasi → campaign → donation → disbursement
+account → notification → organization → campaign → donation → disbursement
 ```
 
 This is **not the same order** as the "Domain-by-domain generation
 order" used for authoring `api/openapi.yaml` at Step 9 (`account` →
-`organisasi` → `campaign` → `donation` → `disbursement` →
+`organization` → `campaign` → `donation` → `disbursement` →
 `notification`, pure dependency order). That order was fine for
 writing an API spec, since nothing there executes. For actual
 development, the order was re-checked against the phase/persona
@@ -372,7 +372,7 @@ early since it's Tier 3 (fully agentic, minimal review).
 
 Two related process gaps identified in the same session, resolved by
 extending existing templates rather than new documents:
-- **Audit log write-sites** are scattered across `organisasi`,
+- **Audit log write-sites** are scattered across `organization`,
   `campaign`, and `disbursement` features (built long after `account`,
   which owns the audit log table) — the `spec/<domain>/features/<fitur>.md`
   template now has a mandatory "Audit log entry?" field.
@@ -402,15 +402,15 @@ than in a further documentation session. Listed here for traceability:
 2. **Google OAuth link/reauth reuse the same redirect/callback
    endpoints** as login/register (`account`), branched via an `intent`
    query param, rather than separate dedicated endpoints per intent.
-3. **Organisasi creation as a single `multipart/form-data` request**
-   (`organisasi`) — base fields + legal document files submitted
+3. **Organization creation as a single `multipart/form-data` request**
+   (`organization`) — base fields + legal document files submitted
    together in one call, rather than create-then-attach-separately.
-4. **Legal/identitas field-edit confirmation mechanism** (`organisasi`)
+4. **Legal/identitas field-edit confirmation mechanism** (`organization`)
    — a `confirm: true` flag in the request body/form, rejected with 409
    if a legal field changes without it, as the API-level counterpart to
    the FE confirmation dialog.
-5. **`GET /organisasi` scope defaults to "mine"** (`organisasi`) — the
-   organisasi the current user represents, not a public directory or
+5. **`GET /organization` scope defaults to "mine"** (`organization`) — the
+   organization the current user represents, not a public directory or
    admin-wide listing (those are served by separate endpoints).
 6. **Publish/schedule/reschedule/republish unified into one endpoint**
    (`campaign`) — `POST /campaigns/{id}/publish`, behavior branching on
@@ -419,7 +419,7 @@ than in a further documentation session. Listed here for traceability:
 7. **Free-text search (`q`) on the public campaign listing**
    (`campaign`) — not specified in any phase doc; proposed for the
    public browse page's search box.
-8. **`GET /organisasi/{id}/events`** (`campaign`) — an events-by-org
+8. **`GET /organization/{id}/events`** (`campaign`) — an events-by-org
    listing endpoint for the Owner/Staff dashboard, not explicitly
    specified.
 9. **`GET /account/donations`** (`donation`) — the registered user's
@@ -453,7 +453,7 @@ phase.
   same-origin reverse-proxy topology. An implementation/config
   artifact.
 - **First vertical slice (Registrasi & Login) → subsequent slices** —
-  actual feature code across auth, organisasi, campaign lifecycle,
+  actual feature code across auth, organization, campaign lifecycle,
   donation flow, and post-campaign reporting. Pure development work —
   fully unblocked by any outstanding spec question, including the
   now-authored `api/openapi.yaml`.

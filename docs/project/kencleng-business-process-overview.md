@@ -19,7 +19,7 @@ doc uses `Campaign` and `Event` as distinct entities throughout (see
 `kencleng-actors-entities.md`):
 - **Campaign** — the core fundraising unit. Owns `target_amount`,
   optional `max_amount`, `deadline`, curation status, and the
-  disbursement process. Always belongs to exactly one Organisasi.
+  disbursement process. Always belongs to exactly one Organization.
 - **Event** — a lightweight promotional entity (name, date/time,
   location, description). No curation, no financial data of its own.
   Many-to-many with Campaign (one campaign can be promoted at multiple
@@ -28,12 +28,12 @@ doc uses `Campaign` and `Event` as distinct entities throughout (see
  
 | # | Step | Actor |
 |---|---|---|
-| 1 | Organisasi registration | Organisasi (prospective Owner) |
-| 2 | Organisasi curation (KYC / legality verification) | Kurator |
-| 3 | Campaign registration — set `target_amount`, `max_amount` (optional), `deadline` | Owner (Organisasi) |
+| 1 | Organization registration | Organization (prospective Owner) |
+| 2 | Organization curation (KYC / legality verification) | Kurator |
+| 3 | Campaign registration — set `target_amount`, `max_amount` (optional), `deadline` | Owner (Organization) |
 | 4 | Campaign curation | Kurator |
 | 5 | Campaign publication | System (post-curation) |
-| 6 | *(Parallel, optional)* Event registration + link to the related Campaign | Organisasi / event organizer |
+| 6 | *(Parallel, optional)* Event registration + link to the related Campaign | Organization / event organizer |
  
 Note: step 6 has no curation gate — Event is intentionally lightweight
 and carries no financial data, so it doesn't need the same gatekeeping
@@ -52,11 +52,11 @@ as a Campaign.
  
 | # | Step | Actor | Notes |
 |---|---|---|---|
-| 1 | Progress report & final collected-donation results | System / Organisasi | Unlike phase 2's progress view, this is **actively distributed** to donors (e.g. notification) in addition to being publicly viewable as a summary page |
-| 2 | Fund disbursement request | Owner (Organisasi) | Sensitive action — Owner-only per business rules in the actors/entities doc |
-| 3 | Fund disbursement to the Organisasi | System | Fully simulated (no real payment rail/bank transfer) — see `kencleng-phase3-detail.md` Feature 3 **[RESOLVED]** |
-| 4 | Fund-usage report | Organisasi (Owner) | |
-| 5 | Fund-usage report verification | Kurator | Must recuse if also a representative of the organisasi (conflict of interest, per the actors/entities doc) |
+| 1 | Progress report & final collected-donation results | System / Organization | Unlike phase 2's progress view, this is **actively distributed** to donors (e.g. notification) in addition to being publicly viewable as a summary page |
+| 2 | Fund disbursement request | Owner (Organization) | Sensitive action — Owner-only per business rules in the actors/entities doc |
+| 3 | Fund disbursement to the Organization | System | Fully simulated (no real payment rail/bank transfer) — see `kencleng-phase3-detail.md` Feature 3 **[RESOLVED]** |
+| 4 | Fund-usage report | Organization (Owner) | |
+| 5 | Fund-usage report verification | Kurator | Must recuse if also a representative of the organization (conflict of interest, per the actors/entities doc) |
  
 ## Business Rules Carried Over (from actors/entities doc)
  
@@ -64,15 +64,15 @@ as a Campaign.
   is not reached by `deadline` — no refund mechanism in v1.
 - If `max_amount` is set and reached before `deadline`, the campaign
   closes early. If not set, overfunding is allowed until `deadline`.
-- Kurator must recuse from curating an Organisasi, curating a Campaign,
-  or verifying a fund-usage report for any organisasi where they are
+- Kurator must recuse from curating an Organization, curating a Campaign,
+  or verifying a fund-usage report for any organization where they are
   also a representative.
 ## Open Items — Needs Further Discussion (per-phase deep dive)
  
 All resolved — kept here for history, strikethrough per project
 convention:
  
-1. ~~**Phase 1**: Organisasi KYC document requirements; Campaign
+1. ~~**Phase 1**: Organization KYC document requirements; Campaign
    registration form/fields beyond target/max/deadline.~~ → **resolved**:
    KYC = Akta Notaris, SK Kemenkumham, NPWP (format-validated, unique),
    Izin PUB (optional), reviewed by an Admin-assigned, conflict-free

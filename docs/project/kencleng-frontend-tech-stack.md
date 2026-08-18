@@ -20,7 +20,7 @@
   primitives with no business awareness) and different from
   `components/features/` (which is domain-specific). `shared/` sits in
   between: components like `MaskedField` know about the *concept* of
-  PII across multiple domains (donation, organisasi, user) but aren't
+  PII across multiple domains (donation, organization, user) but aren't
   domain-specific themselves.
 ## Shared Component Notes **[NEW]**
  
@@ -44,13 +44,13 @@ viewer role, including Admin**.
   Not yet decided.
 ### `SecureUploadNote`
 Small reassurance note/popup used on every non-public file upload form
-(organisasi legal docs, fund-usage-report attachments) — communicates
+(organization legal docs, fund-usage-report attachments) — communicates
 that the file is stored securely and privately. Purely informational,
 no logic — just consistent copy/placement across the 2-3 forms that
 need it.
  
 ### `CurationDecisionPanel`
-Reused across the 3 curation contexts (organisasi curation, campaign
+Reused across the 3 curation contexts (organization curation, campaign
 curation, fund-usage-report verification) — approve/reject buttons +
 mandatory `decision_note` textarea on reject. Same interaction pattern,
 different underlying entity — good candidate for one component
@@ -65,7 +65,7 @@ benchmark sources).
 ### Dashboard shell
 Horizontal top-nav on desktop (no sidebar), top-bar + hamburger on
 mobile. Applies to every authenticated route. Worth revisiting only if
-the nav gets genuinely crowded once Organisasi Owner/Staff, Kurator,
+the nav gets genuinely crowded once Organization Owner/Staff, Kurator,
 and Admin personas are implemented — a concrete, demonstrated need,
 not a reason to add a sidebar preemptively.
  

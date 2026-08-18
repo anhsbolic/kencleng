@@ -1,5 +1,6 @@
 # Kencleng — Agentic Development Workflow
 
+> File: `docs/kencleng-agentic-workflow.md`
 > Status: **Initial draft reference** — this document is a process
 > framework, not a technical spec. Per-domain/feature details
 > (invariants, acceptance criteria, threat models) are created
@@ -70,7 +71,7 @@ grows as development progresses).
 |---|---|---|---|
 | Domain | `spec/<domain>/invariants.md` | Once per domain, when that domain is first worked on | Stable, rarely edited |
 | Domain | `spec/<domain>/threat-model.md` | Alongside the domain invariants | Stable, revised on domain-level changes |
-| Feature | `spec/<domain>/features/<fitur>.md` | Per vertical slice / endpoint | New for each feature |
+| Feature | `spec/<domain>/features/<NN>-<fitur>.md` | Per vertical slice / endpoint | New for each feature |
 | Feature | Acceptance criteria + threat breakdown | Part of the feature spec above | New for each feature |
 
 Layout is **domain-first** — `spec/<domain>/` groups all three
@@ -167,7 +168,7 @@ time.
 - STRIDE per component/endpoint
 - Existing mitigations vs. knowingly accepted residual risk
 
-### 5.3 Feature spec (`spec/<domain>/features/<fitur>.md`)
+### 5.3 Feature spec (`spec/<domain>/features/<NN>-<fitur>.md`)
 
 Minimum template per endpoint/feature:
 
@@ -344,13 +345,17 @@ Finalize, Delivery).
    `spec/README.md` template, `Makefile`/`verify.sh`)
 3. Write `spec/<domain>/invariants.md`
 4. Write `spec/<domain>/threat-model.md`
-5. Enumerate the task list (per endpoint/feature), assign a Tier
-   (§4) and delivery KPI/metrics to each
+5. Enumerate the task list, assign a Tier (§4) and delivery KPI/
+   metrics to each, write `spec/<domain>/tasks.md`
+   (`docs/spec/README.md` §4 template — delivery KPI/metrics is
+   drafted by the assisting agent, confirmed by Anhar, not a fixed
+   company-wide standard)
 6. Group tasks by whether they can run in parallel or must be
-   serial (see parallelization note below)
+   serial (see parallelization note below), recorded in the same
+   `tasks.md`
 
 **Loop, per task:**
-7. Analyze (Explore + Plan) → write `spec/<domain>/features/<fitur>.md`
+7. Analyze (Explore + Plan) → write `spec/<domain>/features/<NN>-<fitur>.md`
    (acceptance criteria, threat breakdown, tier, audit-log field —
    §5.3)
 8. Build (agent generates code + tests, per the tier's mode of work)
@@ -461,7 +466,7 @@ live backend.
 **Loop, per task (per page/component/flow, not necessarily 1:1 with
 backend endpoints):**
 1. Analyze (Explore + Plan) → same feature spec in
-   `spec/<domain>/features/<fitur>.md` already written for the backend track
+   `spec/<domain>/features/<NN>-<fitur>.md` already written for the backend track
    covers this — frontend doesn't get a separate spec doc, it
    implements against the same acceptance criteria plus
    `kencleng-ux-page-map.md` / wireframes / design guidelines

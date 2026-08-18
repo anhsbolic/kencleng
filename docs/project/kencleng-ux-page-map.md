@@ -37,7 +37,7 @@ Decided during Step 1.5 wireframing (Batch 2) once the first
 authenticated page (`/dashboard/security`) needed a layout.
  
 Worth revisiting only if the nav genuinely gets crowded once
-Organisasi Owner/Staff, Kurator, and Admin personas are implemented
+Organization Owner/Staff, Kurator, and Admin personas are implemented
 (they have noticeably more nav items than Donatur's 5) — that's a
 concrete, demonstrated need, not a reason to add a sidebar
 preemptively now.
@@ -95,15 +95,15 @@ All Guest pages, **plus**:
  
 ---
  
-## 3. Organisasi Owner
+## 3. Organization Owner
  
 All Donatur pages, **plus**:
  
 | Page | Actions |
 |---|---|
-| `/dashboard/organisasi/new` | Fill org data + upload legal docs (Akta, SK Kemenkumham, NPWP, optional Izin PUB) — shows `SecureUploadNote` |
-| `/dashboard/organisasi/[id]` | View curation status, edit while `pending_verification`, revise & resubmit if `rejected` — legal docs visible here (owner-only). **[NEW — RESOLVED]** Still editable after `verified`, but editing a *legal/identity* field (Name, NPWP, Akta, SK Kemenkumham, Izin PUB) sends status back to `pending_verification`; editing an *operational* field (Description, Contact) never changes status — see `kencleng-phase1-detail.md` Feature 1 |
-| `/dashboard/organisasi/[id]/representatives` | Invite representative (as `staff`) by email, remove representative, promote/demote owner↔staff, view list — system enforces ≥1 owner. **[RESOLVED — NEW]** Invite is **direct-add, no accept step**: owner enters the email of an existing, verified user → system creates the `OrganisasiRepresentative` row immediately (`level = staff`) and notifies the invitee. Rejected a consent/accept-invite flow as unjustified complexity for v1 — `staff` access is low-risk (no legal docs, no sensitive actions per Business Rule 4). Promote/demote and removal are owner-only and blocked if they'd leave the organisasi with 0 owners. Full detail: `kencleng-roadmap-next-steps.md`, "Critical Open Items Resolved" / representatives spec discussion. |
+| `/dashboard/organization/new` | Fill org data + upload legal docs (Akta, SK Kemenkumham, NPWP, optional Izin PUB) — shows `SecureUploadNote` |
+| `/dashboard/organization/[id]` | View curation status, edit while `pending_verification`, revise & resubmit if `rejected` — legal docs visible here (owner-only). **[NEW — RESOLVED]** Still editable after `verified`, but editing a *legal/identity* field (Name, NPWP, Akta, SK Kemenkumham, Izin PUB) sends status back to `pending_verification`; editing an *operational* field (Description, Contact) never changes status — see `kencleng-phase1-detail.md` Feature 1 |
+| `/dashboard/organization/[id]/representatives` | Invite representative (as `staff`) by email, remove representative, promote/demote owner↔staff, view list — system enforces ≥1 owner. **[RESOLVED — NEW]** Invite is **direct-add, no accept step**: owner enters the email of an existing, verified user → system creates the `OrganizationRepresentative` row immediately (`level = staff`) and notifies the invitee. Rejected a consent/accept-invite flow as unjustified complexity for v1 — `staff` access is low-risk (no legal docs, no sensitive actions per Business Rule 4). Promote/demote and removal are owner-only and blocked if they'd leave the organization with 0 owners. Full detail: `kencleng-roadmap-next-steps.md`, "Critical Open Items Resolved" / representatives spec discussion. |
 | `/dashboard/campaign/new` | Fill draft: title, description, target_amount, max_amount, deadline, upload media. **[NEW]** Also `beneficiary_description` (free-text, optional) — resolved as a simple field rather than a dedicated `Beneficiary` entity, see `kencleng-erd.md` |
 | `/dashboard/campaign/[id]/edit` | Edit draft (while `status = draft`) |
 | `/dashboard/campaign/[id]` | Submit to curation (owner-only action), view curation status, revise if `rejected` |
@@ -118,13 +118,13 @@ All Donatur pages, **plus**:
  
 ---
  
-## 4. Organisasi Staff
+## 4. Organization Staff
  
 Subset of Owner pages — **same routes, sensitive actions hidden/disabled**:
  
 | Page | Actions |
 |---|---|
-| `/dashboard/organisasi/[id]` | **No access to legal document section** (Owner-only, per Business Rule 4 in actors-entities doc) |
+| `/dashboard/organization/[id]` | **No access to legal document section** (Owner-only, per Business Rule 4 in actors-entities doc) |
 | `/dashboard/campaign/new`, `/dashboard/campaign/[id]/edit` | Create/edit draft — **"submit to curation" button hidden/disabled** |
 | `/dashboard/campaign/[id]/publish` | **No access** — publish/unpublish is owner-only |
 | `/dashboard/event/new` | Same as Owner — event creation is not owner-exclusive |
@@ -132,7 +132,7 @@ Subset of Owner pages — **same routes, sensitive actions hidden/disabled**:
 | `/dashboard/campaign/[id]/report` | View only — **cannot add/edit narrative** (owner-only per phase3-detail revision) |
 | `/dashboard/campaign/[id]/disbursement/*` | **No access** |
 | `/dashboard/campaign/[id]/fund-usage-report/*` | View only — submit remains owner-only |
-| `/dashboard/organisasi/[id]/representatives` | **No access** — managing representatives is owner-only |
+| `/dashboard/organization/[id]/representatives` | **No access** — managing representatives is owner-only |
  
 ---
  
@@ -140,8 +140,8 @@ Subset of Owner pages — **same routes, sensitive actions hidden/disabled**:
  
 | Page | Actions |
 |---|---|
-| `/dashboard/kurasi` | **Unified queue** — shows all assignment types (organisasi curation, campaign curation, fund-usage-report verification) tagged by type, in one list |
-| `/dashboard/kurasi/organisasi/[assignmentId]` | Review legal docs (via signed URL), approve/reject + `decision_note` on reject — uses `CurationDecisionPanel` |
+| `/dashboard/kurasi` | **Unified queue** — shows all assignment types (organization curation, campaign curation, fund-usage-report verification) tagged by type, in one list |
+| `/dashboard/kurasi/organization/[assignmentId]` | Review legal docs (via signed URL), approve/reject + `decision_note` on reject — uses `CurationDecisionPanel` |
 | `/dashboard/kurasi/campaign/[assignmentId]` | Review target/deadline/description/media, approve/reject + `decision_note` — uses `CurationDecisionPanel` |
 | `/dashboard/kurasi/fund-usage/[assignmentId]` | Review expense breakdown + attachments, approve/reject + `decision_note` — uses `CurationDecisionPanel` |
  
@@ -154,7 +154,7 @@ No pages in Phase 2 — Kurator has no direct action in the on-campaign flow (no
 | Page | Actions |
 |---|---|
 | `/dashboard/admin/users` | Search users, assign/revoke Admin or Kurator role (system blocks Admin+Kurator/Representative combination). **[RESOLVED — NEW]** Wireframed — see `kencleng-wireframes/admin-users-wireframe.html` |
-| `/dashboard/admin/kurasi-queue` | View pending organisasi/campaign/fund-usage-report items, assign to a specific Kurator (manual pick, conflict-of-interest check enforced). **[RESOLVED — NEW]** Wireframed — see `kencleng-wireframes/admin-kurasi-queue-wireframe.html` |
+| `/dashboard/admin/kurasi-queue` | View pending organization/campaign/fund-usage-report items, assign to a specific Kurator (manual pick, conflict-of-interest check enforced). **[RESOLVED — NEW]** Wireframed — see `kencleng-wireframes/admin-kurasi-queue-wireframe.html` |
 | `/dashboard/admin/campaign/[id]/force-close` | Force-close a `published` campaign anytime, mandatory `decision_note`. **[RESOLVED — NEW]** Wireframed — see `kencleng-wireframes/admin-force-close-wireframe.html` |
 | `/dashboard/admin/disbursement/[reqId]` | Approve/reject disbursement request |
  
@@ -173,7 +173,7 @@ stacking.
 | Element | Where used | Notes |
 |---|---|---|
 | `MaskedField` | Anywhere `guest_email`, `User.primary_email`, `NPWP`, or future banking details are displayed | Masked by default, explicit reveal toggle per field, **applies even to Admin**. Reveal by Admin/Kurator on another party's data logs to Audit Log. **Reveal persistence [RESOLVED — NEW]**: stays revealed until manual re-toggle or page refresh/navigation — implemented as plain local component state (`useState`), no timeout/auto-re-mask logic. Navigating away unmounts the component and resets it for free; no extra engineering needed. |
-| `SecureUploadNote` | Organisasi legal doc upload, fund-usage-report attachment upload | Reassurance note/popup, no logic |
+| `SecureUploadNote` | Organization legal doc upload, fund-usage-report attachment upload | Reassurance note/popup, no logic |
 | `CurationDecisionPanel` | All 3 Kurator decision pages | Approve/reject + mandatory `decision_note` on reject |
 | Notification badge / center | Persistent header element for any logged-in user | Unread count, batched mark-as-read |
  
@@ -182,7 +182,7 @@ stacking.
 ## Shared Patterns Identified
  
 1. **Curation Queue + Decision pattern** — same interaction shape
-   across organisasi curation, campaign curation, and fund-usage-report
+   across organization curation, campaign curation, and fund-usage-report
    verification (Admin assigns → Kurator reviews → approve/reject with
    note). Implemented once as `CurationDecisionPanel`, parameterized
    by curation type.
@@ -215,10 +215,10 @@ stacking.
    "Dashboard Shell" and "Benchmark Design Reference" sections above,
    and the Step 1.5 wireframe artifact (`kencleng-wireframes/`) for
    the full set. **[RESOLVED — NEW]**
-6. ~~`/dashboard/organisasi/[id]/representatives` — business rules not
+6. ~~`/dashboard/organization/[id]/representatives` — business rules not
    yet written~~ → **resolved: direct-add invite (no accept step),
    promote/demote and removal owner-only with the ≥1-owner guard** —
-   see the representatives page row under Organisasi Owner above
+   see the representatives page row under Organization Owner above
    **[RESOLVED — NEW]**
 7. ~~Set-password flow for Google-only users~~ → **resolved: via
    `/dashboard/security` "Atur Password"** — see the `/dashboard/security`
