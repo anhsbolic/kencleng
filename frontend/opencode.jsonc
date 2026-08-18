@@ -1,0 +1,29 @@
+// File: frontend/opencode.jsonc
+//
+// Mirrors backend/opencode.jsonc — see the comments there for the full
+// rationale. Same layout assumption:
+//   kencleng-workspace/
+//   ├── kencleng/              (this repo)
+//   └── harscode-workspace/    (sibling repo, not part of kencleng)
+//
+// Run from frontend/, not the repo root, so backend/ stays out of a
+// frontend session's reach (and vice versa) — "docs" and "api" are
+// referenced individually to restore access to the shared contract
+// material that would otherwise sit above cwd.
+{
+  "$schema": "https://opencode.ai/config.json",
+  "references": {
+    "workspace": {
+      "path": "../../harscode-workspace",
+      "description": "Generic, portable AI agent workflow guidance (code-review, testing, and pull-request phases; best-practices). Secondary reference only — this project's own AGENTS.md and docs/spec/ take precedence wherever the two disagree. Read workflow/README.md as the entry point. Note: best-practices/ here is currently Go/PostgreSQL/REST-API-focused — check workspace/best-practices/index.md, there may be little or nothing frontend-specific yet."
+    },
+    "docs": {
+      "path": "../docs",
+      "description": "Kencleng project docs: docs/spec/domains/<domain>/ (invariants, threat-model, tasks.md, feature specs — the contract for what to build) and docs/kencleng-agentic-workflow.md, docs/project/*.md (process, tech stack, UX page map, design guidelines). Read before starting any task."
+    },
+    "api": {
+      "path": "../api",
+      "description": "OpenAPI 3.0.3 spec (openapi.yaml) — source of truth for request/response contracts, used by openapi-typescript for TS types. Check this before hand-writing any fetch call, TanStack Query hook, or form schema."
+    }
+  }
+}
