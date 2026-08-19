@@ -1795,11 +1795,13 @@ paths:
                 status: 410
                 detail: "Link verifikasi sudah kedaluwarsa. Silakan minta kirim ulang."
         "404":
-          description: Token not found / already used.
+          description: Token not found / already used (also covers a token revoked by a later resend — `revoked_at IS NOT NULL`).
           content:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
 
   /auth/verify-email/resend:
     post:

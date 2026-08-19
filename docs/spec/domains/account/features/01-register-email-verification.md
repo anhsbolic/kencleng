@@ -1,7 +1,7 @@
 # Feature Spec — Register & Email Verification
 
 > File: `docs/spec/account/features/01-register-email-verification.md`
-> Status: draft — all open items resolved, ready for human review
+> Status: Approved
 > Risk tier: 1
 > Domain: account
 
@@ -65,10 +65,16 @@
   state change.
 - Given a token that doesn't exist or was already used, When
   submitted, Then `404`, no state change.
+- Given a revoked token (superseded by a later `resend`, so
+  `revoked_at IS NOT NULL` while still `used_at IS NULL` and
+  unexpired), When submitted, Then `404`, no state change — this is
+  exactly the case the resend flow's `revoked_at` write exists to
+  enforce, and why the redemption guard below includes the
+  `revoked_at IS NULL` clause from INV-account-08.
 - Given the same valid token submitted twice concurrently, Then
   exactly one request succeeds (guarded `UPDATE ... WHERE used_at IS
-  NULL AND expires_at > now()`, per INV-account-08); the other gets
-  `404`.
+  NULL AND revoked_at IS NULL AND expires_at > now()`, per
+  INV-account-08); the other gets `404`.
 
 ### `POST /auth/verify-email/resend`
 
@@ -93,6 +99,7 @@
 | Password fails length policy or found in breach-list | `422` Validation Error |
 | Verification token expired | `410` Token Expired |
 | Verification token not found / already used | `404` |
+| Verification token revoked (superseded by resend) | `404` |
 | Too many requests (any of the 3 endpoints) | `429` |
 | Register / resend, any enumeration-sensitive branch | `202` generic (never a distinguishing status/message — see Assumption A) |
 
@@ -102,7 +109,11 @@
   per-provider, not global; concurrent duplicate `email_password`
   registration attempts for the same email must not both succeed.
 - `docs/spec/account/invariants.md#inv-account-08` — `auth_tokens`
-  single-use and time-bound; applies to both the verification token
+  single-use and time-bound; the redemption guard is the full
+  predicate `used_at IS NULL AND revoked_at IS NULL AND expires_at >
+  now()` (the `revoked_at IS NULL` clause is load-bearing for the
+  resend-supersedes-old-token case — without it, a revoked-but-unused
+  token would still redeem). Applies to both the verification token
   and the resend-issued replacement.
 
 ## Threat breakdown
@@ -111,9 +122,10 @@ Derived from `docs/spec/account/threat-model.md`, component 1:
 
 | Threat | Mitigation at this endpoint's level | Test that proves it |
 |---|---|---|
+| Email enumeration via distinguishable register/resend responses | Uniform `202` generic response + equivalent-cost internal branching (Assumption B) | `TestRegister_GenericResponse_AllBranches`, `TestRegister_GenericResponse_Timing` |
 | Concurrent duplicate registration for the same email | DB unique index `(provider_type, identifier_hash)`, INV-account-01 | `TestRegister_ConcurrentDuplicateEmail_Race` |
-| Email enumeration via distinguishable register/resend responses | Uniform `202` generic response + equivalent-cost internal branching (Assumption B) | `TestRegister_GenericResponse_AllBranches`, plus a response-timing assertion |
-| Verification token replay/double-submit | Guarded `UPDATE ... WHERE used_at IS NULL AND expires_at > now()` | `TestVerifyEmail_TokenSingleUse_Concurrent` |
+| Verification token replay/double-submit | Guarded `UPDATE ... WHERE used_at IS NULL AND revoked_at IS NULL AND expires_at > now()` | `TestVerifyEmail_TokenSingleUse_Concurrent` |
+| Revoked (superseded-by-resend) verification token redeemed anyway | Same guard's `revoked_at IS NULL` clause (INV-account-08 full predicate) | `TestVerifyEmail_RevokedToken_Rejected` |
 | Verification-email flood via resend spam | Stricter `/auth/*` rate limit | `TestResend_RateLimited` |
 | Weak/breached password accepted | Length policy + HaveIBeenPwned k-anonymity check, fail-open on API outage | `TestRegister_PasswordPolicy`, `TestRegister_BreachCheck_FailOpen` |
 | Enumeration via the Google-only-conflict branch specifically | Same generic `202` response as every other branch, notice sent by email instead of by distinguishing status (Assumption C) | `TestRegister_GoogleOnlyConflict_GenericResponse` |
@@ -126,32 +138,48 @@ resolution requires a correctness test that response shape *and*
 timing don't leak internal state. No Tier 0 sub-area here (password
 hashing via bcrypt/argon2 is standard library-backed, not in the same
 class as JWT/TOTP core logic called out in `kencleng-agentic-workflow.md`
-§13.2).
+§13.2). Intended package placement for the hashing call: the
+`internal/domain/account/` service (or a non-fenced
+`internal/platform/` subpackage such as `platform/secrets/`), **not**
+`internal/platform/crypto/` or `internal/platform/auth/` — both of
+which are Tier 0 file-path-fenced per `backend/AGENTS.md` §3, so any
+agent landing hashing in those paths would invalidate this "no Tier 0
+sub-area" claim.
 
 ## Assumptions / open questions
 
-**A. `POST /auth/register` response shape changes from what's
-currently in `openapi.yaml`.** Today's spec has `201` +
+**A. `POST /auth/register` response shape was changed from the
+original `openapi.yaml` contract.** The original spec had `201` +
 `RegisterResponse` (`user_id` + message) on success and a distinct
 `409` on duplicate email. Per the anti-enumeration decision resolved
-in `docs/spec/account/threat-model.md` (2026-08-05), this becomes a
+in `docs/spec/account/threat-model.md` (2026-08-05), this became a
 uniform `202` + `GenericAcceptedMessage`, with **no `user_id` in the
 response** (there's no new ID to return in the duplicate-email case,
 and returning one only sometimes would itself be a signal). Frontend
 must get the user's identity later, via the login/verify flow, not
-from this response. **Requires an `openapi.yaml` edit** — flagged
-here and in `docs/spec/account/threat-model.md`, not yet applied.
+from this response. **The `openapi.yaml` edit is applied** (2026-08-05):
+`api/openapi.yaml:270-273` removes `RegisterResponse` and
+`api/openapi.yaml:1748-1758` declares `/auth/register` returning
+`202` + `GenericAcceptedMessage` with no `user_id`, and drops the
+old `409`-on-duplicate response. The only remaining unresolved
+concern from this assumption — constant-time handling so the response
+shape *and timing* don't leak which branch ran — is owned by
+Assumption B below and deferred to the Build stage.
 
 **B. Constant-time handling is a Build-stage implementation detail,
-not fully specified here.** The three internal branches (new user /
-resend nudge / password-reset nudge) must take equivalent wall-clock
-time and do DB-write-shaped work, so a timing side-channel doesn't
-leak which branch ran. Exact mechanism (e.g. always performing one
-write-shaped operation, or a dummy password-hash computation on the
-no-op branches) is left to the implementing agent, who must record
-the chosen approach in a risk note per `kencleng-agentic-workflow.md`
-§9 — this is exactly the kind of thing that must be reported, not
-silently assumed correct.
+not fully specified here.** The four internal branches (new user /
+resend-verification nudge / password-reset nudge / Google-only-conflict
+nudge — the last added when Assumption C closed the Google-only case)
+must take equivalent wall-clock time and do DB-write-shaped work, so a
+timing side-channel doesn't leak which branch ran. Exact mechanism
+(e.g. always performing one write-shaped operation, or a dummy
+password-hash computation on the no-op branches) is left to the
+implementing agent, who must record the chosen approach in a risk note
+per `kencleng-agentic-workflow.md` §9 — this is exactly the kind of
+thing that must be reported, not silently assumed correct. The
+Google-only branch was added to this list 2026-08-19, after Assumption
+C introduced it as a fourth anti-enumeration branch — the spec's own
+warning below about new branches applies retroactively here.
 
 **C. Resolved — 2026-08-05.** `kencleng-phase0-detail.md` Fitur 1
 and Fitur 1B never documented what happens when someone registers

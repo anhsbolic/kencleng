@@ -20,3 +20,5 @@ vendor/
 .vscode/
 .DS_Store
  
+# local agents related docs
+.local-agents/
