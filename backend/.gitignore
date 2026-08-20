@@ -21,4 +21,6 @@ vendor/
 .DS_Store
  
 # local agents related docs
-.local-agents/
+# should be ignore for real development
+# i am committing this for education purpose only [@anhsolic]
+# .local-agents/
