@@ -1,0 +1,221 @@
+openapi: 3.0.3
+
+info:
+  title: Kencleng API
+  version: 0.1.0-draft
+  description: |
+    API contract for Kencleng, a sandbox donation-platform learning project.
+
+    ## Conventions (apply to every domain)
+
+    - **Success responses are unwrapped** — the resource is returned directly
+      in the response body. The only exception is **list endpoints**, which
+      wrap results as `{ data: [...], pagination: {...} }`.
+    - **Errors follow RFC 9457 (Problem Details for HTTP APIs)**
+      (`application/problem+json`). Validation errors extend the base
+      Problem shape with an `errors[]` field for per-field messages.
+    - **Pagination is cursor-based**, using the UUIDv7 primary key of the
+      resource directly as the cursor (no separate composite cursor needed,
+      since UUIDv7 is already time-orderable).
+    - **Auth**: Bearer JWT (ES256) access token in the `Authorization`
+      header for protected endpoints. The refresh token is never sent as a
+      bearer token — it travels only as an `HttpOnly` + `Secure` +
+      `SameSite=Strict` cookie, set/read implicitly by
+      `/auth/login`, `/auth/refresh`, and `/auth/logout`. Because it's
+      cookie-based, it is documented in each affected endpoint's
+      `description` rather than as a formal `securityScheme`.
+
+    ## Status of this document
+
+    All 6 domains complete: **account, organization, campaign, donation,
+    disbursement, notification**. This covers the full v1 business-rule
+    surface documented in `kencleng-phase0-detail.md` through
+    `kencleng-phase3-detail.md`. Endpoint shapes not explicitly specified
+    in those docs (which intentionally exclude endpoint-level detail) were
+    inferred while authoring this spec and are marked `# INFERRED` in
+    comments throughout — these are proposals, not settled decisions,
+    until reviewed and confirmed.
+
+servers:
+  - url: /api
+    description: Same-origin, reverse-proxied (see kencleng-backend-tech-stack.md deployment topology)
+
+tags:
+  - name: account
+    description: >
+      Registration, login/session management, MFA, multi-provider identity
+      linking, and role assignment. Corresponds to `internal/domain/account/`.
+  - name: organization
+    description: >
+      Organization registration, legal-document attachments, representative
+      management, and the Kurasi Organization (verification) workflow.
+      Corresponds to `internal/domain/organizations/`. Does **not** cover
+      campaigns, curation of campaigns, or events — those belong to the
+      `campaign` domain (next in the generation sequence).
+  - name: campaign
+    description: >
+      Campaign registration, media attachments, Kurasi Campaign, publish/
+      schedule/unpublish/republish, closure (auto + force-close), and
+      lightweight promotional Events. Corresponds to
+      `internal/domain/campaign/`. Includes the one deliberate composite
+      endpoint (`GET /campaigns/{campaignId}`) that aggregates campaign +
+      organization + progress data, per the design philosophy agreed in
+      `kencleng-backend-tech-stack.md`.
+  - name: donation
+    description: >
+      Donation submission (guest + registered), simulated payment
+      settlement, public progress/donor-list display, and the guest
+      donation claim flow. Corresponds to `internal/domain/donation/`.
+      Automatic campaign closure triggers (`max_amount`/`deadline`) are
+      internal side effects of this domain's transaction path, not
+      separate endpoints — see `campaign` domain for the Admin-facing
+      `force-close` endpoint.
+  - name: disbursement
+    description: >
+      Post-campaign reporting narrative, disbursement requests + Admin
+      approval, simulated fund transfer, fund-usage report submission,
+      and its Kurator verification workflow. Corresponds to
+      `internal/domain/disbursement/`.
+  - name: notification
+    description: >
+      Notification center — reading and batched mark-as-read. Corresponds
+      to `internal/domain/notification/`. Notifications themselves are
+      created internally by every other domain (organization, campaign,
+      donation, disbursement) as a side effect of their own actions —
+      there is no cross-domain "create notification" endpoint; this tag
+      only covers the recipient-facing read path.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /auth/register:
+    $ref: './account.yaml#/paths/~1auth~1register'
+  /auth/verify-email:
+    $ref: './account.yaml#/paths/~1auth~1verify-email'
+  /auth/verify-email/resend:
+    $ref: './account.yaml#/paths/~1auth~1verify-email~1resend'
+  /auth/login:
+    $ref: './account.yaml#/paths/~1auth~1login'
+  /auth/login/mfa:
+    $ref: './account.yaml#/paths/~1auth~1login~1mfa'
+  /auth/refresh:
+    $ref: './account.yaml#/paths/~1auth~1refresh'
+  /auth/logout:
+    $ref: './account.yaml#/paths/~1auth~1logout'
+  /auth/forgot-password:
+    $ref: './account.yaml#/paths/~1auth~1forgot-password'
+  /auth/reset-password:
+    $ref: './account.yaml#/paths/~1auth~1reset-password'
+  /auth/google/redirect:
+    $ref: './account.yaml#/paths/~1auth~1google~1redirect'
+  /auth/google/callback:
+    $ref: './account.yaml#/paths/~1auth~1google~1callback'
+  /account/security/google/unlink:
+    $ref: './account.yaml#/paths/~1account~1security~1google~1unlink'
+  /account/me:
+    $ref: './account.yaml#/paths/~1account~1me'
+  /account/security/set-password:
+    $ref: './account.yaml#/paths/~1account~1security~1set-password'
+  /account/security/mfa/enroll:
+    $ref: './account.yaml#/paths/~1account~1security~1mfa~1enroll'
+  /account/security/mfa/enroll/confirm:
+    $ref: './account.yaml#/paths/~1account~1security~1mfa~1enroll~1confirm'
+  /account/security/mfa/disable:
+    $ref: './account.yaml#/paths/~1account~1security~1mfa~1disable'
+  /admin/users:
+    $ref: './account.yaml#/paths/~1admin~1users'
+  /admin/users/{userId}/roles:
+    $ref: './account.yaml#/paths/~1admin~1users~1{userId}~1roles'
+  /organizations:
+    $ref: './organization.yaml#/paths/~1organizations'
+  /organizations/{organizationId}:
+    $ref: './organization.yaml#/paths/~1organizations~1{organizationId}'
+  /organizations/{organizationId}/attachments:
+    $ref: './organization.yaml#/paths/~1organizations~1{organizationId}~1attachments'
+  /organizations/{organizationId}/attachments/{type}:
+    $ref: './organization.yaml#/paths/~1organizations~1{organizationId}~1attachments~1{type}'
+  /organizations/{organizationId}/representatives:
+    $ref: './organization.yaml#/paths/~1organizations~1{organizationId}~1representatives'
+  /organizations/{organizationId}/representatives/{representativeId}:
+    $ref: './organization.yaml#/paths/~1organizations~1{organizationId}~1representatives~1{representativeId}'
+  /organizations/curation-queue:
+    $ref: './organization.yaml#/paths/~1organizations~1curation-queue'
+  /organizations/{organizationId}/curation/assign:
+    $ref: './organization.yaml#/paths/~1organizations~1{organizationId}~1curation~1assign'
+  /organizations/curation-assignments/mine:
+    $ref: './organization.yaml#/paths/~1organizations~1curation-assignments~1mine'
+  /organizations/{organizationId}/curation/decision:
+    $ref: './organization.yaml#/paths/~1organizations~1{organizationId}~1curation~1decision'
+  /campaigns:
+    $ref: './campaign.yaml#/paths/~1campaigns'
+  /organizations/{organizationId}/campaigns:
+    $ref: './campaign.yaml#/paths/~1organizations~1{organizationId}~1campaigns'
+  /campaigns/{campaignId}:
+    $ref: './campaign.yaml#/paths/~1campaigns~1{campaignId}'
+  /campaigns/{campaignId}/submit:
+    $ref: './campaign.yaml#/paths/~1campaigns~1{campaignId}~1submit'
+  /campaigns/{campaignId}/attachments:
+    $ref: './campaign.yaml#/paths/~1campaigns~1{campaignId}~1attachments'
+  /campaigns/curation-queue:
+    $ref: './campaign.yaml#/paths/~1campaigns~1curation-queue'
+  /campaigns/{campaignId}/curation/assign:
+    $ref: './campaign.yaml#/paths/~1campaigns~1{campaignId}~1curation~1assign'
+  /campaigns/curation-assignments/mine:
+    $ref: './campaign.yaml#/paths/~1campaigns~1curation-assignments~1mine'
+  /campaigns/{campaignId}/curation/decision:
+    $ref: './campaign.yaml#/paths/~1campaigns~1{campaignId}~1curation~1decision'
+  /campaigns/{campaignId}/publish:
+    $ref: './campaign.yaml#/paths/~1campaigns~1{campaignId}~1publish'
+  /campaigns/{campaignId}/unpublish:
+    $ref: './campaign.yaml#/paths/~1campaigns~1{campaignId}~1unpublish'
+  /campaigns/{campaignId}/force-close:
+    $ref: './campaign.yaml#/paths/~1campaigns~1{campaignId}~1force-close'
+  /events:
+    $ref: './campaign.yaml#/paths/~1events'
+  /events/{eventId}:
+    $ref: './campaign.yaml#/paths/~1events~1{eventId}'
+  /organizations/{organizationId}/events:
+    $ref: './campaign.yaml#/paths/~1organizations~1{organizationId}~1events'
+  /campaigns/{campaignId}/donations:
+    $ref: './donation.yaml#/paths/~1campaigns~1{campaignId}~1donations'
+  /donations/{donationId}/status:
+    $ref: './donation.yaml#/paths/~1donations~1{donationId}~1status'
+  /account/donations:
+    $ref: './donation.yaml#/paths/~1account~1donations'
+  /account/donations/claimable:
+    $ref: './donation.yaml#/paths/~1account~1donations~1claimable'
+  /account/donations/{donationId}/claim:
+    $ref: './donation.yaml#/paths/~1account~1donations~1{donationId}~1claim'
+  /campaigns/{campaignId}/report:
+    $ref: './disbursement.yaml#/paths/~1campaigns~1{campaignId}~1report'
+  /campaigns/{campaignId}/report-narrative:
+    $ref: './disbursement.yaml#/paths/~1campaigns~1{campaignId}~1report-narrative'
+  /campaigns/{campaignId}/disbursement-requests:
+    $ref: './disbursement.yaml#/paths/~1campaigns~1{campaignId}~1disbursement-requests'
+  /disbursement-requests:
+    $ref: './disbursement.yaml#/paths/~1disbursement-requests'
+  /disbursement-requests/{disbursementRequestId}:
+    $ref: './disbursement.yaml#/paths/~1disbursement-requests~1{disbursementRequestId}'
+  /disbursement-requests/{disbursementRequestId}/decision:
+    $ref: './disbursement.yaml#/paths/~1disbursement-requests~1{disbursementRequestId}~1decision'
+  /disbursement-requests/{disbursementRequestId}/fund-usage-reports:
+    $ref: './disbursement.yaml#/paths/~1disbursement-requests~1{disbursementRequestId}~1fund-usage-reports'
+  /fund-usage-reports/{reportId}:
+    $ref: './disbursement.yaml#/paths/~1fund-usage-reports~1{reportId}'
+  /fund-usage-reports/{reportId}/items/{itemId}/attachments:
+    $ref: './disbursement.yaml#/paths/~1fund-usage-reports~1{reportId}~1items~1{itemId}~1attachments'
+  /fund-usage-reports/curation-queue:
+    $ref: './disbursement.yaml#/paths/~1fund-usage-reports~1curation-queue'
+  /fund-usage-reports/{reportId}/curation/assign:
+    $ref: './disbursement.yaml#/paths/~1fund-usage-reports~1{reportId}~1curation~1assign'
+  /fund-usage-reports/curation-assignments/mine:
+    $ref: './disbursement.yaml#/paths/~1fund-usage-reports~1curation-assignments~1mine'
+  /fund-usage-reports/{reportId}/curation/decision:
+    $ref: './disbursement.yaml#/paths/~1fund-usage-reports~1{reportId}~1curation~1decision'
+  /notifications:
+    $ref: './notification.yaml#/paths/~1notifications'
+  /notifications/unread-count:
+    $ref: './notification.yaml#/paths/~1notifications~1unread-count'
+  /notifications/mark-read:
+    $ref: './notification.yaml#/paths/~1notifications~1mark-read'

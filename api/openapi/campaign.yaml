@@ -1,0 +1,921 @@
+paths:
+  # ===========================================================================
+  # Campaign domain (Fitur 3-6 of kencleng-phase1-detail.md,
+  # Fitur "Penutupan Campaign" of kencleng-phase2-detail.md)
+  # ===========================================================================
+
+  /campaigns:
+    get:
+      tags: [campaign]
+      summary: Public campaign listing
+      description: Only `status = published` campaigns are returned. Backs the public `/campaign` browse page.
+      security: []
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/CampaignCategory"
+        - name: q
+          in: query
+          required: false
+          description: "# INFERRED — free-text search against `title`. Not specified in the phase doc; proposed for the public browse page's search box."
+          schema:
+            type: string
+        - $ref: "./common.yaml#/components/parameters/CursorParam"
+        - $ref: "./common.yaml#/components/parameters/LimitParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignListResponse"
+
+  /organizations/{organizationId}/campaigns:
+    parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [campaign]
+      summary: List all campaigns belonging to an organization (any status)
+      description: Owner/Staff dashboard listing — includes draft, pending, rejected, etc., unlike the public `/campaigns` listing.
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/CampaignStatus"
+        - $ref: "./common.yaml#/components/parameters/CursorParam"
+        - $ref: "./common.yaml#/components/parameters/LimitParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignListResponse"
+        "403":
+          description: Current user is not a representative of this organization.
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+    post:
+      tags: [campaign]
+      summary: Create a new campaign draft
+      description: >
+        Requires the organization to be `verified` and `has_overdue_report =
+        false`. Any representative (owner or staff) may create a draft.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CampaignCreateRequest"
+      responses:
+        "201":
+          description: Created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Campaign"
+        "422":
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "403":
+          description: Not a representative of this organization.
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: Organization not `verified`, or `has_overdue_report = true`.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+              examples:
+                not_verified:
+                  value:
+                    type: "https://kencleng.dev/errors/organization-not-verified"
+                    title: "Organization Not Verified"
+                    status: 409
+                    detail: "Organisasi harus berstatus verified untuk membuat campaign."
+                overdue_report:
+                  value:
+                    type: "https://kencleng.dev/errors/overdue-report"
+                    title: "Overdue Fund Usage Report"
+                    status: 409
+                    detail: "Organisasi ini punya laporan penggunaan dana yang telat. Submit laporan tsb dulu sebelum membuat campaign baru."
+
+  /campaigns/{campaignId}:
+    parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [campaign]
+      summary: Campaign detail (composite — campaign + organization + progress)
+      description: >
+        Public for `status = published` campaigns. Non-published campaigns
+        are only visible to the organization's representatives, the assigned
+        Kurator, or Admin.
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignDetail"
+        "404":
+          $ref: "./common.yaml#/components/responses/NotFound"
+        "403":
+          description: Campaign is not published and requester lacks visibility.
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+    patch:
+      tags: [campaign]
+      summary: Update a campaign draft
+      description: Only permitted while `status = draft`. Owner or Staff.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CampaignUpdateRequest"
+      responses:
+        "200":
+          description: Updated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Campaign"
+        "422":
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: Campaign is not `draft`.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+    delete:
+      tags: [campaign]
+      summary: Delete a campaign draft
+      description: Only permitted while `status = draft`.
+      responses:
+        "204":
+          description: Deleted.
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: Campaign is not `draft`.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  /campaigns/{campaignId}/submit:
+    parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags: [campaign]
+      summary: Submit a draft campaign for curation
+      description: Owner-only. Locks the campaign from further edits until a curation decision is made.
+      responses:
+        "200":
+          description: "`status → pending_curation`."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Campaign"
+        "403":
+          description: Only `owner`-level representatives may submit for curation.
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: Campaign is not `draft`.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  /campaigns/{campaignId}/attachments:
+    parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [campaign]
+      summary: List campaign media
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CampaignAttachment"
+
+    post:
+      tags: [campaign]
+      summary: Upload campaign media
+      description: Public bucket — JPG/PNG only, max 5 MB. Owner or Staff.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UploadCampaignMediaRequest"
+      responses:
+        "201":
+          description: Uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignAttachment"
+        "422":
+          description: Invalid file type or exceeds 5 MB max.
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+  /campaigns/curation-queue:
+    get:
+      tags: [campaign]
+      summary: List campaigns awaiting curator assignment (Admin only)
+      description: Campaigns with `status = pending_curation` and no active (`decision = pending`) assignment yet.
+      parameters:
+        - $ref: "./common.yaml#/components/parameters/CursorParam"
+        - $ref: "./common.yaml#/components/parameters/LimitParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignListResponse"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+  /campaigns/{campaignId}/curation/assign:
+    parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags: [campaign]
+      summary: Assign a Kurator to review this campaign (Admin only)
+      description: Fails if the chosen kurator is a representative of the campaign's organization (conflict of interest).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "./organization.yaml#/components/schemas/AssignCuratorRequest"
+      responses:
+        "201":
+          description: Assigned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignCurationAssignment"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: Conflict of interest, or an active assignment already exists.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  /campaigns/curation-assignments/mine:
+    get:
+      tags: [campaign]
+      summary: List the current Kurator's assigned campaign curation items
+      parameters:
+        - name: decision
+          in: query
+          required: false
+          schema:
+            $ref: "./organization.yaml#/components/schemas/CurationDecision"
+        - $ref: "./common.yaml#/components/parameters/CursorParam"
+        - $ref: "./common.yaml#/components/parameters/LimitParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignCurationAssignmentListResponse"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+  /campaigns/{campaignId}/curation/decision:
+    parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags: [campaign]
+      summary: Submit a curation decision (approve/reject) — assigned Kurator only
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "./organization.yaml#/components/schemas/CurationDecisionRequest"
+      responses:
+        "200":
+          description: "Decision recorded. `status → approved` or `rejected` (a subsequent Owner resubmit sends `rejected → draft`)."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Campaign"
+        "422":
+          description: "`decision_note` missing while `decision = rejected`."
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: No active (`pending`) assignment exists for this campaign.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  /campaigns/{campaignId}/publish:
+    parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags: [campaign]
+      summary: Publish, schedule, reschedule, or republish a campaign
+      description: >
+        Owner-only. Valid from `status = approved` (first publish) or
+        `status = unpublished` (republish). While `status = scheduled`,
+        calling this again updates `publish_at` (reschedule).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PublishRequest"
+      responses:
+        "200":
+          description: "`status → published` or `scheduled`."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Campaign"
+        "422":
+          description: "`publish_at` is in the past, or later than the campaign's `deadline`."
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: Campaign status doesn't allow publish/schedule/reschedule from its current state.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  /campaigns/{campaignId}/unpublish:
+    parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags: [campaign]
+      summary: Unpublish a live campaign (manual, Owner-only)
+      description: Requires `decision_note`. Sets `unpublish_reason = owner_manual`, logged to Audit Log.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnpublishRequest"
+      responses:
+        "200":
+          description: "`status → unpublished`."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Campaign"
+        "422":
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: Campaign is not `published`.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  /campaigns/{campaignId}/force-close:
+    parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags: [campaign]
+      summary: Force-close a published campaign (Admin only)
+      description: >
+        Requires `decision_note`. Sets `closed_reason =
+        admin_force_closed`, `closed_by = <admin user id>`. Idempotent
+        against concurrent auto-close triggers (deadline/max_amount) — see
+        kencleng-phase2-detail.md Fitur 3.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ForceCloseRequest"
+      responses:
+        "200":
+          description: "`status → closed`."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Campaign"
+        "422":
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: Campaign is not `published` (e.g. already closed by another trigger).
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  /events:
+    post:
+      tags: [campaign]
+      summary: Register a promotional Event and link it to one or more campaigns
+      description: No curation gate. Owner or Staff.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EventCreateRequest"
+      responses:
+        "201":
+          description: Created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+        "422":
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "403":
+          description: >
+            One or more `campaign_ids` don't belong to an organization the
+            current user represents.
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: One or more `campaign_ids` are not `published`/`scheduled`.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  /events/{eventId}:
+    parameters:
+      - name: eventId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [campaign]
+      summary: Get event detail
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+        "404":
+          $ref: "./common.yaml#/components/responses/NotFound"
+
+  /organizations/{organizationId}/events:
+    parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [campaign]
+      summary: List events created for an organization's campaigns
+      description: "# INFERRED — not explicitly specified; proposed for the Owner/Staff event management view."
+      parameters:
+        - $ref: "./common.yaml#/components/parameters/CursorParam"
+        - $ref: "./common.yaml#/components/parameters/LimitParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, pagination]
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Event"
+                  pagination:
+                    $ref: "./common.yaml#/components/schemas/Pagination"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+
+components:
+  schemas:
+    # Campaign domain schemas
+    # ---------------------------------------------------------------------
+    CampaignStatus:
+      type: string
+      enum: [draft, pending_curation, approved, rejected, scheduled, published, unpublished, closed]
+
+    CampaignCategory:
+      type: string
+      enum: [bencana_alam, kesehatan, pendidikan, sosial, lainnya]
+
+    UnpublishReason:
+      type: string
+      enum: [owner_manual, organization_re_verification]
+
+    ClosedReason:
+      type: string
+      enum: [max_amount_reached, deadline_reached, admin_force_closed]
+
+    Campaign:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        organization_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        category:
+          $ref: "#/components/schemas/CampaignCategory"
+        location:
+          type: string
+          nullable: true
+        beneficiary_description:
+          type: string
+          nullable: true
+        target_amount:
+          type: string
+          description: Decimal string (NUMERIC(19,2)) — kept as string to avoid float precision loss in transit.
+          example: "5000000.00"
+        max_amount:
+          type: string
+          nullable: true
+          example: "10000000.00"
+        collected_amount:
+          type: string
+          example: "1250000.00"
+        deadline:
+          type: string
+          format: date-time
+        status:
+          $ref: "#/components/schemas/CampaignStatus"
+        publish_at:
+          type: string
+          format: date-time
+          nullable: true
+        published_at:
+          type: string
+          format: date-time
+          nullable: true
+        unpublish_reason:
+          $ref: "#/components/schemas/UnpublishReason"
+          nullable: true
+        closed_at:
+          type: string
+          format: date-time
+          nullable: true
+        closed_reason:
+          $ref: "#/components/schemas/ClosedReason"
+          nullable: true
+        decision_note:
+          type: string
+          nullable: true
+        created_by:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    OrganizationSummary:
+      type: object
+      description: Minimal organization projection embedded in CampaignDetail — not the full Organization resource.
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        status:
+          $ref: "./organization.yaml#/components/schemas/OrganizationStatus"
+
+    CampaignProgress:
+      type: object
+      properties:
+        percentage:
+          type: number
+          format: float
+          description: "`collected_amount / target_amount * 100`, capped at 100 for display even if `max_amount` allows overshoot."
+        donor_count:
+          type: integer
+          description: Count of distinct successful donations (guest + registered).
+        days_remaining:
+          type: integer
+          nullable: true
+          description: "Null if already `closed`."
+
+    CampaignDetail:
+      description: >
+        Response shape for `GET /campaigns/{campaignId}` — the deliberate
+        composite endpoint. Aggregates campaign + organization + progress in
+        one call to avoid client-side N+1 fetches on the platform's primary
+        conversion surface (`/campaign/[id]` per kencleng-ux-page-map.md).
+      allOf:
+        - $ref: "#/components/schemas/Campaign"
+        - type: object
+          properties:
+            organization:
+              $ref: "#/components/schemas/OrganizationSummary"
+            progress:
+              $ref: "#/components/schemas/CampaignProgress"
+
+    CampaignListItem:
+      allOf:
+        - $ref: "#/components/schemas/Campaign"
+        - type: object
+          properties:
+            progress:
+              $ref: "#/components/schemas/CampaignProgress"
+
+    CampaignListResponse:
+      type: object
+      required: [data, pagination]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/CampaignListItem"
+        pagination:
+          $ref: "./common.yaml#/components/schemas/Pagination"
+
+    CampaignCreateRequest:
+      type: object
+      required: [title, category, target_amount, deadline]
+      properties:
+        title:
+          type: string
+          minLength: 1
+        description:
+          type: string
+        category:
+          $ref: "#/components/schemas/CampaignCategory"
+        location:
+          type: string
+        beneficiary_description:
+          type: string
+        target_amount:
+          type: string
+          example: "5000000.00"
+        max_amount:
+          type: string
+          nullable: true
+        deadline:
+          type: string
+          format: date-time
+
+    CampaignUpdateRequest:
+      type: object
+      description: Only permitted while `status = draft`.
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          $ref: "#/components/schemas/CampaignCategory"
+        location:
+          type: string
+        beneficiary_description:
+          type: string
+        target_amount:
+          type: string
+        max_amount:
+          type: string
+          nullable: true
+        deadline:
+          type: string
+          format: date-time
+
+    CampaignAttachment:
+      type: object
+      description: Public-bucket media (no signed URL needed — publicly readable per kencleng-erd.md).
+      properties:
+        id:
+          type: string
+          format: uuid
+        url:
+          type: string
+          format: uri
+        original_name:
+          type: string
+        size_bytes:
+          type: integer
+        content_type:
+          type: string
+        uploaded_by:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+
+    UploadCampaignMediaRequest:
+      type: object
+      required: [file]
+      properties:
+        file:
+          type: string
+          format: binary
+
+    PublishRequest:
+      type: object
+      description: >
+        Omit `publish_at` to publish immediately (`status → published`).
+        Provide a future `publish_at` to schedule (`status → scheduled`).
+        Also used to reschedule (while `status = scheduled`) and to
+        republish (from `status = unpublished`) — same contract in all
+        three cases. # INFERRED — phase doc describes these as related
+        but doesn't state whether they're literally the same endpoint.
+      properties:
+        publish_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    UnpublishRequest:
+      type: object
+      required: [decision_note]
+      properties:
+        decision_note:
+          type: string
+          minLength: 1
+
+    ForceCloseRequest:
+      type: object
+      required: [decision_note]
+      properties:
+        decision_note:
+          type: string
+          minLength: 1
+
+    CampaignCurationAssignment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        campaign_id:
+          type: string
+          format: uuid
+        kurator_id:
+          type: string
+          format: uuid
+        assigned_by:
+          type: string
+          format: uuid
+        assigned_at:
+          type: string
+          format: date-time
+        decision:
+          $ref: "./organization.yaml#/components/schemas/CurationDecision"
+        decision_note:
+          type: string
+          nullable: true
+        decided_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    CampaignCurationAssignmentListResponse:
+      type: object
+      required: [data, pagination]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/CampaignCurationAssignment"
+        pagination:
+          $ref: "./common.yaml#/components/schemas/Pagination"
+
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        event_datetime:
+          type: string
+          format: date-time
+        location:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        campaign_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        created_by:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+
+    EventCreateRequest:
+      type: object
+      required: [name, event_datetime, campaign_ids]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        event_datetime:
+          type: string
+          format: date-time
+        location:
+          type: string
+        description:
+          type: string
+        campaign_ids:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            format: uuid
+          description: All must belong to the same organization as the creator, with status `published` or `scheduled`.
+
+    # ---------------------------------------------------------------------

@@ -1,0 +1,174 @@
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >
+        Access token (JWT, ES256, 15 min TTL). Obtained from
+        `/auth/login`, `/auth/login/mfa`, `/auth/google/callback`, or
+        `/auth/refresh`.
+
+  parameters:
+    CursorParam:
+      name: cursor
+      in: query
+      required: false
+      description: Opaque cursor (a resource UUIDv7) from a previous page's `pagination.next_cursor`. Omit for the first page.
+      schema:
+        type: string
+        format: uuid
+    LimitParam:
+      name: limit
+      in: query
+      required: false
+      description: Max items per page. Default 20, max 50.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 20
+    AdminUsersLimitParam:
+      name: limit
+      in: query
+      required: false
+      description: >
+        Max items per page. Default 20, max 20 — hard-capped lower
+        than the general LimitParam [RESOLVED — 2026-08-05, see
+        docs/spec/account/threat-model.md component 6] because every
+        row requires a decrypt operation (this endpoint bulk-exposes
+        PII), unlike most other paginated list endpoints.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 20
+        default: 20
+
+    IdempotencyKeyHeader:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: >
+        Client-generated UUID, unique per submission attempt. Prevents a
+        double-click / retry from creating two Donation records for the
+        same intended submission — see kencleng-phase2-detail.md Fitur 1.
+      schema:
+        type: string
+        format: uuid
+
+  responses:
+    ValidationError:
+      description: Request failed validation.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/ValidationProblem"
+
+    Unauthorized:
+      description: Missing, invalid, or expired credentials.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: "https://kencleng.dev/errors/unauthorized"
+            title: "Unauthorized"
+            status: 401
+            detail: "Access token tidak valid atau sudah kedaluwarsa."
+
+    Forbidden:
+      description: Authenticated, but not permitted to perform this action.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: "https://kencleng.dev/errors/forbidden"
+            title: "Forbidden"
+            status: 403
+            detail: "Anda tidak memiliki izin untuk melakukan aksi ini."
+
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+
+    Conflict:
+      description: Request conflicts with current state (e.g. duplicate identifier).
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+
+    TooManyRequests:
+      description: Rate limit or lockout threshold exceeded.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: "https://kencleng.dev/errors/too-many-requests"
+            title: "Too Many Requests"
+            status: 429
+            detail: "Terlalu banyak percobaan gagal. Coba lagi dalam 15 menit."
+
+  schemas:
+    # ---------------------------------------------------------------------
+    # Shared envelope schemas
+    # ---------------------------------------------------------------------
+    Problem:
+      type: object
+      description: RFC 9457 Problem Details base shape.
+      required: [type, title, status]
+      properties:
+        type:
+          type: string
+          format: uri
+          example: "https://kencleng.dev/errors/validation-failed"
+        title:
+          type: string
+          example: "Validation Failed"
+        status:
+          type: integer
+          example: 422
+        detail:
+          type: string
+          example: "One or more fields failed validation."
+        instance:
+          type: string
+          format: uri
+          description: Optional — path of the request that produced this error.
+
+    ValidationProblem:
+      description: Problem Details extended with per-field validation errors.
+      allOf:
+        - $ref: "#/components/schemas/Problem"
+        - type: object
+          properties:
+            errors:
+              type: array
+              items:
+                type: object
+                required: [field, message]
+                properties:
+                  field:
+                    type: string
+                    example: "password"
+                  message:
+                    type: string
+                    example: "Password ditemukan di daftar breach publik, silakan pilih password lain."
+
+    Pagination:
+      type: object
+      required: [has_more]
+      properties:
+        next_cursor:
+          type: string
+          format: uuid
+          nullable: true
+        has_more:
+          type: boolean
+
+    # ---------------------------------------------------------------------

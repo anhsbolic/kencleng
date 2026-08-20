@@ -1,0 +1,716 @@
+paths:
+  # ===========================================================================
+  # Disbursement domain (Fitur 1-5 of kencleng-phase3-detail.md)
+  # ===========================================================================
+
+  /campaigns/{campaignId}/report:
+    parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [disbursement]
+      summary: Public campaign report/summary page (permanent archive)
+      description: >
+        Available for any `status = closed` campaign, indefinitely.
+        Auto-generated numbers plus the optional Owner narrative.
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignReportSummary"
+        "404":
+          $ref: "./common.yaml#/components/responses/NotFound"
+        "409":
+          description: Campaign is not yet `closed`.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  /campaigns/{campaignId}/report-narrative:
+    parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    patch:
+      tags: [disbursement]
+      summary: Add or edit the Owner's narrative on the campaign report
+      description: >
+        Owner-only (not Staff). No curation gate — editable any number of
+        times, any time after `closed`, with no deadline.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateReportNarrativeRequest"
+      responses:
+        "200":
+          description: Updated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CampaignReportSummary"
+        "422":
+          description: Narrative exceeds 5000 characters.
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "403":
+          description: Current user is not an `owner`-level representative of this campaign's organization.
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: Campaign is not yet `closed`.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  /campaigns/{campaignId}/disbursement-requests:
+    parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [disbursement]
+      summary: List disbursement request history for a campaign
+      description: Includes past rejected requests as history, not just the currently-active one.
+      parameters:
+        - $ref: "./common.yaml#/components/parameters/CursorParam"
+        - $ref: "./common.yaml#/components/parameters/LimitParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DisbursementRequestListResponse"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+    post:
+      tags: [disbursement]
+      summary: Request disbursement of collected funds
+      description: >
+        Owner-only. No request body — `requested_amount` is always set to
+        `Campaign.collected_amount` at the time of request (lump-sum,
+        single-shot model). Requires `Campaign.status = closed` and no
+        other active (`pending`/`approved`/`disbursed`) request for this
+        campaign.
+      responses:
+        "201":
+          description: Created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DisbursementRequest"
+        "403":
+          description: Current user is not an `owner`-level representative.
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: Campaign is not `closed`, or an active request already exists.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+              examples:
+                not_closed:
+                  value:
+                    type: "https://kencleng.dev/errors/campaign-not-closed"
+                    title: "Campaign Not Closed"
+                    status: 409
+                    detail: "Campaign harus berstatus closed untuk mengajukan pencairan."
+                already_active:
+                  value:
+                    type: "https://kencleng.dev/errors/disbursement-already-active"
+                    title: "Disbursement Request Already Active"
+                    status: 409
+                    detail: "Sudah ada request pencairan aktif untuk campaign ini."
+
+  /disbursement-requests:
+    get:
+      tags: [disbursement]
+      summary: List disbursement requests awaiting Admin decision
+      description: Admin-only queue. Filters to `status = pending` by default.
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/DisbursementRequestStatus"
+        - $ref: "./common.yaml#/components/parameters/CursorParam"
+        - $ref: "./common.yaml#/components/parameters/LimitParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DisbursementRequestListResponse"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+  /disbursement-requests/{disbursementRequestId}:
+    parameters:
+      - name: disbursementRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [disbursement]
+      summary: Get disbursement request detail
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DisbursementRequest"
+        "404":
+          $ref: "./common.yaml#/components/responses/NotFound"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+  /disbursement-requests/{disbursementRequestId}/decision:
+    parameters:
+      - name: disbursementRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags: [disbursement]
+      summary: Approve or reject a disbursement request (Admin only)
+      description: >
+        On approval, simulated fund transfer is triggered internally
+        (short delay) — `status → disbursed` happens as a follow-up system
+        transition, not synchronously in this response. This endpoint's
+        response reflects `status = approved` immediately after an approve
+        decision; poll `GET /disbursement-requests/{id}` to observe the
+        subsequent `disbursed` transition.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DisbursementDecisionRequest"
+      responses:
+        "200":
+          description: Decision recorded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DisbursementRequest"
+        "422":
+          description: "`decision_note` missing while `decision = rejected`."
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: Request is not `pending`.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  /disbursement-requests/{disbursementRequestId}/fund-usage-reports:
+    parameters:
+      - name: disbursementRequestId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [disbursement]
+      summary: List fund-usage report history for a disbursement
+      description: Includes past rejected reports as history, per the resubmit cycle.
+      parameters:
+        - $ref: "./common.yaml#/components/parameters/CursorParam"
+        - $ref: "./common.yaml#/components/parameters/LimitParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FundUsageReportListResponse"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+    post:
+      tags: [disbursement]
+      summary: Submit a fund-usage report
+      description: >
+        Owner-only. Requires `DisbursementRequest.status = disbursed`.
+        Sum of `items[].amount` must exactly match `requested_amount`
+        (strict reconciliation — no tolerance; legitimate incidental costs
+        like bank transfer fees must be included as their own line item).
+        On successful submit, clears the organization's `has_overdue_report`
+        flag if it was set, in the same transaction. File attachments are
+        added afterward via the per-item attachment endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateFundUsageReportRequest"
+      responses:
+        "201":
+          description: Created (`status = pending_verification`).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FundUsageReport"
+        "422":
+          description: Items don't sum to exactly `requested_amount`, or validation failure on a field.
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "403":
+          description: Current user is not an `owner`-level representative.
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: Disbursement is not yet `disbursed`.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  /fund-usage-reports/{reportId}:
+    parameters:
+      - name: reportId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [disbursement]
+      summary: Get fund-usage report detail (with items and attachment metadata)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FundUsageReport"
+        "404":
+          $ref: "./common.yaml#/components/responses/NotFound"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+  /fund-usage-reports/{reportId}/items/{itemId}/attachments:
+    parameters:
+      - name: reportId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: itemId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags: [disbursement]
+      summary: Upload a supporting attachment (nota/foto/dokumen) for a report line item
+      description: Private bucket, PDF/JPG/PNG, max 5 MB. Owner-only. Multiple attachments per item are allowed — call this repeatedly.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UploadFundUsageAttachmentRequest"
+      responses:
+        "201":
+          description: Uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FundUsageReportItemAttachment"
+        "422":
+          description: Invalid file type or exceeds 5 MB max.
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+  /fund-usage-reports/curation-queue:
+    get:
+      tags: [disbursement]
+      summary: List fund-usage reports awaiting curator assignment (Admin only)
+      parameters:
+        - $ref: "./common.yaml#/components/parameters/CursorParam"
+        - $ref: "./common.yaml#/components/parameters/LimitParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FundUsageReportListResponse"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+  /fund-usage-reports/{reportId}/curation/assign:
+    parameters:
+      - name: reportId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags: [disbursement]
+      summary: Assign a Kurator to verify this fund-usage report (Admin only)
+      description: Fails if the chosen kurator is a representative of the report's organization (conflict of interest).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "./organization.yaml#/components/schemas/AssignCuratorRequest"
+      responses:
+        "201":
+          description: Assigned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FundUsageReportVerificationAssignment"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: Conflict of interest, or an active assignment already exists.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  /fund-usage-reports/curation-assignments/mine:
+    get:
+      tags: [disbursement]
+      summary: List the current Kurator's assigned fund-usage-report verification items
+      parameters:
+        - name: decision
+          in: query
+          required: false
+          schema:
+            $ref: "./organization.yaml#/components/schemas/CurationDecision"
+        - $ref: "./common.yaml#/components/parameters/CursorParam"
+        - $ref: "./common.yaml#/components/parameters/LimitParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FundUsageReportVerificationAssignmentListResponse"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+  /fund-usage-reports/{reportId}/curation/decision:
+    parameters:
+      - name: reportId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags: [disbursement]
+      summary: Submit a verification decision (approve/reject) — assigned Kurator only
+      description: >
+        Rejecting here does **not** re-trigger `has_overdue_report` — that
+        flag is purely about submission timing (Fitur 4), not verification
+        outcome. Organization may be rejected and resubmit any number of
+        times penalty-free, as long as the original submission was on time.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "./organization.yaml#/components/schemas/CurationDecisionRequest"
+      responses:
+        "200":
+          description: Decision recorded. `status → verified` or `rejected`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FundUsageReport"
+        "422":
+          description: "`decision_note` missing while `decision = rejected`."
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: No active (`pending`) assignment exists for this report.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+
+components:
+  schemas:
+    # Disbursement domain schemas
+    # ---------------------------------------------------------------------
+    CampaignReportSummary:
+      type: object
+      description: Public, permanent archive page — auto-generated numbers plus optional Owner narrative.
+      properties:
+        campaign_id:
+          type: string
+          format: uuid
+        collected_amount:
+          type: string
+          example: "12500000.00"
+        unique_donor_count:
+          type: integer
+        duration_days:
+          type: integer
+        closed_reason:
+          $ref: "./campaign.yaml#/components/schemas/ClosedReason"
+        report_narrative:
+          type: string
+          nullable: true
+          description: Raw Markdown, max 5000 chars. Frontend is responsible for sanitized rendering (never `dangerouslySetInnerHTML` on unsanitized output).
+
+    UpdateReportNarrativeRequest:
+      type: object
+      required: [report_narrative]
+      properties:
+        report_narrative:
+          type: string
+          maxLength: 5000
+          description: Raw Markdown. May be set to an empty string to clear it. Owner-only, editable any time, no curation gate.
+
+    DisbursementRequestStatus:
+      type: string
+      enum: [pending, approved, rejected, disbursed]
+
+    DisbursementRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        campaign_id:
+          type: string
+          format: uuid
+        requested_by:
+          type: string
+          format: uuid
+        requested_amount:
+          type: string
+          description: Always equals `Campaign.collected_amount` at request time (lump-sum, single-shot model).
+          example: "12500000.00"
+        status:
+          $ref: "#/components/schemas/DisbursementRequestStatus"
+        reviewed_by:
+          type: string
+          format: uuid
+          nullable: true
+        decision_note:
+          type: string
+          nullable: true
+        decided_at:
+          type: string
+          format: date-time
+          nullable: true
+        disbursed_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+
+    DisbursementRequestListResponse:
+      type: object
+      required: [data, pagination]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/DisbursementRequest"
+        pagination:
+          $ref: "./common.yaml#/components/schemas/Pagination"
+
+    DisbursementDecisionRequest:
+      type: object
+      required: [decision]
+      properties:
+        decision:
+          type: string
+          enum: [approved, rejected]
+        decision_note:
+          type: string
+          description: Required if `decision` is `rejected`.
+
+    FundUsageReportStatus:
+      type: string
+      enum: [pending_verification, verified, rejected]
+
+    FundUsageReportItemCreate:
+      type: object
+      required: [category, amount]
+      properties:
+        category:
+          type: string
+          description: Free-text expense category (e.g. "Biaya administrasi bank"), not a fixed enum.
+        amount:
+          type: string
+          example: "500000.00"
+        description:
+          type: string
+
+    CreateFundUsageReportRequest:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/FundUsageReportItemCreate"
+          description: Sum of all `amount` values must exactly equal the disbursement's `requested_amount` (strict reconciliation, no tolerance).
+
+    FundUsageReportItemAttachment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        original_name:
+          type: string
+        size_bytes:
+          type: integer
+        content_type:
+          type: string
+        uploaded_by:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        download_url:
+          type: string
+          description: Signed URL, 5-minute expiry — private bucket.
+
+    FundUsageReportItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        category:
+          type: string
+        amount:
+          type: string
+          example: "500000.00"
+        description:
+          type: string
+          nullable: true
+        attachments:
+          type: array
+          items:
+            $ref: "#/components/schemas/FundUsageReportItemAttachment"
+        created_at:
+          type: string
+          format: date-time
+
+    FundUsageReport:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        disbursement_request_id:
+          type: string
+          format: uuid
+        submitted_by:
+          type: string
+          format: uuid
+        status:
+          $ref: "#/components/schemas/FundUsageReportStatus"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/FundUsageReportItem"
+        submitted_at:
+          type: string
+          format: date-time
+
+    FundUsageReportListResponse:
+      type: object
+      required: [data, pagination]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/FundUsageReport"
+        pagination:
+          $ref: "./common.yaml#/components/schemas/Pagination"
+
+    UploadFundUsageAttachmentRequest:
+      type: object
+      required: [file]
+      properties:
+        file:
+          type: string
+          format: binary
+
+    FundUsageReportVerificationAssignment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        fund_usage_report_id:
+          type: string
+          format: uuid
+        kurator_id:
+          type: string
+          format: uuid
+        assigned_by:
+          type: string
+          format: uuid
+        assigned_at:
+          type: string
+          format: date-time
+        decision:
+          $ref: "./organization.yaml#/components/schemas/CurationDecision"
+        decision_note:
+          type: string
+          nullable: true
+        decided_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    FundUsageReportVerificationAssignmentListResponse:
+      type: object
+      required: [data, pagination]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/FundUsageReportVerificationAssignment"
+        pagination:
+          $ref: "./common.yaml#/components/schemas/Pagination"
+
+    # ---------------------------------------------------------------------

@@ -1,0 +1,377 @@
+paths:
+  # ===========================================================================
+  # Donation domain (Fitur 1, 2, 4 of kencleng-phase2-detail.md)
+  # ===========================================================================
+
+  /campaigns/{campaignId}/donations:
+    parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [donation]
+      summary: Public donor list for a campaign
+      description: >
+        Only `status = success` donations are listed. Names are resolved
+        server-side per the `is_anonymous`/empty-`guest_name` rules —
+        `guest_email` is never included in this or any public-facing shape.
+      security: []
+      parameters:
+        - $ref: "./common.yaml#/components/parameters/CursorParam"
+        - $ref: "./common.yaml#/components/parameters/LimitParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DonationListResponse"
+
+    post:
+      tags: [donation]
+      summary: Submit a donation (guest or registered)
+      description: >
+        Public endpoint — works with or without an `Authorization` header.
+        If authenticated, `guest_name`/`guest_email` in the body are
+        ignored in favor of the session user's own identity. Requires
+        `Campaign.status = published`; payment settlement is simulated
+        asynchronously (2-5s delay, 5% failure rate) after this call
+        returns with `status = pending`.
+      security: []
+      parameters:
+        - $ref: "./common.yaml#/components/parameters/IdempotencyKeyHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitDonationRequest"
+      responses:
+        "201":
+          description: >
+            Donation accepted (`status = pending`). `status_token` is
+            returned here and, if `guest_email` was provided, also emailed
+            — this is the only response where it appears.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Donation"
+        "422":
+          description: "`amount` below the Rp 5.000 minimum, or invalid `payment_method`."
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "409":
+          description: Campaign is not `published` (e.g. closed between page load and submit).
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+              example:
+                type: "https://kencleng.dev/errors/campaign-not-published"
+                title: "Campaign Not Accepting Donations"
+                status: 409
+                detail: "Campaign ini sudah tidak menerima donasi baru."
+
+  /donations/{donationId}/status:
+    parameters:
+      - name: donationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: token
+        in: query
+        required: true
+        description: "`status_token` returned at submission time. Never expires — read-only, non-destructive lookup."
+        schema:
+          type: string
+    get:
+      tags: [donation]
+      summary: Check a donation's settlement status (token-based, no login required)
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Donation"
+        "401":
+          description: Token missing or doesn't match this donation.
+          $ref: "./common.yaml#/components/responses/Unauthorized"
+        "404":
+          $ref: "./common.yaml#/components/responses/NotFound"
+
+  /account/donations:
+    get:
+      tags: [donation]
+      summary: The current user's own full donation history
+      description: >
+        # INFERRED — not explicitly specified in the phase doc, but
+        implied by the Donatur persona having a personal donation record.
+        Includes donations originally made as guest and later claimed
+        (`claimed_at` set).
+      parameters:
+        - $ref: "./common.yaml#/components/parameters/CursorParam"
+        - $ref: "./common.yaml#/components/parameters/LimitParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MyDonationListResponse"
+
+  /account/donations/claimable:
+    get:
+      tags: [donation]
+      summary: List guest donations eligible for claim by the current user
+      description: >
+        Matches `Donation.guest_email_hash` against the current user's own
+        verified `primary_email`. Requires the user's email to be
+        verified. Only donations where `guest_email` was actually provided
+        can ever appear here.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClaimableDonationListResponse"
+        "403":
+          description: Current user's email is not verified.
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+  /account/donations/{donationId}/claim:
+    parameters:
+      - name: donationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags: [donation]
+      summary: Claim a single guest donation
+      description: >
+        Explicit, one-at-a-time confirmation — no bulk/auto-claim. Sets
+        `donor_user_id` and `claimed_at`; the original `guest_name`/
+        `guest_email` snapshot is preserved, and past public display is
+        not retroactively changed.
+      responses:
+        "200":
+          description: Claimed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MyDonation"
+        "403":
+          description: Current user's email is not verified, or this donation's `guest_email` doesn't match.
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "409":
+          description: Already claimed (by this user or, in a rare shared-email edge case, another user).
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+
+components:
+  schemas:
+    # Donation domain schemas
+    # ---------------------------------------------------------------------
+    PaymentMethod:
+      type: string
+      enum: [transfer, debit, gopay, shopeepay, ovo, qris]
+
+    DonationStatus:
+      type: string
+      enum: [pending, success, failed]
+
+    SubmitDonationRequest:
+      type: object
+      required: [amount, payment_method]
+      properties:
+        amount:
+          type: string
+          description: Decimal string, minimum 5000.
+          example: "50000.00"
+        payment_method:
+          $ref: "#/components/schemas/PaymentMethod"
+        guest_name:
+          type: string
+          nullable: true
+          description: Ignored if the request is authenticated (registered donor's `User.name` is used instead).
+        guest_email:
+          type: string
+          format: email
+          nullable: true
+          description: >
+            Ignored if authenticated. If omitted for a guest donation, this
+            donation can never be claimed later and the donor receives no
+            campaign-result notification — a deliberate trade-off, not a bug.
+        is_anonymous:
+          type: boolean
+          default: false
+        event_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: Optional — set if the donation was made in the context of a specific Event.
+
+    Donation:
+      type: object
+      description: >
+        Full shape returned to the submitter right after submission and
+        via the token-based status check. `guest_email` is intentionally
+        never included here — even to the submitter's own status check —
+        since the status endpoint is unauthenticated and token-guarded
+        rather than identity-guarded.
+      properties:
+        id:
+          type: string
+          format: uuid
+        campaign_id:
+          type: string
+          format: uuid
+        event_id:
+          type: string
+          format: uuid
+          nullable: true
+        amount:
+          type: string
+          example: "50000.00"
+        payment_method:
+          $ref: "#/components/schemas/PaymentMethod"
+        is_anonymous:
+          type: boolean
+        status:
+          $ref: "#/components/schemas/DonationStatus"
+        guest_name:
+          type: string
+          nullable: true
+        status_token:
+          type: string
+          description: Only present in the immediate submission response — not returned again by the status-check endpoint (it's the credential used to reach that endpoint).
+        created_at:
+          type: string
+          format: date-time
+
+    DonationListItem:
+      type: object
+      description: Public donor-list projection — the only shape ever exposed to unauthenticated/public listing.
+      properties:
+        id:
+          type: string
+          format: uuid
+        display_name:
+          type: string
+          nullable: true
+          description: >
+            Server-computed: the donor's name (registered) or `guest_name`,
+            substituted with a generic label if empty, or `null` entirely
+            if `is_anonymous = true`. Exact generic-label copy is a FE
+            concern per kencleng-phase2-detail.md.
+        amount:
+          type: string
+          example: "50000.00"
+        created_at:
+          type: string
+          format: date-time
+
+    DonationListResponse:
+      type: object
+      required: [data, pagination]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/DonationListItem"
+        pagination:
+          $ref: "./common.yaml#/components/schemas/Pagination"
+
+    ClaimableDonation:
+      type: object
+      description: >
+        Candidate donation shown to a registered, email-verified user on
+        the "Klaim Donasi Lama" page — matched by `guest_email_hash`. This
+        is the one place `guest_email` is returned in full, since it's
+        being matched against the requesting user's own verified email.
+      properties:
+        id:
+          type: string
+          format: uuid
+        campaign_id:
+          type: string
+          format: uuid
+        campaign_title:
+          type: string
+        guest_name:
+          type: string
+          nullable: true
+        guest_email:
+          type: string
+          format: email
+        amount:
+          type: string
+          example: "50000.00"
+        created_at:
+          type: string
+          format: date-time
+
+    ClaimableDonationListResponse:
+      type: object
+      required: [data, pagination]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClaimableDonation"
+        pagination:
+          $ref: "./common.yaml#/components/schemas/Pagination"
+
+    MyDonation:
+      type: object
+      description: A registered user's own full donation history (including claimed guest donations).
+      properties:
+        id:
+          type: string
+          format: uuid
+        campaign_id:
+          type: string
+          format: uuid
+        campaign_title:
+          type: string
+        amount:
+          type: string
+          example: "50000.00"
+        payment_method:
+          $ref: "#/components/schemas/PaymentMethod"
+        is_anonymous:
+          type: boolean
+        status:
+          $ref: "#/components/schemas/DonationStatus"
+        claimed_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Set if this donation was originally a guest donation later claimed.
+        created_at:
+          type: string
+          format: date-time
+
+    MyDonationListResponse:
+      type: object
+      required: [data, pagination]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/MyDonation"
+        pagination:
+          $ref: "./common.yaml#/components/schemas/Pagination"
+
+    # ---------------------------------------------------------------------

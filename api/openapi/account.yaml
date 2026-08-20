@@ -1,0 +1,1007 @@
+paths:
+  # =========================================================================
+  # Registration & email verification (Fitur 1)
+  # =========================================================================
+  /auth/register:
+    post:
+      tags: [account]
+      summary: Register a new account (email_password)
+      description: >
+        Anti-enumeration [RESOLVED — 2026-08-05]: response is always
+        `202` with the same generic message, regardless of whether the
+        email is new, already registered-unverified, already
+        registered-verified, or already claimed by a `google`-only
+        account (see
+        docs/spec/account/features/01-register-email-verification.md).
+        The actual email sent differs by case (verification link /
+        resend-verification nudge / password-reset nudge / "this email
+        uses Google login" nudge), but the API response and response
+        time must not reveal which case occurred.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "202":
+          description: >
+            Always returned regardless of the email's actual state in
+            the system — see the anti-enumeration note above.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericAcceptedMessage"
+              example:
+                message: "Kalau email belum terdaftar, cek inbox untuk verifikasi. Kalau sudah, cek inbox untuk instruksi lebih lanjut."
+        "422":
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "429":
+          $ref: "./common.yaml#/components/responses/TooManyRequests"
+
+  /auth/verify-email:
+    post:
+      tags: [account]
+      summary: Verify email using the token from the verification email
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerifyEmailRequest"
+      responses:
+        "200":
+          description: Email verified.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Email berhasil diverifikasi."
+        "410":
+          description: Token expired.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+              example:
+                type: "https://kencleng.dev/errors/token-expired"
+                title: "Token Expired"
+                status: 410
+                detail: "Link verifikasi sudah kedaluwarsa. Silakan minta kirim ulang."
+        "404":
+          description: Token not found / already used (also covers a token revoked by a later resend — `revoked_at IS NOT NULL`).
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+        "429":
+          $ref: "./common.yaml#/components/responses/TooManyRequests"
+
+  /auth/verify-email/resend:
+    post:
+      tags: [account]
+      summary: Resend the verification email
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResendVerificationRequest"
+      responses:
+        "202":
+          description: >
+            Always returns this generic acceptance, regardless of whether
+            the email is registered/unverified (anti user-enumeration is
+            not strictly required here since this endpoint doesn't reveal
+            registration status either way, but kept generic for consistency).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericAcceptedMessage"
+        "429":
+          $ref: "./common.yaml#/components/responses/TooManyRequests"
+
+  # =========================================================================
+  # Login & session management (Fitur 2)
+  # =========================================================================
+  /auth/login:
+    post:
+      tags: [account]
+      summary: Login with email_password
+      description: >
+        On success with no MFA enrolled, sets the refresh token as an
+        HttpOnly cookie and returns `LoginResponse`. If MFA is enrolled,
+        returns `LoginMfaRequiredResponse` instead (no cookie set yet) —
+        complete via `POST /auth/login/mfa`.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login succeeded, or MFA verification required.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/LoginResponse"
+                  - $ref: "#/components/schemas/LoginMfaRequiredResponse"
+              examples:
+                no_mfa:
+                  summary: Login succeeded (no MFA)
+                  value:
+                    status: ok
+                    access_token: "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    access_token_expires_at: "2026-07-25T10:15:00Z"
+                    user:
+                      id: "01930f2e-7f1a-7c3a-9b1e-2f6a1c8e4d10"
+                      name: "Anhar"
+                      email: "anhar@example.com"
+                      email_verified: true
+                      roles: []
+                      auth_providers: [email_password]
+                      mfa_enabled: false
+                      created_at: "2026-01-01T00:00:00Z"
+                mfa_required:
+                  summary: MFA verification required
+                  value:
+                    status: mfa_required
+                    mfa_pending_token: "eyJhbGciOiJIUzI1NiJ9..."
+        "401":
+          description: Invalid credentials. Same message whether the account is locked or the password is simply wrong (anti-enumeration).
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+              example:
+                type: "https://kencleng.dev/errors/invalid-credentials"
+                title: "Invalid Credentials"
+                status: 401
+                detail: "Email atau password salah."
+        "429":
+          description: >
+            Locked out (5 failed attempts / 15 min window) — deliberately
+            returns the same generic detail as the 401 case above, per
+            anti-enumeration business rule; only the status code differs.
+          $ref: "./common.yaml#/components/responses/TooManyRequests"
+
+  /auth/login/mfa:
+    post:
+      tags: [account]
+      summary: Complete login by submitting a TOTP or backup code
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginMfaRequest"
+      responses:
+        "200":
+          description: MFA verified, login complete. Refresh token cookie set.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "401":
+          description: Invalid TOTP/backup code, or expired/invalid `mfa_pending_token`.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+        "429":
+          $ref: "./common.yaml#/components/responses/TooManyRequests"
+
+  /auth/refresh:
+    post:
+      tags: [account]
+      summary: Rotate the refresh token and issue a new access token
+      description: >
+        Reads the refresh token from the `HttpOnly` cookie (not from the
+        request body). On reuse detection (a rotated-out token used again),
+        the entire token family is revoked and this endpoint returns 401 —
+        client must force a full re-login.
+      security: []
+      responses:
+        "200":
+          description: New access token issued, refresh token cookie rotated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RefreshResponse"
+        "401":
+          description: Refresh token missing, expired, revoked, or reuse detected.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  /auth/logout:
+    post:
+      tags: [account]
+      summary: Revoke the current refresh token and clear the session cookie
+      responses:
+        "204":
+          description: Logged out.
+
+  # =========================================================================
+  # Forgot / reset password (Fitur 2B)
+  # =========================================================================
+  /auth/forgot-password:
+    post:
+      tags: [account]
+      summary: Request a password reset link
+      description: >
+        Always returns 202 with the same generic message, regardless of
+        whether the email is registered, unregistered, or registered as
+        Google-only (anti user-enumeration). For Google-only accounts, a
+        distinct notice email is sent instead of a reset link — but the
+        API response is identical either way.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ForgotPasswordRequest"
+      responses:
+        "202":
+          description: Generic acceptance.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericAcceptedMessage"
+        "429":
+          $ref: "./common.yaml#/components/responses/TooManyRequests"
+
+  /auth/reset-password:
+    post:
+      tags: [account]
+      summary: Reset password using a token from the reset email
+      description: On success, all of the user's existing refresh tokens are revoked (force logout everywhere).
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPasswordRequest"
+      responses:
+        "200":
+          description: Password reset, all sessions revoked.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Password berhasil diubah. Silakan login ulang."
+        "422":
+          description: Password fails policy or found in breach-list.
+          $ref: "./common.yaml#/components/responses/ValidationError"
+        "410":
+          description: Token expired.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+        "404":
+          description: Token not found / already used.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+
+  # =========================================================================
+  # Google OAuth (Fitur 1B) + Account Linking (Fitur 4)
+  # =========================================================================
+  /auth/google/redirect:
+    get:
+      tags: [account]
+      summary: Initiate the Google OAuth flow
+      description: >
+        # INFERRED — one shared redirect-initiation endpoint for
+        login/register/link/reauth, distinguished by `intent`. Not a JSON
+        endpoint — issues a 302 to Google's consent screen and sets
+        `state`+`nonce` in a short-TTL HttpOnly cookie (~10 min).
+        `intent=link` and `intent=reauth` require an existing authenticated
+        session (still validated via the access token, sent as normal); 
+        `intent=login`/`register` do not.
+      security: []
+      parameters:
+        - name: intent
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [login, link, reauth]
+      responses:
+        "302":
+          description: Redirect to Google's OAuth consent screen.
+
+  /auth/google/callback:
+    get:
+      tags: [account]
+      summary: Google OAuth callback
+      description: >
+        Validates `state`+`nonce` against the cookie set by
+        `/auth/google/redirect`, exchanges the authorization code, verifies
+        the `id_token` against Google's JWKS. Behavior branches on the
+        `intent` carried through `state`:
+          - `login`: existing `google` AuthIdentity → issue tokens (302 to app, cookie set).
+          - `login` + no existing identity + email not used by `email_password` → create User, issue tokens.
+          - `login` + email already used by `email_password` → 302 to `/login` with an error query param (no auto-merge).
+          - `link`: attach a new `google` AuthIdentity to the current session's user.
+          - `reauth`: used only to satisfy an MFA-disable re-authentication requirement for Google-only users; does not issue new tokens.
+        Not a JSON endpoint from the browser's perspective — always ends
+        in a redirect to a frontend route (success or error state
+        indicated via query param).
+      security: []
+      parameters:
+        - name: code
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: state
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "302":
+          description: Redirect to the frontend (final destination on success, or an error-state route on failure).
+
+  /account/security/google/unlink:
+    post:
+      tags: [account]
+      summary: Unlink the Google identity from the current account
+      description: >
+        Requires re-authentication (`password`) [RESOLVED — 2026-08-05].
+        Blocked (409) in two distinct cases — see the two examples
+        below: (1) `google` is the only identity at all
+        (INV-account-02), or (2) another identity exists but isn't
+        verified yet (INV-account-12) — distinguished so the user
+        knows whether to *start* set-password or just *finish*
+        verifying an email they already started.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnlinkGoogleRequest"
+      responses:
+        "200":
+          description: Unlinked.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnlinkGoogleResponse"
+        "401":
+          description: Incorrect `password`.
+          $ref: "./common.yaml#/components/responses/Unauthorized"
+        "409":
+          description: Google is the only identity, or the remaining identity isn't verified yet — see the two examples.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+              examples:
+                only_identity:
+                  summary: No other identity exists at all (INV-account-02)
+                  value:
+                    type: "https://kencleng.dev/errors/only-identity"
+                    title: "Cannot Unlink Only Identity"
+                    status: 409
+                    detail: "Google adalah satu-satunya metode login Anda. Atur email dan password dulu sebelum melepas tautan."
+                unverified_identity:
+                  summary: Another identity exists but isn't verified yet (INV-account-12)
+                  value:
+                    type: "https://kencleng.dev/errors/unverified-remaining-identity"
+                    title: "Remaining Identity Not Verified"
+                    status: 409
+                    detail: "Kamu sudah atur email dan password, tapi belum diverifikasi. Verifikasi email kamu dulu sebelum bisa melepas tautan Google."
+
+  # =========================================================================
+  # Account security — profile, set-password, MFA (Fitur 2, 3, 4)
+  # =========================================================================
+  /account/me:
+    get:
+      tags: [account]
+      summary: Get the current authenticated user's profile
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "401":
+          $ref: "./common.yaml#/components/responses/Unauthorized"
+
+  /account/security/set-password:
+    post:
+      tags: [account]
+      summary: Add an email_password identity, or change the existing one
+      description: >
+        See `SetPasswordRequest`'s description for the two branches.
+        Branch 1 (add new identity, Google-only caller): follows the
+        same anti-enumeration pattern as `/auth/register` — response
+        is generic `202` whether or not the submitted `email` is
+        already claimed by someone else (a distinct nudge email is
+        sent instead, no new identity/token created). Branch 2 (change
+        existing password): immediate `200`, wrong `current_password`
+        is `401`, not generic (this branch is not enumeration-
+        sensitive — the caller is already authenticated and acting on
+        their own known identity).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SetPasswordRequest"
+      responses:
+        "200":
+          description: >
+            Branch 2 only — password changed immediately, all
+            existing sessions revoked.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Password berhasil diganti. Semua sesi lain telah keluar otomatis."
+        "202":
+          description: >
+            Branch 1 only — always returned regardless of whether the
+            submitted email was actually available (anti-enumeration,
+            same pattern as POST /auth/register).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericAcceptedMessage"
+              example:
+                message: "Kalau email tersedia, cek inbox untuk verifikasi."
+        "401":
+          description: Branch 2 only — incorrect `current_password`.
+          $ref: "./common.yaml#/components/responses/Unauthorized"
+        "422":
+          $ref: "./common.yaml#/components/responses/ValidationError"
+
+  /account/security/mfa/enroll:
+    post:
+      tags: [account]
+      summary: Start TOTP MFA enrollment
+      description: Generates a new TOTP secret (not yet enabled until confirmed).
+      responses:
+        "200":
+          description: Secret generated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MfaEnrollResponse"
+
+  /account/security/mfa/enroll/confirm:
+    post:
+      tags: [account]
+      summary: Confirm MFA enrollment with a TOTP code
+      description: On success, MFA becomes active and 10 backup codes are generated and returned once.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MfaEnrollConfirmRequest"
+      responses:
+        "200":
+          description: MFA enabled.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MfaEnrollConfirmResponse"
+        "422":
+          description: Invalid TOTP code.
+          $ref: "./common.yaml#/components/responses/ValidationError"
+
+  /account/security/mfa/disable:
+    post:
+      tags: [account]
+      summary: Disable MFA (requires re-authentication)
+      description: >
+        For `email_password` users, submit `password` in the body. For
+        Google-only users, re-authenticate first via
+        `GET /auth/google/redirect?intent=reauth`, then call this endpoint
+        with no body (the reauth is validated via a short-lived server-side
+        marker tied to the session — implementation detail).
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MfaDisableRequest"
+      responses:
+        "200":
+          description: MFA disabled, backup codes invalidated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "MFA berhasil dinonaktifkan."
+        "401":
+          description: Re-authentication failed or missing.
+          $ref: "./common.yaml#/components/responses/Unauthorized"
+
+  # =========================================================================
+  # Role assignment (Fitur 5) — Admin only
+  # =========================================================================
+  /admin/users:
+    get:
+      tags: [account]
+      summary: List users (Admin only)
+      description: >
+        Used by the Admin "kelola user" page for role assignment.
+        Admin-only authz is checked explicitly at the handler level,
+        not only via a query filter (see AGENTS.md golden rules).
+      parameters:
+        - $ref: "./common.yaml#/components/parameters/CursorParam"
+        - $ref: "./common.yaml#/components/parameters/AdminUsersLimitParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserListResponse"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+
+  /admin/users/{userId}/roles:
+    post:
+      tags: [account]
+      summary: Assign a role (admin or kurator) to a user
+      description: >
+        Rejected with 409 if assigning `admin` to a user who currently
+        holds `kurator` or is an organization representative (mutual
+        exclusivity rule, INV-account-09/10), or if the target already
+        holds the requested role (INV-account-09's duplicate-
+        assignment case, added 2026-08-05 — see
+        docs/spec/account/features/08-role-assignment.md Assumption A).
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssignRoleRequest"
+      responses:
+        "201":
+          description: Role assigned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "404":
+          $ref: "./common.yaml#/components/responses/NotFound"
+        "409":
+          description: Role conflict — see the three examples (exclusivity or duplicate assignment).
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+              examples:
+                admin_kurator_conflict:
+                  summary: Target already holds the other exclusive role (INV-account-09)
+                  value:
+                    type: "https://kencleng.dev/errors/role-conflict"
+                    title: "Role Conflict"
+                    status: 409
+                    detail: "User ini sudah menjadi Kurator. Lepas role Kurator dulu sebelum jadi Admin."
+                representative_conflict:
+                  summary: Target is an organization representative (INV-account-10)
+                  value:
+                    type: "https://kencleng.dev/errors/role-conflict"
+                    title: "Role Conflict"
+                    status: 409
+                    detail: "User ini masih menjadi representative organisasi. Lepas dari organisasi dulu sebelum jadi Admin."
+                duplicate_assignment:
+                  summary: Target already holds the requested role
+                  value:
+                    type: "https://kencleng.dev/errors/duplicate-role"
+                    title: "Role Already Assigned"
+                    status: 409
+                    detail: "User ini sudah punya role ini."
+
+    delete:
+      tags: [account]
+      summary: Revoke a role from a user
+      description: >
+        Rejected with 409 in two cases, added 2026-08-05 [RESOLVED] —
+        see docs/spec/account/features/08-role-assignment.md: (1)
+        revoking `admin` from the last remaining Admin in the system
+        (INV-account-13), or (2) revoking `kurator` from a user who
+        has a `pending` row in `organization_curation_assignments`
+        (INV-account-14, cross-domain read against a table
+        `organization` owns).
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: role
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/Role"
+      responses:
+        "204":
+          description: Role revoked.
+        "403":
+          $ref: "./common.yaml#/components/responses/Forbidden"
+        "404":
+          $ref: "./common.yaml#/components/responses/NotFound"
+        "409":
+          description: Last-Admin guard, or pending-curation-assignment guard — see the two examples.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+              examples:
+                last_admin:
+                  summary: Target is the last remaining Admin (INV-account-13)
+                  value:
+                    type: "https://kencleng.dev/errors/last-admin"
+                    title: "Cannot Revoke Last Admin"
+                    status: 409
+                    detail: "Tidak bisa melepas role Admin dari satu-satunya Admin yang tersisa di sistem."
+                pending_curation:
+                  summary: Target has a pending curation assignment (INV-account-14)
+                  value:
+                    type: "https://kencleng.dev/errors/pending-curation-assignment"
+                    title: "Kurator Has Pending Assignment"
+                    status: 409
+                    detail: "User ini masih punya tugas kurasi yang pending. Selesaikan atau alihkan dulu sebelum melepas role Kurator."
+
+
+components:
+  schemas:
+    # Account domain schemas
+    # ---------------------------------------------------------------------
+    Role:
+      type: string
+      enum: [admin, kurator]
+
+    ProviderType:
+      type: string
+      enum: [email_password, google]
+      description: "`phone_otp` is modeled in the DB but not exposed via API in v1."
+
+    User:
+      type: object
+      description: >
+        The authenticated user's own profile. Full detail (including
+        decrypted `email`) is only ever returned for the resource owner —
+        any FE-side display of *other* users' PII (e.g. Admin viewing a
+        user list) goes through the `MaskedField` component, masking is a
+        frontend concern per kencleng-actors-entities.md.
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        email_verified:
+          type: boolean
+          description: True if at least one `email_password` AuthIdentity has `verified_at` set.
+        roles:
+          type: array
+          items:
+            $ref: "#/components/schemas/Role"
+        auth_providers:
+          type: array
+          description: Which identity providers this user has linked.
+          items:
+            $ref: "#/components/schemas/ProviderType"
+        mfa_enabled:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+
+    RegisterRequest:
+      type: object
+      required: [name, email, password]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+          minLength: 8
+          description: Length-only policy (NIST 800-63B style) — no character-class requirement.
+
+    # RegisterResponse removed 2026-08-05 — POST /auth/register now
+    # returns GenericAcceptedMessage (anti-enumeration; see
+    # docs/spec/account/features/01-register-email-verification.md
+    # Assumption A).
+
+    VerifyEmailRequest:
+      type: object
+      required: [token]
+      properties:
+        token:
+          type: string
+
+    ResendVerificationRequest:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+
+    LoginResponse:
+      type: object
+      description: >
+        Returned when login succeeds outright (no MFA enrolled). Refresh
+        token is set as an HttpOnly cookie on this response, not present
+        in the JSON body.
+      required: [status, access_token, user]
+      properties:
+        status:
+          type: string
+          enum: [ok]
+        access_token:
+          type: string
+        access_token_expires_at:
+          type: string
+          format: date-time
+        user:
+          $ref: "#/components/schemas/User"
+
+    LoginMfaRequiredResponse:
+      type: object
+      description: >
+        # INFERRED — Phase 0 Fitur 2 doesn't name a concrete two-step
+        contract; this is the proposed shape when the account has MFA
+        enabled. `mfa_pending_token` is short-lived (e.g. 5 min) and only
+        valid against `/auth/login/mfa`. No refresh/access token is issued
+        at this point.
+      required: [status, mfa_pending_token]
+      properties:
+        status:
+          type: string
+          enum: [mfa_required]
+        mfa_pending_token:
+          type: string
+
+    LoginMfaRequest:
+      type: object
+      required: [mfa_pending_token]
+      properties:
+        mfa_pending_token:
+          type: string
+        totp_code:
+          type: string
+          description: One of `totp_code` or `backup_code` must be present.
+        backup_code:
+          type: string
+
+    RefreshResponse:
+      type: object
+      description: New refresh token cookie is set implicitly on this response (rotate-on-use).
+      required: [access_token]
+      properties:
+        access_token:
+          type: string
+        access_token_expires_at:
+          type: string
+          format: date-time
+
+    ForgotPasswordRequest:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+
+    GenericAcceptedMessage:
+      type: object
+      description: >
+        Deliberately generic response shape — used anywhere a distinct
+        message would leak user enumeration (forgot-password, resend
+        verification).
+      properties:
+        message:
+          type: string
+          example: "Kalau email terdaftar, instruksi sudah dikirim."
+
+    ResetPasswordRequest:
+      type: object
+      required: [token, new_password]
+      properties:
+        token:
+          type: string
+        new_password:
+          type: string
+          format: password
+          minLength: 8
+
+    SetPasswordRequest:
+      type: object
+      description: >
+        Redesigned 2026-08-05 [RESOLVED] — this endpoint now branches
+        server-side into two behaviors depending on the caller's
+        existing identities, not on which fields are sent (see
+        docs/spec/account/features/05-account-linking.md).
+
+        Branch 1 (caller has no `email_password` identity yet —
+        Google-only): requires `email` + `password`. Creates a new,
+        unverified `email_password` identity; must be verified via
+        `POST /auth/verify-email` before it's usable. Response `202`.
+
+        Branch 2 (caller already has an `email_password` identity —
+        change password): requires `current_password` + `password`.
+        Updates the existing identity's credential in place, takes
+        effect immediately, force-revokes all existing sessions.
+        Response `200`.
+      required: [password]
+      properties:
+        email:
+          type: string
+          format: email
+          description: Branch 1 only. New email for the identity being added — not necessarily the account's existing `primary_email` (e.g. migrating from a personal Gmail-linked account to a work email).
+        current_password:
+          type: string
+          format: password
+          description: Branch 2 only. Confirms ownership of the existing identity before changing its password — prevents a hijacked-but-still-valid session from silently taking over the account.
+        password:
+          type: string
+          format: password
+          minLength: 8
+          description: New password, both branches. Length-only policy (NIST 800-63B style), same as registration.
+
+    MfaEnrollResponse:
+      type: object
+      required: [otpauth_uri]
+      properties:
+        otpauth_uri:
+          type: string
+          description: "`otpauth://` URI to render as a QR code."
+
+    MfaEnrollConfirmRequest:
+      type: object
+      required: [totp_code]
+      properties:
+        totp_code:
+          type: string
+
+    MfaEnrollConfirmResponse:
+      type: object
+      required: [backup_codes]
+      properties:
+        backup_codes:
+          type: array
+          description: Shown once. Client must prompt the user to save these — server only retains hashes.
+          items:
+            type: string
+
+    MfaDisableRequest:
+      type: object
+      description: >
+        Re-authentication payload. For `email_password` users, `password`
+        is required. For Google-only users, disabling MFA instead requires
+        a fresh Google OAuth prompt — see `/auth/google/redirect` with
+        `intent=reauth`.
+      properties:
+        password:
+          type: string
+          format: password
+
+    GoogleLinkedResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Akun Google berhasil ditautkan."
+        auth_providers:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProviderType"
+
+    UnlinkGoogleRequest:
+      type: object
+      description: >
+        Re-authentication payload, added 2026-08-05 [RESOLVED] — see
+        docs/spec/account/features/05-account-linking.md. Always
+        possible to satisfy by the time unlink can succeed at all,
+        since INV-account-12 guarantees a verified `email_password`
+        identity exists at that point (the identity being removed is
+        always the `google` one).
+      required: [password]
+      properties:
+        password:
+          type: string
+          format: password
+          description: The caller's current email_password password, confirming this action is really them.
+
+    UnlinkGoogleResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Akun Google berhasil dilepas."
+
+    AssignRoleRequest:
+      type: object
+      required: [role]
+      properties:
+        role:
+          $ref: "#/components/schemas/Role"
+
+    UserListItem:
+      allOf:
+        - $ref: "#/components/schemas/User"
+        - type: object
+          description: >
+            Admin-facing list view. `email` here is still the decrypted
+            value from the API's perspective — the FE `MaskedField`
+            component is responsible for masking it on screen and logging
+            the reveal action when an Admin/Kurator explicitly unmasks it.
+
+    UserListResponse:
+      type: object
+      required: [data, pagination]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserListItem"
+        pagination:
+          $ref: "./common.yaml#/components/schemas/Pagination"
+
+    # ---------------------------------------------------------------------

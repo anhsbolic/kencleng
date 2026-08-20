@@ -1,0 +1,12 @@
+{
+  "name": "kencleng-api-spec",
+  "private": true,
+  "description": "Bundling tooling for the split OpenAPI spec (api/openapi/*.yaml -> api/openapi.yaml). No runtime code here — devDependency only.",
+  "scripts": {
+    "bundle": "redocly bundle openapi/index.yaml -o ../openapi.yaml --ext yaml",
+    "validate": "redocly lint openapi/index.yaml"
+  },
+  "devDependencies": {
+    "@redocly/cli": "^2.46.2"
+  }
+}

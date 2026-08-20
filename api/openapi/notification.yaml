@@ -1,0 +1,158 @@
+paths:
+  # ===========================================================================
+  # Notification domain (Fitur 6 of kencleng-phase0-detail.md)
+  # ===========================================================================
+
+  /notifications:
+    get:
+      tags: [notification]
+      summary: List the current user's notifications
+      description: >
+        Always filtered server-side to `expires_at > now()` (soft-hide) —
+        expired notifications never appear here even before the weekly
+        hard-delete worker physically removes them.
+      parameters:
+        - name: unread_only
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - $ref: "./common.yaml#/components/parameters/CursorParam"
+        - $ref: "./common.yaml#/components/parameters/LimitParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationListResponse"
+
+  /notifications/unread-count:
+    get:
+      tags: [notification]
+      summary: Get the current user's unread notification count
+      description: Backs the persistent header badge.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnreadCountResponse"
+
+  /notifications/mark-read:
+    post:
+      tags: [notification]
+      summary: Batch mark notifications as read
+      description: >
+        Idempotent — re-marking an already-read notification (e.g. from a
+        retried batch) is a no-op, guarded by `WHERE read_at IS NULL` per
+        row server-side.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MarkNotificationsReadRequest"
+      responses:
+        "204":
+          description: Marked as read.
+        "422":
+          description: Neither `notification_ids` nor `all` provided, or both provided together.
+
+components:
+  schemas:
+    # Notification domain schemas
+    # ---------------------------------------------------------------------
+    NotificationChannel:
+      type: string
+      enum: [in_app, email]
+
+    NotificationType:
+      type: string
+      description: >
+        Extensible list — per kencleng-phase0-detail.md Fitur 6, adding a
+        new notification type is just a new string value using the same
+        mechanism, not a new endpoint. Enumerated here for FE type-safety;
+        update this enum whenever a new type is introduced elsewhere in
+        the spec.
+      enum:
+        - organization_verified
+        - organization_rejected
+        - campaign_approved
+        - campaign_rejected
+        - campaign_closed
+        - donation_success
+        - disbursement_completed
+        - admin_new_curation_item
+        - kurator_assigned
+        - fund_usage_report_verified
+        - fund_usage_report_rejected
+        - disbursement_approved
+        - disbursement_rejected
+        - forgot_password_google_only_notice
+
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          $ref: "#/components/schemas/NotificationType"
+        channel:
+          $ref: "#/components/schemas/NotificationChannel"
+        payload:
+          type: object
+          additionalProperties: true
+          description: Free-form JSON, shape depends on `type` (e.g. campaign id/title for campaign-related types).
+        read_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+
+    NotificationListResponse:
+      type: object
+      required: [data, pagination]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Notification"
+        pagination:
+          $ref: "./common.yaml#/components/schemas/Pagination"
+
+    UnreadCountResponse:
+      type: object
+      required: [unread_count]
+      properties:
+        unread_count:
+          type: integer
+
+    MarkNotificationsReadRequest:
+      type: object
+      description: >
+        Batched, not per-notification — per kencleng-phase0-detail.md
+        Fitur 6, client-side interactions are debounced/batched into one
+        request rather than firing per click.
+      properties:
+        notification_ids:
+          type: array
+          maxItems: 50
+          items:
+            type: string
+            format: uuid
+          description: >
+            Mutually exclusive with `all`. Capped at 50 (matches
+            LimitParam's max page size) — see
+            docs/spec/notification/threat-model.md and
+            docs/spec/notification/features/04-batched-mark-as-read.md
+            for rationale [RESOLVED — 2026-08-19].
+        all:
+          type: boolean
+          description: Mark every currently-unread notification as read. Mutually exclusive with `notification_ids`.
+
