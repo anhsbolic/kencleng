@@ -140,7 +140,8 @@ domain must respect.
   superseded token.
 - **Verification**: Test — double-submit the same reset link
   concurrently; exactly one request succeeds, guarded by `WHERE
-  used_at IS NULL AND expires_at > now()` at the `UPDATE`.
+  used_at IS NULL AND revoked_at IS NULL AND expires_at > now()` at
+  the `UPDATE`.
 
 ### INV-account-09: Admin role is mutually exclusive with Kurator role
 

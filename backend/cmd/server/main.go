@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -20,9 +21,13 @@ import (
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 
+	"github.com/anhsbolic/kencleng/backend/internal/domain/account"
 	"github.com/anhsbolic/kencleng/backend/internal/platform/auth"
+	platformbreachcheck "github.com/anhsbolic/kencleng/backend/internal/platform/breachcheck"
 	platformcrypto "github.com/anhsbolic/kencleng/backend/internal/platform/crypto"
 	"github.com/anhsbolic/kencleng/backend/internal/platform/db"
+	platformnotification "github.com/anhsbolic/kencleng/backend/internal/platform/notification"
+	transporthttp "github.com/anhsbolic/kencleng/backend/internal/transport/http"
 )
 
 func main() {
@@ -60,6 +65,8 @@ func run() error {
 		"MINIO_BUCKET_PRIVATE",
 		"JWT_PRIVATE_KEY_PATH",
 		"JWT_PUBLIC_KEY_PATH",
+		"AUTH_RATE_RPS",
+		"AUTH_RATE_BURST",
 	); err != nil {
 		return err
 	}
@@ -80,20 +87,36 @@ func run() error {
 		return err
 	}
 
-	// 5. Auth: load the ES256 key pair.
-	authKeys, err := auth.Load(os.Getenv("JWT_PRIVATE_KEY_PATH"), os.Getenv("JWT_PUBLIC_KEY_PATH"))
+	// 5. Auth: load the ES256 key pair (used by future login/session task).
+	_, err = auth.Load(os.Getenv("JWT_PRIVATE_KEY_PATH"), os.Getenv("JWT_PUBLIC_KEY_PATH"))
 	if err != nil {
 		return err
 	}
 
-	// The wired dependencies are intentionally unused until the first domain
-	// task; keeping them referenced documents that they are part of startup.
-	_, _ = keys, authKeys
+	// 6. Account domain wiring.
+	breachClient := platformbreachcheck.NewClient(5 * time.Second) // explicit timeout (techplan §7 row 4)
+	emailSender := platformnotification.NewFakeSender()            // v1: logged, no SMTP
+	accountSvc := account.NewService(account.NewRepositoryDB(pool, keys), pool, breachClient, emailSender, keys)
 
-	// 6. Router: a single health check until the first domain task adds real
-	// endpoints.
+	// 7. Rate-limit configuration (fail fast if unset — Open Item #3).
+	rps, err := strconv.ParseFloat(os.Getenv("AUTH_RATE_RPS"), 64)
+	if err != nil || rps <= 0 {
+		return fmt.Errorf("AUTH_RATE_RPS must be a positive number, got %q", os.Getenv("AUTH_RATE_RPS"))
+	}
+	burst, err := strconv.Atoi(os.Getenv("AUTH_RATE_BURST"))
+	if err != nil || burst <= 0 {
+		return fmt.Errorf("AUTH_RATE_BURST must be a positive integer, got %q", os.Getenv("AUTH_RATE_BURST"))
+	}
+
+	// 8. Router: health check + auth routes behind rate limiter.
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /healthz", healthz)
+
+	authMux := http.NewServeMux()
+	authMux.HandleFunc("POST /auth/register", transporthttp.RegisterHandler(accountSvc))
+	authMux.HandleFunc("POST /auth/verify-email", transporthttp.VerifyEmailHandler(accountSvc))
+	authMux.HandleFunc("POST /auth/verify-email/resend", transporthttp.ResendVerificationHandler(accountSvc))
+	mux.Handle("/auth/", transporthttp.RateLimit(rps, burst)(authMux))
 
 	srv := &http.Server{
 		Addr:    ":" + os.Getenv("APP_PORT"),

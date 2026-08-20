@@ -1653,10 +1653,16 @@ components:
       properties:
         notification_ids:
           type: array
+          maxItems: 50
           items:
             type: string
             format: uuid
-          description: Mutually exclusive with `all`.
+          description: >
+            Mutually exclusive with `all`. Capped at 50 (matches
+            LimitParam's max page size) — see
+            docs/spec/notification/threat-model.md and
+            docs/spec/notification/features/04-batched-mark-as-read.md
+            for rationale [RESOLVED — 2026-08-19].
         all:
           type: boolean
           description: Mark every currently-unread notification as read. Mutually exclusive with `notification_ids`.

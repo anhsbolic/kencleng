@@ -80,5 +80,11 @@ npm run verify    # lint + test — see root docs/kencleng-agentic-workflow.md �
   stages this file's conventions support.
 - `docs/project/kencleng-ux-page-map.md` — page-by-persona source of
   truth.
+- `docs/project/kencleng-design-guidelines.md` — typography, color
+  palette, and CSS custom properties. **Read this before writing any
+  new component or page**, not just when something looks visually
+  wrong — the project has already made these calls (Plus Jakarta Sans
+  + Inter, green/amber/cool-gray palette), so there's no open decision
+  here to make from scratch or default to something generic.
 - `docs/spec/features/*.md` — acceptance criteria per feature/page.
 - Root `AGENTS.md` — golden rules, fencing, Definition of Done.
