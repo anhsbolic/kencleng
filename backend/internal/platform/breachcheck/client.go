@@ -7,11 +7,15 @@ import (
 	"context"
 	"crypto/sha1"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"io"
 	"log"
+	"net"
 	"net/http"
+	"net/url"
 	"strings"
+	"syscall"
 	"time"
 )
 
@@ -48,12 +52,21 @@ func (c *Client) IsBreached(ctx context.Context, password string) (bool, error) 
 	}
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
-		// Fail-open: log the fact + category, not the password.
-		log.Printf("breachcheck: API unreachable, proceeding without check: %v", err)
+		// Fail-open: log a sanitized category, never the raw error. A
+		// *url.Error from http.Client.Do embeds the request URL, which
+		// contains the 5-char SHA-1 prefix of the password — partial
+		// credential-derived data. The k-anonymity prefix is safe to
+		// send to the server, not to log. Per
+		// go/secrets-and-sensitive-logging.md §1.
+		log.Printf("breachcheck: API unreachable (%s), proceeding without check",
+			breachErrorCategory(err))
 		return false, nil
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
+		// Drain the body so the connection returns to the pool for reuse
+		// (go/http-client-and-transport.md §2).
+		_, _ = io.Copy(io.Discard, resp.Body)
 		log.Printf("breachcheck: API returned status %d, proceeding without check", resp.StatusCode)
 		return false, nil
 	}
@@ -67,4 +80,37 @@ func (c *Client) IsBreached(ctx context.Context, password string) (bool, error) 
 		}
 	}
 	return false, nil
+}
+
+// breachErrorCategory reduces a breachcheck HTTP error to a safe,
+// PII-free category string for logging. It never returns the request
+// URL (which carries the 5-char SHA-1 password-hash prefix) or any
+// password-derived string. Per go/secrets-and-sensitive-logging.md §1.
+func breachErrorCategory(err error) string {
+	var urlErr *url.Error
+	if errors.As(err, &urlErr) {
+		// urlErr.Op ("Get"/"Post") is safe; urlErr.URL is NOT (contains
+		// the SHA-1 prefix). Extract only the op + a coarse net category.
+		if urlErr.Timeout() {
+			return "timeout"
+		}
+		return fmt.Sprintf("%s: %s", urlErr.Op, classifyNetErr(urlErr.Err))
+	}
+	// Fallback: a coarse category, not the verbatim message.
+	return "transport error"
+}
+
+// classifyNetErr maps a low-level net error to a short, safe category.
+func classifyNetErr(err error) string {
+	var netErr net.Error
+	if errors.As(err, &netErr) && netErr.Timeout() {
+		return "timeout"
+	}
+	if errors.Is(err, context.Canceled) {
+		return "canceled"
+	}
+	if errors.Is(err, io.EOF) || errors.Is(err, syscall.ECONNRESET) {
+		return "connection reset"
+	}
+	return "network error"
 }

@@ -118,3 +118,58 @@ func TestIsBreached_ConnectionError_FailOpen(t *testing.T) {
 		t.Fatal("IsBreached: expected false on connection failure (fail-open)")
 	}
 }
+
+// TestIsBreached_APIUnreachable_LogNoURLNoPrefix proves the L1 fix: when
+// the HTTP request fails, the fail-open log line contains a sanitized
+// category, NOT the request URL (which carries the 5-char SHA-1 prefix of
+// the password — partial credential-derived data) and NOT the SHA-1
+// prefix itself. Per go/secrets-and-sensitive-logging.md §1.
+func TestIsBreached_APIUnreachable_LogNoURLNoPrefix(t *testing.T) {
+	password := "leaky-password-for-log-test"
+	sum := sha1.Sum([]byte(password))
+	full := strings.ToUpper(hex.EncodeToString(sum[:]))
+	prefix := full[:5] // the 5-char k-anonymity prefix that would be in the URL
+
+	// Point at a non-listening port to force a *url.Error carrying the
+	// request URL (which embeds the SHA-1 prefix).
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {}))
+	ts.Close() // closed -> connection refused -> *url.Error with URL
+
+	var logBuf bytes.Buffer
+	origOut := log.Writer()
+	log.SetOutput(&logBuf)
+	defer log.SetOutput(origOut)
+
+	c := NewClient(5 * time.Second)
+	c.baseURL = ts.URL
+
+	got, err := c.IsBreached(context.Background(), password)
+	if err != nil {
+		t.Fatalf("IsBreached: unexpected error on unreachable API: %v", err)
+	}
+	if got {
+		t.Fatal("IsBreached: expected false on unreachable API (fail-open)")
+	}
+
+	logged := logBuf.String()
+	// The log must announce the fail-open.
+	if !strings.Contains(logged, "breachcheck: API unreachable") {
+		t.Errorf("expected 'breachcheck: API unreachable' in log, got: %q", logged)
+	}
+	// The log must NOT contain the request URL (which carries the prefix).
+	if strings.Contains(logged, ts.URL) {
+		t.Errorf("log leaked the request URL (contains SHA-1 prefix): %q", logged)
+	}
+	// The log must NOT contain the 5-char SHA-1 prefix of the password.
+	if strings.Contains(logged, prefix) {
+		t.Errorf("log leaked the 5-char SHA-1 prefix %q: %q", prefix, logged)
+	}
+	// The log must NOT contain the full SHA-1 hash.
+	if strings.Contains(logged, full) {
+		t.Errorf("log leaked the full SHA-1 hash: %q", logged)
+	}
+	// The log must NOT contain the password itself.
+	if strings.Contains(logged, password) {
+		t.Errorf("log leaked the password: %q", logged)
+	}
+}

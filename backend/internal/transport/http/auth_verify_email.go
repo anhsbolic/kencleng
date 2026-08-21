@@ -2,6 +2,7 @@ package http
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/anhsbolic/kencleng/backend/internal/domain/account"
@@ -63,7 +64,16 @@ func ResendVerificationHandler(svc *account.Service) http.HandlerFunc {
 			return
 		}
 
-		_ = svc.ResendVerification(r.Context(), req.Email)
+		if err := svc.ResendVerification(r.Context(), req.Email); err != nil {
+			// Anti-enumeration: the response is still the identical 202
+			// generic (R14) — a 500 on the match branch would distinguish
+			// it from no-match, an enumeration leak. But the internal
+			// failure must be visible to ops: log a sanitized category, not
+			// the recipient (PII). The error chain's leaf is a DB driver
+			// error (SQLSTATE, constraint name; parameterized SQL, no PII
+			// values), safe to log server-side.
+			log.Printf("transport: resend verification failed (recipient redacted): %v", err)
+		}
 
 		// Always 202 generic — the service returns nil for both
 		// match and no-match branches (R13/R14).

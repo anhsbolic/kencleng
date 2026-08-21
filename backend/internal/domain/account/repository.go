@@ -46,16 +46,22 @@ type Repository interface {
 
 	// RedeemToken atomically marks a token used iff it is currently
 	// valid: used_at IS NULL AND revoked_at IS NULL AND expires_at > now()
-	// (full 3-clause predicate per INV-account-08 Statement).
-	// Returns true if exactly 1 row was affected (success); false if 0
-	// rows (not-found / already-used / revoked / expired). On false,
+	// (full 3-clause predicate per INV-account-08 Statement). On success
+	// (exactly 1 row affected) it returns the token's user_id and purpose
+	// via RETURNING — no second round-trip is needed. Returns ok=false if
+	// 0 rows were affected (not-found / already-used / revoked / expired);
 	// the caller disambiguates expired vs other via FindAuthTokenByHash.
+	//
+	// Takes the caller's tx so the subsequent SetUserVerified can run in
+	// the same transaction (S2 fix: redeem + set-verified are atomic — a
+	// set-verified failure rolls back the redeem, so the token is not
+	// burned without the identity being verified).
 	//
 	// The 3-clause guard is non-negotiable. The invariant's
 	// Verification field omits the revoked_at IS NULL clause (2-clause)
 	// — that is a documented spec error (techplan §14 Open Item #2).
 	// Use the Statement's 3-clause version. Do not edit the spec.
-	RedeemToken(ctx context.Context, tokenHash string) (bool, error)
+	RedeemToken(ctx context.Context, tx pgx.Tx, tokenHash string) (userID uuid.UUID, purpose string, ok bool, err error)
 
 	// SetUserVerified sets auth_identities.verified_at = verifiedAt for
 	// the single identity matching (userID, providerType). Called by
@@ -63,7 +69,10 @@ type Repository interface {
 	// user_id (not identity_id), so verification is keyed on
 	// (user_id, provider_type) — for the email_verification flow that is
 	// (userID, "email_password").
-	SetUserVerified(ctx context.Context, userID uuid.UUID, providerType string, verifiedAt time.Time) error
+	//
+	// Takes the caller's tx so it runs in the same transaction as
+	// RedeemToken (S2 fix: atomic redeem + set-verified).
+	SetUserVerified(ctx context.Context, tx pgx.Tx, userID uuid.UUID, providerType string, verifiedAt time.Time) error
 
 	// RevokeTokens sets revoked_at = now() for all unused, unrevoked
 	// tokens of (userID, purpose). Called by resend before issuing a new

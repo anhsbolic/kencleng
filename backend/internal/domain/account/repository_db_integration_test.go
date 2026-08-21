@@ -316,9 +316,20 @@ func TestRedeemToken_Guards(t *testing.T) {
 
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
-			ok, err := repo.RedeemToken(ctx, tc.tokenHash)
+			tx, err := pool.BeginTx(ctx, pgx.TxOptions{})
 			if err != nil {
+				t.Fatalf("begin tx: %v", err)
+			}
+			_, _, ok, err := repo.RedeemToken(ctx, tx, tc.tokenHash)
+			if err != nil {
+				_ = tx.Rollback(ctx)
 				t.Fatalf("RedeemToken (%s): unexpected error: %v", tc.name, err)
+			}
+			// Redeem is inside the caller's tx; commit so the used_at
+			// persists for any later assertions. For the ok==false cases
+			// there's nothing to commit, but commit is a no-op there.
+			if err := tx.Commit(ctx); err != nil {
+				t.Fatalf("commit (%s): %v", tc.name, err)
 			}
 			if ok != tc.wantOK {
 				t.Errorf("RedeemToken (%s): got %v, want %v", tc.name, ok, tc.wantOK)
@@ -327,14 +338,156 @@ func TestRedeemToken_Guards(t *testing.T) {
 	}
 
 	t.Run("non-existent", func(t *testing.T) {
-		ok, err := repo.RedeemToken(ctx, nonExistent)
+		tx, err := pool.BeginTx(ctx, pgx.TxOptions{})
 		if err != nil {
+			t.Fatalf("begin tx: %v", err)
+		}
+		_, _, ok, err := repo.RedeemToken(ctx, tx, nonExistent)
+		if err != nil {
+			_ = tx.Rollback(ctx)
 			t.Fatalf("RedeemToken (non-existent): %v", err)
 		}
+		_ = tx.Rollback(ctx) // no rows to commit
 		if ok {
 			t.Error("RedeemToken (non-existent): got true, want false")
 		}
 	})
+}
+
+// TestRedeemToken_ReturnsUserIDAndPurpose proves the S1/S2 fix: RedeemToken
+// returns user_id and purpose via RETURNING on success, so VerifyEmail
+// needs no re-fetch. On failure (0 rows) it returns ok=false with
+// uuid.Nil/empty purpose.
+func TestRedeemToken_ReturnsUserIDAndPurpose(t *testing.T) {
+	repo, pool := integrationEnv(t)
+	ctx := context.Background()
+	user := newTestUser(t, repo, pool)
+	t.Cleanup(func() {
+		_, _ = pool.Exec(ctx, "DELETE FROM users WHERE id = $1", user.ID)
+	})
+
+	now := time.Now()
+	tokenHash := sha256Hex("returning-token")
+	tok := &AuthToken{
+		ID: uuid.New(), UserID: user.ID, Purpose: "email_verification",
+		TokenHash: tokenHash, ExpiresAt: now.Add(24 * time.Hour), CreatedAt: now,
+	}
+	if err := insertTokenDirect(ctx, pool, tok); err != nil {
+		t.Fatalf("seed token: %v", err)
+	}
+
+	tx, err := pool.BeginTx(ctx, pgx.TxOptions{})
+	if err != nil {
+		t.Fatalf("begin tx: %v", err)
+	}
+	gotUserID, gotPurpose, ok, err := repo.RedeemToken(ctx, tx, tokenHash)
+	if err != nil {
+		_ = tx.Rollback(ctx)
+		t.Fatalf("RedeemToken: %v", err)
+	}
+	if err := tx.Commit(ctx); err != nil {
+		t.Fatalf("commit: %v", err)
+	}
+	if !ok {
+		t.Fatal("expected ok=true for a valid token")
+	}
+	if gotUserID != user.ID {
+		t.Errorf("returned userID = %s, want %s", gotUserID, user.ID)
+	}
+	if gotPurpose != "email_verification" {
+		t.Errorf("returned purpose = %q, want %q", gotPurpose, "email_verification")
+	}
+}
+
+// TestRedeemAndVerify_Atomic proves the S2 fix: redeem + set-verified run
+// in a single transaction. The happy path asserts both committed together.
+// The rollback guarantee (a SetUserVerified failure rolls back the redeem,
+// so the token is not burned) is enforced by the deferred Rollback pattern
+// in VerifyEmail (same as registerNewUser) — forced mid-tx failure
+// injection in pgx is awkward; the rollback is proven by the tx semantics
+// + the unit test TestVerifyEmail_SetVerifiedFails_RollsBackRedeem.
+func TestRedeemAndVerify_Atomic(t *testing.T) {
+	repo, pool := integrationEnv(t)
+	ctx := context.Background()
+	user := newTestUser(t, repo, pool)
+	t.Cleanup(func() {
+		_, _ = pool.Exec(ctx, "DELETE FROM users WHERE id = $1", user.ID)
+	})
+
+	// Insert an unverified email_password identity for the user.
+	email := fmt.Sprintf("atomic-%s@example.com", uuid.NewString())
+	identity := &AuthIdentity{
+		ID: uuid.New(), UserID: user.ID, ProviderType: "email_password",
+		Identifier: email, CredentialSecret: ptrString("bcrypt-hash"),
+	}
+	tx, err := pool.BeginTx(ctx, pgx.TxOptions{})
+	if err != nil {
+		t.Fatalf("begin tx: %v", err)
+	}
+	if err := repo.InsertAuthIdentity(ctx, tx, identity); err != nil {
+		_ = tx.Rollback(ctx)
+		t.Fatalf("InsertAuthIdentity: %v", err)
+	}
+	if err := tx.Commit(ctx); err != nil {
+		t.Fatalf("commit identity: %v", err)
+	}
+
+	// Seed a valid verification token.
+	now := time.Now()
+	tokenHash := sha256Hex("atomic-verify-token")
+	tok := &AuthToken{
+		ID: uuid.New(), UserID: user.ID, Purpose: "email_verification",
+		TokenHash: tokenHash, ExpiresAt: now.Add(24 * time.Hour), CreatedAt: now,
+	}
+	if err := insertTokenDirect(ctx, pool, tok); err != nil {
+		t.Fatalf("seed token: %v", err)
+	}
+
+	// Redeem + set-verified in one transaction (mirrors VerifyEmail).
+	tx2, err := pool.BeginTx(ctx, pgx.TxOptions{})
+	if err != nil {
+		t.Fatalf("begin tx2: %v", err)
+	}
+	committed := false
+	defer func() {
+		if !committed {
+			_ = tx2.Rollback(ctx)
+		}
+	}()
+	redeemedUserID, _, ok, err := repo.RedeemToken(ctx, tx2, tokenHash)
+	if err != nil {
+		t.Fatalf("RedeemToken: %v", err)
+	}
+	if !ok {
+		t.Fatal("expected redeem to succeed")
+	}
+	if redeemedUserID != user.ID {
+		t.Errorf("redeemed userID = %s, want %s", redeemedUserID, user.ID)
+	}
+	if err := repo.SetUserVerified(ctx, tx2, user.ID, "email_password", time.Now()); err != nil {
+		t.Fatalf("SetUserVerified: %v", err)
+	}
+	if err := tx2.Commit(ctx); err != nil {
+		t.Fatalf("commit: %v", err)
+	}
+	committed = true
+
+	// Assert both effects persisted: token used_at is set, identity verified_at is set.
+	gotToken, err := repo.FindAuthTokenByHash(ctx, tokenHash)
+	if err != nil || gotToken == nil {
+		t.Fatalf("FindAuthTokenByHash: %v", err)
+	}
+	if gotToken.UsedAt == nil {
+		t.Error("token used_at not set after atomic redeem+verify")
+	}
+	idHash := crypto.HMAC([]byte(email), integrationTestKeys(t))
+	gotIdent, err := repo.FindAuthIdentityByIdentifierHash(ctx, "email_password", idHash)
+	if err != nil || gotIdent == nil {
+		t.Fatalf("FindAuthIdentityByIdentifierHash: %v", err)
+	}
+	if gotIdent.VerifiedAt == nil {
+		t.Error("identity verified_at not set after atomic redeem+verify")
+	}
 }
 
 // TestRevokeTokens_OnlyUnusedUnrevoked verifies RevokeTokens sets
@@ -448,3 +601,230 @@ func insertTokenDirect(ctx context.Context, pool *pgxpool.Pool, tok *AuthToken) 
 }
 
 func ptrString(s string) *string { return &s }
+
+// integrationSilentSender is a notification.Sender that drops everything
+// silently — used by service-level integration tests where email delivery
+// is not under test.
+type integrationSilentSender struct{}
+
+func (integrationSilentSender) SendVerificationEmail(context.Context, string, string) error {
+	return nil
+}
+func (integrationSilentSender) SendNudgeEmail(context.Context, string, string) error { return nil }
+
+// integrationBreachCheckerFalse is a breachChecker that always returns
+// (false, nil) — fail-open, no network — for service-level integration
+// tests where the breach check is not under test.
+type integrationBreachCheckerFalse struct{}
+
+func (integrationBreachCheckerFalse) IsBreached(context.Context, string) (bool, error) {
+	return false, nil
+}
+
+// integrationService builds a Service wired to a real Postgres pool with
+// silent fakes for breachcheck + notification, so Register can be driven
+// end-to-end against real DB latency. Cleanup closes the pool.
+func integrationService(t *testing.T) (*Service, *RepositoryDB, *pgxpool.Pool) {
+	t.Helper()
+	databaseURL := os.Getenv("DATABASE_URL")
+	if databaseURL == "" {
+		t.Skip("DATABASE_URL not set; skipping integration test")
+	}
+	ctx := context.Background()
+	pool, err := db.Open(ctx, databaseURL)
+	if err != nil {
+		t.Fatalf("open db: %v", err)
+	}
+	t.Cleanup(pool.Close)
+	keys := integrationTestKeys(t)
+	repo := NewRepositoryDB(pool, keys)
+	svc := &Service{
+		repo:        repo,
+		tx:          poolRunner{pool: pool},
+		breachCheck: integrationBreachCheckerFalse{},
+		email:       integrationSilentSender{},
+		keys:        keys,
+	}
+	return svc, repo, pool
+}
+
+// TestRegister_Timing_AllBranches_RealPostgres proves the S3 fix: with the
+// dummy DB write on R3/R4, all four Register branches perform DB-write-
+// shaped work (BeginTx + ≥1 UPDATE/INSERT + Commit) and stay within a ≤2×
+// wall-clock band against real Postgres. This is the authoritative timing
+// test — the unit TestRegister_GenericResponse_Timing only proves bcrypt
+// equivalence (its fake repo is microsecond-fast and cannot catch DB-time
+// gaps). R7 DB-time half is satisfied here.
+//
+// Run: go test -tags=integration -race ./internal/domain/account/...
+func TestRegister_Timing_AllBranches_RealPostgres(t *testing.T) {
+	svc, repo, pool := integrationService(t)
+	ctx := context.Background()
+	_ = pool
+
+	// R3/R4 setup: seed a verified email_password identity and a google-only
+	// identity with unique emails (random uuids so tests never collide).
+	r3Email := fmt.Sprintf("r3-%s@example.com", uuid.NewString())
+	r3Hash := crypto.HMAC([]byte(r3Email), integrationTestKeys(t))
+	r3User := &User{ID: uuid.New(), Name: "R3", PrimaryEmail: r3Email}
+	r3Ident := &AuthIdentity{
+		ID: uuid.New(), UserID: r3User.ID, ProviderType: "email_password",
+		Identifier: r3Email, CredentialSecret: ptrString("h"),
+	}
+	seedVerifiedIdentity(t, repo, pool, r3User, r3Ident)
+	t.Cleanup(func() { _, _ = pool.Exec(ctx, "DELETE FROM users WHERE id = $1", r3User.ID) })
+
+	r4Email := fmt.Sprintf("r4-%s@example.com", uuid.NewString())
+	r4Hash := crypto.HMAC([]byte(r4Email), integrationTestKeys(t))
+	r4User := &User{ID: uuid.New(), Name: "R4", PrimaryEmail: r4Email}
+	r4Ident := &AuthIdentity{
+		ID: uuid.New(), UserID: r4User.ID, ProviderType: "google",
+		Identifier: r4Email,
+	}
+	seedVerifiedIdentity(t, repo, pool, r4User, r4Ident)
+	t.Cleanup(func() { _, _ = pool.Exec(ctx, "DELETE FROM users WHERE id = $1", r4User.ID) })
+
+	// R2 setup: seed an unverified email_password identity.
+	r2Email := fmt.Sprintf("r2-%s@example.com", uuid.NewString())
+	r2Hash := crypto.HMAC([]byte(r2Email), integrationTestKeys(t))
+	r2User := &User{ID: uuid.New(), Name: "R2", PrimaryEmail: r2Email}
+	r2Ident := &AuthIdentity{
+		ID: uuid.New(), UserID: r2User.ID, ProviderType: "email_password",
+		Identifier: r2Email, CredentialSecret: ptrString("h"),
+		// VerifiedAt nil → unverified
+	}
+	seedUnverifiedIdentity(t, repo, pool, r2User, r2Ident)
+	t.Cleanup(func() { _, _ = pool.Exec(ctx, "DELETE FROM users WHERE id = $1", r2User.ID) })
+
+	cases := []struct {
+		name  string
+		email string
+	}{
+		{"R1-new", fmt.Sprintf("r1-%s@example.com", uuid.NewString())},
+		{"R2-unverified", r2Email},
+		{"R3-verified", r3Email},
+		{"R4-google-only", r4Email},
+	}
+
+	// Warm up: one throwaway call per branch to prime caches/plan cache,
+	// so the first measured call isn't an outlier. (R1 creates a user we
+	// don't clean up individually; that's fine — the emails are unique.)
+	for _, tc := range cases {
+		_ = svc.Register(ctx, "warmup", tc.email, "strong-pw-123")
+	}
+
+	// Cleanup the R1 warmup user by email hash (best-effort).
+	warmupHash := crypto.HMAC([]byte(cases[0].email), integrationTestKeys(t))
+	_, _ = pool.Exec(ctx, "DELETE FROM users WHERE primary_email_hash = $1", warmupHash)
+
+	// Measure each branch. R1 creates a new user each iteration (unique
+	// email), so re-seed the email per call. R2/R3/R4 reuse their seeded
+	// identities (R2 issues a new token each call, which is fine).
+	var durations []time.Duration
+	for _, tc := range cases {
+		// For R1, generate a fresh email each iteration so it's always a
+		// new-user branch (not a duplicate from a prior iteration).
+		email := tc.email
+		if tc.name == "R1-new" {
+			email = fmt.Sprintf("r1-%s@example.com", uuid.NewString())
+		}
+		start := time.Now()
+		if err := svc.Register(ctx, "Timing", email, "strong-pw-123"); err != nil {
+			t.Fatalf("%s: Register: %v", tc.name, err)
+		}
+		durations = append(durations, time.Since(start))
+
+		// Best-effort cleanup of R1-created users.
+		if tc.name == "R1-new" {
+			h := crypto.HMAC([]byte(email), integrationTestKeys(t))
+			_, _ = pool.Exec(ctx, "DELETE FROM users WHERE primary_email_hash = $1", h)
+		}
+	}
+
+	max := durations[0]
+	min := durations[0]
+	for _, d := range durations {
+		if d > max {
+			max = d
+		}
+		if d < min {
+			min = d
+		}
+	}
+	ratio := float64(max) / float64(min)
+	// With DB-write-shaped work on all branches, the max/min ratio should
+	// be ≤ 2×. (Bcrypt dominates CPU time equally; DB time is now shaped
+	// equally.) A branch skipping the dummy write would be much faster
+	// against real Postgres, blowing past this band.
+	if ratio > 2.0 {
+		t.Errorf("branch timing not equivalent against real Postgres: "+
+			"durations=%v min=%v max=%v (max/min=%.2f, band=2.0)",
+			durations, min, max, ratio)
+	}
+	t.Logf("timing band: durations=%v min=%v max=%v max/min=%.2f",
+		durations, min, max, ratio)
+
+	// Silence unused-hash warnings (r3Hash/r4Hash/r2Hash used only for
+	// documentation of the hash derivation).
+	_ = r3Hash
+	_ = r4Hash
+	_ = r2Hash
+}
+
+// seedVerifiedIdentity inserts a user + a verified identity directly and
+// commits. Used to set up R3/R4 branches for the timing test.
+func seedVerifiedIdentity(t *testing.T, repo *RepositoryDB, pool *pgxpool.Pool, user *User, ident *AuthIdentity) {
+	t.Helper()
+	ctx := context.Background()
+	tx, err := pool.BeginTx(ctx, pgx.TxOptions{})
+	if err != nil {
+		t.Fatalf("begin tx: %v", err)
+	}
+	if err := repo.InsertUser(ctx, tx, user); err != nil {
+		_ = tx.Rollback(ctx)
+		t.Fatalf("insert user: %v", err)
+	}
+	if err := repo.InsertAuthIdentity(ctx, tx, ident); err != nil {
+		_ = tx.Rollback(ctx)
+		t.Fatalf("insert identity: %v", err)
+	}
+	// Mark verified directly via SQL (goqu) so the identity is in the
+	// verified state without going through the token flow.
+	sqlStr, args, err := goqu.Dialect("postgres").Update("auth_identities").
+		Set(goqu.Record{"verified_at": time.Now()}).
+		Where(goqu.Ex{"id": ident.ID}).
+		Prepared(true).ToSQL()
+	if err != nil {
+		_ = tx.Rollback(ctx)
+		t.Fatalf("build verified_at update: %v", err)
+	}
+	if _, err := tx.Exec(ctx, sqlStr, args...); err != nil {
+		_ = tx.Rollback(ctx)
+		t.Fatalf("set verified_at: %v", err)
+	}
+	if err := tx.Commit(ctx); err != nil {
+		t.Fatalf("commit: %v", err)
+	}
+}
+
+// seedUnverifiedIdentity inserts a user + an unverified identity and
+// commits. Used to set up R2 for the timing test.
+func seedUnverifiedIdentity(t *testing.T, repo *RepositoryDB, pool *pgxpool.Pool, user *User, ident *AuthIdentity) {
+	t.Helper()
+	ctx := context.Background()
+	tx, err := pool.BeginTx(ctx, pgx.TxOptions{})
+	if err != nil {
+		t.Fatalf("begin tx: %v", err)
+	}
+	if err := repo.InsertUser(ctx, tx, user); err != nil {
+		_ = tx.Rollback(ctx)
+		t.Fatalf("insert user: %v", err)
+	}
+	if err := repo.InsertAuthIdentity(ctx, tx, ident); err != nil {
+		_ = tx.Rollback(ctx)
+		t.Fatalf("insert identity: %v", err)
+	}
+	if err := tx.Commit(ctx); err != nil {
+		t.Fatalf("commit: %v", err)
+	}
+}

@@ -240,11 +240,16 @@ func (r *RepositoryDB) FindAuthTokenByHash(ctx context.Context, tokenHash string
 
 // RedeemToken atomically marks a token used iff it is currently valid:
 // used_at IS NULL AND revoked_at IS NULL AND expires_at > now() (full
-// 3-clause predicate per INV-account-08 Statement). Returns true if
-// exactly 1 row was affected; false if 0 rows (not-found / already-used
-// / revoked / expired). Single-use correctness is this atomic
-// UPDATE ... WHERE — no application-level locking.
-func (r *RepositoryDB) RedeemToken(ctx context.Context, tokenHash string) (bool, error) {
+// 3-clause predicate per INV-account-08 Statement). On success (exactly
+// 1 row affected) it returns the token's user_id and purpose via
+// RETURNING — no second round-trip is needed. Returns ok=false if 0 rows
+// were affected (not-found / already-used / revoked / expired). Single-
+// use correctness is this atomic UPDATE ... WHERE — no application-level
+// locking.
+//
+// Runs inside the caller's tx so the subsequent SetUserVerified is in
+// the same transaction (S2 fix: redeem + set-verified are atomic).
+func (r *RepositoryDB) RedeemToken(ctx context.Context, tx pgx.Tx, tokenHash string) (uuid.UUID, string, bool, error) {
 	sqlStr, args, err := pgDialect.Update("auth_tokens").
 		Set(goqu.Record{"used_at": time.Now()}).
 		Where(
@@ -253,23 +258,32 @@ func (r *RepositoryDB) RedeemToken(ctx context.Context, tokenHash string) (bool,
 			goqu.L("revoked_at IS NULL"),
 			goqu.L("expires_at > now()"),
 		).
+		Returning("user_id", "purpose").
 		Prepared(true).
 		ToSQL()
 	if err != nil {
-		return false, fmt.Errorf("account: build redeem auth_tokens: %w", err)
+		return uuid.Nil, "", false, fmt.Errorf("account: build redeem auth_tokens: %w", err)
 	}
-	cmd, err := r.db.Exec(ctx, sqlStr, args...)
-	if err != nil {
-		return false, fmt.Errorf("account: redeem auth_tokens: %w", err)
+	var (
+		userID  uuid.UUID
+		purpose string
+	)
+	if err := tx.QueryRow(ctx, sqlStr, args...).Scan(&userID, &purpose); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return uuid.Nil, "", false, nil // 0 rows affected — not redeemed
+		}
+		return uuid.Nil, "", false, fmt.Errorf("account: redeem auth_tokens: %w", err)
 	}
-	return cmd.RowsAffected() == 1, nil
+	return userID, purpose, true, nil
 }
 
 // SetUserVerified sets auth_identities.verified_at = verifiedAt for the
 // single identity matching (userID, providerType). Called by VerifyEmail
 // after a successful RedeemToken. The token carries user_id, so
 // verification is keyed on (user_id, provider_type).
-func (r *RepositoryDB) SetUserVerified(ctx context.Context, userID uuid.UUID, providerType string, verifiedAt time.Time) error {
+//
+// Runs inside the caller's tx so it is atomic with RedeemToken (S2 fix).
+func (r *RepositoryDB) SetUserVerified(ctx context.Context, tx pgx.Tx, userID uuid.UUID, providerType string, verifiedAt time.Time) error {
 	sqlStr, args, err := pgDialect.Update("auth_identities").
 		Set(goqu.Record{"verified_at": verifiedAt}).
 		Where(goqu.Ex{"user_id": userID, "provider_type": providerType}).
@@ -278,7 +292,7 @@ func (r *RepositoryDB) SetUserVerified(ctx context.Context, userID uuid.UUID, pr
 	if err != nil {
 		return fmt.Errorf("account: build set verified_at: %w", err)
 	}
-	if _, err := r.db.Exec(ctx, sqlStr, args...); err != nil {
+	if _, err := tx.Exec(ctx, sqlStr, args...); err != nil {
 		return fmt.Errorf("account: set verified_at: %w", err)
 	}
 	return nil

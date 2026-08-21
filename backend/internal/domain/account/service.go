@@ -137,7 +137,13 @@ func (s *Service) Register(ctx context.Context, name, email, password string) er
 		}
 		if google != nil {
 			// R4 / R17: Google-only conflict. No new user, no token.
-			// Send nudge after the (read-only) DB round-trip above.
+			// DB-write-shaped no-op for timing equivalence with R1/R2
+			// (R7 DB-time half): a revoke against a non-existent user_id
+			// affects 0 rows but has the same UPDATE+commit cost shape
+			// as R2's real revoke. Then the nudge after.
+			if err := s.dummyWrite(ctx); err != nil {
+				return fmt.Errorf("account: timing write: %w", err)
+			}
 			s.sendNudge(ctx, email, notification.NudgeGoogleOnly)
 			return nil
 		}
@@ -155,11 +161,46 @@ func (s *Service) Register(ctx context.Context, name, email, password string) er
 		return nil
 
 	default:
-		// R3: verified existing. No new record. The lookup above is the
-		// DB round-trip; send a password-reset nudge.
+		// R3: verified existing. No new record. DB-write-shaped no-op for
+		// timing equivalence with R1/R2 (R7 DB-time half): a revoke
+		// against a non-existent user_id affects 0 rows but has the same
+		// UPDATE+commit cost shape as R2's real revoke. Then the
+		// password-reset nudge.
+		if err := s.dummyWrite(ctx); err != nil {
+			return fmt.Errorf("account: timing write: %w", err)
+		}
 		s.sendNudge(ctx, email, notification.NudgePasswordReset)
 		return nil
 	}
+}
+
+// dummyWrite performs a DB-write-shaped no-op for anti-enumeration timing
+// equivalence (R7 DB-time half). It begins a tx, calls RevokeTokens with a
+// synthetic (non-existent) user_id so the UPDATE affects 0 rows, and
+// commits — same BeginTx + UPDATE + Commit round-trip shape as R2's real
+// revoke, but touching no real rows. R3/R4 call this so their wall-clock
+// DB time matches R1/R2; without it, the no-op branches are measurably
+// faster against real Postgres, leaking "verified/google-only" (fast) vs
+// "new/unverified" (slow) — an enumeration side-channel.
+func (s *Service) dummyWrite(ctx context.Context) error {
+	tx, err := s.tx.BeginTx(ctx)
+	if err != nil {
+		return fmt.Errorf("account: begin tx: %w", err)
+	}
+	committed := false
+	defer func() {
+		if !committed {
+			_ = tx.Rollback(ctx)
+		}
+	}()
+	if err := s.repo.RevokeTokens(ctx, tx, uuid.New(), purposeEmailVerify); err != nil {
+		return fmt.Errorf("account: dummy revoke: %w", err)
+	}
+	if err := tx.Commit(ctx); err != nil {
+		return fmt.Errorf("account: commit dummy: %w", err)
+	}
+	committed = true
+	return nil
 }
 
 // registerNewUser inserts a new User + AuthIdentity + AuthToken in a
@@ -285,28 +326,51 @@ func (s *Service) issueNewVerificationToken(ctx context.Context, userID uuid.UUI
 	return plainToken, nil
 }
 
-// VerifyEmail orchestrates R8-R12. Single-use correctness is delegated
-// to the repository's atomic RedeemToken (the 3-clause INV-account-08
-// guard) — the service never does a read-then-write on tokens.
+// VerifyEmail orchestrates R8-R12. Redeem + set-verified run in a single
+// transaction (S2 fix): a SetUserVerified failure rolls back the redeem,
+// so the token is not burned without the identity being verified. The
+// redeemed user_id comes back from RedeemToken via RETURNING — no
+// re-fetch that could silently fail (S1 fix: no userIDForToken path).
+// Single-use correctness is still the atomic 3-clause UPDATE ... WHERE
+// inside RedeemToken — no application-level locking.
 func (s *Service) VerifyEmail(ctx context.Context, token string) error {
 	tokenHash := sha256Hex(token)
 
-	ok, err := s.repo.RedeemToken(ctx, tokenHash)
+	tx, err := s.tx.BeginTx(ctx)
+	if err != nil {
+		return fmt.Errorf("account: begin tx: %w", err)
+	}
+	committed := false
+	defer func() {
+		if !committed {
+			_ = tx.Rollback(ctx)
+		}
+	}()
+
+	userID, _, ok, err := s.repo.RedeemToken(ctx, tx, tokenHash)
 	if err != nil {
 		return fmt.Errorf("account: redeem token: %w", err)
 	}
 	if ok {
 		// R8: valid token redeemed. Set the user's email_password
-		// identity verified_at. The token carries user_id; verification
-		// is keyed on (user_id, provider_type=email_password).
-		if err := s.repo.SetUserVerified(ctx, s.userIDForToken(ctx, tokenHash), providerEmailPassword, time.Now()); err != nil {
+		// identity verified_at. The userID comes from RedeemToken's
+		// RETURNING — no re-fetch. If this fails, the deferred
+		// Rollback undoes the redeem (token not burned, user can retry).
+		if err := s.repo.SetUserVerified(ctx, tx, userID, providerEmailPassword, time.Now()); err != nil {
 			return fmt.Errorf("account: set verified: %w", err)
 		}
-		log.Printf("account: email verified (token redacted)")
+		if err := tx.Commit(ctx); err != nil {
+			return fmt.Errorf("account: commit verify: %w", err)
+		}
+		committed = true
+
+		log.Printf("account: email verified user_id=%s (token redacted)", userID)
 		return nil
 	}
 
 	// !ok: disambiguate expired (R9) vs not-found/used/revoked (R10/R11).
+	// This is a read after the tx rolled back (nothing to undo on the
+	// ok==false path), so it runs outside the redeem tx.
 	t, err := s.repo.FindAuthTokenByHash(ctx, tokenHash)
 	if err != nil {
 		return fmt.Errorf("account: find token: %w", err)
@@ -315,22 +379,6 @@ func (s *Service) VerifyEmail(ctx context.Context, token string) error {
 		return ErrTokenExpired
 	}
 	return ErrTokenNotFound
-}
-
-// userIDForToken returns the user_id for a just-redeemed token. After a
-// successful RedeemToken the row's used_at is set; we re-read it to get
-// user_id. (RedeemToken returns only a bool to keep its atomic guard
-// single-purpose.)
-func (s *Service) userIDForToken(ctx context.Context, tokenHash string) uuid.UUID {
-	t, err := s.repo.FindAuthTokenByHash(ctx, tokenHash)
-	if err != nil || t == nil {
-		// Should not happen immediately after a successful redeem; if it
-		// does, return a zero UUID and let SetUserVerified affect zero
-		// rows rather than crash. Logged for ops.
-		log.Printf("account: could not re-fetch redeemed token (token redacted)")
-		return uuid.Nil
-	}
-	return t.UserID
 }
 
 // ResendVerification orchestrates R13-R14. Rate limiting (R15) is
@@ -381,8 +429,11 @@ func (s *Service) validatePassword(ctx context.Context, password string) error {
 func (s *Service) sendVerification(ctx context.Context, email, plainToken string) {
 	if err := s.email.SendVerificationEmail(ctx, email, plainToken); err != nil {
 		// Post-commit email failure is non-fatal: the DB state is
-		// correct and the user can resend. Log the fact, not the token.
-		log.Printf("account: send verification email failed (recipient redacted): %v", err)
+		// correct and the user can resend. Log a sanitized category,
+		// not the raw error — a real SMTP error can embed the recipient
+		// or token. Per go/secrets-and-sensitive-logging.md §1.
+		log.Printf("account: send verification email failed (recipient redacted): %s",
+			notificationErrorCategory(err))
 	}
 }
 
@@ -390,8 +441,26 @@ func (s *Service) sendVerification(ctx context.Context, email, plainToken string
 // sender but never logged by it (FakeSender redacts).
 func (s *Service) sendNudge(ctx context.Context, email, nudgeType string) {
 	if err := s.email.SendNudgeEmail(ctx, email, nudgeType); err != nil {
-		log.Printf("account: send nudge email failed type=%s: %v", nudgeType, err)
+		// Same sanitization as sendVerification: a real SMTP error can
+		// embed the recipient. nudgeType is a package constant, safe.
+		log.Printf("account: send nudge email failed type=%s (recipient redacted): %s",
+			nudgeType, notificationErrorCategory(err))
 	}
+}
+
+// notificationErrorCategory reduces a notification-sender error to a
+// safe, PII-free category string for logging. It never returns
+// err.Error() verbatim — a real SMTP error can embed the recipient email
+// or token. Per go/secrets-and-sensitive-logging.md §1.
+func notificationErrorCategory(err error) string {
+	// A minimal timeout check for errors that implement the timeout
+	// interface (net package convention). Anything else gets a coarse
+	// category — never the raw message.
+	var t interface{ Timeout() bool }
+	if errors.As(err, &t) && t.Timeout() {
+		return "timeout"
+	}
+	return "send failed"
 }
 
 // generateToken produces a user-facing plain token and its stored

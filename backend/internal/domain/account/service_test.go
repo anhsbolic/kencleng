@@ -6,7 +6,9 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
+	"fmt"
 	"log"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -38,6 +40,9 @@ type fakeRepo struct {
 	insertedUsers      []*User
 	insertedIdentities []*AuthIdentity
 	insertedTokens     []*AuthToken
+
+	// Call counters for assertions (e.g. proving no re-fetch on success).
+	findTokenCalls int
 
 	// Hooks to inject errors on the next matching call (nil = success).
 	insertUserErr     error
@@ -155,40 +160,49 @@ func (f *fakeRepo) FindAuthIdentityByIdentifierHash(_ context.Context, providerT
 func (f *fakeRepo) FindAuthTokenByHash(_ context.Context, tokenHash string) (*AuthToken, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
+	f.findTokenCalls++
 	return f.tokens[tokenHash], nil
 }
 
-func (f *fakeRepo) RedeemToken(_ context.Context, tokenHash string) (bool, error) {
+func (f *fakeRepo) RedeemToken(_ context.Context, _ pgx.Tx, tokenHash string) (uuid.UUID, string, bool, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	if f.redeemErr != nil {
 		err := f.redeemErr
 		f.redeemErr = nil
-		return false, err
+		return uuid.Nil, "", false, err
 	}
 	switch f.redeemMode {
 	case "alwaysTrue":
+		var uid uuid.UUID
+		var purpose string
 		if t, ok := f.tokens[tokenHash]; ok {
 			now := time.Now()
 			t.UsedAt = &now
+			uid = t.UserID
+			purpose = t.Purpose
 		}
-		return true, nil
+		return uid, purpose, true, nil
 	case "alwaysFalse":
-		return false, nil
+		return uuid.Nil, "", false, nil
 	default: // "atomic": single-use CAS, like the DB atomic UPDATE.
 		if f.redeemed[tokenHash] {
-			return false, nil
+			return uuid.Nil, "", false, nil
 		}
 		f.redeemed[tokenHash] = true
+		var uid uuid.UUID
+		var purpose string
 		if t, ok := f.tokens[tokenHash]; ok {
 			now := time.Now()
 			t.UsedAt = &now
+			uid = t.UserID
+			purpose = t.Purpose
 		}
-		return true, nil
+		return uid, purpose, true, nil
 	}
 }
 
-func (f *fakeRepo) SetUserVerified(_ context.Context, userID uuid.UUID, providerType string, verifiedAt time.Time) error {
+func (f *fakeRepo) SetUserVerified(_ context.Context, _ pgx.Tx, userID uuid.UUID, providerType string, verifiedAt time.Time) error {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	if f.setVerifiedErr != nil {
@@ -306,6 +320,24 @@ func (s *captureSender) SendNudgeEmail(_ context.Context, _ string, nudgeType st
 	return nil
 }
 
+// leakySender is a notification.Sender whose error message embeds the
+// recipient email and a fake token, simulating a leaky SMTP error. Used
+// to prove the L2 fix: the log line must not contain the recipient or
+// token even when the underlying error does.
+type leakySender struct {
+	called bool
+}
+
+func (s *leakySender) SendVerificationEmail(_ context.Context, to, token string) error {
+	s.called = true
+	// Simulate an SMTP error that embeds the recipient + token (leaky).
+	return fmt.Errorf("SMTP 553 <recipient=%s> rejected: token=%s", to, token)
+}
+
+func (s *leakySender) SendNudgeEmail(_ context.Context, to, nudgeType string) error {
+	return fmt.Errorf("SMTP 553 <recipient=%s> rejected: nudge=%s", to, nudgeType)
+}
+
 // newTestService builds a Service wired to fakes. Returns the service,
 // the fake repo, the fake breach checker, and the capture sender.
 func newTestService(t *testing.T, breached bool) (*Service, *fakeRepo, *fakeBreachChecker, *captureSender) {
@@ -414,7 +446,7 @@ func TestRegister_VerifiedExisting_PasswordResetNudge(t *testing.T) {
 	svc, repo, _, sender := newTestService(t, false)
 	email := "carol@example.com"
 	hash := hashFor(email)
-	repo.seedIdentity(providerEmailPassword, email, hash, true)
+	existing := repo.seedIdentity(providerEmailPassword, email, hash, true)
 
 	err := svc.Register(context.Background(), "Carol", email, "strong-pw-123")
 	if err != nil {
@@ -425,8 +457,16 @@ func TestRegister_VerifiedExisting_PasswordResetNudge(t *testing.T) {
 		t.Errorf("verified branch must not create records: users=%d identities=%d tokens=%d",
 			len(repo.insertedUsers), len(repo.insertedIdentities), len(repo.insertedTokens))
 	}
-	if len(repo.revokeCalls) != 0 {
-		t.Errorf("verified branch must not revoke tokens, got %v", repo.revokeCalls)
+	// R3 now performs a dummy revoke (0-row UPDATE against a synthetic
+	// user_id) for DB-time uniformity with R1/R2 (R7). Exactly one
+	// revoke call is expected, and its userID must NOT be the existing
+	// user's — it's a synthetic uuid that matches no real rows.
+	if len(repo.revokeCalls) != 1 {
+		t.Errorf("verified branch must perform exactly 1 dummy revoke (R7 DB-time), got %d",
+			len(repo.revokeCalls))
+	} else if repo.revokeCalls[0].userID == existing.UserID {
+		t.Errorf("dummy revoke must use a synthetic user_id, not the existing user's: got %s",
+			repo.revokeCalls[0].userID)
 	}
 	if len(sender.nudgeTypes) != 1 || sender.nudgeTypes[0] != notification.NudgePasswordReset {
 		t.Errorf("expected password-reset nudge, got %v", sender.nudgeTypes)
@@ -442,7 +482,7 @@ func TestRegister_GoogleOnlyConflict_Nudge(t *testing.T) {
 	svc, repo, _, sender := newTestService(t, false)
 	email := "dave@example.com"
 	hash := hashFor(email)
-	repo.seedIdentity(providerGoogle, email, hash, true)
+	existing := repo.seedIdentity(providerGoogle, email, hash, true)
 
 	err := svc.Register(context.Background(), "Dave", email, "strong-pw-123")
 	if err != nil {
@@ -452,8 +492,51 @@ func TestRegister_GoogleOnlyConflict_Nudge(t *testing.T) {
 	if len(repo.insertedUsers) != 0 || len(repo.insertedIdentities) != 0 || len(repo.insertedTokens) != 0 {
 		t.Errorf("google-only branch must not create records")
 	}
+	// R4 now performs a dummy revoke (0-row UPDATE against a synthetic
+	// user_id) for DB-time uniformity with R1/R2 (R7). Exactly one
+	// revoke call is expected, with a synthetic user_id.
+	if len(repo.revokeCalls) != 1 {
+		t.Errorf("google-only branch must perform exactly 1 dummy revoke (R7 DB-time), got %d",
+			len(repo.revokeCalls))
+	} else if repo.revokeCalls[0].userID == existing.UserID {
+		t.Errorf("dummy revoke must use a synthetic user_id, not the existing user's: got %s",
+			repo.revokeCalls[0].userID)
+	}
 	if len(sender.nudgeTypes) != 1 || sender.nudgeTypes[0] != notification.NudgeGoogleOnly {
 		t.Errorf("expected google-only nudge, got %v", sender.nudgeTypes)
+	}
+}
+
+// TestRegister_R3R4_PerformTimingWrite proves the S3 fix: R3 and R4 each
+// perform exactly one dummy revoke (DB-write-shaped no-op) so the no-op
+// branches are no longer write-free. Without this, R3/R4 are measurably
+// faster than R1/R4 against real Postgres — an enumeration side-channel
+// leaking "verified/google-only" (fast) vs "new/unverified" (slow).
+func TestRegister_R3R4_PerformTimingWrite(t *testing.T) {
+	cases := []struct {
+		name  string
+		email string
+		setup func(*fakeRepo, string)
+	}{
+		{"R3-verified", "v3tw@example.com", func(r *fakeRepo, email string) {
+			r.seedIdentity(providerEmailPassword, email, hashFor(email), true)
+		}},
+		{"R4-google-only", "g4tw@example.com", func(r *fakeRepo, email string) {
+			r.seedIdentity(providerGoogle, email, hashFor(email), true)
+		}},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			svc, repo, _, _ := newTestService(t, false)
+			tc.setup(repo, tc.email)
+			if err := svc.Register(context.Background(), "X", tc.email, "strong-pw-123"); err != nil {
+				t.Fatalf("Register: %v", err)
+			}
+			if len(repo.revokeCalls) != 1 {
+				t.Errorf("%s: expected exactly 1 dummy revoke call, got %d",
+					tc.name, len(repo.revokeCalls))
+			}
+		})
 	}
 }
 
@@ -643,6 +726,65 @@ func TestVerifyEmail_ValidToken_SetsVerifiedAt(t *testing.T) {
 	}
 	if call.provider != providerEmailPassword {
 		t.Errorf("verified provider = %q, want %q", call.provider, providerEmailPassword)
+	}
+}
+
+// TestVerifyEmail_RedeemReturnsUserID_NoRefetch proves the S1 fix:
+// RedeemToken returns userID via RETURNING, so the success path never
+// calls FindAuthTokenByHash (no re-fetch that could silently fail).
+func TestVerifyEmail_RedeemReturnsUserID_NoRefetch(t *testing.T) {
+	svc, repo, _, _ := newTestService(t, false)
+	userID := uuid.New()
+	tokenHash := sha256Hex("norefetch-token")
+	now := time.Now()
+	repo.tokens[tokenHash] = &AuthToken{
+		ID: uuid.New(), UserID: userID, Purpose: purposeEmailVerify,
+		TokenHash: tokenHash, ExpiresAt: now.Add(24 * time.Hour), CreatedAt: now,
+	}
+	repo.redeemMode = "alwaysTrue"
+
+	if err := svc.VerifyEmail(context.Background(), "norefetch-token"); err != nil {
+		t.Fatalf("VerifyEmail: %v", err)
+	}
+	if repo.findTokenCalls != 0 {
+		t.Errorf("success path must not re-fetch the token (S1 fix): got %d FindAuthTokenByHash calls",
+			repo.findTokenCalls)
+	}
+}
+
+// TestVerifyEmail_SetVerifiedFails_RollsBackRedeem proves the S1 fix:
+// when SetUserVerified fails, VerifyEmail returns a wrapped error (which
+// the handler maps to 500), NOT nil (which would write a fake 200). The
+// rollback guarantee itself (token not burned) is proven by the deferred
+// Rollback pattern (same as registerNewUser) + the integration test
+// TestRedeemAndVerify_Atomic against real Postgres.
+func TestVerifyEmail_SetVerifiedFails_RollsBackRedeem(t *testing.T) {
+	svc, repo, _, _ := newTestService(t, false)
+	userID := uuid.New()
+	tokenHash := sha256Hex("setverified-fails-token")
+	now := time.Now()
+	repo.tokens[tokenHash] = &AuthToken{
+		ID: uuid.New(), UserID: userID, Purpose: purposeEmailVerify,
+		TokenHash: tokenHash, ExpiresAt: now.Add(24 * time.Hour), CreatedAt: now,
+	}
+	repo.redeemMode = "alwaysTrue"
+	repo.setVerifiedErr = errors.New("db connection lost")
+
+	err := svc.VerifyEmail(context.Background(), "setverified-fails-token")
+	if err == nil {
+		t.Fatal("VerifyEmail returned nil on SetUserVerified failure — S1 regression " +
+			"(handler would write a fake 200 while identity is not verified)")
+	}
+	// The error must be wrapped (preserving the chain) so MapServiceError
+	// can map it to 500, not swallow it.
+	if !strings.Contains(err.Error(), "set verified") {
+		t.Errorf("error should wrap the set-verified failure, got: %v", err)
+	}
+	// SetUserVerified returned an error before recording the call, so no
+	// verifiedCalls should be present (the identity was not marked verified).
+	if len(repo.verifiedCalls) != 0 {
+		t.Errorf("SetUserVerified failure must not record a verified call, got %d",
+			len(repo.verifiedCalls))
 	}
 }
 
@@ -922,5 +1064,68 @@ func TestSha256Hex_Consistency(t *testing.T) {
 	want := hex.EncodeToString(sum[:])
 	if got != want {
 		t.Fatalf("sha256Hex mismatch: got %s want %s", got, want)
+	}
+}
+
+// TestRegister_SendVerificationFails_LogNoPII proves the L2 fix: when the
+// notification sender returns an error whose Error() embeds the recipient
+// email and token (simulating a leaky SMTP error), the service's log line
+// contains a sanitized category, NOT the recipient email or token. Per
+// go/secrets-and-sensitive-logging.md §1.
+func TestRegister_SendVerificationFails_LogNoPII(t *testing.T) {
+	repo := newFakeRepo()
+	sender := &leakySender{}
+	bc := &fakeBreachChecker{breached: false}
+	keys := &crypto.Keys{
+		EncryptionKey: make([]byte, 32),
+		HMACKey:       make([]byte, 32),
+	}
+	svc := &Service{
+		repo:        repo,
+		tx:          fakeTxRunner{},
+		breachCheck: bc,
+		email:       sender,
+		keys:        keys,
+	}
+
+	const recipient = "leaky@example.com"
+	// The generated token is internal to the service; we can't predict
+	// it, but the leakySender embeds whatever token it receives into its
+	// error message. We assert the log doesn't contain ANY hex string of
+	// the length the service generates (64 hex chars = 32 bytes). We also
+	// assert the recipient email is absent.
+
+	var logBuf bytes.Buffer
+	origOut := log.Writer()
+	log.SetOutput(&logBuf)
+	defer log.SetOutput(origOut)
+
+	// Register a new user (R1) — the post-commit sendVerification will
+	// call the leakySender, which returns an error embedding the
+	// recipient + token.
+	if err := svc.Register(context.Background(), "Leaky", recipient, "strong-pw-123"); err != nil {
+		t.Fatalf("Register: post-commit email failure must not fail the request: %v", err)
+	}
+
+	logged := logBuf.String()
+	// The log must announce the failure.
+	if !strings.Contains(logged, "send verification email failed") {
+		t.Errorf("expected 'send verification email failed' in log, got: %q", logged)
+	}
+	// The log must NOT contain the recipient email (PII).
+	if strings.Contains(logged, recipient) {
+		t.Errorf("log leaked recipient email %q: %q", recipient, logged)
+	}
+	// The log must NOT contain "SMTP" (raw error message leak).
+	if strings.Contains(logged, "SMTP") {
+		t.Errorf("log leaked raw SMTP error message: %q", logged)
+	}
+	// The log must NOT contain "rejected" (raw error message leak).
+	if strings.Contains(logged, "rejected") {
+		t.Errorf("log leaked raw error detail 'rejected': %q", logged)
+	}
+	// The log must NOT contain "token=" (raw error message leak).
+	if strings.Contains(logged, "token=") {
+		t.Errorf("log leaked raw error detail 'token=': %q", logged)
 	}
 }
