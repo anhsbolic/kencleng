@@ -25,9 +25,8 @@ func NewFakeSender() *FakeSender { return &FakeSender{} }
 
 // Nudge type constants — keep in sync with service calls.
 const (
-	NudgeResendVerification = "resend_verification"
-	NudgePasswordReset      = "password_reset"
-	NudgeGoogleOnly         = "google_only"
+	NudgePasswordReset = "password_reset"
+	NudgeGoogleOnly    = "google_only"
 )
 
 // SendVerificationEmail logs the fact that a verification email was

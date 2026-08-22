@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"strconv"
 	"syscall"
 	"time"
@@ -95,7 +96,7 @@ func run() error {
 
 	// 6. Account domain wiring.
 	breachClient := platformbreachcheck.NewClient(5 * time.Second) // explicit timeout (techplan §7 row 4)
-	emailSender := platformnotification.NewFakeSender()            // v1: logged, no SMTP
+	emailSender := newEmailSender(appEnv)                          // dev: outbox file; else: FakeSender (logged, no SMTP)
 	accountSvc := account.NewService(account.NewRepositoryDB(pool, keys), pool, breachClient, emailSender, keys)
 
 	// 7. Rate-limit configuration (fail fast if unset — Open Item #3).
@@ -111,6 +112,8 @@ func run() error {
 	// 8. Router: health check + auth routes behind rate limiter.
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /healthz", healthz)
+	mux.HandleFunc("GET /docs", transporthttp.SwaggerHandler())
+	mux.HandleFunc("GET /openapi.yaml", transporthttp.OpenAPIHandler())
 
 	authMux := http.NewServeMux()
 	authMux.HandleFunc("POST /auth/register", transporthttp.RegisterHandler(accountSvc))
@@ -167,6 +170,26 @@ func requireEnv(names ...string) error {
 		}
 	}
 	return nil
+}
+
+// newEmailSender selects the email sender for the current environment.
+// In development it uses a DevSender that appends simulated emails
+// (recipient + token) to a dev outbox file — the local stand-in for an
+// inbox, since v1 has no SMTP. The outbox path defaults to a file under
+// the OS temp dir and is overridable via DEV_OUTBOX_PATH; the path is
+// logged once at startup so the developer knows where to find the
+// verification token. In every other environment it uses FakeSender,
+// which logs only the fact that an email was queued (no token).
+func newEmailSender(appEnv string) platformnotification.Sender {
+	if appEnv != "development" {
+		return platformnotification.NewFakeSender()
+	}
+	outbox := os.Getenv("DEV_OUTBOX_PATH")
+	if outbox == "" {
+		outbox = filepath.Join(os.TempDir(), "kencleng-dev-outbox.log")
+	}
+	log.Printf("dev email outbox: %s (verification tokens are written here)", outbox)
+	return platformnotification.NewDevSender(outbox)
 }
 
 // initMinIO connects to the MinIO endpoint and verifies both buckets exist.

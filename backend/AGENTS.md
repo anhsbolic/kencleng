@@ -62,13 +62,48 @@ backend/
 
 ```bash
 go run ./cmd/server          # run standalone (needs Postgres/MinIO reachable)
+                            # dev (APP_ENV=development) also serves:
+                            #   GET /docs        — Swagger UI (loads /openapi.yaml)
+                            #   GET /openapi.yaml — spec, server rewritten to :APP_PORT
+                            # and writes verification tokens to the dev outbox
+                            #   (path logged at startup; default $TMPDIR/kencleng-dev-outbox.log)
 go test ./...                # unit tests
 go test -race ./...          # concurrency check
 make verify                  # full gate — see root docs/kencleng-agentic-workflow.md §7
 make migrate-up / migrate-down
 ```
 
-## 5. One-off operational playbooks
+## 5. Dev tooling (manual testing)
+
+Two read-only dev affordances are wired in `cmd/server/main.go`, gated
+on `APP_ENV=development`. They surface no secrets in structured logs and
+are not wired in non-dev environments (where `FakeSender` is used and
+no docs routes are needed).
+
+- **Swagger UI** — `GET /docs` serves a single-page Swagger UI (CDN
+  assets) that loads `GET /openapi.yaml` on the same origin (no CORS).
+  The served spec has its `servers.url` rewritten from `/api` to
+  `http://localhost:<APP_PORT>` so "Try it out" hits the backend's real
+  routes directly. The source spec (`../api/openapi.yaml`) is read from
+  disk at runtime and never modified on disk (AGENTS.md §4).
+- **Dev email outbox** — when `APP_ENV=development`, the
+  `notification.DevSender` writes each simulated email (recipient +
+  verification token) to a dev outbox file (default
+  `$TMPDIR/kencleng-dev-outbox.log`, overridable via `DEV_OUTBOX_PATH`,
+  mode 0600). The path is logged once at startup. This is the dev
+  stand-in for an SMTP inbox — tokens stay out of `log.Printf` output
+  (the "no tokens in logs" golden rule holds: the outbox file is a
+  simulated inbox, not a log stream). In every other environment,
+  `FakeSender` is used (token never surfaces).
+
+**Known infra gap (not fixable from a `backend/` session):** the root
+`Caddyfile` uses `handle /api/*` (not `handle_path`), so it does NOT
+strip the `/api` prefix — `:8080/api/*` 404s against the backend's
+routes. Manual Swagger sidesteps this by going direct to `:APP_PORT`.
+Fixing the Caddyfile is a root-level session (root AGENTS.md §7
+directory boundary), not a backend one.
+
+## 6. One-off operational playbooks
 
 For one-time setup work that isn't a feature (initial project scaffold,
 security-tooling config) — check `.agents/docs/README.md` for an index
@@ -76,7 +111,7 @@ of available playbooks before improvising the approach yourself. These
 are read on-demand, not loaded into every session's context — they cover
 things that are relevant once, not on every task.
 
-## 6. Related docs
+## 7. Related docs
 
 - `docs/kencleng-agentic-workflow.md` — process, tiering, testing
   stages this file's conventions support.

@@ -151,13 +151,16 @@ func (s *Service) Register(ctx context.Context, name, email, password string) er
 		return s.registerNewUser(ctx, name, email, passwordHash)
 
 	case identity.VerifiedAt == nil:
-		// R2: unverified existing. Resend-verification flow: revoke old
-		// tokens, issue a new one, send a resend-verification nudge. No
-		// new user/identity.
-		if _, err := s.issueNewVerificationToken(ctx, identity.UserID); err != nil {
+		// R2: unverified existing. Same internal action as
+		// verify-email/resend (R13): revoke old tokens, issue a new one,
+		// send the verification email with the new token. No new
+		// user/identity. The new token must be delivered (the resend
+		// email carries it) so the user can complete verification.
+		plainToken, err := s.issueNewVerificationToken(ctx, identity.UserID)
+		if err != nil {
 			return err
 		}
-		s.sendNudge(ctx, email, notification.NudgeResendVerification)
+		s.sendVerification(ctx, email, plainToken)
 		return nil
 
 	default:
@@ -282,10 +285,10 @@ func (s *Service) registerNewUser(ctx context.Context, name, email, passwordHash
 
 // issueNewVerificationToken revokes the user's old email_verification
 // tokens and issues a new one in a single transaction (R13), returning
-// the plain token so the caller can send the appropriate email after
-// commit. Shared by R2 (register unverified existing, sends a nudge)
-// and R13 (resend endpoint, sends the verification email with the
-// token).
+// the plain token so the caller can send the verification email with it
+// after commit. Shared by R2 (register unverified existing) and R13
+// (resend endpoint) — both send the verification email carrying the
+// new token.
 func (s *Service) issueNewVerificationToken(ctx context.Context, userID uuid.UUID) (string, error) {
 	plainToken, tokenHash, err := generateToken()
 	if err != nil {

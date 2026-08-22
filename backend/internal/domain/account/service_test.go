@@ -435,8 +435,15 @@ func TestRegister_UnverifiedExisting_ResendFlow(t *testing.T) {
 	if len(repo.insertedTokens) != 1 {
 		t.Fatalf("expected 1 new token, got %d", len(repo.insertedTokens))
 	}
-	if len(sender.nudgeTypes) != 1 || sender.nudgeTypes[0] != notification.NudgeResendVerification {
-		t.Errorf("expected resend-verification nudge, got %v", sender.nudgeTypes)
+	// R2 must send the verification email carrying the new token (same
+	// action as the resend endpoint / R13), NOT a token-less nudge — the
+	// spec says "resend-verification email sent". Without this the newly
+	// issued token is never delivered and the user cannot verify.
+	if len(sender.verificationTo) != 1 || sender.verificationTo[0] != email {
+		t.Errorf("expected verification email sent to %s, got %v", email, sender.verificationTo)
+	}
+	if len(sender.nudgeTypes) != 0 {
+		t.Errorf("expected no nudge for R2 (verification email instead), got %v", sender.nudgeTypes)
 	}
 }
 
