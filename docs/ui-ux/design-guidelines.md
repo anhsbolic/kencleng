@@ -274,6 +274,12 @@ All buttons: `radius-md`, `body`/`body-sm` weight 600, `shadow-sm` on
 Primary/Secondary/Destructive only (Outline/Ghost stay flat —
 elevation implies "this is a filled, prominent action").
 
+**Size tokens [NEW — validated via Claude Design prototype,
+2026-08-21]**: Small 36px, Medium 44px (default), Large 52px height.
+Medium is the default for nearly everything; Small is for compact
+contexts (table row actions, inline chips), Large for singular
+high-emphasis CTAs (e.g. the donate button on `/campaign/[id]`).
+
 ### Inputs
 
 - Default: `neutral-100` background, `neutral-200` border, `radius-md`
@@ -312,6 +318,12 @@ Track: `neutral-200` background, `radius-full`. Fill: `primary-600`,
 `0.75rem`) since it's the primary trust/progress signal on public
 campaign pages.
 
+**Fill color at 100% [NEW — validated via Claude Design prototype,
+2026-08-21]**: fill switches from `primary-600` to `success-500`
+once `collected_amount >= target_amount` — gives donors a clear,
+distinct "goal reached" signal rather than just a full-width green
+bar that looks the same as "almost there."
+
 ### `MaskedField`
 
 Masked value rendered in `caption` size, `neutral-500` (muted, since
@@ -333,6 +345,18 @@ Behavior spec: `patterns.md` §C and Pattern 5.
 Rendered as a small inline banner: Info-50 background, Info-700 text,
 `radius-sm`, `Lock` or `ShieldCheck` Lucide icon at `caption` text
 size scale. Behavior spec: `patterns.md` §C.
+
+### Checkbox
+
+**[NEW — added 2026-08-21, gap found via Claude Design prototype]**
+Not originally specified; needed as soon as a real form
+(`/campaign/[id]/donate`'s `is_anonymous` field) required one.
+20×20px box, `radius-sm`, `1.5px` border: `neutral-200` unchecked,
+`primary-600` fill + white check icon when checked. Label text
+`body` weight 400, optional helper line below in `caption`/
+`text-muted`. Composed from existing input border/radius tokens
+rather than a new token family — consistent with the rest of the
+input system.
 
 ---
 

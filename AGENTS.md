@@ -62,15 +62,28 @@ you're working on.
 
 ## 3. File-path fencing (Tier 0 — no agent write)
 
-The following paths are human-authored or human-paired only. An agent
-may **read** these for context but must not modify them without a
-human explicitly asking for it in that specific session:
+The following paths are either human-authored/human-paired, or frozen
+reference output not meant to be treated as a build target — in
+either case, an agent may **read** these for context but must not
+modify them without a human explicitly asking for it in that specific
+session:
 
 - `backend/internal/domain/donation/ledger.go` and any file
   implementing transaction/locking logic for balance updates
 - `backend/internal/domain/disbursement/` state machine implementation
 - `backend/internal/platform/crypto/` (encryption, HMAC, key handling)
 - `backend/internal/platform/auth/` (JWT signing, TOTP, session logic)
+- `design-reference/` at repo root — Claude Design-exported UI
+  prototype code (see `docs/ui-ux/prototype-reference.md`). Different
+  reason than the items above: this isn't sensitive, it's **frozen,
+  disposable reference output** — a visual/structural precedent for
+  what pages should look like, not a real implementation (no real
+  data fetching, state management, or business logic; doesn't follow
+  the `components/features/` vs `components/ui/` vs
+  `components/shared/` split from `kencleng-frontend-tech-stack.md`).
+  An agent may read files here to see layout/styling precedent for a
+  page it's building in `frontend/`, but must never copy code from
+  here wholesale, and must never write to this directory.
 
 If a task seems to require touching one of these, stop and say so
 instead of proceeding — this is a signal that the task should be

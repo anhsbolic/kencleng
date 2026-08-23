@@ -5,13 +5,11 @@
 > framework, not a technical spec. Per-domain/feature details
 > (invariants, acceptance criteria, threat models) are created
 > separately as each domain is worked on.
-> Last updated: 2026-08-04 (domain development order decided; feature
-> spec template extended with audit-log field; cross-domain invariant
-> ownership rule added; per-domain execution checklist and
-> Assisted/Manual/Full-Agent work allocation added as §12-13; frontend
-> execution checklist and domain-level sequencing/Finalize/Delivery
-> added as §14-15; sequential backend-then-frontend confirmed for
-> `account`)
+> Last updated: 2026-08-21 (§14 step 1 and §15 Finalize updated —
+> wireframe references dropped in favor of `docs/ui-ux/patterns.md` /
+> `page-map.md` / `design-guidelines.md`, and Finalize's empty/
+> loading/error-state task narrowed now that `patterns.md` pre-defines
+> those conventions per pattern)
 
 ## 1. Purpose & context
 
@@ -466,10 +464,13 @@ live backend.
 **Loop, per task (per page/component/flow, not necessarily 1:1 with
 backend endpoints):**
 1. Analyze (Explore + Plan) → same feature spec in
-   `spec/<domain>/features/<NN>-<fitur>.md` already written for the backend track
+   `spec/<domain>/features/<fitur>.md` already written for the backend track
    covers this — frontend doesn't get a separate spec doc, it
    implements against the same acceptance criteria plus
-   `kencleng-ux-page-map.md` / wireframes / design guidelines
+   `docs/ui-ux/page-map.md` (which page, which pattern),
+   `docs/ui-ux/patterns.md` (what shape/states that pattern requires),
+   and `docs/ui-ux/design-guidelines.md` (visual tokens). Wireframes
+   are retired — `patterns.md` is now the structural reference.
 2. Build (agent generates component + page code, using
    `openapi-typescript`-generated types from `api/openapi.yaml` as
    the contract)
@@ -537,12 +538,16 @@ per-feature.
 - Full stack up via `docker-compose` (backend + frontend + Caddy +
   Postgres + MinIO) — real integration, not mocks
 - Manual smoke test of every feature in the domain, end-to-end
-- Resolve empty/loading/error states concretely per page (this was a
-  deliberate, documented deferral to implementation time — see
-  `kencleng-roadmap-next-steps.md` Open Item #13 — this is where that
-  deferral gets closed out)
-- Check conformance against wireframes and `kencleng-design-
-  guidelines.md`
+- Apply `docs/ui-ux/patterns.md`'s state definitions (loading/empty/
+  error/success) to this page's actual data shape — narrower than the
+  original deferred task: the *convention* is now pre-defined per
+  pattern, so this step is applying it correctly to the page's
+  specific fields/copy, not inventing state handling from scratch.
+  Still a real per-page check (e.g. does this Detail page's empty
+  state need a role-specific CTA per `page-map.md`), just smaller
+  scope than before.
+- Check conformance against `docs/ui-ux/patterns.md` (structural/
+  state) and `docs/ui-ux/design-guidelines.md` (visual)
 - Manual (§13.2) — this stage is inherently about judging real,
   connected behavior, not something automated gates can substitute for
 

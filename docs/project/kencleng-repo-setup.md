@@ -4,8 +4,9 @@
 > Status: **Agreed** — monorepo, no CI/CD (local docker-compose only
 > for local deployment/verification).
 > Repo: https://github.com/anhsbolic/kencleng
-> Last updated: 2026-08-05 (rev — `docs/spec/` layout changed to
-> domain-first, see §2.1)
+> Last updated: 2026-08-21 (rev — `docs/ui-ux/` added, replaces
+> `docs/wireframes/`; `design-reference/` added as a new top-level
+> directory; see §2.2)
 
 ## 1. Decisions
 
@@ -35,10 +36,14 @@ kencleng/
 │   │   ├── kencleng-frontend-tech-stack.md
 │   │   ├── kencleng-actors-entities.md
 │   │   ├── kencleng-business-process-overview.md
-│   │   ├── kencleng-ux-page-map.md
 │   │   ├── kencleng-phase0-detail.md ... phase3-detail.md
-│   │   ├── kencleng-design-guidelines.md
 │   │   └── kencleng-roadmap-next-steps.md
+│   ├── ui-ux/                     # frontend UX doc set — NEW 2026-08-20, replaces docs/wireframes/
+│   │   ├── design-guidelines.md   # visual tokens (moved from docs/project/)
+│   │   ├── page-map.md            # per-persona page inventory (moved from docs/project/, evolved)
+│   │   ├── patterns.md            # reusable page-shape + state-handling + shared component behavior
+│   │   ├── prototype-reference.md # Tier 1/Tier 2 map of which routes have a design-reference/ prototype — NEW 2026-08-21
+│   │   └── design-reference-usage.md # how to extract & use design-reference/ exports during FE build — NEW 2026-08-21
 │   ├── spec/                     # executable spec, for the agent — see kencleng-agentic-workflow.md
 │   │   ├── README.md              # structure & blank templates for each doc type below (cross-domain, stays at spec/ root)
 │   │   ├── account/               # domain-first: everything for one domain lives together
@@ -56,8 +61,11 @@ kencleng/
 │   │   ├── campaign/
 │   │   ├── donation/
 │   │   └── disbursement/          # same 3-item shape (invariants.md, threat-model.md, features/) for each
-│   ├── wireframes/                # gray-box HTML/SVG, mobile + desktop
 │   └── kencleng-agentic-workflow.md  # process reference doc (lives at docs/ root, not project/ or spec/ — this is process, not product spec)
+│
+├── design-reference/              # Claude Design-exported UI prototype code — NEW 2026-08-21.
+│   ├── README.md                  # frozen reference, NOT the real frontend app — see docs/ui-ux/prototype-reference.md
+│   └── *.html                     # per-page standalone exports; read-only for agents, see AGENTS.md §3
 │
 ├── api/
 │   └── openapi.yaml               # API contract, source of truth — used by backend (hand-written types) & frontend (openapi-typescript)
@@ -124,6 +132,39 @@ domains total, and cross-domain invariant references (§5.1 of
 `docs/spec/<domain>/invariants.md#INV-<domain>-NN` instead of the old
 path shape.
 
+### 2.2 `docs/ui-ux/` and `design-reference/` **[RESOLVED — 2026-08-20/21]**
+
+`docs/wireframes/` (gray-box HTML/SVG per page) is retired — it went
+stale within a month of being drawn, ahead of the 2026-08-20
+spec-first pass, and per-page wireframes don't get cheaper to maintain
+as the domain count grows. Replaced by `docs/ui-ux/`, a doc set that
+validates the *pattern* (reusable page shape + state handling) rather
+than every individual page:
+
+- `design-guidelines.md` — visual tokens (moved from `docs/project/`)
+- `page-map.md` — per-persona page inventory (moved from
+  `docs/project/`, evolved to reference patterns instead of wireframes)
+- `patterns.md` — the reusable page-shape/state catalog that replaces
+  wireframes
+- `prototype-reference.md` — since a handful of representative pages
+  *were* prototyped (via Claude Design, exported into
+  `design-reference/`) to validate `patterns.md`/`design-guidelines.md`
+  actually look right, this doc maps which routes have a near-final
+  prototype ("Tier 1") vs which must be derived from `patterns.md`
+  alone ("Tier 2"), plus known issues found during prototyping that
+  must not be carried into implementation
+- `design-reference-usage.md` — how to extract and use the
+  `design-reference/` exports (they're self-bootstrapping bundles, not
+  plain HTML) without copying architecture that contradicts
+  `kencleng-frontend-tech-stack.md`
+
+`design-reference/` itself is a **new top-level directory**, not under
+`docs/` — kept separate from `frontend/` (the real app) specifically so
+there's no ambiguity about which tree is the actual implementation.
+It's frozen, read-only reference output (see `AGENTS.md` §3) — an
+agent may read it for visual/structural precedent but must never
+write to it or copy it wholesale into `frontend/`.
+
 ## 3.1 docker-compose scope — local dev only
 
 `docker-compose.yml` in this repo represents the **local development
@@ -153,6 +194,8 @@ to the same topology as the real target.
 | `kencleng-agentic-workflow.md` | `docs/` (not `docs/project/` or `docs/spec/`) | This is a process/meta document, not a product spec and not product domain documentation |
 | `go.mod` | `backend/go.mod` | The repo root shouldn't be a Go module and a Node project at the same time — avoids tooling ambiguity |
 | `package.json` | `frontend/package.json` | Same reason — the repo root stays neutral, not owned by a single toolchain |
+| `docs/ui-ux/` | `docs/` (sibling to `project/` and `spec/`) | Frontend UX-specific docs (visual tokens, page inventory, page patterns) — grouped separately from `docs/project/`'s general narrative docs since they're referenced together as a set during frontend work, and separately from `docs/spec/` since they're not per-domain |
+| `design-reference/` | repo root (sibling to `docs/`, `backend/`, `frontend/`, `api/`) | Frozen Claude Design export — visual/structural precedent for specific pages, not a working codebase. Kept separate from `frontend/` so there's no ambiguity about which tree is the real app. |
 
 ## 4. Local verification (in place of CI/CD)
 

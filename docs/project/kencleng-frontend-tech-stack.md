@@ -1,5 +1,5 @@
 ### Structural principles
- 
+
 - **Feature components co-located in `components/features/`** first (not
   nested inside `app/`), so they're reusable across pages without
   duplication. Move to route-nested components only if something
@@ -22,89 +22,14 @@
   between: components like `MaskedField` know about the *concept* of
   PII across multiple domains (donation, organization, user) but aren't
   domain-specific themselves.
-## Shared Component Notes **[NEW]**
- 
-### `MaskedField`
-Central component for all PII masking, per `kencleng-actors-entities.md`
-PII Handling Note. Used wherever `guest_email`, `User.primary_email`,
-`NPWP`, or future banking details are displayed — **regardless of
-viewer role, including Admin**.
- 
-- Default: masked display (e.g. `j***@***.com`)
-- Explicit reveal toggle/button per field instance (not a global
-  "show all PII" switch — each field revealed individually,
-  intentional friction)
-- On reveal by Admin or Kurator viewing another party's data: fires a
-  call to log the reveal action to Audit Log (`kencleng-phase0-detail.md`
-  Fitur 9) — this means `MaskedField` needs to know the *context*
-  (whose data, what field, who's viewing) to pass along, not just be a
-  dumb visual toggle
-- Open question: does reveal auto-re-mask after a timeout / on
-  navigation, or stay revealed until manual re-toggle or page refresh?
-  Not yet decided.
-### `SecureUploadNote`
-Small reassurance note/popup used on every non-public file upload form
-(organization legal docs, fund-usage-report attachments) — communicates
-that the file is stored securely and privately. Purely informational,
-no logic — just consistent copy/placement across the 2-3 forms that
-need it.
- 
-### `CurationDecisionPanel`
-Reused across the 3 curation contexts (organization curation, campaign
-curation, fund-usage-report verification) — approve/reject buttons +
-mandatory `decision_note` textarea on reject. Same interaction pattern,
-different underlying entity — good candidate for one component
-parameterized by curation type.
- 
-## Layout Patterns [NEW — RESOLVED 2026-07-20]
- 
-Decided during Step 1.5 wireframing (see `kencleng-ux-page-map.md`
-"Dashboard Shell" / "Benchmark Design Reference" for the reasoning and
-benchmark sources).
- 
-### Dashboard shell
-Horizontal top-nav on desktop (no sidebar), top-bar + hamburger on
-mobile. Applies to every authenticated route. Worth revisiting only if
-the nav gets genuinely crowded once Organization Owner/Staff, Kurator,
-and Admin personas are implemented — a concrete, demonstrated need,
-not a reason to add a sidebar preemptively.
- 
-### Auth pages (desktop)
-`/login`, `/register`, `/forgot-password` render as a **modal overlay**
-on top of whatever page the user was on — not a dedicated route change.
-`/reset-password` is the deliberate exception: it's a full page on
-desktop too, since the user always arrives via an emailed link (no
-"current page" exists to overlay a modal on top of).
- 
-### Auth pages (mobile)
-Full-page routes for all four (`/login`, `/register`,
-`/forgot-password`, `/reset-password`) — no modal pattern on mobile,
-consistent with limited screen real estate.
- 
-### Google OAuth flow
-**Full-page redirect** on both desktop and mobile, for every trigger
-point (login, register, and account-linking from `/dashboard/security`)
-— **not** a popup window. This was evaluated against a popup +
-`postMessage` approach (which would have preserved the desktop auth
-modal's context) and rejected for added complexity (popup-blocker edge
-cases, extra handshake code) relative to the benefit, consistent with
-the project's "lowest complexity" principle. Consequence: clicking
-"Masuk/Daftar dengan Google" from the desktop modal navigates the
-browser away from that modal entirely; the user lands on
-`/auth/google/callback` and is then redirected to their final
-destination.
- 
-### Public campaign pages
-`/campaign/[id]` and `/campaign/[id]/donate` follow the GoFundMe/
-Kitabisa benchmark structure: hero image → progress bar prominent →
-sticky Donate CTA → donor list separate from narrative body (mobile);
-two-column layout with sticky donate sidebar (desktop). Donation form
-field order (nominal → payment method → optional donor info) already
-matched the existing field order in `kencleng-phase2-detail.md` Fitur
-1, so no rework was needed there.
- 
+- **UX/layout behavior for these components (and page-level layout
+  patterns generally) lives in `docs/ui-ux/patterns.md`**, not here —
+  this doc stays scoped to code organization (where things live, how
+  they're wired), not what they look like or how they behave on
+  screen.
+
 ## Testing [RESOLVED — Step 6]
- 
+
 - **Test runner: Vitest** — native ESM, faster than Jest, minimal
   config for a TypeScript + Next.js App Router project. Consistent
   with the rest of the modern tooling already in use (Vite-based
@@ -131,24 +56,67 @@ matched the existing field order in `kencleng-phase2-detail.md` Fitur
   contract is already type-safe via the OpenAPI-generated types (Step
   2) — MSW keeps tests aligned with that same contract shape instead
   of hand-rolled mock responses that can silently drift.
+
+## PWA Scope [RESOLVED — 2026-08-20]
+
+**App-shell caching only for v1**: static assets (JS/CSS/fonts,
+`manifest.json`) are cacheable via service worker, so the shell loads
+offline — but no data caching/offline write queue. Pages relying on
+live data (donation status, curation queues, etc.) show cached/stale
+data with a freshness indicator when offline (see
+`docs/ui-ux/patterns.md` §B, "Stale/offline data") rather than
+attempting real offline writes.
+
+**Install prompt: browser-default only** — no custom "Add to Home
+Screen" UI/banner. Consistent with lowest-complexity: a custom install
+prompt is worth building once there's a demonstrated need (e.g. low
+install conversion with the default browser prompt), not before.
+
+Rejected for v1: background sync / offline donation queueing (donation
+is a financial transaction — queueing it for later submission without
+the user seeing real-time confirmation is a correctness/trust risk,
+not just a complexity one).
+
 ## Open Items — Needs Further Discussion
- 
-- Exact CORS / cookie configuration for the refresh-token flow (depends
-  on final deployment topology — same-origin vs separate origins)
+
+- ~~Exact CORS / cookie configuration for the refresh-token flow~~ →
+  **resolved: no CORS config needed** — Caddy reverse-proxy makes
+  FE+BE same-origin (`kencleng-repo-setup.md` §3.1), so
+  `SameSite=Strict` works without cross-origin exceptions.
+  **[RESOLVED — 2026-08-20]**
 - ~~API contract format (REST plain JSON vs OpenAPI spec-first)~~ →
   **resolved: OpenAPI 3.x spec-first**, types generated via
   `openapi-typescript` (types only, fetch functions stay hand-written)
   **[RESOLVED — Step 2]**
-- Whether `middleware.ts`-based route protection is sufficient, or if
-  dashboard guarding needs to happen at the layout/component level too
-- `MaskedField` reveal persistence behavior (auto-re-mask timing) **[NEW]**
+- ~~Whether `middleware.ts`-based route protection is sufficient~~ →
+  **resolved: both, different jobs.** `middleware.ts` does the coarse
+  check — redirect to `/login` if there's no session at all. Role-based
+  gating (e.g. hiding legal-doc section from Staff, disabling
+  Owner-only buttons) happens at the layout/component level, since it
+  needs the actual role data fetched, which `middleware.ts` can't
+  cheaply do on every request. **[RESOLVED — 2026-08-20]**
+- `MaskedField` reveal persistence behavior — **resolved: stays
+  revealed until manual re-toggle or page refresh/navigation, plain
+  local component state** — see `docs/ui-ux/patterns.md` §C.
+  **[RESOLVED — 2026-08-21]**
 - ~~Guest donation status page: server-side state (token-based lookup) vs
   client-side state~~ → **resolved: token-in-URL, server-side lookup by
   token** — see `kencleng-phase2-detail.md` Fitur 1 and
-  `kencleng-ux-page-map.md` **[RESOLVED — NEW]**
+  `docs/ui-ux/page-map.md` **[RESOLVED — NEW]**
+
 ## Not Yet Discussed
- 
+
 - Deployment/hosting target for the frontend (same host as backend via
   Docker Compose vs separate hosting like Vercel)
 - ~~Testing approach for the frontend~~ → see **Testing** section
   above **[RESOLVED — Step 6]**
+
+## Related Docs
+
+- Page patterns & shared component behavior: `docs/ui-ux/patterns.md`
+- Visual tokens: `docs/ui-ux/design-guidelines.md`
+- Page inventory: `docs/ui-ux/page-map.md`
+- Which routes have a Claude Design prototype vs derive from patterns
+  alone: `docs/ui-ux/prototype-reference.md`
+- How to extract/use `design-reference/` exports:
+  `docs/ui-ux/design-reference-usage.md`

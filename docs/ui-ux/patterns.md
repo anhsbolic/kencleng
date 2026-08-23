@@ -123,6 +123,14 @@ Dashboard Shell (top-nav desktop / top-bar+hamburger mobile, per
 
 Used by: `/dashboard/campaign/[id]/monitor`, `/dashboard/donations`.
 
+**Reference shape [NEW — validated via Claude Design prototype,
+2026-08-21]**: for an Owner/Staff landing dashboard specifically, 3
+stat cards side by side (e.g. "Total terkumpul", "Donatur", "Laporan"
+with a pending-count sub-label) followed by a list of active campaign
+progress bars below — confirmed this reads well at both desktop and
+mobile widths (stat cards stack to a 2-up or 1-up grid on mobile
+rather than staying 3-across).
+
 ### 5. Curation / Review Page
 
 Read-only item detail (what's being reviewed) → `CurationDecisionPanel`
