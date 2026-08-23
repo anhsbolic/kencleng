@@ -50,3 +50,8 @@ coverage/
 .idea/
 .vscode/
 .DS_Store
+
+# local agents related docs
+# should be ignore for real development
+# i am committing this for education purpose only [@anhsolic]
+# .local-agents/
