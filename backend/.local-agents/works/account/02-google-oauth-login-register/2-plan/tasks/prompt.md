@@ -1,4 +1,4 @@
-Read .local-agents/works/account/01-register-email-verification/2-plan/techplan.md
+Read .local-agents/works/account/02-google-oauth-login-register/2-plan/techplan.md
 
 ### 0. Answer first: is it worth decomposing this techplan?
 
@@ -91,12 +91,12 @@ Minimum manifest contents:
 - N task files (count depends on the resulting split), each self-contained
   for its scope.
 - 1 manifest file indexing all the tasks above.
-- write files in .local-agents/works/account/01-register-email-verification/3-tasks
+- write files in .local-agents/works/account/02-google-oauth-login-register/2-plan/tasks
 
 ## Cross-reference
 
-- Source techplan: see `../../harscode-workspace/workflow/techplan-synthesis-prompt.md` for the
+- Source techplan: see `../../harscode-workspace/workflow/2-1-techplan-synthesis-prompt.md` for the
   contract/derived authoring process that precedes this decomposition
   step.
 - Task files produced here are still subject to the review checklist in
-  `../..//harscode-workspace/workflow/code-review/checklist.md`, same as any other derived-section content.
+  `../../harscode-workspace/workflow/4-code-review/checklist.md`, same as any other derived-section content.

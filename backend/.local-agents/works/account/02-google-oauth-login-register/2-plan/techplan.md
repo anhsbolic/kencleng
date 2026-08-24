@@ -29,6 +29,7 @@ flowchart TD
     A["GET /auth/google/redirect"] --> B{"intent?"}
     B -->|"login"| C["No auth check required"]
     B -->|"link / reauth"| D{"Valid session?"}
+    B -->|"invalid"| Y["400 Bad Request"]
     D -->|"No"| E["401 before Google redirect"]
     D -->|"Yes"| F["Encode user_id into cookie"]
     C --> G["Generate state + nonce, set cookie, 302 to Google"]
@@ -38,9 +39,11 @@ flowchart TD
     I -->|"No"| J["302 error: state_mismatch"]
     I -->|"Yes"| K["Exchange code with Google"]
     K -->|"Timeout/unreachable"| L["302 error: google_unavailable"]
-    K -->|"Success"| M["Verify id_token: sig, iss, aud, exp, nonce"]
-    M -->|"Invalid"| N["302 error: nonce_mismatch"]
-    M -->|"Valid"| O{"intent?"}
+    K -->|"Success"| M["Verify id_token: sig, iss, aud, exp"]
+    M -->|"Invalid"| N2["302 error: google_token_invalid"]
+    M -->|"Valid"| M2{"Nonce matches stored value?"}
+    M2 -->|"No"| N["302 error: nonce_mismatch"]
+    M2 -->|"Yes"| O{"intent?"}
     O -->|"login"| P{"Existing google identity?"}
     P -->|"Yes"| Q["Issue tokens, 302 to app"]
     P -->|"No"| R{"Email used by email_password?"}
@@ -57,6 +60,8 @@ flowchart TD
     style N fill:#f8d7da
     style T fill:#f8d7da
     style V fill:#f8d7da
+    style Y fill:#f8d7da
+    style N2 fill:#f8d7da
     style Q fill:#d1ecf1
     style S fill:#d1ecf1
     style W fill:#d1ecf1
@@ -77,7 +82,7 @@ flowchart TD
 | Missing auth check for link/reauth intent | Attacker links their Google account to any user |
 | No-auto-merge rule bypassed | Email-match auto-linking enables account takeover via unverified provider claim |
 
-**Open items needing human input** — 1 active item (Caddy routing for /auth/* — root-level session needed). See section 14.
+**Open items needing human input** — 2 active items (Caddy routing for /auth/* — root-level session needed; error-code set v2 + audit action_type vocabulary pending frontend sign-off). See section 14.
 
 ---
 
@@ -129,6 +134,7 @@ The no-auto-merge rule is the most security-critical business rule: when a Googl
 | State validation at callback | state param must match cookie; reject (302 error) before any Google API call | Feature spec callback AC, threat: CSRF |
 | Nonce validation at callback | id_token nonce claim must match stored nonce; reject, no state change | Feature spec callback AC, threat: replay |
 | id_token verification | Signature (RS256 against Google JWKS), issuer (accounts.google.com), audience (GOOGLE_CLIENT_ID), expiry, nonce | Feature spec callback AC, threat model component 4 |
+| id_token claims invalid (sig/iss/aud/exp) | Reject with 302 error redirect (google_token_invalid); only a nonce mismatch produces nonce_mismatch | Feature spec callback AC, threat model component 4: spoofing |
 | Fixed redirect_uri | GOOGLE_REDIRECT_URI from env var, never from request | Threat model component 4: open redirect |
 | login + existing google identity | Issue access + refresh tokens, 302 to app | Feature spec callback table row 1 |
 | login + no identity + email not used | Create User + AuthIdentity (google, verified_at=now), issue tokens, 302 to app | Feature spec callback table row 2 |
@@ -138,7 +144,7 @@ The no-auto-merge rule is the most security-critical business rule: when a Googl
 | reauth | No AuthIdentity/token changes; set short-lived reauth marker (5 min), 302 to security page | Feature spec callback table row 6, Assumption A |
 | Google API timeout/unreachable | Clean 503-equivalent error redirect, not raw 500/timeout | Threat model component 4: DoS |
 | Concurrent duplicate Google registration | Unique index (provider_type, identifier_hash) catches race; clean error handling | INV-account-01 |
-| Google identities created already verified | verified_at = now() at insert, never passing through null | INV-account-01 state machine |
+| Google identities created already verified | verified_at = now() at insert, never passing through null | invariants.md State machines section (`auth_identities.verified_at`) |
 | No secrets/tokens in logs | Log fact + outcome, not payload (state, nonce, code, id_token, tokens) | AGENTS.md golden rule |
 | Error responses do not leak internals | No stack traces, raw SQL, file paths in error redirects | AGENTS.md golden rule |
 | PII encryption pattern | Identifier (email) encrypted + HMAC hashed per existing pattern | AGENTS.md golden rule, entity.go |
@@ -160,7 +166,7 @@ The no-auto-merge rule is the most security-critical business rule: when a Googl
 - **R8 (login, new user)**: Given intent=login, no existing google identity, and the email is not used by email_password, When callback is called, Then create User + AuthIdentity (provider_type=google, verified_at=now), issue tokens, 302 to app.
 - **R9 (login, no auto-merge)**: Given intent=login, no existing google identity, and the email is already used by email_password for a different user, When callback is called, Then 302 to /login with error param (google_email_conflict), no new records created.
 - **R10 (link, email conflict)**: Given intent=link and the email is claimed by a different user, When callback is called, Then reject with 302 error redirect (google_link_conflict), no new AuthIdentity created.
-- **R11 (link, no conflict)**: Given intent=link and the email is not claimed by a different user, When callback is called, Then attach a new google AuthIdentity to the session user_id (not a new User), write a user_logs entry ("account linking baru"), 302 to app.
+- **R11 (link, no conflict)**: Given intent=link and the email is not claimed by a different user, When callback is called, Then attach a new google AuthIdentity to the session user_id (not a new User), write a user_logs entry (action_type=account_linking — Fitur 9's "account linking baru"), 302 to app.
 - **R12 (reauth)**: Given intent=reauth, When callback is called with valid state/nonce/id_token, Then no AuthIdentity or token changes occur; a short-lived (5 min) reauth marker tied to the session user_id is set, 302 to security page.
 - **R13 (fixed redirect_uri)**: Given any callback, When constructing the token exchange request, Then the redirect_uri is always GOOGLE_REDIRECT_URI from env var, never taken from the request.
 - **R14 (Google identity verified_at)**: Given a new google AuthIdentity is created, When it is inserted, Then verified_at is set to now() — google identities never pass through null.
@@ -170,6 +176,12 @@ The no-auto-merge rule is the most security-critical business rule: when a Googl
 - **R18 (invalid intent)**: Given an intent value other than login/link/reauth, When GET /auth/google/redirect is called, Then 400 Bad Request.
 - **R19 (missing code or state at callback)**: Given the callback is called without code or state query params, When the handler processes it, Then 302 error redirect (state_mismatch), no Google API call.
 - **R20 (cookie expired/missing at callback)**: Given the state cookie is expired or missing, When callback is called, Then 302 error redirect (state_mismatch), no Google API call.
+- **R21 (JWKS refresh-on-miss)**: Given verification encounters a key ID not present in the cached JWKS, When VerifyIDToken looks up the signing key, Then the JWKS is refetched once and verification retried; a cache miss never becomes a permanent failure.
+- **R22 (explicit HTTP timeout)**: Given an outbound call to Google's token endpoint, When the OAuth client constructs it, Then it uses an http.Client with an explicit timeout (10s) and http.NewRequestWithContext — never http.DefaultClient.
+- **R23 (constant-time comparison)**: Given state and nonce values are compared at callback, When either comparison executes, Then subtle.ConstantTimeCompare is used for both, never `==`.
+- **R24 (state cookie attributes)**: Given the OAuth state cookie is set, When the redirect response is written, Then the cookie has HttpOnly, Secure (always in non-dev), SameSite=Lax, MaxAge=600, Path=/auth/google.
+- **R25 (inline session verification boundary)**: Given intent=link or intent=reauth requires a valid session, When GoogleRedirectHandler authenticates the request, Then the ES256 access token is verified inline via golang-jwt/jwt/v5 with the public key passed as a handler dependency, and platform/auth/ remains unmodified.
+- **R26 (invalid id_token claims)**: Given the id_token fails signature, issuer, audience, or expiry verification, When callback is called, Then reject with 302 error redirect (google_token_invalid), no state change; only a nonce mismatch produces nonce_mismatch (R5).
 
 ## 5. Decision Log
 
@@ -200,7 +212,7 @@ The no-auto-merge rule is the most security-critical business rule: when a Googl
 
 | Risk | Likelihood | Severity | Mitigation |
 |---|---|---|---|
-| Incorrect id_token verification (wrong algorithm, missing aud/iss check) | Low if using library correctly | High — full account takeover via forged token | Use golang-jwt/jwt/v5 with explicit iss, aud, exp validation; RS256 only; test with forged tokens (R5, R6) |
+| Incorrect id_token verification (wrong algorithm, missing aud/iss check) | Low if using library correctly | High — full account takeover via forged token | Use golang-jwt/jwt/v5 with explicit iss, aud, exp validation; RS256 only; test with forged tokens (R5, R26) |
 | Missing auth check for link/reauth intent | Low — handler checks intent explicitly | High — attacker links Google to any user | Explicit conditional check in handler before redirect; test TestGoogleRedirect_LinkReauthRequireAuth (R2) |
 | No-auto-merge rule bypassed | Low — no code path auto-merges | High — account takeover via unverified email claim | No code path creates/attaches identity without explicit authenticated action; test TestGoogleCallback_NoAutoMerge_Login, TestGoogleCallback_NoAutoMerge_Link (R9, R10) |
 | Google JWKS keys rotate, cached keys stale | Medium — Google rotates periodically | Medium — valid tokens rejected | JWKS cache with refresh-on-miss; do not cache forever at startup |
@@ -271,8 +283,9 @@ GET /auth/google/redirect?intent={login|link|reauth}   (new, public)
 
 GET /auth/google/callback?code=...&state=...            (new, public)
   -> 302 to frontend (success: tokens as cookies; error: ?error={code})
-  Error codes: state_mismatch, nonce_mismatch, google_unavailable,
-               google_email_conflict, google_link_conflict
+  Error codes: state_mismatch, nonce_mismatch, google_token_invalid,
+               google_unavailable, google_email_conflict, google_link_conflict
+  (google_token_invalid = id_token fails sig/iss/aud/exp; nonce_mismatch = replay)
 ```
 
 **Business logic flow (concise):**
@@ -294,8 +307,9 @@ GoogleCallback(ctx, code, state, cookie):
   if state != cookieData.state (constant-time): return 302Error(state_mismatch)
   tokens = exchangeCode(code, redirect_uri)  // HTTP client with 10s timeout
     on timeout/error: return 302Error(google_unavailable)
-  idToken = verifyIDToken(tokens.id_token, jwks, client_id, nonce)
-    on invalid: return 302Error(nonce_mismatch)
+  idToken, err = verifyIDToken(tokens.id_token, jwks, client_id, cookieData.nonce)
+    on err == ErrNonceMismatch:   return 302Error(nonce_mismatch)
+    on err != nil:                return 302Error(google_token_invalid)
   email = idToken.email
   emailHash = HMAC(email)
   switch cookieData.intent:
@@ -306,7 +320,7 @@ GoogleCallback(ctx, code, state, cookie):
         setAuthCookies(tokens)
         return 302(appURL)
       epIdentity = FindAuthIdentityByIdentifierHash("email_password", emailHash)
-      if epIdentity != nil and epIdentity.UserID != nil:
+      if epIdentity != nil:
         return 302Error(google_email_conflict)  // no auto-merge
       // new user
       user = create User + AuthIdentity(google, verified_at=now) in tx
@@ -343,7 +357,7 @@ IssueTokens(ctx, userID):
 4. **Platform Google OAuth client** (new package `internal/platform/googleoauth/`):
    - `Client` struct with `http.Client` (10s timeout), `clientID`, `clientSecret`, `redirectURI`, JWKS cache.
    - `ExchangeCode(ctx, code) (*TokenResponse, error)` — POST to Google token endpoint.
-   - `VerifyIDToken(ctx, idToken, expectedNonce) (*Claims, error)` — verify signature against JWKS, iss, aud, exp, nonce.
+   - `VerifyIDToken(ctx, idToken, expectedNonce) (*Claims, error)` — verify signature against JWKS, iss, aud, exp, nonce. Nonce mismatch is returned as a distinguishable `ErrNonceMismatch` (→ nonce_mismatch); every other verification failure maps to google_token_invalid.
    - JWKS keyfunc with cache-on-miss: fetch from `https://www.googleapis.com/oauth2/v3/certs`, cache for 15 min, refresh on key-not-found.
 5. **Handler-level JWT verification** (inline in `transport/http/auth_google.go`):
    - The handler verifies the app's own ES256 access token inline using `golang-jwt/jwt/v5` with `jwt.WithValidMethods([]string{"ES256"})` and the public key passed as a handler dependency. Does NOT touch `platform/auth/` (Tier 0 fenced path). Task #3 can later extract a shared helper if needed — possibly as a human-paired change.
@@ -384,7 +398,7 @@ IssueTokens(ctx, userID):
 - Change: implement InsertUserLog using goqu Insert, same pattern as InsertAuthToken.
 
 **File**: `backend/internal/domain/account/service.go`
-- Change: add `googleOAuth *googleoauth.Client` field to Service struct. Update NewService to accept the new dependency (6th parameter).
+- Change: add `googleOAuth *googleoauth.Client` field to Service struct. Update NewService to accept the new dependencies (6th and 7th parameters: googleOAuth, authKeys).
 - Change: add `authKeys *auth.Keys` field to Service struct (for IssueTokens JWT signing). Update NewService.
 
 **File**: `backend/internal/domain/account/google_oauth.go` (new)
@@ -397,7 +411,7 @@ IssueTokens(ctx, userID):
 - `Client` struct: httpClient (10s timeout), clientID, clientSecret, redirectURI, jwksCache.
 - `NewClient(clientID, clientSecret, redirectURI string) *Client`
 - `ExchangeCode(ctx, code) (*TokenResponse, error)` — POST to https://oauth2.googleapis.com/token.
-- `VerifyIDToken(ctx, idToken, expectedNonce) (*Claims, error)` — parse + verify JWT using golang-jwt/jwt/v5 with JWKS keyfunc.
+- `VerifyIDToken(ctx, idToken, expectedNonce) (*Claims, error)` — parse + verify JWT using golang-jwt/jwt/v5 with JWKS keyfunc; returns `ErrNonceMismatch` for a replayed nonce, generic error otherwise (R26).
 - `AuthURL(state, nonce string) string` — build Google consent URL.
 - Claims struct: Email, Sub, Iss, Aud, Exp, Nonce.
 
@@ -415,12 +429,12 @@ IssueTokens(ctx, userID):
 - Reauth marker store: `var reauthMarkers sync.Map` with background eviction.
 
 **File**: `backend/cmd/server/main.go`
-- Change: add FRONTEND_URL to requireEnv.
+- Change: add GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI, and FRONTEND_URL to requireEnv.
 - Change: construct googleoauth.Client, pass to account.NewService (updated signature).
 - Change: register `GET /auth/google/redirect` and `GET /auth/google/callback` on authMux.
 
 **File**: `backend/.env.example`
-- Change: add `FRONTEND_URL=http://localhost:3000`.
+- Change: none needed — FRONTEND_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, and GOOGLE_REDIRECT_URI are already present (verified against the current file; GOOGLE_REDIRECT_URI already points at :8090 for dev).
 
 **File**: `backend/go.mod`
 - Change: add `github.com/golang-jwt/jwt/v5`.
@@ -454,7 +468,7 @@ IssueTokens(ctx, userID):
 | internal/transport/http/auth_google.go | New | GoogleRedirectHandler + GoogleCallbackHandler + reauth marker store + inline JWT verification |
 | internal/transport/http/auth_google_test.go | New | Handler tests |
 | cmd/server/main.go | Edit | Wire Google client, FRONTEND_URL, new routes |
-| .env.example | Edit | Add FRONTEND_URL; update GOOGLE_REDIRECT_URI to :8090 for dev |
+| .env.example | No change needed | FRONTEND_URL + GOOGLE_* vars already present; GOOGLE_REDIRECT_URI already :8090 for dev |
 | go.mod / go.sum | Edit | Add golang-jwt/jwt/v5 |
 
 | File | Reason untouched |
@@ -492,12 +506,12 @@ Derived 1:1 from section 4.
 - [ ] R18: invalid intent value returns 400
 - [ ] R19: missing code or state at callback returns 302 error (state_mismatch)
 - [ ] R20: expired/missing cookie at callback returns 302 error (state_mismatch)
-- [ ] JWKS refresh-on-miss: stale key triggers refetch, not permanent failure
-- [ ] Google OAuth http.Client has explicit timeout (not http.DefaultClient)
-- [ ] State comparison uses subtle.ConstantTimeCompare
-- [ ] Cookie has SameSite=Lax (not Strict — OAuth redirect requires Lax)
-- [ ] JWT verification for link/reauth is inline (does not touch platform/auth/)
-- [ ] user_logs row is inserted with action_type=account_linking on link success
+- [ ] R21: JWKS refresh-on-miss — unknown kid triggers refetch + retry, not permanent failure
+- [ ] R22: Google OAuth http.Client has explicit timeout, uses NewRequestWithContext (not http.DefaultClient)
+- [ ] R23: State and nonce comparisons use subtle.ConstantTimeCompare
+- [ ] R24: Cookie has HttpOnly, Secure (non-dev), SameSite=Lax, MaxAge=600, Path=/auth/google
+- [ ] R25: JWT verification for link/reauth is inline (does not touch platform/auth/)
+- [ ] R26: id_token failing sig/iss/aud/exp returns 302 error (google_token_invalid); nonce mismatch alone yields nonce_mismatch
 
 ## 13. Testing Examples and Common Mistakes
 
@@ -510,7 +524,7 @@ Derived 1:1 from section 4.
 | Not verifying nonce in id_token | Replay attack with stolen id_token | Verify nonce claim matches stored value |
 | Accepting any JWT algorithm in id_token | Algorithm confusion attack (e.g. HS256 with public key) | Explicitly accept RS256 only in golang-jwt config |
 | Caching JWKS forever at startup | Key rotation causes permanent verification failure | Cache with TTL + refresh-on-miss |
-| Creating google AuthIdentity with verified_at=nil | Violates INV-account-01 state machine (google identities start verified) | Set verified_at=now() at insert |
+| Creating google AuthIdentity with verified_at=nil | Violates the `auth_identities.verified_at` state machine (invariants.md — google identities start verified) | Set verified_at=now() at insert |
 | Auto-merging on email match | Account takeover via unverified email claim | No code path creates/attaches identity without explicit authenticated action |
 | Forgetting to check auth for link/reauth intent | Attacker links Google to any user | Conditional check in handler before redirect |
 | Not clearing state cookie after callback | Cookie replay on subsequent callback | Clear cookie after reading (set MaxAge < 0) |
@@ -523,6 +537,8 @@ Derived 1:1 from section 4.
 
 1. **GOOGLE_REDIRECT_URI routing through Caddy.** The .env.example has `GOOGLE_REDIRECT_URI=http://localhost:8090/auth/google/callback` (updated for dev — direct to backend, bypassing Caddy). But the Caddyfile only routes `/api/*` to the backend (:8090); the path `/auth/google/callback` (no `/api` prefix) would be routed to the frontend (:3000) through Caddy. Dev workaround: use direct `:8090` (already set). Non-dev requires a Caddyfile fix (root-level session, outside backend/ boundary per AGENTS.md section 7). This is the known infra gap from backend/AGENTS.md section 5.
 
+2. **Error-code set v2 + audit action_type vocabulary — frontend sign-off.** The callback now distinguishes `google_token_invalid` (id_token fails signature/issuer/audience/expiry, R26) from `nonce_mismatch` (replayed nonce only, R5), and `user_logs.action_type=account_linking` is pinned as the canonical literal for link-success audit entries (R11). Frontend must confirm both before their implementation begins — extends the `?error={code}` contract adopted in Resolved item 5.
+
 ### Resolved (kept for reference)
 
 1. ~~**Redis for reauth markers**~~ RESOLVED — use in-memory sync.Map instead. User decided against Redis (not in docker-compose, no client in go.mod, adding Redis requires root-level infra change outside backend/ boundary). In-memory sync.Map with TTL eviction chosen; markers lost on restart (acceptable for 5-min TTL).
@@ -533,7 +549,7 @@ Derived 1:1 from section 4.
 
 4. ~~**reauth marker TTL confirmation**~~ RESOLVED — adopt 5 minutes, matching the state/nonce cookie TTL per feature spec Assumption A. One re-auth-freshness convention rather than two. Decision made by human review of techplan recommendations, 2026-08-22.
 
-5. ~~**Error redirect query param names**~~ RESOLVED — adopt `?error={code}` with codes: state_mismatch, nonce_mismatch, google_unavailable, google_email_conflict, google_link_conflict. Frontend should confirm before their implementation begins. Decision made by human review of techplan recommendations, 2026-08-22.
+5. ~~**Error redirect query param names**~~ RESOLVED — adopt `?error={code}` with codes: state_mismatch, nonce_mismatch, google_token_invalid, google_unavailable, google_email_conflict, google_link_conflict. (Frontend confirmation of the final code set is tracked as Active item 2.) Decision made by human review of techplan recommendations, 2026-08-22.
 
 6. ~~**FRONTEND_URL env var**~~ RESOLVED — add to .env.example with dev default `http://localhost:3000`, add to requireEnv in main.go. Decision made by human review of techplan recommendations, 2026-08-22.
 
