@@ -32,10 +32,10 @@ Known recurring bug patterns worth specifically hunting for:
 {/home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/5-testing/examples.md}
 
 Techplan:
-/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/01-register-email-verification/2-plan/techplan.md
+/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/02-google-oauth-login-register/2-plan/techplan.md
 
 Latest implementation report (build or most recent patch/rebuild):
-/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/01-register-email-verification/4-patch/report.md
+/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/02-google-oauth-login-register/4-patch/report.md
 
 Real interface entry point(s):
 Read /home/anhar-solehudin/kencleng-workspace/kencleng/backend/README.md
