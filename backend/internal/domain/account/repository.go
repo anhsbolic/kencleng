@@ -79,4 +79,15 @@ type Repository interface {
 	// token (R13). Takes the caller's tx so revoke + insert of the new
 	// token are atomic within a single transaction.
 	RevokeTokens(ctx context.Context, tx pgx.Tx, userID uuid.UUID, purpose string) error
+
+	// InsertRefreshToken inserts a new session refresh_token row.
+	// TokenHash is already a SHA-256 hex digest (no encryption needed).
+	// Called within tx. Rotation/reuse columns stay nil at issue time.
+	InsertRefreshToken(ctx context.Context, tx pgx.Tx, token *RefreshToken) error
+
+	// InsertUserLog appends an audit entry to user_logs. Called within
+	// tx so the audit write is atomic with the action it records (e.g.
+	// attaching a Google AuthIdentity on link intent). Append-only by
+	// convention; DB-level enforcement arrives with task #08.
+	InsertUserLog(ctx context.Context, tx pgx.Tx, entry *UserLog) error
 }

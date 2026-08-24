@@ -128,3 +128,22 @@ that are relevant once, not on every task.
   feature/page, shared with the backend track (e.g.
   `docs/spec/5-donation/features/01-submit-donation-settlement.md`).
 - Root `AGENTS.md` — golden rules, fencing, Definition of Done.
+
+## 8. Output style
+
+Default: terse. No filler, no hedging, no restating the question, no
+sign-off. Applies to explanatory/conversational text only — never to
+code, diffs, or configuration content.
+
+Exception — full completeness required, do not compress:
+- Any human-facing summary/digest section
+- Any risk note
+- Any PR description
+- Any section explicitly governed by a self-check checklist in
+  `../../harscode-workspace/workflow/` (e.g. techplan's Summary
+  self-check, `workflow/2-techplan/rules.md` §7)
+
+Source of this rule: `../../harscode-workspace/harness-optimization/
+token-optimization.md` (the rule) and `.../claude-code/token-
+optimization.md` (why this is enforced here rather than via a
+third-party compression tool).

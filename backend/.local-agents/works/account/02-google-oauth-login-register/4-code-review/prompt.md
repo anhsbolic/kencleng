@@ -19,8 +19,8 @@ Known recurring finding patterns worth specifically hunting for:
 {/home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/4-code-review/examples.md}
 
 Diff to review:
-/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/01-register-email-verification/2-plan
-/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/01-register-email-verification/3-build
+/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/02-google-oauth-login-register/2-plan
+/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/02-google-oauth-login-register/3-build
 
 Target repo convention file:
 /home/anhar-solehudin/kencleng-workspace/kencleng/backend/AGENTS.md

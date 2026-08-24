@@ -37,9 +37,11 @@ type fakeRepo struct {
 	tokens map[string]*AuthToken
 
 	// Recorded inserts for assertions.
-	insertedUsers      []*User
-	insertedIdentities []*AuthIdentity
-	insertedTokens     []*AuthToken
+	insertedUsers         []*User
+	insertedIdentities    []*AuthIdentity
+	insertedTokens        []*AuthToken
+	insertedRefreshTokens []*RefreshToken
+	insertedUserLogs      []*UserLog
 
 	// Call counters for assertions (e.g. proving no re-fetch on success).
 	findTokenCalls int
@@ -223,6 +225,20 @@ func (f *fakeRepo) RevokeTokens(_ context.Context, _ pgx.Tx, userID uuid.UUID, p
 		return err
 	}
 	f.revokeCalls = append(f.revokeCalls, revokeCall{userID, purpose})
+	return nil
+}
+
+func (f *fakeRepo) InsertRefreshToken(_ context.Context, _ pgx.Tx, token *RefreshToken) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.insertedRefreshTokens = append(f.insertedRefreshTokens, token)
+	return nil
+}
+
+func (f *fakeRepo) InsertUserLog(_ context.Context, _ pgx.Tx, entry *UserLog) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.insertedUserLogs = append(f.insertedUserLogs, entry)
 	return nil
 }
 

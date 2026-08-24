@@ -66,3 +66,32 @@ type AuthToken struct {
 	RevokedAt *time.Time
 	CreatedAt time.Time
 }
+
+// RefreshToken is a long-lived session token enabling access-token renewal.
+// TokenHash is the SHA-256 hex digest of the plain refresh token (the plain
+// value exists only in the response/cookie path, never at rest). FamilyID
+// groups tokens from one login lineage for rotation/reuse detection
+// (INV-account-03/04 — implemented in the login/session task; this ticket
+// only issues first-generation tokens). RevokedAt and ReplacedByID stay nil
+// until rotation lands.
+type RefreshToken struct {
+	ID           uuid.UUID
+	UserID       uuid.UUID
+	FamilyID     uuid.UUID
+	TokenHash    string
+	ExpiresAt    time.Time
+	RevokedAt    *time.Time
+	ReplacedByID *uuid.UUID
+	CreatedAt    time.Time
+}
+
+// UserLog is an append-only audit entry for account events. ActionType is a
+// package constant (e.g. "account_linking"); the DB-level immutability
+// constraint (REVOKE UPDATE/DELETE, INV-account-11) and the full action_type
+// vocabulary are owned by the user-logs task (#08).
+type UserLog struct {
+	ID         uuid.UUID
+	UserID     uuid.UUID
+	ActionType string
+	CreatedAt  time.Time
+}

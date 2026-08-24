@@ -150,6 +150,53 @@ func (r *RepositoryDB) InsertAuthToken(ctx context.Context, tx pgx.Tx, token *Au
 	return nil
 }
 
+// InsertRefreshToken inserts a new session refresh_token row. Same shape
+// as InsertAuthToken: token_hash is already a hash, no encryption, called
+// within the caller's tx. Rotation/reuse columns stay nil at issue time.
+func (r *RepositoryDB) InsertRefreshToken(ctx context.Context, tx pgx.Tx, token *RefreshToken) error {
+	sqlStr, args, err := pgDialect.Insert("refresh_tokens").
+		Rows(goqu.Record{
+			"id":         token.ID,
+			"user_id":    token.UserID,
+			"family_id":  token.FamilyID,
+			"token_hash": token.TokenHash,
+			"expires_at": token.ExpiresAt,
+			"created_at": token.CreatedAt,
+			// revoked_at and replaced_by_id default to NULL for a new token.
+		}).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return fmt.Errorf("account: build insert refresh_tokens: %w", err)
+	}
+	if _, err := tx.Exec(ctx, sqlStr, args...); err != nil {
+		return fmt.Errorf("account: insert refresh_tokens: %w", err)
+	}
+	return nil
+}
+
+// InsertUserLog appends an audit entry to user_logs. Called within the
+// caller's tx so the audit write commits atomically with the action it
+// records.
+func (r *RepositoryDB) InsertUserLog(ctx context.Context, tx pgx.Tx, entry *UserLog) error {
+	sqlStr, args, err := pgDialect.Insert("user_logs").
+		Rows(goqu.Record{
+			"id":          entry.ID,
+			"user_id":     entry.UserID,
+			"action_type": entry.ActionType,
+			"created_at":  entry.CreatedAt,
+		}).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return fmt.Errorf("account: build insert user_logs: %w", err)
+	}
+	if _, err := tx.Exec(ctx, sqlStr, args...); err != nil {
+		return fmt.Errorf("account: insert user_logs: %w", err)
+	}
+	return nil
+}
+
 // FindAuthIdentityByIdentifierHash looks up an identity by
 // (providerType, identifierHash). Returns (nil, nil) if not found.
 // The returned identity has its non-encrypted fields populated;

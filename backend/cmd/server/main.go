@@ -27,6 +27,7 @@ import (
 	platformbreachcheck "github.com/anhsbolic/kencleng/backend/internal/platform/breachcheck"
 	platformcrypto "github.com/anhsbolic/kencleng/backend/internal/platform/crypto"
 	"github.com/anhsbolic/kencleng/backend/internal/platform/db"
+	"github.com/anhsbolic/kencleng/backend/internal/platform/googleoauth"
 	platformnotification "github.com/anhsbolic/kencleng/backend/internal/platform/notification"
 	transporthttp "github.com/anhsbolic/kencleng/backend/internal/transport/http"
 )
@@ -68,6 +69,10 @@ func run() error {
 		"JWT_PUBLIC_KEY_PATH",
 		"AUTH_RATE_RPS",
 		"AUTH_RATE_BURST",
+		"GOOGLE_CLIENT_ID",
+		"GOOGLE_CLIENT_SECRET",
+		"GOOGLE_REDIRECT_URI",
+		"FRONTEND_URL",
 	); err != nil {
 		return err
 	}
@@ -88,8 +93,9 @@ func run() error {
 		return err
 	}
 
-	// 5. Auth: load the ES256 key pair (used by future login/session task).
-	_, err = auth.Load(os.Getenv("JWT_PRIVATE_KEY_PATH"), os.Getenv("JWT_PUBLIC_KEY_PATH"))
+	// 5. Auth: load the ES256 key pair (signs access tokens for the
+	// account service; verified inline by OAuth handlers for link/reauth).
+	authKeys, err := auth.Load(os.Getenv("JWT_PRIVATE_KEY_PATH"), os.Getenv("JWT_PUBLIC_KEY_PATH"))
 	if err != nil {
 		return err
 	}
@@ -97,7 +103,13 @@ func run() error {
 	// 6. Account domain wiring.
 	breachClient := platformbreachcheck.NewClient(5 * time.Second) // explicit timeout (techplan §7 row 4)
 	emailSender := newEmailSender(appEnv)                          // dev: outbox file; else: FakeSender (logged, no SMTP)
-	accountSvc := account.NewService(account.NewRepositoryDB(pool, keys), pool, breachClient, emailSender, keys)
+	googleClient := googleoauth.NewClient(
+		os.Getenv("GOOGLE_CLIENT_ID"),
+		os.Getenv("GOOGLE_CLIENT_SECRET"),
+		os.Getenv("GOOGLE_REDIRECT_URI"),
+	)
+	accountSvc := account.NewService(account.NewRepositoryDB(pool, keys), pool, breachClient, emailSender, keys,
+		googleClient, authKeys, os.Getenv("FRONTEND_URL"))
 
 	// 7. Rate-limit configuration (fail fast if unset — Open Item #3).
 	rps, err := strconv.ParseFloat(os.Getenv("AUTH_RATE_RPS"), 64)
@@ -119,6 +131,16 @@ func run() error {
 	authMux.HandleFunc("POST /auth/register", transporthttp.RegisterHandler(accountSvc))
 	authMux.HandleFunc("POST /auth/verify-email", transporthttp.VerifyEmailHandler(accountSvc))
 	authMux.HandleFunc("POST /auth/verify-email/resend", transporthttp.ResendVerificationHandler(accountSvc))
+
+	// Google OAuth (ticket 02). Cookies are Secure in every non-dev
+	// environment; dev serves plain HTTP so Secure must be off there.
+	googleVerifyToken := transporthttp.GoogleTokenVerifier(authKeys.Public)
+	cookieSecure := appEnv != "development"
+	authMux.HandleFunc("GET /auth/google/redirect",
+		transporthttp.GoogleRedirectHandler(accountSvc, googleVerifyToken, cookieSecure))
+	authMux.HandleFunc("GET /auth/google/callback",
+		transporthttp.GoogleCallbackHandler(accountSvc, cookieSecure))
+
 	mux.Handle("/auth/", transporthttp.RateLimit(rps, burst)(authMux))
 
 	srv := &http.Server{

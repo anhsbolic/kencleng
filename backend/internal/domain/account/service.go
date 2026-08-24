@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -15,8 +16,10 @@ import (
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 
+	"github.com/anhsbolic/kencleng/backend/internal/platform/auth"
 	"github.com/anhsbolic/kencleng/backend/internal/platform/breachcheck"
 	"github.com/anhsbolic/kencleng/backend/internal/platform/crypto"
+	"github.com/anhsbolic/kencleng/backend/internal/platform/googleoauth"
 	"github.com/anhsbolic/kencleng/backend/internal/platform/notification"
 	"github.com/anhsbolic/kencleng/backend/internal/platform/secrets"
 )
@@ -70,25 +73,43 @@ func (p poolRunner) BeginTx(ctx context.Context) (pgx.Tx, error) {
 }
 
 // Service implements the account domain's registration, verification,
-// and resend flows. It is safe for concurrent use: it holds no mutable
-// state of its own, and every injected dependency is goroutine-safe.
+// resend, and Google OAuth flows. It is safe for concurrent use: it holds
+// no mutable state of its own, and every injected dependency is
+// goroutine-safe.
 type Service struct {
 	repo        Repository
 	tx          TxRunner
 	breachCheck breachChecker
 	email       notification.Sender
 	keys        *crypto.Keys
+
+	googleOAuth googleOAuthClient
+	authKeys    *auth.Keys
+	frontendURL string
 }
 
 // NewService constructs an account Service. db is used only to begin
 // transactions; reads/standalone writes go through repo.
-func NewService(repo Repository, db *pgxpool.Pool, bc *breachcheck.Client, sender notification.Sender, keys *crypto.Keys) *Service {
+//
+// Parameters 6–8 are the Google OAuth additions (techplan §10):
+// googleOauth is the shared platform client, authKeys signs ES256 access
+// tokens for IssueTokens (consumed read-only — platform/auth/ itself is a
+// Tier 0 fenced path), frontendURL is the base URL success/error redirects
+// point at (FRONTEND_URL). frontendURL is an 8th parameter beyond the six
+// the techplan enumerated — deviation flagged in the ticket report: the
+// techplan's §8 flow has the service producing complete redirect URLs, so
+// it needs the base URL too.
+func NewService(repo Repository, db *pgxpool.Pool, bc *breachcheck.Client, sender notification.Sender, keys *crypto.Keys, googleOauth *googleoauth.Client, authKeys *auth.Keys, frontendURL string) *Service {
 	return &Service{
 		repo:        repo,
 		tx:          poolRunner{pool: db},
 		breachCheck: bc,
 		email:       sender,
 		keys:        keys,
+
+		googleOAuth: googleOauth,
+		authKeys:    authKeys,
+		frontendURL: strings.TrimRight(frontendURL, "/"),
 	}
 }
 
