@@ -14,6 +14,16 @@
 > The "Incremental Growth Rule" section at the bottom is durable
 > policy — consult it again whenever a *later* domain task thinks it
 > needs to add shared infra.
+> **Revision (2026-08-24)**: (1) fixed Step 2's Serial group S1 range
+> — it's tasks #1-#5, not #1-#4 (Task #5, Account Linking, maps to
+> `/dashboard/security`, already in this phase's Dashboard Shell nav
+> scope); (2) added explicit focus-management requirements to Step 3
+> (Auth Shell modal) and Step 5 (Dashboard Shell mobile drawer) — the
+> original version specified visual/responsive behavior for both but
+> not the focus-trap/return-focus behavior, which
+> `../../harscode-workspace/best-practices/react/
+> accessibility-fundamentals.md` treats as the most commonly-missed
+> requirement for exactly this kind of overlay component.
 
 ## Why this exists, and why it's scoped this small
 
@@ -47,8 +57,12 @@ for this phase, not deferred. See "Incremental Growth Rule" for what
 
 `scaffold-frontend.md` must already be complete (`components/`,
 `lib/`, `mocks/` exist, deps installed, `lib/api/schema.d.ts`
-generated). If not, stop — that playbook runs first, this one
-doesn't substitute for it.
+generated, `lib/api/client.ts` exists per that playbook's Step 7). If
+not, stop — that playbook runs first, this one doesn't substitute for
+it. If `scaffold-frontend.md`'s Step 7 deferred the `auth-store.ts`
+import inside `client.ts` (that store is built in this playbook's own
+Step 4, below), wire that import as part of Step 4 here — don't leave
+it deferred past this phase.
 
 ## Step 1 — Route groups
 
@@ -81,10 +95,15 @@ Guest content, correctly belongs there even unbuilt.
 
 ## Step 2 — Minimum `components/ui/` primitives
 
-Scoped to exactly what Account Tasks #1–#4 need (`docs/spec/1-account/
-tasks.md`, Serial group S1) — all four are Form-pattern pages
-(`docs/ui-ux/patterns.md` Pattern 3), nothing more exotic than a form
-and a request-level error banner:
+Scoped to exactly what Account Tasks #1–#5 need (`docs/spec/1-account/
+tasks.md`, Serial group S1 — **#1-#5, not #1-#4**: Task #5, Account
+Linking, is part of S1 too, and its UI lives at `/dashboard/security`,
+already in this phase's Dashboard Shell nav scope via Step 3b). All
+five are Form-pattern pages (`docs/ui-ux/patterns.md` Pattern 3) —
+Task #2 (Google OAuth) is the partial exception, surfacing mainly as a
+button on the `(auth)` shell rather than a dedicated form page of its
+own, but doesn't need anything beyond what's already listed below.
+Nothing more exotic than a form and a request-level error banner:
 
 | Primitive | Why it's needed now | NOT built now |
 |---|---|---|
@@ -120,6 +139,28 @@ Per `docs/ui-ux/prototype-reference.md`'s `/login` Tier 1 entry:
   banner-level. This shell must leave a banner slot *above* the form
   — the actual wiring happens in Account Task #1/#3's own session,
   but the shell's layout is what makes doing it right the easy path.
+- **Focus management (desktop modal only — new in this revision)**:
+  `patterns.md`'s Shared Components section has no existing modal
+  spec, so this is the first one — follow
+  `../../harscode-workspace/best-practices/react/
+  accessibility-fundamentals.md`'s pattern exactly, not an ad hoc
+  version:
+  - Root panel: `role="dialog"`, `aria-modal="true"`.
+  - On mount (desktop breakpoint only): move focus into the panel —
+    the first interactive field, not the panel container itself.
+  - On unmount/route change away from `(auth)`: return focus to
+    whatever triggered navigation into it, where that's knowable (a
+    "Masuk"/"Daftar" link click); if not knowable (direct URL nav),
+    focus the panel's first field instead of leaving focus on
+    `<body>`.
+  - Tab/Shift+Tab must cycle within the panel only — background
+    content is not reachable by keyboard while the modal is open.
+    Escape does not need to close this particular modal (there's no
+    "cancel" concept for an auth wall), but Tab must still trap.
+  - **Mobile (full-page) does not need any of this** — there's no
+    trigger to return focus to and no background content to trap
+    away from; this requirement is specifically for the desktop
+    overlay variant.
 
 ## Step 4 — Minimal routing/auth plumbing
 
@@ -135,7 +176,10 @@ depends on the hooks defined in this step.
 - **`lib/stores/auth-store.ts`** — Zustand, shape only:
   `{ accessToken: string | null, setAccessToken, clearAccessToken }`.
   No login logic here (that's Task #3's job) — just the shared shape
-  so Tasks #2 and #3 don't each invent their own.
+  so Tasks #2 and #3 don't each invent their own. If
+  `scaffold-frontend.md`'s `lib/api/client.ts` (its Step 7) was built
+  with the store import left as a placeholder, wire the real import
+  now — this is that step's dependency resolving.
 - **`lib/types/roles.ts`** — the two role type unions the hooks below
   need: `GlobalRole = 'donatur' | 'kurator' | 'admin'`,
   `OrgRoleLevel = 'owner' | 'staff'`.
@@ -190,13 +234,30 @@ Per resolved decision: **top-nav desktop, top-bar + hamburger mobile**
   needed when that happens.
 - Mobile hamburger reveals the same nav item list in a drawer/sheet —
   same filtered list, not a second copy.
+- **Focus management (mobile hamburger drawer — new in this
+  revision)**: same source (`accessibility-fundamentals.md`) as
+  Step 3, applied to the drawer instead of a modal:
+  - Hamburger button: `aria-expanded` reflects open/closed state,
+    `aria-controls` points at the drawer's `id`.
+  - On open: move focus to the drawer's first nav item (not the
+    hamburger button itself, which is now visually behind the
+    drawer).
+  - On close (Escape, or selecting a nav item that navigates away):
+    return focus to the hamburger button.
+  - Tab/Shift+Tab cycles within the open drawer only — the nav items
+    behind it (desktop top-nav markup, if present in the DOM at
+    mobile width) must not be reachable by keyboard while the drawer
+    is open.
 
 ## Step 6 — Verify
 
 ```bash
 npm run dev      # (auth) and (dashboard) routes render, even with placeholder pages
 npm run lint
-npm run test       # component tests for the 5 ui/ primitives + nav role-filtering
+npm run test       # component tests for the 5 ui/ primitives + nav role-filtering,
+                    # plus keyboard-only open/close/focus-return for both the Auth
+                    # Shell modal and the Dashboard Shell drawer (RTL role/keyboard
+                    # queries, per component-test-mocking-discipline.md)
 npm run build
 ```
 
@@ -211,9 +272,17 @@ npm run build
       fully built this phase — don't under-build those to match)
 - [ ] Auth Shell's modal-vs-page split actually switches at the
       intended breakpoint, checked at both widths
+- [ ] Auth Shell modal: focus lands inside on open, returns to the
+      trigger (or the panel's first field, if no trigger is knowable)
+      on close, and Tab/Shift+Tab never reaches background content —
+      checked with keyboard only, not just visually
 - [ ] Dashboard Shell nav actually hides/shows items per role — check
       with at least two different `GlobalRole` combinations, not just
       the default logged-in-donatur case
+- [ ] Dashboard Shell mobile drawer: hamburger button's `aria-expanded`
+      toggles correctly, focus lands on the first nav item on open and
+      returns to the hamburger button on close, Tab cycles within the
+      drawer only while open
 - [ ] Notification badge is wired to the mocked
       `GET /notifications/unread-count` shape from `schema.d.ts`, not
       a hardcoded number
@@ -248,7 +317,12 @@ without re-running a Phase-0-sized playbook every time."
    this is exactly how Dashboard Shell's nav list itself is meant to
    grow (Step 5's list is Account-only on purpose; `organization`,
    `campaign`, `kurasi`, `admin` items get added by *those* domains'
-   own tasks, not by reopening this playbook).
+   own tasks, not by reopening this playbook). Any new overlay
+   component (a dropdown, a second modal type, another drawer)
+   inherits this same rule — build the focus-management behavior into
+   it the first time, following `accessibility-fundamentals.md`,
+   rather than treating what Steps 3 and 5 did here as a one-off
+   special case.
 3. **Don't retrofit already-shipped pages** when a later domain adds
    something an earlier page *could* have used. If `campaign`
    domain's `Badge` would've made an earlier Account page nicer,
@@ -268,9 +342,11 @@ without re-running a Phase-0-sized playbook every time."
   playbook; provides the folder/provider/token foundation this phase
   builds on, and defines the **Mock-First Development Workflow**
   (durable section) that this phase's Dashboard Shell notification
-  badge is the first concrete example of.
+  badge is the first concrete example of. Its Step 7
+  (`lib/api/client.ts`) is a direct prerequisite for this phase's
+  Step 4 (`auth-store.ts` wiring).
 - `docs/spec/1-account/tasks.md` — the task list Step 2's primitive
-  set is derived from.
+  set is derived from (Serial group S1, tasks #1-#5).
 - `docs/ui-ux/page-map.md` — Account domain's own page inventory
   (Donatur section) this phase's Dashboard Shell scope is derived
   from, and the Cross-Cutting UI Elements table the notification
@@ -284,3 +360,6 @@ without re-running a Phase-0-sized playbook every time."
   `middleware.ts` resolved decisions this phase implements.
 - `api/openapi/notification.yaml` — `GET /notifications/unread-count`,
   the contract the Dashboard Shell's notification badge mocks against.
+- `../../harscode-workspace/best-practices/react/
+  accessibility-fundamentals.md` — the focus-management pattern Steps
+  3 and 5's modal/drawer requirements implement.

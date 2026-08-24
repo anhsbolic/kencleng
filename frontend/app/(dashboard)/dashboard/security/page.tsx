@@ -1,0 +1,12 @@
+// Placeholder — real form is Account Task #5's scope
+// (docs/spec/1-account/tasks.md), not this playbook
+// (phase0-shared-infra.md). Exists so the Dashboard Shell has a
+// route to render against during this phase's verification.
+export default function SecurityPage() {
+  return (
+    <div>
+      <h1 className="text-2xl font-bold text-neutral-900">Keamanan</h1>
+      <p className="mt-2 text-sm text-neutral-500">Placeholder — Account Task #5.</p>
+    </div>
+  );
+}

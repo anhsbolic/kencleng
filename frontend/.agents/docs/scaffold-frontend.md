@@ -9,7 +9,14 @@
 > stop and say so instead of re-running it.
 > Tier: infrastructure, not a feature — no domain invariant or threat
 > model applies. Still goes through a human checkpoint before merge
-> (Step 8) because every later frontend task inherits this wiring.
+> (Step 10) because every later frontend task inherits this wiring.
+> **Revision (2026-08-24)**: added Step 7 (centralized API client) —
+> the original version left `lib/api/` as "hand-written fetch
+> functions" with no shared request wrapper, which risked each
+> domain's fetch functions re-implementing auth/CSRF header attachment
+> inconsistently. See `../../harscode-workspace/best-practices/react/
+> api-client-centralization.md`. All later step numbers shifted by one
+> from the original version of this file.
 
 ## Step 0 — Verify environment values first
 
@@ -48,7 +55,9 @@ frontend/
 │   ├── features/            # domain-specific, e.g. components/features/donation/
 │   └── shared/               # cross-domain non-primitive, e.g. MaskedField
 ├── lib/
-│   ├── api/                 # hand-written fetch functions + generated schema.d.ts
+│   ├── api/                 # client.ts (Step 7) + hand-written fetch
+│   │                         # functions built through it, per domain +
+│   │                         # generated schema.d.ts (Step 8)
 │   ├── hooks/                # TanStack Query hooks wrapping lib/api/
 │   └── stores/               # Zustand stores, split per domain (not one giant store)
 ├── mocks/                    # MSW request handlers for tests (Step 6)
@@ -72,7 +81,9 @@ here):
 
 - **No HTTP client library** (`axios`, `ky`, etc.) — native `fetch`,
   per `kencleng-frontend-tech-stack.md` Testing section ("real `fetch`
-  calls, real TanStack Query hooks").
+  calls, real TanStack Query hooks"). This applies to the centralized
+  client built in Step 7 too — it wraps native `fetch`, it doesn't
+  introduce a library.
 - **`@hookform/resolvers`** is the standard `react-hook-form` + `zod`
   glue (`zodResolver`) — not called out explicitly in the tech-stack
   doc but a direct, low-complexity consequence of the two decisions
@@ -230,7 +241,79 @@ implemented (custom script diffing `lib/api/schema.d.ts` against
 guess at a mechanism here — this needs an actual decision, likely once
 Task #1's frontend track has real fixtures to check against.
 
-## Step 7 — API types generation
+## Step 7 — Centralized API client (`lib/api/client.ts`)
+
+**New in this revision.** Every domain's `lib/api/<domain>.ts` fetch
+functions need the same three things attached correctly on every
+state-changing request: the in-memory access token, the backend's
+required CSRF/custom header (`restapi/csrf-and-cookie-security.md`,
+backend side), and `credentials: 'include'` for the auth cookie to
+travel. Left implicit, this is exactly the kind of thing that gets
+re-implemented slightly differently per domain as each one's frontend
+track starts — see `../../harscode-workspace/best-practices/react/
+api-client-centralization.md` for the full pattern and worked example;
+this step is that pattern, scaffolded once here rather than
+improvised per domain later.
+
+```ts
+// lib/api/client.ts
+async function apiFetch(path: string, init: RequestInit = {}) {
+  const token = useAuthStore.getState().accessToken; // Zustand store,
+                                                        // built in
+                                                        // Phase 0
+                                                        // Step 4 —
+                                                        // this file
+                                                        // may predate
+                                                        // that store
+                                                        // existing;
+                                                        // if so, wire
+                                                        // this line
+                                                        // when Phase 0
+                                                        // lands, don't
+                                                        // block this
+                                                        // step on it
+  const isMutating = init.method && init.method !== 'GET';
+
+  const res = await fetch(path, {
+    ...init,
+    credentials: 'include',
+    headers: {
+      ...init.headers,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(isMutating ? { 'X-Requested-With': 'kencleng-frontend' } : {}),
+    },
+  });
+
+  if (res.status === 401) {
+    await tryRefreshOnce();
+  }
+  return res;
+}
+
+export { apiFetch };
+```
+
+This step has a genuine ordering dependency the other scaffold steps
+don't: `apiFetch` reads the auth token from `lib/stores/auth-store.ts`,
+which isn't created until Phase 0 Step 4
+(`frontend/.agents/docs/phase0-shared-infra.md`). Two acceptable ways
+to sequence this, either is fine:
+
+- Scaffold `client.ts` now with the store read left as a clearly-marked
+  placeholder (as shown above), wire the real import when Phase 0 runs, or
+- Defer this whole step until immediately after Phase 0 Step 4, if
+  Phase 0 is running in the same session as this scaffold.
+
+Either way, **no domain's `lib/api/<domain>.ts` should be written
+before this file exists** — every domain fetch function should be
+built by calling `apiFetch`, never a raw `fetch()` call
+(`api-client-centralization.md`'s core checklist item).
+
+**Exception, not a gap**: `apiFetch` itself is one of the few places in
+`frontend/` allowed to call raw `fetch()` directly — it's the
+centralization point, not a violator of the rule it enforces.
+
+## Step 8 — API types generation
 
 ```bash
 npx openapi-typescript ../api/openapi.yaml -o lib/api/schema.d.ts
@@ -240,7 +323,7 @@ Run once now (against whatever the spec currently contains) so
 `lib/api/` isn't empty, and re-run whenever `api/openapi.yaml` changes
 — per `frontend/README.md`. Never hand-edit the output.
 
-## Step 8 — Verify
+## Step 9 — Verify
 
 ```bash
 npm run dev            # should start cleanly on :3000
@@ -254,7 +337,7 @@ expected, not a gap. Don't write placeholder tests just to have
 something for it to run, matching the same rule
 `scaffold-backend.md` Step 4 states for the backend side.
 
-## Step 9 — Human checkpoint
+## Step 10 — Human checkpoint
 
 Per `docs/kencleng-agentic-workflow.md` §10/§14 step 6, this isn't
 Tier 0 (no server-side correctness logic here), but still needs a look
@@ -269,6 +352,10 @@ before merge:
       render correctly), not just structurally present
 - [ ] Service worker registration is genuinely gated to the browser
       environment and doesn't break SSR/build
+- [ ] `lib/api/client.ts` (Step 7) attaches the CSRF header only on
+      mutating methods, `credentials: 'include'` on every call, and
+      the 401 handling triggers at most one refresh attempt, not a
+      retry loop
 
 ## Open items surfaced by this playbook (not resolved here)
 
@@ -285,13 +372,14 @@ before merge:
 
 ## Mock-First Development Workflow — durable, applies to every page/task
 
-**This section outlives Steps 0-9 above** — it's the answer to "how
+**This section outlives Steps 0-10 above** — it's the answer to "how
 does a page actually get built," referenced by every domain's frontend
 track from here on, not just this one-time scaffold.
 
 Per page/component (regardless of domain), the cycle is:
 
-1. **Mock** — build the page against `lib/api/<domain>.ts` (typed via
+1. **Mock** — build the page against `lib/api/<domain>.ts` (calling
+   `apiFetch` from `lib/api/client.ts`, typed via
    `lib/api/schema.d.ts`) + a `mocks/handlers.ts` entry shaped from the
    same generated types. No live backend needed — this is what makes
    frontend and backend tracks parallelizable per §15.
@@ -331,3 +419,5 @@ Per page/component (regardless of domain), the cycle is:
 - `docs/ui-ux/design-guidelines.md` — visual tokens (Step 4)
 - `docs/kencleng-agentic-workflow.md` §14 — the gate sequence this
   scaffold's test infra (Step 6) exists to support
+- `../../harscode-workspace/best-practices/react/
+  api-client-centralization.md` — the pattern Step 7 implements
