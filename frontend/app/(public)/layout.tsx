@@ -1,5 +1,7 @@
 import { HandHeart } from "lucide-react";
 import Link from "next/link";
+import { AuthModal } from "@/components/features/account/auth-modal";
+import { AuthModalTriggers } from "@/components/features/account/auth-modal-triggers";
 import { publicNavItems } from "./_components/nav-items";
 import { PublicShellClient } from "./_components/public-shell-client";
 
@@ -9,9 +11,16 @@ import { PublicShellClient } from "./_components/public-shell-client";
  * pass-through stub (`phase0-shared-infra.md` Step 1).
  *
  * Desktop nav renders directly here (static markup, no interactivity
- * needed) — only the mobile hamburger/drawer is a Client Component
- * (`PublicShellClient`), per `server-client-component-boundary.md`'s
- * "'use client' at the smallest leaf" checklist item.
+ * needed) except the "Masuk"/"Daftar" buttons (`AuthModalTriggers`) and
+ * the mobile hamburger/drawer (`PublicShellClient`), both Client
+ * Components, per `server-client-component-boundary.md`'s "'use
+ * client' at the smallest leaf" checklist item.
+ *
+ * `AuthModal` is mounted once here, as a sibling of `{children}` — not
+ * inside `<main>` — so it overlays the actual mounted landing page
+ * (and any other page under this Shell) rather than replacing it, per
+ * the login/register-as-a-modal follow-up to techplan account/03-
+ * login-session-management.
  */
 export default function PublicLayout({
   children,
@@ -46,18 +55,7 @@ export default function PublicLayout({
         </nav>
 
         <div className="ml-auto hidden items-center gap-2 md:flex">
-          <Link
-            href="/login"
-            className="inline-flex h-9 items-center justify-center rounded-md border border-neutral-200 px-3 text-sm font-semibold text-neutral-700 transition-colors hover:bg-neutral-100"
-          >
-            Masuk
-          </Link>
-          <Link
-            href="/register"
-            className="inline-flex h-9 items-center justify-center rounded-md bg-primary-600 px-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-700"
-          >
-            Daftar
-          </Link>
+          <AuthModalTriggers />
         </div>
 
         <div className="ml-auto">
@@ -66,6 +64,8 @@ export default function PublicLayout({
       </header>
 
       <main className="flex flex-1 flex-col">{children}</main>
+
+      <AuthModal />
     </div>
   );
 }

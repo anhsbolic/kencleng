@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 import type { ReactNode } from "react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { server } from "@/mocks/server";
 import { RegisterForm } from "./register-form";
 
@@ -151,6 +151,23 @@ describe("RegisterForm", () => {
 
     const heading = await screen.findByRole("heading", { name: "Cek email kamu" });
     await waitFor(() => expect(heading).toHaveFocus());
+  });
+
+  it("renders 'Masuk' as a real navigation link by default (standalone /register route)", () => {
+    render(withQueryClient(<RegisterForm />));
+
+    expect(screen.getByRole("link", { name: "Masuk" })).toHaveAttribute("href", "/login");
+  });
+
+  it("renders 'Masuk' as a button calling onSwitchToLogin when provided (modal context)", () => {
+    const onSwitchToLogin = vi.fn();
+    render(withQueryClient(<RegisterForm onSwitchToLogin={onSwitchToLogin} />));
+
+    const masuk = screen.getByRole("button", { name: "Masuk" });
+    expect(masuk).not.toHaveAttribute("href");
+
+    fireEvent.click(masuk);
+    expect(onSwitchToLogin).toHaveBeenCalledTimes(1);
   });
 
   it("never fires a request on email blur/change beyond the explicit submit (R18)", () => {

@@ -1,8 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, waitFor } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { server } from "@/mocks/server";
+import { FakeBroadcastChannel, installFakeBroadcastChannel } from "@/mocks/fake-broadcast-channel";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { AuthBootstrapProvider } from "./auth-bootstrap-provider";
 
@@ -119,4 +120,53 @@ describe("AuthBootstrapProvider", () => {
   // inside a `QueryClientProvider` and calls `useQueryClient()`
   // internally (R9's invalidation) — if it weren't correctly nested,
   // every test here would throw on render rather than pass.
+
+  describe("cross-tab auth channel listener (account/03-login-session-management, R14)", () => {
+    let restoreChannel: () => void;
+
+    beforeEach(async () => {
+      restoreChannel = await installFakeBroadcastChannel();
+      // Every test in this block renders against an already-null store
+      // and a refresh that never resolves before the assertion, so the
+      // channel-driven update below is unambiguously the channel's
+      // doing, not the boot-time hydration effect's.
+      server.use(http.post("/auth/refresh", () => HttpResponse.json({}, { status: 401 })));
+    });
+
+    afterEach(() => {
+      restoreChannel();
+    });
+
+    it("applies a 'refreshed' broadcast from another tab by setting the access token", async () => {
+      renderWithQueryClient();
+      await waitFor(() => expect(useAuthStore.getState().accessToken).toBeNull());
+
+      const otherTab = new FakeBroadcastChannel("kencleng-auth");
+      otherTab.postMessage({ type: "refreshed", accessToken: "from-other-tab" });
+
+      await waitFor(() =>
+        expect(useAuthStore.getState().accessToken).toBe("from-other-tab")
+      );
+    });
+
+    it("applies a 'refresh-failed' broadcast by clearing the access token", async () => {
+      useAuthStore.setState({ accessToken: "stale-token" });
+      renderWithQueryClient();
+
+      const otherTab = new FakeBroadcastChannel("kencleng-auth");
+      otherTab.postMessage({ type: "refresh-failed" });
+
+      await waitFor(() => expect(useAuthStore.getState().accessToken).toBeNull());
+    });
+
+    it("applies a 'logged-out' broadcast by clearing the access token", async () => {
+      useAuthStore.setState({ accessToken: "stale-token" });
+      renderWithQueryClient();
+
+      const otherTab = new FakeBroadcastChannel("kencleng-auth");
+      otherTab.postMessage({ type: "logged-out" });
+
+      await waitFor(() => expect(useAuthStore.getState().accessToken).toBeNull());
+    });
+  });
 });

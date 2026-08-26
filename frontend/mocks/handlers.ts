@@ -5,7 +5,7 @@
 // scaffold-frontend.md's durable section) — not speculatively ahead
 // of demonstrated need.
 import { HttpResponse, http } from "msw";
-import type { User } from "@/lib/api/account";
+import type { LoginResponse, User } from "@/lib/api/account";
 import type { CampaignListResponse } from "@/lib/api/campaign";
 import type { UnreadCountResponse } from "@/lib/api/notification";
 
@@ -125,6 +125,32 @@ const mockResendAccepted = {
   message: "Kalau email terdaftar, instruksi sudah dikirim.",
 };
 
+// Default happy-path fixtures for account/04-forgot-reset-password.
+// Individual tests override the 422/404/410/429/network-error cases via
+// `server.use(...)`, same pattern as the register/verify-email fixtures
+// above. Both messages are the backend's own real response text
+// (`auth_password_reset.go`), not invented — see the techplan's D6.
+const mockForgotPasswordAccepted = {
+  message: "Kalau email terdaftar, instruksi sudah dikirim.",
+};
+const mockResetPasswordOk = {
+  message: "Password berhasil diubah. Silakan login ulang.",
+};
+
+// Default happy-path fixture for account/03-login-session-management's
+// two login-completing endpoints (`/auth/login`'s "ok" branch and
+// `/auth/login/mfa`, which only ever returns this same shape). Reuses
+// `mockUser` so a successful mocked login is consistent with what
+// `GET /account/me` already returns for the same fixture user.
+// Individual tests override via `server.use(...)` for the
+// `mfa_required`/401/429 branches.
+const mockLoginOk: LoginResponse = {
+  status: "ok",
+  access_token: "mock-access-token",
+  access_token_expires_at: new Date(Date.now() + 15 * 60 * 1000).toISOString(),
+  user: mockUser,
+};
+
 export const handlers = [
   http.get("/account/me", () => HttpResponse.json(mockUser)),
   http.get("/notifications/unread-count", () =>
@@ -147,4 +173,14 @@ export const handlers = [
   // successful-hydration case (techplan account/02-google-oauth-
   // login-register, R8-R11).
   http.post("/auth/refresh", () => HttpResponse.json({}, { status: 401 })),
+  http.post("/auth/login", () => HttpResponse.json(mockLoginOk, { status: 200 })),
+  http.post("/auth/login/mfa", () => HttpResponse.json(mockLoginOk, { status: 200 })),
+  // Logout is idempotent/no-body per spec 03 — 204 with no content.
+  http.post("/auth/logout", () => new HttpResponse(null, { status: 204 })),
+  http.post("/auth/forgot-password", () =>
+    HttpResponse.json(mockForgotPasswordAccepted, { status: 202 })
+  ),
+  http.post("/auth/reset-password", () =>
+    HttpResponse.json(mockResetPasswordOk, { status: 200 })
+  ),
 ];

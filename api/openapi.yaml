@@ -327,6 +327,8 @@ paths:
         '422':
           description: Password fails policy or found in breach-list.
           $ref: '#/components/responses/ValidationError'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
   /auth/google/redirect:
     get:
       tags:

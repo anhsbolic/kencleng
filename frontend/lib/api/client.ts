@@ -8,6 +8,7 @@
 // backend's required CSRF/custom header on state-changing methods.
 
 import { useAuthStore } from "@/lib/stores/auth-store";
+import { postAuthChannelMessage } from "./auth-channel";
 import type { components } from "./schema";
 
 function getAccessToken() {
@@ -35,6 +36,12 @@ type RefreshResponse = components["schemas"]["RefreshResponse"];
  * including the one set by a successful Google OAuth callback, which
  * delivers its tokens as cookies rather than a JSON body (techplan
  * account/02-google-oauth-login-register, D3/R8-R11).
+ *
+ * Since account/03-login-session-management (task-02), every external
+ * caller (`apiFetch`'s own 401 handler included) goes through
+ * `coordinatedRefresh` below instead of calling this function directly
+ * — this function's own single-attempt contract is unchanged, it's just
+ * no longer the outermost entry point for cross-tab-safe callers.
  */
 async function tryRefreshOnce(): Promise<boolean> {
   try {
@@ -56,6 +63,65 @@ async function tryRefreshOnce(): Promise<boolean> {
     setAccessToken(null);
     return false;
   }
+}
+
+const REFRESH_LOCK_NAME = "kencleng-refresh-token";
+
+/**
+ * Cross-tab-coordinated wrapper around `tryRefreshOnce` (techplan
+ * account/03-login-session-management, task-02, D3 — resolves task
+ * #02's own carried-forward Open Item #1). Without this, two tabs both
+ * calling `tryRefreshOnce` around the same access-token expiry can race
+ * `POST /auth/refresh`; the backend's rotate-on-use + reuse-detection
+ * design (INV-account-03/04) then treats the *losing* tab's call as a
+ * reuse attempt and revokes the entire token family — a real forced
+ * logout, not a hypothetical, per spec 03's own Assumption D.
+ *
+ * Mutual exclusion is done via the Web Locks API (`navigator.locks`) —
+ * a browser-native, purpose-built primitive for exactly this cross-tab
+ * mutex problem, chosen over a hand-rolled `BroadcastChannel`-only
+ * election (which cannot fully close the race on its own, since
+ * `BroadcastChannel` delivery is asynchronous) — see the source
+ * techplan's D3 for the full option comparison, approved by Anhar
+ * 2026-08-26 as a deliberate deviation from spec 03's literal
+ * "BroadcastChannel" wording, satisfying the same stated goal through a
+ * different mechanism.
+ *
+ * `navigator.locks` is feature-detected, never assumed present: absent
+ * in some browsers, and absent in this project's own pinned jsdom test
+ * environment (confirmed directly, not assumed — see the source
+ * techplan's §14 Resolved #6). When unavailable, this falls back to
+ * calling `tryRefreshOnce` directly, unserialized — an explicit,
+ * accepted degradation (the pre-existing single-tab behavior), not a
+ * silent gap.
+ *
+ * The outcome is also broadcast on the shared auth channel (fan-out
+ * half of the coordination — see `auth-channel.ts`), so sibling tabs
+ * can absorb the result via `AuthBootstrapProvider`'s listener instead
+ * of each independently hitting the network.
+ */
+async function coordinatedRefresh(): Promise<boolean> {
+  const locks = typeof navigator !== "undefined" ? navigator.locks : undefined;
+
+  if (!locks) {
+    return tryRefreshOnce();
+  }
+
+  return locks.request(REFRESH_LOCK_NAME, async () => {
+    const ok = await tryRefreshOnce();
+
+    if (ok) {
+      // tryRefreshOnce already called setAccessToken on success, so the
+      // store holds the freshly-rotated token by the time we read it
+      // here — no separate return value needed from tryRefreshOnce
+      // itself (its existing Promise<boolean> contract is unchanged).
+      postAuthChannelMessage({ type: "refreshed", accessToken: getAccessToken() ?? "" });
+    } else {
+      postAuthChannelMessage({ type: "refresh-failed" });
+    }
+
+    return ok;
+  });
 }
 
 /**
@@ -84,8 +150,10 @@ async function apiFetch(
 
   // At most one refresh + retry per call, guarded by `isRetry` — a
   // 401 on the retried request is returned as-is, never re-refreshed.
+  // Goes through `coordinatedRefresh` (not `tryRefreshOnce` directly) so
+  // concurrent 401s across tabs are serialized instead of racing.
   if (res.status === 401 && !isRetry) {
-    const refreshed = await tryRefreshOnce();
+    const refreshed = await coordinatedRefresh();
     if (refreshed) {
       return apiFetch(path, init, true);
     }
@@ -133,4 +201,4 @@ export async function readProblemDetail(res: Response): Promise<string | undefin
   }
 }
 
-export { apiFetch, getAccessToken, setAccessToken, tryRefreshOnce };
+export { apiFetch, coordinatedRefresh, getAccessToken, setAccessToken, tryRefreshOnce };

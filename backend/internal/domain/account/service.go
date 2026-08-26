@@ -43,12 +43,19 @@ var (
 // tokenTTL is the validity window for an email_verification token.
 const tokenTTL = 24 * time.Hour
 
+// resetTokenTTL is the validity window for a password_reset token
+// (Fitur 2B). Deliberately NOT derived from tokenTTL: a reset link is a
+// higher-risk credential (direct account takeover if stolen) and gets a
+// much shorter window per the feature spec.
+const resetTokenTTL = time.Hour
+
 // emailVerification is the auth_identities provider_type / auth_tokens
 // purpose for the email/password verification flow.
 const (
 	providerEmailPassword = "email_password"
 	providerGoogle        = "google"
 	purposeEmailVerify    = "email_verification"
+	purposePasswordReset  = "password_reset"
 )
 
 // TxRunner abstracts db.BeginTx so the service is unit-testable without a
@@ -100,6 +107,12 @@ type Service struct {
 	// tests inject a recorder to prove every login branch burns comparable
 	// CPU work). nil → secrets.ComparePassword.
 	compare func(hashedPassword, password string) error
+	// hashPassword is the password-hashing seam, mirroring compare:
+	// production always leaves it nil (real bcrypt via
+	// secrets.HashPassword); concurrency-heavy integration tests inject a
+	// cheap stub so the invariant under test is DB row contention, not
+	// crypto cost. nil → secrets.HashPassword.
+	hashPassword func(password string) (string, error)
 	// mintAccess signs an ES256 access token with purpose="access"
 	// (wraps platform/auth MintAccessToken). Required for any flow that
 	// issues sessions; calls fail with a clear error if left nil.
@@ -146,6 +159,7 @@ func NewService(repo Repository, db *pgxpool.Pool, bc *breachcheck.Client, sende
 		mfa:            mfa,
 		now:            nowFn,
 		compare:        compareFn,
+		hashPassword:   secrets.HashPassword,
 		mintAccess:     mintAccess,
 		mintMFAPending: mintMFAPending,
 		verifyPending:  verifyPending,
@@ -410,11 +424,19 @@ func (s *Service) VerifyEmail(ctx context.Context, token string) error {
 		}
 	}()
 
-	userID, _, ok, err := s.repo.RedeemToken(ctx, tx, tokenHash)
+	userID, purpose, ok, err := s.repo.RedeemToken(ctx, tx, tokenHash)
 	if err != nil {
 		return fmt.Errorf("account: redeem token: %w", err)
 	}
 	if ok {
+		// Cross-purpose guard (Q1 fix): RedeemToken's guard is
+		// purpose-agnostic by design; the consuming flow owns the
+		// purpose check. A password_reset token presented here must NOT
+		// verify an email — returning an error rolls the redeem back via
+		// the deferred Rollback, so the token is not consumed.
+		if purpose != purposeEmailVerify {
+			return ErrTokenNotFound
+		}
 		// R8: valid token redeemed. Set the user's email_password
 		// identity verified_at. The userID comes from RedeemToken's
 		// RETURNING — no re-fetch. If this fails, the deferred
@@ -467,6 +489,187 @@ func (s *Service) ResendVerification(ctx context.Context, email string) error {
 	return nil
 }
 
+// ForgotPassword orchestrates the Fitur 2B request half: three internal
+// branches (registered email_password / Google-only / no match) that all
+// return nil so the handler writes an identical 202 generic response.
+//
+// Branch wall-clock time is shaped for anti-enumeration equivalence
+// (same reasoning as Register R7): the registered branch does lookup +
+// BeginTx + INSERT + Commit; each no-op branch does its lookups plus a
+// dummyWrite so its DB-time shape matches. Unlike the verification resend
+// flow, a new reset token is issued WITHOUT revoking prior outstanding
+// ones — resolved spec Assumption A keeps every token guarded
+// independently by INV-account-08's single-use predicate.
+//
+// The plain token leaves the process exactly once, via the post-commit
+// SendPasswordResetEmail call, and is never logged.
+func (s *Service) ForgotPassword(ctx context.Context, email string) error {
+	identifierHash := crypto.HMAC([]byte(email), s.keys)
+
+	identity, err := s.repo.FindAuthIdentityByIdentifierHash(ctx, providerEmailPassword, identifierHash)
+	if err != nil {
+		return fmt.Errorf("account: lookup email_password identity for forgot: %w", err)
+	}
+	if identity != nil {
+		plainToken, err := s.issueResetToken(ctx, identity.UserID)
+		if err != nil {
+			return err
+		}
+		s.sendPasswordReset(ctx, email, plainToken)
+		log.Printf("account: password reset requested user_id=%s", identity.UserID)
+		return nil
+	}
+
+	googleIdentity, err := s.repo.FindAuthIdentityByIdentifierHash(ctx, providerGoogle, identifierHash)
+	if err != nil {
+		return fmt.Errorf("account: lookup google identity for forgot: %w", err)
+	}
+
+	// Both no-op branches take the same DB-write-shaped path (dummyWrite)
+	// so their timing matches the real branch above; only the email
+	// content differs between them, and neither leaks into the API
+	// response.
+	if err := s.dummyWrite(ctx); err != nil {
+		return fmt.Errorf("account: timing write: %w", err)
+	}
+	if googleIdentity != nil {
+		s.sendNudge(ctx, email, notification.NudgeGoogleOnly)
+	}
+	return nil
+}
+
+// issueResetToken inserts a fresh password_reset AuthToken in a single
+// transaction, returning the plain token so the caller can send it by
+// email after commit.
+//
+// Deliberately NOT reusing issueNewVerificationToken: that helper revokes
+// the user's prior tokens of the same purpose before inserting, which is
+// correct for verification resend but would violate resolved Assumption A
+// here — repeated forgot-password requests must not invalidate
+// previously-issued, still-unexpired reset tokens.
+func (s *Service) issueResetToken(ctx context.Context, userID uuid.UUID) (string, error) {
+	plainToken, tokenHash, err := generateToken()
+	if err != nil {
+		return "", fmt.Errorf("account: generate token: %w", err)
+	}
+
+	tx, err := s.tx.BeginTx(ctx)
+	if err != nil {
+		return "", fmt.Errorf("account: begin tx: %w", err)
+	}
+	committed := false
+	defer func() {
+		if !committed {
+			_ = tx.Rollback(ctx)
+		}
+	}()
+
+	token := &AuthToken{
+		ID:        uuid.New(),
+		UserID:    userID,
+		Purpose:   purposePasswordReset,
+		TokenHash: tokenHash,
+		ExpiresAt: time.Now().Add(resetTokenTTL),
+		CreatedAt: time.Now(),
+	}
+	if err := s.repo.InsertAuthToken(ctx, tx, token); err != nil {
+		return "", fmt.Errorf("account: insert auth_token: %w", err)
+	}
+
+	if err := tx.Commit(ctx); err != nil {
+		return "", fmt.Errorf("account: commit reset token: %w", err)
+	}
+	committed = true
+
+	return plainToken, nil
+}
+
+// ResetPassword orchestrates the Fitur 2B redemption half. Order of
+// operations is load-bearing (spec Assumption B):
+//
+//  1. validatePassword runs BEFORE any DB work — a fixable input mistake
+//     must never burn the single-use token (422 with used_at still NULL).
+//  2. The bcrypt hash runs before BeginTx — ~100ms of CPU must never hold
+//     row locks open.
+//  3. Redeem → purpose check → credential update → mass session revoke
+//     all run inside ONE transaction: INV-account-05 requires the
+//     credential update and RevokeAllRefreshTokensForUser to commit or
+//     roll back together, and the same boundary makes any earlier failure
+//     un-redeem the token automatically (deferred Rollback).
+//
+// On !ok the disambiguation read runs after the rolled-back tx (nothing
+// to undo), mirroring VerifyEmail: expired → ErrTokenExpired (410);
+// not-found / already-used / revoked → ErrTokenNotFound (404). Under a
+// concurrent double-submit the loser observes used_at already set and
+// maps to 404 — exactly the outcome INV-account-08's race test asserts.
+func (s *Service) ResetPassword(ctx context.Context, token, newPassword string) error {
+	if err := s.validatePassword(ctx, newPassword); err != nil {
+		return err
+	}
+
+	// Nil-safe like the rest of the seam family: NewService wires
+	// secrets.HashPassword, but struct-literal test constructions may
+	// leave it unset.
+	hashFn := s.hashPassword
+	if hashFn == nil {
+		hashFn = secrets.HashPassword
+	}
+	passwordHash, err := hashFn(newPassword)
+	if err != nil {
+		return fmt.Errorf("account: hash password: %w", err)
+	}
+
+	tokenHash := sha256Hex(token)
+
+	tx, err := s.tx.BeginTx(ctx)
+	if err != nil {
+		return fmt.Errorf("account: begin tx: %w", err)
+	}
+	committed := false
+	defer func() {
+		if !committed {
+			_ = tx.Rollback(ctx)
+		}
+	}()
+
+	userID, purpose, ok, err := s.repo.RedeemToken(ctx, tx, tokenHash)
+	if err != nil {
+		return fmt.Errorf("account: redeem token: %w", err)
+	}
+	if ok {
+		// Cross-purpose guard (Q1 mirror): a token minted for email
+		// verification must not reset a password. Returning here rolls
+		// back the redeem — the token stays unconsumed.
+		if purpose != purposePasswordReset {
+			return ErrTokenNotFound
+		}
+
+		if err := s.repo.UpdateIdentityCredentialSecret(ctx, tx, userID, providerEmailPassword, passwordHash); err != nil {
+			return fmt.Errorf("account: update credential_secret: %w", err)
+		}
+		if err := s.repo.RevokeAllRefreshTokensForUser(ctx, tx, userID); err != nil {
+			return fmt.Errorf("account: revoke sessions: %w", err)
+		}
+
+		if err := tx.Commit(ctx); err != nil {
+			return fmt.Errorf("account: commit reset: %w", err)
+		}
+		committed = true
+
+		log.Printf("account: password reset completed user_id=%s (token redacted)", userID)
+		return nil
+	}
+
+	t, err := s.repo.FindAuthTokenByHash(ctx, tokenHash)
+	if err != nil {
+		return fmt.Errorf("account: find token: %w", err)
+	}
+	if t != nil && !t.ExpiresAt.After(time.Now()) {
+		return ErrTokenExpired
+	}
+	return ErrTokenNotFound
+}
+
 // validatePassword enforces the password policy: length >= 8 and not in
 // the breach list (fail-open). R5/R6/R18/R19. Checked before any branch
 // lookup so it cannot leak email state.
@@ -496,6 +699,18 @@ func (s *Service) sendVerification(ctx context.Context, email, plainToken string
 		// not the raw error — a real SMTP error can embed the recipient
 		// or token. Per go/secrets-and-sensitive-logging.md §1.
 		log.Printf("account: send verification email failed (recipient redacted): %s",
+			notificationErrorCategory(err))
+	}
+}
+
+// sendPasswordReset sends the password-reset email with the plain token.
+// The plain token leaves the process exactly once: here, after commit.
+// It is never logged.
+func (s *Service) sendPasswordReset(ctx context.Context, email, plainToken string) {
+	if err := s.email.SendPasswordResetEmail(ctx, email, plainToken); err != nil {
+		// Same sanitization as sendVerification: a real SMTP error can
+		// embed the recipient or token. Per go/secrets-and-sensitive-logging.md §1.
+		log.Printf("account: send password reset email failed (recipient redacted): %s",
 			notificationErrorCategory(err))
 	}
 }

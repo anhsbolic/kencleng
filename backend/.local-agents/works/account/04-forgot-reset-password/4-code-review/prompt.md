@@ -19,8 +19,8 @@ Known recurring finding patterns worth specifically hunting for:
 {/home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/4-code-review/examples.md}
 
 Diff to review:
-/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/03-login-session-management/2-plan
-/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/03-login-session-management/3-build
+/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/04-forgot-reset-password/2-plan
+/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/04-forgot-reset-password/3-build
 
 Target repo convention file:
 /home/anhar-solehudin/kencleng-workspace/kencleng/backend/AGENTS.md

@@ -596,6 +596,57 @@ func (r *RepositoryDB) RevokeRefreshTokenFamily(ctx context.Context, tx pgx.Tx, 
 	return nil
 }
 
+// UpdateIdentityCredentialSecret sets credential_secret = passwordHash for
+// the single identity matching (userID, providerType). Keyed on
+// (user_id, provider_type) — mirroring SetUserVerified — because the reset
+// token carries user_id and INV-account-01 guarantees at most one identity
+// per (user_id, provider_type).
+//
+// Runs inside the caller's tx so it is atomic with RedeemToken and
+// RevokeAllRefreshTokensForUser (INV-account-05): a failure here rolls back
+// the redeem, leaving the token unconsumed (spec Assumption B).
+func (r *RepositoryDB) UpdateIdentityCredentialSecret(ctx context.Context, tx pgx.Tx, userID uuid.UUID, providerType string, passwordHash string) error {
+	sqlStr, args, err := pgDialect.Update("auth_identities").
+		Set(goqu.Record{"credential_secret": passwordHash}).
+		Where(goqu.Ex{"user_id": userID, "provider_type": providerType}).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return fmt.Errorf("account: build update credential_secret: %w", err)
+	}
+	if _, err := tx.Exec(ctx, sqlStr, args...); err != nil {
+		return fmt.Errorf("account: update credential_secret: %w", err)
+	}
+	return nil
+}
+
+// RevokeAllRefreshTokensForUser sets revoked_at = now() for EVERY
+// refresh_tokens row matching userID that is not already revoked — all
+// families, including already-rotated rows (no replaced_by_id guard),
+// because INV-account-05 scopes the mass revoke to the user. The
+// revoked_at IS NULL guard keeps repeat calls idempotent.
+//
+// Runs inside the caller's tx so it commits or rolls back together with
+// RedeemToken and UpdateIdentityCredentialSecret — never as a separate
+// best-effort step after the credential update.
+func (r *RepositoryDB) RevokeAllRefreshTokensForUser(ctx context.Context, tx pgx.Tx, userID uuid.UUID) error {
+	sqlStr, args, err := pgDialect.Update("refresh_tokens").
+		Set(goqu.Record{"revoked_at": time.Now()}).
+		Where(
+			goqu.Ex{"user_id": userID},
+			goqu.L("revoked_at IS NULL"),
+		).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return fmt.Errorf("account: build revoke refresh_tokens by user: %w", err)
+	}
+	if _, err := tx.Exec(ctx, sqlStr, args...); err != nil {
+		return fmt.Errorf("account: revoke refresh_tokens by user: %w", err)
+	}
+	return nil
+}
+
 // FindIdentifierHashByUserAndProvider returns the identifier_hash of the
 // single identity matching (userID, providerType); found=false when absent.
 // See Repository.FindIdentifierHashByUserAndProvider.

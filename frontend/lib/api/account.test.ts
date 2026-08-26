@@ -2,7 +2,14 @@ import { HttpResponse, http } from "msw";
 import { describe, expect, it } from "vitest";
 import { server } from "@/mocks/server";
 import { ApiError } from "./client";
-import { register, resendVerification, verifyEmail } from "./account";
+import {
+  login,
+  loginMfa,
+  logout,
+  register,
+  resendVerification,
+  verifyEmail,
+} from "./account";
 
 describe("register", () => {
   it("resolves ok:true with the backend's own message on 202 (R4)", async () => {
@@ -156,5 +163,128 @@ describe("resendVerification", () => {
     await expect(resendVerification({ email: "anyone@example.com" })).rejects.toMatchObject({
       status: 429,
     });
+  });
+});
+
+describe("login", () => {
+  it("resolves the 'ok' branch with the access token and user on 200 (R3)", async () => {
+    const result = await login({ email: "donatur@example.com", password: "rahasia123" });
+
+    expect(result.status).toBe("ok");
+    if (result.status === "ok") {
+      expect(result.access_token).toBe("mock-access-token");
+      expect(result.user.email).toBe("donatur@example.com");
+    }
+  });
+
+  it("resolves the 'mfa_required' branch with a pending token, no access token (R4)", async () => {
+    server.use(
+      http.post("/auth/login", () =>
+        HttpResponse.json({ status: "mfa_required", mfa_pending_token: "pending-token" })
+      )
+    );
+
+    const result = await login({ email: "donatur@example.com", password: "rahasia123" });
+
+    expect(result).toEqual({ status: "mfa_required", mfa_pending_token: "pending-token" });
+  });
+
+  it("throws ApiError with the generic detail on 401 (R5)", async () => {
+    server.use(
+      http.post("/auth/login", () =>
+        HttpResponse.json(
+          {
+            type: "https://kencleng.dev/errors/invalid-credentials",
+            title: "Invalid Credentials",
+            status: 401,
+            detail: "Email atau password salah.",
+          },
+          { status: 401 }
+        )
+      )
+    );
+
+    await expect(
+      login({ email: "donatur@example.com", password: "wrong" })
+    ).rejects.toMatchObject({ status: 401, detail: "Email atau password salah." });
+  });
+
+  it("throws ApiError with the identical detail text on 429 lockout (R5)", async () => {
+    server.use(
+      http.post("/auth/login", () =>
+        HttpResponse.json(
+          {
+            type: "https://kencleng.dev/errors/too-many-requests",
+            title: "Too Many Requests",
+            status: 429,
+            detail: "Email atau password salah.",
+          },
+          { status: 429 }
+        )
+      )
+    );
+
+    await expect(
+      login({ email: "donatur@example.com", password: "wrong" })
+    ).rejects.toMatchObject({ status: 429, detail: "Email atau password salah." });
+  });
+});
+
+describe("loginMfa", () => {
+  it("resolves the 'ok' branch on 200 (R7)", async () => {
+    const result = await loginMfa({ mfa_pending_token: "pending-token", totp_code: "123456" });
+    expect(result.status).toBe("ok");
+  });
+
+  it("throws ApiError on 401 (wrong code / expired token) (R8)", async () => {
+    server.use(
+      http.post("/auth/login/mfa", () =>
+        HttpResponse.json(
+          {
+            type: "https://kencleng.dev/errors/invalid-credentials",
+            title: "Invalid Credentials",
+            status: 401,
+            detail: "Email atau password salah.",
+          },
+          { status: 401 }
+        )
+      )
+    );
+
+    await expect(
+      loginMfa({ mfa_pending_token: "pending-token", totp_code: "000000" })
+    ).rejects.toMatchObject({ status: 401 });
+  });
+
+  it("throws ApiError on 429 MFA-stage lockout (R8)", async () => {
+    server.use(
+      http.post("/auth/login/mfa", () =>
+        HttpResponse.json(
+          {
+            type: "https://kencleng.dev/errors/too-many-requests",
+            title: "Too Many Requests",
+            status: 429,
+            detail: "Email atau password salah.",
+          },
+          { status: 429 }
+        )
+      )
+    );
+
+    await expect(
+      loginMfa({ mfa_pending_token: "pending-token", totp_code: "000000" })
+    ).rejects.toMatchObject({ status: 429 });
+  });
+});
+
+describe("logout", () => {
+  it("resolves on 204 (R17/R19)", async () => {
+    await expect(logout()).resolves.toBeUndefined();
+  });
+
+  it("throws ApiError on an unexpected 5xx — caller decides how to treat it", async () => {
+    server.use(http.post("/auth/logout", () => HttpResponse.json({}, { status: 500 })));
+
+    await expect(logout()).rejects.toBeInstanceOf(ApiError);
   });
 });

@@ -1068,6 +1068,9 @@ func (integrationSilentSender) SendVerificationEmail(context.Context, string, st
 	return nil
 }
 func (integrationSilentSender) SendNudgeEmail(context.Context, string, string) error { return nil }
+func (integrationSilentSender) SendPasswordResetEmail(context.Context, string, string) error {
+	return nil
+}
 
 // integrationBreachCheckerFalse is a breachChecker that always returns
 // (false, nil) — fail-open, no network — for service-level integration

@@ -2,7 +2,8 @@
 
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
-import { tryRefreshOnce } from "@/lib/api/client";
+import { subscribeAuthChannel } from "@/lib/api/auth-channel";
+import { coordinatedRefresh } from "@/lib/api/client";
 import { accountKeys } from "@/lib/hooks/use-account-me";
 import { useAuthStore } from "@/lib/stores/auth-store";
 
@@ -39,12 +40,16 @@ export function AuthBootstrapProvider({ children }: { children: React.ReactNode 
     // the store (e.g. a prior manual login this same session).
     if (useAuthStore.getState().accessToken !== null) return;
 
-    tryRefreshOnce().then((succeeded) => {
-      // R9 — `tryRefreshOnce` already calls `setAccessToken` on
-      // success (client.ts); this provider's own job is only the
-      // query-cache side of hydration, so a component that queried
-      // `account.me` before hydration completed doesn't keep
-      // rendering stale logged-out state.
+    // Goes through `coordinatedRefresh` (not `tryRefreshOnce` directly)
+    // so this boot-time attempt is serialized against any other tab
+    // doing the same thing at the same moment (account/03-login-
+    // session-management, task-02, D3).
+    coordinatedRefresh().then((succeeded) => {
+      // R9 — `tryRefreshOnce` (called internally by `coordinatedRefresh`)
+      // already calls `setAccessToken` on success; this provider's own
+      // job is only the query-cache side of hydration, so a component
+      // that queried `account.me` before hydration completed doesn't
+      // keep rendering stale logged-out state.
       if (succeeded) {
         queryClient.invalidateQueries({ queryKey: accountKeys.me() });
       }
@@ -52,6 +57,24 @@ export function AuthBootstrapProvider({ children }: { children: React.ReactNode 
       // `null`, indistinguishable from an ordinary guest page load.
     });
   }, [queryClient]);
+
+  // Cross-tab channel listener (account/03, task-02, R14) — kept as a
+  // second, independent effect from the one-shot hydration attempt
+  // above: this one stays subscribed for the component's entire
+  // mounted lifetime, not gated by the `attempted` ref.
+  useEffect(() => {
+    return subscribeAuthChannel((msg) => {
+      switch (msg.type) {
+        case "refreshed":
+          useAuthStore.getState().setAccessToken(msg.accessToken);
+          break;
+        case "refresh-failed":
+        case "logged-out":
+          useAuthStore.getState().clearAccessToken();
+          break;
+      }
+    });
+  }, []);
 
   return <>{children}</>;
 }

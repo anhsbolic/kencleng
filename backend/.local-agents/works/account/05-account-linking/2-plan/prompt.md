@@ -1,4 +1,4 @@
-Read the guidance folder at /home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/techplan in this order:
+Read the guidance folder at /home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/2-techplan in this order:
 README.md, template.md, rules.md, guardrails.md, guidelines.md,
 examples.md, retro.md. This defines how you should classify content
 and what the output must look like.

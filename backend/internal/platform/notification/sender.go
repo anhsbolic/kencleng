@@ -14,6 +14,7 @@ import (
 type Sender interface {
 	SendVerificationEmail(ctx context.Context, to, token string) error
 	SendNudgeEmail(ctx context.Context, to, nudgeType string) error
+	SendPasswordResetEmail(ctx context.Context, to, token string) error
 }
 
 // FakeSender logs the recipient and message type instead of sending.
@@ -40,5 +41,12 @@ func (FakeSender) SendVerificationEmail(ctx context.Context, to, token string) e
 // its type. It never logs the recipient address.
 func (FakeSender) SendNudgeEmail(ctx context.Context, to, nudgeType string) error {
 	log.Printf("notification: nudge email queued type=%s (recipient redacted)", nudgeType)
+	return nil
+}
+
+// SendPasswordResetEmail logs the fact that a password-reset email was
+// queued. It never logs the recipient address or the token.
+func (FakeSender) SendPasswordResetEmail(ctx context.Context, to, token string) error {
+	log.Printf("notification: password reset email queued (recipient redacted)")
 	return nil
 }

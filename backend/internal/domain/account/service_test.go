@@ -56,6 +56,12 @@ type fakeRepo struct {
 	verifiedCalls     []setVerifiedCall
 	revokeCalls       []revokeCall
 
+	// Password-reset slice hooks + recordings (task #04).
+	updateCredentialErr   error
+	updateCredentialCalls []updateCredentialCall
+	revokeAllForUserErr   error
+	revokeAllForUserCalls []uuid.UUID
+
 	// redeemMode controls RedeemToken behavior:
 	//   "atomic" (default) — first call for a given hash wins (CAS),
 	//                         subsequent calls return false (single-use,
@@ -85,6 +91,12 @@ type setVerifiedCall struct {
 type revokeCall struct {
 	userID  uuid.UUID
 	purpose string
+}
+
+type updateCredentialCall struct {
+	userID       uuid.UUID
+	provider     string
+	passwordHash string
 }
 
 func newFakeRepo() *fakeRepo {
@@ -276,6 +288,30 @@ func (f *fakeRepo) RevokeRefreshTokenFamily(_ context.Context, _ pgx.Tx, _ uuid.
 	return nil
 }
 
+func (f *fakeRepo) UpdateIdentityCredentialSecret(_ context.Context, _ pgx.Tx, userID uuid.UUID, providerType string, passwordHash string) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.updateCredentialErr != nil {
+		err := f.updateCredentialErr
+		f.updateCredentialErr = nil
+		return err
+	}
+	f.updateCredentialCalls = append(f.updateCredentialCalls, updateCredentialCall{userID, providerType, passwordHash})
+	return nil
+}
+
+func (f *fakeRepo) RevokeAllRefreshTokensForUser(_ context.Context, _ pgx.Tx, userID uuid.UUID) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.revokeAllForUserErr != nil {
+		err := f.revokeAllForUserErr
+		f.revokeAllForUserErr = nil
+		return err
+	}
+	f.revokeAllForUserCalls = append(f.revokeAllForUserCalls, userID)
+	return nil
+}
+
 func (f *fakeRepo) GetLoginUserView(_ context.Context, _ uuid.UUID) (*LoginUserView, error) {
 	return nil, nil
 }
@@ -361,7 +397,10 @@ type captureSender struct {
 	mu              sync.Mutex
 	verificationTo  []string
 	nudgeTypes      []string
+	resetTo         []string
+	resetTokens     []string
 	verificationErr error
+	resetErr        error
 }
 
 func (s *captureSender) SendVerificationEmail(_ context.Context, to, _ string) error {
@@ -376,6 +415,14 @@ func (s *captureSender) SendNudgeEmail(_ context.Context, _ string, nudgeType st
 	defer s.mu.Unlock()
 	s.nudgeTypes = append(s.nudgeTypes, nudgeType)
 	return nil
+}
+
+func (s *captureSender) SendPasswordResetEmail(_ context.Context, to, token string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.resetTo = append(s.resetTo, to)
+	s.resetTokens = append(s.resetTokens, token)
+	return s.resetErr
 }
 
 // leakySender is a notification.Sender whose error message embeds the
@@ -394,6 +441,11 @@ func (s *leakySender) SendVerificationEmail(_ context.Context, to, token string)
 
 func (s *leakySender) SendNudgeEmail(_ context.Context, to, nudgeType string) error {
 	return fmt.Errorf("SMTP 553 <recipient=%s> rejected: nudge=%s", to, nudgeType)
+}
+
+func (s *leakySender) SendPasswordResetEmail(_ context.Context, to, token string) error {
+	s.called = true
+	return fmt.Errorf("SMTP 553 <recipient=%s> rejected: token=%s", to, token)
 }
 
 // newTestService builds a Service wired to fakes. Returns the service,

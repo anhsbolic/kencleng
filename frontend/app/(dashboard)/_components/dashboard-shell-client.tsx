@@ -3,10 +3,39 @@
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState, type ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import { useAccountMe } from "@/lib/hooks/use-account-me";
 import { useFocusTrap } from "@/lib/hooks/use-focus-trap";
 import { useHasRole } from "@/lib/hooks/use-has-role";
+import { useLogout } from "@/lib/hooks/use-logout";
 import { NotificationBadge } from "./notification-badge";
 import { navItems } from "./nav-items";
+
+/**
+ * "Keluar" (logout) button — visible to any authenticated user
+ * regardless of role, so gated directly on `useAccountMe()`'s `data`
+ * rather than `useHasRole`'s role-array shape (a role list is the wrong
+ * primitive for "is anyone logged in at all") — techplan account/03-
+ * login-session-management, task-04, R18.
+ */
+function LogoutButton() {
+  const { data: user } = useAccountMe();
+  const logoutMutation = useLogout();
+
+  if (!user) return null;
+
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      size="sm"
+      loading={logoutMutation.isPending}
+      onClick={() => logoutMutation.mutate()}
+    >
+      Keluar
+    </Button>
+  );
+}
 
 const DRAWER_ID = "dashboard-mobile-nav";
 
@@ -82,6 +111,7 @@ export function DashboardShellClient({ children }: { children: ReactNode }) {
         </nav>
 
         <div className="flex items-center gap-2">
+          <LogoutButton />
           <NotificationBadge />
           <button
             ref={hamburgerRef}

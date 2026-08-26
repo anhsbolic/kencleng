@@ -46,6 +46,14 @@ func (s *DevSender) SendNudgeEmail(ctx context.Context, to, nudgeType string) er
 	return s.append(fmt.Sprintf("[nudge:%s] recipient=%s\n", nudgeType, to))
 }
 
+// SendPasswordResetEmail appends a password-reset "email" line carrying
+// the plaintext token to the outbox file. Same rationale as the
+// verification line: with no SMTP in v1, this file IS the inbox a
+// developer uses to complete POST /auth/reset-password manually.
+func (s *DevSender) SendPasswordResetEmail(ctx context.Context, to, token string) error {
+	return s.append(fmt.Sprintf("[password_reset] recipient=%s token=%s\n", to, token))
+}
+
 // append writes one line to the outbox file under a lock (the server is
 // concurrent). It creates the file (and parent dir) on first use.
 func (s *DevSender) append(line string) error {

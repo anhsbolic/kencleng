@@ -2,9 +2,18 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 import type { ReactNode } from "react";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { server } from "@/mocks/server";
+import * as authChannel from "@/lib/api/auth-channel";
+import { useAuthStore } from "@/lib/stores/auth-store";
 import { DashboardShellClient, NavLink } from "./dashboard-shell-client";
+
+vi.mock("@/lib/api/auth-channel", async () => {
+  const actual = await vi.importActual<typeof import("@/lib/api/auth-channel")>(
+    "@/lib/api/auth-channel"
+  );
+  return { ...actual, postAuthChannelMessage: vi.fn() };
+});
 
 function mockMe(roles: ("admin" | "kurator")[]) {
   server.use(
@@ -29,6 +38,59 @@ function withQueryClient(children: ReactNode) {
   });
   return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
+
+beforeEach(() => {
+  useAuthStore.setState({ accessToken: "some-token" });
+  vi.mocked(authChannel.postAuthChannelMessage).mockClear();
+});
+
+describe("LogoutButton (techplan account/03-login-session-management, R17/R18)", () => {
+  it("is absent while useAccountMe has no data yet", () => {
+    render(withQueryClient(<DashboardShellClient>Konten</DashboardShellClient>));
+
+    expect(screen.queryByRole("button", { name: "Keluar" })).not.toBeInTheDocument();
+  });
+
+  it("appears once useAccountMe resolves with data (R18)", async () => {
+    mockMe([]);
+    render(withQueryClient(<DashboardShellClient>Konten</DashboardShellClient>));
+
+    expect(await screen.findByRole("button", { name: "Keluar" })).toBeInTheDocument();
+  });
+
+  it("clicking it always clears the store, clears the query cache, and broadcasts logout — even on a failed request (R17)", async () => {
+    mockMe([]);
+    server.use(http.post("/auth/logout", () => HttpResponse.json({}, { status: 500 })));
+
+    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+    const clearSpy = vi.spyOn(queryClient, "clear");
+    render(
+      <QueryClientProvider client={queryClient}>
+        <DashboardShellClient>Konten</DashboardShellClient>
+      </QueryClientProvider>
+    );
+    const button = await screen.findByRole("button", { name: "Keluar" });
+
+    fireEvent.click(button);
+
+    await waitFor(() => expect(useAuthStore.getState().accessToken).toBeNull());
+    expect(clearSpy).toHaveBeenCalled();
+    expect(authChannel.postAuthChannelMessage).toHaveBeenCalledWith({ type: "logged-out" });
+  });
+
+  it("clicking it on a successful request produces the identical cleanup (R17)", async () => {
+    mockMe([]);
+    server.use(http.post("/auth/logout", () => new HttpResponse(null, { status: 204 })));
+
+    render(withQueryClient(<DashboardShellClient>Konten</DashboardShellClient>));
+    const button = await screen.findByRole("button", { name: "Keluar" });
+
+    fireEvent.click(button);
+
+    await waitFor(() => expect(useAuthStore.getState().accessToken).toBeNull());
+    expect(authChannel.postAuthChannelMessage).toHaveBeenCalledWith({ type: "logged-out" });
+  });
+});
 
 describe("NavLink role filtering", () => {
   it("hides an item the current user's role isn't in", async () => {

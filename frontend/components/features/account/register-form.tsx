@@ -18,6 +18,17 @@ const GENERIC_ERROR_MESSAGE = "Terjadi kesalahan. Silakan coba lagi."; // TBD â€
 const DEFAULT_SUCCESS_MESSAGE =
   "Kalau email belum terdaftar, cek inbox untuk verifikasi. Kalau sudah, cek inbox untuk instruksi lebih lanjut.";
 
+export interface RegisterFormProps {
+  /**
+   * When rendered inside the landing-page auth modal (techplan
+   * account/03-login-session-management), the "Sudah punya akun? Masuk"
+   * link must switch the modal's mode instead of navigating to
+   * `/login` (which would leave the landing page). Omit for the
+   * standalone `/register` route, where a real navigation is correct.
+   */
+  onSwitchToLogin?: () => void;
+}
+
 /**
  * `/register`'s form (techplan account/01-register-email-verification,
  * Task 2). Every backend branch behind `POST /auth/register` collapses
@@ -26,7 +37,7 @@ const DEFAULT_SUCCESS_MESSAGE =
  * success view below is unconditional on anything but "was this a
  * 202."
  */
-export function RegisterForm() {
+export function RegisterForm({ onSwitchToLogin }: RegisterFormProps = {}) {
   const registerMutation = useRegister();
   const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | undefined>();
@@ -167,9 +178,19 @@ export function RegisterForm() {
 
       <span className="text-center text-sm text-neutral-700">
         Sudah punya akun?{" "}
-        <Link href="/login" className="font-semibold text-primary-700">
-          Masuk
-        </Link>
+        {onSwitchToLogin ? (
+          <button
+            type="button"
+            onClick={onSwitchToLogin}
+            className="font-semibold text-primary-700"
+          >
+            Masuk
+          </button>
+        ) : (
+          <Link href="/login" className="font-semibold text-primary-700">
+            Masuk
+          </Link>
+        )}
       </span>
     </form>
   );

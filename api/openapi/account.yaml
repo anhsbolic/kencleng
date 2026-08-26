@@ -297,6 +297,8 @@ paths:
             application/problem+json:
               schema:
                 $ref: "./common.yaml#/components/schemas/Problem"
+        "429":
+          $ref: "./common.yaml#/components/responses/TooManyRequests"
 
   # =========================================================================
   # Google OAuth (Fitur 1B) + Account Linking (Fitur 4)

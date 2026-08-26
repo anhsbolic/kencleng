@@ -4,16 +4,16 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { useFocusTrap } from "@/lib/hooks/use-focus-trap";
+import { useAuthModalStore } from "@/lib/stores/auth-modal-store";
 import { publicNavItems } from "./nav-items";
 
 const DRAWER_ID = "public-mobile-nav";
 
-// `Button` renders a literal <button>, which must never nest inside the
-// <a> a Link renders — invalid interactive-content nesting
-// (accessibility-fundamentals.md). Masuk/Daftar are navigation, so
-// they're styled links here, matching Button's outline/primary variant
-// classes directly rather than wrapping the component.
-const authLinkBase =
+// Masuk/Daftar open the landing-page auth modal (login/register-as-a-
+// modal follow-up to techplan account/03-login-session-management)
+// instead of navigating — styled to match the previous Link-based
+// markup exactly.
+const authButtonBase =
   "inline-flex h-11 w-full items-center justify-center rounded-md px-5 text-base font-semibold transition-colors";
 
 /**
@@ -30,6 +30,8 @@ export function PublicShellClient() {
   const [open, setOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const openLogin = useAuthModalStore((state) => state.openLogin);
+  const openRegister = useAuthModalStore((state) => state.openRegister);
 
   useFocusTrap({
     active: open,
@@ -75,20 +77,26 @@ export function PublicShellClient() {
             </Link>
           ))}
           <div className="mt-2 flex flex-col gap-2 border-t border-neutral-200 pt-3">
-            <Link
-              href="/login"
-              onClick={() => setOpen(false)}
-              className={`${authLinkBase} border border-neutral-200 bg-transparent text-neutral-700 hover:bg-neutral-100`}
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                openLogin();
+              }}
+              className={`${authButtonBase} border border-neutral-200 bg-transparent text-neutral-700 hover:bg-neutral-100`}
             >
               Masuk
-            </Link>
-            <Link
-              href="/register"
-              onClick={() => setOpen(false)}
-              className={`${authLinkBase} bg-primary-600 text-white shadow-sm hover:bg-primary-700`}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                openRegister();
+              }}
+              className={`${authButtonBase} bg-primary-600 text-white shadow-sm hover:bg-primary-700`}
             >
               Daftar
-            </Link>
+            </button>
           </div>
         </div>
       )}

@@ -41,14 +41,17 @@ export async function getMe(): Promise<User> {
 }
 
 /**
- * Thin wrapper around `apiFetch` for this file's three POST-only
- * unauthenticated actions: normalizes a fetch-level rejection (network
- * down, DNS failure — `fetch` itself throws, it doesn't resolve with a
- * response) into the same `ApiError` shape as an HTTP-level failure,
- * so every caller has exactly one error type to check `instanceof`
- * against, never a mix of `ApiError` and a raw `TypeError`.
+ * Thin wrapper around `apiFetch` for this file's POST-only actions
+ * (register/verify-email/resend, plus login/login-mfa/logout — added by
+ * account/03): normalizes a fetch-level rejection (network down, DNS
+ * failure — `fetch` itself throws, it doesn't resolve with a response)
+ * into the same `ApiError` shape as an HTTP-level failure, so every
+ * caller has exactly one error type to check `instanceof` against,
+ * never a mix of `ApiError` and a raw `TypeError`. `body` is optional —
+ * `logout` sends no request body, `JSON.stringify(undefined)` yields
+ * `undefined`, which `fetch` treats as no body sent.
  */
-async function postAccountAction(path: string, body: unknown): Promise<Response> {
+async function postAccountAction(path: string, body?: unknown): Promise<Response> {
   try {
     return await apiFetch(path, {
       method: "POST",
@@ -117,6 +120,141 @@ export async function resendVerification(
   input: ResendVerificationRequest
 ): Promise<{ message?: string }> {
   const res = await postAccountAction("/auth/verify-email/resend", input);
+
+  if (res.ok) {
+    return res.json();
+  }
+
+  throw new ApiError(res.status, await readProblemDetail(res));
+}
+
+export type LoginRequest = components["schemas"]["LoginRequest"];
+export type LoginMfaRequest = components["schemas"]["LoginMfaRequest"];
+export type LoginResponse = components["schemas"]["LoginResponse"];
+export type LoginMfaRequiredResponse =
+  components["schemas"]["LoginMfaRequiredResponse"];
+
+/**
+ * `POST /auth/login`'s success shape — `status: "ok"` carries the
+ * session (cookie already set by the time this resolves) or
+ * `status: "mfa_required"` carries only a short-lived
+ * `mfa_pending_token` (no cookie yet). The backend's own `status` field
+ * is the discriminant — deliberately not wrapped in a locally-invented
+ * `ok`/`kind` union, since the wire shape already discriminates cleanly
+ * (techplan account/03-login-session-management, task-01).
+ */
+export type LoginResult = LoginResponse | LoginMfaRequiredResponse;
+
+/**
+ * `POST /auth/login` — email_password credential check. `200` resolves
+ * to either branch of `LoginResult`. `401` (wrong credentials) and
+ * `429` (lockout) both throw `ApiError` carrying the **identical**
+ * generic detail text the backend sends for either case (spec 03,
+ * `errors.go`'s `problemDetailGenericCredential`) — callers never need
+ * to branch on `.status` for copy, only for control flow.
+ */
+export async function login(input: LoginRequest): Promise<LoginResult> {
+  const res = await postAccountAction("/auth/login", input);
+
+  if (res.status === 200) {
+    return res.json();
+  }
+
+  throw new ApiError(res.status, await readProblemDetail(res));
+}
+
+/**
+ * `POST /auth/login/mfa` — completes login via `totp_code`/
+ * `backup_code` against a valid `mfa_pending_token`. Always resolves the
+ * `LoginResponse` ("ok") shape on `200` — this endpoint never returns
+ * `mfa_required` again. `401` (wrong code, or expired/invalid token) and
+ * `429` (MFA-stage lockout) both throw `ApiError`, same generic-detail
+ * treatment as `login`.
+ */
+export async function loginMfa(input: LoginMfaRequest): Promise<LoginResponse> {
+  const res = await postAccountAction("/auth/login/mfa", input);
+
+  if (res.status === 200) {
+    return res.json();
+  }
+
+  throw new ApiError(res.status, await readProblemDetail(res));
+}
+
+/**
+ * `POST /auth/logout` — idempotent from the client's perspective (spec
+ * 03: no refresh cookie present is not an error, `204`). No
+ * discriminated result needed: the caller (`useLogout`) clears local
+ * state unconditionally regardless of network outcome, so this function
+ * only needs to resolve on success — a genuine failure (network error,
+ * unexpected `5xx`) still throws `ApiError` via the usual path, but
+ * `useLogout`'s `onSettled` never branches on it.
+ */
+export async function logout(): Promise<void> {
+  const res = await postAccountAction("/auth/logout", undefined);
+
+  if (!res.ok) {
+    throw new ApiError(res.status, await readProblemDetail(res));
+  }
+}
+
+export type ForgotPasswordRequest = components["schemas"]["ForgotPasswordRequest"];
+export type ResetPasswordRequest = components["schemas"]["ResetPasswordRequest"];
+
+/**
+ * Discriminated-union result for `forgotPassword()` — mirrors
+ * `RegisterResult`'s shape (techplan account/04, D3). The `202` branch is
+ * always identical regardless of which internal case fired
+ * (registered/unregistered/Google-only — anti-enumeration by design, R3).
+ * The `422` branch is a defensive addition: confirmed directly against
+ * `auth_password_reset.go` that the backend rejects a malformed email with
+ * a real, spec-undocumented `422` (`{field:"email", ...}`) — client-side
+ * `zod` should already prevent reaching it in normal use (R4).
+ */
+export type ForgotPasswordResult =
+  | { ok: true; message?: string }
+  | { ok: false; kind: "validation"; errors: ValidationErrorItem[] };
+
+/**
+ * `POST /auth/forgot-password` — see `ForgotPasswordResult`'s doc comment
+ * for the `202`/`422` split. Everything else (`429`, network, unexpected
+ * `5xx`) throws `ApiError`, never silently returned as a result branch.
+ */
+export async function forgotPassword(
+  input: ForgotPasswordRequest
+): Promise<ForgotPasswordResult> {
+  const res = await postAccountAction("/auth/forgot-password", input);
+
+  if (res.status === 202) {
+    const body: { message?: string } = await res.json();
+    return { ok: true, message: body.message };
+  }
+
+  if (res.status === 422) {
+    const body: { errors?: ValidationErrorItem[] } = await res.json();
+    return { ok: false, kind: "validation", errors: body.errors ?? [] };
+  }
+
+  throw new ApiError(res.status, await readProblemDetail(res));
+}
+
+/**
+ * `POST /auth/reset-password` — resolves on `200`, throws `ApiError` for
+ * every other status (`404`/`410`/`422`/`429`/network/unexpected `5xx`),
+ * matching `verifyEmail()`'s exact shape (techplan account/04, D2) rather
+ * than a discriminated validation result: confirmed directly against
+ * `service.go`'s `validatePassword` that the real `422` never carries
+ * `errors[]` (a bare `account.ErrValidation` sentinel mapped to a fieldless
+ * `Problem`), so there is no field-level data to model here. The caller
+ * (`ResetPasswordForm`) branches on `.status` and renders frontend-owned
+ * copy per branch — never the backend's raw `detail`, confirmed to be
+ * unlocalized English placeholder text for every branch this endpoint can
+ * return (D6).
+ */
+export async function resetPassword(
+  input: ResetPasswordRequest
+): Promise<{ message?: string }> {
+  const res = await postAccountAction("/auth/reset-password", input);
 
   if (res.ok) {
     return res.json();

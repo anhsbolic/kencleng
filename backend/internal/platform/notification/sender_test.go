@@ -58,3 +58,29 @@ func TestFakeSender_SendNudgeEmail_ReturnsNilNoPIIInLog(t *testing.T) {
 		t.Fatalf("log should contain nudge type %q; got: %q", NudgePasswordReset, logged)
 	}
 }
+
+// TestFakeSender_SendPasswordResetEmail_ReturnsNilNoPIIInLog verifies the
+// call succeeds and the log line contains neither the recipient address
+// nor the reset token.
+func TestFakeSender_SendPasswordResetEmail_ReturnsNilNoPIIInLog(t *testing.T) {
+	var logBuf bytes.Buffer
+	origOut := log.Writer()
+	log.SetOutput(&logBuf)
+	defer log.SetOutput(origOut)
+
+	s := NewFakeSender()
+	recipient := "user@example.com"
+	token := "super-secret-reset-token-value"
+
+	if err := s.SendPasswordResetEmail(context.Background(), recipient, token); err != nil {
+		t.Fatalf("SendPasswordResetEmail: unexpected error: %v", err)
+	}
+
+	logged := logBuf.String()
+	if strings.Contains(logged, recipient) {
+		t.Fatalf("log must not contain recipient email; got: %q", logged)
+	}
+	if strings.Contains(logged, token) {
+		t.Fatalf("log must not contain the reset token; got: %q", logged)
+	}
+}

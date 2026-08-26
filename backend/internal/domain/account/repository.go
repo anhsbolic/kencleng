@@ -74,6 +74,17 @@ type Repository interface {
 	// RedeemToken (S2 fix: atomic redeem + set-verified).
 	SetUserVerified(ctx context.Context, tx pgx.Tx, userID uuid.UUID, providerType string, verifiedAt time.Time) error
 
+	// UpdateIdentityCredentialSecret sets credential_secret =
+	// passwordHash for the single identity matching (userID,
+	// providerType). Keyed on (user_id, provider_type) — mirroring
+	// SetUserVerified — because the reset token carries user_id and
+	// INV-account-01 guarantees at most one identity per
+	// (user_id, provider_type). Called by ResetPassword inside the same
+	// transaction as RedeemToken and RevokeAllRefreshTokensForUser so a
+	// failure anywhere rolls the redeem back: the token survives a failed
+	// reset (spec Assumption B) and no half-reset state can commit.
+	UpdateIdentityCredentialSecret(ctx context.Context, tx pgx.Tx, userID uuid.UUID, providerType string, passwordHash string) error
+
 	// RevokeTokens sets revoked_at = now() for all unused, unrevoked
 	// tokens of (userID, purpose). Called by resend before issuing a new
 	// token (R13). Takes the caller's tx so revoke + insert of the new
@@ -149,6 +160,20 @@ type Repository interface {
 	// with it. Called on reuse detection (and on the race-loser branch,
 	// which spec Assumption D defines as equivalent).
 	RevokeRefreshTokenFamily(ctx context.Context, tx pgx.Tx, familyID uuid.UUID) error
+
+	// RevokeAllRefreshTokensForUser sets revoked_at = now() for EVERY
+	// refresh_tokens row matching userID that is not already revoked —
+	// deliberately spanning all families and including already-rotated
+	// rows (no replaced_by_id guard), because INV-account-05 scopes the
+	// mass revoke to the user, not to a lineage: after a password reset,
+	// every session must die regardless of which device or rotation
+	// generation it belongs to. The revoked_at IS NULL guard keeps repeat
+	// calls idempotent (same convention as RevokeRefreshTokenByHash).
+	// Called by ResetPassword inside the same transaction as RedeemToken
+	// and UpdateIdentityCredentialSecret — INV-account-05 requires the
+	// credential update and this mass revoke to commit or roll back
+	// together, never as separate steps.
+	RevokeAllRefreshTokensForUser(ctx context.Context, tx pgx.Tx, userID uuid.UUID) error
 
 	// FindIdentifierHashByUserAndProvider returns the identifier_hash of
 	// the single identity matching (userID, providerType). Used by the MFA

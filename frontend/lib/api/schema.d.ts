@@ -217,8 +217,7 @@ export interface paths {
                         "application/problem+json": components["schemas"]["Problem"];
                     };
                 };
-                /** @description Locked out (5 failed attempts / 15 min window) — deliberately returns the same generic detail as the 401 case above, per anti-enumeration business rule; only the status code differs. */
-                429: components["responses"]["TooManyRequests"];
+                429: components["responses"]["LockedOutGenericCredentials"];
             };
         };
         delete?: never;
@@ -268,7 +267,7 @@ export interface paths {
                         "application/problem+json": components["schemas"]["Problem"];
                     };
                 };
-                429: components["responses"]["TooManyRequests"];
+                429: components["responses"]["LockedOutGenericCredentials"];
             };
         };
         delete?: never;
@@ -461,6 +460,7 @@ export interface paths {
                 };
                 /** @description Password fails policy or found in breach-list. */
                 422: components["responses"]["ValidationError"];
+                429: components["responses"]["TooManyRequests"];
             };
         };
         delete?: never;
@@ -4512,6 +4512,23 @@ export interface components {
                  *       "title": "Too Many Requests",
                  *       "status": 429,
                  *       "detail": "Terlalu banyak percobaan gagal. Coba lagi dalam 15 menit."
+                 *     }
+                 */
+                "application/problem+json": components["schemas"]["Problem"];
+            };
+        };
+        /** @description Locked out (>=5 failed attempts / 15 min window) — deliberately returns the same generic title/detail as the 401 case above, per anti-enumeration business rule; only the status code differs. */
+        LockedOutGenericCredentials: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                /**
+                 * @example {
+                 *       "type": "https://kencleng.dev/errors/too-many-requests",
+                 *       "title": "Invalid Credentials",
+                 *       "status": 429,
+                 *       "detail": "Email atau password salah."
                  *     }
                  */
                 "application/problem+json": components["schemas"]["Problem"];

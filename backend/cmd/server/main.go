@@ -153,6 +153,11 @@ func run() error {
 	authMux.HandleFunc("POST /auth/verify-email", transporthttp.VerifyEmailHandler(accountSvc))
 	authMux.HandleFunc("POST /auth/verify-email/resend", transporthttp.ResendVerificationHandler(accountSvc))
 
+	// Forgot & reset password (task #04). Both inherit the /auth/ rate
+	// limiter via the wrapper below.
+	authMux.HandleFunc("POST /auth/forgot-password", transporthttp.ForgotPasswordHandler(accountSvc))
+	authMux.HandleFunc("POST /auth/reset-password", transporthttp.ResetPasswordHandler(accountSvc))
+
 	// Login & session (task #03). All four inherit the /auth/ rate limiter
 	// via the wrapper below. Cookies are Secure in every non-dev
 	// environment; dev serves plain HTTP so Secure must be off there.
