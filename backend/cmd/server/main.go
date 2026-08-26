@@ -18,6 +18,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/joho/godotenv"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
@@ -67,6 +68,7 @@ func run() error {
 		"MINIO_BUCKET_PRIVATE",
 		"JWT_PRIVATE_KEY_PATH",
 		"JWT_PUBLIC_KEY_PATH",
+		"MFA_PENDING_TOKEN_SECRET",
 		"AUTH_RATE_RPS",
 		"AUTH_RATE_BURST",
 		"GOOGLE_CLIENT_ID",
@@ -94,8 +96,14 @@ func run() error {
 	}
 
 	// 5. Auth: load the ES256 key pair (signs access tokens for the
-	// account service; verified inline by OAuth handlers for link/reauth).
+	// account service; verified inline by OAuth handlers for link/reauth)
+	// and the dedicated HS256 secret for mfa_pending tokens (one key = one
+	// purpose — never shared with other key material).
 	authKeys, err := auth.Load(os.Getenv("JWT_PRIVATE_KEY_PATH"), os.Getenv("JWT_PUBLIC_KEY_PATH"))
+	if err != nil {
+		return err
+	}
+	mfaPendingSecret, err := auth.ValidateMFAPendingSecret(os.Getenv("MFA_PENDING_TOKEN_SECRET"))
 	if err != nil {
 		return err
 	}
@@ -108,8 +116,21 @@ func run() error {
 		os.Getenv("GOOGLE_CLIENT_SECRET"),
 		os.Getenv("GOOGLE_REDIRECT_URI"),
 	)
+	// Login/session token closures over the Tier 0 primitives
+	// (platform/auth/token.go). The MFA verifier stays nil → fail-closed
+	// stub until account task #6 supplies the real TOTP/backup-code logic.
+	mintAccess := func(userID uuid.UUID, now time.Time) (string, error) {
+		return auth.MintAccessToken(authKeys.Private, userID, now)
+	}
+	mintMFAPending := func(userID uuid.UUID, now time.Time) (string, error) {
+		return auth.MintMFAPending(mfaPendingSecret, userID, now)
+	}
+	verifyPending := func(token string, now time.Time) (uuid.UUID, error) {
+		return auth.VerifyMFAPending(mfaPendingSecret, token, now)
+	}
 	accountSvc := account.NewService(account.NewRepositoryDB(pool, keys), pool, breachClient, emailSender, keys,
-		googleClient, authKeys, os.Getenv("FRONTEND_URL"))
+		googleClient, authKeys, os.Getenv("FRONTEND_URL"),
+		nil, nil, nil, mintAccess, mintMFAPending, verifyPending)
 
 	// 7. Rate-limit configuration (fail fast if unset — Open Item #3).
 	rps, err := strconv.ParseFloat(os.Getenv("AUTH_RATE_RPS"), 64)
@@ -132,10 +153,17 @@ func run() error {
 	authMux.HandleFunc("POST /auth/verify-email", transporthttp.VerifyEmailHandler(accountSvc))
 	authMux.HandleFunc("POST /auth/verify-email/resend", transporthttp.ResendVerificationHandler(accountSvc))
 
-	// Google OAuth (ticket 02). Cookies are Secure in every non-dev
+	// Login & session (task #03). All four inherit the /auth/ rate limiter
+	// via the wrapper below. Cookies are Secure in every non-dev
 	// environment; dev serves plain HTTP so Secure must be off there.
-	googleVerifyToken := transporthttp.GoogleTokenVerifier(authKeys.Public)
 	cookieSecure := appEnv != "development"
+	authMux.HandleFunc("POST /auth/login", transporthttp.LoginHandler(accountSvc, cookieSecure))
+	authMux.HandleFunc("POST /auth/login/mfa", transporthttp.LoginMfaHandler(accountSvc, cookieSecure))
+	authMux.HandleFunc("POST /auth/refresh", transporthttp.RefreshHandler(accountSvc, cookieSecure))
+	authMux.HandleFunc("POST /auth/logout", transporthttp.LogoutHandler(accountSvc, cookieSecure))
+
+	// Google OAuth (ticket 02). Shares the cookieSecure flag above.
+	googleVerifyToken := transporthttp.GoogleTokenVerifier(authKeys.Public)
 	authMux.HandleFunc("GET /auth/google/redirect",
 		transporthttp.GoogleRedirectHandler(accountSvc, googleVerifyToken, cookieSecure))
 	authMux.HandleFunc("GET /auth/google/callback",

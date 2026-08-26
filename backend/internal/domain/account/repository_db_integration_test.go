@@ -602,6 +602,463 @@ func insertTokenDirect(ctx context.Context, pool *pgxpool.Pool, tok *AuthToken) 
 
 func ptrString(s string) *string { return &s }
 
+// ---- login/session slice integration tests ---------------------------------
+
+// insertLoginAttemptDirect seeds a login_attempts row with an arbitrary
+// historical attempted_at (InsertLoginAttempt writes what it's given, but a
+// dedicated helper keeps the seed sites terse). Cleanup is the caller's job:
+// login_attempts.user_id is ON DELETE SET NULL, so deleting the user does
+// NOT remove these rows.
+func insertLoginAttemptDirect(ctx context.Context, pool *pgxpool.Pool, a *LoginAttempt) error {
+	rec := goqu.Record{
+		"id":              a.ID,
+		"identifier_hash": a.IdentifierHash,
+		"stage":           a.Stage,
+		"success":         a.Success,
+		"attempted_at":    a.AttemptedAt,
+	}
+	if a.UserID != nil {
+		rec["user_id"] = *a.UserID
+	}
+	sqlStr, args, err := goqu.Dialect("postgres").Insert("login_attempts").
+		Rows(rec).Prepared(true).ToSQL()
+	if err != nil {
+		return fmt.Errorf("build login_attempt seed: %w", err)
+	}
+	if _, err := pool.Exec(ctx, sqlStr, args...); err != nil {
+		return fmt.Errorf("seed login_attempt: %w", err)
+	}
+	return nil
+}
+
+// insertRefreshTokenDirect seeds a refresh_tokens row with arbitrary
+// rotation state (revoked_at / replaced_by_id), which InsertRefreshToken
+// cannot produce (it always inserts fresh unrotated tokens).
+func insertRefreshTokenDirect(ctx context.Context, pool *pgxpool.Pool, tok *RefreshToken) error {
+	rec := goqu.Record{
+		"id":         tok.ID,
+		"user_id":    tok.UserID,
+		"family_id":  tok.FamilyID,
+		"token_hash": tok.TokenHash,
+		"expires_at": tok.ExpiresAt,
+		"created_at": tok.CreatedAt,
+	}
+	if tok.RevokedAt != nil {
+		rec["revoked_at"] = *tok.RevokedAt
+	}
+	if tok.ReplacedByID != nil {
+		rec["replaced_by_id"] = *tok.ReplacedByID
+	}
+	sqlStr, args, err := goqu.Dialect("postgres").Insert("refresh_tokens").
+		Rows(rec).Prepared(true).ToSQL()
+	if err != nil {
+		return fmt.Errorf("build refresh_token seed: %w", err)
+	}
+	if _, err := pool.Exec(ctx, sqlStr, args...); err != nil {
+		return fmt.Errorf("seed refresh_token: %w", err)
+	}
+	return nil
+}
+
+// TestInsertLoginAttempt_AndCountWindows verifies the lockout counting
+// queries: stage filter, success=false filter, strictly-after cutoff
+// semantics, and the two key shapes (identifier_hash vs user_id — rows with
+// NULL user_id must never be counted by the user-keyed query).
+func TestInsertLoginAttempt_AndCountWindows(t *testing.T) {
+	repo, pool := integrationEnv(t)
+	ctx := context.Background()
+	user := newTestUser(t, repo, pool)
+
+	idHash := "idhash-" + uuid.NewString()
+	t.Cleanup(func() {
+		_, _ = pool.Exec(ctx, "DELETE FROM login_attempts WHERE identifier_hash = $1", idHash)
+	})
+
+	now := time.Now()
+	attempts := []*LoginAttempt{
+		// In-window password failures (counted).
+		{ID: uuid.New(), IdentifierHash: idHash, UserID: &user.ID, Stage: "password", Success: false, AttemptedAt: now.Add(-14 * time.Minute)},
+		{ID: uuid.New(), IdentifierHash: idHash, UserID: &user.ID, Stage: "password", Success: false, AttemptedAt: now.Add(-time.Minute)},
+		// Out-of-window failure (older than any realistic cutoff below).
+		{ID: uuid.New(), IdentifierHash: idHash, UserID: &user.ID, Stage: "password", Success: false, AttemptedAt: now.Add(-16 * time.Minute)},
+		// Success rows never count, regardless of window.
+		{ID: uuid.New(), IdentifierHash: idHash, UserID: &user.ID, Stage: "password", Success: true, AttemptedAt: now.Add(-13 * time.Minute)},
+		// Different stage never counts against the password-stage query.
+		{ID: uuid.New(), IdentifierHash: idHash, UserID: &user.ID, Stage: "mfa", Success: false, AttemptedAt: now.Add(-12 * time.Minute)},
+		// MFA-stage row with known user (counted by the user-keyed query).
+		{ID: uuid.New(), IdentifierHash: idHash, UserID: &user.ID, Stage: "mfa", Success: false, AttemptedAt: now.Add(-11 * time.Minute)},
+		// Password failure with UNKNOWN identity (NULL user_id): counted by
+		// identifier-keyed query, invisible to the user-keyed query.
+		{ID: uuid.New(), IdentifierHash: idHash, UserID: nil, Stage: "password", Success: false, AttemptedAt: now.Add(-10 * time.Minute)},
+	}
+	for _, a := range attempts {
+		if err := insertLoginAttemptDirect(ctx, pool, a); err != nil {
+			t.Fatalf("seed attempt: %v", err)
+		}
+	}
+
+	cutoff := now.Add(-15 * time.Minute)
+
+	got, err := repo.CountRecentFailedAttemptsByIdentifier(ctx, idHash, "password", cutoff)
+	if err != nil {
+		t.Fatalf("count by identifier: %v", err)
+	}
+	want := 3 // -14m, -1m failures + the NULL-user_id failure at -10m; -16m out of window; success/mfa excluded
+	if got != want {
+		t.Errorf("identifier-keyed count = %d, want %d", got, want)
+	}
+
+	gotUser, err := repo.CountRecentFailedAttemptsByUser(ctx, user.ID, "mfa", cutoff)
+	if err != nil {
+		t.Fatalf("count by user: %v", err)
+	}
+	if gotUser != 2 { // -12m and -11m mfa failures, both in-window
+		t.Errorf("user-keyed mfa count = %d, want 2", gotUser)
+	}
+
+	// NULL user_id row must not leak into the user-keyed query.
+	gotUserPw, err := repo.CountRecentFailedAttemptsByUser(ctx, user.ID, "password", cutoff)
+	if err != nil {
+		t.Fatalf("count by user (password): %v", err)
+	}
+	if gotUserPw != 2 { // -14m and -1m; NULL-user_id row excluded
+		t.Errorf("user-keyed password count = %d, want 2", gotUserPw)
+	}
+}
+
+// TestRotateRefreshToken_HappyPath proves the single-tx rotation contract:
+// guarded mark succeeds, child lands with the parent's user_id/family_id,
+// and parent.replaced_by_id points at the child.
+func TestRotateRefreshToken_HappyPath(t *testing.T) {
+	repo, pool := integrationEnv(t)
+	ctx := context.Background()
+	user := newTestUser(t, repo, pool)
+
+	family := uuid.New()
+	parentHash := sha256Hex("parent-token")
+	parent := &RefreshToken{
+		ID: uuid.New(), UserID: user.ID, FamilyID: family,
+		TokenHash: parentHash, ExpiresAt: time.Now().Add(30 * 24 * time.Hour),
+		CreatedAt: time.Now(),
+	}
+	if err := insertRefreshTokenDirect(ctx, pool, parent); err != nil {
+		t.Fatalf("seed parent: %v", err)
+	}
+	t.Cleanup(func() {
+		_, _ = pool.Exec(ctx, "DELETE FROM refresh_tokens WHERE family_id = $1", family)
+	})
+
+	child := &RefreshToken{
+		ID:        uuid.New(),
+		TokenHash: sha256Hex("child-token"),
+		ExpiresAt: time.Now().Add(30 * 24 * time.Hour),
+		CreatedAt: time.Now(),
+	}
+
+	tx, err := pool.BeginTx(ctx, pgx.TxOptions{})
+	if err != nil {
+		t.Fatalf("begin tx: %v", err)
+	}
+	rotated, err := repo.RotateRefreshToken(ctx, tx, parentHash, child)
+	if err != nil {
+		_ = tx.Rollback(ctx)
+		t.Fatalf("RotateRefreshToken: %v", err)
+	}
+	if !rotated {
+		_ = tx.Rollback(ctx)
+		t.Fatal("expected rotated=true on a valid token")
+	}
+	if child.UserID != user.ID || child.FamilyID != family {
+		t.Fatalf("child not populated from RETURNING: user=%s family=%s", child.UserID, child.FamilyID)
+	}
+	if err := tx.Commit(ctx); err != nil {
+		t.Fatalf("commit: %v", err)
+	}
+
+	// Parent marked exactly once, pointing at the child.
+	marked, ok, err := repo.FindRefreshTokenByHash(ctx, parentHash)
+	if err != nil || !ok {
+		t.Fatalf("find parent: %v", err)
+	}
+	if marked.ReplacedByID == nil || *marked.ReplacedByID != child.ID {
+		t.Errorf("parent replaced_by_id = %v, want %s", marked.ReplacedByID, child.ID)
+	}
+	// Child exists, same family, unrotated/unrevoked.
+	storedChild, ok, err := repo.FindRefreshTokenByHash(ctx, child.TokenHash)
+	if err != nil || !ok {
+		t.Fatalf("find child: %v", err)
+	}
+	if storedChild.FamilyID != family || storedChild.ReplacedByID != nil || storedChild.RevokedAt != nil {
+		t.Errorf("unexpected child state: %+v", storedChild)
+	}
+}
+
+// TestRotateRefreshToken_GuardsReturnFalse exercises every zero-row guard:
+// already rotated, revoked, expired, and non-existent — all must return
+// rotated=false without touching the tx or creating a second child.
+func TestRotateRefreshToken_GuardsReturnFalse(t *testing.T) {
+	repo, pool := integrationEnv(t)
+	ctx := context.Background()
+	user := newTestUser(t, repo, pool)
+
+	now := time.Now()
+	expiredAt := now.Add(-time.Hour)
+
+	cases := []struct {
+		name      string
+		tokenHash string
+		seed      func() error
+	}{
+		{
+			name:      "already rotated",
+			tokenHash: sha256Hex("already-rotated"),
+			seed: func() error {
+				existing := uuid.New()
+				return insertRefreshTokenDirect(ctx, pool, &RefreshToken{
+					ID: uuid.New(), UserID: user.ID, FamilyID: uuid.New(),
+					TokenHash: sha256Hex("already-rotated"),
+					ExpiresAt: now.Add(24 * time.Hour), ReplacedByID: &existing, CreatedAt: now,
+				})
+			},
+		},
+		{
+			name:      "revoked",
+			tokenHash: sha256Hex("revoked-refresh"),
+			seed: func() error {
+				revoked := now.Add(-time.Minute)
+				return insertRefreshTokenDirect(ctx, pool, &RefreshToken{
+					ID: uuid.New(), UserID: user.ID, FamilyID: uuid.New(),
+					TokenHash: sha256Hex("revoked-refresh"),
+					ExpiresAt: now.Add(24 * time.Hour), RevokedAt: &revoked, CreatedAt: now,
+				})
+			},
+		},
+		{
+			name:      "expired",
+			tokenHash: sha256Hex("expired-refresh"),
+			seed: func() error {
+				return insertRefreshTokenDirect(ctx, pool, &RefreshToken{
+					ID: uuid.New(), UserID: user.ID, FamilyID: uuid.New(),
+					TokenHash: sha256Hex("expired-refresh"),
+					ExpiresAt: expiredAt, CreatedAt: now,
+				})
+			},
+		},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			if err := tc.seed(); err != nil {
+				t.Fatalf("seed: %v", err)
+			}
+			t.Cleanup(func() {
+				_, _ = pool.Exec(ctx, "DELETE FROM refresh_tokens WHERE token_hash = $1", tc.tokenHash)
+			})
+
+			child := &RefreshToken{
+				ID: uuid.New(), TokenHash: sha256Hex(tc.name + "-child"),
+				ExpiresAt: now.Add(24 * time.Hour), CreatedAt: now,
+			}
+			tx, err := pool.BeginTx(ctx, pgx.TxOptions{})
+			if err != nil {
+				t.Fatalf("begin tx: %v", err)
+			}
+			defer func() { _ = tx.Rollback(ctx) }()
+
+			rotated, err := repo.RotateRefreshToken(ctx, tx, tc.tokenHash, child)
+			if err != nil {
+				t.Fatalf("RotateRefreshToken (%s): %v", tc.name, err)
+			}
+			if rotated {
+				t.Errorf("RotateRefreshToken (%s): got true, want false", tc.name)
+			}
+		})
+	}
+
+	// Non-existent hash: same zero-row behavior.
+	tx, _ := pool.BeginTx(ctx, pgx.TxOptions{})
+	defer func() { _ = tx.Rollback(ctx) }()
+	child := &RefreshToken{ID: uuid.New(), TokenHash: sha256Hex("ghost-child"),
+		ExpiresAt: now.Add(time.Hour), CreatedAt: now}
+	rotated, err := repo.RotateRefreshToken(ctx, tx, sha256Hex("never-existed"), child)
+	if err != nil || rotated {
+		t.Errorf("non-existent hash: rotated=%v err=%v, want false/nil", rotated, err)
+	}
+}
+
+// TestRevokeRefreshTokenFamily_IncludesRotated proves INV-account-04: family
+// revocation reaches already-rotated descendants, not just live tokens.
+func TestRevokeRefreshTokenFamily_IncludesRotated(t *testing.T) {
+	repo, pool := integrationEnv(t)
+	ctx := context.Background()
+	user := newTestUser(t, repo, pool)
+
+	family := uuid.New()
+	liveHash := sha256Hex("family-live")
+	rotatedHash := sha256Hex("family-rotated")
+	otherFamilyHash := sha256Hex("other-family")
+
+	rotatedMark := uuid.New()
+	now := time.Now()
+	seeds := []*RefreshToken{
+		{ID: uuid.New(), UserID: user.ID, FamilyID: family, TokenHash: liveHash,
+			ExpiresAt: now.Add(24 * time.Hour), CreatedAt: now},
+		{ID: uuid.New(), UserID: user.ID, FamilyID: family, TokenHash: rotatedHash,
+			ExpiresAt: now.Add(24 * time.Hour), ReplacedByID: &rotatedMark, CreatedAt: now},
+		{ID: uuid.New(), UserID: user.ID, FamilyID: uuid.New(), TokenHash: otherFamilyHash,
+			ExpiresAt: now.Add(24 * time.Hour), CreatedAt: now}, // different family — untouched
+	}
+	for _, s := range seeds {
+		if err := insertRefreshTokenDirect(ctx, pool, s); err != nil {
+			t.Fatalf("seed token: %v", err)
+		}
+	}
+	otherFamily := seeds[2].FamilyID
+	t.Cleanup(func() {
+		_, _ = pool.Exec(ctx, "DELETE FROM refresh_tokens WHERE family_id IN ($1, $2)",
+			family, otherFamily)
+	})
+
+	tx, err := pool.BeginTx(ctx, pgx.TxOptions{})
+	if err != nil {
+		t.Fatalf("begin tx: %v", err)
+	}
+	if err := repo.RevokeRefreshTokenFamily(ctx, tx, family); err != nil {
+		_ = tx.Rollback(ctx)
+		t.Fatalf("RevokeRefreshTokenFamily: %v", err)
+	}
+	if err := tx.Commit(ctx); err != nil {
+		t.Fatalf("commit: %v", err)
+	}
+
+	for name, hash := range map[string]string{"live": liveHash, "rotated": rotatedHash} {
+		tok, ok, err := repo.FindRefreshTokenByHash(ctx, hash)
+		if err != nil || !ok {
+			t.Fatalf("find %s: %v", name, err)
+		}
+		if tok.RevokedAt == nil {
+			t.Errorf("%s token in family was not revoked (INV-account-04 violation)", name)
+		}
+	}
+	other, _, err := repo.FindRefreshTokenByHash(ctx, otherFamilyHash)
+	if err != nil {
+		t.Fatalf("find other-family token: %v", err)
+	}
+	if other.RevokedAt != nil {
+		t.Error("token from a different family must not be touched by family revocation")
+	}
+}
+
+// TestGetLoginUserView_AssemblesFields verifies the LoginResponse.user read
+// model end-to-end: decrypted email, provider aggregation, verified flag,
+// roles, and the MFA-enabled flag.
+func TestGetLoginUserView_AssemblesFields(t *testing.T) {
+	repo, pool := integrationEnv(t)
+	ctx := context.Background()
+
+	email := fmt.Sprintf("view-%s@example.com", uuid.NewString())
+	user := &User{ID: uuid.New(), Name: "View Tester", PrimaryEmail: email}
+	tx, err := pool.BeginTx(ctx, pgx.TxOptions{})
+	if err != nil {
+		t.Fatalf("begin tx: %v", err)
+	}
+	if err := repo.InsertUser(ctx, tx, user); err != nil {
+		_ = tx.Rollback(ctx)
+		t.Fatalf("insert user: %v", err)
+	}
+	verifiedIdent := &AuthIdentity{
+		ID: uuid.New(), UserID: user.ID, ProviderType: "email_password",
+		Identifier: email, CredentialSecret: ptrString("bcrypt-hash"),
+	}
+	if err := repo.InsertAuthIdentity(ctx, tx, verifiedIdent); err != nil {
+		_ = tx.Rollback(ctx)
+		t.Fatalf("insert email_password identity: %v", err)
+	}
+	googleIdent := &AuthIdentity{
+		ID: uuid.New(), UserID: user.ID, ProviderType: "google",
+		Identifier: fmt.Sprintf("g-%s@accounts.example.com", uuid.NewString()),
+	}
+	if err := repo.InsertAuthIdentity(ctx, tx, googleIdent); err != nil {
+		_ = tx.Rollback(ctx)
+		t.Fatalf("insert google identity: %v", err)
+	}
+	if err := tx.Commit(ctx); err != nil {
+		t.Fatalf("commit identities: %v", err)
+	}
+	t.Cleanup(func() { _, _ = pool.Exec(ctx, "DELETE FROM users WHERE id = $1", user.ID) })
+
+	// Mark the email_password identity verified directly (verification flow
+	// itself is not under test here).
+	verifySQL, verifyArgs, err := goqu.Dialect("postgres").Update("auth_identities").
+		Set(goqu.Record{"verified_at": time.Now()}).
+		Where(goqu.Ex{"id": verifiedIdent.ID}).
+		Prepared(true).ToSQL()
+	if err != nil {
+		t.Fatalf("build verify update: %v", err)
+	}
+	if _, err := pool.Exec(ctx, verifySQL, verifyArgs...); err != nil {
+		t.Fatalf("mark identity verified: %v", err)
+	}
+
+	// Seed role + enabled MFA directly (their write paths belong to tasks #8/#6).
+	roleSQL, roleArgs, err := goqu.Dialect("postgres").Insert("user_roles").
+		Rows(goqu.Record{"id": uuid.New(), "user_id": user.ID, "role": "kurator"}).
+		Prepared(true).ToSQL()
+	if err != nil {
+		t.Fatalf("build role seed: %v", err)
+	}
+	if _, err := pool.Exec(ctx, roleSQL, roleArgs...); err != nil {
+		t.Fatalf("seed role: %v", err)
+	}
+	mfaSQL, mfaArgs, err := goqu.Dialect("postgres").Insert("mfa_totp_secrets").
+		Rows(goqu.Record{"user_id": user.ID, "secret_encrypted": []byte("ciphertext"), "enabled_at": time.Now()}).
+		Prepared(true).ToSQL()
+	if err != nil {
+		t.Fatalf("build mfa seed: %v", err)
+	}
+	if _, err := pool.Exec(ctx, mfaSQL, mfaArgs...); err != nil {
+		t.Fatalf("seed mfa: %v", err)
+	}
+
+	view, err := repo.GetLoginUserView(ctx, user.ID)
+	if err != nil {
+		t.Fatalf("GetLoginUserView: %v", err)
+	}
+	if view == nil {
+		t.Fatal("expected view for existing user, got nil")
+	}
+	if view.Email != email {
+		t.Errorf("decrypted email = %q, want %q (decrypt-on-read broken)", view.Email, email)
+	}
+	if !view.EmailVerified {
+		t.Error("email_verified = false, want true (identity has verified_at set)")
+	}
+	if view.MFAEnabled != true {
+		t.Error("mfa_enabled = false, want true (enabled_at IS NOT NULL row exists)")
+	}
+	if len(view.Roles) != 1 || view.Roles[0] != "kurator" {
+		t.Errorf("roles = %v, want [kurator]", view.Roles)
+	}
+	if len(view.AuthProviders) != 2 {
+		t.Errorf("auth_providers = %v, want 2 entries", view.AuthProviders)
+	}
+	if view.Name != "View Tester" || view.ID != user.ID {
+		t.Errorf("profile fields wrong: %+v", view)
+	}
+}
+
+// TestGetLoginUserView_NonExistentUser verifies the (nil, nil) convention.
+func TestGetLoginUserView_NonExistentUser(t *testing.T) {
+	repo, _ := integrationEnv(t)
+	view, err := repo.GetLoginUserView(context.Background(), uuid.New())
+	if err != nil {
+		t.Fatalf("GetLoginUserView: %v", err)
+	}
+	if view != nil {
+		t.Errorf("expected nil view for non-existent user, got %+v", view)
+	}
+}
+
 // integrationSilentSender is a notification.Sender that drops everything
 // silently — used by service-level integration tests where email delivery
 // is not under test.

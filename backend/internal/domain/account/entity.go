@@ -71,9 +71,13 @@ type AuthToken struct {
 // TokenHash is the SHA-256 hex digest of the plain refresh token (the plain
 // value exists only in the response/cookie path, never at rest). FamilyID
 // groups tokens from one login lineage for rotation/reuse detection
-// (INV-account-03/04 — implemented in the login/session task; this ticket
-// only issues first-generation tokens). RevokedAt and ReplacedByID stay nil
-// until rotation lands.
+// (INV-account-03/04 — rotation and reuse detection are live as of the
+// login/session slice). RevokedAt and ReplacedByID start nil; ReplacedByID
+// transitions NULL → child-id at most once via RotateRefreshToken's guarded
+// UPDATE (a token with ReplacedByID set can no longer be rotated); RevokedAt
+// is set directly on logout (RevokeRefreshTokenByHash) or wholesale across
+// the whole family when reuse is detected (RevokeRefreshTokenFamily,
+// INV-account-04).
 type RefreshToken struct {
 	ID           uuid.UUID
 	UserID       uuid.UUID
@@ -83,6 +87,43 @@ type RefreshToken struct {
 	RevokedAt    *time.Time
 	ReplacedByID *uuid.UUID
 	CreatedAt    time.Time
+}
+
+// LoginAttempt records one credential-verification outcome for the
+// persistent lockout mechanism (Fitur 2C). Stage distinguishes the password
+// step ("password") from the MFA step ("mfa"): both use the same threshold
+// (≥5 failures in a trailing 15-minute window) but different keys —
+// password-stage lockout counts by IdentifierHash because identity is not
+// reliably known yet, MFA-stage lockout counts by UserID (already verified
+// via a valid mfa_pending_token). UserID stays nil when identity was never
+// established (wrong-email attempts); it carries the known user otherwise.
+// Rows are append-only — nothing ever updates or deletes them.
+type LoginAttempt struct {
+	ID             uuid.UUID
+	IdentifierHash string
+	UserID         *uuid.UUID // nil when identity unknown at write time
+	Stage          string     // "password" | "mfa"
+	Success        bool
+	AttemptedAt    time.Time
+}
+
+// LoginUserView is the read model assembled at login time to populate
+// LoginResponse.user (openapi components.schemas.User). Email is decrypted
+// plaintext — this is the resource owner's own profile view, the one place
+// the repository adapter decrypts primary_email on read (every other flow
+// looks up by *_hash and never needs plaintext back). Roles come from
+// user_roles (empty until account task #8 ships its assignment API);
+// AuthProviders aggregates the distinct provider_types across the user's
+// auth_identities rows; MFAEnabled reflects an enabled mfa_totp_secrets row.
+type LoginUserView struct {
+	ID            uuid.UUID
+	Name          string
+	Email         string // decrypted plaintext; never logged
+	EmailVerified bool   // any email_password identity has verified_at set
+	Roles         []string
+	AuthProviders []string
+	MFAEnabled    bool
+	CreatedAt     time.Time
 }
 
 // UserLog is an append-only audit entry for account events. ActionType is a

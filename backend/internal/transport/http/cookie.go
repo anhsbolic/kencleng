@@ -58,9 +58,59 @@ func clearOAuthStateCookie(w http.ResponseWriter, cookieSecure bool) {
 	})
 }
 
-// writeAuthCookies delivers issued session tokens as cookies (techplan §14
-// Resolved item 7 — cookie delivery is the only option compatible with the
-// 302-redirect contract):
+// readRefreshCookie returns the raw refresh-cookie value; absent/empty
+// cookie yields "" (the service treats that as unauthenticated).
+func readRefreshCookie(r *http.Request) string {
+	c, err := r.Cookie(refreshTokenCookieName)
+	if err != nil {
+		return ""
+	}
+	return c.Value
+}
+
+// writeRefreshCookie delivers ONLY the rotated refresh token — the contract
+// for /auth/login, /auth/login/mfa, and /auth/refresh (openapi: the access
+// token travels in the JSON body for these endpoints, never as a cookie;
+// only the OAuth 302 callback needs writeAuthCookies' both-cookie shape).
+//
+// Attributes per index.yaml conventions + LockedOutGenericCredentials-era
+// spec: HttpOnly (no JS access), Secure in every non-dev environment,
+// SameSite=Strict (never crosses sites — only same-site refresh requests
+// use it), Path="/" so /auth/refresh and /auth/logout see it.
+func writeRefreshCookie(w http.ResponseWriter, cookieSecure bool, value string) {
+	// #nosec G124 -- Secure is deliberately environment-conditional (dev
+	// serves plain HTTP); HttpOnly + SameSite=Strict are always set.
+	http.SetCookie(w, &http.Cookie{
+		Name:     refreshTokenCookieName,
+		Value:    value,
+		Path:     "/",
+		MaxAge:   int(refreshTokenCookieTTL.Seconds()),
+		HttpOnly: true,
+		Secure:   cookieSecure,
+		SameSite: http.SameSiteStrictMode,
+	})
+}
+
+// clearRefreshCookie instructs the browser to delete the refresh cookie
+// immediately (MaxAge < 0). Called on every logout regardless of whether a
+// valid cookie was presented — idempotent by contract.
+func clearRefreshCookie(w http.ResponseWriter, cookieSecure bool) {
+	// #nosec G124 -- same environment-conditional Secure as writeRefreshCookie.
+	http.SetCookie(w, &http.Cookie{
+		Name:     refreshTokenCookieName,
+		Value:    "",
+		Path:     "/",
+		MaxAge:   -1,
+		HttpOnly: true,
+		Secure:   cookieSecure,
+		SameSite: http.SameSiteStrictMode,
+	})
+}
+
+// writeAuthCookies delivers issued session tokens as cookies for the Google
+// OAuth 302-redirect contract (techplan §14 Resolved item 7 — cookie
+// delivery is the only option compatible with a redirect, where there is no
+// JSON body to carry the access token):
 //
 //   - access token: short TTL, HttpOnly. Readable path-wide so the SPA's
 //     navigations carry it; it expires quickly on its own.
@@ -68,7 +118,9 @@ func clearOAuthStateCookie(w http.ResponseWriter, cookieSecure bool) {
 //     sites — only same-site refresh requests will use it), 30-day lifetime.
 //
 // The access cookie carries the ES256 JWT; neither cookie ever contains the
-// raw refresh token in any log output (R16).
+// raw refresh token in any log output (R16). NOT used by /auth/login,
+// /auth/login/mfa, or /auth/refresh — those deliver the access token in the
+// JSON body and set only the refresh cookie (writeRefreshCookie).
 func writeAuthCookies(w http.ResponseWriter, cookieSecure bool, accessToken, refreshToken string) {
 	http.SetCookie(w, &http.Cookie{
 		Name:     accessTokenCookieName,

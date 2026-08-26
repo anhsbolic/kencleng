@@ -498,8 +498,8 @@ func TestIssueTokens_ES256AccessAndHashedRefresh(t *testing.T) {
 	if rc.Subject != uid.String() {
 		t.Errorf("sub = %q, want %q", rc.Subject, uid.String())
 	}
-	if rc.ExpiresAt == nil || time.Until(rc.ExpiresAt.Time) > accessTokenTTL+5*time.Second {
-		t.Errorf("exp should be ~%s away, got %v", accessTokenTTL, rc.ExpiresAt)
+	if rc.ExpiresAt == nil || time.Until(rc.ExpiresAt.Time) > auth.AccessTokenTTL+5*time.Second {
+		t.Errorf("exp should be ~%s away, got %v", auth.AccessTokenTTL, rc.ExpiresAt)
 	}
 
 	// Refresh token: only its SHA-256 hash is stored.
@@ -513,7 +513,7 @@ func TestIssueTokens_ES256AccessAndHashedRefresh(t *testing.T) {
 	if rt.UserID != uid || rt.FamilyID == uuid.Nil {
 		t.Errorf("refresh row ownership/family wrong: %+v", rt)
 	}
-	if rt.ExpiresAt.Sub(time.Now()) > refreshTokenTTL+5*time.Second {
+	if time.Until(rt.ExpiresAt) > refreshTokenTTL+5*time.Second {
 		t.Errorf("expires_at should be ~30d out, got %v", rt.ExpiresAt)
 	}
 	if rt.RevokedAt != nil || rt.ReplacedByID != nil {

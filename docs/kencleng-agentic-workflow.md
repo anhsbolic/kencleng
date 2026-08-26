@@ -5,13 +5,21 @@
 > framework, not a technical spec. Per-domain/feature details
 > (invariants, acceptance criteria, threat models) are created
 > separately as each domain is worked on.
-> Last updated: 2026-08-24 (§15 amended — cross-domain mock-batching
-> formalized: a domain's frontend track can reach mock-verified and
-> sit there while other domains do the same, deferring that domain's
-> real-backend integration and Finalize; see the amendment block
-> inside §15. Tracked via `scaffold-frontend.md`'s new Integration
-> Tracker. Previous update — 2026-08-21: §14 step 1 and §15 Finalize
-> updated — wireframe references dropped in favor of
+> Last updated: 2026-08-24 (§14 amended twice: (1) no new document
+> added; each frontend task's step 1 now explicitly checks
+> `page-map.md` for page consolidation/spec-gap issues, and step 5's
+> risk note records the result — a forcing function reusing an
+> existing artifact rather than a new one; (2) same check extended to
+> the component level — step 1 also checks `components/ui/`/
+> `components/shared/` for an existing primitive before creating a
+> new one, recorded in the same risk-note line, instead of adding a
+> directory-level README/index. §15 also amended — cross-domain
+> mock-batching formalized: a domain's frontend track can reach
+> mock-verified and sit there while other domains do the same,
+> deferring that domain's real-backend integration and Finalize; see
+> the amendment block inside §15. Tracked via `scaffold-frontend.md`'s
+> new Integration Tracker. Previous update — 2026-08-21: §14 step 1
+> and §15 Finalize updated — wireframe references dropped in favor of
 > `docs/ui-ux/patterns.md` / `page-map.md` / `design-guidelines.md`,
 > and Finalize's empty/loading/error-state task narrowed now that
 > `patterns.md` pre-defines those conventions per pattern)
@@ -466,6 +474,16 @@ domain are stable (they are — spec phase is closed), since frontend
 work is contract-driven and builds against mocked responses, not a
 live backend.
 
+**No separate frontend task list is pre-enumerated.** A frontend task
+is not assumed 1:1 with a backend task — multiple backend features
+can surface on one page (e.g. `account`'s MFA and Account Linking
+backend tasks both land on the single `/dashboard/security` page, per
+`page-map.md`'s "Form (multi-section)" description), and a backend
+task with no dedicated page (e.g. an email-verification link landing
+route) still needs an explicit frontend surface, however small. This
+is checked **per task, not pre-planned for the whole domain** — see
+step 1 below.
+
 **Loop, per task (per page/component/flow, not necessarily 1:1 with
 backend endpoints):**
 1. Analyze (Explore + Plan) → same feature spec in
@@ -475,7 +493,21 @@ backend endpoints):**
    `docs/ui-ux/page-map.md` (which page, which pattern),
    `docs/ui-ux/patterns.md` (what shape/states that pattern requires),
    and `docs/ui-ux/design-guidelines.md` (visual tokens). Wireframes
-   are retired — `patterns.md` is now the structural reference.
+   are retired — `patterns.md` is now the structural reference. **As
+   part of this step, check `page-map.md` for which page this feature
+   surfaces on, and check whether that page already exists from an
+   earlier frontend task in this domain** — if so, this task extends
+   that page, it does not create a duplicate. If `page-map.md`
+   describes an action for this page with no backing endpoint
+   anywhere in `tasks.md` (or vice versa), that's a spec gap — flag it
+   and resolve before building, don't build around it silently.
+   **Same check applies one level down, at the component level**:
+   before creating anything in `components/ui/` or
+   `components/shared/`, check whether an existing primitive/component
+   already covers the need — creating a near-duplicate (a second
+   `Skeleton`, a `Button` variant with a different API from the one
+   already in use elsewhere) is the same class of gap as duplicating a
+   page, just at a smaller scope.
 2. Build (agent generates component + page code, using
    `openapi-typescript`-generated types from `api/openapi.yaml` as
    the contract)
@@ -491,7 +523,13 @@ backend endpoints):**
 5. Agent writes the risk note (§9) — for frontend this is mainly
    "what did I assume about an error/empty/loading state that isn't
    nailed down in the spec yet" (see §15 — Finalize is where these
-   get resolved for real)
+   get resolved for real), **plus a one-line record of step 1's page
+   and component checks: which page this task landed on (new or
+   already existing), and any `components/ui/`/`components/shared/`
+   item reused instead of recreated** — this is the forcing function
+   that keeps both checks (step 1) from being silently skipped,
+   without requiring a separate pre-planning document or a directory
+   index/README for it.
 6. Human checkpoint — same Tier-based rule as §10, but note frontend
    work is rarely Tier 0 itself (Tier 0 is about server-side
    correctness-critical logic); a frontend task's tier is inherited

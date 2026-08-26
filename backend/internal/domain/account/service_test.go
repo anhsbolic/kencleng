@@ -242,6 +242,48 @@ func (f *fakeRepo) InsertUserLog(_ context.Context, _ pgx.Tx, entry *UserLog) er
 	return nil
 }
 
+// ---- login/session stubs ---------------------------------------------------
+// Minimal implementations satisfying the Repository interface additions from
+// the login/session slice. Task 04's tests replace these with call-recording
+// fakes; the stubs below just keep existing Register/VerifyEmail tests
+// compiling and passing (none of those flows reach the new methods).
+
+func (f *fakeRepo) InsertLoginAttempt(_ context.Context, _ pgx.Tx, _ *LoginAttempt) error {
+	return nil
+}
+
+func (f *fakeRepo) CountRecentFailedAttemptsByIdentifier(_ context.Context, _, _ string, _ time.Time) (int, error) {
+	return 0, nil
+}
+
+func (f *fakeRepo) CountRecentFailedAttemptsByUser(_ context.Context, _ uuid.UUID, _ string, _ time.Time) (int, error) {
+	return 0, nil
+}
+
+func (f *fakeRepo) FindRefreshTokenByHash(_ context.Context, _ string) (*RefreshToken, bool, error) {
+	return nil, false, nil
+}
+
+func (f *fakeRepo) RotateRefreshToken(_ context.Context, _ pgx.Tx, _ string, _ *RefreshToken) (bool, error) {
+	return false, nil
+}
+
+func (f *fakeRepo) RevokeRefreshTokenByHash(_ context.Context, _ pgx.Tx, _ string) error {
+	return nil
+}
+
+func (f *fakeRepo) RevokeRefreshTokenFamily(_ context.Context, _ pgx.Tx, _ uuid.UUID) error {
+	return nil
+}
+
+func (f *fakeRepo) GetLoginUserView(_ context.Context, _ uuid.UUID) (*LoginUserView, error) {
+	return nil, nil
+}
+
+func (f *fakeRepo) FindIdentifierHashByUserAndProvider(_ context.Context, _ uuid.UUID, _ string) (string, bool, error) {
+	return "", false, nil
+}
+
 // seedIdentity stores an identity under both its plaintext-keyed dedup
 // map and its hash-keyed lookup map so FindAuthIdentityByIdentifierHash
 // can find it.

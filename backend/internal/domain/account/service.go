@@ -73,9 +73,11 @@ func (p poolRunner) BeginTx(ctx context.Context) (pgx.Tx, error) {
 }
 
 // Service implements the account domain's registration, verification,
-// resend, and Google OAuth flows. It is safe for concurrent use: it holds
-// no mutable state of its own, and every injected dependency is
-// goroutine-safe.
+// resend, Google OAuth flows, and (since the login/session slice) the
+// credential login / MFA completion / refresh rotation / logout flows.
+// It is safe for concurrent use: it holds no mutable state of its own, and
+// every injected dependency is goroutine-safe — session correctness lives
+// in Postgres behind guarded statements, not in process memory.
 type Service struct {
 	repo        Repository
 	tx          TxRunner
@@ -86,20 +88,50 @@ type Service struct {
 	googleOAuth googleOAuthClient
 	authKeys    *auth.Keys
 	frontendURL string
+
+	// ---- login/session seams (task #03 slice) ----
+
+	// mfa verifies TOTP/backup codes at /auth/login/mfa. nil →
+	// stubMfaVerifier (fails closed until account task #6 lands).
+	mfa MfaVerifier
+	// now is the clock seam; lockout windows and token TTLs derive from it.
+	now func() time.Time
+	// compare is the password-comparison seam (R18 timing discipline:
+	// tests inject a recorder to prove every login branch burns comparable
+	// CPU work). nil → secrets.ComparePassword.
+	compare func(hashedPassword, password string) error
+	// mintAccess signs an ES256 access token with purpose="access"
+	// (wraps platform/auth MintAccessToken). Required for any flow that
+	// issues sessions; calls fail with a clear error if left nil.
+	mintAccess func(userID uuid.UUID, now time.Time) (string, error)
+	// mintMFAPending signs the short-lived mfa_pending step-up token
+	// (wraps platform/auth MintMFAPending). Required for Login's MFA branch.
+	mintMFAPending func(userID uuid.UUID, now time.Time) (string, error)
+	// verifyPending validates an mfa_pending_token and returns its subject
+	// (wraps platform/auth VerifyMFAPending). Required for LoginMfa; fails
+	// clearly if nil.
+	verifyPending func(token string, now time.Time) (uuid.UUID, error)
 }
 
 // NewService constructs an account Service. db is used only to begin
 // transactions; reads/standalone writes go through repo.
 //
-// Parameters 6–8 are the Google OAuth additions (techplan §10):
-// googleOauth is the shared platform client, authKeys signs ES256 access
-// tokens for IssueTokens (consumed read-only — platform/auth/ itself is a
-// Tier 0 fenced path), frontendURL is the base URL success/error redirects
-// point at (FRONTEND_URL). frontendURL is an 8th parameter beyond the six
-// the techplan enumerated — deviation flagged in the ticket report: the
-// techplan's §8 flow has the service producing complete redirect URLs, so
-// it needs the base URL too.
-func NewService(repo Repository, db *pgxpool.Pool, bc *breachcheck.Client, sender notification.Sender, keys *crypto.Keys, googleOauth *googleoauth.Client, authKeys *auth.Keys, frontendURL string) *Service {
+// Parameters beyond the original six: 7–8 are the Google OAuth additions
+// (techplan §10), and 9–14 are the login/session seams — mfa verifier
+// (nil → fail-closed stub until task #6), clock, password comparer
+// (both nil → sensible defaults), and three token closures built over
+// platform/auth/token.go (Tier 0 paired output). Deviations from the
+// techplan's enumerated parameter count are flagged in the ticket report.
+func NewService(repo Repository, db *pgxpool.Pool, bc *breachcheck.Client, sender notification.Sender, keys *crypto.Keys, googleOauth *googleoauth.Client, authKeys *auth.Keys, frontendURL string, mfa MfaVerifier, nowFn func() time.Time, compareFn func(hashedPassword, password string) error, mintAccess func(userID uuid.UUID, now time.Time) (string, error), mintMFAPending func(userID uuid.UUID, now time.Time) (string, error), verifyPending func(token string, now time.Time) (uuid.UUID, error)) *Service {
+	if mfa == nil {
+		mfa = stubMfaVerifier{}
+	}
+	if nowFn == nil {
+		nowFn = time.Now
+	}
+	if compareFn == nil {
+		compareFn = secrets.ComparePassword
+	}
 	return &Service{
 		repo:        repo,
 		tx:          poolRunner{pool: db},
@@ -110,6 +142,13 @@ func NewService(repo Repository, db *pgxpool.Pool, bc *breachcheck.Client, sende
 		googleOAuth: googleOauth,
 		authKeys:    authKeys,
 		frontendURL: strings.TrimRight(frontendURL, "/"),
+
+		mfa:            mfa,
+		now:            nowFn,
+		compare:        compareFn,
+		mintAccess:     mintAccess,
+		mintMFAPending: mintMFAPending,
+		verifyPending:  verifyPending,
 	}
 }
 

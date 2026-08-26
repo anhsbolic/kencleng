@@ -85,6 +85,89 @@ type Repository interface {
 	// Called within tx. Rotation/reuse columns stay nil at issue time.
 	InsertRefreshToken(ctx context.Context, tx pgx.Tx, token *RefreshToken) error
 
+	// InsertLoginAttempt appends one credential-verification outcome to
+	// login_attempts (Fitur 2C). attempt.UserID may be nil when identity
+	// was never established (wrong-email attempts) — the column stays
+	// NULL. Called within tx so the attempt row commits atomically with
+	// the caller's surrounding login bookkeeping. Rows are append-only;
+	// nothing ever updates them.
+	InsertLoginAttempt(ctx context.Context, tx pgx.Tx, attempt *LoginAttempt) error
+
+	// CountRecentFailedAttemptsByIdentifier returns how many failed login
+	// attempts exist for identifierHash with the given stage ("password"
+	// or "mfa") whose attempted_at is strictly after since. This is the
+	// password-stage lockout hot query — identity is not reliably known
+	// at check time, so the count is keyed by identifier_hash. Callers
+	// derive `since` from their own clock seam (deterministic tests); the
+	// adapter never calls time.Now() here.
+	CountRecentFailedAttemptsByIdentifier(ctx context.Context, identifierHash, stage string, since time.Time) (int, error)
+
+	// CountRecentFailedAttemptsByUser is the MFA-stage counterpart of
+	// CountRecentFailedAttemptsByIdentifier: same threshold semantics,
+	// but keyed by userID because identity was already established via a
+	// validated mfa_pending_token by the time this query runs.
+	CountRecentFailedAttemptsByUser(ctx context.Context, userID uuid.UUID, stage string, since time.Time) (int, error)
+
+	// FindRefreshTokenByHash looks up a refresh token by its SHA-256 hex
+	// digest. Returns ok=false when no row matches (the plain token was
+	// never issued by this deployment, or garbage input).
+	FindRefreshTokenByHash(ctx context.Context, tokenHash string) (token *RefreshToken, ok bool, err error)
+
+	// RotateRefreshToken implements INV-account-03's exactly-once rotation
+	// inside ONE transaction on the caller's tx:
+	//
+	//  1. Guarded parent mark: UPDATE refresh_tokens SET replaced_by_id =
+	//     child.ID WHERE token_hash = oldTokenHash AND replaced_by_id IS
+	//     NULL AND revoked_at IS NULL AND expires_at > now(). The 3-clause
+	//     guard makes this the only writer of replaced_by_id and the sole
+	//     arbiter of concurrent refresh races — exactly one caller can win.
+	//  2. On success (RETURNING user_id, family_id from the parent), the
+	//     child row is inserted into the SAME transaction with the parent's
+	//     user_id/family_id. A child-insert failure rolls back the whole tx,
+	//     leaving no parent-marked-without-child state (which would brick
+	//     the family via reuse detection on the client's next refresh).
+	//
+	// The caller pre-sets child.ID, child.TokenHash (SHA-256 of the new
+	// plain token), child.ExpiresAt, and child.CreatedAt; UserID and
+	// FamilyID are populated from the parent's RETURNING values. Returns
+	// rotated=false (transaction untouched — caller decides whether to
+	// roll back) when the guard matched zero rows: not found, already
+	// rotated, revoked, or expired. Per spec Assumption D, all four cases
+	// are treated identically downstream (reuse ⇒ family revocation).
+	RotateRefreshToken(ctx context.Context, tx pgx.Tx, oldTokenHash string, child *RefreshToken) (rotated bool, err error)
+
+	// RevokeRefreshTokenByHash sets revoked_at = now() for the single row
+	// matching tokenHash if it is not already revoked (logout path). The
+	// revoked_at IS NULL guard keeps repeated logouts idempotent.
+	RevokeRefreshTokenByHash(ctx context.Context, tx pgx.Tx, tokenHash string) error
+
+	// RevokeRefreshTokenFamily sets revoked_at = now() for EVERY row in
+	// the family that is not yet revoked — deliberately including rows
+	// whose replaced_by_id is already set, per INV-account-04: reuse of a
+	// rotated-out token means the whole lineage is compromised, and a
+	// token that was legitimately rotated further down the chain must die
+	// with it. Called on reuse detection (and on the race-loser branch,
+	// which spec Assumption D defines as equivalent).
+	RevokeRefreshTokenFamily(ctx context.Context, tx pgx.Tx, familyID uuid.UUID) error
+
+	// FindIdentifierHashByUserAndProvider returns the identifier_hash of
+	// the single identity matching (userID, providerType). Used by the MFA
+	// login step to backfill login_attempts.identifier_hash from the user's
+	// own email_password identity (spec Assumption C — schema consistency
+	// only; the MFA-stage lockout query keys on user_id). Returns found=false
+	// when no such identity exists.
+	FindIdentifierHashByUserAndProvider(ctx context.Context, userID uuid.UUID, providerType string) (identifierHash string, found bool, err error)
+
+	// GetLoginUserView assembles the LoginResponse.user read model for
+	// userID (techplan §8): profile fields from users (with primary_email
+	// DECRYPTED — the one decrypt-on-read path in this repository),
+	// EmailVerified from any verified email_password auth_identity,
+	// AuthProviders from the distinct provider_types across identities,
+	// Roles from user_roles (empty until account task #8 ships assignment),
+	// MFAEnabled from an enabled mfa_totp_secrets row. Returns (nil, nil)
+	// if the user does not exist.
+	GetLoginUserView(ctx context.Context, userID uuid.UUID) (*LoginUserView, error)
+
 	// InsertUserLog appends an audit entry to user_logs. Called within
 	// tx so the audit write is atomic with the action it records (e.g.
 	// attaching a Google AuthIdentity on link intent). Append-only by

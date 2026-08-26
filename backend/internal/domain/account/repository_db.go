@@ -370,5 +370,370 @@ func (r *RepositoryDB) RevokeTokens(ctx context.Context, tx pgx.Tx, userID uuid.
 	return nil
 }
 
+// InsertLoginAttempt appends one credential-verification outcome to
+// login_attempts. attempt.UserID may be nil (wrong-email attempts) — the
+// column is omitted so the DB NULL default applies, avoiding the
+// nil-pointer-in-interface pitfall noted in InsertAuthIdentity.
+// attempt.AttemptedAt is written explicitly so tests can seed historical
+// rows for window-boundary assertions. Called within tx.
+func (r *RepositoryDB) InsertLoginAttempt(ctx context.Context, tx pgx.Tx, attempt *LoginAttempt) error {
+	rec := goqu.Record{
+		"id":              attempt.ID,
+		"identifier_hash": attempt.IdentifierHash,
+		"stage":           attempt.Stage,
+		"success":         attempt.Success,
+		"attempted_at":    attempt.AttemptedAt,
+	}
+	if attempt.UserID != nil {
+		rec["user_id"] = *attempt.UserID
+	}
+
+	sqlStr, args, err := pgDialect.Insert("login_attempts").
+		Rows(rec).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return fmt.Errorf("account: build insert login_attempts: %w", err)
+	}
+	if _, err := tx.Exec(ctx, sqlStr, args...); err != nil {
+		return fmt.Errorf("account: insert login_attempts: %w", err)
+	}
+	return nil
+}
+
+// CountRecentFailedAttemptsByIdentifier returns the number of failed login
+// attempts for identifierHash at the given stage with attempted_at strictly
+// after since. The cutoff is a bound parameter computed by the caller from
+// its own clock — no time.Now() hides in this adapter, so lockout windows
+// are deterministically testable.
+func (r *RepositoryDB) CountRecentFailedAttemptsByIdentifier(ctx context.Context, identifierHash, stage string, since time.Time) (int, error) {
+	sqlStr, args, err := pgDialect.From("login_attempts").
+		Select(goqu.COUNT("*")).
+		Where(
+			goqu.Ex{"identifier_hash": identifierHash, "stage": stage, "success": false},
+			goqu.L("attempted_at > ?", since),
+		).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return 0, fmt.Errorf("account: build count login_attempts by identifier: %w", err)
+	}
+	var n int
+	if err := r.db.QueryRow(ctx, sqlStr, args...).Scan(&n); err != nil {
+		return 0, fmt.Errorf("account: count login_attempts by identifier: %w", err)
+	}
+	return n, nil
+}
+
+// CountRecentFailedAttemptsByUser is the MFA-stage counterpart keyed on
+// user_id + stage; see CountRecentFailedAttemptsByIdentifier for the
+// cutoff semantics.
+func (r *RepositoryDB) CountRecentFailedAttemptsByUser(ctx context.Context, userID uuid.UUID, stage string, since time.Time) (int, error) {
+	sqlStr, args, err := pgDialect.From("login_attempts").
+		Select(goqu.COUNT("*")).
+		Where(
+			goqu.Ex{"user_id": userID, "stage": stage, "success": false},
+			goqu.L("attempted_at > ?", since),
+		).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return 0, fmt.Errorf("account: build count login_attempts by user: %w", err)
+	}
+	var n int
+	if err := r.db.QueryRow(ctx, sqlStr, args...).Scan(&n); err != nil {
+		return 0, fmt.Errorf("account: count login_attempts by user: %w", err)
+	}
+	return n, nil
+}
+
+// FindRefreshTokenByHash looks up a refresh token row by its SHA-256 hex
+// digest. Returns ok=false when no row matches. All columns are populated,
+// including nullable rotation state (RevokedAt/ReplacedByID), so callers
+// can run the full reuse-detection classification without a second query.
+func (r *RepositoryDB) FindRefreshTokenByHash(ctx context.Context, tokenHash string) (*RefreshToken, bool, error) {
+	sqlStr, args, err := pgDialect.From("refresh_tokens").
+		Select("id", "user_id", "family_id", "token_hash", "expires_at", "revoked_at", "replaced_by_id", "created_at").
+		Where(goqu.Ex{"token_hash": tokenHash}).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return nil, false, fmt.Errorf("account: build select refresh_tokens: %w", err)
+	}
+
+	var (
+		token        RefreshToken
+		revokedAt    sql.NullTime
+		replacedByID sql.NullString
+	)
+	if err := r.db.QueryRow(ctx, sqlStr, args...).Scan(
+		&token.ID,
+		&token.UserID,
+		&token.FamilyID,
+		&token.TokenHash,
+		&token.ExpiresAt,
+		&revokedAt,
+		&replacedByID,
+		&token.CreatedAt,
+	); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, false, nil
+		}
+		return nil, false, fmt.Errorf("account: select refresh_tokens: %w", err)
+	}
+	if revokedAt.Valid {
+		t := revokedAt.Time
+		token.RevokedAt = &t
+	}
+	if replacedByID.Valid {
+		id, parseErr := uuid.Parse(replacedByID.String)
+		if parseErr != nil {
+			return nil, false, fmt.Errorf("account: parse refresh_tokens.replaced_by_id: %w", parseErr)
+		}
+		token.ReplacedByID = &id
+	}
+	return &token, true, nil
+}
+
+// RotateRefreshToken implements INV-account-03's exactly-once rotation in
+// ONE transaction on the caller's tx: guarded parent mark → child insert.
+// See Repository.RotateRefreshToken for the full contract. On rotated=false
+// nothing has been written and the tx is left untouched — the caller rolls
+// back and classifies (not-found / already-rotated / revoked / expired are
+// deliberately indistinguishable per spec Assumption D).
+func (r *RepositoryDB) RotateRefreshToken(ctx context.Context, tx pgx.Tx, oldTokenHash string, child *RefreshToken) (bool, error) {
+	markSQL, markArgs, err := pgDialect.Update("refresh_tokens").
+		Set(goqu.Record{"replaced_by_id": child.ID}).
+		Where(
+			goqu.Ex{"token_hash": oldTokenHash},
+			goqu.L("replaced_by_id IS NULL"),
+			goqu.L("revoked_at IS NULL"),
+			goqu.L("expires_at > now()"), // DB clock, same convention as RedeemToken
+		).
+		Returning("user_id", "family_id").
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return false, fmt.Errorf("account: build rotate refresh_tokens mark: %w", err)
+	}
+
+	var parentUserID, familyID uuid.UUID
+	if err := tx.QueryRow(ctx, markSQL, markArgs...).Scan(&parentUserID, &familyID); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			// Guard matched zero rows: not found / already rotated /
+			// revoked / expired. Nothing was modified in the tx.
+			return false, nil
+		}
+		return false, fmt.Errorf("account: rotate refresh_tokens mark: %w", err)
+	}
+
+	child.UserID = parentUserID
+	child.FamilyID = familyID
+
+	insertSQL, insertArgs, err := pgDialect.Insert("refresh_tokens").
+		Rows(goqu.Record{
+			"id":         child.ID,
+			"user_id":    child.UserID,
+			"family_id":  child.FamilyID,
+			"token_hash": child.TokenHash,
+			"expires_at": child.ExpiresAt,
+			"created_at": child.CreatedAt,
+			// revoked_at / replaced_by_id default to NULL.
+		}).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return false, fmt.Errorf("account: build rotate refresh_tokens child insert: %w", err)
+	}
+	if _, err := tx.Exec(ctx, insertSQL, insertArgs...); err != nil {
+		// The whole tx fails here — the deferred rollback in the service
+		// undoes the parent mark too, leaving no marked-without-child state.
+		return false, fmt.Errorf("account: insert rotated refresh_token child: %w", err)
+	}
+	return true, nil
+}
+
+// RevokeRefreshTokenByHash sets revoked_at = now() for the single matching
+// row if it is not already revoked. Idempotent by construction: repeated
+// calls match zero rows under the revoked_at IS NULL guard and change
+// nothing.
+func (r *RepositoryDB) RevokeRefreshTokenByHash(ctx context.Context, tx pgx.Tx, tokenHash string) error {
+	sqlStr, args, err := pgDialect.Update("refresh_tokens").
+		Set(goqu.Record{"revoked_at": time.Now()}).
+		Where(
+			goqu.Ex{"token_hash": tokenHash},
+			goqu.L("revoked_at IS NULL"),
+		).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return fmt.Errorf("account: build revoke refresh_tokens by hash: %w", err)
+	}
+	if _, err := tx.Exec(ctx, sqlStr, args...); err != nil {
+		return fmt.Errorf("account: revoke refresh_tokens by hash: %w", err)
+	}
+	return nil
+}
+
+// RevokeRefreshTokenFamily sets revoked_at = now() for every unrevoked row
+// sharing familyID — INCLUDING already-rotated rows (no replaced_by_id
+// guard): INV-account-04 means a reused token condemns its entire lineage.
+func (r *RepositoryDB) RevokeRefreshTokenFamily(ctx context.Context, tx pgx.Tx, familyID uuid.UUID) error {
+	sqlStr, args, err := pgDialect.Update("refresh_tokens").
+		Set(goqu.Record{"revoked_at": time.Now()}).
+		Where(
+			goqu.Ex{"family_id": familyID},
+			goqu.L("revoked_at IS NULL"),
+		).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return fmt.Errorf("account: build revoke refresh_tokens family: %w", err)
+	}
+	if _, err := tx.Exec(ctx, sqlStr, args...); err != nil {
+		return fmt.Errorf("account: revoke refresh_tokens family: %w", err)
+	}
+	return nil
+}
+
+// FindIdentifierHashByUserAndProvider returns the identifier_hash of the
+// single identity matching (userID, providerType); found=false when absent.
+// See Repository.FindIdentifierHashByUserAndProvider.
+func (r *RepositoryDB) FindIdentifierHashByUserAndProvider(ctx context.Context, userID uuid.UUID, providerType string) (string, bool, error) {
+	sqlStr, args, err := pgDialect.From("auth_identities").
+		Select("identifier_hash").
+		Where(goqu.Ex{"user_id": userID, "provider_type": providerType}).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return "", false, fmt.Errorf("account: build select identity hash by user: %w", err)
+	}
+	var hash string
+	if err := r.db.QueryRow(ctx, sqlStr, args...).Scan(&hash); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return "", false, nil
+		}
+		return "", false, fmt.Errorf("account: select identity hash by user: %w", err)
+	}
+	return hash, true, nil
+}
+
+// GetLoginUserView assembles the LoginResponse.user read model. It runs as
+// four simple prepared queries rather than one wide join: each sub-answer
+// (identity aggregation, roles, mfa flag) is independently indexable and
+// keeps the decrypt-on-read step isolated to the profile row. primary_email
+// is decrypted here — the plaintext lives only in the returned view and is
+// never logged (R19 discipline is enforced upstream, but the view doc also
+// warns). Returns (nil, nil) when the user does not exist.
+func (r *RepositoryDB) GetLoginUserView(ctx context.Context, userID uuid.UUID) (*LoginUserView, error) {
+	view := &LoginUserView{
+		ID:            userID,
+		Roles:         []string{},
+		AuthProviders: []string{},
+	}
+
+	// 1. Profile row: name + ciphertext email + created_at.
+	profileSQL, profileArgs, err := pgDialect.From("users").
+		Select("name", "primary_email", "created_at").
+		Where(goqu.Ex{"id": userID}).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return nil, fmt.Errorf("account: build select users for login view: %w", err)
+	}
+	var emailCiphertext []byte
+	if err := r.db.QueryRow(ctx, profileSQL, profileArgs...).Scan(
+		&view.Name, &emailCiphertext, &view.CreatedAt,
+	); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, nil
+		}
+		return nil, fmt.Errorf("account: select users for login view: %w", err)
+	}
+	plaintext, err := crypto.Decrypt(emailCiphertext, r.keys)
+	if err != nil {
+		return nil, fmt.Errorf("account: decrypt primary_email for login view: %w", err)
+	}
+	view.Email = string(plaintext)
+
+	// 2. Identity aggregation: distinct providers + verified flag.
+	identSQL, identArgs, err := pgDialect.From("auth_identities").
+		Select("provider_type", "verified_at").
+		Where(goqu.Ex{"user_id": userID}).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return nil, fmt.Errorf("account: build select auth_identities for login view: %w", err)
+	}
+	rows, err := r.db.Query(ctx, identSQL, identArgs...)
+	if err != nil {
+		return nil, fmt.Errorf("account: select auth_identities for login view: %w", err)
+	}
+	defer rows.Close()
+	seenProviders := make(map[string]bool)
+	for rows.Next() {
+		var providerType string
+		var verifiedAt sql.NullTime
+		if err := rows.Scan(&providerType, &verifiedAt); err != nil {
+			return nil, fmt.Errorf("account: scan auth_identities for login view: %w", err)
+		}
+		if !seenProviders[providerType] {
+			seenProviders[providerType] = true
+			view.AuthProviders = append(view.AuthProviders, providerType)
+		}
+		if providerType == "email_password" && verifiedAt.Valid {
+			view.EmailVerified = true
+		}
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("account: iterate auth_identities for login view: %w", err)
+	}
+
+	// 3. Roles (empty until account task #8's assignment API writes rows).
+	rolesSQL, rolesArgs, err := pgDialect.From("user_roles").
+		Select("role").
+		Where(goqu.Ex{"user_id": userID}).
+		Order(goqu.I("role").Asc()).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return nil, fmt.Errorf("account: build select user_roles for login view: %w", err)
+	}
+	roleRows, err := r.db.Query(ctx, rolesSQL, rolesArgs...)
+	if err != nil {
+		return nil, fmt.Errorf("account: select user_roles for login view: %w", err)
+	}
+	defer roleRows.Close()
+	for roleRows.Next() {
+		var role string
+		if err := roleRows.Scan(&role); err != nil {
+			return nil, fmt.Errorf("account: scan user_roles for login view: %w", err)
+		}
+		view.Roles = append(view.Roles, role)
+	}
+	if err := roleRows.Err(); err != nil {
+		return nil, fmt.Errorf("account: iterate user_roles for login view: %w", err)
+	}
+
+	// 4. MFA enabled flag: an mfa_totp_secrets row with enabled_at set
+	// (INV-account-07 guarantees enabled_at is only set after verified
+	// enrollment; the login branch keys off exactly this predicate).
+	mfaSQL, mfaArgs, err := pgDialect.From("mfa_totp_secrets").
+		Select(goqu.COUNT("*")).
+		Where(goqu.Ex{"user_id": userID}, goqu.L("enabled_at IS NOT NULL")).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return nil, fmt.Errorf("account: build select mfa_totp_secrets for login view: %w", err)
+	}
+	var enabledCount int
+	if err := r.db.QueryRow(ctx, mfaSQL, mfaArgs...).Scan(&enabledCount); err != nil {
+		return nil, fmt.Errorf("account: select mfa_totp_secrets for login view: %w", err)
+	}
+	view.MFAEnabled = enabledCount > 0
+
+	return view, nil
+}
+
 // Compile-time assertion that RepositoryDB implements Repository.
 var _ Repository = (*RepositoryDB)(nil)

@@ -54,6 +54,22 @@ func WriteValidationError(w http.ResponseWriter, errs []fieldError) {
 	})
 }
 
+// Login/session error vocabulary (task #03). The anti-enumeration rule is
+// load-bearing here: wrong-email, wrong-password, and lockout share the
+// SAME title+detail — only the status code differs between 401 and 429
+// (openapi LockedOutGenericCredentials, amended 2026-08-26). The type URI
+// is the one machine-readable distinction.
+const (
+	problemTypeInvalidCredentials = "https://kencleng.dev/errors/invalid-credentials" // #nosec G101 — problem-type URI, not a credential
+	problemTypeTooManyRequests    = "https://kencleng.dev/errors/too-many-requests"   // #nosec G101 — problem-type URI, not a credential
+
+	// #nosec G101 — user-facing Indonesian error TEXT (the word "password"
+	// inside the sentence trips the heuristic); these are response strings,
+	// never credentials.
+	problemTitleInvalidCredentials = "Invalid Credentials"
+	problemDetailGenericCredential = "Email atau password salah." // #nosec G101
+)
+
 // MapServiceError maps a service sentinel error to the appropriate HTTP
 // status + Problem Details. Unknown errors map to 500 with a generic
 // detail — never the raw error string.
@@ -71,6 +87,18 @@ func MapServiceError(w http.ResponseWriter, err error) {
 		WriteProblem(w, http.StatusNotFound,
 			"https://kencleng.dev/problems/token-not-found",
 			"Token Not Found", "The verification token was not found.")
+	case errors.Is(err, account.ErrLockedOut):
+		WriteProblem(w, http.StatusTooManyRequests,
+			problemTypeTooManyRequests,
+			problemTitleInvalidCredentials, problemDetailGenericCredential)
+	case errors.Is(err, account.ErrMfaPendingInvalid):
+		WriteProblem(w, http.StatusUnauthorized,
+			problemTypeInvalidCredentials,
+			problemTitleInvalidCredentials, problemDetailGenericCredential)
+	case errors.Is(err, account.ErrInvalidCredentials):
+		WriteProblem(w, http.StatusUnauthorized,
+			problemTypeInvalidCredentials,
+			problemTitleInvalidCredentials, problemDetailGenericCredential)
 	default:
 		// Do NOT leak err.Error() — log it server-side, return generic.
 		log.Printf("transport: unhandled service error: %v", err)

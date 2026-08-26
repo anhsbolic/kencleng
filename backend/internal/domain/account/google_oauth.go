@@ -15,6 +15,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 
+	"github.com/anhsbolic/kencleng/backend/internal/platform/auth"
 	"github.com/anhsbolic/kencleng/backend/internal/platform/crypto"
 	"github.com/anhsbolic/kencleng/backend/internal/platform/googleoauth"
 )
@@ -43,11 +44,12 @@ const (
 const actionAccountLinking = "account_linking"
 
 // TTLs for the OAuth flow. stateCookieTTL matches the transport cookie
-// MaxAge (R24); accessTokenTTL/refreshTokenTTL are first-generation session
-// lifetimes (rotation arrives with the login/session task).
+// MaxAge (R24); refreshTokenTTL is the first-generation session lifetime
+// (rotation arrives with the login/session task). accessTokenTTL lives in
+// platform/auth (AccessTokenTTL) — the single source of truth shared with
+// the login/session slice.
 const (
 	stateCookieTTL  = 10 * time.Minute
-	accessTokenTTL  = 15 * time.Minute
 	refreshTokenTTL = 30 * 24 * time.Hour
 )
 
@@ -489,7 +491,7 @@ func (s *Service) IssueTokens(ctx context.Context, userID uuid.UUID) (accessToke
 	accessClaims := jwt.RegisteredClaims{
 		Subject:   userID.String(),
 		IssuedAt:  jwt.NewNumericDate(now),
-		ExpiresAt: jwt.NewNumericDate(now.Add(accessTokenTTL)),
+		ExpiresAt: jwt.NewNumericDate(now.Add(auth.AccessTokenTTL)),
 	}
 	access, err := jwt.NewWithClaims(jwt.SigningMethodES256, accessClaims).SignedString(s.authKeys.Private)
 	if err != nil {

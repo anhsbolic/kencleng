@@ -112,10 +112,39 @@ const mockUser: User = {
 
 const mockUnreadCount: UnreadCountResponse = { unread_count: 3 };
 
+// Default happy-path fixtures for account/01-register-email-verification
+// (register/verify-email/resend). Individual tests override the 422/
+// 404/410/429/network-error cases via `server.use(...)`, same pattern
+// as the roles-array override already used for `mockUser` elsewhere.
+const mockRegisterAccepted = {
+  message:
+    "Kalau email belum terdaftar, cek inbox untuk verifikasi. Kalau sudah, cek inbox untuk instruksi lebih lanjut.",
+};
+const mockVerifyEmailVerified = { message: "Email berhasil diverifikasi." };
+const mockResendAccepted = {
+  message: "Kalau email terdaftar, instruksi sudah dikirim.",
+};
+
 export const handlers = [
   http.get("/account/me", () => HttpResponse.json(mockUser)),
   http.get("/notifications/unread-count", () =>
     HttpResponse.json(mockUnreadCount)
   ),
   http.get("/campaigns", () => HttpResponse.json(mockCampaigns)),
+  http.post("/auth/register", () =>
+    HttpResponse.json(mockRegisterAccepted, { status: 202 })
+  ),
+  http.post("/auth/verify-email", () =>
+    HttpResponse.json(mockVerifyEmailVerified, { status: 200 })
+  ),
+  http.post("/auth/verify-email/resend", () =>
+    HttpResponse.json(mockResendAccepted, { status: 202 })
+  ),
+  // Default: no refresh cookie present (unauthenticated guest) — the
+  // overwhelmingly common case, since AuthBootstrapProvider calls this
+  // on every app load, not just after a Google OAuth callback.
+  // Individual tests override via `server.use(...)` for the
+  // successful-hydration case (techplan account/02-google-oauth-
+  // login-register, R8-R11).
+  http.post("/auth/refresh", () => HttpResponse.json({}, { status: 401 })),
 ];

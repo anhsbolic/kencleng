@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { AuthBootstrapProvider } from "@/components/providers/auth-bootstrap-provider";
 import { MockingProvider } from "@/components/providers/mocking-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { SwRegister } from "@/components/providers/sw-register";
@@ -35,7 +36,14 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <MockingProvider>
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            {/* Mounted inside QueryProvider (needs useQueryClient) and
+                inside MockingProvider (so MSW is ready first in
+                mock-dev mode — MockingProvider already gates all
+                children behind `ready`). Techplan account/02-google-
+                oauth-login-register, R13. */}
+            <AuthBootstrapProvider>{children}</AuthBootstrapProvider>
+          </QueryProvider>
         </MockingProvider>
         <SwRegister />
       </body>

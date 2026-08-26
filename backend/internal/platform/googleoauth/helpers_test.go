@@ -113,8 +113,6 @@ func tokenServer(t *testing.T, status int, body string) *httptest.Server {
 	return srv
 }
 
-const goodTokenResponseFmt = `{"access_token":"at","id_token":%q,"token_type":"Bearer","expires_in":3599}`
-
 // captureStdlog redirects the standard logger into a thread-safe buffer for
 // the duration of the test and returns a function reading everything logged
 // so far.

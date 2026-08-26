@@ -48,7 +48,7 @@ func TestResendVerificationHandler_ServiceError_Still202_ButLogs(t *testing.T) {
 		HMACKey:       make([]byte, 32),
 	}
 	repo := &fakeResendRepo{findErr: errors.New("db connection lost")}
-	svc := account.NewService(repo, nil, nil, nil, keys, nil, nil, "http://localhost:3000")
+	svc := account.NewService(repo, nil, nil, nil, keys, nil, nil, "http://localhost:3000", nil, nil, nil, nil, nil, nil)
 
 	// Capture log output.
 	var logBuf bytes.Buffer
