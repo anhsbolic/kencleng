@@ -168,11 +168,7 @@ paths:
                 status: 401
                 detail: "Email atau password salah."
         "429":
-          description: >
-            Locked out (5 failed attempts / 15 min window) — deliberately
-            returns the same generic detail as the 401 case above, per
-            anti-enumeration business rule; only the status code differs.
-          $ref: "./common.yaml#/components/responses/TooManyRequests"
+          $ref: "#/components/responses/LockedOutGenericCredentials"
 
   /auth/login/mfa:
     post:
@@ -199,7 +195,7 @@ paths:
               schema:
                 $ref: "./common.yaml#/components/schemas/Problem"
         "429":
-          $ref: "./common.yaml#/components/responses/TooManyRequests"
+          $ref: "#/components/responses/LockedOutGenericCredentials"
 
   /auth/refresh:
     post:
@@ -688,6 +684,31 @@ paths:
 
 
 components:
+  responses:
+    # Login-specific lockout response (added 2026-08-26, per
+    # docs/spec/1-account/features/03-login-session-management.md
+    # anti-enumeration rule + human approval of techplan Open Item 1).
+    #
+    # Deliberately NOT the shared common.yaml TooManyRequests: the login
+    # endpoints' 429 must carry the SAME generic title/detail as their 401,
+    # so the response body cannot confirm "this identifier exists and is
+    # locked". Only the status code and the machine-readable type URI differ.
+    # Do not swap this back to the shared component.
+    LockedOutGenericCredentials:
+      description: >
+        Locked out (>=5 failed attempts / 15 min window) — deliberately
+        returns the same generic title/detail as the 401 case above, per
+        anti-enumeration business rule; only the status code differs.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "./common.yaml#/components/schemas/Problem"
+          example:
+            type: "https://kencleng.dev/errors/too-many-requests"
+            title: "Invalid Credentials"
+            status: 429
+            detail: "Email atau password salah."
+
   schemas:
     # Account domain schemas
     # ---------------------------------------------------------------------

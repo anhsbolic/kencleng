@@ -410,6 +410,29 @@ Per page/component (regardless of domain), the cycle is:
    workflow-doc level (root-scoped, out of this playbook's boundary)
    rather than silently assuming a mechanism here.
 
+### Integration Tracker — required once more than one domain is mock-verified
+
+**New in this revision (2026-08-24).** Per `docs/kencleng-agentic-
+workflow.md` §15's cross-domain mock-batching amendment: once a
+domain's frontend track reaches mock-verified (steps 1-2 above) for
+multiple domains before any of them does Step 3, it becomes possible
+to lose track of which specific endpoints, across which domains, are
+still mock-only. This table is the fix — update it whenever a handler
+is added to `mocks/handlers.ts` (new row) or Step 3 happens for one
+(status flips).
+
+| Domain | Endpoint | Mock added | Real endpoint exists? | Integrated (Step 3 done)? |
+|---|---|---|---|---|
+| `account` | `POST /account/register` | ✅ | ✅ | ☐ |
+| `campaign` | `GET /campaigns` | ✅ | ❌ | ☐ |
+
+Keep this table in this file (not a separate doc) — it's a direct
+extension of the workflow it's tracking, not a new artifact category.
+A row moves to "Integrated" only after Step 3's actual swap
+(`passthrough()` or handler deletion) is done and verified against the
+real endpoint — not when the real endpoint merely starts existing on
+the backend side.
+
 ## Related docs
 
 - `frontend/AGENTS.md` — project layout, style conventions

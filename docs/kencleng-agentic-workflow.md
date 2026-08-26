@@ -5,11 +5,16 @@
 > framework, not a technical spec. Per-domain/feature details
 > (invariants, acceptance criteria, threat models) are created
 > separately as each domain is worked on.
-> Last updated: 2026-08-21 (§14 step 1 and §15 Finalize updated —
-> wireframe references dropped in favor of `docs/ui-ux/patterns.md` /
-> `page-map.md` / `design-guidelines.md`, and Finalize's empty/
-> loading/error-state task narrowed now that `patterns.md` pre-defines
-> those conventions per pattern)
+> Last updated: 2026-08-24 (§15 amended — cross-domain mock-batching
+> formalized: a domain's frontend track can reach mock-verified and
+> sit there while other domains do the same, deferring that domain's
+> real-backend integration and Finalize; see the amendment block
+> inside §15. Tracked via `scaffold-frontend.md`'s new Integration
+> Tracker. Previous update — 2026-08-21: §14 step 1 and §15 Finalize
+> updated — wireframe references dropped in favor of
+> `docs/ui-ux/patterns.md` / `page-map.md` / `design-guidelines.md`,
+> and Finalize's empty/loading/error-state task narrowed now that
+> `patterns.md` pre-defines those conventions per pattern)
 
 ## 1. Purpose & context
 
@@ -533,6 +538,51 @@ frontend track starts.** This also keeps backend/frontend learning
 genuinely separate for this first domain, per the project's own
 working principle, rather than context-switching between them
 per-feature.
+
+**Amendment — cross-domain mock-batching (2026-08-24) [RESOLVED]**
+
+The sequencing above governs ordering *within* one domain
+(backend-then-frontend, or parallel, per that domain's own decision).
+It says nothing about ordering *across* domains — in practice, running
+every domain's frontend track through to Finalize immediately, one
+domain at a time, turned out not to be the actual preference: frontend
+tracks for multiple domains can be built and left at the
+**mock-verified** stage (Mock-First Development Workflow steps 1-2,
+`scaffold-frontend.md`) before any of them proceeds to Step 3
+("Integrate real") or that domain's Finalize.
+
+This is possible without weakening anything already decided, because
+of what Step 3 actually is: per `scaffold-frontend.md`'s own Mock-First
+Development Workflow, swapping a mock handler for a real endpoint is
+explicitly designed to need **no application code changes** — it is
+not a second pass through this section's task loop (§14 steps 1-7),
+and never requires re-running Explore or Plan for that task. Batching
+multiple domains at the mock-verified stage therefore doesn't
+accumulate "unfinished work" in the sense §10's human checkpoint or §9's
+risk-note process cares about — each task that reached mock-verified
+already went through the full loop, including its own human checkpoint,
+for the mock-based implementation. What's deferred is only the
+real-backend wiring and that domain's Finalize/Delivery, not any of the
+loop's quality gates.
+
+**Consequence for Finalize**: Finalize is still "once per domain," but
+is no longer assumed to trigger immediately when a domain's frontend
+track's task loop is done. A domain can sit at
+"frontend-track-complete, mock-verified, not yet Finalized" for as long
+as needed. What must not happen: losing track of *which* domains are in
+that state, or which specific endpoints within a mock-verified domain
+still need Step 3's swap. See `scaffold-frontend.md`'s **Integration
+Tracker** subsection for the mechanism that prevents this — a domain or
+endpoint sitting at mock-verified is a tracked, visible state, not an
+implicit one someone has to remember.
+
+**Not changed by this amendment**: Tier 0-1 human checkpoint
+requirements (§10), the risk-note process (§9), gate ordering within a
+task (§7/§14 step 3), or the backend-then-frontend-vs-parallel decision
+itself (still per-domain, still re-evaluated at each domain's start).
+This amendment only affects *when* Finalize/Delivery happens relative
+to other domains' frontend tracks — it does not skip, shorten, or
+substitute for anything else in the per-task loop.
 
 **Finalize** (once per domain, after both tracks are done):
 - Full stack up via `docker-compose` (backend + frontend + Caddy +

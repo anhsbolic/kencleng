@@ -6,7 +6,11 @@
 > (`docs/wireframes/`) removed — see `patterns.md` for why. Each page
 > row now names the reusable pattern it uses instead of a per-page
 > layout description.
-> Last updated: 2026-08-20
+> Last updated: 2026-08-24 — added Public Shell nav decision and
+> scoped the `/` (home) "highlighted campaigns" note (see Shell &
+> Benchmark Notes and the footnote under §1's table). Both were
+> resolved specifically to unblock building `/` — see those sections
+> for what's still open beyond that scope.
 
 ## Context
 
@@ -48,13 +52,23 @@ in `patterns.md` and `kencleng-frontend-tech-stack.md` — not
 duplicated here. This section previously held that content; see those
 two docs instead.
 
----
+**Public Shell — resolved 2026-08-24, scoped to unblock `/` (home)**:
+top nav, matching the Guest page set — logo (left), "Beranda" (`/`)
+and "Jelajahi Kampanye" (`/campaign`) links, "Masuk"/"Daftar" buttons
+(right). Mobile: hamburger collapsing the same item set into a drawer,
+reusing the same open/close focus-management behavior already built
+for Dashboard Shell's mobile drawer (`frontend/.agents/docs/
+phase0-shared-infra.md` Step 5) — not a new pattern, the same one
+applied to a second shell. Footer intentionally not decided yet — not
+required for `/` to function, deferred rather than blocking.
+
+## ---
 
 ## 1. Guest (not logged in)
 
 | Page | Pattern | Actions |
 |---|---|---|
-| `/` (home) | List/Browse | Browse highlighted campaigns |
+| `/` (home) | List/Browse | Browse highlighted campaigns¹ |
 | `/campaign` (list) | List/Browse | Browse/filter `published` campaigns |
 | `/campaign/[id]` (detail) | Detail (public variant) | View description, progress bar, public donor list (org info shown inline — no separate org profile page), donate button. Also displays `beneficiary_description` |
 | `/campaign/[id]/donate` (donation form) | Form (single-step, no revision cycle) | Fill `amount`, choose `payment_method` (transfer/debit/gopay/shopeepay/ovo/qris — simulated), optionally fill `guest_name`/`guest_email` (both independently optional), see nudge note about benefits of providing email, submit |
@@ -63,6 +77,18 @@ two docs instead.
 | `/register` | Form | Register form + "Daftar dengan Google" button |
 | `/forgot-password` | Form | Submit email to request password reset |
 | `/reset-password?token=...` | Form | Submit new password |
+
+¹ **"Highlighted" — resolved 2026-08-24, mock-scope only, not a
+product decision.** `api/openapi/campaign.yaml`'s `GET /campaigns` has
+no sort/featured parameter — there's no backend concept of
+"highlighted" yet. For building `/`, the mock (`mocks/handlers.ts`)
+simply returns a fixed set of fixture campaigns for `GET /campaigns`
+with no special filter — the frontend doesn't invent a `featured`
+flag or sort logic the API doesn't have. **Still open**: what
+"highlighted" actually means once `campaign` domain's backend is
+built (most recent? closest to goal? manually curated?) — that's a
+real product decision for `campaign` domain's own techplan, not
+resolved here and not to be assumed from this mock.
 
 ---
 
@@ -175,6 +201,11 @@ patterns' normal responsive behavior.
 3. ~~Admin-only pages not yet wireframed~~ — **superseded**, same
    reason as above; Admin pages now covered by List/Browse and
    Curation/Review pattern definitions
+4. **"Highlighted campaigns" selection criteria** — what the `/` page
+   actually shows once `campaign` domain's backend exists (see
+   footnote under §1). Not resolved, deliberately deferred to
+   `campaign` domain's own techplan — the mock built to unblock `/`'s
+   UI should not be read as having answered this.
 
 ## Resolved (moved to `patterns.md`)
 
@@ -188,6 +219,10 @@ patterns' normal responsive behavior.
   `kencleng-frontend-tech-stack.md` PWA Scope, and `patterns.md` §B
   for the resulting "stale data" state convention.
   **[RESOLVED — 2026-08-20]**
+- ~~Public Shell nav/layout~~ → **resolved: top nav (desktop),
+  hamburger drawer (mobile), reusing Dashboard Shell's drawer
+  focus-management** — see Shell & Benchmark Notes above.
+  **[RESOLVED — 2026-08-24]**
 
 ## Related Docs
 

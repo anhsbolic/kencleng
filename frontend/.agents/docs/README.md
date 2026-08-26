@@ -16,6 +16,7 @@ setup/operational work that neither of those covers.
 | Trigger | File | When to use |
 |---|---|---|
 | Empty `frontend/` (only default `create-next-app` scaffold — no `components/`, no `lib/api/`, no providers wired) | [`scaffold-frontend.md`](scaffold-frontend.md) | One-time, before Task #1 of any domain's frontend track — bootstraps folder structure, state/data providers, PWA manifest, and test infra |
+| `campaign` domain's frontend track starting, `(public)/layout.tsx` still the Phase 0 pass-through stub | [`scaffold-public-shell.md`](scaffold-public-shell.md) | One-time — builds the real Public Shell nav (desktop top nav, mobile hamburger+drawer) that `/`, `/campaign`, `/campaign/[id]` all sit inside |
 
 ## Rules for playbooks in this folder
 

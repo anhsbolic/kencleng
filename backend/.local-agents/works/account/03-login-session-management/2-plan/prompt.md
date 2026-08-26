@@ -1,9 +1,9 @@
-Read the guidance folder at /home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/techplan in this order:
+Read the guidance folder at /home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/2-techplan in this order:
 README.md, template.md, rules.md, guardrails.md, guidelines.md,
 examples.md, retro.md. This defines how you should classify content
 and what the output must look like.
 
-Then read every file in /home/anhar-solehudin/kencleng-workspace/works/domains/account/03-login-session-management/explore/logs — treat all of them as raw
+Then read every file in /home/anhar-solehudin/kencleng-workspace/works/domains/account/03-login-session-management/1-explore/logs — treat all of them as raw
 material. Don't assume a fixed number or fixed names; classify each
 piece of content by the function it serves (rules.md § 1), not by
 which file it came from.

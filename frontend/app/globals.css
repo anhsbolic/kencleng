@@ -55,6 +55,32 @@
   --color-neutral-700: #334155;
   --color-neutral-900: #0f172a;
 
+  /* Typography scale (docs/ui-ux/design-guidelines.md "Type scale") —
+   * first use of the full scale in this codebase; wired the same way
+   * as every other token category below (CSS var on :root, re-exposed
+   * to Tailwind via @theme inline), not a one-off convention. Font
+   * weights use Tailwind's default scale (font-bold=700,
+   * font-semibold=600, font-normal=400, font-extrabold=800) — no
+   * custom weight tokens needed. */
+  --font-size-display: 2.25rem; /* 36px — Landing/hero only */
+  --line-height-display: 2.5rem;
+  --font-size-h1: 1.875rem; /* 30px — page titles */
+  --line-height-h1: 2.25rem;
+  --font-size-h2: 1.5rem; /* 24px — section titles, card group headers */
+  --line-height-h2: 2rem;
+  --font-size-h3: 1.25rem; /* 20px — card titles */
+  --line-height-h3: 1.75rem;
+  --font-size-h4: 1.125rem; /* 18px — sub-section labels */
+  --line-height-h4: 1.5rem;
+  --font-size-body-lg: 1.125rem; /* 18px — campaign narrative body */
+  --line-height-body-lg: 1.75rem;
+  --font-size-body: 1rem; /* 16px — default UI text */
+  --line-height-body: 1.5rem;
+  --font-size-body-sm: 0.875rem; /* 14px — form labels, table cells, helper text */
+  --line-height-body-sm: 1.25rem;
+  --font-size-caption: 0.75rem; /* 12px — timestamps, badge text, MaskedField */
+  --line-height-caption: 1rem;
+
   /* Shape */
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -126,6 +152,25 @@
 
   --font-sans: var(--font-inter);
   --font-heading: var(--font-plus-jakarta-sans);
+
+  --text-display: var(--font-size-display);
+  --text-display--line-height: var(--line-height-display);
+  --text-h1: var(--font-size-h1);
+  --text-h1--line-height: var(--line-height-h1);
+  --text-h2: var(--font-size-h2);
+  --text-h2--line-height: var(--line-height-h2);
+  --text-h3: var(--font-size-h3);
+  --text-h3--line-height: var(--line-height-h3);
+  --text-h4: var(--font-size-h4);
+  --text-h4--line-height: var(--line-height-h4);
+  --text-body-lg: var(--font-size-body-lg);
+  --text-body-lg--line-height: var(--line-height-body-lg);
+  --text-body: var(--font-size-body);
+  --text-body--line-height: var(--line-height-body);
+  --text-body-sm: var(--font-size-body-sm);
+  --text-body-sm--line-height: var(--line-height-body-sm);
+  --text-caption: var(--font-size-caption);
+  --text-caption--line-height: var(--line-height-caption);
 }
 
 body {

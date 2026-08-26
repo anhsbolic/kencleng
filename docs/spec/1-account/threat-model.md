@@ -42,11 +42,11 @@ down from this doc.
 
 | Category | Concrete threat | Existing mitigation | Residual risk |
 |---|---|---|---|
-| Spoofing | Credential stuffing / brute-force login | `login_attempts` persistent lockout (5 failed / 15 min window, INV-account not applicable here but see `login_attempts` design) + in-memory rate limit | Lockout is per `identifier_hash` only, not per-IP — see residual risk §2 below (device/IP fingerprinting) |
-| Tampering | Refresh token replay/reuse, or tampering with the cookie | Rotate-on-use + reuse detection (INV-account-03, INV-account-04); cookie is HttpOnly + Secure + `SameSite=Strict`, inaccessible to JS | N/A |
+| Spoofing | Credential stuffing / brute-force login at the password stage, and TOTP/backup-code brute force at `/auth/login/mfa` (MFA stage) **[added 2026-08-26, per feature-spec Assumption C]** | `login_attempts` persistent lockout (5 failed / 15 min window), two stages: password stage keyed by `identifier_hash` (identity not yet known at check time), MFA stage keyed by `user_id` (`stage='mfa'`, checked before any code verification); plus in-memory rate limit on all `/auth/*`. Lockout-rejected attempts write no `login_attempts` row and use the same generic response body as wrong credentials | Lockout is per `identifier_hash` / per `user_id`, not per-IP — see residual risk §2 below (device/IP fingerprinting). A distributed attack can rotate target identifiers to stay under either counter |
+| Tampering | Refresh token replay/reuse, or tampering with the cookie. Token-type confusion — an `mfa_pending_token` presented where an access token is expected **[added 2026-08-26, per feature-spec Assumptions A/B]** | Rotate-on-use + reuse detection (INV-account-03, INV-account-04); cookie is HttpOnly + Secure + `SameSite=Strict`, inaccessible to JS. Token confusion mitigated by two independent layers: the `mfa_pending_token` is signed with a separate HS256 secret (`MFA_PENDING_TOKEN_SECRET`, distinct from the access token's ES256 keypair) so it fails access-token signature verification outright — a cryptographic guarantee, not a logic check — plus an explicit `purpose` claim verified as defense-in-depth on top | N/A |
 | Repudiation | N/A significant | Every login attempt (success or fail) recorded in `login_attempts` with timestamp | N/A |
 | Information disclosure | Login error message distinguishes "wrong email" from "wrong password" | Generic error message regardless of which check failed, consistent with anti-enumeration in Fitur 2B | N/A |
-| Denial of service | Refresh-endpoint flooding | Rate limit on `/auth/*` | N/A |
+| Denial of service | Refresh-endpoint flooding | Rate limit on `/auth/*` | The limiter keys on `r.RemoteAddr`; behind the reverse proxy every client shares the proxy IP, collapsing all clients into one bucket until X-Forwarded-For support lands (deferred follow-up, accepted 2026-08-26 — see task #3 techplan) |
 | Elevation of privilege | Token issued without completing the required MFA step, for a user with MFA enabled | Token issuance is ordered strictly after MFA verification in the flow (Fitur 2, steps 5–7); INV-account-07 ensures MFA state itself can't be silently half-enabled | N/A |
 
 ### 3. Forgot & Reset Password
@@ -169,6 +169,35 @@ down from this doc.
    housekeeping/cleanup job exists for this table. Accepted as a
    low-severity storage cost, not a security gap (INV-account-06
    guarantees the stale rows can never be redeemed).
+
+6. **Cookie-session CSRF relies on `SameSite=Strict` alone —
+   resolved, accepted.** **[RESOLVED — 2026-08-26]** The refresh
+   cookie (consumed implicitly by `/auth/login/mfa`,
+   `/auth/refresh`, `/auth/logout`) has no second CSRF layer
+   (custom-header check or double-submit token). Rationale: Strict
+   already blocks cross-site browser requests from carrying the
+   cookie; the sandbox topology has no untrusted same-site
+   subdomains (the main residual gap of site-scoped SameSite); and
+   the worst-case abuse of a forged same-site request is nuisance
+   (forced rotation/logout), not data exposure. Revisit trigger: if
+   untrusted same-site subdomains ever appear, or when the frontend
+   track lands — the centralized React API client is the natural,
+   near-zero-cost place to add a custom header then. Decided per
+   task #3's techplan Open Item (Anhar, 2026-08-26).
+
+7. **`login_attempts` grows unboundedly — resolved, accepted for
+   v1.** **[RESOLVED — 2026-08-26]** The table is append-only audit
+   material (successes included, by contract) with no retention job;
+   `user_id ON DELETE SET NULL` means user deletion never prunes
+   history either. Accepted as a storage cost, not a security gap:
+   lockout lookups hit targeted indexes (`identifier_hash`,
+   `user_id`+`stage`) whose cost is size-insensitive, time-range
+   audit queries ride the BRIN index, and sandbox-scale volume is
+   GBs/year at worst. If real usage ever demands housekeeping, the
+   right vehicle is a standalone hard-delete-style task (precedent:
+   notification domain's `05-hard-delete-worker`), not login-slice
+   scope. Decided per task #3's techplan Open Item (Anhar,
+   2026-08-26).
 
 ## References
 

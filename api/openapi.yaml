@@ -1,8 +1,3 @@
-# GENERATED FILE — DO NOT EDIT DIRECTLY.
-# Source of truth is api/openapi/*.yaml (split per domain).
-# Regenerate with: npm run bundle (from api/), or:
-#   redocly bundle api/openapi/index.yaml -o api/openapi.yaml --ext yaml
-#
 openapi: 3.0.3
 info:
   title: Kencleng API
@@ -213,9 +208,7 @@ paths:
                 status: 401
                 detail: Email atau password salah.
         '429':
-          description: |
-            Locked out (5 failed attempts / 15 min window) — deliberately returns the same generic detail as the 401 case above, per anti-enumeration business rule; only the status code differs.
-          $ref: '#/components/responses/TooManyRequests'
+          $ref: '#/components/responses/LockedOutGenericCredentials'
   /auth/login/mfa:
     post:
       tags:
@@ -242,7 +235,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
         '429':
-          $ref: '#/components/responses/TooManyRequests'
+          $ref: '#/components/responses/LockedOutGenericCredentials'
   /auth/refresh:
     post:
       tags:
@@ -3782,6 +3775,18 @@ components:
             title: Too Many Requests
             status: 429
             detail: Terlalu banyak percobaan gagal. Coba lagi dalam 15 menit.
+    LockedOutGenericCredentials:
+      description: |
+        Locked out (>=5 failed attempts / 15 min window) — deliberately returns the same generic title/detail as the 401 case above, per anti-enumeration business rule; only the status code differs.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://kencleng.dev/errors/too-many-requests
+            title: Invalid Credentials
+            status: 429
+            detail: Email atau password salah.
     Unauthorized:
       description: Missing, invalid, or expired credentials.
       content:

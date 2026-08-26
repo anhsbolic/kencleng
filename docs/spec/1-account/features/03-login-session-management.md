@@ -154,8 +154,8 @@ threat-model — see Assumption B):
 ## Risk tier & rationale
 
 **Tier 1**, with a **Tier 0 fenced sub-area**: JWT signing/
-verification (both the access token and `mfa_pending_token`, since
-both are signed with the same ES256 key — see Assumption A) and the
+verification (the access token's ES256 keypair and the
+`mfa_pending_token`'s separate HS256 secret — see Assumption A) and the
 refresh-token rotate-on-use/reuse-detection logic. This matches the
 Tier 0 examples in `kencleng-agentic-workflow.md` §13.2 verbatim
 ("JWT/TOTP, refresh-token reuse detection") — these specific files

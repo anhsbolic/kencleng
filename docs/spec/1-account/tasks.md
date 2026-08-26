@@ -64,6 +64,13 @@ No task in this domain lands at Tier 0 in full or Tier 3 — expected,
   (`user_roles`), can run in parallel with S1 or Group B.
 - **Task #7** (`GET /account/me`): trivial, no grouping constraint,
   fits in wherever there's capacity.
+- **Migration ownership note** (added 2026-08-26, per task #3's
+  approved techplan D1-C — see
+  `.local-agents/works/account/03-login-session-management/2-plan/techplan.md`):
+  migrations `000006`–`000009` (`login_attempts`, `mfa_totp_secrets`,
+  `mfa_backup_codes`, `user_roles`) are created by **task #3** as
+  schema-pre-settle. Tasks #6 and #8 own table *logic* only — do not
+  create these tables' migrations again.
 
 Suggested execution order given the above:
 `S1 (serial: #1→#2→#3→#4→#5)` with `#6` and `#8` run in parallel
@@ -74,14 +81,17 @@ alongside S1 once their independent tables' migrations are settled;
 
 | # | Status | Notes |
 |---|---|---|
-| 1 | not started | |
-| 2 | not started | |
-| 3 | not started | |
+| 1 | merged | Register & email verification shipped on main (`14834e5` finalize; review/patch commits precede it) |
+| 2 | merged | Google OAuth login/register shipped on main (`efc1111` → `ce61841` explore→build→review→testing) |
+| 3 | in progress | Explore logs + techplan done (`.local-agents/works/account/03-login-session-management/`); open items resolved with Anhar 2026-08-26; build not started |
 | 4 | not started | |
 | 5 | not started | |
-| 6 | not started | |
+| 6 | not started | Migrations for `mfa_totp_secrets`/`mfa_backup_codes` pre-created by task #3 — logic only |
 | 7 | not started | |
-| 8 | not started | |
+| 8 | not started | `user_roles` migration pre-created by task #3 — logic only |
+
+(Statuses updated 2026-08-26 from git history ground truth — the tracker
+had been left at all-"not started" despite tasks #1–#2 shipping.)
 
 ## References
 
