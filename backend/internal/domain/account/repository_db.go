@@ -903,5 +903,174 @@ func (r *RepositoryDB) DeleteAuthIdentitiesByIDs(ctx context.Context, tx pgx.Tx,
 	return nil
 }
 
+// UpsertPendingMFASecret stores an encrypted TOTP secret for a user whose
+// MFA is not yet enabled, using a single conflict-armed upsert guarded by
+// enabled_at IS NULL (INV-account-07 / D5). When a row already exists with
+// enabled_at set, the DO UPDATE arm's WHERE matches zero rows and inserted
+// is false WITHOUT touching the live secret — the structural 409-when-
+// active guarantee (a re-enroll can never clobber a live secret under a
+// concurrent confirm). inserted=false is a state signal, not a driver error.
+//
+// Encryption happens at the caller side (the service passes AES-GCM
+// ciphertext); the adapter only persists it — matching entity.go's
+// ciphertext-at-the-adapter doctrine. enabled_at is deliberately never
+// written here: it stays NULL until EnableMFATOTPIfPending.
+func (r *RepositoryDB) UpsertPendingMFASecret(ctx context.Context, userID uuid.UUID, secretCiphertext []byte) (bool, error) {
+	sqlStr, args, err := pgDialect.Insert("mfa_totp_secrets").
+		Rows(goqu.Record{
+			"user_id":          userID,
+			"secret_encrypted": secretCiphertext,
+			// enabled_at, created_at, updated_at default in the schema.
+		}).
+		OnConflict(goqu.DoUpdate("user_id",
+			goqu.C("secret_encrypted").Set(goqu.I("excluded.secret_encrypted"))).
+			Where(goqu.I("mfa_totp_secrets.enabled_at").IsNull())).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return false, fmt.Errorf("account: build upsert mfa_totp_secrets: %w", err)
+	}
+	tag, err := r.db.Exec(ctx, sqlStr, args...)
+	if err != nil {
+		return false, fmt.Errorf("account: upsert mfa_totp_secrets: %w", err)
+	}
+	return tag.RowsAffected() > 0, nil
+}
+
+// GetMFATOTPSecretForVerify returns the decrypted base32 TOTP secret and
+// enabled_at for a user. Decryption happens here at the storage boundary
+// (D3): the service/verifier never sees ciphertext. found=false when no row
+// exists; enabledAt is nil while MFA is not enabled.
+func (r *RepositoryDB) GetMFATOTPSecretForVerify(ctx context.Context, userID uuid.UUID) (string, *time.Time, bool, error) {
+	sqlStr, args, err := pgDialect.From("mfa_totp_secrets").
+		Select("secret_encrypted", "enabled_at").
+		Where(goqu.Ex{"user_id": userID}).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return "", nil, false, fmt.Errorf("account: build select mfa_totp_secrets: %w", err)
+	}
+	var (
+		ciphertext []byte
+		enabledAt  sql.NullTime
+	)
+	if err := r.db.QueryRow(ctx, sqlStr, args...).Scan(&ciphertext, &enabledAt); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return "", nil, false, nil
+		}
+		return "", nil, false, fmt.Errorf("account: select mfa_totp_secrets: %w", err)
+	}
+	plaintext, err := crypto.Decrypt(ciphertext, r.keys)
+	if err != nil {
+		return "", nil, false, fmt.Errorf("account: decrypt mfa_totp_secrets: %w", err)
+	}
+	var enabledAtPtr *time.Time
+	if enabledAt.Valid {
+		t := enabledAt.Time
+		enabledAtPtr = &t
+	}
+	return string(plaintext), enabledAtPtr, true, nil
+}
+
+// EnableMFATOTPIfPending sets enabled_at = now() for the user's row iff
+// enabled_at IS NULL (guarded, INV-account-07). This is the FIRST statement
+// of the confirm transaction (D4-A): the race loser matches zero rows and
+// gets ok=false. Runs inside the caller's tx.
+func (r *RepositoryDB) EnableMFATOTPIfPending(ctx context.Context, tx pgx.Tx, userID uuid.UUID) (bool, error) {
+	sqlStr, args, err := pgDialect.Update("mfa_totp_secrets").
+		Set(goqu.Record{"enabled_at": goqu.L("now()")}).
+		Where(goqu.Ex{"user_id": userID}, goqu.L("enabled_at IS NULL")).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return false, fmt.Errorf("account: build enable mfa_totp_secrets: %w", err)
+	}
+	tag, err := tx.Exec(ctx, sqlStr, args...)
+	if err != nil {
+		return false, fmt.Errorf("account: enable mfa_totp_secrets: %w", err)
+	}
+	return tag.RowsAffected() > 0, nil
+}
+
+// SetMFADisabledIfEnabled sets enabled_at = NULL iff it is currently
+// non-null. Idempotent by construction: a repeat disable (or a disable on a
+// never-enabled row) matches zero rows and returns disabled=false, which
+// callers treat as an idempotent no-op (R11). Backup-code rows are
+// deliberately left untouched (INV-account-06 implicit invalidation). Runs
+// inside the caller's tx so the disable and its audit entry commit
+// atomically.
+func (r *RepositoryDB) SetMFADisabledIfEnabled(ctx context.Context, tx pgx.Tx, userID uuid.UUID) (bool, error) {
+	sqlStr, args, err := pgDialect.Update("mfa_totp_secrets").
+		Set(goqu.Record{"enabled_at": goqu.L("NULL")}).
+		Where(goqu.Ex{"user_id": userID}, goqu.L("enabled_at IS NOT NULL")).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return false, fmt.Errorf("account: build disable mfa_totp_secrets: %w", err)
+	}
+	tag, err := tx.Exec(ctx, sqlStr, args...)
+	if err != nil {
+		return false, fmt.Errorf("account: disable mfa_totp_secrets: %w", err)
+	}
+	return tag.RowsAffected() > 0, nil
+}
+
+// InsertMFABackupCodes batch-inserts the freshly generated backup-code rows
+// inside the confirm tx. Callers pass code hashes only (never plaintext).
+// Runs inside the caller's tx so codes commit with the enable.
+func (r *RepositoryDB) InsertMFABackupCodes(ctx context.Context, tx pgx.Tx, codes []MFABackupCode) error {
+	vals := make([][]interface{}, 0, len(codes))
+	for _, c := range codes {
+		vals = append(vals, []interface{}{c.ID, c.UserID, c.CodeHash})
+	}
+	sqlStr, args, err := pgDialect.Insert("mfa_backup_codes").
+		Cols("id", "user_id", "code_hash").
+		Vals(vals...).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return fmt.Errorf("account: build insert mfa_backup_codes: %w", err)
+	}
+	if _, err := tx.Exec(ctx, sqlStr, args...); err != nil {
+		return fmt.Errorf("account: insert mfa_backup_codes: %w", err)
+	}
+	return nil
+}
+
+// RedeemMFABackupCode marks a backup code used at most once, and only while
+// the owner's MFA is enabled — BOTH INV-account-06 clauses live in this ONE
+// joined UPDATE: used_at IS NULL (single-use) AND the owner's
+// mfa_totp_secrets.enabled_at IS NOT NULL (implicit invalidation after
+// disable). The enabled-check is a DB clause here, never app-side sequencing
+// (check-then-act would race). redeemed=false (without writing) when the
+// code is unknown, already used, or the owner's MFA is disabled. Runs inside
+// the caller's tx so the used_at write is atomic with the surrounding login
+// bookkeeping.
+func (r *RepositoryDB) RedeemMFABackupCode(ctx context.Context, tx pgx.Tx, userID uuid.UUID, codeHash string) (bool, error) {
+	bc := goqu.T("mfa_backup_codes")
+	sqlStr, args, err := pgDialect.Update(bc).
+		Set(goqu.Record{"used_at": goqu.L("now()")}).
+		From("mfa_totp_secrets").
+		Where(
+			goqu.Ex{
+				"mfa_backup_codes.user_id":   userID,
+				"mfa_backup_codes.code_hash": codeHash,
+			},
+			goqu.L("mfa_backup_codes.used_at IS NULL"),
+			goqu.L("mfa_totp_secrets.user_id = mfa_backup_codes.user_id"),
+			goqu.L("mfa_totp_secrets.enabled_at IS NOT NULL"),
+		).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return false, fmt.Errorf("account: build redeem mfa_backup_codes: %w", err)
+	}
+	tag, err := tx.Exec(ctx, sqlStr, args...)
+	if err != nil {
+		return false, fmt.Errorf("account: redeem mfa_backup_codes: %w", err)
+	}
+	return tag.RowsAffected() > 0, nil
+}
+
 // Compile-time assertion that RepositoryDB implements Repository.
 var _ Repository = (*RepositoryDB)(nil)

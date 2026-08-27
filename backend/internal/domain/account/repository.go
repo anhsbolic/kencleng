@@ -223,4 +223,53 @@ type Repository interface {
 	// attaching a Google AuthIdentity on link intent). Append-only by
 	// convention; DB-level enforcement arrives with task #08.
 	InsertUserLog(ctx context.Context, tx pgx.Tx, entry *UserLog) error
+
+	// UpsertPendingMFASecret stores an encrypted TOTP secret for a user
+	// whose MFA is not yet enabled. The write is a single conflict-armed
+	// upsert guarded by enabled_at IS NULL (INV-account-07 / D5): if a row
+	// already exists with enabled_at set, the UPDATE arm matches zero rows
+	// and inserted=false is returned WITHOUT touching the live secret. This
+	// is the structural 409-when-active guarantee — a re-enroll can never
+	// clobber a live secret under a concurrent confirm. inserted=false is
+	// NOT a driver error; callers distinguish it from real failures.
+	// secretCiphertext is the AES-GCM output of platform/crypto; the domain
+	// caller passes plaintext to this adapter's caller and encryption
+	// happens at the storage boundary (entity.go doctrine).
+	UpsertPendingMFASecret(ctx context.Context, userID uuid.UUID, secretCiphertext []byte) (inserted bool, err error)
+
+	// GetMFATOTPSecretForVerify returns the decrypted base32 TOTP secret
+	// and enabled_at for a user. The adapter decrypts internally (D3): the
+	// service/verifier never sees ciphertext. Returns found=false when no
+	// row exists. enabledAt is nil when MFA is not yet enabled.
+	GetMFATOTPSecretForVerify(ctx context.Context, userID uuid.UUID) (secretBase32 string, enabledAt *time.Time, found bool, err error)
+
+	// EnableMFATOTPIfPending sets enabled_at = now() for the user's row
+	// iff enabled_at IS NULL (guarded, INV-account-07). This is the FIRST
+	// statement of the confirm transaction (D4-A): the race loser matches
+	// zero rows and gets ok=false. Takes the caller's tx so the enable and
+	// the batch backup-code insert commit or roll back together.
+	EnableMFATOTPIfPending(ctx context.Context, tx pgx.Tx, userID uuid.UUID) (ok bool, err error)
+
+	// SetMFADisabledIfEnabled sets enabled_at = NULL iff it is currently
+	// non-null. Idempotent by construction: a repeat disable (or a disable
+	// on a never-enabled row) matches zero rows and returns disabled=false,
+	// which callers treat as an idempotent no-op (R11). Takes the caller's
+	// tx so the disable and its audit entry commit atomically. Backup-code
+	// rows are deliberately left untouched (INV-account-06 implicit
+	// invalidation).
+	SetMFADisabledIfEnabled(ctx context.Context, tx pgx.Tx, userID uuid.UUID) (disabled bool, err error)
+
+	// InsertMFABackupCodes batch-inserts the freshly generated backup-code
+	// rows inside the confirm tx. Callers pass code hashes only (never
+	// plaintext); exactly backupCodeCount rows are expected. Called within
+	// the winner's tx so codes commit with the enable.
+	InsertMFABackupCodes(ctx context.Context, tx pgx.Tx, codes []MFABackupCode) error
+
+	// RedeemMFABackupCode marks a backup code used at most once, and only
+	// while the owner's MFA is enabled — BOTH INV-account-06 clauses live
+	// in this ONE statement (a joined UPDATE, see repository_db). Returns
+	// redeemed=false (without writing) when the code is unknown, already
+	// used, or the owner's enabled_at IS NULL. Takes the caller's tx so
+	// the used_at write is atomic with the surrounding login bookkeeping.
+	RedeemMFABackupCode(ctx context.Context, tx pgx.Tx, userID uuid.UUID, codeHash string) (redeemed bool, err error)
 }

@@ -113,6 +113,20 @@ func MapServiceError(w http.ResponseWriter, err error) {
 		WriteProblem(w, http.StatusUnauthorized,
 			problemTypeInvalidCredentials,
 			problemTitleInvalidCredentials, problemDetailGenericCredential)
+	// MFA lifecycle (account #06). The enroll 409 must surface a distinct
+	// problem type; the two confirm 422 classes collapse onto the shared
+	// validation shape (the handler itself emits the byte-identical per-field
+	// ValidationError for R7 — these cases are the defensive fallback for any
+	// caller that reaches MapServiceError without the handler intercepting).
+	case errors.Is(err, account.ErrMfaAlreadyEnabled):
+		WriteProblem(w, http.StatusConflict,
+			"https://kencleng.dev/errors/mfa-already-enabled",
+			"MFA Already Enabled",
+			"MFA sudah aktif. Nonaktifkan dulu sebelum mendaftar ulang.")
+	case errors.Is(err, account.ErrInvalidTOTPCode), errors.Is(err, account.ErrMfaNotPending):
+		WriteProblem(w, http.StatusUnprocessableEntity,
+			"https://kencleng.dev/problems/validation-failed",
+			"Validation Failed", "The request was invalid.")
 	default:
 		// Do NOT leak err.Error() — log it server-side, return generic.
 		log.Printf("transport: unhandled service error: %v", err)

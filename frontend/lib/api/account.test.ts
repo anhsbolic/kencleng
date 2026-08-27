@@ -6,6 +6,9 @@ import {
   login,
   loginMfa,
   logout,
+  mfaDisable,
+  mfaEnroll,
+  mfaEnrollConfirm,
   register,
   resendVerification,
   verifyEmail,
@@ -286,5 +289,122 @@ describe("logout", () => {
     server.use(http.post("/auth/logout", () => HttpResponse.json({}, { status: 500 })));
 
     await expect(logout()).rejects.toBeInstanceOf(ApiError);
+  });
+});
+
+describe("mfaEnroll", () => {
+  it("resolves with the otpauth_uri on 200 (R5)", async () => {
+    const result = await mfaEnroll();
+
+    expect(result.otpauth_uri).toContain("otpauth://totp/");
+  });
+
+  it("throws ApiError(409) when already enabled — undocumented in schema.d.ts, handled defensively anyway (R6)", async () => {
+    server.use(
+      http.post("/account/security/mfa/enroll", () =>
+        HttpResponse.json(
+          {
+            type: "https://kencleng.dev/errors/mfa-already-enabled",
+            title: "MFA Already Enabled",
+            status: 409,
+            detail: "MFA sudah aktif.",
+          },
+          { status: 409 }
+        )
+      )
+    );
+
+    await expect(mfaEnroll()).rejects.toMatchObject({ status: 409, detail: "MFA sudah aktif." });
+  });
+
+  it("throws ApiError on network failure/unexpected 5xx (R7)", async () => {
+    server.use(http.post("/account/security/mfa/enroll", () => HttpResponse.error()));
+
+    await expect(mfaEnroll()).rejects.toBeInstanceOf(ApiError);
+  });
+});
+
+describe("mfaEnrollConfirm", () => {
+  it("resolves with exactly 10 backup_codes on 200 (R9 hook-layer)", async () => {
+    const result = await mfaEnrollConfirm({ totp_code: "123456" });
+
+    expect(result.backup_codes).toHaveLength(10);
+  });
+
+  it("throws ApiError on 422 — not a discriminated validation result (R10, D8)", async () => {
+    server.use(
+      http.post("/account/security/mfa/enroll/confirm", () =>
+        HttpResponse.json(
+          {
+            type: "https://kencleng.dev/errors/validation-failed",
+            title: "Validation Failed",
+            status: 422,
+            errors: [{ field: "totp_code", message: "Invalid code" }],
+          },
+          { status: 422 }
+        )
+      )
+    );
+
+    await expect(mfaEnrollConfirm({ totp_code: "000000" })).rejects.toMatchObject({ status: 422 });
+  });
+
+  it("throws ApiError on network failure/unexpected 5xx (R11)", async () => {
+    server.use(http.post("/account/security/mfa/enroll/confirm", () => HttpResponse.error()));
+
+    await expect(mfaEnrollConfirm({ totp_code: "123456" })).rejects.toBeInstanceOf(ApiError);
+  });
+});
+
+describe("mfaDisable", () => {
+  it("resolves on 200 for the email_password branch — password in body (R15 hook-layer)", async () => {
+    await expect(mfaDisable({ password: "correct-pw" })).resolves.toMatchObject({
+      message: "MFA berhasil dinonaktifkan.",
+    });
+  });
+
+  it("resolves on 200 for the Google-only branch — no body (R18 hook-layer)", async () => {
+    await expect(mfaDisable()).resolves.toMatchObject({
+      message: "MFA berhasil dinonaktifkan.",
+    });
+  });
+
+  it("throws ApiError(401) on wrong password (R16)", async () => {
+    server.use(
+      http.post("/account/security/mfa/disable", () =>
+        HttpResponse.json(
+          {
+            type: "https://kencleng.dev/errors/unauthorized",
+            title: "Unauthorized",
+            status: 401,
+            detail: "Password salah.",
+          },
+          { status: 401 }
+        )
+      )
+    );
+
+    await expect(mfaDisable({ password: "wrong-pw" })).rejects.toMatchObject({
+      status: 401,
+      detail: "Password salah.",
+    });
+  });
+
+  it("throws ApiError(401) on missing/expired Google reauth marker (R19)", async () => {
+    server.use(
+      http.post("/account/security/mfa/disable", () =>
+        HttpResponse.json(
+          {
+            type: "https://kencleng.dev/errors/unauthorized",
+            title: "Unauthorized",
+            status: 401,
+            detail: "Access token tidak valid atau sudah kedaluwarsa.",
+          },
+          { status: 401 }
+        )
+      )
+    );
+
+    await expect(mfaDisable()).rejects.toMatchObject({ status: 401 });
   });
 });

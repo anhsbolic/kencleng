@@ -136,3 +136,18 @@ type UserLog struct {
 	ActionType string
 	CreatedAt  time.Time
 }
+
+// MFABackupCode is a single-use MFA recovery code. CodeHash holds the
+// SHA-256 hex digest of the normalized plaintext code (never the plaintext
+// itself, and never encrypted — it is already a hash, mirroring
+// AuthToken.TokenHash). UsedAt transitions NULL → timestamp at most once,
+// guarded at the UPDATE by the repository (INV-account-06). Ciphertext
+// concerns do not apply here (no plaintext column); the owning user's
+// mfa_totp_secrets.enabled_at gates functional validity, external to this
+// table — see Repository.RedeemMFABackupCode.
+type MFABackupCode struct {
+	ID        uuid.UUID
+	UserID    uuid.UUID
+	CodeHash  string
+	CreatedAt time.Time
+}

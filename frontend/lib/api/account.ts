@@ -330,3 +330,73 @@ export async function unlinkGoogle(input: UnlinkGoogleRequest): Promise<UnlinkGo
 
   throw new ApiError(res.status, await readProblemDetail(res));
 }
+
+export type MfaEnrollResponse = components["schemas"]["MfaEnrollResponse"];
+export type MfaEnrollConfirmRequest =
+  components["schemas"]["MfaEnrollConfirmRequest"];
+export type MfaEnrollConfirmResponse =
+  components["schemas"]["MfaEnrollConfirmResponse"];
+export type MfaDisableRequest = components["schemas"]["MfaDisableRequest"];
+
+/**
+ * `POST /account/security/mfa/enroll` — no request body. Resolves on
+ * `200` with a fresh `otpauth_uri` (rendered as a QR code by the
+ * caller). `409` (already enabled — undocumented in `schema.d.ts`
+ * despite the feature spec requiring it, techplan account/06-mfa-totp
+ * §8 finding) and network/unexpected `5xx` both throw `ApiError`, same
+ * as every other function in this file — no discriminated-result shape
+ * needed, there's no field-level branch to preserve here.
+ */
+export async function mfaEnroll(): Promise<MfaEnrollResponse> {
+  const res = await postAccountAction("/account/security/mfa/enroll");
+
+  if (res.status === 200) {
+    return res.json();
+  }
+
+  throw new ApiError(res.status, await readProblemDetail(res));
+}
+
+/**
+ * `POST /account/security/mfa/enroll/confirm` — resolves on `200` with
+ * exactly 10 one-time `backup_codes`. `422` (invalid `totp_code`, or no
+ * pending secret) throws `ApiError` rather than a discriminated
+ * validation result (techplan D8) — the feature spec is explicit this
+ * is "treated the same as an invalid code, no distinguishing response
+ * needed", matching `resetPassword()`'s precedent over `register()`'s/
+ * `setPassword()`'s shape. Network/unexpected `5xx` also throw.
+ */
+export async function mfaEnrollConfirm(
+  input: MfaEnrollConfirmRequest
+): Promise<MfaEnrollConfirmResponse> {
+  const res = await postAccountAction("/account/security/mfa/enroll/confirm", input);
+
+  if (res.status === 200) {
+    return res.json();
+  }
+
+  throw new ApiError(res.status, await readProblemDetail(res));
+}
+
+/**
+ * `POST /account/security/mfa/disable` — `email_password` users pass
+ * `{ password }`; Google-only users call this with no argument at all,
+ * sending no body (the re-auth is a short-lived server-side marker set
+ * by a prior `GET /auth/google/redirect?intent=reauth`, not sent by
+ * this call — techplan D6, Option B: this function does not pre-check
+ * the marker, it just attempts the call and lets the caller react to a
+ * `401`). `401` (wrong password, or missing/expired marker —
+ * undifferentiated in `schema.d.ts`'s `Unauthorized` response, same
+ * generic detail either way) throws `ApiError`.
+ */
+export async function mfaDisable(
+  input?: MfaDisableRequest
+): Promise<{ message?: string }> {
+  const res = await postAccountAction("/account/security/mfa/disable", input);
+
+  if (res.ok) {
+    return res.json();
+  }
+
+  throw new ApiError(res.status, await readProblemDetail(res));
+}

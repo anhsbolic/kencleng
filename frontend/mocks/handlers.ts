@@ -5,7 +5,12 @@
 // scaffold-frontend.md's durable section) — not speculatively ahead
 // of demonstrated need.
 import { HttpResponse, http } from "msw";
-import type { LoginResponse, User } from "@/lib/api/account";
+import type {
+  LoginResponse,
+  MfaEnrollConfirmResponse,
+  MfaEnrollResponse,
+  User,
+} from "@/lib/api/account";
 import type { CampaignListResponse } from "@/lib/api/campaign";
 import type { UnreadCountResponse } from "@/lib/api/notification";
 
@@ -149,6 +154,34 @@ const mockSetPasswordAdded = {
 };
 const mockUnlinkGoogleOk = { message: "Akun Google berhasil dilepas." };
 
+// Default happy-path fixtures for account/06-mfa-totp. `mockMfaDisableOk`'s
+// message is the backend's own confirmed text (`schema.d.ts`'s own
+// `@example` for this response) — not invented. `mockMfaEnrollResponse`'s
+// URI is a well-formed but fake otpauth:// URI (no real secret needs to be
+// cryptographically valid for a mock) — its `secret` param is what
+// `parseOtpauthSecret()`'s tests/consumers exercise. Individual tests
+// override the 409/422/401 branches via `server.use(...)`, same per-test
+// inline pattern already used elsewhere in this file.
+const mockMfaEnrollResponse: MfaEnrollResponse = {
+  otpauth_uri:
+    "otpauth://totp/Kencleng:donatur%40example.com?secret=JBSWY3DPEHPK3PXP&issuer=Kencleng",
+};
+const mockMfaEnrollConfirmResponse: MfaEnrollConfirmResponse = {
+  backup_codes: [
+    "1a2b3c4d",
+    "5e6f7g8h",
+    "9i0j1k2l",
+    "3m4n5o6p",
+    "7q8r9s0t",
+    "1u2v3w4x",
+    "5y6z7a8b",
+    "9c0d1e2f",
+    "3g4h5i6j",
+    "7k8l9m0n",
+  ],
+};
+const mockMfaDisableOk = { message: "MFA berhasil dinonaktifkan." };
+
 // Default happy-path fixture for account/03-login-session-management's
 // two login-completing endpoints (`/auth/login`'s "ok" branch and
 // `/auth/login/mfa`, which only ever returns this same shape). Reuses
@@ -200,5 +233,14 @@ export const handlers = [
   ),
   http.post("/account/security/google/unlink", () =>
     HttpResponse.json(mockUnlinkGoogleOk, { status: 200 })
+  ),
+  http.post("/account/security/mfa/enroll", () =>
+    HttpResponse.json(mockMfaEnrollResponse, { status: 200 })
+  ),
+  http.post("/account/security/mfa/enroll/confirm", () =>
+    HttpResponse.json(mockMfaEnrollConfirmResponse, { status: 200 })
+  ),
+  http.post("/account/security/mfa/disable", () =>
+    HttpResponse.json(mockMfaDisableOk, { status: 200 })
   ),
 ];

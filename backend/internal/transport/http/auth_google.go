@@ -121,6 +121,26 @@ func CheckReauthMarker(userID uuid.UUID) bool {
 	return true
 }
 
+// ConsumeReauthMarker atomically checks AND invalidates the reauth marker
+// for userID in one step (LoadAndDelete): it returns whether a currently-
+// valid marker was present, and in all cases removes it so it can never be
+// replayed for a second sensitive action. This fulfills feature-06's
+// consume-on-use clause for the Google-only MFA-disable path: a second
+// disable call finds the marker gone and is rejected. Existing
+// CheckReauthMarker (read-only + lazy-expiry sweep) and the background
+// sweeper are left untouched.
+func ConsumeReauthMarker(userID uuid.UUID) bool {
+	v, ok := reauthMarkers.LoadAndDelete(userID)
+	if !ok {
+		return false
+	}
+	expiry := v.(time.Time)
+	if time.Now().After(expiry) {
+		return false // expired — consumed and invalid
+	}
+	return true
+}
+
 func init() {
 	// Periodic sweep bounding memory from abandoned markers (same shape as
 	// middleware.go's rate-limiter sweeper). A package-level goroutine is

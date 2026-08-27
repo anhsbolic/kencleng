@@ -117,8 +117,9 @@ func run() error {
 		os.Getenv("GOOGLE_REDIRECT_URI"),
 	)
 	// Login/session token closures over the Tier 0 primitives
-	// (platform/auth/token.go). The MFA verifier stays nil → fail-closed
-	// stub until account task #6 supplies the real TOTP/backup-code logic.
+	// (platform/auth/token.go). The MFA verifier is now the real implementation
+	// (account task #06) — it replaced the fail-closed stub that shipped with
+	// the login slice.
 	mintAccess := func(userID uuid.UUID, now time.Time) (string, error) {
 		return auth.MintAccessToken(authKeys.Private, userID, now)
 	}
@@ -128,9 +129,10 @@ func run() error {
 	verifyPending := func(token string, now time.Time) (uuid.UUID, error) {
 		return auth.VerifyMFAPending(mfaPendingSecret, token, now)
 	}
+	mfaVerifier := account.NewMfaVerifier(account.NewRepositoryDB(pool, keys))
 	accountSvc := account.NewService(account.NewRepositoryDB(pool, keys), pool, breachClient, emailSender, keys,
 		googleClient, authKeys, os.Getenv("FRONTEND_URL"),
-		nil, nil, nil, mintAccess, mintMFAPending, verifyPending)
+		mfaVerifier, nil, nil, mintAccess, mintMFAPending, verifyPending)
 
 	// 7. Rate-limit configuration (fail fast if unset — Open Item #3).
 	rps, err := strconv.ParseFloat(os.Getenv("AUTH_RATE_RPS"), 64)
@@ -184,6 +186,10 @@ func run() error {
 	accountMux := http.NewServeMux()
 	accountMux.HandleFunc("POST /account/security/set-password", transporthttp.SetPasswordHandler(accountSvc))
 	accountMux.HandleFunc("POST /account/security/google/unlink", transporthttp.UnlinkGoogleHandler(accountSvc))
+	// MFA lifecycle (task #06).
+	accountMux.HandleFunc("POST /account/security/mfa/enroll", transporthttp.MfaEnrollHandler(accountSvc))
+	accountMux.HandleFunc("POST /account/security/mfa/enroll/confirm", transporthttp.MfaEnrollConfirmHandler(accountSvc))
+	accountMux.HandleFunc("POST /account/security/mfa/disable", transporthttp.MfaDisableHandler(accountSvc))
 	mux.Handle("/account/security/", transporthttp.RateLimit(rps, burst)(
 		transporthttp.RequireSession(googleVerifyToken)(accountMux)))
 

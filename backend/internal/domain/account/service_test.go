@@ -85,6 +85,30 @@ type fakeRepo struct {
 	// cleared after insert). This makes the fake's dedup survive the
 	// plaintext-clearing the real adapter performs.
 	identityKeys map[string]bool
+
+	// ---- MFA slice (task #06) ----
+	// mfaSecrets maps userID → the base32 secret as returned by
+	// GetMFATOTPSecretForVerify. Tests seed this directly with a KNOWN
+	// base32 value so they can generate matching TOTP codes (the real
+	// adapter decrypts at the boundary; the fake stores whatever
+	// UpsertPendingMFASecret got, opaque, and get/seed override it with a
+	// known plaintext for test determinism).
+	mfaSecrets map[uuid.UUID]string
+	// mfaEnabledAt maps userID → enabled_at (nil = pending/disabled).
+	mfaEnabledAt map[uuid.UUID]*time.Time
+	// mfaCodes maps code_hash → row (for RedeemMFABackupCode).
+	mfaCodes map[string]*MFABackupCode
+	// redeemedBackup tracks which code hashes have been single-use
+	// redeemed (the entity has no UsedAt — redemption is a write concern).
+	redeemedBackup map[string]bool
+
+	// Recording for assertions.
+	upsertedMFASecrets map[uuid.UUID][]byte
+	insertedMFACodes   []MFABackupCode
+	redeemedCodeHashes []string
+
+	// view is the LoginUserView GetLoginUserView returns (seeded by tests).
+	view *LoginUserView
 }
 
 type setVerifiedCall struct {
@@ -106,11 +130,16 @@ type updateCredentialCall struct {
 
 func newFakeRepo() *fakeRepo {
 	return &fakeRepo{
-		identities:   make(map[string]*AuthIdentity),
-		tokens:       make(map[string]*AuthToken),
-		redeemed:     make(map[string]bool),
-		identityKeys: make(map[string]bool),
-		redeemMode:   "atomic",
+		identities:         make(map[string]*AuthIdentity),
+		tokens:             make(map[string]*AuthToken),
+		redeemed:           make(map[string]bool),
+		identityKeys:       make(map[string]bool),
+		mfaSecrets:         make(map[uuid.UUID]string),
+		mfaEnabledAt:       make(map[uuid.UUID]*time.Time),
+		mfaCodes:           make(map[string]*MFABackupCode),
+		redeemedBackup:     make(map[string]bool),
+		redeemMode:         "atomic",
+		upsertedMFASecrets: make(map[uuid.UUID][]byte),
 	}
 }
 
@@ -318,7 +347,27 @@ func (f *fakeRepo) RevokeAllRefreshTokensForUser(_ context.Context, _ pgx.Tx, us
 }
 
 func (f *fakeRepo) GetLoginUserView(_ context.Context, _ uuid.UUID) (*LoginUserView, error) {
-	return nil, nil
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.view == nil {
+		return nil, nil
+	}
+	cp := *f.view
+	return &cp, nil
+}
+
+// seedView installs a login view so GetLoginUserView returns a profile
+// (MfaEnroll reads the decrypted primary_email from it for the otpauth
+// label, D11).
+func (f *fakeRepo) seedView(email string) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.view = &LoginUserView{
+		ID:            uuid.New(),
+		Email:         email,
+		AuthProviders: []string{},
+		Roles:         []string{},
+	}
 }
 
 func (f *fakeRepo) FindIdentifierHashByUserAndProvider(_ context.Context, _ uuid.UUID, _ string) (string, bool, error) {
@@ -384,6 +433,149 @@ func (f *fakeRepo) DeleteAuthIdentitiesByIDs(_ context.Context, _ pgx.Tx, ids []
 	return nil
 }
 
+// ---- MFA slice methods (task #06) ----
+
+// UpsertPendingMFASecret simulates the conflict-armed upsert: stores the
+// (opaque) secret as pending when the user is not enabled, else returns
+// inserted=false — mirroring the D5 guard where a live secret is never
+// overwritten.
+func (f *fakeRepo) UpsertPendingMFASecret(_ context.Context, userID uuid.UUID, secretCiphertext []byte) (bool, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.mfaEnabledAt[userID] != nil {
+		return false, nil // enabled ⇒ blocked (409 signal)
+	}
+	f.mfaSecrets[userID] = string(secretCiphertext)
+	f.mfaEnabledAt[userID] = nil // pending
+	f.upsertedMFASecrets[userID] = secretCiphertext
+	return true, nil
+}
+
+// GetMFATOTPSecretForVerify returns the stored secret and enabled state.
+// Tests seed a KNOWN base32 into mfaSecrets so they can compute a matching
+// TOTP code; UpsertPendingMFASecret stores the ciphertext opaquely, so
+// seedAfterEnroll overrides it with known plaintext for determinism.
+func (f *fakeRepo) GetMFATOTPSecretForVerify(_ context.Context, userID uuid.UUID) (string, *time.Time, bool, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	secret, ok := f.mfaSecrets[userID]
+	if !ok {
+		return "", nil, false, nil
+	}
+	var enabled *time.Time
+	if f.mfaEnabledAt[userID] != nil {
+		t := *f.mfaEnabledAt[userID]
+		enabled = &t
+	}
+	return secret, enabled, true, nil
+}
+
+// EnableMFATOTPIfPending flips pending → enabled iff currently pending
+// (the guarded-first arm inside the confirm tx); returns false when the
+// user has no secret or is already enabled (race loser).
+func (f *fakeRepo) EnableMFATOTPIfPending(_ context.Context, _ pgx.Tx, userID uuid.UUID) (bool, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if _, ok := f.mfaSecrets[userID]; !ok {
+		return false, nil
+	}
+	if f.mfaEnabledAt[userID] != nil {
+		return false, nil
+	}
+	now := time.Now()
+	f.mfaEnabledAt[userID] = &now
+	return true, nil
+}
+
+// SetMFADisabledIfEnabled flips enabled → disabled iff currently enabled;
+// returns false on an idempotent no-op (not-enrolled or already disabled).
+func (f *fakeRepo) SetMFADisabledIfEnabled(_ context.Context, _ pgx.Tx, userID uuid.UUID) (bool, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.mfaEnabledAt[userID] == nil {
+		return false, nil
+	}
+	f.mfaEnabledAt[userID] = nil
+	return true, nil
+}
+
+// InsertMFABackupCodes records and stores the batch by hash.
+func (f *fakeRepo) InsertMFABackupCodes(_ context.Context, _ pgx.Tx, codes []MFABackupCode) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	for i := range codes {
+		c := codes[i]
+		f.mfaCodes[c.CodeHash] = &c
+		f.insertedMFACodes = append(f.insertedMFACodes, c)
+	}
+	return nil
+}
+
+// RedeemMFABackupCode simulates the joined guarded UPDATE: redeem succeeds
+// only when the code exists, is unused, belongs to the user, AND the
+// user's MFA is enabled (INV-account-06 both-clauses-in-one).
+func (f *fakeRepo) RedeemMFABackupCode(_ context.Context, _ pgx.Tx, userID uuid.UUID, codeHash string) (bool, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.mfaEnabledAt[userID] == nil {
+		return false, nil // disabled ⇒ implicit invalidation
+	}
+	c, ok := f.mfaCodes[codeHash]
+	if !ok || c.UserID != userID || f.redeemedBackup[codeHash] {
+		return false, nil
+	}
+	f.redeemedBackup[codeHash] = true
+	f.redeemedCodeHashes = append(f.redeemedCodeHashes, codeHash)
+	return true, nil
+}
+
+// seedMFAEnrollment installs a pending enrollment (secret present, enabled
+// nil). Used by confirm-path tests to control the exact base32 secret so a
+// deterministic TOTP code can be computed.
+func (f *fakeRepo) seedMFAEnrollment(userID uuid.UUID, base32Secret string) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.mfaSecrets[userID] = base32Secret
+	f.mfaEnabledAt[userID] = nil
+}
+
+// seedMFADisabled installs a disabled/absent enrollment (no secret row).
+func (f *fakeRepo) seedMFADisabled(userID uuid.UUID) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	delete(f.mfaSecrets, userID)
+	delete(f.mfaEnabledAt, userID)
+	// Leave any existing backup codes present-but-unusable (they only
+	// matter through the enabled gate), mirroring real implicit
+	// invalidation that never hard-deletes codes.
+}
+
+// seedMFAEnabled installs an enabled enrollment.
+func (f *fakeRepo) seedMFAEnabled(userID uuid.UUID, base32Secret string) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	now := time.Now()
+	f.mfaSecrets[userID] = base32Secret
+	f.mfaEnabledAt[userID] = &now
+}
+
+// seedMFABackupCode installs an unused backup-code row for the user. The
+// caller passes already-normalized plaintext (normalizeBackupCode lives in
+// mfa.go, task #03 — kept out of this fake so the fake stays independent
+// of the service helpers); sha256Hex of that normalized value is the
+// stored hash, matching what the verifier derives.
+func (f *fakeRepo) seedMFABackupCode(userID uuid.UUID, normalizedPlaintext string) string {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	hash := sha256Hex(normalizedPlaintext)
+	f.mfaCodes[hash] = &MFABackupCode{
+		ID:       uuid.New(),
+		UserID:   userID,
+		CodeHash: hash,
+	}
+	return hash
+}
+
 // seedIdentity stores an identity under both its plaintext-keyed dedup
 // map and its hash-keyed lookup map so FindAuthIdentityByIdentifierHash
 // can find it.
@@ -404,6 +596,23 @@ func (f *fakeRepo) seedIdentity(providerType, identifier string, hash string, ve
 	}
 	f.identities[providerType+"|"+identifier] = ident
 	f.identities[f.idKey(providerType, hash)] = ident
+	return ident
+}
+
+// seedEPIdentityForUser installs a single email_password identity for a
+// specific user_id (one map entry, so FindAuthIdentitiesByUser returns it
+// exactly once). Used by MfaDisable's provider detection, which looks
+// identities up by user_id.
+func (f *fakeRepo) seedEPIdentityForUser(userID uuid.UUID, credSecret *string) *AuthIdentity {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	ident := &AuthIdentity{
+		ID:               uuid.New(),
+		UserID:           userID,
+		ProviderType:     providerEmailPassword,
+		CredentialSecret: credSecret,
+	}
+	f.identities["by-user|ep|"+userID.String()] = ident
 	return ident
 }
 

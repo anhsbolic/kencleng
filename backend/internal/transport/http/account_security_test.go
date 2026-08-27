@@ -30,6 +30,19 @@ type stubSecurityService struct {
 	setPasswordCalled bool
 	unlinkErr         error
 	unlinkCalled      bool
+
+	enrollURI      string
+	enrollErr      error
+	enrollCalled   bool
+	confirmCodes   []string
+	confirmErr     error
+	confirmCalled  bool
+	disableErr     error
+	disableCalled  bool
+	reauthRequired bool
+	reauthResult   bool
+	reauthErr      error
+	reauthCalled   bool
 }
 
 func (s *stubSecurityService) SetPassword(_ context.Context, _ uuid.UUID, _, _, _ string) (bool, error) {
@@ -40,6 +53,29 @@ func (s *stubSecurityService) SetPassword(_ context.Context, _ uuid.UUID, _, _, 
 func (s *stubSecurityService) UnlinkGoogle(_ context.Context, _ uuid.UUID, _ string) error {
 	s.unlinkCalled = true
 	return s.unlinkErr
+}
+
+func (s *stubSecurityService) MfaEnroll(_ context.Context, _ uuid.UUID) (string, error) {
+	s.enrollCalled = true
+	return s.enrollURI, s.enrollErr
+}
+
+func (s *stubSecurityService) MfaEnrollConfirm(_ context.Context, _ uuid.UUID, _ string) ([]string, error) {
+	s.confirmCalled = true
+	return s.confirmCodes, s.confirmErr
+}
+
+func (s *stubSecurityService) MfaDisable(_ context.Context, _ uuid.UUID, _ string) error {
+	s.disableCalled = true
+	return s.disableErr
+}
+
+func (s *stubSecurityService) MfaDisableReauthRequired(_ context.Context, _ uuid.UUID) (bool, error) {
+	s.reauthCalled = true
+	if s.reauthErr != nil {
+		return false, s.reauthErr
+	}
+	return s.reauthRequired, nil
 }
 
 // ---- R15: session enforcement ---------------------------------------

@@ -1,4 +1,4 @@
-read docs inside /home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/exploration before doing exploration 
+read docs inside /home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/1-exploration before doing exploration 
 
 now you are exploring a task for feature 06-mfa-totp, read /home/anhar-solehudin/kencleng-workspace/kencleng/docs/spec/README.md then read /home/anhar-solehudin/kencleng-workspace/kencleng/docs/spec/domains/account/features/06-mfa-totp.md.
 

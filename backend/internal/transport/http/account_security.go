@@ -3,9 +3,12 @@ package http
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/google/uuid"
+
+	"github.com/anhsbolic/kencleng/backend/internal/domain/account"
 )
 
 // sessionUserIDKey is the context key under which RequireSession stores
@@ -56,14 +59,17 @@ func RequireSession(verifier func(string) (uuid.UUID, error)) func(http.Handler)
 	}
 }
 
-// securityService is the subset of *account.Service the two security
-// handlers depend on. *account.Service satisfies it; tests inject a stub
-// so the transport contract (status codes, problem types) is exercisable
-// without wiring the full domain — same seam philosophy as
-// googleOAuthService.
+// securityService is the subset of *account.Service the security handlers
+// depend on. *account.Service satisfies it; tests inject a stub so the
+// transport contract (status codes, problem types) is exercisable without
+// wiring the full domain — same seam philosophy as googleOAuthService.
 type securityService interface {
 	SetPassword(ctx context.Context, userID uuid.UUID, email, currentPassword, newPassword string) (bool, error)
 	UnlinkGoogle(ctx context.Context, userID uuid.UUID, password string) error
+	MfaEnroll(ctx context.Context, userID uuid.UUID) (string, error)
+	MfaEnrollConfirm(ctx context.Context, userID uuid.UUID, totpCode string) ([]string, error)
+	MfaDisable(ctx context.Context, userID uuid.UUID, password string) error
+	MfaDisableReauthRequired(ctx context.Context, userID uuid.UUID) (bool, error)
 }
 
 type setPasswordRequest struct {
@@ -188,5 +194,142 @@ func UnlinkGoogleHandler(svc securityService) http.HandlerFunc {
 		_ = json.NewEncoder(w).Encode(map[string]string{
 			"message": "Akun Google berhasil dilepas.",
 		})
+	}
+}
+
+// MfaEnrollHandler handles POST /account/security/mfa/enroll. Returns 200
+// with the otpauth:// URI on success, 409 (ErrMfaAlreadyEnabled) when MFA is
+// already active. The URI embeds the TOTP secret and is never logged.
+func MfaEnrollHandler(svc securityService) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		userID, ok := UserIDFromContext(r.Context())
+		if !ok {
+			WriteProblem(w, http.StatusUnauthorized,
+				"https://kencleng.dev/problems/unauthenticated",
+				"Authentication Required", "Sign in before continuing.")
+			return
+		}
+
+		uri, err := svc.MfaEnroll(r.Context(), userID)
+		if err != nil {
+			MapServiceError(w, err) // ErrMfaAlreadyEnabled → 409
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_ = json.NewEncoder(w).Encode(map[string]string{"otpauth_uri": uri})
+	}
+}
+
+// mfaEnrollConfirmRequest mirrors openapi MfaEnrollConfirmRequest.
+type mfaEnrollConfirmRequest struct {
+	TOTPCode string `json:"totp_code"`
+}
+
+// MfaEnrollConfirmHandler handles POST /account/security/mfa/enroll/confirm.
+// Returns 200 with the once-shown backup codes, or 422 with an
+// indistinguishable per-field ValidationError for both "wrong code" and "no
+// pending enrollment" (R7 — no enumeration signal on a self-targeting
+// endpoint).
+func MfaEnrollConfirmHandler(svc securityService) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		userID, ok := UserIDFromContext(r.Context())
+		if !ok {
+			WriteProblem(w, http.StatusUnauthorized,
+				"https://kencleng.dev/problems/unauthenticated",
+				"Authentication Required", "Sign in before continuing.")
+			return
+		}
+
+		var req mfaEnrollConfirmRequest
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+			write400InvalidJSON(w)
+			return
+		}
+		if req.TOTPCode == "" {
+			WriteValidationError(w, []fieldError{{Field: "totp_code", Message: "required"}})
+			return
+		}
+
+		codes, err := svc.MfaEnrollConfirm(r.Context(), userID, req.TOTPCode)
+		if err != nil {
+			// R7: byte-identical 422 for wrong-code and no-pending.
+			if errors.Is(err, account.ErrInvalidTOTPCode) || errors.Is(err, account.ErrMfaNotPending) {
+				WriteValidationError(w, []fieldError{{
+					Field:   "totp_code",
+					Message: "TOTP code salah, atau tidak ada sesi pendaftaran aktif.",
+				}})
+				return
+			}
+			MapServiceError(w, err)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_ = json.NewEncoder(w).Encode(map[string][]string{"backup_codes": codes})
+	}
+}
+
+// mfaDisableRequest mirrors openapi MfaDisableRequest (optional password).
+type mfaDisableRequest struct {
+	Password string `json:"password"`
+}
+
+// MfaDisableHandler handles POST /account/security/mfa/disable.
+//
+// Re-authentication, server-side (R14):
+//   - email_password caller: password is required (422 if absent; the service
+//     verifies it, wrong → 401).
+//   - Google-only caller: a currently-valid reauth marker must be present; the
+//     handler atomically CONSUMES it (consume-on-use — a second call finds it
+//     gone and gets 401). Any submitted password is ignored for Google-only
+//     (R14: a password does not bypass the marker requirement).
+//
+// The marker never crosses into the domain service (D6).
+func MfaDisableHandler(svc securityService) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		userID, ok := UserIDFromContext(r.Context())
+		if !ok {
+			WriteProblem(w, http.StatusUnauthorized,
+				"https://kencleng.dev/problems/unauthenticated",
+				"Authentication Required", "Sign in before continuing.")
+			return
+		}
+
+		// Tolerant decode: an empty/absent body leaves password "".
+		var req mfaDisableRequest
+		if r.Body != nil {
+			_ = json.NewDecoder(r.Body).Decode(&req)
+		}
+
+		googleOnly, err := svc.MfaDisableReauthRequired(r.Context(), userID)
+		if err != nil {
+			MapServiceError(w, err)
+			return
+		}
+		if googleOnly {
+			if !ConsumeReauthMarker(userID) {
+				WriteProblem(w, http.StatusUnauthorized,
+					"https://kencleng.dev/errors/unauthorized",
+					"Unauthorized",
+					"Perlu autentikasi ulang melalui Google sebelum menonaktifkan MFA.")
+				return
+			}
+			req.Password = "" // ignore any submitted password (R14)
+		} else if req.Password == "" {
+			WriteValidationError(w, []fieldError{{Field: "password", Message: "required"}})
+			return
+		}
+
+		if err := svc.MfaDisable(r.Context(), userID, req.Password); err != nil {
+			MapServiceError(w, err) // ErrInvalidCredentials → 401, ErrValidation → 422
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_ = json.NewEncoder(w).Encode(map[string]string{"message": "MFA berhasil dinonaktifkan."})
 	}
 }

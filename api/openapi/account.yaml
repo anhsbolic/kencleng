@@ -482,7 +482,11 @@ paths:
     post:
       tags: [account]
       summary: Start TOTP MFA enrollment
-      description: Generates a new TOTP secret (not yet enabled until confirmed).
+      description: >
+        Generates a new TOTP secret (not yet enabled until confirmed).
+        Rejected with 409 if MFA is already enabled — re-enrollment must
+        go through disable → enable, never a stray re-enroll over a live
+        secret.
       responses:
         "200":
           description: Secret generated.
@@ -490,6 +494,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/MfaEnrollResponse"
+        "409":
+          description: MFA is already enabled; re-enrollment rejected.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+              example:
+                type: "https://kencleng.dev/errors/mfa-already-enabled"
+                title: "MFA Already Enabled"
+                status: 409
+                detail: "MFA sudah aktif. Nonaktifkan dulu sebelum mendaftar ulang."
 
   /account/security/mfa/enroll/confirm:
     post:
@@ -543,6 +558,9 @@ paths:
         "401":
           description: Re-authentication failed or missing.
           $ref: "./common.yaml#/components/responses/Unauthorized"
+        "422":
+          description: Missing `password` for an `email_password` caller.
+          $ref: "./common.yaml#/components/responses/ValidationError"
 
   # =========================================================================
   # Role assignment (Fitur 5) — Admin only
