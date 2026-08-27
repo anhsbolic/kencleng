@@ -434,7 +434,11 @@ func (s *Service) VerifyEmail(ctx context.Context, token string) error {
 		// purpose check. A password_reset token presented here must NOT
 		// verify an email — returning an error rolls the redeem back via
 		// the deferred Rollback, so the token is not consumed.
-		if purpose != purposeEmailVerify {
+		// Both email_verification (registration) and
+		// email_verification_link (set-password Branch 1) are valid
+		// here; the link purpose additionally triggers an audit entry
+		// after SetUserVerified (R14).
+		if purpose != purposeEmailVerify && purpose != purposeEmailVerifyLink {
 			return ErrTokenNotFound
 		}
 		// R8: valid token redeemed. Set the user's email_password
@@ -443,6 +447,23 @@ func (s *Service) VerifyEmail(ctx context.Context, token string) error {
 		// Rollback undoes the redeem (token not burned, user can retry).
 		if err := s.repo.SetUserVerified(ctx, tx, userID, providerEmailPassword, time.Now()); err != nil {
 			return fmt.Errorf("account: set verified: %w", err)
+		}
+		// R14: when the redeemed token came from the set-password
+		// Branch-1 flow (purpose=email_verification_link), write the
+		// audit entry in the SAME transaction — the identity is now
+		// verified, which is the moment the spec says to audit ("on
+		// successful verification, not at initial creation").
+		// Registration-purpose redemptions write no such row.
+		if purpose == purposeEmailVerifyLink {
+			entry := &UserLog{
+				ID:         uuid.New(),
+				UserID:     userID,
+				ActionType: actionAccountLinking,
+				CreatedAt:  time.Now(),
+			}
+			if err := s.repo.InsertUserLog(ctx, tx, entry); err != nil {
+				return fmt.Errorf("account: insert link audit log: %w", err)
+			}
 		}
 		if err := tx.Commit(ctx); err != nil {
 			return fmt.Errorf("account: commit verify: %w", err)

@@ -1,12 +1,15 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { Banner } from "@/components/ui/banner";
 import { Spinner } from "@/components/ui/spinner";
 import { ApiError } from "@/lib/api/client";
+import { accountKeys } from "@/lib/hooks/use-account-me";
 import { useVerifyEmail } from "@/lib/hooks/use-verify-email";
+import { useAuthStore } from "@/lib/stores/auth-store";
 import { ResendVerificationControl } from "./resend-verification-control";
 
 // TBD — Open Item #1 on the originating techplan: no worked example
@@ -40,6 +43,13 @@ export function VerifyEmailStatus() {
   const verifyEmail = useVerifyEmail();
   const firedRef = useRef(false);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
+  const queryClient = useQueryClient();
+  // techplan account/05-account-linking, R19/D6 — an already-
+  // authenticated caller mid-linking-flow (Branch 1's step 2) needs a
+  // different terminal CTA than a logged-out registrant; both share
+  // this same component/route, per the spec's "reuse unchanged"
+  // framing at the wire-contract level.
+  const accessToken = useAuthStore((state) => state.accessToken);
 
   useEffect(() => {
     if (!token || firedRef.current) return;
@@ -47,6 +57,16 @@ export function VerifyEmailStatus() {
     verifyEmail.mutate({ token });
     // eslint-disable-next-line react-hooks/exhaustive-deps -- fire exactly once per mount/token, not on every verifyEmail identity change (R12)
   }, [token]);
+
+  // R19 — invalidate regardless of auth state: harmless no-op for the
+  // logged-out registration caller (nothing cached yet), required for
+  // an authenticated caller so /dashboard/security reflects the
+  // just-verified identity without a stale cache.
+  useEffect(() => {
+    if (verifyEmail.isSuccess) {
+      queryClient.invalidateQueries({ queryKey: accountKeys.me() });
+    }
+  }, [verifyEmail.isSuccess, queryClient]);
 
   const outcome: Outcome = !token
     ? { kind: "invalid" } // R11 — a missing token is treated identically to 404, no separate message
@@ -86,8 +106,11 @@ export function VerifyEmailStatus() {
           <Banner variant="success">
             {outcome.message ?? "Email berhasil diverifikasi."}
           </Banner>
-          <Link href="/login" className="font-semibold text-primary-700">
-            Masuk sekarang
+          <Link
+            href={accessToken ? "/dashboard/security" : "/login"}
+            className="font-semibold text-primary-700"
+          >
+            {accessToken ? "Kembali ke Keamanan" : "Masuk sekarang"}
           </Link>
         </>
       )}

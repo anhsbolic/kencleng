@@ -62,6 +62,11 @@ type fakeRepo struct {
 	revokeAllForUserErr   error
 	revokeAllForUserCalls []uuid.UUID
 
+	// Account-linking slice hooks + recordings (task #05).
+	findIdentitiesByUserErr   error
+	findIdentitiesByUserCalls int
+	deletedIdentityIDs        []uuid.UUID
+
 	// redeemMode controls RedeemToken behavior:
 	//   "atomic" (default) — first call for a given hash wins (CAS),
 	//                         subsequent calls return false (single-use,
@@ -318,6 +323,65 @@ func (f *fakeRepo) GetLoginUserView(_ context.Context, _ uuid.UUID) (*LoginUserV
 
 func (f *fakeRepo) FindIdentifierHashByUserAndProvider(_ context.Context, _ uuid.UUID, _ string) (string, bool, error) {
 	return "", false, nil
+}
+
+// FindAuthIdentitiesByUser returns all seeded identities for userID from
+// the fake's in-memory map (keyed by provider|identifier). The FOR UPDATE
+// variant is a no-op lock-wise here — the fake's mu.Lock already serializes
+// callers, which is sufficient for unit-level coverage; real concurrency is
+// proven by the integration race suite (task-06).
+func (f *fakeRepo) FindAuthIdentitiesByUser(_ context.Context, userID uuid.UUID) ([]AuthIdentity, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.findIdentitiesByUserCalls++
+	if f.findIdentitiesByUserErr != nil {
+		err := f.findIdentitiesByUserErr
+		f.findIdentitiesByUserErr = nil
+		return nil, err
+	}
+	var out []AuthIdentity
+	for _, id := range f.identities {
+		if id.UserID == userID {
+			// Return a copy so callers can't mutate the stored row.
+			c := *id
+			out = append(out, c)
+		}
+	}
+	return out, nil
+}
+
+func (f *fakeRepo) FindAuthIdentitiesByUserForUpdate(_ context.Context, _ pgx.Tx, userID uuid.UUID) ([]AuthIdentity, error) {
+	// Delegate to the non-tx variant — see FindAuthIdentitiesByUser for
+	// why FOR UPDATE is a no-op in the fake.
+	return f.FindAuthIdentitiesByUser(context.Background(), userID)
+}
+
+// DeleteAuthIdentitiesByIDs removes the caller-classified rows from the
+// fake's in-memory maps (both identities and identityKeys, so a re-insert
+// after delete works — matching real DB hard-delete semantics). Records
+// the deleted IDs for R9 assertion.
+func (f *fakeRepo) DeleteAuthIdentitiesByIDs(_ context.Context, _ pgx.Tx, ids []uuid.UUID) error {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	want := make(map[uuid.UUID]bool, len(ids))
+	for _, id := range ids {
+		want[id] = true
+	}
+	seen := make(map[uuid.UUID]bool) // dedup: same identity is stored under 2 keys
+	for key, id := range f.identities {
+		if want[id.ID] && !seen[id.ID] {
+			delete(f.identities, key)
+			delete(f.identityKeys, key)
+			f.deletedIdentityIDs = append(f.deletedIdentityIDs, id.ID)
+			seen[id.ID] = true
+		} else if want[id.ID] {
+			// Second key for the same identity — delete from map but
+			// don't record the ID again.
+			delete(f.identities, key)
+			delete(f.identityKeys, key)
+		}
+	}
+	return nil
 }
 
 // seedIdentity stores an identity under both its plaintext-keyed dedup

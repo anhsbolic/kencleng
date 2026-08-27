@@ -183,6 +183,31 @@ type Repository interface {
 	// when no such identity exists.
 	FindIdentifierHashByUserAndProvider(ctx context.Context, userID uuid.UUID, providerType string) (identifierHash string, found bool, err error)
 
+	// FindAuthIdentitiesByUser returns ALL auth identities for userID
+	// with their non-encrypted fields populated. Identifier is left
+	// empty per the read-path convention (flows look up by hash and do
+	// not need plaintext back). CredentialSecret IS populated for
+	// email_password rows — UnlinkGoogle's re-auth step compares against
+	// the verified identity's stored bcrypt hash. Returns an empty slice
+	// (not nil) when the user has no identities.
+	FindAuthIdentitiesByUser(ctx context.Context, userID uuid.UUID) ([]AuthIdentity, error)
+
+	// FindAuthIdentitiesByUserForUpdate is the tx-taking counterpart of
+	// FindAuthIdentitiesByUser that additionally takes FOR UPDATE row
+	// locks inside the caller's transaction. It is the serialization
+	// point for UnlinkGoogle's check-then-delete: concurrent unlinks
+	// block here and classify post-commit state under READ COMMITTED,
+	// so the INV-account-02/12 guard cannot race past. The lock is
+	// acquired inside the caller's tx — never on the pool.
+	FindAuthIdentitiesByUserForUpdate(ctx context.Context, tx pgx.Tx, userID uuid.UUID) ([]AuthIdentity, error)
+
+	// DeleteAuthIdentitiesByIDs hard-deletes the caller-classified rows
+	// (auth_identities has no soft-delete column). The caller — not this
+	// method — owns guard classification; no conditions are re-checked
+	// here. Called within tx so the delete commits atomically with the
+	// audit entry it justifies. A no-op (not an error) when ids is empty.
+	DeleteAuthIdentitiesByIDs(ctx context.Context, tx pgx.Tx, ids []uuid.UUID) error
+
 	// GetLoginUserView assembles the LoginResponse.user read model for
 	// userID (techplan §8): profile fields from users (with primary_email
 	// DECRYPTED — the one decrypt-on-read path in this repository),

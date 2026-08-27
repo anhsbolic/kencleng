@@ -176,6 +176,17 @@ func run() error {
 
 	mux.Handle("/auth/", transporthttp.RateLimit(rps, burst)(authMux))
 
+	// Account security (task #05). Behind the same per-IP rate limiter
+	// + the RequireSession middleware (first always-authenticated route
+	// group). The session verifier reuses GoogleTokenVerifier (generic
+	// ES256 access-token verification — the function name is historical
+	// from task #02; platform/auth stays untouched per the Tier 0 fence).
+	accountMux := http.NewServeMux()
+	accountMux.HandleFunc("POST /account/security/set-password", transporthttp.SetPasswordHandler(accountSvc))
+	accountMux.HandleFunc("POST /account/security/google/unlink", transporthttp.UnlinkGoogleHandler(accountSvc))
+	mux.Handle("/account/security/", transporthttp.RateLimit(rps, burst)(
+		transporthttp.RequireSession(googleVerifyToken)(accountMux)))
+
 	srv := &http.Server{
 		Addr:    ":" + os.Getenv("APP_PORT"),
 		Handler: mux,

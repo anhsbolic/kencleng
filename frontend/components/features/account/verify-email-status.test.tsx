@@ -2,8 +2,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen, waitFor } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 import type { ReactNode } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { server } from "@/mocks/server";
+import { accountKeys } from "@/lib/hooks/use-account-me";
+import { useAuthStore } from "@/lib/stores/auth-store";
 import { VerifyEmailStatus } from "./verify-email-status";
 
 let mockToken: string | null = "valid-token";
@@ -14,10 +16,16 @@ vi.mock("next/navigation", () => ({
   }),
 }));
 
-function withQueryClient(children: ReactNode) {
-  const queryClient = new QueryClient({
+beforeEach(() => {
+  useAuthStore.setState({ accessToken: null });
+});
+
+function withQueryClient(
+  children: ReactNode,
+  queryClient: QueryClient = new QueryClient({
     defaultOptions: { mutations: { retry: false } },
-  });
+  })
+) {
   return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
 
@@ -136,5 +144,30 @@ describe("VerifyEmailStatus", () => {
     expect(
       await screen.findByText("Terlalu banyak percobaan gagal. Coba lagi dalam 15 menit.")
     ).toBeInTheDocument();
+  });
+
+  // techplan account/05-account-linking, R19/D6 — authenticated-caller
+  // additive fix (Branch 1's step 2 of the 3-step linking flow).
+  it("links to /dashboard/security when the caller is authenticated, instead of /login (R19)", async () => {
+    mockToken = "valid-token";
+    useAuthStore.setState({ accessToken: "still-valid-token" });
+    render(withQueryClient(<VerifyEmailStatus />));
+
+    const link = await screen.findByRole("link", { name: "Kembali ke Keamanan" });
+    expect(link).toHaveAttribute("href", "/dashboard/security");
+    expect(screen.queryByRole("link", { name: /masuk sekarang/i })).not.toBeInTheDocument();
+  });
+
+  it("invalidates account.me on success, regardless of auth state (R19)", async () => {
+    mockToken = "valid-token";
+    const queryClient = new QueryClient({ defaultOptions: { mutations: { retry: false } } });
+    queryClient.setQueryData(accountKeys.me(), { id: "1" });
+
+    render(withQueryClient(<VerifyEmailStatus />, queryClient));
+
+    await screen.findByText("Email berhasil diverifikasi.");
+    await waitFor(() =>
+      expect(queryClient.getQueryState(accountKeys.me())?.isInvalidated).toBe(true)
+    );
   });
 });

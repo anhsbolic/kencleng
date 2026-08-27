@@ -262,3 +262,71 @@ export async function resetPassword(
 
   throw new ApiError(res.status, await readProblemDetail(res));
 }
+
+export type SetPasswordRequest = components["schemas"]["SetPasswordRequest"];
+export type UnlinkGoogleRequest = components["schemas"]["UnlinkGoogleRequest"];
+
+/**
+ * Discriminated-union result for `setPassword()` — techplan account/05-
+ * account-linking, D4. `branch` distinguishes which server-side case
+ * fired (`"added"` = Branch 1, generic `202`; `"changed"` = Branch 2,
+ * `200`) so callers (`useSetPassword`'s `onSuccess`) don't need to
+ * re-derive it from status codes themselves — branch selection is
+ * entirely server-side (never a client-supplied flag), confirmed
+ * verified-agnostic against the real backend (`security.go`). `422` is
+ * a return branch, never thrown — same rule as `register`/
+ * `resetPassword`'s `kind: "validation"` shape.
+ */
+export type SetPasswordResult =
+  | { ok: true; branch: "added"; message?: string }
+  | { ok: true; branch: "changed"; message?: string }
+  | { ok: false; kind: "validation"; errors: ValidationErrorItem[] };
+
+/**
+ * `POST /account/security/set-password`. `401` (Branch 2 wrong
+ * `current_password`) and network/5xx throw `ApiError` — its `.detail`
+ * is the backend's own confirmed-correct Indonesian text
+ * (`problemDetailGenericCredential`, shared with `login`'s own 401),
+ * shown verbatim by callers (D4) — no frontend override needed there,
+ * unlike the `422` branch.
+ */
+export async function setPassword(input: SetPasswordRequest): Promise<SetPasswordResult> {
+  const res = await postAccountAction("/account/security/set-password", input);
+
+  if (res.status === 202) {
+    const body: { message?: string } = await res.json();
+    return { ok: true, branch: "added", message: body.message };
+  }
+  if (res.status === 200) {
+    const body: { message?: string } = await res.json();
+    return { ok: true, branch: "changed", message: body.message };
+  }
+  if (res.status === 422) {
+    const body: { errors?: ValidationErrorItem[] } = await res.json();
+    return { ok: false, kind: "validation", errors: body.errors ?? [] };
+  }
+
+  throw new ApiError(res.status, await readProblemDetail(res));
+}
+
+export type UnlinkGoogleResult = { ok: true; message?: string };
+
+/**
+ * `POST /account/security/google/unlink` — resolves on `200`, throws
+ * `ApiError` for `401` (wrong password) and `409` (two distinct cases,
+ * INV-account-02/INV-account-12) alike. Both `409` cases already carry
+ * distinct, correct, final Indonesian `.detail` text from the backend
+ * (confirmed directly against `account_security.go`) — callers show it
+ * verbatim, no `.type` field parsing needed (techplan account/05-
+ * account-linking D4).
+ */
+export async function unlinkGoogle(input: UnlinkGoogleRequest): Promise<UnlinkGoogleResult> {
+  const res = await postAccountAction("/account/security/google/unlink", input);
+
+  if (res.ok) {
+    const body: { message?: string } = await res.json();
+    return { ok: true, message: body.message };
+  }
+
+  throw new ApiError(res.status, await readProblemDetail(res));
+}

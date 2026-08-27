@@ -786,5 +786,122 @@ func (r *RepositoryDB) GetLoginUserView(ctx context.Context, userID uuid.UUID) (
 	return view, nil
 }
 
+// pgxQueryer is the subset of pgx used by scanAuthIdentities that is
+// satisfied by both *pgxpool.Pool (standalone reads) and pgx.Tx
+// (FOR UPDATE-locked reads inside a caller transaction). Defining it
+// locally avoids importing an extra pgx type and keeps the scan helper
+// usable from both call sites.
+type pgxQueryer interface {
+	Query(ctx context.Context, sql string, args ...any) (pgx.Rows, error)
+}
+
+// scanAuthIdentities runs the identities SELECT encoded in sqlStr/args and
+// scans every row into []AuthIdentity. Shared by FindAuthIdentitiesByUser
+// (pool) and FindAuthIdentitiesByUserForUpdate (tx + FOR UPDATE).
+// CredentialSecret and VerifiedAt are nullable; the established sql.Null*
+// pattern (see FindAuthIdentityByIdentifierHash) keeps the scan safe.
+// Identifier is deliberately NOT selected — read-path convention is that
+// plaintext is only decrypted where a flow needs it, and neither
+// SetPassword Branch 2 nor UnlinkGoogle needs plaintext (they key on
+// user_id + provider, or on the stored hash).
+func (r *RepositoryDB) scanAuthIdentities(ctx context.Context, runner pgxQueryer, sqlStr string, args ...any) ([]AuthIdentity, error) {
+	rows, err := runner.Query(ctx, sqlStr, args...)
+	if err != nil {
+		return nil, fmt.Errorf("account: select auth_identities by user: %w", err)
+	}
+	defer rows.Close()
+	var out []AuthIdentity
+	for rows.Next() {
+		var (
+			identity   AuthIdentity
+			credSecret sql.NullString
+			verifiedAt sql.NullTime
+		)
+		if err := rows.Scan(
+			&identity.ID,
+			&identity.UserID,
+			&identity.ProviderType,
+			&credSecret,
+			&verifiedAt,
+			&identity.CreatedAt,
+			&identity.UpdatedAt,
+		); err != nil {
+			return nil, fmt.Errorf("account: scan auth_identities by user: %w", err)
+		}
+		if credSecret.Valid {
+			s := credSecret.String
+			identity.CredentialSecret = &s
+		}
+		if verifiedAt.Valid {
+			t := verifiedAt.Time
+			identity.VerifiedAt = &t
+		}
+		out = append(out, identity)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("account: iterate auth_identities by user: %w", err)
+	}
+	return out, nil
+}
+
+// FindAuthIdentitiesByUser returns ALL identities for userID (non-encrypted
+// fields only; Identifier left empty). Returns an empty slice when the user
+// has no identities.
+func (r *RepositoryDB) FindAuthIdentitiesByUser(ctx context.Context, userID uuid.UUID) ([]AuthIdentity, error) {
+	sqlStr, args, err := pgDialect.From("auth_identities").
+		Select("id", "user_id", "provider_type", "credential_secret", "verified_at", "created_at", "updated_at").
+		Where(goqu.Ex{"user_id": userID}).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return nil, fmt.Errorf("account: build select auth_identities by user: %w", err)
+	}
+	return r.scanAuthIdentities(ctx, r.db, sqlStr, args...)
+}
+
+// FindAuthIdentitiesByUserForUpdate is the tx-taking counterpart that
+// additionally acquires FOR UPDATE row locks inside the caller's
+// transaction. This is the serialization point for UnlinkGoogle's
+// check-then-delete: concurrent unlinks block on the row locks, and under
+// READ COMMITTED each waits-and-classifies against post-commit state, so
+// the INV-account-02/12 guard cannot race past.
+func (r *RepositoryDB) FindAuthIdentitiesByUserForUpdate(ctx context.Context, tx pgx.Tx, userID uuid.UUID) ([]AuthIdentity, error) {
+	// goqu has no first-class FOR UPDATE clause; append it to the
+	// generated SELECT. The WHERE is parameterized by goqu; the suffix
+	// is a fixed literal, so no injection surface is introduced.
+	sqlStr, args, err := pgDialect.From("auth_identities").
+		Select("id", "user_id", "provider_type", "credential_secret", "verified_at", "created_at", "updated_at").
+		Where(goqu.Ex{"user_id": userID}).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return nil, fmt.Errorf("account: build select auth_identities by user for update: %w", err)
+	}
+	sqlStr += " FOR UPDATE"
+	return r.scanAuthIdentities(ctx, tx, sqlStr, args...)
+}
+
+// DeleteAuthIdentitiesByIDs hard-deletes the caller-classified rows. The
+// caller owns guard classification; no conditions are re-checked here. A
+// no-op (not an error) when ids is empty — saves building a degenerate
+// IN () clause. Uses goqu's In predicate on a prepared statement; ids are
+// uuid.UUID values (never user text), so there is no injection surface.
+func (r *RepositoryDB) DeleteAuthIdentitiesByIDs(ctx context.Context, tx pgx.Tx, ids []uuid.UUID) error {
+	if len(ids) == 0 {
+		return nil
+	}
+	sqlStr, args, err := pgDialect.Delete("auth_identities").
+		Where(goqu.C("id").In(ids)).
+		Prepared(true).
+		ToSQL()
+	if err != nil {
+		return fmt.Errorf("account: build delete auth_identities by ids: %w", err)
+	}
+	if _, err := tx.Exec(ctx, sqlStr, args...); err != nil {
+		return fmt.Errorf("account: delete auth_identities by ids: %w", err)
+	}
+	return nil
+}
+
 // Compile-time assertion that RepositoryDB implements Repository.
 var _ Repository = (*RepositoryDB)(nil)

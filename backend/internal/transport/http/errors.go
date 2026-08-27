@@ -95,6 +95,20 @@ func MapServiceError(w http.ResponseWriter, err error) {
 		WriteProblem(w, http.StatusUnauthorized,
 			problemTypeInvalidCredentials,
 			problemTitleInvalidCredentials, problemDetailGenericCredential)
+	// Unlink guard sentinels (account #05) — titles + Indonesian details
+	// moved verbatim from UnlinkGoogleHandler per techplan task-05
+	// ("+ two 409 cases in MapServiceError") so the mapping lives in one
+	// place instead of being duplicated inline at the handler.
+	case errors.Is(err, account.ErrOnlyIdentity):
+		WriteProblem(w, http.StatusConflict,
+			"https://kencleng.dev/errors/only-identity",
+			"Cannot Unlink Only Identity",
+			"Google adalah satu-satunya metode login Anda. Atur email dan password dulu sebelum melepas tautan.")
+	case errors.Is(err, account.ErrRemainingUnverified):
+		WriteProblem(w, http.StatusConflict,
+			"https://kencleng.dev/errors/unverified-remaining-identity",
+			"Remaining Identity Not Verified",
+			"Kamu sudah atur email dan password, tapi belum diverifikasi. Verifikasi email kamu dulu sebelum bisa melepas tautan Google.")
 	case errors.Is(err, account.ErrInvalidCredentials):
 		WriteProblem(w, http.StatusUnauthorized,
 			problemTypeInvalidCredentials,

@@ -1,12 +1,15 @@
-// Placeholder — real form is Account Task #5's scope
-// (docs/spec/1-account/tasks.md), not this playbook
-// (phase0-shared-infra.md). Exists so the Dashboard Shell has a
-// route to render against during this phase's verification.
+import { LoginMethodsSection } from "@/components/features/account/login-methods-section";
+
+// Real content for Account Task #5 (account-linking) — replaces the
+// Phase 0 placeholder. Account Task #6 (MFA) adds its own <MfaSection />
+// here as a sibling when that task starts (techplan account/05-account-
+// linking D1 — independent section components, not a monolithic form).
 export default function SecurityPage() {
   return (
-    <div>
+    <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-bold text-neutral-900">Keamanan</h1>
-      <p className="mt-2 text-sm text-neutral-500">Placeholder — Account Task #5.</p>
+      <LoginMethodsSection />
+      {/* Account Task #6 (MFA) adds <MfaSection /> here */}
     </div>
   );
 }

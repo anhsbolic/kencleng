@@ -137,6 +137,18 @@ const mockResetPasswordOk = {
   message: "Password berhasil diubah. Silakan login ulang.",
 };
 
+// Default happy-path fixtures for account/05-account-linking. Both
+// messages are the backend's own real response text
+// (account_security.go), not invented — see the techplan's D4.
+// Individual tests override the 401/409/422 branches, and the caller's
+// `/account/me` identity shape (e.g. a Google-only user), via
+// `server.use(...)`, same per-test inline pattern already used by
+// dashboard-shell-client.test.tsx for role overrides.
+const mockSetPasswordAdded = {
+  message: "Kalau email tersedia, cek inbox untuk verifikasi.",
+};
+const mockUnlinkGoogleOk = { message: "Akun Google berhasil dilepas." };
+
 // Default happy-path fixture for account/03-login-session-management's
 // two login-completing endpoints (`/auth/login`'s "ok" branch and
 // `/auth/login/mfa`, which only ever returns this same shape). Reuses
@@ -182,5 +194,11 @@ export const handlers = [
   ),
   http.post("/auth/reset-password", () =>
     HttpResponse.json(mockResetPasswordOk, { status: 200 })
+  ),
+  http.post("/account/security/set-password", () =>
+    HttpResponse.json(mockSetPasswordAdded, { status: 202 })
+  ),
+  http.post("/account/security/google/unlink", () =>
+    HttpResponse.json(mockUnlinkGoogleOk, { status: 200 })
   ),
 ];
