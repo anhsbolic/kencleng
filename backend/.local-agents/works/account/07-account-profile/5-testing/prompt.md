@@ -1,16 +1,39 @@
-You are running the testing phase for a story that has already been
+You are running the testing phase for a task that has already been
 through implementation and code review. Follow this process, in order:
 
+Guidance folder for this phase: /home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/5-testing —
+guidelines.md, checklist.md, examples.md referenced below resolve
+relative to this.
+
+Response style: keep the sweep/coverage work itself efficient — don't
+narrate every step. The final report below must be as thorough as a
+real testing report demonstrates is possible without an over-narrated
+process (see /home/anhar-solehudin/kencleng-workspace/harscode-workspace/best-practices/go/examples/testing-concurrency.md
+for a worked example) — that level of detail is the bar for this
+report, not an exception (/home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/README.md §
+Response Style By Phase).
+
 Step 0 — Sweep, don't redo:
-{/home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/5-testing/guidelines.md#process} (item 0 specifically).
+{file:/home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/5-testing/guidelines.md#process} (item 0 specifically).
 Read the implementation report below. For every rule/scenario it claims
 is covered by a named test, spot-check it (run the existing test, don't
 rewrite it). Then read its "what is not tested, and why" section (or
 equivalent) — that is your priority list, not a fresh read of techplan
 § 4 from zero.
 
+Also as part of Step 0: read techplan § 12's Test Focus Pointer table.
+For every row still marked relevant, cross-check the raw exploration
+docs below for the concrete Sniffing Checklist Risk-lens finding behind
+it, then build a Test Execution Plan (scope, tooling, threshold) for
+that area — this is a distinct deliverable from the four-category
+coverage in Step 1, and covers race/concurrency/perf/security-class
+tests that Step 1 does not. If the pointer table is empty or missing
+but you notice a genuinely concurrency/perf/security-sensitive area in
+the exploration docs or code, flag it back as a possible techplan gap —
+don't silently add the test yourself without noting the gap.
+
 Step 1 — Coverage per techplan § 4:
-{/home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/5-testing/guidelines.md#process} (items 1-3). Test every
+{file:/home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/5-testing/guidelines.md#process} (items 1-3). Test every
 rule in the techplan's Rules & Validation section using the real
 interface. For rules already spot-checked in Step 0 as genuinely
 covered, don't re-derive a new test — note it as confirmed. Spend actual
@@ -27,59 +50,18 @@ Verify error responses precisely — category, actionable message,
 correct propagation through the app's error-handling layer, not just
 "an error happened."
 
-Full checklist: {/home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/5-testing/checklist.md}
+Full checklist: {file:/home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/5-testing/checklist.md}
 Known recurring bug patterns worth specifically hunting for:
-{/home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/5-testing/examples.md}
+{file:/home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/5-testing/examples.md}
 
 Techplan:
-/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/07-account-profile/2-plan/techplan.md
+/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/07-account-profile/2-techplan/techplan.md
+
+Raw exploration docs:
+/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/07-account-profile/1-exploration/logs
 
 Latest implementation report (build or most recent patch/rebuild):
-/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/07-account-profile/4-patch/report.md
-
-Real interface entry point(s):
-Read /home/anhar-solehudin/kencleng-workspace/kencleng/backend/README.md
+/home/anhar-solehudin/kencleng-workspace/kencleng/backend/.local-agents/works/account/07-account-profile/3-build/report.md
 
 Target repo build/lint/test commands:
-read /home/anhar-solehudin/kencleng-workspace/kencleng/backend/README.md
-
----
-
-Output format:
-
-## 0. Sweep Summary
-- Confirmed (spot-checked, still passing): [rule/scenario → test name]
-- Closed from report's own gap list: [gap → what was added/verified]
-- Not carried over — required fresh testing: [what, and why the report
-  didn't cover it]
-
-## 1. Test Coverage
-[Rule/Scenario | Category (happy/negative/edge/backward-compat) |
-Real-interface test performed | Result] per item. Cite § 4 rule IDs
-where applicable. If a § 4 scenario can't be exercised through the real
-interface, flag it explicitly — don't skip silently.
-
-## 2. Error Verification
-[Error case | Expected category | Actual category | Message
-actionable? | Propagation correct?] per case, or "No error paths
-exercised beyond §1" if genuinely none apply.
-
-## 3. Final Verification
-- [ ] Target repo build/lint/test commands: pass/fail (paste output)
-- [ ] Migration/schema version collision check: result
-- [ ] Backward compatibility: explicitly verified, not assumed
-- [ ] Fresh end-to-end techplan read: gaps/contradictions found, or none
-
-## 4. New Bug Patterns
-Only include entries that meet the threshold in
-{/home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/5-testing/guidelines.md#threshold-for-adding-to-examplesmd}
-(a category of mistake, not a one-off). Otherwise state "No new pattern
-— see /home/anhar-solehudin/kencleng-workspace/harscode-workspace/workflow/5-testing/examples.md for handling this ticket-specific
-bug directly."
-
-## Verdict
-One of: Pass / Pass with flagged follow-ups / Fail — send back to
-implementation.
-If "Fail" or flagged follow-ups, list which findings are blocking vs.
-optional, and whether they trace to a genuinely new gap or a
-Step-0-confirmed area that regressed.
+/home/anhar-solehudin/kencleng-workspace/kencleng/backend/README.md

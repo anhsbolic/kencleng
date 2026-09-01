@@ -193,6 +193,14 @@ func run() error {
 	mux.Handle("/account/security/", transporthttp.RateLimit(rps, burst)(
 		transporthttp.RequireSession(googleVerifyToken)(accountMux)))
 
+	// Account profile read (task #07). Same middleware chain as the security
+	// group; /account/me is its own route on the main mux (prefix differs from
+	// /account/security/).
+	mux.Handle("GET /account/me",
+		transporthttp.RateLimit(rps, burst)(
+			transporthttp.RequireSession(googleVerifyToken)(
+				transporthttp.AccountMeHandler(accountSvc))))
+
 	srv := &http.Server{
 		Addr:    ":" + os.Getenv("APP_PORT"),
 		Handler: mux,

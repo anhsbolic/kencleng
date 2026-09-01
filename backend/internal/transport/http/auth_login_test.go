@@ -209,6 +209,53 @@ func TestLoginHandler_MalformedJSON400(t *testing.T) {
 	}
 }
 
+// R8 — the login success body's user object carries the exact User-schema
+// snake_case keys (not the raw LoginUserView field names). Shared with the
+// /account/me shape test via assertUserShape.
+func TestLoginHandler_UserShapeSnakeCase(t *testing.T) {
+	stub := &stubLoginService{loginRes: account.LoginResult{
+		Status:               "ok",
+		AccessToken:          "access-jwt",
+		RefreshTokenPlain:    "refresh-plain",
+		AccessTokenExpiresAt: time.Now().Add(time.Minute),
+		User:                 fullView("budi@example.com"),
+	}}
+	rec := postJSON(t, LoginHandler(stub, true), "/auth/login", `{"email":"a@b.co","password":"pw"}`)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	body := decodeBody(t, rec)
+	user, ok := body["user"].(map[string]any)
+	if !ok {
+		t.Fatalf("user object missing or wrong type: %#v", body["user"])
+	}
+	assertUserShape(t, user)
+	if user["email"] != "budi@example.com" {
+		t.Errorf("email = %v, want budi@example.com", user["email"])
+	}
+}
+
+func TestLoginMfaHandler_UserShapeSnakeCase(t *testing.T) {
+	stub := &stubLoginService{mfaRes: account.LoginResult{
+		Status:               "ok",
+		AccessToken:          "access-jwt",
+		RefreshTokenPlain:    "refresh-plain",
+		AccessTokenExpiresAt: time.Now().Add(time.Minute),
+		User:                 fullView("budi@example.com"),
+	}}
+	rec := postJSON(t, LoginMfaHandler(stub, true), "/auth/login/mfa",
+		`{"mfa_pending_token":"p","totp_code":"123456"}`)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", rec.Code)
+	}
+	body := decodeBody(t, rec)
+	user, ok := body["user"].(map[string]any)
+	if !ok {
+		t.Fatalf("user object missing or wrong type: %#v", body["user"])
+	}
+	assertUserShape(t, user)
+}
+
 func TestLoginMfaHandler_RequiresExactlyOneCode(t *testing.T) {
 	cases := map[string]string{
 		"neither": `{"mfa_pending_token":"p"}`,

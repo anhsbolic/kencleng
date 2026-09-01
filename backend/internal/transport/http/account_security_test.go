@@ -40,7 +40,6 @@ type stubSecurityService struct {
 	disableErr     error
 	disableCalled  bool
 	reauthRequired bool
-	reauthResult   bool
 	reauthErr      error
 	reauthCalled   bool
 }

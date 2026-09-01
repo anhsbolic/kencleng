@@ -109,6 +109,9 @@ type fakeRepo struct {
 
 	// view is the LoginUserView GetLoginUserView returns (seeded by tests).
 	view *LoginUserView
+	// getViewCalls records every userID GetLoginUserView was called with
+	// (task #07 — proves GetProfile forwards the session userID unmodified).
+	getViewCalls []uuid.UUID
 }
 
 type setVerifiedCall struct {
@@ -346,9 +349,10 @@ func (f *fakeRepo) RevokeAllRefreshTokensForUser(_ context.Context, _ pgx.Tx, us
 	return nil
 }
 
-func (f *fakeRepo) GetLoginUserView(_ context.Context, _ uuid.UUID) (*LoginUserView, error) {
+func (f *fakeRepo) GetLoginUserView(_ context.Context, userID uuid.UUID) (*LoginUserView, error) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
+	f.getViewCalls = append(f.getViewCalls, userID)
 	if f.view == nil {
 		return nil, nil
 	}
@@ -537,17 +541,6 @@ func (f *fakeRepo) seedMFAEnrollment(userID uuid.UUID, base32Secret string) {
 	defer f.mu.Unlock()
 	f.mfaSecrets[userID] = base32Secret
 	f.mfaEnabledAt[userID] = nil
-}
-
-// seedMFADisabled installs a disabled/absent enrollment (no secret row).
-func (f *fakeRepo) seedMFADisabled(userID uuid.UUID) {
-	f.mu.Lock()
-	defer f.mu.Unlock()
-	delete(f.mfaSecrets, userID)
-	delete(f.mfaEnabledAt, userID)
-	// Leave any existing backup codes present-but-unusable (they only
-	// matter through the enabled gate), mirroring real implicit
-	// invalidation that never hard-deletes codes.
 }
 
 // seedMFAEnabled installs an enabled enrollment.
@@ -1517,5 +1510,46 @@ func TestRegister_SendVerificationFails_LogNoPII(t *testing.T) {
 	// The log must NOT contain "token=" (raw error message leak).
 	if strings.Contains(logged, "token=") {
 		t.Errorf("log leaked raw error detail 'token=': %q", logged)
+	}
+}
+
+// ---- R7: GetProfile pass-through (task #07) ----------------------------
+
+func TestGetProfile_PassesThroughToRepository(t *testing.T) {
+	svc, repo, _, _ := newTestService(t, false)
+	userID := uuid.New()
+
+	// Unseeded: the repository returns (nil, nil); GetProfile passes it
+	// through verbatim.
+	view, err := svc.GetProfile(context.Background(), userID)
+	if err != nil {
+		t.Fatalf("GetProfile (unseeded): %v", err)
+	}
+	if view != nil {
+		t.Fatalf("GetProfile returned non-nil view for an unseeded user: %+v", view)
+	}
+
+	// Seeded: the repository returns a view; GetProfile returns it
+	// unmodified (same decrypted email, no transformation in between).
+	repo.seedView("owner@example.com")
+	view, err = svc.GetProfile(context.Background(), userID)
+	if err != nil {
+		t.Fatalf("GetProfile (seeded): %v", err)
+	}
+	if view == nil {
+		t.Fatal("GetProfile returned nil view for a seeded user")
+	}
+	if view.Email != "owner@example.com" {
+		t.Errorf("email = %q, want owner@example.com", view.Email)
+	}
+
+	// Both calls must forward the session userID unmodified to the port.
+	if len(repo.getViewCalls) != 2 {
+		t.Fatalf("GetLoginUserView call count = %d, want 2", len(repo.getViewCalls))
+	}
+	for i, got := range repo.getViewCalls {
+		if got != userID {
+			t.Errorf("GetLoginUserView call %d received userID %s, want %s", i, got, userID)
+		}
 	}
 }

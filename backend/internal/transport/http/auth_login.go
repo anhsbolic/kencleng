@@ -35,10 +35,10 @@ type loginMfaRequest struct {
 // loginOKResponse mirrors openapi LoginResponse: status "ok", access token
 // in the BODY (never a cookie on these endpoints), plus the assembled user.
 type loginOKResponse struct {
-	Status               string                 `json:"status"`
-	AccessToken          string                 `json:"access_token"`
-	AccessTokenExpiresAt time.Time              `json:"access_token_expires_at,omitempty"`
-	User                 *account.LoginUserView `json:"user,omitempty"`
+	Status               string        `json:"status"`
+	AccessToken          string        `json:"access_token"`
+	AccessTokenExpiresAt time.Time     `json:"access_token_expires_at,omitempty"`
+	User                 *userResponse `json:"user,omitempty"`
 }
 
 // loginMfaRequiredResponse mirrors openapi LoginMfaRequiredResponse. The
@@ -97,7 +97,7 @@ func LoginHandler(svc loginSessionService, cookieSecure bool) http.HandlerFunc {
 			Status:               "ok",
 			AccessToken:          res.AccessToken,
 			AccessTokenExpiresAt: res.AccessTokenExpiresAt,
-			User:                 res.User,
+			User:                 toUserResponse(res.User),
 		})
 	}
 }
@@ -135,7 +135,7 @@ func LoginMfaHandler(svc loginSessionService, cookieSecure bool) http.HandlerFun
 			Status:               "ok",
 			AccessToken:          res.AccessToken,
 			AccessTokenExpiresAt: res.AccessTokenExpiresAt,
-			User:                 res.User,
+			User:                 toUserResponse(res.User),
 		})
 	}
 }
