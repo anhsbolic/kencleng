@@ -1,105 +1,545 @@
 # Kencleng — UI/UX Prototype Reference
 
 > Intended path: `docs/ui-ux/prototype-reference.md`
-> Status: New (2026-08-21) — indexes the Claude Design prototypes
-> exported into `design-reference/` at repo root, and defines how
-> much authority each one carries for implementation.
-> Last updated: 2026-08-21
+>
+> Status: Draft v2
+>
+> Purpose: Define which prototype/reference artifacts exist, how much authority they carry, and how they relate to current product, UX, visual-system, asset, and production-component truth.
 
-## Context
+## Core Principle
 
-`patterns.md` and `design-guidelines.md` are the durable spec —
-abstract shape + tokens. To validate that spec actually looks right
-and to give the coding agent a concrete visual precedent, a set of
-representative pages were prototyped in Claude Design and exported as
-real code into `design-reference/` (see `AGENTS.md` §3 — that
-directory is read-only for agents, frozen reference output, not a
-build target).
+A prototype is:
 
-Not every page got its own prototype — doing that for all ~40 routes
-in `page-map.md` would recreate the exact staleness/maintenance
-problem that got the old wireframes retired. Instead, this doc
-defines two tiers so an agent (or a human reviewing agent output)
-knows how much weight to give the reference for any given page.
+> **route-specific design evidence and visual precedent**
 
-## Tier 1 — Near-final draft (build from this directly)
+It is not automatically:
 
-These routes have an actual generated prototype in
-`design-reference/`. For these specific pages, treat the prototype as
-close to authoritative on layout/visual detail — implement to match
-it, deviating only where the feature spec (`docs/spec/<domain>/
-features/*.md`) requires different behavior than what was mocked
-(e.g. the prototype used illustrative placeholder data; real data
-shape follows the OpenAPI contract, not the mock).
+* product truth;
+* API truth;
+* component architecture;
+* state-management architecture;
+* canonical visual-system definition;
+* canonical asset definition;
+* production code.
 
-| Route | Pattern (`patterns.md`) | Notes |
-|---|---|---|
-| `/` | Landing (one-off, not a formal pattern) | Public header variant, not Dashboard Shell |
-| `/login` | Form (Auth sub-variant) | Desktop = modal overlay, mobile = full page — see known issue below |
-| `/campaign` | List/Browse | Includes loading + empty states |
-| `/campaign/[id]` | Detail (public variant) | Includes loading state; most benchmark-sensitive page |
-| `/campaign/[id]/donate` | Form (single-step) | Includes idle + submitting states |
-| `/dashboard/campaign/new` | Form (Revisable Submission) | Includes idle, field-error, submitting states |
-| `/dashboard/campaign/[id]/monitor` | Dashboard/Summary | Includes independent per-card loading + partial-failure states |
-| `/dashboard/kurasi/campaign/[assignmentId]` | Curation/Review | Includes idle, reject-expanded, locked/already-decided states |
-| `/donation/[id]/status` | Status/Tracking | Includes loading, success, invalid-token states |
-| `/dashboard/organization/new` | Form (Revisable Submission) | Includes idle + field-error states; the one page that exercises `SecureUploadNote` in real context |
+A visually complete prototype may still contain illustrative data, provisional assets, outdated tokens, or implementation shortcuts.
 
-Plus two non-page reference sheets (not routes, pure component/layout
-precedent): the original **Component & Layout sheet** — buttons,
-badges, inputs, `MaskedField`, `SecureUploadNote`, progress bar,
-Dashboard Shell desktop/mobile.
+Use prototypes to preserve **design intent**, not prototype implementation accidents.
 
-## Tier 2 — Template only (derive from `patterns.md`)
+---
 
-Every other route in `page-map.md` has no prototype. For these, apply
-`patterns.md`'s definition for that pattern, using the closest Tier 1
-example below as the structural/visual precedent — not a literal copy
-(different data, different role-gating), but same shape and token
-usage.
+# A. Authority by Concern
 
-| Pattern | Tier 2 routes (no prototype) | Closest Tier 1 precedent |
-|---|---|---|
-| List/Browse | `/dashboard/admin/users`, `/dashboard/admin/kurasi-queue`, `/dashboard/kurasi` (queue), `/dashboard/donations`, `/dashboard/donations/claim`, `/dashboard/notifications`, `/dashboard/organization/[id]/representatives` | `/campaign` |
-| Detail | `/dashboard/organization/[id]`, `/dashboard/campaign/[id]`, `/dashboard/campaign/[id]/report`, `/dashboard/campaign/[id]/disbursement/[reqId]`, `/dashboard/campaign/[id]/fund-usage-report/[reportId]` | `/campaign/[id]` (adjust: dashboard context, role-gated sections) |
-| Form | `/register`, `/forgot-password`, `/reset-password`, `/dashboard/profile`, `/dashboard/security`, `/dashboard/event/new`, `/dashboard/campaign/[id]/edit`, `/dashboard/campaign/[id]/publish`, `/dashboard/campaign/[id]/disbursement/new`, `/dashboard/campaign/[id]/fund-usage-report/new` | `/dashboard/campaign/new` (dashboard forms) or `/login` (auth modal/mobile split) |
-| Curation/Review | `/dashboard/kurasi/organization/[assignmentId]`, `/dashboard/kurasi/fund-usage/[assignmentId]`, `/dashboard/admin/campaign/[id]/force-close`, `/dashboard/admin/disbursement/[reqId]` | `/dashboard/kurasi/campaign/[assignmentId]` |
-| Status/Tracking | (none — only one instance of this pattern exists) | `/donation/[id]/status` |
+There is no single flat source-of-truth order for every frontend question.
 
-## Known Issues — do NOT carry over into implementation
+Different documents own different concerns.
 
-These were found during prototyping and are **not** correct per
-`patterns.md`/`design-guidelines.md` — an agent implementing the real
-page should follow the spec docs, not replicate these:
+| Concern                         | Primary authority                                     |
+| ------------------------------- | ----------------------------------------------------- |
+| Business/domain semantics       | `docs/spec/<domain>/...`                              |
+| API shape and server contract   | `api/openapi.yaml`                                    |
+| Product-design principles       | `product-design-principles.md`                        |
+| Reusable UX behavior            | `patterns.md`                                         |
+| Visual system                   | `design-guidelines.md`                                |
+| Brand / visual assets           | `brand-and-visual-assets.md`                          |
+| Route/persona inventory         | `page-map.md`                                         |
+| Component ownership/contracts   | `frontend/components/README.md` + dedicated contracts |
+| Route-specific visual precedent | this document + `design-reference/`                   |
 
-1. **Login error state, `/login`**: the prototype rendered the
-   generic "Email atau password salah" authentication failure as a
-   field-level error attached to the Email input (red border, message
-   under that field) instead of a banner above the form. Per
-   `patterns.md` §B, request-level failures (this one) and
-   field-level validation errors must not be conflated, and a generic
-   auth failure must not visually implicate one specific field (that
-   leaks which part of the attempt was correct). **Status: not
-   confirmed fixed in the final export — verify before implementing.**
-2. **Campaign card image placeholder, `/campaign` and `/` featured
-   section**: the placeholder for a missing campaign photo rendered as
-   a file-upload dropzone ("Foto kampanye — atau *browse files*")
-   instead of a plain read-only image placeholder. These are public,
-   read-only cards — no upload affordance belongs there (upload only
-   belongs on `/dashboard/campaign/new`'s actual media field).
-   **Status: known issue, not fixed — cosmetic only, but don't copy
-   the dropzone affordance into the real read-only card component.**
-3. **Typography sizes drift slightly from `design-guidelines.md`**:
-   e.g. exported `--font-size-h1` is 44px vs the spec's 30px,
-   `--font-size-display` is 40px vs spec's 36px. Colors, radius, and
-   shadow tokens verified exact; type scale did not fully carry over.
-   **Status: known issue, not fixed — `design-guidelines.md` remains
-   the literal source of truth for exact type sizes; don't copy the
-   prototype's font-size values verbatim into `frontend/`.**
+When a prototype conflicts with an authority that owns the relevant concern, the owning authority wins.
 
-## Related Docs
+Examples:
 
-- Pattern definitions: `patterns.md`
-- Visual tokens: `design-guidelines.md`
-- Full page inventory: `page-map.md`
-- Directory boundary rule for `design-reference/`: `AGENTS.md` §3
+```text
+prototype mock field
+vs OpenAPI
+→ OpenAPI wins
+
+prototype component decomposition
+vs production semantic ownership
+→ component system wins
+
+prototype spacing/color
+vs current visual-system token
+→ current design guideline wins
+
+prototype placeholder illustration
+vs approved canonical asset
+→ canonical asset wins
+```
+
+Do not silently resolve a genuine product/domain contradiction.
+
+Surface it.
+
+---
+
+# B. Current Reference Artifacts
+
+The current artifacts under:
+
+```text
+design-reference/
+```
+
+were exported from Claude Design as standalone prototype output.
+
+They remain:
+
+* frozen;
+* read-only for agents;
+* disposable as implementation code;
+* useful as rendered visual/structural reference.
+
+Per root `AGENTS.md`, agents may inspect them but must not modify the directory or wholesale-copy its implementation into `frontend/`.
+
+Future design references may originate from other design or generation tools.
+
+Their authority is determined by this document and their approval/status — **not by which tool created them**.
+
+---
+
+# C. Tier 1 — Route-Specific Visual Precedent
+
+Tier 1 means:
+
+> A dedicated prototype exists for this route and should strongly inform route-specific composition and visual intent.
+
+It does **not** mean:
+
+> Copy the prototype as literally as possible.
+
+Use Tier 1 reference primarily for:
+
+* information hierarchy;
+* major composition;
+* relative visual emphasis;
+* intended states;
+* interaction affordances;
+* responsive intent where represented;
+* copy/microcopy as a candidate;
+* intended visual character.
+
+Translate it through the current canonical:
+
+```text
+product principles
++
+UX patterns
++
+visual system
++
+brand/asset system
++
+component architecture
+```
+
+Current Tier 1 routes:
+
+| Route                                       | Pattern / role                              |
+| ------------------------------------------- | ------------------------------------------- |
+| `/`                                         | Landing / one-off expressive public surface |
+| `/login`                                    | Form — authentication variant               |
+| `/campaign`                                 | List / Browse                               |
+| `/campaign/[id]`                            | Detail — public variant                     |
+| `/campaign/[id]/donate`                     | Form — donation                             |
+| `/dashboard/campaign/new`                   | Form — Revisable Submission                 |
+| `/dashboard/campaign/[id]/monitor`          | Dashboard / Summary                         |
+| `/dashboard/kurasi/campaign/[assignmentId]` | Curation / Review                           |
+| `/donation/[id]/status`                     | Status / Tracking                           |
+| `/dashboard/organization/new`               | Form — Revisable Submission                 |
+
+The reference set also contains non-route component/layout sheets.
+
+Those sheets are **visual precedents**, not production component specifications.
+
+---
+
+# D. Tier 2 — Pattern-Derived Surfaces
+
+Tier 2 routes have no dedicated route prototype.
+
+Do not interpret that absence as:
+
+```text
+"design however you want"
+```
+
+Instead:
+
+```text
+page-map
+→ applicable UX pattern
+→ closest relevant precedent
+→ current design system
+→ current component system
+```
+
+Use existing Tier 1 surfaces as comparative precedent where useful, but do not literally clone content or role-specific composition.
+
+Examples:
+
+### List / Browse
+
+Useful precedent:
+
+```text
+/campaign
+```
+
+Possible consumers include administrative queues, donations, notifications, representatives, and other collection surfaces.
+
+### Detail
+
+Useful precedent:
+
+```text
+/campaign/[id]
+```
+
+Dashboard/operational detail surfaces must adapt hierarchy to their persona and task.
+
+### Form
+
+Useful precedents:
+
+```text
+/dashboard/campaign/new
+/login
+```
+
+depending on dashboard vs authentication context.
+
+### Curation / Review
+
+Useful precedent:
+
+```text
+/dashboard/kurasi/campaign/[assignmentId]
+```
+
+### Status / Tracking
+
+Useful precedent:
+
+```text
+/donation/[id]/status
+```
+
+A Tier 2 feature may still be classified **OPEN** under design readiness when the nearest pattern does not adequately answer its UX problem.
+
+Tier 2 does not mean agent improvisation without design reasoning.
+
+---
+
+# E. Prototype Freshness
+
+Prototype authority is not permanent merely because an artifact exists.
+
+A reference may become partially stale when:
+
+* product requirements change;
+* UX patterns evolve;
+* visual-system rules change;
+* a component contract changes;
+* canonical assets replace provisional visuals;
+* accessibility/responsive verification reveals a defect.
+
+Use these conceptual statuses where useful:
+
+```text
+CURRENT
+NEEDS_REVALIDATION
+SUPERSEDED
+```
+
+A stale prototype may remain valuable for composition or historical rationale while no longer being authoritative on a changed concern.
+
+Do not regenerate every prototype whenever a token changes.
+
+Update or supersede references when the visual/design intent itself has materially changed.
+
+---
+
+# F. Current Migration Note
+
+The current reference exports predate the Product Design / Visual System v2 work.
+
+Therefore they should currently be treated as:
+
+> **strong composition precedent requiring translation through the current design system**
+
+rather than literal final snapshots.
+
+In particular:
+
+* current visual tokens override prototype token drift;
+* the v2 Secondary-action direction is neutral/outlined rather than treating amber as the default filled secondary action;
+* canonical visual assets, once approved, override older generic/provisional placeholders;
+* component architecture must follow semantic ownership rather than prototype decomposition.
+
+Do not update frozen `design-reference/` files merely to reflect these changes.
+
+Production implementation should translate them correctly.
+
+---
+
+# G. Known Prototype Issues
+
+Known defects must not become production precedent merely because they are visible in a Tier 1 artifact.
+
+## Login request-level error
+
+The login prototype has historically represented a generic authentication failure too closely to a field-level email validation error.
+
+Production behavior must preserve the UX/security distinction between:
+
+```text
+field validation
+```
+
+and:
+
+```text
+request-level authentication failure
+```
+
+according to the current Form/Error patterns.
+
+## Campaign image placeholder
+
+Public campaign surfaces contain a prototype placeholder that resembles an upload affordance.
+
+A read-only public campaign card/detail must not imply that the viewer can upload media there.
+
+Use the canonical placeholder behavior from the visual-asset system once established.
+
+## Typography drift
+
+Prototype typography does not perfectly match the canonical production type scale.
+
+`design-guidelines.md` owns current typography values.
+
+Do not copy prototype font sizes literally.
+
+---
+
+# H. Prototype vs Product Truth
+
+Prototype data is illustrative unless confirmed by product/API authority.
+
+Do not infer from a mockup that Kencleng supports:
+
+* a backend field;
+* ranking;
+* sorting;
+* status;
+* verification level;
+* permission;
+* calculation;
+* recommendation;
+* financial state;
+* analytics metric.
+
+Example:
+
+```text
+prototype shows "Featured"
+```
+
+does not establish a product concept called:
+
+```text
+featured
+```
+
+The product/domain authority must support it.
+
+Principle:
+
+> **Visual completeness is not evidence of domain truth.**
+
+---
+
+# I. Prototype vs Component Architecture
+
+Prototype component boundaries are exploratory evidence.
+
+They may reveal useful responsibilities.
+
+They do not dictate production extraction.
+
+For example, a prototype may contain:
+
+```text
+AmountField
+MethodGrid
+SummaryStrip
+```
+
+These are useful clues about conceptual responsibilities.
+
+Production engineering must still ask:
+
+```text
+Is this responsibility meaningful?
+Who semantically owns it?
+Is an existing component contract already available?
+Is extraction actually useful?
+```
+
+Do not mirror the prototype component tree by default.
+
+Production components follow:
+
+```text
+frontend/components/README.md
+```
+
+and current Harscode frontend engineering guidance.
+
+---
+
+# J. Prototype vs Visual System
+
+A Tier 1 prototype strongly informs composition and overall intent.
+
+The canonical visual system owns recurring visual rules such as:
+
+* colors;
+* typography;
+* radii;
+* elevation;
+* action hierarchy;
+* spacing conventions;
+* status semantics;
+* icon treatment.
+
+If the prototype differs because it predates an approved visual-system change:
+
+```text
+preserve intent
+→ use current system
+```
+
+If the prototype appears intentionally to propose a **new system-level direction**:
+
+```text
+do not normalize silently
+→ classify as design proposal
+→ review
+→ approve before canonicalizing
+```
+
+---
+
+# K. Prototype vs Brand Assets
+
+An image or illustration appearing in a prototype is not automatically canonical.
+
+Determine whether it is:
+
+```text
+placeholder
+provisional asset
+approved asset
+canonical asset
+```
+
+according to `brand-and-visual-assets.md`.
+
+An agent must not reproduce a generic temporary visual merely because it appears in the reference.
+
+If a route materially needs an expressive asset and no canonical asset exists:
+
+```text
+design gap
+→ asset brief
+→ generate or hand off
+→ appropriate approval
+→ integrate
+```
+
+---
+
+# L. Reference Comparison
+
+Rendered production UI does not need arbitrary pixel identity with a prototype.
+
+Compare primarily:
+
+* hierarchy;
+* composition;
+* relative emphasis;
+* interaction intent;
+* state coverage;
+* responsive behavior;
+* visual-system consistency;
+* brand character.
+
+Small implementation differences are acceptable when they improve:
+
+* accessibility;
+* robustness;
+* current design-system consistency;
+* realistic content handling;
+* responsive behavior.
+
+A large visual deviation from a Tier 1 reference should be intentional and explainable.
+
+---
+
+# M. Design Readiness
+
+Prototype coverage contributes to, but does not determine, design readiness.
+
+A Tier 1 route can still be **PARTIAL** or **OPEN** if major requirements have changed since the prototype.
+
+A Tier 2 route can be **READY** when established patterns and precedents answer the problem completely.
+
+Use the readiness definitions from:
+
+```text
+product-design-principles.md
+```
+
+Do not equate:
+
+```text
+prototype exists = READY
+prototype missing = OPEN
+```
+
+---
+
+# N. Adding Future References
+
+Do not create a dedicated prototype for every route by default.
+
+Create or preserve a new route-specific reference when it materially helps resolve:
+
+* new interaction architecture;
+* important product storytelling;
+* major responsive composition;
+* new visual-system direction;
+* high-risk or benchmark-sensitive UI;
+* important reusable precedent.
+
+Avoid recreating a full screenshot/wireframe inventory that becomes expensive to maintain.
+
+Patterns and canonical systems should carry repeated knowledge.
+
+Prototypes should carry **high-value design precedent**.
+
+---
+
+# O. Related Documents
+
+* `product-design-principles.md`
+* `patterns.md`
+* `design-guidelines.md`
+* `brand-and-visual-assets.md`
+* `page-map.md`
+* `design-reference-usage.md`
+* `frontend/components/README.md`
+* root `AGENTS.md`

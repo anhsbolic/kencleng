@@ -1,387 +1,1424 @@
-# Kencleng — Frontend Design Guidelines
+# Kencleng — Visual Design Guidelines
 
 > Intended path: `docs/ui-ux/design-guidelines.md`
-> Status: Resolved — originally Step 10 of `kencleng-roadmap-next-steps.md`.
-> Moved into `docs/ui-ux/` 2026-08-20 (was `docs/project/`) — grouped
-> with `page-map.md` and `patterns.md` as the frontend-UX doc set.
-> Content unchanged from the 2026-07-27 version except cross-references.
-> Last updated: 2026-08-20
+>
+> Status: Draft v2
+>
+> Purpose: Define the visual system of Kencleng — color, typography, spacing, density, surfaces, shape, elevation, icon treatment, motion, and visual component hierarchy.
+>
+> This document answers:
+>
+> **"What should Kencleng look and feel like consistently?"**
+>
+> It does not define business rules, UX flow semantics, visual-asset generation policy, or React component architecture.
 
-## Context
+---
 
-This document is the visual design layer sitting on top of the
-structural decisions defined elsewhere:
+# A. Visual Direction
 
-- `page-map.md` — per-persona, per-route page inventory (the "which
-  page")
-- `patterns.md` — reusable page shapes & state handling (the "what
-  shape")
-- `kencleng-frontend-tech-stack.md` — code architecture (the "how
-  it's built")
-- **This doc** — the visual layer: colors, typography, spacing,
-  shape, elevation, and how they map onto concrete component states
-  (the "what it actually looks like")
+Kencleng should feel:
 
-Brand direction: **warm & charitable** — approachable and a little
-playful, distinct from the cooler/more corporate feel of a typical
-fintech product, while staying legible and calm enough for a donation
-flow that handles money and PII.
+**warm + trustworthy + transparent + calm**
 
-## Implementation Approach
+When visual qualities compete, prioritize:
 
-**CSS custom properties are the source of truth**, referenced from
-Tailwind config rather than duplicated into it:
+```text
+Trustworthiness
+      ↓
+Clarity
+      ↓
+Warmth
+      ↓
+Delight
+```
+
+The interface should feel human and approachable without resembling either:
+
+```text
+cold institutional fintech
+```
+
+or:
+
+```text
+playful charity template
+```
+
+The visual language should communicate **quiet confidence**.
+
+That means:
+
+* clear hierarchy rather than excessive decoration;
+* warm accents rather than constant saturated color;
+* generous but purposeful whitespace;
+* readable financial information;
+* restrained elevation;
+* expressive illustration where it adds meaning;
+* calm treatment around money, identity, verification, and consequential actions.
+
+A surface should not need gradients, shadows, icons, cards, and badges simultaneously to feel designed.
+
+Restraint is part of the visual identity.
+
+---
+
+# B. Relationship to Product Design
+
+Visual treatment follows product meaning.
+
+Before solving a visual problem, understand:
+
+```text
+product truth
+→ UX hierarchy
+→ visual hierarchy
+→ component implementation
+```
+
+A polished treatment must never create product meaning that does not exist.
+
+Examples:
+
+* green styling does not create verification;
+* a flame icon does not make something trending;
+* a prominent card does not make something recommended;
+* gold decoration does not make something premium or trusted;
+* photography does not prove real-world impact.
+
+See `product-design-principles.md` for product-design authority.
+
+---
+
+# C. Implementation and Token Authority
+
+Kencleng uses **Tailwind CSS v4 with CSS-first configuration**.
+
+Design tokens live in:
+
+```text
+frontend/app/globals.css
+```
+
+as CSS custom properties and are exposed to Tailwind through:
 
 ```css
-/* globals.css */
+@theme inline
+```
+
+There is no `tailwind.config.js` theme source of truth.
+
+Conceptually:
+
+```css
 :root {
-  --color-primary-500: #34A853;
-  --radius-md: 0.75rem;
-  /* ... */
+  --color-primary-600: #278a42;
+  --radius-md: 12px;
+}
+
+@theme inline {
+  --color-primary-600: var(--color-primary-600);
+  --radius-md: var(--radius-md);
 }
 ```
 
-```js
-// tailwind.config.js
-theme: {
-  extend: {
-    colors: {
-      primary: {
-        500: 'var(--color-primary-500)',
-        /* ... */
-      },
-    },
-    borderRadius: {
-      md: 'var(--radius-md)',
-    },
-  },
-}
+Day-to-day component implementation should use the corresponding Tailwind utilities rather than duplicating raw values.
+
+Bad:
+
+```tsx
+<div className="bg-[#278A42] rounded-[12px]" />
 ```
 
-Rationale: CSS variables are runtime-readable (useful for anything
-that needs a raw value in JS — canvas, SVG, chart libraries) and keep
-a single edit point if a token changes, while Tailwind utility classes
-stay the day-to-day authoring interface so components don't need
-inline `style` props. **Dark mode is explicitly out of scope for v1**
-— this doc defines light-mode tokens only. If dark mode becomes a
-demonstrated need later, the CSS-variable layer is exactly what makes
-adding a `[data-theme="dark"]` override block cheap; it's not a
-reason to build it now.
+Good:
 
-**Spacing scale**: Tailwind's default 4px-based scale (`0.5, 1, 1.5,
-2, 3, 4, 6, 8...`) is used as-is, unmodified. No project-specific
-override — introducing a custom spacing scale isn't justified without
-a concrete gap the default doesn't cover (lowest-complexity
-principle).
+```tsx
+<div className="bg-primary-600 rounded-md" />
+```
 
----
+Raw values are acceptable when the value is:
 
-## Color Tokens
+* truly local;
+* not part of the visual system;
+* not likely to recur;
+* or cannot reasonably be represented through the existing token system.
 
-Every color is a 50–900 shade scale. Only the shades actually used by
-components are listed per color below; the full scale exists in
-`globals.css` for headroom (e.g. hover/active states one shade up or
-down).
+Repeated raw values are evidence that a token may be missing.
 
-### Primary — Green (brand, primary CTA)
-
-The main brand color — donate buttons, primary actions, active nav
-state, links inside primary contexts. A slightly warm, yellow-leaning
-green (not a cold/corporate blue-green) to match the "warm &
-charitable" mood.
-
-| Shade | Hex | Usage |
-|---|---|---|
-| 50 | `#F0FBF4` | Subtle background tint (e.g. selected campaign card) |
-| 100 | `#DCF5E3` | Hover background for ghost/text buttons |
-| 300 | `#8CDCA8` | Disabled-state fill |
-| 500 | `#34A853` | **Base brand green** — icons, secondary emphasis |
-| 600 | `#278A42` | **Primary button background** (passes AA against white text) |
-| 700 | `#1F6E35` | Primary button hover/active |
-| 900 | `#164825` | High-contrast text-on-light-green contexts |
-
-### Success — Distinct green shade (semantic state)
-
-Deliberately a different, more blue-leaning green from Primary — so
-"this is the brand/CTA" and "this succeeded" never look identical.
-Used for: donation success, verified organization, published campaign
-status badges.
-
-| Shade | Hex | Usage |
-|---|---|---|
-| 50 | `#ECFDF9` | Success banner/toast background |
-| 500 | `#0F9D6E` | Success badge fill, success icon |
-| 700 | `#0B7A56` | Success text on light background (AA compliant) |
-
-### Warning — Orange (red-leaning, distinct from Accent)
-
-Kept deliberately separate from Accent/Amber below — see the resolved
-conflict note. Used for: `has_overdue_report` flag, near-deadline
-notices, destructive-but-not-final confirmations.
-
-| Shade | Hex | Usage |
-|---|---|---|
-| 50 | `#FFF4ED` | Warning banner background |
-| 500 | `#E8590C` | Warning badge fill, warning icon |
-| 700 | `#B8430A` | Warning text on light background |
-
-### Error — Red
-
-Standard destructive/error semantic. Used for: rejected curation
-status, failed donation, form validation errors, destructive action
-buttons (e.g. remove representative).
-
-| Shade | Hex | Usage |
-|---|---|---|
-| 50 | `#FEF2F2` | Error banner/input background |
-| 500 | `#DC2626` | Error badge fill, error icon, error text |
-| 700 | `#B91C1C` | Destructive button hover/active |
-
-### Info — Blue
-
-Neutral informational semantic (distinct from both Primary green and
-Accent amber, so it's unambiguous). Used for: informational banners,
-`SecureUploadNote`, neutral tooltips.
-
-| Shade | Hex | Usage |
-|---|---|---|
-| 50 | `#EFF6FF` | Info banner background |
-| 500 | `#2563EB` | Info icon, info badge fill |
-| 700 | `#1D4ED8` | Info text on light background |
-
-### Accent — Amber (secondary/non-primary emphasis)
-
-Bright, warm amber — used sparingly for secondary emphasis that isn't
-a primary CTA and isn't a semantic state: highlight badges (e.g.
-"Kurasi Baru" tag), secondary buttons, illustrative accents. **Not**
-used for warning states — see conflict resolution below.
-
-| Shade | Hex | Usage |
-|---|---|---|
-| 50 | `#FFFBEB` | Accent badge background |
-| 400 | `#FBBF24` | Accent icon/illustration fill |
-| 500 | `#F59E0B` | Secondary button background, accent badge border |
-| 600 | `#D97706` | Secondary button hover/active |
-
-**Conflict resolution note (Primary green vs Success green, Accent
-amber vs Warning orange)**: both conflicts were flagged and resolved
-the same way — by shifting hue/shade rather than reusing a color
-across brand and semantic roles. This keeps "this is a call-to-action
-or highlight" and "this is telling you the status of something"
-visually distinct at a glance, which matters more here than
-elsewhere since Kencleng's core flows (curation, disbursement,
-fund-usage reporting) are status-heavy.
-
-### Neutral — Cool Gray
-
-| Shade | Hex | Usage |
-|---|---|---|
-| 50 | `#F8FAFC` | Page background |
-| 100 | `#F1F5F9` | Card background (alternate), input background |
-| 200 | `#E2E8F0` | Borders, dividers |
-| 300 | `#CBD5E1` | Disabled borders |
-| 400 | `#94A3B8` | Placeholder text, disabled text |
-| 500 | `#64748B` | Secondary/muted body text |
-| 700 | `#334155` | Body text |
-| 900 | `#0F172A` | Heading text, high-emphasis text |
+Do not introduce a token merely because one value appears once.
 
 ---
 
-## Typography
+# D. Token Evolution
 
-### Font families
+Tokens should represent stable visual decisions.
 
-- **Heading**: Plus Jakarta Sans (weights 600, 700, 800) — used for
-  all `h1`–`h4`, page titles, card titles, button labels.
-- **Body**: Inter (weights 400, 500, 600) — used for body copy, form
-  labels/inputs, table content, captions.
+Use this order:
 
-Both are loaded via `next/font/google` (self-hosted by Next.js at
-build time, not a runtime Google Fonts request) — keeps the "no
-external runtime dependency" property that matters for a PWA aiming
-for good offline/App-Shell behavior, while still getting the two-font
-pairing.
+```text
+existing token works
+→ reuse
 
-### Type scale
+existing token almost works
+→ reconsider composition before creating token
 
-| Token | Font | Size / Line-height | Weight | Usage |
-|---|---|---|---|---|
-| `display` | Heading | 2.25rem / 2.5rem | 800 | Landing/hero only |
-| `h1` | Heading | 1.875rem / 2.25rem | 700 | Page titles |
-| `h2` | Heading | 1.5rem / 2rem | 700 | Section titles, card group headers |
-| `h3` | Heading | 1.25rem / 1.75rem | 600 | Card titles |
-| `h4` | Heading | 1.125rem / 1.5rem | 600 | Sub-section labels |
-| `body-lg` | Body | 1.125rem / 1.75rem | 400 | Campaign narrative body |
-| `body` | Body | 1rem / 1.5rem | 400 | Default UI text |
-| `body-sm` | Body | 0.875rem / 1.25rem | 400 | Form labels, table cells, helper text |
-| `caption` | Body | 0.75rem / 1rem | 500 | Timestamps, badge text, `MaskedField` masked value |
+repeated legitimate need
+→ propose token extension
 
-Button labels use `body` (400px context) or `body-sm` (compact
-buttons) at weight 600 in the **body** font (Inter), not the heading
-font — keeps button text feeling like an action, not a title.
+one-off visual adjustment
+→ keep local
+```
 
----
+Avoid creating tokens named after pages or features.
 
-## Shape & Elevation
+Bad:
 
-### Border radius — "rounded jelas" (pronounced rounding)
+```text
+--campaign-card-green
+--donation-page-shadow
+--admin-header-radius
+```
 
-| Token | Value | Usage |
-|---|---|---|
-| `radius-sm` | 8px | Badges, chips, small icon buttons |
-| `radius-md` | 12px | Buttons, inputs, select/dropdown triggers |
-| `radius-lg` | 16px | Cards (campaign card, dashboard panel) |
-| `radius-xl` | 24px | Modals, auth overlay panel, large containers |
-| `radius-full` | 9999px | Avatars, pill badges, circular icon buttons |
+Prefer semantic visual concepts:
 
-### Shadow — soft elevation
+```text
+primary
+success
+surface
+border
+radius
+elevation
+```
 
-| Token | Value | Usage |
-|---|---|---|
-| `shadow-sm` | `0 1px 2px rgba(15, 23, 42, 0.06)` | Cards at rest |
-| `shadow-md` | `0 4px 12px rgba(15, 23, 42, 0.08)` | Dropdowns, popovers, hover-elevated cards |
-| `shadow-lg` | `0 12px 32px rgba(15, 23, 42, 0.12)` | Modals, auth overlay panel |
-
-Neutral-900-based shadow color (not pure black) keeps shadows soft
-and consistent with the cool-gray neutral palette rather than muddy.
+Domain meaning belongs above the token layer.
 
 ---
 
-## Icons
+# E. Color System
 
-**Lucide** (`lucide-react`) — already the natural fit given
-`shadcn/ui` primitives are already available in this environment's
-React tooling, and consistent stroke-based style pairs well with the
-rounded, friendly shape language above. Default stroke width 2px,
-sized at `1rem`/`1.25rem`/`1.5rem` matching `caption`/`body`/`h4` text
-contexts respectively so icons don't visually dominate adjacent text.
+## 1. Primary — Brand Green
 
----
+Current brand family:
 
-## Component Tokens
+| Shade         | Value     | Typical role                        |
+| ------------- | --------- | ----------------------------------- |
+| `primary-50`  | `#F0FBF4` | subtle selected/active tint         |
+| `primary-100` | `#DCF5E3` | low-emphasis interaction background |
+| `primary-300` | `#8CDCA8` | subdued/disabled contexts           |
+| `primary-500` | `#34A853` | brand accent/icon emphasis          |
+| `primary-600` | `#278A42` | primary action                      |
+| `primary-700` | `#1F6E35` | primary hover/active                |
+| `primary-900` | `#164825` | high-contrast green text            |
 
-### Buttons
+Primary green communicates:
 
-| Variant | Background | Text | Border | Usage |
-|---|---|---|---|---|
-| Primary | `primary-600`, hover `primary-700` | white | none | Donate, submit, main CTA — one per view |
-| Secondary | `accent-500`, hover `accent-600` | `neutral-900` | none | Secondary emphasis action (not destructive, not primary) |
-| Outline | transparent, hover `neutral-100` | `neutral-700` | `neutral-200` | Cancel, secondary navigation actions |
-| Ghost | transparent, hover `primary-100` | `primary-700` | none | Low-emphasis inline actions (table row actions) |
-| Destructive | `error-500`, hover `error-700` | white | none | Reject, remove representative, delete |
+```text
+Kencleng identity
++
+positive primary action
+```
 
-All buttons: `radius-md`, `body`/`body-sm` weight 600, `shadow-sm` on
-Primary/Secondary/Destructive only (Outline/Ghost stay flat —
-elevation implies "this is a filled, prominent action").
+It must not automatically mean:
 
-**Size tokens [NEW — validated via Claude Design prototype,
-2026-08-21]**: Small 36px, Medium 44px (default), Large 52px height.
-Medium is the default for nearly everything; Small is for compact
-contexts (table row actions, inline chips), Large for singular
-high-emphasis CTAs (e.g. the donate button on `/campaign/[id]`).
+```text
+success
+verified
+completed
+```
 
-### Inputs
-
-- Default: `neutral-100` background, `neutral-200` border, `radius-md`
-- Focus: border → `primary-500`, plus a `2px` `primary-100` focus
-  ring (offset, `focus-visible` only — keyboard-navigation
-  accessibility, not on mouse click)
-- Error: border → `error-500`, helper text in `error-700`,
-  `body-sm`/`caption`
-- Disabled: `neutral-50` background, `neutral-400` text, no border
-  color change
-
-### Badges (status indicators)
-
-Every status enum across the app (`Organization`/`Campaign` curation
-status, `Donation.status`, `has_overdue_report`, etc. — see
-`kencleng-erd.md`) maps onto one of the five semantic colors, not a
-new color per status:
-
-| Status examples | Semantic color |
-|---|---|
-| `pending_verification`, `draft` | Neutral (`neutral-100` bg, `neutral-700` text) |
-| `verified`, `published`, `success` (donation) | Success |
-| `rejected`, `failed` (donation) | Error |
-| `has_overdue_report = true`, near-deadline | Warning |
-| Informational tags (e.g. "Baru") | Accent |
-
-Badge shape: `radius-full` (pill), `caption` weight 500, `50`-shade
-background + `700`-shade text for AA-compliant contrast at small text
-size.
-
-### Progress bar (donation progress)
-
-Track: `neutral-200` background, `radius-full`. Fill: `primary-600`,
-`radius-full`. This is the single most benchmark-sensitive component
-(GoFundMe/Kitabisa pattern) — kept visually prominent (min height
-`0.75rem`) since it's the primary trust/progress signal on public
-campaign pages.
-
-**Fill color at 100% [NEW — validated via Claude Design prototype,
-2026-08-21]**: fill switches from `primary-600` to `success-500`
-once `collected_amount >= target_amount` — gives donors a clear,
-distinct "goal reached" signal rather than just a full-width green
-bar that looks the same as "almost there."
-
-### `MaskedField`
-
-Masked value rendered in `caption` size, `neutral-500` (muted, since
-it's intentionally non-actionable content). Reveal toggle: `Ghost`
-button variant, `Eye`/`EyeOff` Lucide icon only (no label text, to
-keep it compact next to the masked value). Behavior spec (reveal
-logging, persistence): `patterns.md` §C.
-
-### `CurationDecisionPanel`
-
-Approve action uses the Primary button style; Reject uses Destructive.
-The mandatory `decision_note` textarea (shown on reject) uses default
-Input styling with an Error-toned helper text noting it's required —
-reusing existing tokens rather than introducing panel-specific styles.
-Behavior spec: `patterns.md` §C and Pattern 5.
-
-### `SecureUploadNote`
-
-Rendered as a small inline banner: Info-50 background, Info-700 text,
-`radius-sm`, `Lock` or `ShieldCheck` Lucide icon at `caption` text
-size scale. Behavior spec: `patterns.md` §C.
-
-### Checkbox
-
-**[NEW — added 2026-08-21, gap found via Claude Design prototype]**
-Not originally specified; needed as soon as a real form
-(`/campaign/[id]/donate`'s `is_anonymous` field) required one.
-20×20px box, `radius-sm`, `1.5px` border: `neutral-200` unchecked,
-`primary-600` fill + white check icon when checked. Label text
-`body` weight 400, optional helper line below in `caption`/
-`text-muted`. Composed from existing input border/radius tokens
-rather than a new token family — consistent with the rest of the
-input system.
+Those concepts use semantic success treatment.
 
 ---
 
-## Accessibility
+## 2. Success
 
-- **Minimum contrast: WCAG AA (4.5:1 for body text, 3:1 for large
-  text/icons)**, applied when choosing which shade of each color pairs
-  with which text color above — e.g. `primary-600` (not `500`) is the
-  button background specifically because `500` fails AA against white
-  text at normal button-label size.
-- **Focus-visible only** ring styling (not on mouse click) — avoids
-  the common AI-generated-code pitfall of either missing focus states
-  entirely or showing them on every click, which is noisy for mouse
-  users and unhelpful for keyboard users if inconsistent.
-- Badge and status colors are always paired with a text label (never
-  color alone) — relevant given a chunk of Kencleng's status
-  vocabulary (`pending_verification` vs `rejected` vs `verified`) needs
-  to be distinguishable for color-blind users too.
+Current family:
+
+| Shade         | Value     |
+| ------------- | --------- |
+| `success-50`  | `#ECFDF9` |
+| `success-500` | `#0F9D6E` |
+| `success-700` | `#0B7A56` |
+
+Use for actual positive state:
+
+* successful operation;
+* completed state;
+* verified state when domain truth supports it;
+* achieved progress state.
+
+Do not use Success merely because an action is desirable.
 
 ---
 
-## Related Docs
+## 3. Warning
 
-- Page inventory: `page-map.md`
-- Page patterns & shared component behavior: `patterns.md`
-- Code architecture: `kencleng-frontend-tech-stack.md`
-- Status enums referenced in badge mapping: `kencleng-erd.md`
-- Roadmap tracking: `kencleng-roadmap-next-steps.md` (Step 10)
+Current family:
+
+| Shade         | Value     |
+| ------------- | --------- |
+| `warning-50`  | `#FFF4ED` |
+| `warning-500` | `#E8590C` |
+| `warning-700` | `#B8430A` |
+
+Use when something requires attention but is not an error.
+
+Examples may include:
+
+* approaching deadline;
+* overdue obligation;
+* potentially consequential condition.
+
+Warning must not be used as decorative warmth.
+
+---
+
+## 4. Error / Destructive
+
+Current family:
+
+| Shade       | Value     |
+| ----------- | --------- |
+| `error-50`  | `#FEF2F2` |
+| `error-500` | `#DC2626` |
+| `error-700` | `#B91C1C` |
+
+Use for:
+
+* failures;
+* invalid state;
+* rejection;
+* destructive actions;
+* critical corrective feedback.
+
+Do not make an entire surface red when a localized error treatment is sufficient.
+
+---
+
+## 5. Information
+
+Current family:
+
+| Shade      | Value     |
+| ---------- | --------- |
+| `info-50`  | `#EFF6FF` |
+| `info-500` | `#2563EB` |
+| `info-700` | `#1D4ED8` |
+
+Use for neutral explanatory information.
+
+Information blue is intentionally not the primary brand color.
+
+This keeps:
+
+```text
+brand/action
+```
+
+visually distinct from:
+
+```text
+neutral information
+```
+
+---
+
+## 6. Accent — Warm Amber
+
+Current family:
+
+| Shade        | Value     |
+| ------------ | --------- |
+| `accent-50`  | `#FFFBEB` |
+| `accent-400` | `#FBBF24` |
+| `accent-500` | `#F59E0B` |
+| `accent-600` | `#D97706` |
+
+Accent amber provides warmth and expressive emphasis.
+
+Good uses:
+
+* restrained highlights;
+* illustration details;
+* decorative product accents;
+* low-frequency labels;
+* milestone treatment when not semantically Success/Warning.
+
+Do **not** use Accent as:
+
+* warning;
+* error;
+* verification;
+* universal secondary CTA;
+* arbitrary colored decoration.
+
+Accent should feel special because it is used sparingly.
+
+---
+
+## 7. Neutral
+
+Current family:
+
+| Shade         | Value     | Typical role                |
+| ------------- | --------- | --------------------------- |
+| `neutral-50`  | `#F8FAFC` | page canvas                 |
+| `neutral-100` | `#F1F5F9` | subtle surfaces/input fills |
+| `neutral-200` | `#E2E8F0` | borders/dividers            |
+| `neutral-300` | `#CBD5E1` | subdued borders             |
+| `neutral-400` | `#94A3B8` | placeholders/disabled       |
+| `neutral-500` | `#64748B` | secondary text              |
+| `neutral-700` | `#334155` | normal body text            |
+| `neutral-900` | `#0F172A` | high-emphasis text          |
+
+Neutral colors carry most of the interface.
+
+Brand color should not carry the entire UI.
+
+---
+
+# F. Color Discipline
+
+Color communicates hierarchy and meaning.
+
+Do not:
+
+```text
+assign a different color to every status
+use color simply to make cards distinct
+color every icon differently
+use accent color because a section feels empty
+```
+
+Prefer:
+
+```text
+neutral interface
++
+intentional semantic color
++
+restrained brand warmth
+```
+
+A typical screen should visually be dominated by:
+
+```text
+neutral surfaces
+→ typography
+→ one clear primary action
+→ semantic accents only where meaningful
+```
+
+This prevents the product from feeling noisy or gamified.
+
+---
+
+# G. Surface Hierarchy
+
+Kencleng should not become a collection of nested cards.
+
+Use three conceptual surface levels.
+
+## Canvas
+
+The page background.
+
+Current default:
+
+```text
+neutral-50
+```
+
+## Base surface
+
+Primary content surface, often:
+
+```text
+white
+```
+
+Examples:
+
+* form region;
+* main content panel;
+* dialog;
+* important summary.
+
+## Subtle surface
+
+Used for grouping secondary content:
+
+```text
+neutral-50 / neutral-100
+```
+
+depending on surrounding contrast.
+
+---
+
+## Card rule
+
+A card is appropriate when the content is:
+
+* an independently understandable item;
+* selectable/clickable as one unit;
+* meaningfully grouped from neighboring information;
+* repeated as part of a collection;
+* or needs a clear bounded surface.
+
+Do **not** create a card merely because a section exists.
+
+Bad:
+
+```text
+Page
+ └─ Card
+     ├─ Card
+     │   └─ Card
+     └─ Card
+```
+
+Good:
+
+```text
+Page
+ ├─ natural section
+ ├─ natural section
+ └─ bounded card where grouping matters
+```
+
+Prefer spacing and typography before adding containers.
+
+---
+
+# H. Typography
+
+## Font families
+
+### Heading
+
+**Plus Jakarta Sans**
+
+Weights:
+
+```text
+600
+700
+800
+```
+
+Used for:
+
+* display;
+* page titles;
+* meaningful section headings;
+* card/item titles.
+
+### Body
+
+**Inter**
+
+Weights:
+
+```text
+400
+500
+600
+```
+
+Used for:
+
+* body copy;
+* controls;
+* labels;
+* inputs;
+* tables;
+* metadata;
+* buttons.
+
+Do not use the heading font for every emphasized label.
+
+Typography should create hierarchy without relying on decorative color.
+
+---
+
+# I. Type Scale
+
+Current scale:
+
+| Token     | Size / line-height | Typical use             |
+| --------- | ------------------ | ----------------------- |
+| `display` | `36 / 40px`        | hero/marketing emphasis |
+| `h1`      | `30 / 36px`        | page title              |
+| `h2`      | `24 / 32px`        | major section           |
+| `h3`      | `20 / 28px`        | card/section title      |
+| `h4`      | `18 / 24px`        | subsection              |
+| `body-lg` | `18 / 28px`        | narrative/intro         |
+| `body`    | `16 / 24px`        | standard UI/body        |
+| `body-sm` | `14 / 20px`        | secondary/helper UI     |
+| `caption` | `12 / 16px`        | metadata only           |
+
+The scale is intentionally restrained.
+
+Do not increase heading size merely to make a page feel more designed.
+
+Large typography is appropriate when the page is intentionally expressive, especially marketing/landing surfaces.
+
+Operational product surfaces should prioritize information density and scanability.
+
+---
+
+# J. Typography Hierarchy
+
+Use weight before introducing unnecessary size jumps.
+
+Recommended emphasis:
+
+```text
+Primary heading
+→ size + weight
+
+Secondary hierarchy
+→ moderate size + weight
+
+Metadata
+→ smaller size + muted color
+
+Important number
+→ weight/size appropriate to context
+```
+
+Do not style every amount as a giant dashboard number.
+
+Money prominence should follow its importance to the user's current decision.
+
+For narrative text, avoid excessively wide lines.
+
+Prefer a readable text measure rather than allowing paragraphs to span an entire dashboard-width container.
+
+For aligned financial/tabular values, consider tabular numerals when it materially improves comparison.
+
+---
+
+# K. Spacing and Rhythm
+
+Kencleng uses Tailwind's existing 4px-based spacing scale.
+
+Do not introduce a parallel custom spacing system without demonstrated need.
+
+Common rhythm should center around:
+
+```text
+4px   micro separation
+8px   tightly related elements
+12px  compact internal grouping
+16px  standard component gap/padding
+24px  section-level grouping
+32px  major section separation
+48px  page-level separation
+64px+ expressive/marketing breathing room
+```
+
+These are guidelines, not mandatory pairings.
+
+The principle is:
+
+> **Distance communicates relationship.**
+
+Related elements should be visually closer than unrelated sections.
+
+Avoid mechanically applying the same `gap-6` everywhere.
+
+---
+
+# L. Density
+
+Kencleng has different density needs.
+
+## Public / donation-facing surfaces
+
+Bias toward:
+
+* easier scanning;
+* larger breathing room;
+* trust/context visibility;
+* strong content hierarchy.
+
+## Forms
+
+Bias toward:
+
+* predictable vertical rhythm;
+* compact relationship between label, control, helper/error;
+* enough space between unrelated field groups.
+
+## Admin / curator operational surfaces
+
+May be denser because comparison and repeated actions matter.
+
+Density must not reduce:
+
+* readability;
+* target size;
+* status comprehension;
+* error visibility.
+
+Do not force marketing-level whitespace into operational dashboards.
+
+Do not force dense admin-table spacing onto public campaign pages.
+
+---
+
+# M. Layout and Content Width
+
+Prefer a small number of meaningful layout widths rather than arbitrary `max-width` values per route.
+
+Conceptual categories:
+
+```text
+reading
+form
+standard content
+wide operational/data
+full-bleed expressive
+```
+
+Exact production utilities/components may evolve as repeated usage demonstrates stable values.
+
+Do not let a narrative paragraph inherit a very wide dashboard container.
+
+Do not make forms unnecessarily wide simply because viewport space exists.
+
+---
+
+# N. Shape
+
+Current radius scale:
+
+| Token         | Value       | Typical role                      |
+| ------------- | ----------- | --------------------------------- |
+| `radius-sm`   | 8px         | compact controls/badges           |
+| `radius-md`   | 12px        | buttons/inputs                    |
+| `radius-lg`   | 16px        | ordinary cards/panels             |
+| `radius-xl`   | 24px        | large expressive/overlay surfaces |
+| `radius-full` | pill/circle | pills, avatars, circular controls |
+
+The product uses clearly rounded forms, but not every object should be maximally rounded.
+
+Hierarchy:
+
+```text
+small object
+→ smaller radius
+
+larger surface
+→ larger radius when appropriate
+```
+
+Avoid the generic AI pattern:
+
+```text
+everything rounded-3xl
+```
+
+Large radius is an expressive choice, not a default quality signal.
+
+---
+
+# O. Elevation
+
+Current shadows:
+
+| Token       | Typical role         |
+| ----------- | -------------------- |
+| `shadow-sm` | subtle elevated item |
+| `shadow-md` | popover/dropdown     |
+| `shadow-lg` | modal/high overlay   |
+
+Prefer borders and surface contrast for ordinary page structure.
+
+Use elevation when there is a real visual stacking relationship.
+
+Good:
+
+```text
+popover above page
+modal above overlay
+floating menu
+```
+
+Less appropriate:
+
+```text
+every dashboard card
+every form field
+every section
+```
+
+A flat interface with strong spacing can feel more trustworthy than one filled with floating surfaces.
+
+---
+
+# P. Buttons and Action Hierarchy
+
+Action hierarchy follows UX intent defined in `patterns.md`.
+
+## Primary
+
+Visual treatment:
+
+```text
+primary-600
+white text
+primary-700 hover
+```
+
+Use for the dominant safe action.
+
+Most surfaces should have at most one visually dominant primary action within the same decision context.
+
+---
+
+## Secondary
+
+**Target v2 direction: neutral rather than amber-filled.**
+
+Recommended treatment:
+
+```text
+white / transparent surface
+neutral-700 text
+neutral-200 border
+neutral-100 hover
+```
+
+Use for legitimate secondary actions.
+
+This keeps secondary actions visible without competing with Primary.
+
+The existing amber-filled `secondary` component variant should be migrated deliberately through shared-component impact analysis rather than changed silently.
+
+---
+
+## Accent action
+
+Do not make Accent a universal button tier.
+
+When a rare expressive action genuinely needs warm emphasis, establish it intentionally rather than treating Amber as the automatic second-most-important button.
+
+---
+
+## Ghost
+
+Use for low-emphasis actions where surrounding context already establishes affordance.
+
+Do not use icon-only Ghost buttons when the action would be ambiguous without a label or accessible name.
+
+---
+
+## Destructive
+
+Use Error semantic treatment.
+
+Destructive actions should not be visually mistaken for the safe Primary action.
+
+Use filled destructive treatment when prominence/friction warrants it; lower-emphasis destructive actions may use text/outline treatment where the component system supports it.
+
+---
+
+# Q. Button Size
+
+Current heights:
+
+```text
+Small   36px
+Medium  44px
+Large   52px
+```
+
+Medium remains the standard interactive size.
+
+Small is appropriate for compact operational contexts, but should not become the default for touch-heavy/mobile interactions.
+
+Large is for singular high-emphasis actions, not as a way to make ordinary actions feel more important.
+
+---
+
+# R. Inputs
+
+Default visual contract:
+
+* 44px standard control height where appropriate;
+* `radius-md`;
+* neutral background/border;
+* strong readable foreground;
+* visible placeholder distinction;
+* primary focus treatment;
+* error semantic border/helper;
+* disabled treatment clearly inactive.
+
+A field group should visually read as:
+
+```text
+Label
+Control
+Helper / Error
+```
+
+Do not make placeholders substitute for labels.
+
+Do not use saturated colored input backgrounds for ordinary state.
+
+Error styling must remain understandable without color alone.
+
+---
+
+# S. Status and Badges
+
+Badge tones should map many product states onto a small semantic visual vocabulary:
+
+```text
+neutral
+success
+warning
+error
+info
+accent
+```
+
+Do not create a new color for each backend enum.
+
+However:
+
+> **Not every status should become a pill.**
+
+Use a Badge when compact state recognition is useful.
+
+For consequential states, use:
+
+```text
+status label
++
+explanation / consequence
+```
+
+through appropriate supporting text or Banner treatment.
+
+A pill alone should not carry critical financial or workflow meaning.
+
+---
+
+# T. Banners and Feedback Surfaces
+
+Use banners for section/page-level feedback requiring persistent attention.
+
+Semantic variants:
+
+```text
+success
+error
+warning
+info
+```
+
+Keep banners visually calm.
+
+Avoid:
+
+* oversized icons;
+* heavy saturated fills;
+* stacked banners for every message;
+* using banners where field-level feedback is more appropriate.
+
+The visual weight should match the consequence.
+
+---
+
+# U. Progress Visualization
+
+Progress is especially important on campaign-facing surfaces because it contributes to comprehension and trust.
+
+The existing progress treatment uses:
+
+```text
+neutral track
++
+primary fill
++
+success treatment when completed
+```
+
+The visual bar must not carry meaning alone.
+
+Pair it with explicit textual context such as:
+
+```text
+amount collected
+target
+percentage/progress when useful
+```
+
+Do not add animation that makes financial progress appear more dramatic or urgent than the underlying data.
+
+---
+
+# V. Iconography
+
+Standard utility iconography may use the established library consistently.
+
+Utility icons should:
+
+* use a consistent stroke family;
+* avoid unnecessary filled-vs-outline mixing;
+* remain subordinate to text;
+* use predictable size;
+* have accessible names when needed.
+
+Default sizes may center around:
+
+```text
+16px
+20px
+24px
+```
+
+depending on context.
+
+Do not automatically place every icon inside:
+
+```text
+colored rounded square
+```
+
+That treatment should exist only where the visual system intentionally calls for it.
+
+Product-semantic and expressive visual decisions follow `brand-and-visual-assets.md`.
+
+Library availability must not determine brand identity.
+
+---
+
+# W. Illustration and Imagery Relationship
+
+This document does not define individual assets.
+
+The visual system expects expressive assets to harmonize with:
+
+* warm restrained palette;
+* rounded but not childish geometry;
+* clear focal hierarchy;
+* calm compositions;
+* restrained detail inside operational product surfaces.
+
+Hero/empty/placeholder/logo asset rules belong to `brand-and-visual-assets.md`.
+
+Do not compensate for a missing expressive asset by adding arbitrary gradient or icon decoration.
+
+---
+
+# X. Backgrounds and Decorative Treatment
+
+Default product screens should use simple, calm backgrounds.
+
+Decorative backgrounds are most appropriate for:
+
+* landing/marketing surfaces;
+* onboarding;
+* selected milestone moments;
+* purposeful empty states.
+
+Avoid default AI decoration:
+
+```text
+random gradient blob
+blurred orb
+glassmorphism panel
+mesh gradient
+floating icon cloud
+```
+
+unless it is intentionally part of the approved brand visual language.
+
+Whitespace is a valid background.
+
+---
+
+# Y. Motion
+
+Motion should explain change or reinforce continuity.
+
+Good purposes:
+
+* showing an element opening/closing;
+* communicating state transition;
+* preserving spatial context;
+* lightweight feedback after interaction.
+
+Motion should be:
+
+```text
+short
+calm
+predictable
+interruptible where appropriate
+```
+
+Typical interaction transitions should usually remain within roughly:
+
+```text
+120–220ms
+```
+
+Larger panel/overlay transitions may be slightly longer when spatial continuity benefits.
+
+Do not use:
+
+* bounce as a default;
+* gratuitous entrance animations;
+* continuous decorative motion in operational screens;
+* confetti for routine financial/security actions;
+* animation that delays user progress.
+
+Respect reduced-motion preferences.
+
+---
+
+# Z. Responsive Visual Behavior
+
+Responsive design is not desktop UI compressed into a narrower width.
+
+When space decreases, preserve this priority:
+
+```text
+primary task
+→ trust/consequence information
+→ essential content
+→ supporting content
+→ decoration
+```
+
+Decoration should usually yield before meaningful information.
+
+Common transformations may include:
+
+```text
+multi-column → stacked
+sidebar → inline/disclosure/drawer
+action row → stacked or wrapped
+dense metadata → reorganized hierarchy
+```
+
+Do not reduce typography to illegibly small sizes merely to preserve desktop composition.
+
+Do not hide important content simply to avoid redesigning the layout.
+
+Engineering robustness rules live in Harscode frontend best practices; this document owns the intended visual hierarchy.
+
+---
+
+# AA. Accessibility as Visual Quality
+
+Accessibility is part of visual maturity, not a later compliance pass.
+
+Visual requirements include:
+
+* WCAG-appropriate contrast;
+* clear focus indication;
+* readable text hierarchy;
+* no color-only semantic communication;
+* visible invalid/disabled states;
+* sufficiently large interactive targets;
+* layouts that remain usable under text growth/zoom.
+
+Muted text must remain readable.
+
+Do not make important explanatory text low contrast simply because it is visually secondary.
+
+Detailed interaction accessibility guidance belongs to frontend engineering best practices.
+
+---
+
+# AB. Long Content and Indonesian Copy
+
+Production UI must survive real Indonesian-language content.
+
+Do not design only against short English-like labels or mock strings.
+
+Expect:
+
+* long organization names;
+* long campaign titles;
+* long rejection/validation explanations;
+* large formatted Rupiah values;
+* multi-line button/label pressure in constrained layouts where unavoidable.
+
+Prefer flexible composition over truncation.
+
+Truncate only when full content remains available through an appropriate interaction and the product context permits it.
+
+---
+
+# AC. Anti-Generic AI UI Guardrails
+
+AI-generated interfaces frequently converge on visually polished but interchangeable patterns.
+
+Kencleng should actively resist unnecessary defaults such as:
+
+### Cardification
+
+```text
+every section
+→ rounded card + shadow
+```
+
+Use natural page hierarchy first.
+
+### Icon-box repetition
+
+```text
+every heading
+→ icon inside colored rounded square
+```
+
+Use when meaningfully established, not automatically.
+
+### Dashboard-stat reflex
+
+Do not create:
+
+```text
+three/four giant KPI cards
+```
+
+because the page is called a dashboard.
+
+Metrics must serve a real user question.
+
+### Gradient reflex
+
+Do not use gradients simply to make a hero or CTA feel premium.
+
+### Excessive pills
+
+Not every metadata value is a badge.
+
+### Giant-centered-heading reflex
+
+Operational product pages usually benefit more from scannable hierarchy than marketing-size centered typography.
+
+### Everything floats
+
+Do not shadow every card, input, toolbar, and panel.
+
+### Generic fintech imagery
+
+Avoid random:
+
+```text
+coins
+wallets
+shields
+handshakes
+floating charts
+```
+
+unless they genuinely communicate Kencleng's specific story.
+
+### Decorative novelty without meaning
+
+If a visual decision could be removed without changing meaning, ask whether it is actually improving the experience.
+
+---
+
+# AD. Distinctiveness Test
+
+For expressive surfaces, ask:
+
+> **Could this exact interface belong to an unrelated SaaS product after changing only the logo and primary color?**
+
+If yes, inspect whether a meaningful Kencleng-specific opportunity is being missed.
+
+Do not respond by adding arbitrary decoration.
+
+Distinctiveness should come from:
+
+* product meaning;
+* content hierarchy;
+* brand assets;
+* relevant visual metaphor;
+* coherent tone.
+
+Not novelty for its own sake.
+
+---
+
+# AE. Visual Readiness
+
+Before implementation, visual readiness can be:
+
+## READY
+
+Existing guidelines/components/reference establish the visual direction.
+
+Use them.
+
+## PARTIAL
+
+The visual system covers most needs but a local treatment is unresolved.
+
+Agent may extend existing visual rules when the extension does not establish a new brand/system contract.
+
+## OPEN
+
+The surface requires a meaningful new visual language, expressive asset, component-system variation, or brand-defining decision.
+
+Perform design exploration before treating an implementation as canonical.
+
+This complements the Design Readiness model in `product-design-principles.md`.
+
+---
+
+# AF. Prototype Relationship
+
+A prototype is evidence and visual precedent according to `prototype-reference.md`.
+
+Translate:
+
+```text
+hierarchy
+composition
+states
+visual intent
+responsive intent
+```
+
+Do not automatically copy:
+
+```text
+component boundaries
+raw spacing values
+arbitrary prototype CSS
+temporary asset choices
+local mock-state architecture
+```
+
+Production design should converge toward the canonical Kencleng visual system.
+
+When a prototype intentionally proposes a system-level visual evolution, evaluate that evolution explicitly rather than silently normalizing it into code.
+
+---
+
+# AG. Component Relationship
+
+`components/ui/` is the production implementation surface of this visual system.
+
+The authority chain is:
+
+```text
+product-design-principles
+        ↓
+design-guidelines
+        ↓
+component contract
+        ↓
+component implementation
+```
+
+A component should not silently establish a new system rule.
+
+Examples that require design-system consideration:
+
+* new global semantic color;
+* new standard radius;
+* new button hierarchy;
+* new global elevation level;
+* new recurring icon treatment.
+
+Local implementation details do not require documentation updates unless they become stable system behavior.
+
+Shared-component change discipline lives in:
+
+```text
+frontend/components/README.md
+```
+
+---
+
+# AH. Visual Verification
+
+When rendered UI changes, visual quality must be verified in the rendered product.
+
+Relevant checks may include:
+
+* hierarchy;
+* spacing/rhythm;
+* realistic content;
+* responsive composition;
+* visual state;
+* focus visibility;
+* semantic color use;
+* component consistency;
+* approved-reference alignment.
+
+Build-time inspection supports iteration.
+
+Independent Testing owns final rendered verification when the workflow provides a separate Testing phase.
+
+Do not use pixel identity as the default definition of design correctness.
+
+Evaluate **intent + system consistency + observable quality**.
+
+---
+
+# AI. Dark Mode
+
+Dark mode remains outside current v1 scope unless product evidence changes that decision.
+
+Do not:
+
+* build an unused parallel theme;
+* create dark variants "for completeness";
+* double every design decision prematurely.
+
+However, continue using semantic tokens and avoid unnecessary hardcoding so future theming remains feasible.
+
+---
+
+# AJ. Evolution
+
+The design system is living but should not drift casually.
+
+Update this document when:
+
+* repeated product work reveals a missing visual rule;
+* multiple components independently solve the same visual problem;
+* a token repeatedly fails legitimate use cases;
+* product personality evolves intentionally;
+* accessibility or responsive verification exposes systemic weakness;
+* a new approved brand/asset language changes visual-system expectations.
+
+Do not update the design system for one isolated preference.
+
+When a system-level visual change affects existing shared primitives:
+
+```text
+design decision
+→ shared-component impact analysis
+→ migration
+→ representative consumer verification
+→ documentation update
+```
+
+A prettier local screenshot is not sufficient evidence for a global design-system change.
+
+---
+
+# AK. Related Documents
+
+* `product-design-principles.md` — product personality, hierarchy, trust, design authority
+* `brand-and-visual-assets.md` — logo, icons, illustrations, placeholders, visual assets, generation/handoff
+* `patterns.md` — reusable UX behavior
+* `page-map.md` — route/persona inventory
+* `prototype-reference.md` — prototype visual authority
+* `design-reference-usage.md` — prototype-to-production translation
+* `frontend/components/README.md` — component ownership, living registry, shared-component impact policy
+* `../project/kencleng-frontend-tech-stack.md` — frontend technology and architecture
