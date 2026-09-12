@@ -112,6 +112,8 @@ post-migration authority cleanup
 → first representative Codex frontend feature
 ```
 
+The authority-cleanup step is represented by the current A1 cleanup PR; once merged, the next implementation work is the Button shared-component migration followed by Playwright wiring.
+
 Before declaring the Codex frontend workflow operationally ready, verify that:
 
 - always-loaded instructions are compact and non-conflicting;
