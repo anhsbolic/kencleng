@@ -137,7 +137,9 @@ List intentionally accepted residual risks and the reason they remain accepted.
 
 ## Tasks
 
-One row per coherent project work item. A task may cover one endpoint, several tightly coupled endpoints, or another meaningful feature unit. Implementation/session boundaries follow the active Harscode workflow; Kencleng project preconditions are described in `docs/kencleng-agentic-workflow.md` §7.
+One row per coherent project work item. A task may cover one endpoint, several tightly coupled endpoints, or another meaningful feature unit.
+
+Implementation/session boundaries follow the active Harscode workflow. Kencleng project preconditions are defined under **Per-feature project preconditions** in `docs/kencleng-agentic-workflow.md`.
 
 | # | Task | Endpoints | Tier | Rationale | Parallel group |
 |---|---|---|---|---|---|
@@ -147,11 +149,15 @@ For Tier-0 sub-areas, name the protected implementation area explicitly; do not 
 
 ## Parallel / serial grouping
 
-State which tasks can run concurrently and which must run serially. Consider overlapping files, shared tables, migration numbering, API schema, domain dependencies, and broad shared frontend components. See `docs/kencleng-agentic-workflow.md` §20.
+State which tasks can run concurrently and which must run serially. Consider overlapping files, shared tables, migration numbering, API schema, domain dependencies, and broad shared frontend components.
+
+See **Parallelization and write scopes** in `docs/kencleng-agentic-workflow.md`.
 
 ## Status tracker
 
-Keep domain task status current. Cross-domain backend/frontend/integration state belongs in `docs/project/kencleng-development-tracker.md` as described by `docs/kencleng-agentic-workflow.md` §24.
+Keep domain task status current.
+
+Cross-domain backend/frontend/integration state belongs in `docs/project/kencleng-development-tracker.md`; see **Project status tracking** in `docs/kencleng-agentic-workflow.md`.
 
 | # | Status | Notes |
 |---|---|---|
@@ -169,7 +175,7 @@ Keep domain task status current. Cross-domain backend/frontend/integration state
 
 > File: `docs/spec/<domain-dir>/features/<NN>-<fitur>.md`
 > Status: draft / agreed / implemented
-> Risk tier: 0 / 1 / 2 / 3 (see `docs/kencleng-agentic-workflow.md` §4)
+> Risk tier: 0 / 1 / 2 / 3 (see **Project risk tiering** in `docs/kencleng-agentic-workflow.md`)
 > Domain: <domain name>
 
 ## Endpoint / feature surface
@@ -211,7 +217,8 @@ Record material assumptions or unresolved ambiguity. Do not leave an implementat
 
 ## 6. Rules for filling these out
 
-1. **Claims require evidence.** Claims that something is mitigated/tested should point to concrete executable evidence when such evidence exists. See `docs/kencleng-agentic-workflow.md` §22–§23.
-2. **Keep status current.** `draft` is not a final implementation basis; `agreed` means reviewed/accepted by the appropriate human/project authority. See `docs/kencleng-agentic-workflow.md` §19.
-3. **Implementation must not rewrite requirements to make code pass.** Requirement/spec changes are separate decisions governed by root `AGENTS.md` §4 and the appropriate human/project authority.
+1. **Claims require evidence.** Claims that something is mitigated/tested should point to concrete executable evidence when such evidence exists. See **Evidence and verification ownership** in `docs/kencleng-agentic-workflow.md`.
+2. **Keep status current.** `draft` is not a final implementation basis; `agreed` means reviewed/accepted by the appropriate human/project authority. See **Human authority** in `docs/kencleng-agentic-workflow.md`.
+3. **Implementation must not rewrite requirements to make code pass.** Requirement/spec changes are separate decisions governed by root `AGENTS.md` and the appropriate human/project authority.
 4. **Record ambiguity rather than silently resolving it.** Use `Assumptions / open questions` whenever a material assumption is required because the specification is unclear.
+5. **Prefer named cross-references over workflow section numbers.** The Kencleng orchestration overlay is intentionally allowed to be compacted/reorganized; topic names are more stable than historical `§NN` references.
