@@ -47,6 +47,9 @@ prototype authority / consumption
 frontend component contracts
 → frontend/components/README.md
 
+project status
+→ docs/project/kencleng-development-tracker.md
+
 Kencleng project orchestration
 → docs/kencleng-agentic-workflow.md
 
@@ -199,9 +202,9 @@ Human approval is required where defined for:
 
 An agent must not approve its own work where independent human authority is required.
 
-## 12. Playbooks and generated artifacts
+## 12. One-off docs and generated artifacts
 
-Files under `.agents/docs/` are on-demand project-specific playbooks. They do not override canonical specs, architecture docs, UI/UX authorities, or Harscode workflow.
+One-off setup/playbook documents, when present, are on-demand context only. They do not override canonical specs, architecture docs, UI/UX authorities, root/scoped `AGENTS.md`, or Harscode workflow.
 
 Generated exploration, techplan, build, review, testing, and PR artifacts are task evidence/history, not automatically project-wide precedent. Promote reusable truth into the source that owns that concern.
 
@@ -210,6 +213,7 @@ Generated exploration, techplan, build, review, testing, and PR artifacts are ta
 Project:
 
 - `docs/kencleng-agentic-workflow.md` — Kencleng orchestration overlay
+- `docs/project/kencleng-development-tracker.md` — current cross-domain/project status
 - `docs/project/kencleng-repo-setup.md`
 - `docs/spec/README.md`
 - `docs/project/kencleng-backend-tech-stack.md`
