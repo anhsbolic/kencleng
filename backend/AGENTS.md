@@ -67,6 +67,7 @@ The root Caddy proxy currently has a known `/api` prefix-handling caveat documen
 - `docs/spec/<domain-dir>/invariants.md`, `threat-model.md`, feature specs — domain correctness/security/behavior; see `docs/spec/README.md`.
 - `api/openapi.yaml` — API shape.
 - `docs/project/kencleng-backend-tech-stack.md` — backend architecture.
+- `docs/project/kencleng-development-tracker.md` — current cross-domain/project status.
 - `docs/kencleng-agentic-workflow.md` — Kencleng risk/human/integration orchestration.
 - Harscode — generic lifecycle and engineering best-practices.
 - Root `AGENTS.md` — repository-wide rules, protected paths, and write boundaries.
