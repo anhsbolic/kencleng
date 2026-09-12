@@ -20,4 +20,23 @@ describe("Button", () => {
     expect(button).toBeDisabled();
     expect(button).toHaveAttribute("aria-busy", "true");
   });
+
+  it("renders secondary as a neutral outlined action instead of an accent-filled action", () => {
+    render(<Button variant="secondary">Batal</Button>);
+
+    const button = screen.getByRole("button", { name: "Batal" });
+    expect(button).toHaveClass(
+      "bg-transparent",
+      "text-neutral-700",
+      "border",
+      "border-neutral-200",
+      "hover:bg-neutral-100"
+    );
+    expect(button).not.toHaveClass(
+      "bg-accent-500",
+      "text-neutral-900",
+      "shadow-sm",
+      "hover:bg-accent-600"
+    );
+  });
 });
