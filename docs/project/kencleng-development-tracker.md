@@ -84,6 +84,8 @@ These entries prove that the old domain status table is stale. They do **not** b
 
 The account task/spec documents intentionally remain unchanged in this cleanup PR: changing domain contract/status files deserves its own evidence-backed reconciliation rather than being hidden inside instruction compaction.
 
+**Remaining reconciliation work:** before relying on account `tasks.md` as current status, perform a dedicated evidence sweep of tasks 03–08 and update only status/path/reference metadata that can be proven. Do not bundle that work into unrelated frontend runtime changes.
+
 ## 5. Cross-cutting frontend readiness
 
 | Capability | Status | Notes |
