@@ -21,7 +21,7 @@ Benefits include:
 - easy clone/fork for a sandbox/open-source project;
 - explicit cross-stack integration without forcing backend/frontend production writes into the same implementation scope.
 
-Monorepo does **not** mean one agent session should freely modify both applications. Root and scoped `AGENTS.md` files define the write boundaries.
+Monorepo does **not** mean one agent session should freely modify both applications. Root and scoped `AGENTS.md` files define write boundaries.
 
 ### No CI/CD currently
 
@@ -143,7 +143,7 @@ docs/spec/1-account/
 backend/internal/domain/1-account/
 ```
 
-Instead, use `docs/spec/README.md` for spec structure and each architecture document for implementation layout.
+Use `docs/spec/README.md` for spec structure and each architecture document for implementation layout.
 
 ## 4. UI/UX and design references
 
@@ -243,7 +243,7 @@ Use:
 - `docs/ui-ux/` for frontend product/design truth;
 - `docs/project/kencleng-development-tracker.md` for current cross-domain status.
 
-If this document disagrees with an executable repository file about a command or topology detail, inspect the executable file and then update this document rather than treating old prose as stronger evidence.
+If this document disagrees with an executable repository file about a command or topology detail, inspect the executable file and update this document rather than treating old prose as stronger evidence.
 
 ## 10. Evolution
 
