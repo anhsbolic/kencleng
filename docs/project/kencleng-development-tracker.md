@@ -98,7 +98,7 @@ The account task/spec documents intentionally remain unchanged in this cleanup P
 | Living Component System | Present | `frontend/components/README.md` |
 | Prototype authority/usage v2 | Present | `docs/ui-ux/prototype-reference.md`, `design-reference-usage.md` |
 | Frontend architecture v2 | Present | `docs/project/kencleng-frontend-tech-stack.md` |
-| Authority cleanup after `3f5de5e` | In review | PR #1 compacts always-loaded instructions, restores fencing, creates this tracker, and removes stale competing guidance. |
+| Authority cleanup after `3f5de5e` | In review | Current PR compacts always-loaded instructions, restores fencing, creates this tracker, and removes stale competing guidance. |
 | Browser automation capability | Planned | Playwright selected, not yet wired; do not claim Playwright runs. |
 | Button Secondary v2 runtime adoption | Planned | Documentation targets neutral/outlined Secondary; runtime migration is a separate shared-component change. |
 | Codex harness optimization | Planned outside Kencleng | Harscode handoff will be staged only after Kencleng project truth/runtime feedback loop are clean. |
