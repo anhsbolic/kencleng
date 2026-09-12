@@ -4,7 +4,7 @@
 >
 > Status: Living project status
 >
-> Last reconciled: 2026-09-12 against main checkpoint `3f5de5e`
+> Last reconciled: 2026-09-12 against main through `749807a` plus the B2 browser-verification change
 >
 > Purpose: Keep cross-domain backend/frontend/integration status visible without putting dated progress into workflow policy.
 
@@ -82,7 +82,7 @@ Mainline history after the older `docs/spec/1-account/tasks.md` status snapshot 
 
 These entries prove that the old domain status table is stale. They do **not** by themselves prove every Harscode verification/finalization requirement was satisfied; that is why the domain remains `IN_PROGRESS` / `NEEDS_RECONCILIATION` here rather than being promoted automatically.
 
-The account task/spec documents intentionally remain unchanged in this cleanup PR: changing domain contract/status files deserves its own evidence-backed reconciliation rather than being hidden inside instruction compaction.
+The account task/spec documents intentionally remain unchanged in this cleanup sequence: changing domain contract/status files deserves its own evidence-backed reconciliation rather than being hidden inside cross-cutting frontend work.
 
 **Remaining reconciliation work:** before relying on account `tasks.md` as current status, perform a dedicated evidence sweep of tasks 03–08 and update only status/path/reference metadata that can be proven. Do not bundle that work into unrelated frontend runtime changes.
 
@@ -98,32 +98,32 @@ The account task/spec documents intentionally remain unchanged in this cleanup P
 | Living Component System | Present | `frontend/components/README.md` |
 | Prototype authority/usage v2 | Present | `docs/ui-ux/prototype-reference.md`, `design-reference-usage.md` |
 | Frontend architecture v2 | Present | `docs/project/kencleng-frontend-tech-stack.md` |
-| Authority cleanup after `3f5de5e` | In review | Current PR compacts always-loaded instructions, restores fencing, creates this tracker, and removes stale competing guidance. |
-| Browser automation capability | Planned | Playwright selected, not yet wired; do not claim Playwright runs. |
-| Button Secondary v2 runtime adoption | Planned | Documentation targets neutral/outlined Secondary; runtime migration is a separate shared-component change. |
-| Codex harness optimization | Planned outside Kencleng | Harscode handoff will be staged only after Kencleng project truth/runtime feedback loop are clean. |
+| Authority cleanup after `3f5de5e` | Present | Merged in PR #1 / `bdba6b0`; compact authority routing, Tier-0 fencing, living tracker, and stale-guidance cleanup are on main. |
+| Button Secondary v2 runtime adoption | Present | Merged in PR #2 / `749807a`; `Button.secondary` is neutral/outlined and covered by a targeted primitive regression test. |
+| Browser automation capability | Introduced by B2 | Playwright is wired as an explicit real-browser capability with Chromium, deterministic `/login` smoke coverage, and separate commands; it intentionally remains outside the fast `npm run verify` baseline. |
+| Codex harness optimization | Planned outside Kencleng | Harscode handoff starts after the browser-verification capability is executable and verified. |
 
-## 6. Current blockers before Codex frontend dogfood
+## 6. Readiness before Codex frontend dogfood
 
-The intended sequence is:
+The staged sequence is:
 
 ```text
-post-migration authority cleanup
-→ Button.secondary shared-component dogfood
-→ Playwright browser-verification capability
-→ Harscode Codex harness translation
-→ first representative Codex frontend feature
+post-migration authority cleanup       ✓ merged
+→ Button.secondary shared-component    ✓ merged
+→ Playwright browser verification      B2 change
+→ Harscode Codex harness translation   next after B2 verification
+→ first representative Codex feature
 ```
-
-Once the current authority-cleanup PR is merged, the next implementation work is the Button shared-component migration followed by Playwright wiring.
 
 Before declaring the Codex frontend workflow operationally ready, verify that:
 
 - always-loaded instructions are compact and non-conflicting;
 - current design/component authorities are discoverable;
 - shared-component change governance has been exercised on a real change;
-- rendered/browser verification is executable;
+- rendered/browser verification is executable in a clean checkout;
 - Codex translation remains harness translation rather than project policy duplication.
+
+The B2 browser capability is not considered operationally proven merely because config/test files exist. The dependency lock, Chromium install, fast baseline, and browser smoke must execute successfully from a real checkout before moving to the Harscode Codex translation step.
 
 ## 7. Update discipline
 
