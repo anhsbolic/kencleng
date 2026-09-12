@@ -1,29 +1,27 @@
 // File: frontend/opencode.jsonc
 //
-// Mirrors backend/opencode.jsonc — see the comments there for the full
-// rationale. Same layout assumption:
+// Assumes the local directory layout:
 //   kencleng-workspace/
-//   ├── kencleng/              (this repo)
-//   └── harscode-workspace/    (sibling repo, not part of kencleng)
+//   ├── kencleng/
+//   └── harscode-workspace/
 //
-// Run from frontend/, not the repo root, so backend/ stays out of a
-// frontend session's reach (and vice versa) — "docs" and "api" are
-// referenced individually to restore access to the shared contract
-// material that would otherwise sit above cwd.
+// Run OpenCode from frontend/. Frontend and backend remain separate
+// production write scopes by default. Shared docs/API are referenced
+// explicitly for context without exposing backend/ as normal write scope.
 {
   "$schema": "https://opencode.ai/config.json",
   "references": {
     "workspace": {
       "path": "../../harscode-workspace",
-      "description": "Generic, portable AI agent workflow guidance (code-review, testing, and pull-request phases; best-practices). Secondary reference only — this project's own AGENTS.md and docs/spec/ take precedence wherever the two disagree. Read workflow/README.md as the entry point. Note: best-practices/ here is currently Go/PostgreSQL/REST-API-focused — check workspace/best-practices/index.md, there may be little or nothing frontend-specific yet."
+      "description": "Generic portable workflow and engineering best-practices from Harscode, including current React/frontend guidance. Harscode owns the per-feature lifecycle; Kencleng owns project-specific architecture, product/design truth, orchestration, and project status. Read workflow/README.md and best-practices/index.md as entry points."
     },
     "docs": {
       "path": "../docs",
-      "description": "Kencleng project docs: docs/spec/domains/<domain>/ (invariants, threat-model, tasks.md, feature specs — the contract for what to build) and docs/kencleng-agentic-workflow.md, docs/project/*.md (process, tech stack, UX page map, design guidelines). Read before starting any task."
+      "description": "Kencleng project knowledge. Domain/feature truth lives under numbered docs/spec/<domain-dir>/ directories; docs/ui-ux/ owns product-design, UX, visual-system, asset, and prototype guidance; docs/project/ owns frontend architecture/context/current project status; docs/kencleng-agentic-workflow.md owns project orchestration. Use root/frontend AGENTS.md to route to the smallest relevant authority set."
     },
     "api": {
       "path": "../api",
-      "description": "OpenAPI 3.0.3 spec (openapi.yaml) — source of truth for request/response contracts, used by openapi-typescript for TS types. Check this before hand-writing any fetch call, TanStack Query hook, or form schema."
+      "description": "OpenAPI 3.0.3 contract used by openapi-typescript. Check openapi.yaml before hand-writing fetch payload/response types already defined by the contract."
     }
   }
 }

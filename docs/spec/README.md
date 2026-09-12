@@ -1,45 +1,53 @@
 # docs/spec — Structure & Templates
 
 > File: `docs/spec/README.md`
-> This guide explains the four types of spec documents that live in
-> `docs/spec/`, when each one is created/updated, and the blank
-> template for each type. See `docs/kencleng-agentic-workflow.md` for
-> the reasoning/principles behind this structure.
+>
+> This guide defines the four spec document types under `docs/spec/`, when they are created/updated, and their blank templates.
+>
+> `docs/kencleng-agentic-workflow.md` owns Kencleng-specific domain preparation, risk tiering, orchestration, and project-level coordination. Harscode owns the per-feature development lifecycle.
+
+Throughout this document, `<domain-dir>` means the actual numbered domain directory under `docs/spec/`, for example:
+
+```text
+1-account
+2-notification
+3-organization
+4-campaign
+5-donation
+6-disbursement
+```
+
+The numeric prefix expresses project/domain order. Backend package directories remain unnumbered (for example `backend/internal/domain/account/`); do not assume spec and package paths are literal mirrors.
 
 ## 1. Four document types
 
 | Type | Location | Lifespan | Written by |
 |---|---|---|---|
-| Domain invariant | `docs/spec/<domain>/invariants.md` | Once per domain, stable | Anhar (with drafting help from an agent), must be human-reviewed |
-| Threat model | `docs/spec/<domain>/threat-model.md` | Once per domain, revised on domain-level changes | Same as above |
-| Task list | `docs/spec/<domain>/tasks.md` | Once per domain, status updated as tasks complete | Same as above — see §3.1 |
-| Feature spec | `docs/spec/<domain>/features/<NN>-<fitur>.md` | New for each vertical slice/endpoint | Same as above, per feature |
+| Domain invariant | `docs/spec/<domain-dir>/invariants.md` | Once per domain, stable | Human/project authority; an agent may draft, human review required |
+| Threat model | `docs/spec/<domain-dir>/threat-model.md` | Once per domain, revised on domain-level changes | Same as above |
+| Task list | `docs/spec/<domain-dir>/tasks.md` | Once per domain, task status updated as work progresses | Same as above |
+| Feature spec | `docs/spec/<domain-dir>/features/<NN>-<fitur>.md` | New for each coherent feature/work item | Same as above, per feature |
 
-Layout is **domain-first**: every document about one domain lives
-under a single `docs/spec/<domain>/` folder (`account`, `notification`,
-`organization`, `campaign`, `donation`, `disbursement`), mirroring
-`backend/internal/domain/<domain>/`. This file (`docs/spec/README.md`)
-is the one exception — it's shared/cross-domain reference material, so
-it stays at `spec/` root. See `kencleng-repo-setup.md` §2.1 for the
-full rationale.
+Layout is **domain-first**: every spec about one domain lives under its single numbered domain directory. This file is the exception because it is shared/cross-domain reference material.
 
-Order of creation for a new domain: **domain invariant → domain
-threat model → task list → feature spec per endpoint**, because
-feature specs always reference back to the documents above rather
-than redefining anything, and tiering in the task list depends on
-what the invariants/threat model already surfaced.
+See `docs/project/kencleng-repo-setup.md` for repository structure.
 
-All of these documents are **executable specs for the agent** — as
-opposed to the documents in `docs/project/`, which are narrative,
-meant for humans to read. If a `docs/project/*` document and a
-`docs/spec/*` document ever disagree for the same domain/feature,
-`docs/spec/*` wins (since it's the hardened, more precise version) —
-but the conflict itself must be resolved explicitly (noted down, not
-silently ignored on one side).
+Order of creation for a new domain:
+
+```text
+domain invariant
+→ threat model
+→ task list
+→ feature specs for coherent work items
+```
+
+These documents are executable domain/feature specifications. They own domain behavior, acceptance criteria, invariants, and threat-model expectations. Other documents own architecture, design, workflow, or project status.
+
+If another document conflicts with `docs/spec/*` on domain/feature behavior, the spec is authoritative and the contradiction must be surfaced explicitly. Do not use this as a blanket precedence claim over documents that own different concerns.
 
 ## 2. Template: Domain Invariant
 
-`docs/spec/<domain>/invariants.md`
+`docs/spec/<domain-dir>/invariants.md`
 
 ```markdown
 # Domain Invariant — <domain name>
@@ -53,28 +61,19 @@ One or two sentences: what this domain is responsible for.
 
 ## Invariants
 
-Each invariant is written as a machine-verifiable statement (not
-narrative), plus when it must hold.
+Each invariant is written as a machine-verifiable statement plus when it must hold.
 
 ### INV-<domain>-01: <short name>
 
-- **Statement**: <condition that must always hold, phrased so it can
-  become an assertion — e.g. an equation, a bound, a state-transition
-  rule>
-- **Holds after operations**: <list of operations/endpoints that can
-  affect this invariant>
-- **Verification**: <name of the test/property test that proves this>
-
-(repeat for each invariant)
+- **Statement**: <condition that must always hold>
+- **Holds after operations**: <operations/endpoints that can affect it>
+- **Verification**: <test/property/evidence that proves it>
 
 ## State machine (if applicable)
 
-If the domain has an entity with changing status (e.g. campaign,
-disbursement), describe the valid states and allowed transitions. Any
-transition not listed is invalid and must be rejected at the code
-level.
+Describe valid states and allowed transitions. Any transition not listed is invalid.
 
-```
+```text
 draft -> submitted -> approved -> disbursed
                     -> rejected
 ```
@@ -87,7 +86,7 @@ draft -> submitted -> approved -> disbursed
 
 ## 3. Template: Threat Model
 
-`docs/spec/<domain>/threat-model.md`
+`docs/spec/<domain-dir>/threat-model.md`
 
 ```markdown
 # Threat Model — <domain name>
@@ -97,17 +96,10 @@ draft -> submitted -> approved -> disbursed
 
 ## Actors & trust boundaries
 
-List the actors that interact with this domain (e.g. guest donor,
-registered donor, org owner/staff, admin, external systems), and
-where data crosses a trust boundary (e.g. an unauthenticated guest
-can write to the donations table).
-
 | Actor | Authenticated? | Trust boundary crossed |
 |---|---|---|
 
 ## STRIDE per component/endpoint
-
-For each significant component/endpoint in this domain:
 
 ### <endpoint/component name>
 
@@ -120,21 +112,16 @@ For each significant component/endpoint in this domain:
 | Denial of service | ... | ... | ... |
 | Elevation of privilege | ... | ... | ... |
 
-Leave rows that are genuinely not applicable blank (don't force an
-entry that doesn't apply), but write "N/A — <reason>" explicitly
-rather than deleting the row silently, so it's clear it was
-considered rather than missed.
+Use `N/A — <reason>` when a category genuinely does not apply so it is clear the category was considered.
 
 ## Knowingly accepted residual risk
 
-Summary of risks that have been identified but are intentionally not
-mitigated further in v1, with the reason (e.g. "over-engineering for
-a sandbox project," "no demonstrated need yet").
+List intentionally accepted residual risks and the reason they remain accepted.
 ```
 
 ## 4. Template: Domain Task List
 
-`docs/spec/<domain>/tasks.md`
+`docs/spec/<domain-dir>/tasks.md`
 
 ```markdown
 # Task List — <domain name>
@@ -144,74 +131,62 @@ a sandbox project," "no demonstrated need yet").
 
 ## Delivery KPI / metrics
 
-The concrete, measurable bar every task in this domain must clear
-before merge (proposed once, applies to all tasks below unless a task
-overrides it with a stricter requirement).
-
 | Metric | Applies to | Threshold |
 |---|---|---|
 | ... | ... | ... |
 
 ## Tasks
 
-One row per vertical slice (a task may group several tightly-coupled
-endpoints — see `kencleng-agentic-workflow.md` §11 "scope fencing" for
-what counts as one slice).
+One row per coherent project work item. A task may cover one endpoint, several tightly coupled endpoints, or another meaningful feature unit.
+
+Implementation/session boundaries follow the active Harscode workflow. Kencleng project preconditions are defined under **Per-feature project preconditions** in `docs/kencleng-agentic-workflow.md`.
 
 | # | Task | Endpoints | Tier | Rationale | Parallel group |
 |---|---|---|---|---|---|
 | 1 | ... | `METHOD /path`, ... | 0/1/2/3 | why this tier | A / serial |
 
-For any task with a Tier 0 sub-area embedded inside an otherwise
-higher-tier task (e.g. JWT/TOTP core logic inside an agent-generated
-endpoint), name the specific sub-area and note it needs file-path
-fencing in `AGENTS.md` — don't leave it implicit in the tier number
-alone.
+For Tier-0 sub-areas, name the protected implementation area explicitly; do not rely on the tier number alone.
 
 ## Parallel / serial grouping
 
-State which tasks can run concurrently (different agent sessions,
-non-overlapping files/tables/migration numbers) and which must run
-serially (shared tables, shared migration sequence), per
-`kencleng-agentic-workflow.md` §12's parallelization note.
+State which tasks can run concurrently and which must run serially. Consider overlapping files, shared tables, migration numbering, API schema, domain dependencies, and broad shared frontend components.
+
+See **Parallelization and write scopes** in `docs/kencleng-agentic-workflow.md`.
 
 ## Status tracker
 
-Update as work progresses — this is the lightweight, domain-scoped
-substitute for a global tracker (no cross-domain development-phase
-tracker exists yet, see `kencleng-agentic-workflow.md` §16).
+Keep domain task status current.
+
+Cross-domain backend/frontend/integration state belongs in `docs/project/kencleng-development-tracker.md`; see **Project status tracking** in `docs/kencleng-agentic-workflow.md`.
 
 | # | Status | Notes |
 |---|---|---|
-| 1 | not started / in progress / gates passed / human-reviewed / merged | ... |
+| 1 | not started / in progress / blocked / verified / merged | ... |
 ```
 
 ## 5. Template: Feature Spec
 
-`docs/spec/<domain>/features/<NN>-<fitur>.md`
+`docs/spec/<domain-dir>/features/<NN>-<fitur>.md`
 
-`<NN>` is the 2-digit task number from that domain's `tasks.md` (e.g.
-`01-register-email-verification.md`) — feature files within a domain
-are inherently ordered (dependency order, parallel groups from
-`tasks.md`), so the filename should carry that order rather than
-leaving it only discoverable by opening `tasks.md`.
+`<NN>` is the 2-digit task number from that domain's `tasks.md`.
 
 ```markdown
-# Feature Spec — <feature/endpoint name>
+# Feature Spec — <feature/work item name>
 
-> File: `docs/spec/<domain>/features/<NN>-<fitur>.md`
+> File: `docs/spec/<domain-dir>/features/<NN>-<fitur>.md`
 > Status: draft / agreed / implemented
-> Risk tier: 0 / 1 / 2 / 3 (see kencleng-agentic-workflow.md §4)
+> Risk tier: 0 / 1 / 2 / 3 (see **Project risk tiering** in `docs/kencleng-agentic-workflow.md`)
 > Domain: <domain name>
 
-## Endpoint
+## Endpoint / feature surface
 
 `<METHOD> <path>`
+
+If the work item is not naturally one endpoint, describe the coherent feature/API surface instead of forcing a false 1:1 mapping.
 
 ## Acceptance criteria
 
 - Given <initial condition>, When <action>, Then <expected result>
-- (repeat for each happy-path scenario)
 
 ### Error cases
 
@@ -221,46 +196,29 @@ leaving it only discoverable by opening `tasks.md`.
 
 ## Applicable invariants
 
-Reference related invariants, don't redefine them here:
-
-- `docs/spec/<domain>/invariants.md#INV-<domain>-01`
+- `docs/spec/<domain-dir>/invariants.md#INV-<domain>-01`
 
 ## Threat breakdown
 
-Derived from `docs/spec/<domain>/threat-model.md`, narrowed down to
-this specific endpoint:
+Derived from `docs/spec/<domain-dir>/threat-model.md` and narrowed to this feature/API surface.
 
-| Threat | Mitigation at this endpoint's level | Test that proves it |
+| Threat | Mitigation at this feature's level | Evidence that proves it |
 |---|---|---|
-| ... | ... | `test_name` |
+| ... | ... | `test_name` / other executable evidence |
 
 ## Risk tier & rationale
 
-The chosen tier and why (e.g. "Tier 1 — touches campaign balance,
-needs a property test + human review").
+<chosen tier and why>
 
 ## Assumptions / open questions
 
-Anything the agent assumed during implementation if the spec was
-ambiguous at some point — must be revisited once a decision is made,
-not left blank forever if a gap turns out to exist.
+Record material assumptions or unresolved ambiguity. Do not leave an implementation-affecting assumption implicit.
 ```
 
-## 6. Rules for filling these out (apply to all four document types)
+## 6. Rules for filling these out
 
-1. **Every claim of "this is mitigated/tested" must point to a
-   concrete test name** — not a narrative sentence with no
-   reference (see `kencleng-agentic-workflow.md` §9 on agent
-   honesty).
-2. **The status in the header must be kept up to date** — draft
-   means it isn't yet a valid basis for final implementation; agreed
-   means it has been human-reviewed per
-   `kencleng-agentic-workflow.md` §10.
-3. **The implementing agent must not edit this document** to make its
-   own code pass (see §11, fencing, in
-   `kencleng-agentic-workflow.md`) — changes to spec are a separate
-   decision that goes through a human.
-4. **Ambiguity is recorded, not silently resolved** — the
-   "Assumptions / open questions" section of a feature spec must be
-   filled in whenever the agent makes any assumption because the spec
-   was unclear.
+1. **Claims require evidence.** Claims that something is mitigated/tested should point to concrete executable evidence when such evidence exists. See **Evidence and verification ownership** in `docs/kencleng-agentic-workflow.md`.
+2. **Keep status current.** `draft` is not a final implementation basis; `agreed` means reviewed/accepted by the appropriate human/project authority. See **Human authority** in `docs/kencleng-agentic-workflow.md`.
+3. **Implementation must not rewrite requirements to make code pass.** Requirement/spec changes are separate decisions governed by root `AGENTS.md` and the appropriate human/project authority.
+4. **Record ambiguity rather than silently resolving it.** Use `Assumptions / open questions` whenever a material assumption is required because the specification is unclear.
+5. **Prefer named cross-references over workflow section numbers.** The Kencleng orchestration overlay is intentionally allowed to be compacted/reorganized; topic names are more stable than historical `§NN` references.

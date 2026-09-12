@@ -2,23 +2,15 @@
 
 > File: `docs/kencleng-agentic-workflow.md`
 >
-> Status: Draft v2
+> Status: Current project orchestration policy
 >
-> Last updated: 2026-09-10
+> Last updated: 2026-09-12
 >
-> Purpose: Define Kencleng-specific orchestration that sits on top of the Harscode feature-development workflow.
->
-> This document does **not** define a competing per-feature development lifecycle.
+> Purpose: Define Kencleng-specific coordination that sits on top of Harscode. This document does **not** define a competing per-feature lifecycle.
 
----
+## 1. Authority boundary
 
-# 1. Authority Boundary
-
-Kencleng uses two complementary layers.
-
-## Harscode owns feature execution
-
-Harscode owns **how one feature/task is executed**, including:
+Harscode owns **how one feature/task moves through its development lifecycle**:
 
 ```text
 Exploration
@@ -29,338 +21,169 @@ Exploration
 → Pull Request
 ```
 
-It also owns:
+Harscode also owns generic phase responsibilities, session boundaries, patch routing, reports, review/testing methodology, and portable engineering best-practices.
 
-* default session boundaries;
-* phase responsibilities;
-* patch routing;
-* implementation/report artifacts;
-* generic engineering best practices;
-* generic review/testing methodology.
+Kencleng owns project-specific orchestration:
 
-Do not redefine those mechanics here.
+- domain order and preparation;
+- invariants/threat-model expectations;
+- project risk tiers and human authority;
+- backend/frontend sequencing;
+- design-readiness requirements;
+- mock-first and real-integration state;
+- domain finalization/delivery;
+- project status tracking;
+- project-specific cross-domain/manual coordination.
 
----
+> **Harscode decides how a task moves through its lifecycle. Kencleng decides what project conditions surround that lifecycle.**
 
-## Kencleng owns project orchestration
+Concern-specific source routing lives in root `AGENTS.md`. Do not duplicate a second full authority table here.
 
-This document owns Kencleng-specific concerns such as:
+### Legacy numeric references
 
-* domain development order;
-* domain preparation;
-* invariants and threat-model expectations;
-* project risk tiers;
-* human-authority requirements;
-* backend/frontend sequencing;
-* contract-driven frontend development;
-* mock-first integration state;
-* product/design readiness;
-* domain-level integration/finalization;
-* project-specific manual operations;
-* cross-domain coordination.
+Older feature/task docs may contain `§NN` references to previous revisions of this document.
 
-Principle:
+Those numeric references are historical navigation aids, not independent policy. When a number no longer points to the old topic, follow the **named rule and current source owner** instead. Clean stale numeric references when the owning spec/task document is next materially edited.
 
-> **Harscode decides how a task moves through its lifecycle. Kencleng decides what project-specific conditions and coordination surround that lifecycle.**
+Do not resurrect superseded workflow behavior solely because an older spec cites an old section number.
 
----
-
-# 2. Concern-Specific Source of Truth
-
-Use the source that owns the concern.
-
-| Concern                                | Authority                                             |
-| -------------------------------------- | ----------------------------------------------------- |
-| Domain invariants / threats            | `docs/spec/<domain>/invariants.md`, `threat-model.md` |
-| Feature behavior / acceptance criteria | `docs/spec/<domain>/features/*.md`                    |
-| API shape                              | `api/openapi.yaml`                                    |
-| Backend architecture                   | `docs/project/kencleng-backend-tech-stack.md`         |
-| Frontend architecture                  | `docs/project/kencleng-frontend-tech-stack.md`        |
-| Product-design principles              | `docs/ui-ux/product-design-principles.md`             |
-| UX behavior                            | `docs/ui-ux/patterns.md`                              |
-| Visual system                          | `docs/ui-ux/design-guidelines.md`                     |
-| Brand / visual assets                  | `docs/ui-ux/brand-and-visual-assets.md`               |
-| Route/persona mapping                  | `docs/ui-ux/page-map.md`                              |
-| Prototype authority                    | `docs/ui-ux/prototype-reference.md`                   |
-| Component governance                   | `frontend/components/README.md`                       |
-| Feature lifecycle                      | Harscode `workflow/`                                  |
-| Project orchestration                  | this document                                         |
-
-A visually complete prototype cannot override domain/API truth.
-
-A local implementation cannot silently redefine a project-wide UX/component contract.
-
-If two authorities genuinely conflict on the same concern, surface the contradiction.
-
----
-
-# 3. Domain Development Order
+## 2. Domain development order
 
 Current domain order:
 
 ```text
 account
 → notification
-→ organisasi
+→ organization
 → campaign
 → donation
 → disbursement
 ```
 
-This ordering reflects product-phase progression and dependency shape.
+The order reflects dependency/product progression, not a rule that every task in one domain must finish before any work in the next begins.
 
-Notable decisions:
+Project notes:
 
-## Notification is intentionally early
+- Notification is intentionally early because later domains depend on it.
+- Campaign contains internal lifecycle dependencies; tasks still follow their own dependency order.
+- Audit logging is cross-domain infrastructure. Every applicable feature spec must explicitly state whether an audit event is required and what is recorded.
+- Cross-domain invariants have one owner: define the invariant under the domain that owns the authoritative field/table; other domains reference it.
 
-Notification is used by later domains and is cheaper to establish before those integrations depend on it.
+## 3. Once-per-domain preflight
 
-## Campaign spans multiple business phases
+Before active implementation in a new domain:
 
-Campaign work still follows product lifecycle dependencies internally.
+1. confirm dependencies and domain sequencing;
+2. create/verify the numbered domain's:
+   - `invariants.md`;
+   - `threat-model.md`;
+   - `tasks.md`;
+3. ensure tasks identify relevant invariants, risk tier, audit requirements, dependency/parallel constraints, and meaningful delivery criteria;
+4. decide backend/frontend sequencing strategy;
+5. confirm OpenAPI readiness before contract-driven frontend work;
+6. identify cross-domain prerequisites and migration/shared-component collision risks;
+7. update `docs/project/kencleng-development-tracker.md` with the actual domain state.
 
-Being in the same domain does not mean its features can be built in arbitrary order.
+Domain preflight prepares project context. It does not replace Harscode Exploration/Techplan for a feature.
 
-## Audit logging is cross-domain infrastructure
+## 4. Project risk tiering
 
-Audit-log storage may be established early, but write sites appear throughout later domains.
-
-Every applicable feature spec must explicitly answer:
-
-```text
-Audit log entry?
-Yes / No
-
-If yes:
-- event
-- relevant recorded fields
-```
-
-Do not rely on later implementers remembering this implicitly.
-
-## Cross-domain invariants have one owner
-
-When an invariant crosses domains, define it once under the domain owning the underlying authoritative field/table.
-
-Other domains reference it.
-
-Do not duplicate invariant definitions.
-
----
-
-# 4. Project Risk Tiering
-
-Risk tier determines **correctness/security oversight**.
+Risk tier controls **correctness/security oversight**.
 
 It is independent from:
 
-```text
-design readiness
-```
+- frontend design readiness;
+- shared-component/change blast radius.
 
-and:
+A low business-risk change may have high component blast radius; a high-risk feature may be locally scoped. Evaluate them separately.
 
-```text
-change blast radius
-```
+### Tier 0 — human-authored / human-paired
 
-All three may independently increase required scrutiny.
+Reserved for correctness-critical core implementation, including examples such as:
 
----
+- donation ledger locking strategy;
+- money rounding/calculation core;
+- encryption/key-handling core;
+- security-critical JWT/TOTP core;
+- refresh-token reuse-detection core;
+- disbursement state-machine core.
 
-## Tier 0 — Human-authored / human-paired
+Agents may explore, critique, propose tests, or perform adversarial review. Critical implementation remains human-authored or explicitly human-paired.
 
-Reserved for correctness-critical implementation where agent autonomy is not sufficient.
+Root `AGENTS.md` contains the explicit protected-path fencing.
 
-Examples include:
+### Tier 1 — agent implementation + proof + human review
 
-* donation ledger locking strategy;
-* money rounding/calculation core;
-* encryption/key-handling core;
-* JWT/TOTP security-critical core;
-* refresh-token reuse detection core;
-* disbursement state-machine core.
+Typical examples:
 
-Agent use is allowed for:
+- transaction boundaries;
+- balance/status writes;
+- audit-log writes;
+- security-sensitive authentication flows;
+- PII handling;
+- authorization-sensitive paths;
+- work raised by a threat model.
 
-* exploration;
-* critique;
-* test ideas;
-* adversarial review;
-* proposal drafting.
+Requires appropriate executable evidence, independent review/testing, and human review before merge.
 
-The critical implementation itself remains human-authored or explicitly human-paired.
+### Tier 2 — standard verified feature work
 
----
+Typical examples: ordinary CRUD, conventional API integration, standard forms, and non-critical feature behavior.
 
-## Tier 1 — Agent implementation + proof + human review
+Normal Harscode lifecycle plus project-specific verification is normally sufficient.
 
-Examples:
+### Tier 3 — low-risk agentic work
 
-* transaction boundaries;
-* balance/status writes;
-* audit-log writes;
-* security-sensitive auth flows;
-* PII handling;
-* authorization-sensitive paths;
-* other work raised by the threat model.
+Typical examples: straightforward documentation, isolated non-critical styling, seed/sample content, or simple low-risk UI state.
 
-Requires:
+Tier 3 does not waive shared-component blast-radius analysis or other applicable project rules.
 
-* appropriate executable evidence;
-* independent review/testing;
-* mandatory human review before merge.
+### Assignment
 
----
+Assign the risk tier before Build. Threat-model evidence may raise it.
 
-## Tier 2 — Agent implementation + standard verification
+Frontend work does not automatically inherit a backend Tier-0 designation merely because it displays related data; judge the frontend's actual responsibility (PII, auth-sensitive UI, unsafe rendering, consequential money/status presentation, etc.).
 
-Examples:
+## 5. Per-feature project preconditions
 
-* ordinary CRUD;
-* conventional API integration;
-* standard forms;
-* non-critical feature behavior.
+Every feature still follows Harscode.
 
-Standard Harscode lifecycle and project verification are normally sufficient.
+### Backend
 
-Human review may be sampled or requested when something unusual emerges.
-
----
-
-## Tier 3 — Low-risk agentic work
-
-Examples may include:
-
-* straightforward documentation;
-* isolated non-critical styling;
-* seed/sample content;
-* simple low-risk UI state.
-
-Tier 3 does **not** mean:
-
-```text
-safe to change anything globally
-```
-
-A Tier 3 visual change to a foundational shared primitive may still have high blast radius and require broad downstream verification.
-
----
-
-# 5. Risk Tier Is Assigned Before Build
-
-Every feature/work item must have an explicit risk tier before implementation begins.
-
-The threat model can raise the tier even when implementation looks simple.
-
-Frontend code does not automatically inherit Tier 0 merely because it displays data from a Tier 0 backend operation.
-
-However, a frontend surface may independently deserve higher scrutiny when it handles:
-
-* security-sensitive authentication behavior;
-* PII;
-* unsafe content rendering;
-* consequential financial/status presentation;
-* authorization-sensitive interaction;
-* other threat-model concerns.
-
-Use actual responsibility, not directory name, to determine risk.
-
----
-
-# 6. Once-Per-Domain Preflight
-
-Before active feature implementation in a new domain:
-
-1. Read relevant project/reference material.
-2. Confirm domain dependencies and sequencing.
-3. Create or verify:
-
-```text
-docs/spec/<domain>/invariants.md
-docs/spec/<domain>/threat-model.md
-docs/spec/<domain>/tasks.md
-```
-
-4. Ensure tasks reference appropriate:
-
-   * invariants;
-   * risk tiers;
-   * audit requirements;
-   * meaningful delivery/KPI expectations where the project tracks them.
-5. Determine which tasks are dependency-ordered versus independently executable.
-6. Determine backend/frontend sequencing for the domain.
-7. Confirm OpenAPI readiness for any contract-driven frontend work.
-8. Identify cross-domain prerequisites before parallel execution starts.
-
-Domain preflight prepares the project context.
-
-It does not replace Harscode Exploration/Techplan for individual features.
-
----
-
-# 7. Per-Feature Project Preconditions
-
-Every task still uses the Harscode feature lifecycle.
-
-Kencleng adds project-specific inputs.
-
-## Backend feature
-
-Before Build, confirm the relevant:
+Before Build, confirm as relevant:
 
 ```text
 feature spec
 applicable invariants
 threat-model concerns
 risk tier
-audit-log requirement
+audit requirement
 OpenAPI contract
 ```
 
-are sufficiently defined.
+If Exploration exposes a contract gap, resolve it in the authority that owns the gap before proceeding. Do not reinterpret the missing requirement in production code.
 
-If Exploration discovers a project-contract gap, resolve that gap through the appropriate authority before continuing Build.
+### Frontend
 
-Do not reinterpret the requirement inside implementation code.
+Frontend work is scoped around the meaningful UI unit (page, flow, interaction, or component responsibility), not forced into a 1:1 relationship with backend endpoints.
 
----
-
-## Frontend feature
-
-A frontend work item is organized around the meaningful UI unit:
-
-```text
-page
-flow
-interaction
-component responsibility
-```
-
-It is **not required to be 1:1 with a backend endpoint**.
-
-Before Build, inspect as relevant:
+Before Build, inspect the smallest relevant set of:
 
 ```text
 feature/domain spec
 OpenAPI
-page-map
-UX pattern
-design guidelines
-brand/assets
-prototype authority
-existing production components
+page map / UX pattern
+product-design + visual guidance
+asset authority
+prototype/reference authority
+existing production component contracts
 ```
 
-Check whether the intended capability already belongs to an existing page or component.
+Do not create duplicate routes or near-duplicate broad components just because a backend task is new.
 
-Do not create duplicate routes or near-duplicate broad components merely because a backend task is new.
+## 6. Frontend design readiness
 
----
-
-# 8. Frontend Design Readiness
-
-Frontend Exploration must classify material UI work as:
+Material UI work must be classified during Exploration using `docs/ui-ux/product-design-principles.md`:
 
 ```text
 READY
@@ -368,262 +191,77 @@ PARTIAL
 OPEN
 ```
 
-using `docs/ui-ux/product-design-principles.md`.
+- **READY:** established intent/pattern/system/reference is sufficient; proceed normally.
+- **PARTIAL:** core intent is known; resolve limited gaps using established principles and record material precedent-setting assumptions.
+- **OPEN:** material interaction/information-architecture/brand/product-design decisions remain unresolved; Exploration must resolve them before Techplan/Build becomes canonical.
 
-## READY
+`OPEN` does not introduce a new workflow phase. It changes what Harscode Exploration must accomplish.
 
-Existing product intent, UX pattern, visual system, assets, and/or approved precedent sufficiently answer the problem.
+Human approval is required wherever the product-design or asset system assigns human authority.
 
-Proceed through the normal Harscode lifecycle.
+Visual-asset production details belong to `docs/ui-ux/brand-and-visual-assets.md`; do not duplicate them here. Tool limitations must not silently downgrade a required expressive asset to generic filler.
 
-## PARTIAL
+## 7. Shared frontend component impact
 
-The core intent is known, but small design decisions remain.
+Risk tier and component blast radius are separate dimensions.
 
-Resolve them during Exploration using established principles and precedents.
-
-Record material assumptions when they establish precedent.
-
-Do not escalate ordinary senior-frontend judgment unnecessarily.
-
-## OPEN
-
-The work contains unresolved product-design or interaction decisions that would materially affect the resulting experience.
-
-Use the Harscode Exploration phase for **design exploration** before Techplan becomes executable.
-
-Resolve:
-
-* user goal;
-* information hierarchy;
-* primary action;
-* flow;
-* states;
-* responsive intent;
-* pattern reuse/new pattern;
-* visual asset needs;
-* open product decisions.
-
-Human approval is required where `product-design-principles.md` or the asset system assigns human design authority.
-
-OPEN does not create a new generic workflow phase.
-
-It changes what Exploration must resolve.
-
----
-
-# 9. Visual Asset Readiness
-
-Material visual-asset needs must be classified during frontend Exploration.
+Before materially modifying `frontend/components/ui/` or `frontend/components/shared/`, follow `frontend/components/README.md`:
 
 ```text
-canonical asset exists
-→ reuse
-
-asset can be produced by current harness
-→ brief → generate → review → approval as required
-
-asset cannot be produced by current harness
-→ brief → ready-to-use generation prompt → human/tool handoff
+classify change
+→ discover consumers/wrappers
+→ identify representative risk cases
+→ implement
+→ verify component contract
+→ verify representative downstream consumers
 ```
 
-Tool limitations must not silently downgrade the design into generic filler.
+Frontend tasks modifying the same broad shared contract should not proceed independently without an intentional coordination plan.
 
-Temporary assets must remain explicitly:
+## 8. Backend/frontend sequencing
 
-```text
-PROVISIONAL
-```
+Backend-first is not universal. Choose the strategy per domain based on contract stability, dependency shape, coordination cost, value of parallelism, and integration risk.
 
-Brand-defining assets require human approval before becoming canonical.
-
-See:
-
-```text
-docs/ui-ux/brand-and-visual-assets.md
-```
-
----
-
-# 10. Component Impact Preflight
-
-Changing a shared component and changing local feature code are not equivalent risks.
-
-Before materially modifying:
-
-```text
-frontend/components/ui/
-frontend/components/shared/
-```
-
-follow the consumer-impact process from:
-
-```text
-frontend/components/README.md
-```
-
-This is independent from feature risk tier.
-
-Example:
-
-```text
-simple Button spacing change
-```
-
-may be low security/business risk but high blast radius.
-
-Conversely:
-
-```text
-Tier 1 feature-specific security UI
-```
-
-may have high risk but small component blast radius.
-
-Do not collapse these dimensions into one score.
-
----
-
-# 11. Backend / Frontend Sequencing
-
-Backend-first is not a universal project rule.
-
-Choose sequencing per domain based on:
-
-* contract stability;
-* dependency shape;
-* coordination cost;
-* value of parallelism;
-* integration risk.
-
-Possible strategies:
-
-## Backend-first
+### Backend-first
 
 ```text
 backend features
 → frontend features
-→ integration
+→ real integration
 ```
 
-Prefer when:
+Prefer when the API/business semantics are still evolving or coordination overhead would outweigh parallelism.
 
-* API behavior is still evolving;
-* business/domain semantics are complex;
-* coordination overhead would outweigh parallelism.
+Account historically used this approach for much of its initial work.
 
-`account` historically used this strategy.
-
-## Contract-parallel
+### Contract-parallel
 
 ```text
 stable spec + OpenAPI
        ↓
 backend          frontend against contract mocks
        \          /
-        integration
+        real integration
 ```
 
-Prefer when:
-
-* API contract is stable enough;
-* frontend can meaningfully progress against MSW;
-* domain size or schedule justifies the coordination overhead.
+Prefer when the contract is stable enough and frontend can meaningfully progress against MSW/mocks.
 
 Parallelism is an optimization, not a goal.
 
----
+## 9. Project development states
 
-# 12. Frontend Mock-First State
+Project status is tracked in `docs/project/kencleng-development-tracker.md`.
 
-Frontend work may be implemented and verified against contract-driven mocks before the live backend is available.
-
-Call this state:
+Ordinary progress labels may include:
 
 ```text
-FRONTEND_MOCK_VERIFIED
+NOT_STARTED
+IN_PROGRESS
+BLOCKED
+NEEDS_RECONCILIATION
 ```
 
-It means:
-
-* production UI exists;
-* mocked API behavior follows the intended OpenAPI contract;
-* frontend unit/component verification has passed;
-* rendered UI has been exercised as required;
-* the feature has completed its explicitly scoped frontend verification.
-
-It does **not** mean:
-
-```text
-real backend integration verified
-```
-
-Keep that distinction explicit.
-
----
-
-# 13. Mock-First Does Not Guarantee Zero Integration Changes
-
-The architecture should aim for:
-
-```text
-mock → real backend
-```
-
-without rewriting application behavior.
-
-But this is a design goal, not an assumption that may override evidence.
-
-If real integration requires application-code changes:
-
-```text
-identify why
-```
-
-Possible causes include:
-
-* mock drift;
-* OpenAPI drift;
-* misunderstood state semantics;
-* integration/environment behavior;
-* actual implementation defect.
-
-Route required code changes back through the appropriate Harscode Build/Patch activity.
-
-Do not make unreviewed "integration-only" production edits outside the lifecycle because the change was expected to be wiring-only.
-
----
-
-# 14. Cross-Domain Mock Batching
-
-Multiple domains may temporarily reach:
-
-```text
-FRONTEND_MOCK_VERIFIED
-```
-
-before live integration occurs.
-
-This is allowed when it materially improves development sequencing.
-
-The state must be explicitly tracked.
-
-Never rely on human memory to remember:
-
-* which domains are mock-verified;
-* which endpoints are still mocked;
-* which real integrations remain;
-* which integration blockers exist.
-
-Mock-verified is a visible intermediate state, not a euphemism for complete.
-
----
-
-# 15. Project Development States
-
-Track meaningful project integration states explicitly.
-
-Suggested vocabulary:
+Evidence-backed milestones are:
 
 ```text
 CONTRACT_READY
@@ -634,344 +272,178 @@ DOMAIN_FINALIZED
 DELIVERED
 ```
 
-These are **project orchestration states**.
+These are project orchestration states, not Harscode phase names.
 
-They do not replace Harscode phase names.
+Do not promote a row to a milestone merely because implementation files or a commit exist.
 
-For example:
+## 10. Frontend mock-first state
 
-```text
-Harscode Testing
-```
+Frontend work may reach `FRONTEND_MOCK_VERIFIED` before live backend integration when:
 
-describes a task lifecycle phase.
+- production UI exists;
+- mocks follow the intended OpenAPI contract;
+- scoped frontend unit/component verification passed;
+- required rendered UI verification was exercised;
+- the explicitly scoped frontend verification is complete.
 
-```text
-FRONTEND_MOCK_VERIFIED
-```
+`FRONTEND_MOCK_VERIFIED` does **not** mean real backend integration was verified.
 
-describes what project-level integration evidence currently exists.
+Multiple domains/features may temporarily remain mock-verified when that sequencing is valuable, but every such state and remaining live-integration dependency must be visible in the development tracker.
 
-Do not use the terms interchangeably.
+The architecture should aim for mock→real integration without rewriting application behavior, but this is a design goal rather than an assumption. If real integration reveals required application changes, investigate mock/OpenAPI/state/environment drift and route production patches through Harscode Build/Patch.
 
----
+## 11. Integration verification
 
-# 16. Integration Verification
+When backend and frontend are available together, verify the real interface/stack appropriate to the feature.
 
-When backend and frontend are available together, verify the real integration.
+For frontend-visible behavior this includes real rendered browser exercise.
 
-Use the real stack/interface appropriate to the feature.
+Playwright is the selected target browser-automation capability once repository wiring exists. It is a capability for interaction, responsive/layout checks, integration verification, and high-value regression tests—not a requirement to create a comprehensive permanent E2E matrix.
 
-For frontend-visible behavior, this includes real rendered browser exercise.
+Until Playwright is actually wired, do not invent a command or claim it ran.
 
-The project has chosen **Playwright as the standard browser-automation capability** for this purpose once repository wiring is present.
+A commit that happens to touch both frontend and backend is not evidence of `INTEGRATED_VERIFIED` by itself.
 
-Playwright capability does not imply a mandatory comprehensive E2E suite.
+## 12. Domain finalization and delivery
 
-Use browser automation for:
+After required backend/frontend work reaches real integration, perform a cross-feature finalization sweep focused on integration gaps, not a second implementation lifecycle.
 
-* real interaction;
-* responsive/layout checks;
-* integration verification;
-* high-value repeatable regressions.
+Confirm as applicable:
 
-Promote scenarios into permanent E2E tests only when maintenance cost is justified.
+- temporary mocks are no longer unintentionally on production paths;
+- important cross-feature flows compose correctly;
+- representative real-data loading/error/empty/success states behave correctly;
+- financial/status meaning remains clear;
+- security/authorization boundaries survive integration;
+- representative responsive/rendered behavior is correct;
+- canonical UX/design/component systems are followed;
+- provisional dependencies/assets are resolved or explicitly accepted.
 
-If Playwright wiring is not yet present, do not claim automated browser verification was run.
+Defects requiring code changes go back through Harscode Build/Patch.
 
----
+Promote to `DOMAIN_FINALIZED` only with finalization evidence. Promote to `DELIVERED` only when the intended integrated completion/release criteria are met.
 
-# 17. Domain Finalization
+Git merge state and project delivery state are different concerns.
 
-Domain Finalization occurs after the required backend/frontend work for that domain has reached real integration.
+## 13. Human authority
 
-It is a **cross-feature integration sweep**, not a second implementation workflow.
+Human authority is mandatory where the project assigns it, including:
 
-Finalization should confirm:
+- Tier-0 core implementation;
+- Tier-1 review before merge;
+- established product/domain semantic changes;
+- protected spec/test changes;
+- brand-defining visual assets;
+- material `OPEN` product/design decisions requiring product authority;
+- manual DB/index application.
 
-* expected backend/frontend connections use real services rather than temporary mocks;
-* important cross-feature flows compose correctly;
-* representative real-data loading/error/empty/success states behave correctly;
-* financial/status meaning remains clear;
-* applicable security/authorization boundaries survive integration;
-* representative responsive/rendered behavior is correct;
-* canonical UX/design/component systems are being followed;
-* no tracked provisional dependency remains unintentionally unresolved.
+Agents may analyze/propose indexes. Applying an index is human-triggered; Tier-0 tables require particular care around locking/query-plan consequences.
 
-Do not blindly rerun every feature test from scratch.
+An agent must not approve its own decision where independent human authority is required.
 
-Use existing evidence plus integration-focused verification.
-
-Any defect requiring code changes routes back through Build/Patch.
-
----
-
-# 18. Delivery
-
-Delivery occurs when the domain meets its intended integrated completion criteria.
-
-Delivery should:
-
-* mark domain state accurately in the development tracker;
-* record unresolved accepted risks;
-* record intentionally deferred work;
-* ensure any temporary mock/provisional status remains visible if still accepted;
-* complete the appropriate release/merge activity for the repository strategy in use.
-
-Do not define a second universal "merge" step here if individual feature PRs have already merged through Harscode.
-
-Project delivery state and Git merge state are separate concerns.
-
----
-
-# 19. Human Authority
-
-Human effort should be spent on decisions where judgment or project authority is genuinely required.
-
-Mandatory examples:
-
-## Tier 0
-
-Human authors/pairs on critical core implementation.
-
-## Tier 1
-
-Human review before merge.
-
-## Product/domain changes
-
-Human approves changes to established business/spec semantics.
-
-## Brand-defining decisions
-
-Human approves canonical:
-
-* logo;
-* wordmark;
-* major brand visual direction;
-* other Level 4 assets.
-
-## Major OPEN design decisions
-
-Human/product approval where the design system assigns product authority.
-
-## Schema/index application
-
-Agents may analyze and propose indexes.
-
-Applying an index remains a human-triggered action.
-
-For Tier 0 tables, inspect locking/query-plan consequences with particular care.
-
-Do not convert a human-authority requirement into a prompt asking an agent to approve its own decision.
-
----
-
-# 20. Parallelization
+## 14. Parallelization and write scopes
 
 Parallel work is allowed only when independence is real.
 
-Consider:
+Check:
 
-* overlapping files;
-* shared components;
-* database tables;
-* migrations;
-* API schemas;
-* domain dependencies;
-* generated artifacts.
+- overlapping files;
+- shared components;
+- database tables/migrations;
+- API schemas;
+- domain dependencies;
+- generated artifacts.
 
-Two tasks that appear feature-independent may still conflict through a shared primitive or schema.
+Coordinate migration numbering explicitly when concurrent tasks could collide.
 
-If multiple DB migrations are generated concurrently, avoid migration-number collisions through explicit coordination.
+Backend and frontend production writes remain separate scopes by default. Cross-stack contract work is coordinated explicitly rather than allowing one Build to drift across both applications.
 
-Frontend tasks modifying the same broad `ui/` or `shared/` contract should generally not proceed independently without an intentional coordination plan.
+The boundary does not prevent reading cross-stack context, integration Testing, or project finalization.
 
----
+## 15. Evidence and verification ownership
 
-# 21. Directory Boundary
+Kencleng uses **verifiability over trust**.
 
-Backend and frontend implementation remain separate write scopes by default.
-
-A frontend-scoped Build does not modify backend production code.
-
-A backend-scoped Build does not modify frontend production code.
-
-Cross-stack contract work should be coordinated explicitly rather than allowing one feature session to drift across both codebases.
-
-Shared docs/API changes follow their own authority and approval rules.
-
-This boundary does not prevent:
-
-* reading cross-stack context;
-* domain-level integration Testing;
-* project Finalization.
-
-It prevents uncontrolled cross-scope implementation.
-
----
-
-# 22. Evidence and Risk Reporting
-
-Kencleng keeps the principle:
-
-> **Verifiability over trust.**
-
-Implementation reports and PR risk notes must distinguish:
+Reports and PR risk notes distinguish:
 
 ```text
-proven
+verified
 assumed
 not tested
 deferred
 ```
 
-Do not treat an agent's statement as proof.
+Claims should point to concrete executable evidence where it exists. A known material risk silently omitted is a process failure.
 
-Claims should point to concrete evidence where evidence is mechanically available.
+Do not duplicate a universal test sequence here:
 
-A risk discovered and reported is useful output.
+- Harscode owns lifecycle-phase verification responsibilities;
+- repository commands/config own executable checks;
+- Kencleng adds risk-specific requirements.
 
-A material known risk silently omitted is a process failure.
+Examples of project-specific evidence include race/concurrency verification, threat-focused security checks, applicable invariant/property tests, hostile-content rendering tests, rendered browser verification, and real-stack integration before integrated/finalized status.
 
-Exact artifact/report structure follows the active Harscode phase guidance plus root `AGENTS.md`.
+Run the right evidence for the risk rather than expensive categories indiscriminately.
 
----
+## 16. Project status tracking
 
-# 23. Verification Ownership
+Workflow policy and project progress are different information.
 
-Do not duplicate a fixed universal test sequence in this document.
-
-Harscode owns lifecycle-phase testing responsibilities.
-
-The target repository owns the actual executable commands/configuration.
-
-Kencleng adds project-specific requirements by risk.
-
-Examples:
-
-* concurrency/race evidence for relevant concurrency-sensitive code;
-* security verification for threat-model concerns;
-* invariant/property evidence for applicable Tier 1 backend behavior;
-* hostile-content rendering tests where user-controlled content exists;
-* rendered browser verification for material frontend UI changes;
-* real-stack integration before integrated/domain-finalized status.
-
-Run the right verification for the risk.
-
-Do not run expensive categories indiscriminately merely to appear thorough.
-
----
-
-# 24. Project Status Tracking
-
-Workflow policy and project status are different information.
-
-This document should not accumulate dated progress amendments such as:
-
-```text
-account complete
-campaign currently mock-verified
-endpoint X still needs integration
-```
-
-That information belongs in a dedicated living development tracker.
-
-Recommended owner:
+Current cross-domain status belongs only in:
 
 ```text
 docs/project/kencleng-development-tracker.md
 ```
 
-The tracker should record, at minimum:
+Do not append dated progress amendments to this workflow document.
 
-```text
-domain / feature
-backend status
-frontend status
-integration status
-important blockers
-accepted/deferred risks
-```
+Domain `tasks.md` files remain domain-scoped task views. If a domain tracker and the cross-domain tracker disagree, reconcile against concrete repository/test evidence; do not silently keep two incompatible current statuses.
 
-The existing Integration Tracker embedded in a scaffold/playbook should be migrated out rather than becoming the permanent source of operational status.
+## 17. Generated task artifacts
 
-A one-off scaffold document is not the right long-term owner for living project state.
+Exploration logs, techplans, build reports, review/testing reports, and PR artifacts are task evidence/history. They do not become project-wide policy merely because a prior task contains a decision.
 
----
+Promote reusable project truth into the canonical source that owns the concern.
 
-# 25. Generated Agent Artifacts
+## 18. Evolution
 
-Exploration logs, techplans, build reports, review reports, testing reports, and other task artifacts belong in the target Kencleng repository according to the established task-work directory convention.
+Keep this overlay stable and Kencleng-specific.
 
-They are generated work products.
-
-They do not become project-wide policy merely because a previous task contains a decision.
-
-Promote recurring project truth into the appropriate canonical project document.
-
----
-
-# 26. Evolution
-
-Keep this document stable and project-specific.
-
-Update it when Kencleng's orchestration model changes, for example:
-
-* domain sequencing changes;
-* risk authority changes;
-* integration strategy changes;
-* project-wide frontend/backend coordination changes;
-* a recurring orchestration failure exposes a missing rule.
+Update it when domain sequencing, risk/human authority, integration strategy, or project-wide coordination changes.
 
 Do not add:
 
-* generic React practices;
-* generic Go practices;
-* Harscode phase mechanics;
-* one-feature implementation lessons;
-* dated project progress.
+- generic React/Go practices;
+- Harscode phase mechanics;
+- one-feature implementation lessons;
+- dated progress;
+- component/design detail already owned elsewhere.
 
-Those have different owners.
+Rewrite canonical policy when it changes; Git history preserves superseded wording.
 
-Avoid amendment chains such as:
+## 19. Related documents
 
-```text
-Amendment 1
-Previous amendment
-Resolved 2026-...
-```
+Project:
 
-When a policy changes, rewrite the canonical rule clearly.
-
-Git history preserves the old version.
-
-Use an ADR/proposal only when historical rationale itself needs to remain prominent.
-
----
-
-# 27. Related Documents
-
-Project authority:
-
-* `AGENTS.md`
-* `docs/spec/README.md`
-* `docs/project/kencleng-backend-tech-stack.md`
-* `docs/project/kencleng-frontend-tech-stack.md`
-* `docs/project/kencleng-development-tracker.md` — once created
+- `AGENTS.md`
+- `docs/spec/README.md`
+- `docs/project/kencleng-backend-tech-stack.md`
+- `docs/project/kencleng-frontend-tech-stack.md`
+- `docs/project/kencleng-development-tracker.md`
+- `docs/project/kencleng-repo-setup.md`
 
 Frontend product/design:
 
-* `docs/ui-ux/product-design-principles.md`
-* `docs/ui-ux/patterns.md`
-* `docs/ui-ux/design-guidelines.md`
-* `docs/ui-ux/brand-and-visual-assets.md`
-* `docs/ui-ux/page-map.md`
-* `docs/ui-ux/prototype-reference.md`
-* `docs/ui-ux/design-reference-usage.md`
-* `frontend/components/README.md`
+- `docs/ui-ux/product-design-principles.md`
+- `docs/ui-ux/patterns.md`
+- `docs/ui-ux/design-guidelines.md`
+- `docs/ui-ux/brand-and-visual-assets.md`
+- `docs/ui-ux/page-map.md`
+- `docs/ui-ux/prototype-reference.md`
+- `docs/ui-ux/design-reference-usage.md`
+- `frontend/components/README.md`
 
-Portable workflow:
+Portable workflow/engineering:
 
-* Harscode `workflow/`
-* Harscode `best-practices/`
+- Harscode `workflow/`
+- Harscode `best-practices/`
