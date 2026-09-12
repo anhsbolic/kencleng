@@ -82,6 +82,8 @@ Mainline history after the older `docs/spec/1-account/tasks.md` status snapshot 
 
 These entries prove that the old domain status table is stale. They do **not** by themselves prove every Harscode verification/finalization requirement was satisfied; that is why the domain remains `IN_PROGRESS` / `NEEDS_RECONCILIATION` here rather than being promoted automatically.
 
+The account task/spec documents intentionally remain unchanged in this cleanup PR: changing domain contract/status files deserves its own evidence-backed reconciliation rather than being hidden inside instruction compaction.
+
 ## 5. Cross-cutting frontend readiness
 
 | Capability | Status | Notes |
