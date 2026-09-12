@@ -7,8 +7,8 @@ const representativeViewports = [
 
 async function expectLoginSurface(page: Page) {
   await expect(page.getByRole("heading", { name: "Masuk", level: 1 })).toBeVisible();
-  await expect(page.getByLabel("Email")).toBeVisible();
-  await expect(page.getByLabel("Password")).toBeVisible();
+  await expect(page.getByLabel("Email", { exact: true })).toBeVisible();
+  await expect(page.getByLabel("Password", { exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Masuk", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Masuk dengan Google" })).toBeVisible();
 
