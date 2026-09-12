@@ -1,283 +1,160 @@
 # AGENTS.md — frontend/
 
-This file adds Kencleng frontend-specific rules on top of root `AGENTS.md`.
+Frontend-specific rules on top of root `AGENTS.md`.
 
-Read root `AGENTS.md` first.
+Read root `AGENTS.md` first. This file is intentionally compact: detailed rationale belongs in the canonical frontend architecture/design/component documents it points to.
 
-Scope:
+Scope: `frontend/`.
 
-```text
-frontend/
-```
+Do not modify backend production code from a frontend-scoped Build.
 
-Do not modify `backend/` from a frontend-scoped implementation session.
-
----
-
-## 1. Project Map
+## 1. Project map
 
 ```text
 frontend/
-├── app/                    # Next.js App Router; route-local composition may live here
+├── app/                    # App Router; route-local composition may live here
 ├── components/
 │   ├── ui/                 # generic design-system primitives
 │   ├── features/<domain>/  # domain-semantic components
 │   └── shared/             # genuinely cross-domain semantic components
 ├── lib/
-│   ├── api/                # typed fetch functions + generated OpenAPI types
+│   ├── api/                # typed API functions + generated OpenAPI types
 │   ├── hooks/              # TanStack Query hooks
-│   └── stores/             # only genuinely shared client-owned Zustand state
+│   └── stores/             # genuinely shared client-owned Zustand state only
 ├── mocks/                  # MSW handlers
 └── public/
 ```
 
 Component placement is **semantic-owner-first**, not reusable-first.
 
-Read:
+Canonical component governance: `components/README.md`.
+
+## 2. Business and API authority
+
+Frontend is not business authority.
+
+Do not recreate backend decisions for money, eligibility, permissions, verification, lifecycle transitions, or financial validity.
+
+Client validation, presentation logic, formatting, interaction state, and derived presentation values are legitimate frontend responsibilities.
+
+If required product information is missing from the API/spec, surface the contract gap instead of inventing business behavior in React.
+
+API request/response shape comes from generated OpenAPI types based on `../api/openapi.yaml`. Do not maintain parallel handwritten API models for shapes the contract already owns.
+
+## 3. State ownership
+
+Before creating state, use this order:
 
 ```text
-components/README.md
+derivable
+→ derive it
+
+server/API authoritative
+→ existing server/TanStack Query owner
+
+navigation/share/bookmark/back-forward state
+→ URL when appropriate and non-sensitive
+
+form lifecycle
+→ React Hook Form
+
+ephemeral UI interaction
+→ narrowest local React owner
+
+genuinely shared client-owned state
+→ Zustand
 ```
 
-before introducing or materially changing broad reusable components.
+Hard rules:
 
----
+- do not mirror server data into Zustand;
+- do not create a store merely because a domain exists;
+- do not synchronize deterministic projections through effects;
+- do not put sensitive values in the URL for convenience.
 
-## 2. Business Authority
+Detailed architecture: `../docs/project/kencleng-frontend-tech-stack.md`.
 
-Frontend is **not business authority**.
+## 4. Forms and user-controlled content
 
-Do not recreate backend decisions for:
+Forms use React Hook Form + Zod for UX validation. Server validation remains authoritative.
 
-* money;
-* eligibility;
-* permissions;
-* verification;
-* lifecycle transitions;
-* financial validity.
+Distinguish field validation from request/business failure.
 
-Client validation and presentation derivation are allowed.
+User-controlled Markdown/HTML must use the established safe rendering/sanitization path. Do not manually convert user content into unsafe `dangerouslySetInnerHTML`.
 
-Backend/domain truth remains authoritative.
+Any such rendering requires hostile-content test coverage.
 
-If required product information is missing from the API/spec, flag the contract gap instead of inventing client-side business behavior.
+## 5. Component ownership and shared-change impact
 
----
-
-## 3. State Ownership
-
-Before creating state:
+Use the narrowest truthful owner:
 
 ```text
-1. Derivable?
-   → derive
-
-2. API/server authoritative?
-   → existing server/TanStack Query owner
-
-3. Navigation/share/bookmark/back-forward state?
-   → URL when appropriate and non-sensitive
-
-4. Form-lifecycle state?
-   → React Hook Form
-
-5. Ephemeral UI interaction?
-   → narrowest local owner
-
-6. Genuinely shared client-owned state?
-   → Zustand
+route-specific composition → app/<route>/
+domain concept             → components/features/<domain>/
+cross-domain semantic      → components/shared/
+generic primitive          → components/ui/
 ```
 
-Do not mirror server data into Zustand.
+Do not extract by line count or promote by usage count alone. Repetition is evidence to evaluate an abstraction, not proof that one is needed.
 
-Do not create a Zustand store simply because a domain exists.
-
-Do not synchronize deterministic projections through effects.
-
-Do not move sensitive state into the URL for convenience.
-
----
-
-## 4. API and Forms
-
-API request/response types come from the generated OpenAPI types in `lib/api/`.
-
-Do not hand-write parallel API types already defined by:
+Before materially changing anything in `components/ui/` or `components/shared/`:
 
 ```text
-../api/openapi.yaml
-```
-
-Forms use:
-
-```text
-react-hook-form
-+
-zod
-```
-
-for UX validation.
-
-Server validation remains authoritative.
-
-Distinguish field validation from request/business failures.
-
----
-
-## 5. Component Ownership
-
-Use the narrowest truthful semantic owner:
-
-```text
-route-specific composition
-→ app/<route>/
-
-domain concept
-→ components/features/<domain>/
-
-genuinely cross-domain semantic concept
-→ components/shared/
-
-generic UI primitive
-→ components/ui/
-```
-
-Do not extract by line count.
-
-Do not promote by usage count alone.
-
-Repeated code is evidence to evaluate shared semantics, not proof of abstraction.
-
-Prefer explicit composition / stable variants over configuration-heavy generic components.
-
-Canonical governance:
-
-```text
-components/README.md
-```
-
----
-
-## 6. Shared Component Changes
-
-Before materially changing anything under:
-
-```text
-components/ui/
-components/shared/
-```
-
-you must:
-
-```text
-classify the change
-→ discover current consumers
+classify change
+→ discover actual consumers/wrappers
 → identify representative risk cases
 → implement
-→ verify the component
+→ verify component contract
 → verify representative downstream consumers
 ```
 
-Do not maintain or trust a stale manual consumer list.
+Compilation alone does not prove visual, behavioral, semantic, responsive, or accessibility compatibility.
 
-A change that compiles can still be visually, behaviorally, semantically, or accessibly breaking.
+Read `components/README.md` before introducing or materially changing a broad reusable contract.
 
-UI primitives have potentially high blast radius even when their implementation is small.
+## 6. Product design readiness
 
----
-
-## 7. Product Design Before UI Implementation
-
-For material UI work, determine design readiness:
+For material UI work classify design readiness according to `../docs/ui-ux/product-design-principles.md`:
 
 ```text
-READY
-→ implement established intent
-
-PARTIAL
-→ extend established patterns using product/design judgment
-
-OPEN
-→ perform design exploration before canonical implementation
+READY   → implement established intent
+PARTIAL → resolve small gaps using established principles/patterns
+OPEN    → use Exploration to resolve material product/design intent before canonical Build
 ```
 
-Do not silently invent material product or interaction intent while coding.
+Do not silently invent consequential product or interaction intent while coding.
 
-Read as needed:
+Read the smallest relevant authority set:
 
-```text
-../docs/ui-ux/product-design-principles.md
-../docs/ui-ux/patterns.md
-../docs/ui-ux/design-guidelines.md
-../docs/ui-ux/brand-and-visual-assets.md
-../docs/ui-ux/page-map.md
-```
+- `../docs/ui-ux/product-design-principles.md` — product/design authority and readiness;
+- `../docs/ui-ux/patterns.md` — reusable UX behavior;
+- `../docs/ui-ux/design-guidelines.md` — visual system;
+- `../docs/ui-ux/brand-and-visual-assets.md` — asset/brand authority;
+- `../docs/ui-ux/page-map.md` — route/persona inventory.
 
----
+## 7. Visual assets
 
-## 8. Visual Assets
+Standard library icons are appropriate for ordinary utility actions.
 
-Do not silently fill important visual gaps with:
+Do not silently replace a materially important expressive/brand asset need with generic iconography, random gradients, stock-like imagery, or generic AI decoration.
 
-* arbitrary library icons;
-* stock-like imagery;
-* random gradients;
-* generic AI decoration.
+When a required asset is missing, follow `../docs/ui-ux/brand-and-visual-assets.md`:
 
-Standard library icons are appropriate for standard utility actions.
+- reuse canonical asset when one exists;
+- generate a candidate when the current harness can do so adequately;
+- otherwise produce an asset brief + ready-to-use generation prompt for human/tool handoff;
+- keep temporary assets explicitly provisional;
+- human approval is required for brand-defining assets.
 
-If an expressive/brand asset is materially required:
+Tool limitation must not silently become design limitation.
 
-```text
-canonical asset exists
-→ reuse it
+## 8. Visual system
 
-current harness can generate
-→ brief → generate candidate → review → required approval
-
-current harness cannot generate
-→ produce asset brief + ready-to-use generation prompt
-```
-
-Do not permanently downgrade the design because the current harness lacks image-generation capability.
-
-Logo/wordmark/brand-defining assets require human approval before becoming canonical.
-
-See:
-
-```text
-../docs/ui-ux/brand-and-visual-assets.md
-```
-
----
-
-## 9. Visual System
-
-Read:
-
-```text
-../docs/ui-ux/design-guidelines.md
-```
-
-before introducing new visual-system behavior.
-
-Kencleng uses Tailwind CSS v4 CSS-first tokens from:
-
-```text
-app/globals.css
-```
-
-via:
-
-```css
-@theme inline
-```
+Kencleng uses Tailwind CSS v4 CSS-first tokens from `app/globals.css` via `@theme inline`.
 
 There is no `tailwind.config.js` design-token authority.
 
-Prefer canonical tokens and existing primitives.
-
-Do not create feature-specific global tokens or primitive variants merely to avoid local composition.
+Prefer canonical tokens and existing primitives. Do not push feature-specific styling into global tokens/primitive variants merely to avoid local composition.
 
 Target action hierarchy:
 
@@ -287,83 +164,36 @@ Secondary → neutral / outlined
 Accent    → restrained warm emphasis
 ```
 
----
+The runtime migration of existing amber-filled Secondary is a separate shared-component change and must use consumer-impact analysis.
 
-## 10. Prototype / Design Reference
+## 9. Prototype/reference translation
 
-Before implementing a prototype-derived surface, read:
+`../design-reference/` is frozen read-only prototype/reference output.
 
-```text
-../docs/ui-ux/prototype-reference.md
-../docs/ui-ux/design-reference-usage.md
-```
+Before prototype-derived implementation read:
 
-`../design-reference/` is frozen Tier-0 read-only reference output.
+- `../docs/ui-ux/prototype-reference.md`;
+- `../docs/ui-ux/design-reference-usage.md`.
 
-Never modify it.
+Preserve route-specific hierarchy, composition, states, interaction intent, and responsive intent. Translate through current domain/API truth, UX patterns, visual system, asset system, and component architecture.
 
-Never wholesale-copy prototype code into production.
+Do not wholesale-copy prototype code. Prototype component boundaries, mock data, local state, exact CSS, and provisional assets are not production authority.
 
-Preserve:
+## 10. Rendered verification
 
-* hierarchy;
-* composition;
-* states;
-* interaction intent;
-* responsive intent.
+Material rendered UI or spatial-interaction changes require inspection in a real browser or equivalent layout-capable environment.
 
-Translate through current:
+Vitest/RTL/MSW do not prove layout, hierarchy, responsiveness, clipping/overflow, or real-browser spatial behavior.
 
-* domain/API truth;
-* UX patterns;
-* visual system;
-* asset system;
-* component architecture.
+Use the smallest representative set of realistic states, content conditions, and viewports capable of exposing likely failures.
 
-Prototype component boundaries, mock data, local state, exact CSS, and provisional assets are not production authority.
-
----
-
-## 11. Rendered Verification
-
-If a change materially affects rendered UI or spatial interaction, inspect the result in a real browser or equivalent layout-capable environment.
-
-Automated unit/component tests do not prove:
-
-* layout;
-* hierarchy;
-* responsive behavior;
-* clipping;
-* overflow;
-* real-browser spatial interaction.
-
-Use representative:
-
-```text
-states
-+
-viewports
-+
-realistic content conditions
-```
-
-rather than exhaustive screenshot matrices.
-
-During Build:
-
-```text
-edit → render → inspect → fix
-```
-
-is valid implementation feedback.
-
-When Harscode provides a separate Testing phase, final rendered verification belongs to Testing and must independently verify the observable result.
+During Build, `edit → render → inspect → fix` is valid implementation feedback. When Harscode uses a separate Testing phase, final rendered verification belongs there and must independently verify the observable result.
 
 Screenshots are useful evidence when they help; they are not a ritual.
 
----
+Playwright is the selected target browser capability but is not wired yet. Until it is present in `package.json`/config, do not invent a command or claim a Playwright run.
 
-## 12. Testing
+## 11. Testing and local commands
 
 Current automated baseline:
 
@@ -373,31 +203,9 @@ React Testing Library
 MSW
 ```
 
-Tests should verify observable behavior rather than implementation structure.
+Tests should verify observable behavior rather than internal structure.
 
-Any user-controlled Markdown/HTML rendering must include hostile-content sanitization coverage.
-
-Browser verification is separate from the unit/component test layer.
-
-When Playwright/browser automation is available, use it for real rendered verification and promote checks into permanent E2E tests only when the regression value justifies maintenance.
-
----
-
-## 13. Security Presentation
-
-Never render manually converted user-controlled HTML through unsafe `dangerouslySetInnerHTML`.
-
-Role-aware UI does not provide authorization security.
-
-Backend authorization remains authoritative.
-
-Never expose secrets, tokens, or PII through logs or accidental UI/debug output.
-
-Follow root `AGENTS.md` security rules.
-
----
-
-## 14. Local Commands
+Current commands:
 
 ```bash
 npm run dev
@@ -407,106 +215,43 @@ npm run test
 npm run verify
 ```
 
-Do not claim verification that was not actually run.
+Do not claim verification that was not actually run. `npm run verify` currently covers lint + unit/component tests; it is not proof of rendered correctness.
 
-If rendered UI changed, `npm run verify` alone is not proof of rendered correctness.
+## 12. Security presentation
 
----
+- frontend role-aware rendering does not provide authorization security;
+- backend authorization remains authoritative;
+- never expose secrets, raw tokens, or PII through logs/debug UI;
+- follow root `AGENTS.md` for security/fencing rules.
 
-## 15. Workflow Authority
+## 13. Workflow authority
 
-Generic per-feature lifecycle lives in:
+Harscode owns the generic feature lifecycle and generic frontend engineering practice.
 
-```text
-../../harscode-workspace/workflow/
-```
+`../docs/kencleng-agentic-workflow.md` owns Kencleng-specific sequencing, risk/human authority, integration states, and domain delivery.
 
-Default lifecycle:
+Do not redefine either here.
 
-```text
-Exploration + Techplan
-→ Build / patch loop
-→ Code Review
-→ Testing
-→ Pull Request
-```
+Historical feature/task docs may contain numeric section references to older revisions of the Kencleng workflow. Treat the **current named rule/source owner** as authoritative rather than inferring policy from an old section number.
 
-Do not duplicate or redefine that lifecycle here.
-
-Kencleng-specific sequencing, risk tiers, frontend/backend coordination, and domain delivery rules live in:
+## 14. Source routing
 
 ```text
-../docs/kencleng-agentic-workflow.md
+business/domain behavior → ../docs/spec/<domain-dir>/
+API shape                → ../api/openapi.yaml
+frontend architecture    → ../docs/project/kencleng-frontend-tech-stack.md
+product-design authority → ../docs/ui-ux/product-design-principles.md
+UX behavior              → ../docs/ui-ux/patterns.md
+visual system            → ../docs/ui-ux/design-guidelines.md
+brand/assets             → ../docs/ui-ux/brand-and-visual-assets.md
+route/persona inventory  → ../docs/ui-ux/page-map.md
+prototype authority      → ../docs/ui-ux/prototype-reference.md
+component contracts      → components/README.md
+project status           → ../docs/project/kencleng-development-tracker.md
 ```
 
-as a **project orchestration overlay**, not a competing generic feature workflow.
+If authorities genuinely conflict on the same concern, surface the contradiction.
 
-One-off setup/playbook work remains under:
+## 15. Output style
 
-```text
-.agents/docs/
-```
-
-and is read only when relevant.
-
----
-
-## 16. Source-of-Truth Routing
-
-Use the authority that owns the question.
-
-```text
-business/domain semantics
-→ ../docs/spec/<domain>/
-
-API shape
-→ ../api/openapi.yaml
-
-frontend architecture
-→ ../docs/project/kencleng-frontend-tech-stack.md
-
-product design principles
-→ ../docs/ui-ux/product-design-principles.md
-
-UX behavior
-→ ../docs/ui-ux/patterns.md
-
-visual system
-→ ../docs/ui-ux/design-guidelines.md
-
-brand/assets
-→ ../docs/ui-ux/brand-and-visual-assets.md
-
-route/persona inventory
-→ ../docs/ui-ux/page-map.md
-
-prototype authority
-→ ../docs/ui-ux/prototype-reference.md
-
-component contracts
-→ components/README.md
-```
-
-If authorities genuinely conflict, surface the contradiction.
-
-Do not silently pick whichever source makes implementation easiest.
-
----
-
-## 17. Output Style
-
-Default explanatory/process narration:
-
-```text
-terse
-```
-
-Final deliverables remain complete.
-
-Do not compress:
-
-* risk notes;
-* review findings;
-* testing/build reports;
-* PR descriptions;
-* sections whose Harscode workflow contract requires completeness.
+Default narration is terse. Final deliverables remain complete where Harscode requires complete risk notes, review findings, testing/build reports, or PR descriptions.
