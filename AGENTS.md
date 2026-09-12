@@ -120,6 +120,8 @@ Use `docs/kencleng-agentic-workflow.md` only for Kencleng-specific orchestration
 
 Do not create a second feature lifecycle in project instructions.
 
+Older feature/task docs may contain numeric section references to previous workflow revisions. Follow the current named rule/source owner rather than reviving superseded policy from an old `§NN` reference.
+
 ## 6. Scope and directory boundaries
 
 Work on one coherent Harscode work unit at a time. Do not combine unrelated changes merely because they are nearby. Session boundaries follow the active Harscode workflow rather than an unconditional one-endpoint-per-session rule.
