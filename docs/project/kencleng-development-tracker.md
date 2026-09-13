@@ -4,7 +4,7 @@
 >
 > Status: Living project status
 >
-> Last reconciled: 2026-09-12 against main through `749807a` plus the B2 browser-verification change
+> Last reconciled: 2026-09-13 against Kencleng main through `b2531d8` and Harscode main through `5f3c9bc`
 >
 > Purpose: Keep cross-domain backend/frontend/integration status visible without putting dated progress into workflow policy.
 
@@ -100,30 +100,44 @@ The account task/spec documents intentionally remain unchanged in this cleanup s
 | Frontend architecture v2 | Present | `docs/project/kencleng-frontend-tech-stack.md` |
 | Authority cleanup after `3f5de5e` | Present | Merged in PR #1 / `bdba6b0`; compact authority routing, Tier-0 fencing, living tracker, and stale-guidance cleanup are on main. |
 | Button Secondary v2 runtime adoption | Present | Merged in PR #2 / `749807a`; `Button.secondary` is neutral/outlined and covered by a targeted primitive regression test. |
-| Browser automation capability | Introduced by B2 | Playwright is wired as an explicit real-browser capability with Chromium, deterministic `/login` smoke coverage, and separate commands; it intentionally remains outside the fast `npm run verify` baseline. |
-| Codex harness optimization | Planned outside Kencleng | Harscode handoff starts after the browser-verification capability is executable and verified. |
+| Browser automation capability | Proven | PR #3 / `b07a256`; Playwright is wired as an explicit Chromium real-browser capability, `npm run verify` passed 40 files / 226 tests, and the deterministic `/login` browser smoke passed 1/1 from a real checkout. It intentionally remains outside the fast baseline. |
+| Codex harness optimization | Present in Harscode | Harscode proposal `0027` is Accepted and merged on Harscode main at `5f3c9bc`; `harness-optimization/codex/` now defines the translation-only Codex layer. |
+| First Codex frontend dogfood | Next | Select one representative frontend work item and run it through the actual Harscode/Codex workflow; record failures by guidance layer instead of pre-optimizing further. |
 
 ## 6. Readiness before Codex frontend dogfood
 
-The staged sequence is:
+The staged prerequisite sequence is complete:
 
 ```text
 post-migration authority cleanup       ✓ merged
 → Button.secondary shared-component    ✓ merged
-→ Playwright browser verification      B2 change
-→ Harscode Codex harness translation   next after B2 verification
-→ first representative Codex feature
+→ Playwright browser verification      ✓ proven and merged
+→ Harscode Codex harness translation   ✓ accepted and merged
+→ first representative Codex feature  NEXT
 ```
 
-Before declaring the Codex frontend workflow operationally ready, verify that:
+The frontend is now ready to start the first Codex dogfood **as an experiment, not as proof that the harness is already optimal**.
 
-- always-loaded instructions are compact and non-conflicting;
+During dogfood, classify problems by the layer that actually failed:
+
+```text
+project guidance / authority
+Harscode workflow or best-practice
+Codex harness translation
+feature implementation bug
+```
+
+Do not respond to a feature bug by expanding global agent policy, and do not respond to a real reusable harness gap by patching only the one feature's local instructions.
+
+The first dogfood should be representative enough to exercise current frontend authorities and browser verification, while avoiding a Tier-0/Tier-1 security or money-critical surface as the first harness experiment.
+
+Readiness evidence now includes:
+
+- compact hierarchical Kencleng `AGENTS.md` routing is on `main`;
 - current design/component authorities are discoverable;
-- shared-component change governance has been exercised on a real change;
-- rendered/browser verification is executable in a clean checkout;
-- Codex translation remains harness translation rather than project policy duplication.
-
-The B2 browser capability is not considered operationally proven merely because config/test files exist. The dependency lock, Chromium install, fast baseline, and browser smoke must execute successfully from a real checkout before moving to the Harscode Codex translation step.
+- shared-component blast-radius governance was exercised in B1;
+- the real-browser Playwright capability was executed successfully in B2;
+- Harscode Codex proposal `0027` was human-approved and merged without creating a second project policy source.
 
 ## 7. Update discipline
 
