@@ -22,7 +22,7 @@ frontend/
 │   ├── hooks/              # TanStack Query hooks
 │   └── stores/             # genuinely shared client-owned Zustand state only
 ├── mocks/                  # MSW handlers
-├── tests/browser/          # selected committed Playwright browser regressions
+├── tests/browser/          # optional committed Playwright browser regressions
 └── public/
 ```
 
@@ -178,23 +178,26 @@ Preserve route-specific hierarchy, composition, states, interaction intent, and 
 
 Do not wholesale-copy prototype code. Prototype component boundaries, mock data, local state, exact CSS, and provisional assets are not production authority.
 
-## 10. Rendered verification
+## 10. Rendered iteration and human acceptance
 
-Material rendered UI or spatial-interaction changes require inspection in a real browser or equivalent layout-capable environment.
+Material rendered UI or spatial-interaction changes need real rendered feedback; compilation, Vitest, RTL, and MSW do not prove hierarchy, responsiveness, clipping/overflow, or whether an interaction feels understandable in context.
 
-Vitest/RTL/MSW do not prove layout, hierarchy, responsiveness, clipping/overflow, or real-browser spatial behavior.
+During Build, agent-driven `edit → render → inspect → fix` is valid implementation feedback when the selected client/environment supports it. Use the smallest representative set of realistic states, content conditions, and viewports capable of exposing likely failures.
 
-Use the smallest representative set of realistic states, content conditions, and viewports capable of exposing likely failures.
+Agent rendered feedback is **not final product acceptance**.
 
-During Build, `edit → render → inspect → fix` is valid implementation feedback. When Harscode uses a separate Testing phase, final rendered verification belongs there and must independently verify the observable result.
+Before merge/delivery of material frontend UI, a human must manually exercise the rendered result in a real browser at a representative scope appropriate to the change. Human acceptance should focus on:
 
-Screenshots are useful evidence when they help; they are not a ritual.
+- visual hierarchy and clarity;
+- interaction comprehension;
+- responsive usability;
+- product/design intent;
+- asset appropriateness;
+- obvious loading/empty/error/success behavior in context.
 
-Playwright is the repository browser-verification capability. `playwright.config.ts` starts the local Next.js dev server by default; set `PLAYWRIGHT_BASE_URL` when verification should target an already-running stack instead.
+Keep the human acceptance scope proportional to the change. Screenshots may support discussion/evidence, but they are not a ritual and do not replace actual interaction where interaction matters.
 
-Use committed tests under `tests/browser/` for stable browser-level regression contracts. Do not turn every one-off visual inspection into a permanent E2E test merely because Playwright is available.
-
-## 11. Testing and local commands
+## 11. Testing and Playwright boundary
 
 Automated baseline:
 
@@ -202,12 +205,11 @@ Automated baseline:
 Vitest
 React Testing Library
 MSW
-Playwright for selected real-browser checks
 ```
 
 Tests should verify observable behavior rather than internal structure.
 
-Current commands:
+Current local commands:
 
 ```bash
 npm run dev
@@ -215,6 +217,15 @@ npm run build
 npm run lint
 npm run test
 npm run verify
+```
+
+`npm run verify` intentionally remains the fast lint + unit/component baseline.
+
+Playwright is installed as a **separate, on-demand browser automation capability**. It is not part of the default Harscode phase contract for Kencleng frontend work.
+
+Available Playwright commands:
+
+```bash
 npm run browser:install
 npm run test:browser
 npm run test:browser:headed
@@ -223,7 +234,13 @@ npm run test:browser:ui
 
 `npm run browser:install` installs the pinned Chromium browser used by Playwright and is normally needed once per Playwright/browser-version change on a machine.
 
-Do not claim verification that was not actually run. `npm run verify` intentionally remains the fast lint + unit/component baseline; it does **not** run Playwright and is not proof of rendered correctness. Run the browser command separately when rendered verification is required.
+Do not add, expand, or run Playwright merely because a task reached Build, Code Review, Testing, or PR. A human decides when a browser behavior is valuable enough to automate and explicitly requests the relevant Playwright work (or the task itself is browser-regression/automation maintenance).
+
+Committed tests under `tests/browser/` are automation assets scoped by the behavior they protect: smoke, a feature flow, a known regression, or a deliberate broader journey. Their scope is not derived from a Harscode task folder.
+
+Playwright does not replace required human rendered acceptance.
+
+Do not claim any verification that was not actually run.
 
 ## 12. Security presentation
 
@@ -232,30 +249,33 @@ Do not claim verification that was not actually run. `npm run verify` intentiona
 - never expose secrets, raw tokens, or PII through logs/debug UI;
 - follow root `AGENTS.md` for security/fencing rules.
 
-## 13. Workflow authority
+## 13. Workflow and Codex execution authority
 
 Harscode owns the generic feature lifecycle and generic frontend engineering practice.
 
+When manually invoking a phase, start from the current canonical Harscode `workflow/*-prompt.md` entrypoint. Fill its variables and add only narrow task/project context that is not already owned there. Do not create a parallel frontend copy of the Harscode lifecycle prompts.
+
 `../docs/kencleng-agentic-workflow.md` owns Kencleng-specific sequencing, risk/human authority, integration states, and domain delivery.
 
-Do not redefine either here.
+For Codex frontend work, `../docs/project/codex-frontend-execution-profile.md` owns project-specific model/reasoning/client/capability routing. That execution profile does not redefine Harscode phases or product/design truth.
 
 Historical feature/task docs may contain numeric section references to older revisions of the Kencleng workflow. Treat the **current named rule/source owner** as authoritative rather than inferring policy from an old section number.
 
 ## 14. Source routing
 
 ```text
-business/domain behavior → ../docs/spec/<domain-dir>/
-API shape                → ../api/openapi.yaml
-frontend architecture    → ../docs/project/kencleng-frontend-tech-stack.md
-product-design authority → ../docs/ui-ux/product-design-principles.md
-UX behavior              → ../docs/ui-ux/patterns.md
-visual system            → ../docs/ui-ux/design-guidelines.md
-brand/assets             → ../docs/ui-ux/brand-and-visual-assets.md
-route/persona inventory  → ../docs/ui-ux/page-map.md
-prototype authority      → ../docs/ui-ux/prototype-reference.md
-component contracts      → components/README.md
-project status           → ../docs/project/kencleng-development-tracker.md
+business/domain behavior  → ../docs/spec/<domain-dir>/
+API shape                 → ../api/openapi.yaml
+frontend architecture     → ../docs/project/kencleng-frontend-tech-stack.md
+Codex execution profile   → ../docs/project/codex-frontend-execution-profile.md
+product-design authority  → ../docs/ui-ux/product-design-principles.md
+UX behavior               → ../docs/ui-ux/patterns.md
+visual system             → ../docs/ui-ux/design-guidelines.md
+brand/assets              → ../docs/ui-ux/brand-and-visual-assets.md
+route/persona inventory   → ../docs/ui-ux/page-map.md
+prototype authority       → ../docs/ui-ux/prototype-reference.md
+component contracts       → components/README.md
+project status            → ../docs/project/kencleng-development-tracker.md
 ```
 
 If authorities genuinely conflict on the same concern, surface the contradiction.
