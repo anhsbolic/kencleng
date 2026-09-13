@@ -4,7 +4,7 @@
 >
 > Status: Current project orchestration policy
 >
-> Last updated: 2026-09-12
+> Last updated: 2026-09-13
 >
 > Purpose: Define Kencleng-specific coordination that sits on top of Harscode. This document does **not** define a competing per-feature lifecycle.
 
@@ -38,6 +38,8 @@ Kencleng owns project-specific orchestration:
 > **Harscode decides how a task moves through its lifecycle. Kencleng decides what project conditions surround that lifecycle.**
 
 Concern-specific source routing lives in root `AGENTS.md`. Do not duplicate a second full authority table here.
+
+When a Harscode phase is manually invoked, use its current canonical `workflow/*-prompt.md` entrypoint rather than re-authoring a project-specific copy of the phase instructions. Kencleng overlays only the project context it actually owns.
 
 ### Legacy numeric references
 
@@ -181,6 +183,8 @@ existing production component contracts
 
 Do not create duplicate routes or near-duplicate broad components just because a backend task is new.
 
+For Codex frontend work, `docs/project/codex-frontend-execution-profile.md` chooses model/client/capability. It does not change the lifecycle or product authority.
+
 ## 6. Frontend design readiness
 
 Material UI work must be classified during Exploration using `docs/ui-ux/product-design-principles.md`:
@@ -283,7 +287,7 @@ Frontend work may reach `FRONTEND_MOCK_VERIFIED` before live backend integration
 - production UI exists;
 - mocks follow the intended OpenAPI contract;
 - scoped frontend unit/component verification passed;
-- required rendered UI verification was exercised;
+- required **human rendered acceptance** for material UI was completed;
 - the explicitly scoped frontend verification is complete.
 
 `FRONTEND_MOCK_VERIFIED` does **not** mean real backend integration was verified.
@@ -292,15 +296,17 @@ Multiple domains/features may temporarily remain mock-verified when that sequenc
 
 The architecture should aim for mock→real integration without rewriting application behavior, but this is a design goal rather than an assumption. If real integration reveals required application changes, investigate mock/OpenAPI/state/environment drift and route production patches through Harscode Build/Patch.
 
+Playwright is not required to earn `FRONTEND_MOCK_VERIFIED`. If a human explicitly requested browser automation for the relevant behavior, its result may be included as additional evidence, but it does not replace human rendered acceptance.
+
 ## 11. Integration verification
 
 When backend and frontend are available together, verify the real interface/stack appropriate to the feature.
 
-For frontend-visible behavior this includes real rendered browser exercise.
+For material frontend-visible behavior, a human must exercise the integrated rendered flow in a real browser before `INTEGRATED_VERIFIED`/delivery is claimed.
 
-Playwright is the selected target browser-automation capability once repository wiring exists. It is a capability for interaction, responsive/layout checks, integration verification, and high-value regression tests—not a requirement to create a comprehensive permanent E2E matrix.
+Playwright is available as an **independent, on-demand browser automation capability**. It is not a Harscode phase entry/exit requirement and must not be run merely because a feature reached Testing or PR.
 
-Until Playwright is actually wired, do not invent a command or claim it ran.
+A human decides when a browser behavior is valuable enough to automate and explicitly requests that work (or creates a dedicated browser-regression/automation task). Browser automation is scoped by the behavior it protects—smoke, feature flow, known regression, or deliberate broader journey—not by a Harscode task-folder path.
 
 A commit that happens to touch both frontend and backend is not evidence of `INTEGRATED_VERIFIED` by itself.
 
@@ -335,6 +341,7 @@ Human authority is mandatory where the project assigns it, including:
 - protected spec/test changes;
 - brand-defining visual assets;
 - material `OPEN` product/design decisions requiring product authority;
+- manual rendered acceptance before merge/delivery of material frontend UI;
 - manual DB/index application.
 
 Agents may analyze/propose indexes. Applying an index is human-triggered; Tier-0 tables require particular care around locking/query-plan consequences.
@@ -379,9 +386,9 @@ Do not duplicate a universal test sequence here:
 
 - Harscode owns lifecycle-phase verification responsibilities;
 - repository commands/config own executable checks;
-- Kencleng adds risk-specific requirements.
+- Kencleng adds risk-specific requirements and human acceptance boundaries.
 
-Examples of project-specific evidence include race/concurrency verification, threat-focused security checks, applicable invariant/property tests, hostile-content rendering tests, rendered browser verification, and real-stack integration before integrated/finalized status.
+Examples of project-specific evidence include race/concurrency verification, threat-focused security checks, applicable invariant/property tests, hostile-content rendering tests, human rendered acceptance for material frontend UI, optional explicitly requested browser automation, and real-stack integration before integrated/finalized status.
 
 Run the right evidence for the risk rather than expensive categories indiscriminately.
 
@@ -429,6 +436,7 @@ Project:
 - `docs/spec/README.md`
 - `docs/project/kencleng-backend-tech-stack.md`
 - `docs/project/kencleng-frontend-tech-stack.md`
+- `docs/project/codex-frontend-execution-profile.md`
 - `docs/project/kencleng-development-tracker.md`
 - `docs/project/kencleng-repo-setup.md`
 
