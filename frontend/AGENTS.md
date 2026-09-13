@@ -22,6 +22,7 @@ frontend/
 │   ├── hooks/              # TanStack Query hooks
 │   └── stores/             # genuinely shared client-owned Zustand state only
 ├── mocks/                  # MSW handlers
+├── tests/browser/          # selected committed Playwright browser regressions
 └── public/
 ```
 
@@ -164,8 +165,6 @@ Secondary → neutral / outlined
 Accent    → restrained warm emphasis
 ```
 
-The runtime migration of existing amber-filled Secondary is a separate shared-component change and must use consumer-impact analysis.
-
 ## 9. Prototype/reference translation
 
 `../design-reference/` is frozen read-only prototype/reference output.
@@ -191,16 +190,19 @@ During Build, `edit → render → inspect → fix` is valid implementation feed
 
 Screenshots are useful evidence when they help; they are not a ritual.
 
-Playwright is the selected target browser capability but is not wired yet. Until it is present in `package.json`/config, do not invent a command or claim a Playwright run.
+Playwright is the repository browser-verification capability. `playwright.config.ts` starts the local Next.js dev server by default; set `PLAYWRIGHT_BASE_URL` when verification should target an already-running stack instead.
+
+Use committed tests under `tests/browser/` for stable browser-level regression contracts. Do not turn every one-off visual inspection into a permanent E2E test merely because Playwright is available.
 
 ## 11. Testing and local commands
 
-Current automated baseline:
+Automated baseline:
 
 ```text
 Vitest
 React Testing Library
 MSW
+Playwright for selected real-browser checks
 ```
 
 Tests should verify observable behavior rather than internal structure.
@@ -213,9 +215,15 @@ npm run build
 npm run lint
 npm run test
 npm run verify
+npm run browser:install
+npm run test:browser
+npm run test:browser:headed
+npm run test:browser:ui
 ```
 
-Do not claim verification that was not actually run. `npm run verify` currently covers lint + unit/component tests; it is not proof of rendered correctness.
+`npm run browser:install` installs the pinned Chromium browser used by Playwright and is normally needed once per Playwright/browser-version change on a machine.
+
+Do not claim verification that was not actually run. `npm run verify` intentionally remains the fast lint + unit/component baseline; it does **not** run Playwright and is not proof of rendered correctness. Run the browser command separately when rendered verification is required.
 
 ## 12. Security presentation
 
