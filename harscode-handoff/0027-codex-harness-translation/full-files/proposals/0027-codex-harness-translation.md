@@ -1,6 +1,6 @@
 # 0027 — Codex root translation: instruction hierarchy, skills, session isolation, sandbox/approvals, and token optimization
 
-**Status:** Proposed
+**Status:** Accepted
 **Date:** 2026-09-13
 **Protection Tier:** general
 **Triggered by:** Preparing the first Codex frontend dogfood after a target project had already exercised compact hierarchical `AGENTS.md`, shared-component blast-radius governance, and real-browser verification. The remaining gap was not missing workflow policy; it was the absence of a Codex-native translation layer equivalent to the existing Claude Code harness translation.
@@ -133,4 +133,4 @@ The proposal also keeps correctness independent of fast-moving native multi-agen
 
 ---
 
-*After human review: update the Status above. If Accepted, add the target files and leave this proposal in place as the changelog entry. Re-verify Codex mechanics according to the new harness README's stated window.*
+*Accepted after human review on 2026-09-13. Add the target files and leave this proposal in place as the changelog entry. Re-verify Codex mechanics according to the new harness README's stated window.*
