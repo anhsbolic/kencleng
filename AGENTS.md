@@ -47,6 +47,9 @@ prototype authority / consumption
 frontend component contracts
 → frontend/components/README.md
 
+Codex frontend execution profile
+→ docs/project/codex-frontend-execution-profile.md
+
 project status
 → docs/project/kencleng-development-tracker.md
 
@@ -116,6 +119,8 @@ Exploration + Techplan
 
 Use Harscode for phase responsibilities, session boundaries, patch routing, reports, and generic engineering best-practices.
 
+When manually invoking a Harscode phase, start from that phase's current canonical `workflow/*-prompt.md` entrypoint. Fill its variables and add only narrow Kencleng/task context that is not already owned by the prompt. Do not maintain a second Kencleng-authored copy of generic phase instructions.
+
 Use `docs/kencleng-agentic-workflow.md` only for Kencleng-specific orchestration such as domain sequencing, risk tiers, human authority, backend/frontend coordination, design readiness, mock-first integration, and domain finalization.
 
 Do not create a second feature lifecycle in project instructions.
@@ -149,7 +154,9 @@ Material frontend UI work must use the current product-design, UX, visual, asset
 
 Changes to `frontend/components/ui/` or `frontend/components/shared/` require consumer/blast-radius analysis according to `frontend/components/README.md`.
 
-Material rendered UI changes require rendered verification according to frontend guidance and Harscode Testing.
+For Codex work, use `docs/project/codex-frontend-execution-profile.md` to choose client/model/capability without redefining the Harscode phase.
+
+Material rendered UI changes require **human rendered acceptance before merge/delivery** according to frontend guidance. Agent rendered iteration during Build is implementation feedback, not final acceptance. Browser automation is separate/on-demand and is not a Harscode phase gate.
 
 ## 9. Verification and evidence
 
@@ -161,12 +168,13 @@ Evidence is risk-driven. Examples include:
 - race/concurrency evidence for relevant concurrent code;
 - threat-focused security verification;
 - hostile-content rendering coverage;
-- real-browser verification for material frontend UI changes;
+- human rendered acceptance for material frontend UI changes;
+- optional browser-automation evidence when explicitly requested;
 - real backend/frontend integration before claiming integrated completion.
 
 Do not indiscriminately run expensive test classes during Build when Harscode assigns them to Testing.
 
-The project has selected Playwright as the target browser-automation capability, but until it is actually wired into the repository do not invent a command or claim Playwright verification ran. Once available, use it for appropriate rendered interaction, responsive checks, integration verification, and high-value browser regressions—not as a mandate for a giant E2E suite.
+Playwright is available as an **independent browser-automation capability**, not a default lifecycle requirement. Ordinary Exploration, Techplan, Build, Code Review, Testing, and PR work must not add or run Playwright merely because a phase exists. Add/run Playwright when a human explicitly requests browser automation or when the task itself is browser-regression/automation maintenance. Playwright does not replace required human rendered acceptance.
 
 ## 10. Pull-request evidence
 
@@ -186,7 +194,7 @@ A behavior-changing PR must identify:
 
 Tier-specific requirements follow `docs/kencleng-agentic-workflow.md`. Use evidence appropriate to the responsibility being changed.
 
-For material frontend UI changes also identify the design basis/precedent, material design assumptions, rendered verification performed, and any provisional visual assets.
+For material frontend UI changes also identify the design basis/precedent, material design assumptions, human rendered acceptance performed, and any provisional visual assets. If Playwright/browser automation was explicitly requested and run, report it as additional automation evidence rather than implying it is the acceptance gate.
 
 Distinguish `verified`, `assumed`, `deferred`, and `not tested`. A known material risk silently omitted is worse than a clearly documented limitation.
 
@@ -217,9 +225,10 @@ Project:
 - `docs/kencleng-agentic-workflow.md` — Kencleng orchestration overlay
 - `docs/project/kencleng-development-tracker.md` — current cross-domain/project status
 - `docs/project/kencleng-repo-setup.md`
-- `docs/spec/README.md`
 - `docs/project/kencleng-backend-tech-stack.md`
 - `docs/project/kencleng-frontend-tech-stack.md`
+- `docs/project/codex-frontend-execution-profile.md` — Codex frontend client/model/capability routing
+- `docs/spec/README.md`
 
 Frontend design:
 
