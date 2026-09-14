@@ -69,7 +69,7 @@ required for `/` to function, deferred rather than blocking.
 | `/` (home) | List/Browse | Browse highlighted campaigns¹ |
 | `/campaign` (list) | List/Browse | Browse/filter `published` campaigns |
 | `/campaign/[id]` (detail) | Detail (public variant) | View description, progress bar, public donor list (org info shown inline — no separate org profile page), donate button. Also displays `beneficiary_description` |
-| `/campaign/[id]/donate` | Form (single-step, no revision cycle) | Fill `amount`, choose `payment_method` (transfer/debit/gopay/shopeepay/ovo/qris — simulated), optionally fill `guest_name`/`guest_email` (both independently optional), see nudge note about benefits of providing email, submit |
+| `/campaign/[id]/donate` (donation form) | Form (single-step, no revision cycle) | Fill `amount`, choose `payment_method` (transfer/debit/gopay/shopeepay/ovo/qris — simulated), optionally fill `guest_name`/`guest_email` (both independently optional), see nudge note about benefits of providing email, submit |
 | `/donation/[id]/status` | Status/Tracking | Check donation status (`pending`/`success`/`failed`) without login — token-in-URL, see `kencleng-phase2-detail.md` Feature 1 |
 | `/login` | Form | Login form + "Masuk dengan Google" button |
 | `/register` | Form | Register form + "Daftar dengan Google" button |
