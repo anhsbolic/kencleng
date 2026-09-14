@@ -17,7 +17,9 @@ feature behavior / acceptance criteria
 → docs/spec/<domain-dir>/features/*.md
 
 API contract
-→ api/openapi.yaml
+→ api/README.md (routing/editing rules)
+→ api/openapi/<domain>.yaml + referenced common.yaml components
+→ api/openapi.yaml only when an aggregate/generated view is needed
 
 backend architecture
 → docs/project/kencleng-backend-tech-stack.md
@@ -40,9 +42,9 @@ feature lifecycle / generic engineering practice
 
 Treat this map as routing, not as an instruction to read every target in full. Start from the concern that is active, locate the authoritative section/operation/heading, follow its referenced dependencies, and expand only when the task needs broader consistency context.
 
-For large structured sources such as `api/openapi.yaml`, read the relevant operation plus referenced schemas/security/error components rather than loading the entire file by default. A cross-cutting contract review may justify a broader read.
+For API work, prefer the split source for the active domain plus only the referenced shared components from `api/openapi/common.yaml`. `api/openapi.yaml` is the generated bundled aggregate and remains useful for aggregate/cross-domain inspection and generated-client correspondence; do not load it in full by default for a domain-local task.
 
-For business behavior, domain invariants/threat models and feature specs are authoritative over narrative project background; `api/openapi.yaml` owns API shape. Do not apply that precedence to unrelated concerns owned by architecture or design documents.
+For business behavior, domain invariants/threat models and feature specs are authoritative over narrative project background; the OpenAPI source owns API shape. Do not apply that precedence to unrelated concerns owned by architecture or design documents.
 
 If authorities genuinely conflict on the same concern, surface the contradiction instead of choosing whichever interpretation makes implementation easiest.
 
@@ -52,7 +54,7 @@ If authorities genuinely conflict on the same concern, surface the contradiction
 - **Money:** backend monetary arithmetic uses the established decimal representation; never introduce `float64` for money, including fixtures.
 - **SQL:** use the established parameterized `goqu` approach; never construct SQL from user-controlled values via interpolation/concatenation.
 - **Sensitive data:** never log secrets, raw tokens, or PII payloads.
-- **Client errors:** never leak stack traces, raw SQL, internal filesystem paths, or other implementation internals. Follow the applicable Problem Details contract in `api/openapi.yaml`.
+- **Client errors:** never leak stack traces, raw SQL, internal filesystem paths, or other implementation internals. Follow the applicable Problem Details contract in the OpenAPI source.
 - **PII:** follow the established encryption/HMAC storage pattern; do not invent a second convention.
 - **Authorization:** backend authorization checks are explicit. Frontend role gates or hidden controls are UX, not security authority.
 

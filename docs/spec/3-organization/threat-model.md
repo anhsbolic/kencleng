@@ -1,8 +1,8 @@
 # Threat Model — organization
 
-> File: `docs/spec/organization/threat-model.md`
+> File: `docs/spec/3-organization/threat-model.md`
 > Status: draft — reconciled against `api/openapi/organization.yaml` 2026-08-20
-> Last updated: 2026-08-20
+> Last updated: 2026-09-14
 
 ## Reconciliation note (2026-08-20, decisions finalized 2026-08-20)
 
@@ -38,10 +38,10 @@ section — confirmed to match the actual API (`multipart/form-data`,
 One addition: **file upload attack surface** — `akta_notaris`,
 `sk_kemenkumham`, `izin_pub` are user-supplied binary files.
 `organization.yaml` documents a `422` for "invalid file type or
-exceeds 5 MB max" on the attachment-replace endpoint, but this same
-constraint isn't explicitly re-stated on the registration endpoint's
-error list — worth confirming the same file-type/size validation
-applies at registration time too, not just on later replacement.
+exceeds 5 MB max" on the attachment-replace endpoint. The registration
+feature spec confirms the same size boundary for initial uploads as
+exactly `5_000_000` bytes per file. No canonical MIME allowlist is
+specified for frontend use; frontend code must not invent one.
 
 ### Organization detail view — `GET /organizations/{organizationId}`
 
@@ -174,7 +174,7 @@ now resolved — see `invariants.md`'s reconciliation note):
 
 ## References
 
-- Related domain invariants: `docs/spec/organization/invariants.md`
+- Related domain invariants: `docs/spec/3-organization/invariants.md`
   (reconciled 2026-08-20 — read together with this file, the three
   `[NEEDS DECISION]` items are shared between both docs)
 - Related ERD: `docs/project/kencleng-erd.md` §2
@@ -184,4 +184,4 @@ now resolved — see `invariants.md`'s reconciliation note):
 - **Actual API (ground truth as of 2026-08-20)**:
   `api/openapi/organization.yaml`, `api/openapi/campaign.yaml` (for
   `has_overdue_report`)
-- Related threat model precedent: `docs/spec/account/threat-model.md`
+- Related threat model precedent: `docs/spec/1-account/threat-model.md`

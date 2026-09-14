@@ -1,8 +1,8 @@
 # Domain Tasks — organization
 
-> File: `docs/spec/organization/tasks.md`
+> File: `docs/spec/3-organization/tasks.md`
 > Status: draft — reconciled against `api/openapi/organization.yaml` 2026-08-20
-> Last updated: 2026-08-20
+> Last updated: 2026-09-14
 
 ## Reconciliation note (2026-08-20)
 
@@ -51,7 +51,9 @@ rejected.
 (`422`, "invalid file type or exceeds 5 MB max" — documented on the
 attachment-replace endpoint, Task 05) applies identically at
 registration time for the initial `akta_notaris`/`sk_kemenkumham`/
-`izin_pub` uploads.
+`izin_pub` uploads. The registration feature spec now owns the exact
+frontend-facing size boundary (`5_000_000` bytes) and the decision not
+to invent a client MIME allowlist where none is canonical.
 
 ## Task 02 — Organization detail view
 
@@ -221,11 +223,10 @@ stale one.
 
 ## References
 
-- Related domain invariants: `docs/spec/organization/invariants.md`
+- Related domain invariants: `docs/spec/3-organization/invariants.md`
   (reconciled 2026-08-20 — three `[NEEDS DECISION]` items shared
   across invariants/threat-model/tasks)
-- Related threat model: `docs/spec/organization/threat-model.md`
+- Related threat model: `docs/spec/3-organization/threat-model.md`
   (reconciled 2026-08-20)
 - **Actual API (ground truth)**: `api/openapi/organization.yaml`
-- Feature specs (need reconciliation next, same open items apply):
-  `docs/spec/organization/features/`
+- Feature specs: `docs/spec/3-organization/features/`

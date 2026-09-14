@@ -42,9 +42,9 @@ Client validation, presentation logic, formatting, interaction state, and derive
 
 If required product information is missing from the API/spec, surface the contract gap instead of inventing business behavior in React.
 
-API request/response shape comes from generated OpenAPI types based on `../api/openapi.yaml`. Do not maintain parallel handwritten API models for shapes the contract already owns.
+API request/response shape comes from generated OpenAPI types based on the bundled `../api/openapi.yaml`. Do not maintain parallel handwritten API models for shapes the contract already owns.
 
-When inspecting `../api/openapi.yaml`, locate the relevant operation plus referenced request/response schemas, security requirements, and Problem/error components. Do not load the entire OpenAPI document by default unless the task is explicitly cross-cutting across the contract.
+For contract inspection, start with `../api/README.md`, then prefer the active domain source (`../api/openapi/<domain>.yaml`) plus only the referenced components from `../api/openapi/common.yaml`. Use the bundled `../api/openapi.yaml` when an aggregate/cross-domain view or generated-client correspondence is actually needed; do not load the whole bundle by default for a domain-local task.
 
 ## 3. State ownership
 
@@ -275,7 +275,8 @@ Historical feature/task docs may contain numeric section references to older rev
 
 ```text
 business/domain behavior  → ../docs/spec/<domain-dir>/
-API shape                 → ../api/openapi.yaml (relevant operation + referenced components)
+API shape                 → ../api/README.md → ../api/openapi/<domain>.yaml + referenced common.yaml components
+aggregate API view        → ../api/openapi.yaml only when cross-domain/generated-bundle context is needed
 frontend architecture     → ../docs/project/kencleng-frontend-tech-stack.md (active concern sections)
 Codex execution profile   → ../docs/project/codex-frontend-execution-profile.md (current routing concern)
 product-design authority  → ../docs/ui-ux/product-design-principles.md

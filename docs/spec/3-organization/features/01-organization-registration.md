@@ -1,10 +1,10 @@
 # Feature Spec — 01: Organization Registration
 
-> File: `docs/spec/organization/features/01-organization-registration.md`
+> File: `docs/spec/3-organization/features/01-organization-registration.md`
 > Domain: `organization`
-> Task: 01 (see `docs/spec/organization/tasks.md`)
+> Task: 01 (see `docs/spec/3-organization/tasks.md`)
 > Status: draft — reconciled against `api/openapi/organization.yaml` 2026-08-20
-> Last updated: 2026-08-20
+> Last updated: 2026-09-14
 
 ## Summary
 
@@ -33,18 +33,23 @@ separate draft-then-attach step).
 | `description` | string | No | Operational field |
 | `contact` | string | No | Operational field |
 | `npwp` | string | Yes | Pattern `^\d{2}\.\d{3}\.\d{3}\.\d-\d{3}\.\d{3}$`, format-only validation, no DJP lookup |
-| `akta_notaris` | binary | Yes | |
-| `sk_kemenkumham` | binary | Yes | |
-| `izin_pub` | binary | No | Optional in v1 |
+| `akta_notaris` | binary | Yes | Max `5_000_000` bytes |
+| `sk_kemenkumham` | binary | Yes | Max `5_000_000` bytes |
+| `izin_pub` | binary | No | Optional in v1; max `5_000_000` bytes |
+
+The API contract may reject an invalid file type with `422`, but v1
+does not define a canonical MIME allowlist for the frontend. Do not
+invent an `accept` list or guessed client-side MIME policy. The exact
+client-side size boundary is `5_000_000` bytes per uploaded file.
 
 ## Behavior
 
 1. Reject if the caller holds `role = 'admin'` (`403`).
 2. Validate `npwp` format (regex, plaintext, before encryption).
-3. Validate each uploaded file: type/size (`422` if invalid — the
-   "invalid file type or exceeds 5 MB max" rule is documented
-   explicitly on the attachment-replace endpoint, Task 05; apply the
-   same limits here at registration time).
+3. Validate each uploaded file: enforce the `5_000_000` byte maximum
+   and return `422` when invalid. File-type rejection remains
+   backend/API-owned; because no canonical MIME allowlist is specified,
+   frontend code must not mirror a guessed type allowlist.
 4. Within a single transaction:
    a. `SELECT COUNT(*) ... WHERE user_id = current_user_id AND level =
       'owner' FOR UPDATE` — reject (`409 organization-limit-reached`)
@@ -65,7 +70,7 @@ separate draft-then-attach step).
 |---|---|
 | No/invalid bearer token | `401` |
 | Caller holds `role = 'admin'` | `403` |
-| `npwp` fails format regex, or file type/size invalid | `422` (`ValidationError`) |
+| `npwp` fails format regex, or an uploaded file is invalid / exceeds `5_000_000` bytes | `422` (`ValidationError`) |
 | `npwp` already registered | `409`, `type: npwp-taken` |
 | Caller already owns 5 organizations | `409`, `type: organization-limit-reached` |
 | Missing `akta_notaris` or `sk_kemenkumham` | `422` |
@@ -91,14 +96,14 @@ separate draft-then-attach step).
       succeeds.
 - [ ] Duplicate NPWP → `409`.
 - [ ] Malformed NPWP format → `422`, no insert attempted.
-- [ ] Invalid file type/oversized file → `422`.
+- [ ] Invalid file / file above `5_000_000` bytes → `422`.
 - [ ] Missing required legal documents → `422`.
 
 ## References
 
-- `docs/spec/organization/invariants.md` — INV-organization-01, 02, 03,
-  04
-- `docs/spec/organization/threat-model.md` — "Organization
+- `docs/spec/3-organization/invariants.md` — INV-organization-01, 02,
+  03, 04
+- `docs/spec/3-organization/threat-model.md` — "Organization
   registration" section
-- `docs/spec/organization/tasks.md` — Task 01
+- `docs/spec/3-organization/tasks.md` — Task 01
 - `api/openapi/organization.yaml` — `POST /organizations`
