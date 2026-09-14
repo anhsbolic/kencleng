@@ -6,11 +6,9 @@
 > (`docs/wireframes/`) removed — see `patterns.md` for why. Each page
 > row now names the reusable pattern it uses instead of a per-page
 > layout description.
-> Last updated: 2026-08-24 — added Public Shell nav decision and
-> scoped the `/` (home) "highlighted campaigns" note (see Shell &
-> Benchmark Notes and the footnote under §1's table). Both were
-> resolved specifically to unblock building `/` — see those sections
-> for what's still open beyond that scope.
+> Last updated: 2026-09-14 — corrected Organization Registration to
+> the one-shot Form contract and removed a stale implication that
+> secure-upload reassurance requires a named shared component.
 
 ## Context
 
@@ -71,7 +69,7 @@ required for `/` to function, deferred rather than blocking.
 | `/` (home) | List/Browse | Browse highlighted campaigns¹ |
 | `/campaign` (list) | List/Browse | Browse/filter `published` campaigns |
 | `/campaign/[id]` (detail) | Detail (public variant) | View description, progress bar, public donor list (org info shown inline — no separate org profile page), donate button. Also displays `beneficiary_description` |
-| `/campaign/[id]/donate` (donation form) | Form (single-step, no revision cycle) | Fill `amount`, choose `payment_method` (transfer/debit/gopay/shopeepay/ovo/qris — simulated), optionally fill `guest_name`/`guest_email` (both independently optional), see nudge note about benefits of providing email, submit |
+| `/campaign/[id]/donate` | Form (single-step, no revision cycle) | Fill `amount`, choose `payment_method` (transfer/debit/gopay/shopeepay/ovo/qris — simulated), optionally fill `guest_name`/`guest_email` (both independently optional), see nudge note about benefits of providing email, submit |
 | `/donation/[id]/status` | Status/Tracking | Check donation status (`pending`/`success`/`failed`) without login — token-in-URL, see `kencleng-phase2-detail.md` Feature 1 |
 | `/login` | Form | Login form + "Masuk dengan Google" button |
 | `/register` | Form | Register form + "Daftar dengan Google" button |
@@ -115,7 +113,7 @@ All Donatur pages, **plus**:
 
 | Page | Pattern | Actions |
 |---|---|---|
-| `/dashboard/organization/new` | Form (Revisable Submission) | Fill org data + upload legal docs (Akta, SK Kemenkumham, NPWP, optional Izin PUB) — shows `SecureUploadNote` |
+| `/dashboard/organization/new` | Form (single-step, no revision cycle) | Fill org data + upload legal docs (Akta, SK Kemenkumham, NPWP, optional Izin PUB) in one submission; include contextual secure-upload reassurance where useful and accurate |
 | `/dashboard/organization/[id]` | Detail (dashboard variant) | View curation status, edit while `pending_verification`, revise & resubmit if `rejected` — legal docs visible here (owner-only). Still editable after `verified`, but editing a *legal/identity* field sends status back to `pending_verification`; editing an *operational* field never changes status — see `kencleng-phase1-detail.md` Feature 1 |
 | `/dashboard/organization/[id]/representatives` | List/Browse + inline Form | Invite representative (as `staff`) by email — direct-add, no accept step — remove representative, promote/demote owner↔staff, view list — system enforces ≥1 owner. Full detail: `kencleng-roadmap-next-steps.md`, representatives spec discussion |
 | `/dashboard/campaign/new` | Form (Revisable Submission) | Fill draft: title, description, target_amount, max_amount, deadline, upload media. Also `beneficiary_description` (free-text, optional) |
@@ -127,7 +125,7 @@ All Donatur pages, **plus**:
 | `/dashboard/campaign/[id]/report` | Detail + inline Form action | View auto-generated summary (post-`closed`), **add/edit narrative** (`report_narrative` — optional, no curation gate, editable anytime) |
 | `/dashboard/campaign/[id]/disbursement/new` | Form (Revisable Submission) | Request disbursement (owner-only, campaign must be `closed`) |
 | `/dashboard/campaign/[id]/disbursement/[reqId]` | Detail | View request status, revise & resubmit if `rejected` |
-| `/dashboard/campaign/[id]/fund-usage-report/new` | Form (Revisable Submission) | Fill expense breakdown per category + upload attachments — shows `SecureUploadNote` |
+| `/dashboard/campaign/[id]/fund-usage-report/new` | Form (Revisable Submission) | Fill expense breakdown per category + upload attachments; include contextual secure-upload reassurance where useful and accurate |
 | `/dashboard/campaign/[id]/fund-usage-report/[reportId]` | Detail | View verification status, revise & resubmit if `rejected` |
 
 ---
@@ -185,7 +183,7 @@ patterns' normal responsive behavior.
 | Element | Where used | Notes |
 |---|---|---|
 | `MaskedField` | Anywhere `guest_email`, `User.primary_email`, `NPWP`, or future banking details are displayed | See `patterns.md` §C for full behavior spec |
-| `SecureUploadNote` | Organization legal doc upload, fund-usage-report attachment upload | See `patterns.md` §C |
+| Secure-upload reassurance | Organization legal doc upload, fund-usage-report attachment upload | UX intent only; `patterns.md` owns the principle, not a required shared-component architecture |
 | `CurationDecisionPanel` | All curation/review pages (Kurator + Admin force-close/disbursement) | See `patterns.md` §C and Pattern 5 |
 | Notification badge / center | Persistent header element for any logged-in user | Unread count, batched mark-as-read |
 
