@@ -4,7 +4,7 @@
 >
 > Status: Current project orchestration policy
 >
-> Last updated: 2026-09-13
+> Last updated: 2026-09-14
 >
 > Purpose: Define Kencleng-specific coordination that sits on top of Harscode. This document does **not** define a competing per-feature lifecycle.
 
@@ -169,17 +169,7 @@ If Exploration exposes a contract gap, resolve it in the authority that owns the
 
 Frontend work is scoped around the meaningful UI unit (page, flow, interaction, or component responsibility), not forced into a 1:1 relationship with backend endpoints.
 
-Before Build, inspect the smallest relevant set of:
-
-```text
-feature/domain spec
-OpenAPI
-page map / UX pattern
-product-design + visual guidance
-asset authority
-prototype/reference authority
-existing production component contracts
-```
+Before Build, identify the active frontend concerns and route them through `frontend/AGENTS.md`. Feature/domain behavior and the relevant API shape are common inputs for contract-driven feature work; page-map/UX, product-design, visual, asset, prototype/reference, and broad component authorities are **conditional concerns**, not a preload checklist. Inspect only the authorities triggered by the actual feature and decisions at hand.
 
 Do not create duplicate routes or near-duplicate broad components just because a backend task is new.
 
