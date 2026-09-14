@@ -1,8 +1,8 @@
 # AGENTS.md — Kencleng
 
-Root instruction map for AI coding agents working in this repository.
+Root instruction map and cross-repository hard rules for AI coding agents.
 
-Read this file before writing code. More-specific `AGENTS.md` files apply within their directory scope.
+Read this file before writing code. More-specific `AGENTS.md` files apply within their directory scope and own stack-specific detail.
 
 Kencleng is a sandbox donation/crowdfunding project for correctness-critical, secure-by-design agentic engineering. Agent-generated code does not reduce correctness, security, or evidence requirements.
 
@@ -25,30 +25,8 @@ backend architecture
 frontend architecture
 → docs/project/kencleng-frontend-tech-stack.md
 
-product-design principles
-→ docs/ui-ux/product-design-principles.md
-
-UX patterns
-→ docs/ui-ux/patterns.md
-
-visual system
-→ docs/ui-ux/design-guidelines.md
-
-brand / visual assets
-→ docs/ui-ux/brand-and-visual-assets.md
-
-route/persona mapping
-→ docs/ui-ux/page-map.md
-
-prototype authority / consumption
-→ docs/ui-ux/prototype-reference.md
-→ docs/ui-ux/design-reference-usage.md
-
-frontend component contracts
-→ frontend/components/README.md
-
-Codex frontend execution profile
-→ docs/project/codex-frontend-execution-profile.md
+frontend product/design/component detail
+→ frontend/AGENTS.md
 
 project status
 → docs/project/kencleng-development-tracker.md
@@ -60,7 +38,11 @@ feature lifecycle / generic engineering practice
 → Harscode workflow / best-practices
 ```
 
-For business behavior, domain invariants/threat models and feature specs are authoritative over narrative project background; `api/openapi.yaml` owns the API shape. Do not apply that precedence to unrelated concerns owned by architecture or design docs.
+Treat this map as routing, not as an instruction to read every target in full. Start from the concern that is active, locate the authoritative section/operation/heading, follow its referenced dependencies, and expand only when the task needs broader consistency context.
+
+For large structured sources such as `api/openapi.yaml`, read the relevant operation plus referenced schemas/security/error components rather than loading the entire file by default. A cross-cutting contract review may justify a broader read.
+
+For business behavior, domain invariants/threat models and feature specs are authoritative over narrative project background; `api/openapi.yaml` owns API shape. Do not apply that precedence to unrelated concerns owned by architecture or design documents.
 
 If authorities genuinely conflict on the same concern, surface the contradiction instead of choosing whichever interpretation makes implementation easiest.
 
@@ -70,7 +52,7 @@ If authorities genuinely conflict on the same concern, surface the contradiction
 - **Money:** backend monetary arithmetic uses the established decimal representation; never introduce `float64` for money, including fixtures.
 - **SQL:** use the established parameterized `goqu` approach; never construct SQL from user-controlled values via interpolation/concatenation.
 - **Sensitive data:** never log secrets, raw tokens, or PII payloads.
-- **Client errors:** never leak stack traces, raw SQL, internal filesystem paths, or other implementation internals. Follow the Problem Details contract in `api/openapi.yaml`.
+- **Client errors:** never leak stack traces, raw SQL, internal filesystem paths, or other implementation internals. Follow the applicable Problem Details contract in `api/openapi.yaml`.
 - **PII:** follow the established encryption/HMAC storage pattern; do not invent a second convention.
 - **Authorization:** backend authorization checks are explicit. Frontend role gates or hidden controls are UX, not security authority.
 
@@ -110,26 +92,25 @@ If a spec or test appears wrong, report the contradiction, explain the evidence,
 Harscode owns the generic per-feature lifecycle:
 
 ```text
-Exploration + Techplan
+Exploration
+→ Techplan
 → Build / Patch
 → Code Review
 → Testing
 → Pull Request
 ```
 
-Use Harscode for phase responsibilities, session boundaries, patch routing, reports, and generic engineering best-practices.
+Harscode owns phase responsibilities, session/context boundaries, patch routing, reports, and generic engineering best-practices. Same-session vs fresh-session choices follow the active Harscode context/session guidance; the arrow above is lifecycle order, not a requirement that adjacent phases share a session.
 
 When manually invoking a Harscode phase, start from that phase's current canonical `workflow/*-prompt.md` entrypoint. Fill its variables and add only narrow Kencleng/task context that is not already owned by the prompt. Do not maintain a second Kencleng-authored copy of generic phase instructions.
 
-Use `docs/kencleng-agentic-workflow.md` only for Kencleng-specific orchestration such as domain sequencing, risk tiers, human authority, backend/frontend coordination, design readiness, mock-first integration, and domain finalization.
-
-Do not create a second feature lifecycle in project instructions.
+Use `docs/kencleng-agentic-workflow.md` for Kencleng-specific orchestration such as domain sequencing, risk tiers, human authority, backend/frontend coordination, design readiness, mock-first integration, and domain finalization. Read the relevant section(s); it is not mandatory startup prose for every phase.
 
 Older feature/task docs may contain numeric section references to previous workflow revisions. Follow the current named rule/source owner rather than reviving superseded policy from an old `§NN` reference.
 
 ## 6. Scope and directory boundaries
 
-Work on one coherent Harscode work unit at a time. Do not combine unrelated changes merely because they are nearby. Session boundaries follow the active Harscode workflow rather than an unconditional one-endpoint-per-session rule.
+Work on one coherent Harscode work unit at a time. Do not combine unrelated changes merely because they are nearby.
 
 Backend and frontend production writes remain separate by default:
 
@@ -140,43 +121,24 @@ Backend and frontend production writes remain separate by default:
 
 A small task unexpectedly touching many unrelated files is a risk signal. Investigate before expanding scope.
 
-## 7. Backend scope
+Within stack scope:
 
-When working under `backend/`, read `backend/AGENTS.md` plus only the domain/project material relevant to the task.
+- `backend/` → read `backend/AGENTS.md`; it owns backend-specific execution rules.
+- `frontend/` → read `frontend/AGENTS.md`; it owns frontend architecture/design/component/rendered-verification routing.
 
-Backend remains authoritative for financial correctness, authorization, domain lifecycle, transaction semantics, and persistence invariants. Frontend behavior must not compensate for missing backend correctness.
+Do not repeat those scoped rules here merely to make the root file self-contained.
 
-## 8. Frontend scope
-
-When working under `frontend/`, read `frontend/AGENTS.md` before implementation.
-
-Material frontend UI work must use the current product-design, UX, visual, asset, prototype, and component authorities and classify design readiness as `READY`, `PARTIAL`, or `OPEN` according to `docs/ui-ux/product-design-principles.md`.
-
-Changes to `frontend/components/ui/` or `frontend/components/shared/` require consumer/blast-radius analysis according to `frontend/components/README.md`.
-
-For Codex work, use `docs/project/codex-frontend-execution-profile.md` to choose client/model/capability without redefining the Harscode phase.
-
-Material rendered UI changes require **human rendered acceptance before merge/delivery** according to frontend guidance. Agent rendered iteration during Build is implementation feedback, not final acceptance. Browser automation is separate/on-demand and is not a Harscode phase gate.
-
-## 9. Verification and evidence
+## 7. Verification and evidence
 
 Use the repository's actual executable commands/configuration. Never claim a check ran unless it ran.
 
-Evidence is risk-driven. Examples include:
+Evidence is risk-driven. Applicable examples include invariant/property evidence, concurrency/race evidence, threat-focused security checks, hostile-content rendering coverage, human rendered acceptance for material UI, explicitly requested browser automation, and real backend/frontend integration before integrated completion.
 
-- invariant/property evidence for applicable correctness-critical backend rules;
-- race/concurrency evidence for relevant concurrent code;
-- threat-focused security verification;
-- hostile-content rendering coverage;
-- human rendered acceptance for material frontend UI changes;
-- optional browser-automation evidence when explicitly requested;
-- real backend/frontend integration before claiming integrated completion.
+Do not indiscriminately run expensive test classes during Build when the active Harscode workflow assigns them to independent Testing. Stack-specific verification boundaries live in the scoped `AGENTS.md` files.
 
-Do not indiscriminately run expensive test classes during Build when Harscode assigns them to Testing.
+Distinguish `verified`, `assumed`, `deferred`, and `not tested`. A known material risk silently omitted is worse than a clearly documented limitation.
 
-Playwright is available as an **independent browser-automation capability**, not a default lifecycle requirement. Ordinary Exploration, Techplan, Build, Code Review, Testing, and PR work must not add or run Playwright merely because a phase exists. Add/run Playwright when a human explicitly requests browser automation or when the task itself is browser-regression/automation maintenance. Playwright does not replace required human rendered acceptance.
-
-## 10. Pull-request evidence
+## 8. Pull-request evidence
 
 A behavior-changing PR must identify:
 
@@ -192,13 +154,9 @@ A behavior-changing PR must identify:
 - What is not tested, and why: ...
 ```
 
-Tier-specific requirements follow `docs/kencleng-agentic-workflow.md`. Use evidence appropriate to the responsibility being changed.
+Tier-specific and stack-specific additions follow `docs/kencleng-agentic-workflow.md` and the applicable scoped `AGENTS.md`.
 
-For material frontend UI changes also identify the design basis/precedent, material design assumptions, human rendered acceptance performed, and any provisional visual assets. If Playwright/browser automation was explicitly requested and run, report it as additional automation evidence rather than implying it is the acceptance gate.
-
-Distinguish `verified`, `assumed`, `deferred`, and `not tested`. A known material risk silently omitted is worse than a clearly documented limitation.
-
-## 11. Human authority
+## 9. Human authority
 
 Human approval is required where defined for:
 
@@ -208,40 +166,13 @@ Human approval is required where defined for:
 - protected spec/test changes;
 - brand-defining visual assets;
 - material `OPEN` product/design decisions;
-- manual DB/index application.
+- manual DB/index application;
+- any additional human gate explicitly owned by the applicable scoped/project authority.
 
 An agent must not approve its own work where independent human authority is required.
 
-## 12. One-off docs and generated artifacts
+## 10. One-off docs and generated artifacts
 
-One-off setup/playbook documents, when present, are on-demand context only. They do not override canonical specs, architecture docs, UI/UX authorities, root/scoped `AGENTS.md`, or Harscode workflow.
+One-off setup/playbook documents, when present, are on-demand context only. They do not override canonical specs, architecture/design authorities, root/scoped `AGENTS.md`, or Harscode workflow.
 
 Generated exploration, techplan, build, review, testing, and PR artifacts are task evidence/history, not automatically project-wide precedent. Promote reusable truth into the source that owns that concern.
-
-## 13. Related documents
-
-Project:
-
-- `docs/kencleng-agentic-workflow.md` — Kencleng orchestration overlay
-- `docs/project/kencleng-development-tracker.md` — current cross-domain/project status
-- `docs/project/kencleng-repo-setup.md`
-- `docs/project/kencleng-backend-tech-stack.md`
-- `docs/project/kencleng-frontend-tech-stack.md`
-- `docs/project/codex-frontend-execution-profile.md` — Codex frontend client/model/capability routing
-- `docs/spec/README.md`
-
-Frontend design:
-
-- `docs/ui-ux/product-design-principles.md`
-- `docs/ui-ux/patterns.md`
-- `docs/ui-ux/design-guidelines.md`
-- `docs/ui-ux/brand-and-visual-assets.md`
-- `docs/ui-ux/page-map.md`
-- `docs/ui-ux/prototype-reference.md`
-- `docs/ui-ux/design-reference-usage.md`
-- `frontend/components/README.md`
-
-Portable engineering workflow:
-
-- Harscode `workflow/`
-- Harscode `best-practices/`
