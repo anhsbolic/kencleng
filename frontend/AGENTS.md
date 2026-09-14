@@ -2,11 +2,13 @@
 
 Frontend-specific rules on top of root `AGENTS.md`.
 
-Read root `AGENTS.md` first. This file is intentionally compact: detailed rationale belongs in the canonical frontend architecture/design/component documents it points to.
+Read root `AGENTS.md` first. This file is the always-applicable frontend rule/router surface; detailed rationale remains in the canonical frontend architecture/design/component documents it points to.
 
 Scope: `frontend/`.
 
 Do not modify backend production code from a frontend-scoped Build.
+
+Use progressive disclosure for project authorities: identify the active concern, open the authoritative section(s) that govern it, follow referenced dependencies, and expand only when a cross-cutting decision/check requires broader context. A canonical file being important does not make every section mandatory on every frontend task.
 
 ## 1. Project map
 
@@ -42,6 +44,8 @@ If required product information is missing from the API/spec, surface the contra
 
 API request/response shape comes from generated OpenAPI types based on `../api/openapi.yaml`. Do not maintain parallel handwritten API models for shapes the contract already owns.
 
+When inspecting `../api/openapi.yaml`, locate the relevant operation plus referenced request/response schemas, security requirements, and Problem/error components. Do not load the entire OpenAPI document by default unless the task is explicitly cross-cutting across the contract.
+
 ## 3. State ownership
 
 Before creating state, use this order:
@@ -73,7 +77,7 @@ Hard rules:
 - do not synchronize deterministic projections through effects;
 - do not put sensitive values in the URL for convenience.
 
-Detailed architecture: `../docs/project/kencleng-frontend-tech-stack.md`.
+Detailed architecture: `../docs/project/kencleng-frontend-tech-stack.md`. Open the sections governing the active architecture/state/API concern rather than treating the whole architecture document as mandatory startup prose.
 
 ## 4. Forms and user-controlled content
 
@@ -111,9 +115,9 @@ classify change
 
 Compilation alone does not prove visual, behavioral, semantic, responsive, or accessibility compatibility.
 
-Read `components/README.md` before introducing or materially changing a broad reusable contract.
+Read `components/README.md` when introducing or materially changing a broad `ui/` or `shared/` contract, moving a component between ownership layers, or deciding a non-obvious abstraction boundary. Ordinary route-local work does not require reading the full component-governance document merely because it uses existing primitives.
 
-## 6. Product design readiness
+## 6. Product design readiness and authority routing
 
 For material UI work classify design readiness according to `../docs/ui-ux/product-design-principles.md`:
 
@@ -125,13 +129,19 @@ OPEN    → use Exploration to resolve material product/design intent before can
 
 Do not silently invent consequential product or interaction intent while coding.
 
-Read the smallest relevant authority set:
+Route design context by the question being answered; do not automatically read every UI/UX document:
 
-- `../docs/ui-ux/product-design-principles.md` — product/design authority and readiness;
-- `../docs/ui-ux/patterns.md` — reusable UX behavior;
-- `../docs/ui-ux/design-guidelines.md` — visual system;
-- `../docs/ui-ux/brand-and-visual-assets.md` — asset/brand authority;
-- `../docs/ui-ux/page-map.md` — route/persona inventory.
+| Active concern | Authority to open |
+|---|---|
+| design readiness, product/design decision authority, trust/clarity principles | `../docs/ui-ux/product-design-principles.md` |
+| an established recurring interaction/feedback/form/review pattern | matching section(s) of `../docs/ui-ux/patterns.md` |
+| typography, spacing, color, layout, responsive or visual-system rule | matching section(s) of `../docs/ui-ux/design-guidelines.md` |
+| expressive/product-semantic/brand asset need, asset status or generation/handoff | `../docs/ui-ux/brand-and-visual-assets.md` |
+| route, persona, navigation/IA relationship | matching route/persona section of `../docs/ui-ux/page-map.md` |
+| prototype-derived implementation | `../docs/ui-ux/prototype-reference.md` + `../docs/ui-ux/design-reference-usage.md` |
+| broad component contract/placement/change blast radius | `components/README.md` |
+
+Material UI normally needs product-design readiness plus the specific behavior/visual authorities relevant to the feature. It does **not** require reading brand assets, the full page map, prototype guidance, and the component system when those concerns are not active.
 
 ## 7. Visual assets
 
@@ -169,12 +179,12 @@ Accent    → restrained warm emphasis
 
 `../design-reference/` is frozen read-only prototype/reference output.
 
-Before prototype-derived implementation read:
+Only when implementation is actually prototype-derived, read:
 
 - `../docs/ui-ux/prototype-reference.md`;
 - `../docs/ui-ux/design-reference-usage.md`.
 
-Preserve route-specific hierarchy, composition, states, interaction intent, and responsive intent. Translate through current domain/API truth, UX patterns, visual system, asset system, and component architecture.
+Preserve route-specific hierarchy, composition, states, interaction intent, and responsive intent. Translate through current domain/API truth, applicable UX patterns, visual system, asset system, and component architecture.
 
 Do not wholesale-copy prototype code. Prototype component boundaries, mock data, local state, exact CSS, and provisional assets are not production authority.
 
@@ -255,9 +265,9 @@ Harscode owns the generic feature lifecycle and generic frontend engineering pra
 
 When manually invoking a phase, start from the current canonical Harscode `workflow/*-prompt.md` entrypoint. Fill its variables and add only narrow task/project context that is not already owned there. Do not create a parallel frontend copy of the Harscode lifecycle prompts.
 
-`../docs/kencleng-agentic-workflow.md` owns Kencleng-specific sequencing, risk/human authority, integration states, and domain delivery.
+`../docs/kencleng-agentic-workflow.md` owns Kencleng-specific sequencing, risk/human authority, integration states, and domain delivery. Read the specific project-precondition/risk/integration section needed for the current decision; the full orchestration overlay is not a default per-phase read.
 
-For Codex frontend work, `../docs/project/codex-frontend-execution-profile.md` owns project-specific model/reasoning/client/capability routing. That execution profile does not redefine Harscode phases or product/design truth.
+For Codex frontend work, `../docs/project/codex-frontend-execution-profile.md` owns project-specific model/reasoning/client/capability routing. Read the routing section(s) needed to choose or reconsider the current execution capability; do not repeatedly reload unrelated rendered-acceptance/Playwright rationale that is already enforced here.
 
 Historical feature/task docs may contain numeric section references to older revisions of the Kencleng workflow. Treat the **current named rule/source owner** as authoritative rather than inferring policy from an old section number.
 
@@ -265,20 +275,20 @@ Historical feature/task docs may contain numeric section references to older rev
 
 ```text
 business/domain behavior  → ../docs/spec/<domain-dir>/
-API shape                 → ../api/openapi.yaml
-frontend architecture     → ../docs/project/kencleng-frontend-tech-stack.md
-Codex execution profile   → ../docs/project/codex-frontend-execution-profile.md
+API shape                 → ../api/openapi.yaml (relevant operation + referenced components)
+frontend architecture     → ../docs/project/kencleng-frontend-tech-stack.md (active concern sections)
+Codex execution profile   → ../docs/project/codex-frontend-execution-profile.md (current routing concern)
 product-design authority  → ../docs/ui-ux/product-design-principles.md
-UX behavior               → ../docs/ui-ux/patterns.md
-visual system             → ../docs/ui-ux/design-guidelines.md
+UX behavior               → ../docs/ui-ux/patterns.md (matching pattern)
+visual system             → ../docs/ui-ux/design-guidelines.md (matching concern)
 brand/assets              → ../docs/ui-ux/brand-and-visual-assets.md
-route/persona inventory   → ../docs/ui-ux/page-map.md
-prototype authority       → ../docs/ui-ux/prototype-reference.md
-component contracts       → components/README.md
+route/persona inventory   → ../docs/ui-ux/page-map.md (matching route/persona)
+prototype authority       → ../docs/ui-ux/prototype-reference.md + design-reference-usage.md, only when prototype-derived
+component contracts       → components/README.md, for broad contract/placement concerns
 project status            → ../docs/project/kencleng-development-tracker.md
 ```
 
-If authorities genuinely conflict on the same concern, surface the contradiction.
+This is a clue map, not a checklist of documents to preload. If authorities genuinely conflict on the same concern, surface the contradiction.
 
 ## 15. Output style
 
