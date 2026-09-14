@@ -1,8 +1,8 @@
 # Domain Invariant — organization
 
-> File: `docs/spec/organization/invariants.md`
+> File: `docs/spec/3-organization/invariants.md`
 > Status: draft — reconciled against `api/openapi/organization.yaml` 2026-08-20
-> Last updated: 2026-08-20
+> Last updated: 2026-09-14
 
 ## Reconciliation note (2026-08-20, decisions finalized 2026-08-20)
 
@@ -110,7 +110,7 @@ creation (INV-organization-13, new — see below).
 ### INV-organization-05: Admin role is mutually exclusive with being a representative
 
 - **Statement**: See **INV-account-10** in
-  `docs/spec/account/invariants.md` — declared there in full.
+  `docs/spec/1-account/invariants.md` — declared there in full.
 - **Holds after operations (this domain's responsibility)**:
   representative invite (`POST .../representatives`) and
   promote-to-`owner` (`PATCH .../representatives/{id}`) must reject a
@@ -318,14 +318,14 @@ One-way per row; resubmission creates a new row (old kept as history).
 
 ## Reference for `campaign` domain
 
-When `docs/spec/campaign/invariants.md` is written, it must reference:
+When `docs/spec/4-campaign/invariants.md` is written, it must reference:
 - **INV-organization-09** (auto-unpublish on re-verification)
 - **INV-organization-13** (`has_overdue_report` blocks creation, and
   the `status = 'verified'` requirement on creation)
 
 ## Reference for `disbursement` domain
 
-When `docs/spec/disbursement/invariants.md` is written, it must
+When `docs/spec/6-disbursement/invariants.md` is written, it must
 reference **INV-organization-13** for the set/clear trigger on
 `has_overdue_report`, since that domain owns the fund-usage-report
 deadline logic that determines when the flag flips.
@@ -337,7 +337,7 @@ deadline logic that determines when the flag flips.
   Fitur 1, 1B, 2, 5
 - Related actors/rules: `docs/project/kencleng-actors-entities.md`
   Business Rules 1–4, PII Handling Note
-- Related invariants: `docs/spec/account/invariants.md` —
+- Related invariants: `docs/spec/1-account/invariants.md` —
   INV-account-10, INV-account-11
 - **Actual API (ground truth for endpoint shape as of 2026-08-20)**:
   `api/openapi/organization.yaml`, `api/openapi/campaign.yaml`
