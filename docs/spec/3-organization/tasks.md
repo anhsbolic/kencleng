@@ -1,8 +1,8 @@
 # Domain Tasks — organization
 
-> File: `docs/spec/organization/tasks.md`
-> Status: draft — reconciled against `api/openapi/organization.yaml` 2026-08-20
-> Last updated: 2026-08-20
+> File: `docs/spec/3-organization/tasks.md`
+> Status: draft — reconciled against `api/openapi/organization.yaml` 2026-08-20; Task 01 upload contract clarified 2026-09-14
+> Last updated: 2026-09-14
 
 ## Reconciliation note (2026-08-20)
 
@@ -21,6 +21,13 @@ items resolved (see `invariants.md`'s reconciliation note). Task 02
 and Task 04 are no longer blocking. One separate, lower-priority item
 remains open: 5-organization limit re-check on promote-to-owner
 (Task 07).
+
+**Task 01 clarification, 2026-09-14**: registration uses a decimal
+`5_000_000` byte maximum for each legal document. The current
+`OrganizationCreateRequest` does not define a MIME/file-type allow-list;
+do not inherit or invent one from the separate attachment-replacement
+surface. This clarification is intentionally scoped to registration and
+does not rewrite Task 05's own endpoint contract.
 
 | # | Task | Endpoint / surface | Depends on | Related invariants |
 |---|---|---|---|---|
@@ -47,11 +54,12 @@ rows, 0 registrations exceeding the 5-org cap (sequential and
 concurrent), 0 duplicate-NPWP registrations, Admin-role caller always
 rejected.
 
-**New, from reconciliation**: confirm file-type/size validation
-(`422`, "invalid file type or exceeds 5 MB max" — documented on the
-attachment-replace endpoint, Task 05) applies identically at
-registration time for the initial `akta_notaris`/`sk_kemenkumham`/
-`izin_pub` uploads.
+**Registration upload contract**: each uploaded legal document is
+limited to exactly `5_000_000` bytes; `5_000_001` bytes is invalid and
+returns `422`. No MIME/file-type allow-list is currently canonical for
+`POST /organizations`, so frontend/backend work for Task 01 must not
+invent one. `akta_notaris` and `sk_kemenkumham` remain required;
+`izin_pub` remains optional.
 
 ## Task 02 — Organization detail view
 
@@ -221,11 +229,10 @@ stale one.
 
 ## References
 
-- Related domain invariants: `docs/spec/organization/invariants.md`
+- Related domain invariants: `docs/spec/3-organization/invariants.md`
   (reconciled 2026-08-20 — three `[NEEDS DECISION]` items shared
   across invariants/threat-model/tasks)
-- Related threat model: `docs/spec/organization/threat-model.md`
+- Related threat model: `docs/spec/3-organization/threat-model.md`
   (reconciled 2026-08-20)
 - **Actual API (ground truth)**: `api/openapi/organization.yaml`
-- Feature specs (need reconciliation next, same open items apply):
-  `docs/spec/organization/features/`
+- Feature specs: `docs/spec/3-organization/features/`
