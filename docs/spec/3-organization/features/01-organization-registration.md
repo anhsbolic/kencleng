@@ -1,16 +1,16 @@
 # Feature Spec — 01: Organization Registration
 
-> File: `docs/spec/organization/features/01-organization-registration.md`
+> File: `docs/spec/3-organization/features/01-organization-registration.md`
 > Domain: `organization`
-> Task: 01 (see `docs/spec/organization/tasks.md`)
-> Status: draft — reconciled against `api/openapi/organization.yaml` 2026-08-20
-> Last updated: 2026-08-20
+> Task: 01 (see `docs/spec/3-organization/tasks.md`)
+> Status: draft — reconciled against `api/openapi/organization.yaml` and dogfood findings 2026-09-14
+> Last updated: 2026-09-14
 
 ## Summary
 
 `POST /organizations` — a logged-in, non-Admin user registers a new
 organization. Creates `organizations` (`status =
-pending_verification`) and the registrant's own owner
+ pending_verification`) and the registrant's own owner
 `organization_representatives` row atomically, in one
 `multipart/form-data` submission (data + legal documents together, no
 separate draft-then-attach step).
@@ -33,18 +33,22 @@ separate draft-then-attach step).
 | `description` | string | No | Operational field |
 | `contact` | string | No | Operational field |
 | `npwp` | string | Yes | Pattern `^\d{2}\.\d{3}\.\d{3}\.\d-\d{3}\.\d{3}$`, format-only validation, no DJP lookup |
-| `akta_notaris` | binary | Yes | |
-| `sk_kemenkumham` | binary | Yes | |
-| `izin_pub` | binary | No | Optional in v1 |
+| `akta_notaris` | binary | Yes | Max `5_000_000` bytes |
+| `sk_kemenkumham` | binary | Yes | Max `5_000_000` bytes |
+| `izin_pub` | binary | No | Optional in v1; max `5_000_000` bytes when present |
+
+The current registration contract does **not** define a MIME/file-type
+allow-list. Do not infer one from the attachment-replacement endpoint or
+invent one in frontend validation. A future canonical contract may add
+file-type restrictions explicitly.
 
 ## Behavior
 
 1. Reject if the caller holds `role = 'admin'` (`403`).
 2. Validate `npwp` format (regex, plaintext, before encryption).
-3. Validate each uploaded file: type/size (`422` if invalid — the
-   "invalid file type or exceeds 5 MB max" rule is documented
-   explicitly on the attachment-replace endpoint, Task 05; apply the
-   same limits here at registration time).
+3. Reject any uploaded legal document larger than exactly `5_000_000`
+   bytes (`422`). For this create flow, file type/MIME is not a current
+   validation rule.
 4. Within a single transaction:
    a. `SELECT COUNT(*) ... WHERE user_id = current_user_id AND level =
       'owner' FOR UPDATE` — reject (`409 organization-limit-reached`)
@@ -65,7 +69,8 @@ separate draft-then-attach step).
 |---|---|
 | No/invalid bearer token | `401` |
 | Caller holds `role = 'admin'` | `403` |
-| `npwp` fails format regex, or file type/size invalid | `422` (`ValidationError`) |
+| `npwp` fails format regex | `422` (`ValidationError`) |
+| Any uploaded legal document exceeds `5_000_000` bytes | `422` (`ValidationError`) |
 | `npwp` already registered | `409`, `type: npwp-taken` |
 | Caller already owns 5 organizations | `409`, `type: organization-limit-reached` |
 | Missing `akta_notaris` or `sk_kemenkumham` | `422` |
@@ -91,14 +96,16 @@ separate draft-then-attach step).
       succeeds.
 - [ ] Duplicate NPWP → `409`.
 - [ ] Malformed NPWP format → `422`, no insert attempted.
-- [ ] Invalid file type/oversized file → `422`.
+- [ ] Legal document at exactly `5_000_000` bytes is accepted by the
+      size rule; `5_000_001` bytes is rejected with `422`.
+- [ ] No MIME/file-type allow-list is invented for registration.
 - [ ] Missing required legal documents → `422`.
 
 ## References
 
-- `docs/spec/organization/invariants.md` — INV-organization-01, 02, 03,
-  04
-- `docs/spec/organization/threat-model.md` — "Organization
+- `docs/spec/3-organization/invariants.md` — INV-organization-01, 02,
+  03, 04
+- `docs/spec/3-organization/threat-model.md` — "Organization
   registration" section
-- `docs/spec/organization/tasks.md` — Task 01
+- `docs/spec/3-organization/tasks.md` — Task 01
 - `api/openapi/organization.yaml` — `POST /organizations`
