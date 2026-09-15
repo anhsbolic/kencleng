@@ -1,18 +1,7 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
-/**
- * Landing hero — static, server-rendered (no data dependency, no
- * interactivity). Structure/copy carried over from the Tier 1
- * prototype (`docs/design-reference/landing-page.html`); typography
- * uses `design-guidelines.md`'s real `display`/`body-lg` tokens, not
- * the prototype's drifted hardcoded pixel values (R13, Known Issue #3).
- *
- * The prototype's hero badge read "120 organisasi terverifikasi" — a
- * specific count with no backing aggregate endpoint, the same problem
- * `TrustStrip` had (techplan Decision 3). Kept the badge's visual
- * trust-signal role but dropped the fabricated number.
- */
+/** Static, route-owned hero for the public home page. */
 export function Hero() {
   return (
     <div className="border-b border-primary-100 bg-primary-50">

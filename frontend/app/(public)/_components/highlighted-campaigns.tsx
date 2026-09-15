@@ -1,24 +1,17 @@
 "use client";
 
 import { Inbox } from "lucide-react";
-import { Banner } from "@/components/ui/banner";
-import { Button } from "@/components/ui/button";
 import {
   CampaignCard,
   CampaignCardSkeleton,
 } from "@/components/features/campaign/campaign-card";
+import { Banner } from "@/components/ui/banner";
+import { Button } from "@/components/ui/button";
 import { useCampaigns } from "@/lib/hooks/use-campaigns";
 
 const SKELETON_COUNT = 3;
 
-/**
- * `/`'s highlighted-campaigns section — the one part of the page that
- * needs client-side data fetching, so it's the only `'use client'`
- * leaf on `/` (`server-client-component-boundary.md`; techplan
- * Decision 6). Handles all four List/Browse states (`patterns.md`
- * §A.1, §B): loading (R6), error (R9), empty (R8), success (R7) — plus
- * the stale/revalidating indicator (R16).
- */
+/** Client-side campaign collection and its loading, error, empty, and stale states. */
 export function HighlightedCampaigns() {
   const { data, isLoading, isError, isFetching, refetch } = useCampaigns();
   const revalidating = isFetching && !isLoading;
@@ -55,9 +48,6 @@ export function HighlightedCampaigns() {
           </div>
         </Banner>
       ) : !data || data.data.length === 0 ? (
-        // No CTA here — Guest can't create a campaign (patterns.md §B
-        // Empty row: primary action shown only if the viewer is
-        // actually authorized to take it).
         <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed border-neutral-200 py-10 text-center">
           <Inbox aria-hidden="true" className="size-8 text-neutral-400" />
           <p className="text-body text-neutral-500">

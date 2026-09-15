@@ -3,28 +3,22 @@ import { CheckCircle2, CreditCard, FileText } from "lucide-react";
 const STEPS = [
   {
     icon: CheckCircle2,
-    title: "Temukan kampanye terverifikasi",
-    body: "Setiap organisasi diperiksa tim verifikasi Kencleng sebelum kampanyenya tampil.",
+    title: "Temukan kampanye yang sedang berjalan",
+    body: "Jelajahi kampanye dari organisasi yang telah diverifikasi.",
   },
   {
     icon: CreditCard,
-    title: "Donasi aman dengan berbagai metode",
-    body: "Transfer bank, e-wallet, atau QRIS. Minimal Rp 10.000, tanpa biaya tersembunyi.",
+    title: "Pilih metode donasi",
+    body: "Transfer bank, kartu debit, e-wallet, atau QRIS tersedia untuk dipilih saat berdonasi.",
   },
   {
     icon: FileText,
-    title: "Pantau transparansi penyaluran dana",
-    body: "Laporan penggunaan dana terbit berkala dan dapat Anda baca kapan saja.",
+    title: "Pantau status donasi",
+    body: "Setelah donasi dibuat, cek statusnya melalui tautan yang tersedia.",
   },
 ];
 
-/**
- * Static 3-step explainer — carried over from the Tier 1 prototype.
- * Not in `page-map.md`/`patterns.md`'s resolved scope for `/`, but kept
- * (techplan Decision 3): accurate static copy describing the real,
- * already-documented product flow, no data dependency — unlike
- * `TrustStrip`, there's no fabricated-numbers risk here.
- */
+/** Static, authority-bounded explainer for the public home page. */
 export function HowItWorks() {
   return (
     <div id="cara-kerja" className="border-y border-neutral-200 bg-white">
@@ -34,7 +28,7 @@ export function HowItWorks() {
             Cara kerja
           </span>
           <h2 className="text-h2 font-bold text-neutral-900">
-            Tiga langkah, dari niat sampai laporan
+            Tiga langkah untuk berdonasi
           </h2>
         </div>
 
