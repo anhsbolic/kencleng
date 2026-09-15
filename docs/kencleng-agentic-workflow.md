@@ -4,7 +4,7 @@
 >
 > Status: Current project orchestration policy
 >
-> Last updated: 2026-09-14
+> Last updated: 2026-09-15
 >
 > Purpose: Define Kencleng-specific coordination that sits on top of Harscode. This document does **not** define a competing per-feature lifecycle.
 
@@ -63,6 +63,8 @@ account
 ```
 
 The order reflects dependency/product progression, not a rule that every task in one domain must finish before any work in the next begins.
+
+Frontend implementation order is **not** derived mechanically from this domain sequence. Domain boundaries continue to own business semantics, contracts, and domain-specific component concepts, while frontend page/flow delivery follows the frontend foundation and dependency guidance under **Per-feature project preconditions → Frontend**.
 
 Project notes:
 
@@ -167,7 +169,25 @@ If Exploration exposes a contract gap, resolve it in the authority that owns the
 
 ### Frontend
 
-Frontend work is scoped around the meaningful UI unit (page, flow, interaction, or component responsibility), not forced into a 1:1 relationship with backend endpoints.
+Frontend work is scoped around the meaningful UI unit (page, flow, interaction, component responsibility, or cross-cutting experience foundation), not forced into a 1:1 relationship with backend endpoints or business-domain task order.
+
+Before proliferating domain feature surfaces, establish **enough frontend experience foundation** for subsequent UI work to remain coherent. Depending on the current project state, this may include runtime/scaffold readiness, visual tokens and typography, core primitives, the relevant application shell/navigation, brand expression and interaction language, and a representative rendered slice that is sufficient to calibrate the experience.
+
+A representative rendered slice may use only the portion of a page needed to validate the system. It does **not** require completing the whole landing page, every public route, or every domain dependency first, and it must not invent unresolved product semantics merely to make the slice look complete.
+
+Once the foundation is sufficient for the current stage, sequence frontend pages and flows by real prerequisites: user-journey dependency, shared shell/component dependency, design readiness, contract readiness, integration risk, and delivery value. This sequencing may cross business-domain boundaries. Domain ownership still determines where business truth and domain-semantic components belong.
+
+A useful default model is:
+
+```text
+frontend experience foundation
+→ required shell / core interaction foundation
+→ representative vertical slices
+→ dependency-driven page / flow delivery
+→ real integration / reconciliation
+```
+
+This is a sequencing model, not a new lifecycle. Each coherent task within it still follows Harscode. It also does not make `/` universally the first route; the foundation work should be proportional to the product surface and current repository state.
 
 Before Build, identify the active frontend concerns and route them through `frontend/AGENTS.md`. Feature/domain behavior and the relevant API shape are common inputs for contract-driven feature work; page-map/UX, product-design, visual, asset, prototype/reference, and broad component authorities are **conditional concerns**, not a preload checklist. Inspect only the authorities triggered by the actual feature and decisions at hand.
 

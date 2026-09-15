@@ -4,7 +4,7 @@
 >
 > Status: Living project status
 >
-> Last reconciled: 2026-09-13 against Kencleng main through `b2531d8` and Harscode main through `5f3c9bc`
+> Last reconciled: 2026-09-15 against Kencleng main `ec789070` and Harscode `workflow-v2` validation baseline `fce5721d`
 >
 > Purpose: Keep cross-domain backend/frontend/integration status visible without putting dated progress into workflow policy.
 
@@ -102,23 +102,36 @@ The account task/spec documents intentionally remain unchanged in this cleanup s
 | Button Secondary v2 runtime adoption | Present | Merged in PR #2 / `749807a`; `Button.secondary` is neutral/outlined and covered by a targeted primitive regression test. |
 | Browser automation capability | Proven | PR #3 / `b07a256`; Playwright is wired as an explicit Chromium real-browser capability, `npm run verify` passed 40 files / 226 tests, and the deterministic `/login` browser smoke passed 1/1 from a real checkout. It intentionally remains outside the fast baseline. |
 | Codex harness optimization | Present in Harscode | Harscode proposal `0027` is Accepted and merged on Harscode main at `5f3c9bc`; `harness-optimization/codex/` now defines the translation-only Codex layer. |
-| First Codex frontend dogfood | Next | Select one representative frontend work item and run it through the actual Harscode/Codex workflow; record failures by guidance layer instead of pre-optimizing further. |
+| Continuous Real-Task Validation #1 | NEXT | Frontend Experience Foundation / brand calibration using a representative `/` slice. The goal is to validate enough public-facing brand, shell, CTA hierarchy, typography/spacing/color, and responsive behavior to calibrate subsequent frontend work — not to finish the landing page or resolve Campaign product semantics. |
+| Continuous Real-Task Validation #2 | PLANNED | Organization Registration at `/dashboard/organization/new` remains the next representative feature vertical slice unless Validation #1 produces evidence that changes the sequencing decision. |
 
-## 6. Readiness before Codex frontend dogfood
+## 6. Readiness before frontend Continuous Real-Task Validation
 
 The staged prerequisite sequence is complete:
 
 ```text
-post-migration authority cleanup       ✓ merged
-→ Button.secondary shared-component    ✓ merged
-→ Playwright browser verification      ✓ proven and merged
-→ Harscode Codex harness translation   ✓ accepted and merged
-→ first representative Codex feature  NEXT
+post-migration authority cleanup         ✓ merged
+→ Button.secondary shared-component      ✓ merged
+→ Playwright browser verification        ✓ proven and merged
+→ Harscode Codex harness translation     ✓ accepted and merged
+→ workflow-v2 audit/remediation gate     ✓ verified
+→ frontend experience foundation run     NEXT
 ```
 
-The frontend is now ready to start the first Codex dogfood **as an experiment, not as proof that the harness is already optimal**.
+The frontend is ready to start Continuous Real-Task Validation **as real project work, not as proof that the workflow or project guidance is already optimal**.
 
-During dogfood, classify problems by the layer that actually failed:
+The first run is intentionally foundation-oriented:
+
+```text
+representative surface: /
+primary intent:          public brand / experience calibration
+scope shape:             enough shell + hero + representative content/CTA surface
+not required:            complete landing page, final Campaign semantics, or live Campaign backend integration
+```
+
+The second planned run is Organization Registration, which exercises a different concern set: contract-driven form behavior, multipart uploads, API errors, mocks, authenticated dashboard composition, and representative browser behavior.
+
+During validation, classify problems by the layer that actually failed:
 
 ```text
 project guidance / authority
@@ -129,7 +142,7 @@ feature implementation bug
 
 Do not respond to a feature bug by expanding global agent policy, and do not respond to a real reusable harness gap by patching only the one feature's local instructions.
 
-The first dogfood should be representative enough to exercise current frontend authorities and browser verification, while avoiding a Tier-0/Tier-1 security or money-critical surface as the first harness experiment.
+The first validation task should be representative enough to exercise current frontend product/design/component authorities and rendered verification while avoiding a Tier-0/Tier-1 security or money-critical surface as the first workflow experiment.
 
 Readiness evidence now includes:
 
@@ -137,7 +150,8 @@ Readiness evidence now includes:
 - current design/component authorities are discoverable;
 - shared-component blast-radius governance was exercised in B1;
 - the real-browser Playwright capability was executed successfully in B2;
-- Harscode Codex proposal `0027` was human-approved and merged without creating a second project policy source.
+- Harscode Codex proposal `0027` was human-approved and merged without creating a second project policy source;
+- workflow-v2 remediation findings were independently re-verified before the validation baseline was selected.
 
 ## 7. Update discipline
 
