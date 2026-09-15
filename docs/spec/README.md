@@ -2,11 +2,11 @@
 
 > File: `docs/spec/README.md`
 >
-> This guide defines the four spec document types under `docs/spec/`, when they are created/updated, and their blank templates.
+> This guide defines the spec document types under `docs/spec/`, when they are created/updated, and their blank templates.
 >
 > `docs/kencleng-agentic-workflow.md` owns Kencleng-specific domain preparation, risk tiering, orchestration, and project-level coordination. Harscode owns the per-feature development lifecycle.
 
-Throughout this document, `<domain-dir>` means the actual numbered domain directory under `docs/spec/`, for example:
+Throughout this document, `<domain-dir>` means the actual numbered business-domain directory under `docs/spec/`, for example:
 
 ```text
 1-account
@@ -19,6 +19,8 @@ Throughout this document, `<domain-dir>` means the actual numbered domain direct
 
 The numeric prefix expresses project/domain order. Backend package directories remain unnumbered (for example `backend/internal/domain/account/`); do not assume spec and package paths are literal mirrors.
 
+`docs/spec/0-foundations/` is a deliberate non-business-domain exception for cross-domain project foundation requirements/tasks that need to exist before or across business-domain feature delivery. It may use `tasks.md` plus `features/` without implying a new business domain or requiring domain invariants/threat models that do not truthfully exist.
+
 ## 1. Four document types
 
 | Type | Location | Lifespan | Written by |
@@ -28,11 +30,13 @@ The numeric prefix expresses project/domain order. Backend package directories r
 | Task list | `docs/spec/<domain-dir>/tasks.md` | Once per domain, task status updated as work progresses | Same as above |
 | Feature spec | `docs/spec/<domain-dir>/features/<NN>-<fitur>.md` | New for each coherent feature/work item | Same as above, per feature |
 
-Layout is **domain-first**: every spec about one domain lives under its single numbered domain directory. This file is the exception because it is shared/cross-domain reference material.
+Layout is **domain-first** for business-domain specs: every spec about one business domain lives under its single numbered domain directory. Shared/cross-domain exceptions are limited to this reference file and explicit project-foundation work under `docs/spec/0-foundations/`; do not use the exception as a catch-all for unrelated documentation.
+
+Foundation work follows the same `tasks.md` + `features/<NN>-*.md` task/requirement split where useful. Domain-only fields such as applicable domain invariants or threat-model derivation may be marked non-applicable with a concrete reason rather than inventing false domain artifacts.
 
 See `docs/project/kencleng-repo-setup.md` for repository structure.
 
-Order of creation for a new domain:
+Order of creation for a new business domain:
 
 ```text
 domain invariant
@@ -41,9 +45,9 @@ domain invariant
 → feature specs for coherent work items
 ```
 
-These documents are executable domain/feature specifications. They own domain behavior, acceptance criteria, invariants, and threat-model expectations. Other documents own architecture, design, workflow, or project status.
+These documents are executable domain/feature specifications. They own domain/feature behavior, acceptance criteria, applicable invariants, and threat-model expectations. Foundation feature specs own the concrete project-foundation requirement/acceptance criteria they define. Other documents own architecture, design systems, workflow, or project status.
 
-If another document conflicts with `docs/spec/*` on domain/feature behavior, the spec is authoritative and the contradiction must be surfaced explicitly. Do not use this as a blanket precedence claim over documents that own different concerns.
+If another document conflicts with `docs/spec/*` on the behavior/requirement owned by a spec, the spec is authoritative and the contradiction must be surfaced explicitly. Do not use this as a blanket precedence claim over documents that own different concerns.
 
 ## 2. Template: Domain Invariant
 
