@@ -7,16 +7,10 @@ const eslintConfig = defineConfig([
   ...nextTs,
   // Override default ignores of eslint-config-next.
   globalIgnores([
-    // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // MSW-generated (`npx msw init public/ --save`) — regenerate,
-    // don't hand-edit or lint.
-    "public/mockServiceWorker.js",
-    // openapi-typescript-generated — regenerate, don't hand-edit or lint.
-    "lib/api/schema.d.ts",
   ]),
 ]);
 

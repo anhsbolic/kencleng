@@ -16,8 +16,8 @@ export default defineConfig({
     // Playwright owns committed real-browser tests. Keep them out of
     // Vitest even though both runners intentionally use *.spec.ts.
     exclude: [...configDefaults.exclude, "tests/browser/**"],
-    // No component tests exist yet at scaffold time — this is
-    // expected (scaffold-frontend.md Step 9), not a failure.
+    // No component tests exist at the clean baseline. Tooling verification
+    // should still pass before the first production behavior is introduced.
     passWithNoTests: true,
   },
 });
