@@ -1,231 +1,187 @@
-# Kencleng — UX Page Map (Persona × Phase × Page)
+# Kencleng — Persona × Surface Map
 
-> Intended path: `docs/ui-ux/page-map.md`
-> Status: Revised 2026-08-20 — evolved from the original
-> `kencleng-ux-page-map.md` (2026-07-24). Wireframe references
-> (`docs/wireframes/`) removed — see `patterns.md` for why. Each page
-> row now names the reusable pattern it uses instead of a per-page
-> layout description.
-> Last updated: 2026-08-24 — added Public Shell nav decision and
-> scoped the `/` (home) "highlighted campaigns" note (see Shell &
-> Benchmark Notes and the footnote under §1's table). Both were
-> resolved specifically to unblock building `/` — see those sections
-> for what's still open beyond that scope.
+> Status: Canonical
+> Purpose: Map user personas to product surfaces and user goals.
+> Boundary: This document does not own route implementation, shell layout, visual composition, frontend architecture, or business rules.
 
-## Context
+This map is derived from current product/domain behavior and exists to keep product surfaces coherent across personas.
 
-This doc maps **which pages exist and what each persona can do on
-them**, cutting across Phase 0-3. It sits at a different layer than
-the other frontend docs:
+Exact route paths may evolve during frontend re-architecture. If a route path conflicts with a canonical product/domain requirement, product truth wins.
 
-- `kencleng-phase0-3-detail.md` — business rules & flow per feature
-  (what happens, in what order, what data)
-- `kencleng-actors-entities.md` — who/what exists (roles, entities)
-- `kencleng-frontend-tech-stack.md` — code architecture (folder
-  structure, route paths, state management)
-- `patterns.md` — reusable page-shape + state-handling definitions
-  ("what shape does a page like this take")
-- **This doc** — the missing middle layer: given all of the above,
-  what pages does each persona actually see, what pattern does each
-  use, and what can they do on each one
+## 1. Guest / Public Visitor
 
-This doc doesn't restate business rules or layout mechanics in
-detail — it references the phase-detail docs for "why"/"how" and
-`patterns.md` for "what shape."
+Primary goals:
 
-## Legend
+- understand Kencleng and how trust/transparency works;
+- discover published campaigns;
+- inspect campaign purpose, organizer context, progress, and relevant public reporting;
+- donate without requiring an account when product rules allow;
+- track an unauthenticated donation when the domain provides a safe tokenized flow;
+- authenticate or create an account when desired.
 
-- **(OPEN)** — still needs a decision
-- Route paths follow `kencleng-frontend-tech-stack.md` App Router
-  structure
-- **Pattern** column names refer to `patterns.md` §A (List/Browse,
-  Detail, Form, Dashboard/Summary, Curation/Review, Status/Tracking)
-- "Baseline" = available regardless of phase, as long as the persona
-  is authenticated (Phase 0 concerns)
+Expected product surfaces:
 
-## Shell & Benchmark Notes
-
-Dashboard Shell (top-nav desktop, top-bar+hamburger mobile), auth
-modal-vs-page split, Google OAuth full-redirect flow, and the
-GoFundMe/Kitabisa-benchmarked public campaign layout are now defined
-in `patterns.md` and `kencleng-frontend-tech-stack.md` — not
-duplicated here. This section previously held that content; see those
-two docs instead.
-
-**Public Shell — resolved 2026-08-24, scoped to unblock `/` (home)**:
-top nav, matching the Guest page set — logo (left), "Beranda" (`/`)
-and "Jelajahi Kampanye" (`/campaign`) links, "Masuk"/"Daftar" buttons
-(right). Mobile: hamburger collapsing the same item set into a drawer,
-reusing the same open/close focus-management behavior already built
-for Dashboard Shell's mobile drawer (`frontend/.agents/docs/
-phase0-shared-infra.md` Step 5) — not a new pattern, the same one
-applied to a second shell. Footer intentionally not decided yet — not
-required for `/` to function, deferred rather than blocking.
-
-## ---
-
-## 1. Guest (not logged in)
-
-| Page | Pattern | Actions |
+| Surface | UX pattern | Primary purpose |
 |---|---|---|
-| `/` (home) | List/Browse | Browse highlighted campaigns¹ |
-| `/campaign` (list) | List/Browse | Browse/filter `published` campaigns |
-| `/campaign/[id]` (detail) | Detail (public variant) | View description, progress bar, public donor list (org info shown inline — no separate org profile page), donate button. Also displays `beneficiary_description` |
-| `/campaign/[id]/donate` (donation form) | Form (single-step, no revision cycle) | Fill `amount`, choose `payment_method` (transfer/debit/gopay/shopeepay/ovo/qris — simulated), optionally fill `guest_name`/`guest_email` (both independently optional), see nudge note about benefits of providing email, submit |
-| `/donation/[id]/status` | Status/Tracking | Check donation status (`pending`/`success`/`failed`) without login — token-in-URL, see `kencleng-phase2-detail.md` Feature 1 |
-| `/login` | Form | Login form + "Masuk dengan Google" button |
-| `/register` | Form | Register form + "Daftar dengan Google" button |
-| `/forgot-password` | Form | Submit email to request password reset |
-| `/reset-password?token=...` | Form | Submit new password |
+| Public home | Editorial public / List-Browse composition | Understand platform, trust model, and discover campaigns |
+| Campaign discovery | List / Browse | Browse published campaigns |
+| Public campaign detail | Detail | Understand campaign, steward, funding context, story, and available donation action |
+| Donation flow | Form | Submit a donation with clear amount/payment consequences |
+| Donation status/tracking | Status / Tracking | Understand transaction state and next action |
+| Authentication | Form | Login/register/recovery flows |
 
-¹ **"Highlighted" — resolved 2026-08-24, mock-scope only, not a
-product decision.** `api/openapi/campaign.yaml`'s `GET /campaigns` has
-no sort/featured parameter — there's no backend concept of
-"highlighted" yet. For building `/`, the mock (`mocks/handlers.ts`)
-simply returns a fixed set of fixture campaigns for `GET /campaigns`
-with no special filter — the frontend doesn't invent a `featured`
-flag or sort logic the API doesn't have. **Still open**: what
-"highlighted" actually means once `campaign` domain's backend is
-built (most recent? closest to goal? manually curated?) — that's a
-real product decision for `campaign` domain's own techplan, not
-resolved here and not to be assumed from this mock.
+Public surfaces must not expose non-public campaign content or imply organizer/campaign trust states beyond canonical product truth.
 
----
+## 2. Registered Donor
 
-## 2. Donatur (registered)
+Inherits public capabilities plus authenticated donor concerns.
 
-All Guest pages, **plus**:
+Primary goals:
 
-| Page | Pattern | Actions |
+- view personal donation history;
+- understand current donation/payment states;
+- follow campaign/program updates after donation;
+- manage profile/security/notification concerns where supported;
+- claim eligible guest donations when the domain supports it.
+
+Expected product surfaces:
+
+| Surface | UX pattern | Primary purpose |
 |---|---|---|
-| Email verification link (from email, not a full page) | — | Click link → `AuthIdentity.verified_at` set |
-| `/campaign/[id]/donate` | Form | Same form, **plus** `is_anonymous` checkbox (not available to Guest) |
-| `/dashboard/donations` | List/Browse | View personal donation history (including anonymous ones) |
-| `/dashboard/donations/claim` | List/Browse | View guest-donation candidates matching verified email, confirm each individually |
-| `/dashboard/profile` | Form | Edit name, etc. (no profile picture — dropped from v1) |
-| `/dashboard/security` | Form (multi-section) | Enable/disable MFA (QR scan + confirm code), view/regenerate backup codes, link/unlink Google identity. Google-only users also see "Atur Password" here — sets an `email_password` `AuthIdentity` (`verified_at = now` immediately) so unlink-Google becomes available. See `kencleng-phase0-detail.md` Feature 4 |
-| `/dashboard/notifications` | List/Browse | View notification center, mark-as-read (batched client-side — see phase0-detail Feature 6) |
-| ToS reminder banner (not a page) | — | Non-blocking, appears when a new ToS version is published; click to re-accept |
+| Donation history | List / Browse | Review personal donation records |
+| Donation detail / Evidence Journal | Evidence Journal / Detail | Follow donation fact, campaign progress, milestones, reports, and pending updates |
+| Donation claim flow | List / Browse + confirmation | Review and claim eligible guest donations |
+| Profile | Form | Manage supported profile information |
+| Security | Form / settings | Manage supported authentication/security methods |
+| Notifications | List / Browse | Review product notifications |
 
----
+The Evidence Journal must distinguish funding progress, operational progress, and reported outcome.
 
 ## 3. Organization Owner
 
-All Donatur pages, **plus**:
+Primary goals:
 
-| Page | Pattern | Actions |
+- establish and maintain organization identity;
+- manage representatives according to domain permissions;
+- create and revise campaigns;
+- submit campaigns to curation;
+- publish/schedule/unpublish when allowed;
+- monitor campaign funding/activity;
+- submit disbursement and fund-usage reporting when applicable;
+- provide campaign/report narratives where the domain permits.
+
+Expected product surfaces:
+
+| Surface | UX pattern | Primary purpose |
 |---|---|---|
-| `/dashboard/organization/new` | Form (Revisable Submission) | Fill org data + upload legal docs (Akta, SK Kemenkumham, NPWP, optional Izin PUB) — shows `SecureUploadNote` |
-| `/dashboard/organization/[id]` | Detail (dashboard variant) | View curation status, edit while `pending_verification`, revise & resubmit if `rejected` — legal docs visible here (owner-only). Still editable after `verified`, but editing a *legal/identity* field sends status back to `pending_verification`; editing an *operational* field never changes status — see `kencleng-phase1-detail.md` Feature 1 |
-| `/dashboard/organization/[id]/representatives` | List/Browse + inline Form | Invite representative (as `staff`) by email — direct-add, no accept step — remove representative, promote/demote owner↔staff, view list — system enforces ≥1 owner. Full detail: `kencleng-roadmap-next-steps.md`, representatives spec discussion |
-| `/dashboard/campaign/new` | Form (Revisable Submission) | Fill draft: title, description, target_amount, max_amount, deadline, upload media. Also `beneficiary_description` (free-text, optional) |
-| `/dashboard/campaign/[id]/edit` | Form | Edit draft (while `status = draft`) |
-| `/dashboard/campaign/[id]` | Detail + inline Form action | Submit to curation (owner-only action), view curation status, revise if `rejected` |
-| `/dashboard/campaign/[id]/publish` | Form (single unified action) | Publish now / schedule `publish_at`, reschedule, unpublish (requires mandatory reason, logged to Audit Log — see `kencleng-phase1-detail.md` Feature 5), republish |
-| `/dashboard/event/new` | Form | Fill event (name, datetime, location, description), link to own campaign(s) with status `published`/`scheduled` |
-| `/dashboard/campaign/[id]/monitor` | Dashboard/Summary | View `collected_amount` vs `target_amount` (same data as public, from dashboard context) |
-| `/dashboard/campaign/[id]/report` | Detail + inline Form action | View auto-generated summary (post-`closed`), **add/edit narrative** (`report_narrative` — optional, no curation gate, editable anytime) |
-| `/dashboard/campaign/[id]/disbursement/new` | Form (Revisable Submission) | Request disbursement (owner-only, campaign must be `closed`) |
-| `/dashboard/campaign/[id]/disbursement/[reqId]` | Detail | View request status, revise & resubmit if `rejected` |
-| `/dashboard/campaign/[id]/fund-usage-report/new` | Form (Revisable Submission) | Fill expense breakdown per category + upload attachments — shows `SecureUploadNote` |
-| `/dashboard/campaign/[id]/fund-usage-report/[reportId]` | Detail | View verification status, revise & resubmit if `rejected` |
-
----
+| Organization registration | Form — Revisable Submission | Submit organization information/evidence |
+| Organization detail | Detail | Understand organization state and allowed next actions |
+| Representatives | List / Browse + Form | Manage permitted representatives |
+| Campaign creation/edit | Form — Revisable Submission | Create/revise campaign data |
+| Campaign owner detail | Detail | Understand campaign state and available lifecycle actions |
+| Publication controls | Form / consequential action | Publish, schedule, reschedule, or unpublish according to product truth |
+| Campaign monitor | Dashboard / Summary | Understand funding/current campaign state |
+| Campaign report | Detail + permitted edit action | Review report data and supported narrative |
+| Disbursement request | Form — Revisable Submission | Submit and follow disbursement request |
+| Fund-usage report | Form / Detail — Revisable Submission | Submit and follow expense/accountability reporting |
 
 ## 4. Organization Staff
 
-Subset of Owner pages — **same routes, sensitive actions hidden/disabled**:
+Primary goals overlap with Organization Owner, but actions must reflect the narrower permission model defined by domain authority.
 
-| Page | Pattern | Actions |
+Staff surfaces may reuse Owner surface structures while hiding or disabling only actions they are not permitted to perform.
+
+Frontend visibility is UX only and never substitutes for backend authorization.
+
+Common staff concerns include:
+
+- create/edit allowed campaign drafts;
+- view organization/campaign information permitted to staff;
+- view monitoring/reporting information;
+- create events where supported;
+- avoid access to owner-only legal, representative-management, publication, disbursement, or narrative actions when the domain restricts them.
+
+## 5. Curator
+
+Primary goals:
+
+- review assigned organization/campaign/fund-usage material;
+- understand submission evidence and context;
+- approve/reject according to domain rules;
+- provide decision reasoning where required;
+- understand already-decided states without misleading active controls.
+
+Expected product surfaces:
+
+| Surface | UX pattern | Primary purpose |
 |---|---|---|
-| `/dashboard/organization/[id]` | Detail | **No access to legal document section** (Owner-only, per Business Rule 4 in actors-entities doc) |
-| `/dashboard/campaign/new`, `/dashboard/campaign/[id]/edit` | Form | Create/edit draft — **"submit to curation" button hidden/disabled** |
-| `/dashboard/campaign/[id]/publish` | — | **No access** — publish/unpublish is owner-only |
-| `/dashboard/event/new` | Form | Same as Owner — event creation is not owner-exclusive |
-| `/dashboard/campaign/[id]/monitor` | Dashboard/Summary | View only |
-| `/dashboard/campaign/[id]/report` | Detail | View only — **cannot add/edit narrative** (owner-only per phase3-detail revision) |
-| `/dashboard/campaign/[id]/disbursement/*` | — | **No access** |
-| `/dashboard/campaign/[id]/fund-usage-report/*` | Detail | View only — submit remains owner-only |
-| `/dashboard/organization/[id]/representatives` | — | **No access** — managing representatives is owner-only |
+| Curation queue | List / Browse | Review assigned work by real domain type/state |
+| Organization review | Curation / Review | Review organization evidence and decide |
+| Campaign review | Curation / Review | Review campaign content and decide |
+| Fund-usage review | Curation / Review | Review accountability report/evidence and decide |
 
----
-
-## 5. Kurator
-
-| Page | Pattern | Actions |
-|---|---|---|
-| `/dashboard/kurasi` | List/Browse | **Unified queue** — shows all assignment types (organization curation, campaign curation, fund-usage-report verification) tagged by type, in one list |
-| `/dashboard/kurasi/organization/[assignmentId]` | Curation/Review | Review legal docs (via signed URL), approve/reject + `decision_note` on reject |
-| `/dashboard/kurasi/campaign/[assignmentId]` | Curation/Review | Review target/deadline/description/media, approve/reject + `decision_note` |
-| `/dashboard/kurasi/fund-usage/[assignmentId]` | Curation/Review | Review expense breakdown + attachments, approve/reject + `decision_note` |
-
-No pages in Phase 2 — Kurator has no direct action in the on-campaign
-flow (no dispute mechanism designed yet).
-
----
+Organization verification, campaign curation, and fund-usage verification remain distinct product concepts even if they share a reusable review pattern.
 
 ## 6. Admin
 
-| Page | Pattern | Actions |
+Primary goals depend on product/domain authority and may include:
+
+- user/role administration;
+- curation assignment;
+- exceptional campaign lifecycle action;
+- disbursement review;
+- other explicitly defined operational controls.
+
+Expected product surfaces:
+
+| Surface | UX pattern | Primary purpose |
 |---|---|---|
-| `/dashboard/admin/users` | List/Browse | Search users, assign/revoke Admin or Kurator role (system blocks Admin+Kurator/Representative combination) |
-| `/dashboard/admin/kurasi-queue` | List/Browse | View pending organization/campaign/fund-usage-report items, assign to a specific Kurator (manual pick, conflict-of-interest check enforced) |
-| `/dashboard/admin/campaign/[id]/force-close` | Curation/Review (single-action variant) | Force-close a `published` campaign anytime, mandatory `decision_note` |
-| `/dashboard/admin/disbursement/[reqId]` | Curation/Review | Approve/reject disbursement request |
+| User/role administration | List / Browse | Find users and manage supported roles |
+| Curation assignment | List / Browse | Assign real pending work to curators |
+| Exceptional campaign action | Curation / Review or consequential action | Perform supported administrative lifecycle action |
+| Disbursement review | Curation / Review | Review and decide disbursement requests |
 
-**Mobile note**: all 4 Admin pages reuse the standard Dashboard Shell
-(top-bar + hamburger) with sections stacked linearly — no distinct
-mobile-specific layout needed, per the List/Browse and Curation/Review
-patterns' normal responsive behavior.
+Admin UI must not invent metrics or “control center” dashboards merely because admin products commonly have them.
 
----
+## 7. Cross-Cutting Surface Concepts
 
-## Cross-Cutting UI Elements (not full pages)
+### Trust / Transparency Context
+Trust information should be distributed near relevant decisions and may also have dedicated deeper detail.
 
-| Element | Where used | Notes |
-|---|---|---|
-| `MaskedField` | Anywhere `guest_email`, `User.primary_email`, `NPWP`, or future banking details are displayed | See `patterns.md` §C for full behavior spec |
-| `SecureUploadNote` | Organization legal doc upload, fund-usage-report attachment upload | See `patterns.md` §C |
-| `CurationDecisionPanel` | All curation/review pages (Kurator + Admin force-close/disbursement) | See `patterns.md` §C and Pattern 5 |
-| Notification badge / center | Persistent header element for any logged-in user | Unread count, batched mark-as-read |
+### Evidence Journal
+A donor-facing post-donation product concept for chronological factual updates, reports, provenance, and pending next states.
 
----
+### Secure/Sensitive Data Presentation
+PII, legal documents, tokens, payment/security information, and other sensitive data must follow domain/security authority. Design may clarify access but cannot authorize it.
 
-## Open Items
+### Curation Decision Experience
+Shared interaction semantics may exist across multiple review domains without collapsing their business meaning into one generic “verification”.
 
-1. ~~Guest donor display label~~ → **resolved: "Donatur"** when
-   `guest_name` is omitted. **[RESOLVED — 2026-08-20]**
-2. ~~Mobile-specific wireframes per page~~ — **superseded**: wireframes
-   retired in favor of `patterns.md`'s pattern-level responsive
-   behavior; no per-page mobile artifact needed
-3. ~~Admin-only pages not yet wireframed~~ — **superseded**, same
-   reason as above; Admin pages now covered by List/Browse and
-   Curation/Review pattern definitions
-4. **"Highlighted campaigns" selection criteria** — what the `/` page
-   actually shows once `campaign` domain's backend exists (see
-   footnote under §1). Not resolved, deliberately deferred to
-   `campaign` domain's own techplan — the mock built to unblock `/`'s
-   UI should not be read as having answered this.
+## 8. What This Map Does Not Decide
 
-## Resolved (moved to `patterns.md`)
+This document intentionally does not establish:
 
-- Empty/loading/error states per page — now defined once per pattern
-  in `patterns.md` §A/§B, not per page
-- ~~Mobile-specific PWA layout considerations beyond responsive
-  stacking (offline states, install prompts)~~ → **resolved:
-  app-shell caching only (static assets cacheable, data always
-  live/stale-on-fetch, no offline write queue), browser-default
-  install prompt (no custom install UI)** — see
-  `kencleng-frontend-tech-stack.md` PWA Scope, and `patterns.md` §B
-  for the resulting "stale data" state convention.
-  **[RESOLVED — 2026-08-20]**
-- ~~Public Shell nav/layout~~ → **resolved: top nav (desktop),
-  hamburger drawer (mobile), reusing Dashboard Shell's drawer
-  focus-management** — see Shell & Benchmark Notes above.
-  **[RESOLVED — 2026-08-24]**
+- exact route names;
+- navigation/shell architecture;
+- mobile drawer behavior;
+- frontend folder structure;
+- component decomposition;
+- PWA/offline behavior;
+- mock-data behavior;
+- concrete visual layout;
+- backend product concepts that do not exist in canonical domain authority.
 
-## Related Docs
+Those concerns belong to their respective authorities or future engineering/design-system derivation.
 
-- Pattern definitions & shared component behavior: `patterns.md`
-- Visual tokens: `design-guidelines.md`
-- Code architecture: `kencleng-frontend-tech-stack.md`
+## 9. Open Product/Surface Questions
+
+Items that remain unresolved must stay unresolved rather than being inferred from legacy frontend/prototypes.
+
+Examples may include:
+
+- campaign discovery prioritization/curation semantics when not defined by backend/product authority;
+- future dedicated public organization profile behavior;
+- future event/public discovery behavior;
+- exact post-donation Evidence Journal API support and source labeling where not yet represented in canonical contracts.
+
+These are product/engineering follow-ups and must not be answered by visual precedent alone.
