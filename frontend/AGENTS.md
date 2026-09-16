@@ -12,25 +12,29 @@ Use progressive disclosure for project authorities: identify the active concern,
 
 ## 1. Project map
 
+The following paths are **semantic ownership destinations**, not a requirement that every directory already exists. The clean-start frontend intentionally creates a layer only when real implementation needs it.
+
 ```text
 frontend/
 ├── app/                    # App Router; route-local composition may live here
 ├── components/
-│   ├── ui/                 # generic design-system primitives
-│   ├── features/<domain>/  # domain-semantic components
-│   └── shared/             # genuinely cross-domain semantic components
+│   ├── ui/                 # generic design-system primitives, when established
+│   ├── features/<domain>/  # domain-semantic components, when needed
+│   └── shared/             # genuinely cross-domain semantic components, when proven
 ├── lib/
-│   ├── api/                # typed API functions + generated OpenAPI types
-│   ├── hooks/              # TanStack Query hooks
+│   ├── api/                # focused typed API functions / generated types when needed
+│   ├── hooks/              # TanStack Query hooks when needed
 │   └── stores/             # genuinely shared client-owned Zustand state only
-├── mocks/                  # MSW handlers
+├── mocks/                  # MSW handlers when a task needs mocks
 ├── tests/browser/          # optional committed Playwright browser regressions
-└── public/
+└── public/                 # justified static assets only
 ```
 
 Component placement is **semantic-owner-first**, not reusable-first.
 
 Canonical component governance: `components/README.md`.
+
+The previous frontend product implementation was intentionally retired. Git history is archive/evidence, not current implementation precedent. During the reboot/readiness window, follow `../docs/project/frontend-reboot-plan.md`; after the clean baseline is frozen, normal Harscode feature development resumes.
 
 ## 2. Business and API authority
 
@@ -42,7 +46,7 @@ Client validation, presentation logic, formatting, interaction state, and derive
 
 If required product information is missing from the API/spec, surface the contract gap instead of inventing business behavior in React.
 
-API request/response shape comes from generated OpenAPI types based on the bundled `../api/openapi.yaml`. Do not maintain parallel handwritten API models for shapes the contract already owns.
+API request/response shape comes from generated OpenAPI types based on the canonical OpenAPI sources. Do not maintain parallel handwritten API models for shapes the contract already owns.
 
 For contract inspection, start with `../api/README.md`, then prefer the active domain source (`../api/openapi/<domain>.yaml`) plus only the referenced components from `../api/openapi/common.yaml`. Use the bundled `../api/openapi.yaml` when an aggregate/cross-domain view or generated-client correspondence is actually needed; do not load the whole bundle by default for a domain-local task.
 
@@ -55,7 +59,7 @@ derivable
 → derive it
 
 server/API authoritative
-→ existing server/TanStack Query owner
+→ Server Component / TanStack Query owner as appropriate
 
 navigation/share/bookmark/back-forward state
 → URL when appropriate and non-sensitive
@@ -67,7 +71,7 @@ ephemeral UI interaction
 → narrowest local React owner
 
 genuinely shared client-owned state
-→ Zustand
+→ Zustand only when justified
 ```
 
 Hard rules:
@@ -75,17 +79,18 @@ Hard rules:
 - do not mirror server data into Zustand;
 - do not create a store merely because a domain exists;
 - do not synchronize deterministic projections through effects;
-- do not put sensitive values in the URL for convenience.
+- do not put sensitive values in the URL for convenience;
+- do not recreate retired store/provider architecture merely because it existed before the reboot.
 
 Detailed architecture: `../docs/project/kencleng-frontend-tech-stack.md`. Open the sections governing the active architecture/state/API concern rather than treating the whole architecture document as mandatory startup prose.
 
 ## 4. Forms and user-controlled content
 
-Forms use React Hook Form + Zod for UX validation. Server validation remains authoritative.
+Forms use React Hook Form + Zod for UX validation when a task actually needs a form. Server validation remains authoritative.
 
 Distinguish field validation from request/business failure.
 
-User-controlled Markdown/HTML must use the established safe rendering/sanitization path. Do not manually convert user content into unsafe `dangerouslySetInnerHTML`.
+User-controlled Markdown/HTML must use an established safe rendering/sanitization path. Do not manually convert user content into unsafe `dangerouslySetInnerHTML`.
 
 Any such rendering requires hostile-content test coverage.
 
@@ -115,7 +120,9 @@ classify change
 
 Compilation alone does not prove visual, behavioral, semantic, responsive, or accessibility compatibility.
 
-Read `components/README.md` when introducing or materially changing a broad `ui/` or `shared/` contract, moving a component between ownership layers, or deciding a non-obvious abstraction boundary. Ordinary route-local work does not require reading the full component-governance document merely because it uses existing primitives.
+Read `components/README.md` when introducing or materially changing a broad `ui/` or `shared/` contract, moving a component between ownership layers, or deciding a non-obvious abstraction boundary. Ordinary route-local work does not require reading the full component-governance document merely because it uses an existing primitive.
+
+At the clean-start baseline the reusable registry is intentionally empty. Do not recreate historical Button/Badge/Input/etc. contracts until real new-generation usage establishes them.
 
 ## 6. Product design readiness and authority routing
 
@@ -124,7 +131,7 @@ For material UI work classify design readiness according to `../docs/ui-ux/produ
 ```text
 READY   → implement established intent
 PARTIAL → resolve small gaps using established principles/patterns
-OPEN    → use Exploration to resolve material product/design intent before canonical Build
+OPEN    → resolve material product/design intent before canonical Build
 ```
 
 Do not silently invent consequential product or interaction intent while coding.
@@ -142,15 +149,17 @@ Use `../docs/ui-ux/README.md` as the active UI/UX routing entrypoint. Open only 
 | approved visual-direction evidence | `../docs/ui-ux/visual-references/selected-direction/` |
 | broad component contract/placement/change blast radius | `components/README.md` |
 
-The approved direction is **Sunlit Editorial / Evidence-Led Optimism** and the concrete visual system is now owned by `../docs/ui-ux/design-guidelines.md`.
+The approved direction is **Sunlit Editorial / Evidence-Led Optimism** and the concrete visual system is owned by `../docs/ui-ux/design-guidelines.md`.
 
-Do not resurrect removed legacy visual guidelines, prototype exports, green identity rules, old fonts, or old token decisions from Git history as current precedent.
+Do not resurrect removed legacy visual guidelines, prototype exports, green identity rules, old fonts, old tokens, or retired component decisions from Git history as current precedent.
 
 Material UI normally needs product-design readiness plus only the specific behavior/visual/asset authorities relevant to the feature. It does not require reading every UI/UX document.
 
 ## 7. Visual assets
 
 Standard library icons are appropriate for ordinary utility actions. The current utility-icon baseline is Phosphor Icons as defined by `../docs/ui-ux/design-guidelines.md`.
+
+Do not install/use a competing icon family merely because one existed in the retired frontend or remains in historical package-lock evidence.
 
 Do not silently replace a materially important expressive/brand asset need with generic iconography, random gradients, stock-like imagery, synthetic documentary people, or generic AI decoration.
 
@@ -188,7 +197,7 @@ Use it for the approved:
 - campaign imagery / placeholder treatment;
 - public-expressive vs product-disciplined relationship.
 
-Do not reinterpret existing `app/globals.css`, Tailwind utilities, current primitives, or existing page styling as higher design authority when they conflict with the canonical visual system. Existing implementation must be evaluated and migrated deliberately.
+Bootstrap `app/globals.css`, package availability, Git history, or incidental implementation choices are not higher visual authority. New production tokens/components are derived deliberately from current design authority and real usage; do not rebuild the retired token/component taxonomy for compatibility.
 
 Visual-system semantics are not permission to invent business behavior. Domain/API truth remains authoritative for what a status, report, verification state, amount, or outcome actually means.
 
@@ -229,7 +238,7 @@ Keep the human acceptance scope proportional to the change. Screenshots may supp
 
 ## 11. Testing and Playwright boundary
 
-Automated baseline:
+Automated baseline capabilities:
 
 ```text
 Vitest
@@ -237,7 +246,7 @@ React Testing Library
 MSW
 ```
 
-Tests should verify observable behavior rather than internal structure.
+Tests should verify observable behavior rather than internal structure. Absence of tests at the clean scaffold baseline is valid; new tests are created with behavior worth protecting.
 
 Current local commands:
 
@@ -251,9 +260,9 @@ npm run verify
 
 `npm run verify` intentionally remains the fast lint + unit/component baseline.
 
-Playwright is installed as a **separate, on-demand browser automation capability**. It is not part of the default Harscode phase contract for Kencleng frontend work.
+Playwright is a **separate, on-demand browser automation capability**. It is not automatically required because a task reached Build, Code Review, Testing, or PR.
 
-Available Playwright commands:
+Available commands:
 
 ```bash
 npm run browser:install
@@ -262,9 +271,17 @@ npm run test:browser:headed
 npm run test:browser:ui
 ```
 
-`npm run browser:install` installs the pinned Chromium browser used by Playwright and is normally needed once per Playwright/browser-version change on a machine.
+For a non-trivial proposed browser check/regression, the planning/verification contract should state:
 
-Do not add, expand, or run Playwright merely because a task reached Build, Code Review, Testing, or PR. A human decides when a browser behavior is valuable enough to automate and explicitly requests the relevant Playwright work (or the task itself is browser-regression/automation maintenance).
+```text
+why browser automation is useful
+risk if omitted
+which phase owns the authoritative run
+```
+
+An agent may recommend Playwright based on concrete browser/interaction/regression risk. It becomes part of the task when the human explicitly requests it **or approves a task/spec/Techplan that includes that verification contract**. Do not require a second redundant permission prompt after the human has already approved the plan containing it.
+
+Code Review may run a targeted browser reproduction when needed to prove/disprove a suspected finding; it should not rerun broad final verification by default. Build should use focused implementation feedback. Broad/final independent verification belongs to Testing when the workflow uses a Testing phase.
 
 Committed tests under `tests/browser/` are automation assets scoped by the behavior they protect: smoke, a feature flow, a known regression, or a deliberate broader journey. Their scope is not derived from a Harscode task folder.
 
@@ -283,13 +300,15 @@ Do not claim any verification that was not actually run.
 
 Harscode owns the generic feature lifecycle and generic frontend engineering practice.
 
-When manually invoking a phase, start from the current canonical Harscode `workflow/*-prompt.md` entrypoint. Fill its variables and add only narrow task/project context that is not already owned there. Do not create a parallel frontend copy of the Harscode lifecycle prompts.
+During frontend reboot preparation, do **not** manufacture Exploration/Techplan/Build artifacts for the reset itself. The reboot is project preparation/maintenance governed by `../docs/project/frontend-reboot-plan.md`.
+
+After the clean reboot baseline is verified/frozen, when manually invoking a Harscode phase, start from the current canonical Harscode `workflow/*-prompt.md` entrypoint. Fill its variables and add only narrow task/project context that is not already owned there. Do not create a parallel frontend copy of the Harscode lifecycle prompts.
 
 `../docs/kencleng-agentic-workflow.md` owns Kencleng-specific sequencing, risk/human authority, integration states, and domain delivery. Read the specific project-precondition/risk/integration section needed for the current decision; the full orchestration overlay is not a default per-phase read.
 
 For Codex frontend work, `../docs/project/codex-frontend-execution-profile.md` owns project-specific model/reasoning/client/capability routing. Read the routing section(s) needed to choose or reconsider the current execution capability; do not repeatedly reload unrelated rendered-acceptance/Playwright rationale that is already enforced here.
 
-Historical feature/task docs may contain numeric section references to older revisions of the Kencleng workflow. Treat the **current named rule/source owner** as authoritative rather than inferring policy from an old section number.
+Historical feature/task/local-agent docs may contain older workflow/design assumptions. Treat the **current named rule/source owner** as authoritative rather than inferring policy from historical artifacts.
 
 ## 14. Source routing
 
@@ -298,6 +317,7 @@ business/domain behavior  → ../docs/spec/<domain-dir>/
 API shape                 → ../api/README.md → ../api/openapi/<domain>.yaml + referenced common.yaml components
 aggregate API view        → ../api/openapi.yaml only when cross-domain/generated-bundle context is needed
 frontend architecture     → ../docs/project/kencleng-frontend-tech-stack.md (active concern sections)
+frontend reboot gate      → ../docs/project/frontend-reboot-plan.md (pre-development only)
 Codex execution profile   → ../docs/project/codex-frontend-execution-profile.md (current routing concern)
 UI/UX authority map       → ../docs/ui-ux/README.md
 product-design authority  → ../docs/ui-ux/product-design-principles.md
@@ -307,7 +327,7 @@ UX behavior               → ../docs/ui-ux/patterns.md (matching pattern)
 asset governance          → ../docs/ui-ux/asset-governance.md
 route/persona inventory   → ../docs/ui-ux/page-map.md (matching route/persona)
 selected visual evidence  → ../docs/ui-ux/visual-references/selected-direction/
-component contracts       → components/README.md, for broad contract/placement concerns
+component contracts       → components/README.md, when broad contracts exist
 project status            → ../docs/project/kencleng-development-tracker.md
 ```
 

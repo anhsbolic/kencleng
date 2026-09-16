@@ -17,11 +17,11 @@
     },
     "docs": {
       "path": "../docs",
-      "description": "Kencleng project knowledge. Domain/feature truth lives under numbered docs/spec/<domain-dir>/ directories; docs/ui-ux/ owns product-design, UX, visual-system, asset, and prototype guidance; docs/project/ owns frontend architecture/context/current project status; docs/kencleng-agentic-workflow.md owns project orchestration. Use root/frontend AGENTS.md to route to the smallest relevant authority set."
+      "description": "Kencleng project knowledge. Domain/feature truth lives under numbered docs/spec/<domain-dir>/ directories; docs/ui-ux/ owns the active Sunlit Editorial product-design, UX, visual-system, asset, page-map, and selected-direction authorities; docs/project/ owns frontend architecture, reboot/readiness context, and current project status; docs/kencleng-agentic-workflow.md owns project orchestration. Removed prototype/design generations are Git history, not active authority. Use root/frontend AGENTS.md to route to the smallest relevant authority set."
     },
     "api": {
       "path": "../api",
-      "description": "OpenAPI 3.0.3 contract used by openapi-typescript. Check openapi.yaml before hand-writing fetch payload/response types already defined by the contract."
+      "description": "OpenAPI 3.0.3 contract used by openapi-typescript. Check the split source for the active domain (via api/README.md) before hand-writing fetch payload/response types already defined by the contract."
     }
   }
 }

@@ -54,7 +54,11 @@ coverage/
 .vscode/
 .DS_Store
 
-# local agents related docs
-# should be ignore for real development
-# i am committing this for education purpose only [@anhsolic]
-# .local-agents/
+# Learning/process evidence
+#
+# Intentionally DO NOT ignore `.local-agents/` in Kencleng.
+# This repository is a learning-by-doing project and representative
+# Harscode/agent process artifacts are committed so other readers can
+# inspect how work was explored, planned, built, reviewed, and tested.
+# Old generations may be removed from the active tree during a reboot;
+# Git history remains their archive.
