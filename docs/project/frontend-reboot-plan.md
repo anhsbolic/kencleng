@@ -1,29 +1,30 @@
 # Kencleng — Frontend Reboot Plan
 
-> Status: Active preparation
+> Status: Ready for merge
 > Decision owner: Anhar Solehudin
 > Prepared with: ChatGPT — GPT-5.6 Sol
 > Prepared: 2026-09-16
 > Last updated: 2026-09-16
 > Scope: project preparation before the next frontend Harscode development run
 > Base design authority: `docs/ui-ux/README.md`
+> Harscode candidate baseline: `workflow-v2@4199c6db1b26ef1920ba670f222aff0c6d0f9e59`
 
 ## 1. Purpose
 
-Kencleng is intentionally retiring the current frontend product implementation before the next frontend development cycle.
+Kencleng intentionally retires the previous frontend product implementation before the next frontend development cycle.
 
-The goal is **not** to delete the frontend repository or discard proven engineering tooling. The goal is to return the active frontend tree to a clean engineering scaffold so the next product UI implementation is derived from the current canonical product/design authorities rather than inherited accidentally from the superseded frontend generation.
+The goal is not to delete the frontend repository or discard proven engineering tooling. The goal is to return the active frontend tree to a clean engineering scaffold so the next product UI implementation is derived from current canonical product/design authorities rather than inherited accidentally from the superseded frontend generation.
 
-This preparation work is **not a Harscode feature-development run**. Exploration, Techplan, Build, Code Review, and Testing for the new frontend begin only after the reboot baseline is frozen and declared ready for development.
+This reboot is project preparation/maintenance, not a Harscode feature-development run. Exploration, Techplan, Build, Code Review, and Testing for the new frontend begin only from the merged reboot baseline.
 
-## 2. Human decisions already made
+## 2. Human decisions
 
 - The approved frontend design direction is **Sunlit Editorial / Evidence-Led Optimism**.
-- The next frontend implementation should be allowed to start from a clean presentation foundation rather than preserving the old UI by default.
+- The next frontend implementation starts from a clean presentation foundation rather than preserving the old UI by default.
 - Existing product/UI implementation has no preservation privilege merely because it already exists.
-- Git history remains the archive for the retired implementation and removed design generations; repository history will not be rewritten.
+- Git history remains the archive for retired implementation and removed design generations; repository history is not rewritten.
 - `frontend/.local-agents/` remains intentionally tracked because Kencleng is a learning-by-doing project and process evidence should be inspectable by readers.
-- Existing `.local-agents` work artifacts tied to the retired frontend generation may be removed from the active tree during the reboot; their history remains available in Git. New development runs will create a fresh committed process history.
+- Old `.local-agents/works/**` artifacts tied to the retired frontend generation are removed from the active tree; their history remains in Git. New development runs will create fresh committed process history.
 
 ## 3. Reboot principle
 
@@ -37,52 +38,50 @@ clean engineering scaffold
 new frontend development
 ```
 
-The reboot must avoid both failure modes:
+The reboot avoids both failure modes:
 
 1. preserving stale UI/component decisions because they already exist; and
-2. deleting infrastructure that is valuable independently of the retired product implementation.
+2. deleting engineering capability that remains valuable independently of the retired product implementation.
 
-## 4. Retain by default
+## 4. Retained capability
 
-Retain project capabilities that are implementation-independent and remain intentionally selected for the next frontend generation:
+Retained project capabilities include:
 
-- Next.js App Router / React / TypeScript project scaffold;
-- package manager lockfile and build/lint configuration where still valid;
-- Tailwind CSS v4 capability, but not the old visual tokens;
+- Next.js App Router / React / TypeScript scaffold;
+- package/build/lint configuration where still valid;
+- Tailwind CSS v4 capability, but not the retired visual tokens;
 - Vitest + React Testing Library capability;
 - Playwright capability;
 - OpenAPI TypeScript generation/tooling;
-- MSW capability, but not old feature fixtures/handlers merely because they exist;
+- MSW capability, but not retired feature fixtures/handlers;
 - Harscode/Kencleng agent guidance;
 - canonical product/domain specs and API contracts;
-- canonical `docs/ui-ux/` authorities and approved selected-direction references;
-- repository-level development tooling that does not encode the retired frontend product implementation.
+- canonical `docs/ui-ux/` authorities and selected-direction references;
+- repository-level tooling that does not encode retired frontend product behavior.
 
 Retention is about capability, not preservation of old product code.
 
-## 5. Retire/reset by default
+## 5. Retired active implementation
 
-The active tree should not preserve implementation whose primary value comes from the retired frontend generation. The deletion manifest should evaluate and normally retire:
+The reboot removes from the active tree the previous generation's:
 
-- existing public/authenticated route UI and layouts;
-- existing product components;
-- current `components/ui/` and `components/shared/` implementations and their old contract registry;
-- old visual tokens, colors, fonts, radius/elevation values, and presentation CSS;
-- Lucide-specific product/icon presentation where it represents the retired visual system;
-- feature hooks/stores/API wrappers created only for the retired frontend implementation, unless a separate project authority requires retention;
-- old frontend feature mocks/fixtures;
-- old component/UI tests whose subject is being retired;
-- old browser scenarios whose subject is being retired;
-- legacy frontend assets and presentation-specific PWA shell artifacts when no longer justified;
-- tracked `frontend/.local-agents/works/**` artifacts from the retired frontend generation.
+- public/authenticated route UI and layouts;
+- product components and old reusable UI/shared implementations;
+- old visual tokens, fonts, colors, radius/elevation values, and presentation CSS;
+- Lucide-based retired presentation usage;
+- feature hooks/stores/API wrappers tied to retired frontend implementation;
+- feature mocks/fixtures;
+- component/UI/browser tests whose subjects were retired;
+- presentation-specific PWA/service-worker assets that were no longer justified;
+- `frontend/.local-agents/works/**` history from the retired generation.
 
 Git history remains the archive for all retired files.
 
 ## 6. Clean-start component rule
 
-The reboot must not pre-create abstractions simply to reproduce the old directory shape.
+The reboot does not pre-create abstractions merely to reproduce the old directory shape.
 
-After reset, it is acceptable for these directories not to exist until a real implementation creates a truthful owner:
+These locations may remain absent until real implementation creates a truthful owner:
 
 ```text
 components/ui/
@@ -94,128 +93,113 @@ mocks/
 tests/browser/
 ```
 
-The architecture describes placement rules, not a requirement to keep empty or speculative layers.
-
-The living component registry should start with no established production `ui`/`shared` contracts. New reusable contracts are added only when the new implementation creates and validates them.
+The architecture defines placement rules, not a requirement to keep speculative folders. The living component registry begins with no established production `ui`/`shared` contracts.
 
 ## 7. Local-agent process-history policy
 
-`frontend/.local-agents/` remains tracked intentionally.
-
-Purpose:
-
-- make the engineering learning process inspectable;
-- preserve representative Harscode artifacts for education and retrospective analysis;
-- allow readers to see how requirements became plans, code, review findings, patches, and verification evidence.
+`frontend/.local-agents/` remains tracked intentionally to make the engineering learning process inspectable.
 
 Rules after reboot:
 
-- old active work directories tied to the retired frontend generation are removed from the active tree;
-- Git history is the archive for those retired artifacts;
+- Git history archives the retired work directories;
 - new runs use fresh task directories;
-- generated workflow artifacts remain task evidence/history and do not become project-wide authority merely because they are committed;
-- project truth must still be promoted into the owning spec/architecture/design document.
+- generated workflow artifacts remain task evidence/history, not project-wide authority merely because they are committed;
+- reusable project truth must still be promoted into the owning spec/architecture/design document.
 
-## 8. Documentation reconciliation required before deletion
+## 8. Documentation reconciliation
 
-Before deleting product implementation, reconcile at least:
+The reboot reconciles:
 
 - `docs/spec/0-foundations/tasks.md`;
 - `docs/spec/0-foundations/features/01-frontend-experience-foundation.md`;
 - `docs/project/kencleng-frontend-tech-stack.md`;
 - `docs/project/kencleng-development-tracker.md`;
-- `frontend/AGENTS.md` where current-runtime assumptions need removal;
+- `frontend/AGENTS.md`;
 - `frontend/README.md`;
 - `frontend/components/README.md`;
 - `docs/ui-ux/asset-governance.md`;
-- `docs/ui-ux/visual-references/selected-direction/README.md`.
+- `docs/ui-ux/visual-references/selected-direction/README.md`;
+- frontend harness/config references that still pointed to removed prototype-era authority.
 
-The active documentation must not point new agents back toward removed prototype authority, green-brand rules, retired frontend components, or old workflow artifacts as current precedent.
+Active documentation must not route new agents back toward removed prototype authority, green-brand rules, retired components, or old workflow artifacts as current precedent.
 
-## 9. Deletion-manifest requirement
+## 9. Deletion manifest
 
-Do not perform a broad `rm` based only on top-level directory names.
-
-Before deletion, produce an explicit manifest classifying each active frontend area as:
+The executed reset boundary is documented in:
 
 ```text
-RETAIN
-RESET / REPLACE WITH MINIMAL SCAFFOLD
-DELETE
-REVIEW MANUALLY
+docs/project/frontend-reboot-deletion-manifest.md
 ```
 
-The manifest must explain the reason for every retained implementation-level area so retention does not happen by inertia.
+The manifest classifies active frontend areas as `RETAIN`, `RESET / REPLACE WITH MINIMAL SCAFFOLD`, `DELETE`, or `REVIEW MANUALLY` so retention does not happen by inertia.
 
-## 10. Minimal reboot baseline
+## 10. Resulting minimal baseline
 
-The target active frontend tree should contain only enough code/configuration to prove the engineering scaffold remains healthy.
+The active frontend tree now intentionally contains only a minimal technical application shell plus retained tooling/governance.
 
-A representative target shape is:
+Representative shape:
 
 ```text
 frontend/
 ├── app/
-│   ├── layout.tsx          # minimal technical root
-│   ├── page.tsx            # minimal bootstrap surface, not product precedent
-│   └── globals.css         # minimal bootstrap only; no legacy visual system
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── globals.css
 ├── components/
-│   └── README.md           # governance; no established component registry entries
-├── public/                 # only still-justified technical/static essentials
-├── .local-agents/          # committed process evidence; fresh works begin later
+│   └── README.md
+├── .local-agents/
+│   └── README.md
 ├── AGENTS.md
 ├── README.md
 ├── package.json
 ├── package-lock.json
 ├── tsconfig.json
-├── next.config.*
-├── postcss.config.*
-├── eslint.config.*
-├── vitest.config.*
+├── next.config.ts
+├── postcss.config.mjs
+├── eslint.config.mjs
+├── vitest.config.ts
 └── playwright.config.ts
 ```
 
-Exact minimal files follow live scaffold/tooling requirements; this diagram is a target posture, not permission to invent unused folders.
+The bootstrap `/` surface is intentionally plain and is not product/design precedent.
 
-## 11. Reboot verification
+## 11. Verification evidence
 
-The reboot itself verifies **scaffold health**, not product behavior.
+Reboot verification proves scaffold health, not product behavior.
 
-Minimum checks after deletion/reset should prove, as applicable:
+On 2026-09-16, Anhar reported successful local execution on `frontend-reboot-preparation` of the requested reboot checks, including dependency installation/synchronization, `npm run verify`, `npm run build`, and boot/render inspection of the minimal frontend. ChatGPT did not execute those commands and records them as **operator-reported verification**.
 
-- dependencies/configuration are internally consistent;
-- lint/static configuration loads;
-- the minimal Next.js application builds;
-- the minimal application can start/render;
-- test runners/configuration can initialize even if no product tests remain;
-- Playwright capability remains configured if intentionally retained;
-- generated OpenAPI tooling still works if part of the retained scaffold.
+The resulting `package-lock.json` was pushed in commit:
 
-Do not carry old product tests merely to make a test count non-zero.
+```text
+6fd4663c4fe3e8d9d5e89f4f6a9a71c8d18a2ba2
+```
+
+GitHub inspection confirms that commit only synchronized `frontend/package-lock.json`, and the lockfile root dependency set now matches the cleaned `package.json`.
 
 ## 12. Ready-for-development gate
 
-The frontend reboot baseline is ready only when all of the following are true:
+- [x] Sunlit Editorial authorities are canonical and internally reconciled.
+- [x] Frontend architecture docs describe the new clean-start posture.
+- [x] Foundation spec assumes a clean frontend implementation baseline.
+- [x] Development tracker records the old frontend generation as intentionally retired.
+- [x] No active docs intentionally route agents to removed prototype/design authority.
+- [x] No legacy product UI implementation remains in the active frontend tree unless explicitly retained by the deletion manifest.
+- [x] No legacy reusable UI/shared contract is treated as established by default.
+- [x] Old feature-specific frontend tests/mocks/browser scenarios are retired with their subjects.
+- [x] Old `.local-agents/works/**` implementation history is removed from the active tree; Git remains the archive.
+- [x] `.local-agents/` remains available for fresh committed learning/process evidence.
+- [x] Retained engineering scaffold was operator-verified at the agreed minimum level.
+- [x] The first new frontend development task/spec is clear and points to current authorities.
+- [x] Harscode candidate baseline for the first new run is frozen at `4199c6db1b26ef1920ba670f222aff0c6d0f9e59`.
 
-- [ ] Sunlit Editorial authorities are canonical and internally reconciled.
-- [ ] Frontend architecture docs describe the new clean-start posture.
-- [ ] Foundation spec assumes a clean frontend implementation baseline.
-- [ ] Development tracker records the old frontend generation as intentionally retired.
-- [ ] No active docs route agents to removed prototype/design authority.
-- [ ] No legacy product UI implementation remains in the active frontend tree unless explicitly retained by the deletion manifest.
-- [ ] No legacy reusable UI/shared contract is treated as established by default.
-- [ ] Old feature-specific frontend tests/mocks/browser scenarios are retired with their subjects.
-- [ ] Old `.local-agents/works/**` implementation history is removed from the active tree; Git remains the archive.
-- [ ] `.local-agents/` remains available for fresh committed learning/process evidence.
-- [ ] Retained engineering scaffold builds/boots at the agreed minimum level.
-- [ ] The first new frontend development task/spec is clear and points to current authorities.
-- [ ] The Harscode candidate baseline for the first new run is frozen.
+**Gate result: READY FOR MERGE.**
 
-Only after this gate passes should the next real frontend Harscode run begin.
+The clean frontend becomes the new frozen project baseline only after this reboot branch is merged to `main`; the exact merged `main` commit then becomes the Kencleng baseline for the first new frontend run.
 
 ## 13. Intended next development sequence
 
-After the reboot baseline is frozen:
+After merge/freeze:
 
 ```text
 clean frontend scaffold
@@ -224,4 +208,6 @@ clean frontend scaffold
 → subsequent dependency-driven page/flow delivery
 ```
 
-The representative `/` slice remains deliberately smaller than a complete landing page. It exists to establish the first production expression of the approved design system, not to recreate the retired landing implementation.
+The representative `/` slice remains deliberately smaller than a complete landing page. It establishes the first production expression of the approved design system; it does not recreate the retired landing implementation.
+
+CRTV measurement for the next run begins before its first Exploration session. The reboot preparation itself is not part of that feature benchmark.
