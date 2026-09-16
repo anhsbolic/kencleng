@@ -135,21 +135,22 @@ Use `../docs/ui-ux/README.md` as the active UI/UX routing entrypoint. Open only 
 |---|---|
 | design readiness, product/design decision authority, trust/clarity principles | `../docs/ui-ux/product-design-principles.md` |
 | approved brand/product UI thesis, public-vs-product expression, trust language, visual invariants | `../docs/ui-ux/brand-product-ui-brief.md` |
+| concrete color, typography, spacing, surfaces, radius, iconography, provenance grammar, progress grammar | `../docs/ui-ux/design-guidelines.md` |
 | established recurring interaction/feedback/form/review pattern | matching section(s) of `../docs/ui-ux/patterns.md` |
 | expressive/product-semantic/brand asset need, asset status or generation/handoff | `../docs/ui-ux/asset-governance.md` |
 | route, persona, navigation/IA relationship | matching route/persona section of `../docs/ui-ux/page-map.md` |
 | approved visual-direction evidence | `../docs/ui-ux/visual-references/selected-direction/` |
 | broad component contract/placement/change blast radius | `components/README.md` |
 
-The approved upstream direction is **Sunlit Editorial / Evidence-Led Optimism**.
+The approved direction is **Sunlit Editorial / Evidence-Led Optimism** and the concrete visual system is now owned by `../docs/ui-ux/design-guidelines.md`.
 
-Concrete production visual-system authority is intentionally absent until deliberately derived. Do not resurrect removed `design-guidelines.md`, legacy prototype exports, or their exact green/font/token decisions from Git history as current precedent.
+Do not resurrect removed legacy visual guidelines, prototype exports, green identity rules, old fonts, or old token decisions from Git history as current precedent.
 
-Material UI normally needs product-design readiness plus only the specific behavior/brand/asset authorities relevant to the feature. It does not require reading every UI/UX document.
+Material UI normally needs product-design readiness plus only the specific behavior/visual/asset authorities relevant to the feature. It does not require reading every UI/UX document.
 
 ## 7. Visual assets
 
-Standard library icons are appropriate for ordinary utility actions.
+Standard library icons are appropriate for ordinary utility actions. The current utility-icon baseline is Phosphor Icons as defined by `../docs/ui-ux/design-guidelines.md`.
 
 Do not silently replace a materially important expressive/brand asset need with generic iconography, random gradients, stock-like imagery, synthetic documentary people, or generic AI decoration.
 
@@ -165,23 +166,31 @@ Illustration must not masquerade as real campaign evidence. Photography or image
 
 Tool limitation must not silently become design limitation.
 
-## 8. Visual direction
+## 8. Visual system
 
-Current upstream direction comes from `../docs/ui-ux/brand-product-ui-brief.md`:
+Concrete production visual-system authority lives in:
 
-- light, warm, editorial foundation;
-- restrained clear-bright yellow as brand energy, not semantic proof;
-- mature warm neutrals;
-- expressive human/editorial public surfaces;
-- disciplined authenticated/product surfaces;
-- editorial-documentary photography;
-- mature human illustration for explanatory/brand roles;
-- information/trust structure as the primary signature;
-- Progress as Evidence as a secondary product-language signature.
+```text
+../docs/ui-ux/design-guidelines.md
+```
 
-Do not infer exact hex values, final fonts, token scales, radii, shadows, or motion values from this summary. Those decisions require deliberate visual-system derivation.
+Use it for the approved:
 
-Avoid generic SaaS composition, endless rounded cards, glassmorphism, excessive gradients, fintech-blue/charity-green trust shorthand, badge theatre, and manipulative donation urgency.
+- warm-neutral palette and exact core color values;
+- Newsreader / Instrument Sans role separation and type scales;
+- spacing and density posture;
+- border-first / spacing-first grouping;
+- radius and elevation family;
+- Phosphor utility-icon baseline;
+- action hierarchy;
+- provenance/truth presentation grammar;
+- funding vs operational vs reported-outcome visual grammar;
+- campaign imagery / placeholder treatment;
+- public-expressive vs product-disciplined relationship.
+
+Do not reinterpret existing `app/globals.css`, Tailwind utilities, current primitives, or existing page styling as higher design authority when they conflict with the canonical visual system. Existing implementation must be evaluated and migrated deliberately.
+
+Visual-system semantics are not permission to invent business behavior. Domain/API truth remains authoritative for what a status, report, verification state, amount, or outcome actually means.
 
 ## 9. Selected visual references
 
@@ -193,9 +202,11 @@ Approved direction evidence lives under:
 
 Use it to understand visual character, hierarchy, public-vs-product expressive intensity, restrained editorial-yellow usage, and the Evidence Journal concept.
 
-Do not treat those references as product/domain truth, component architecture, exact token values, route contracts, or pixel-perfect screenshots to clone.
+Do not treat those references as product/domain truth, component architecture, route contracts, or pixel-perfect screenshots to clone.
 
-If a visual detail conflicts with domain/API truth, domain/API truth wins. If a later deliberately derived authority owns a more specific visual-system concern, that concern owner wins.
+When a concern is concretely owned by `design-guidelines.md`, the guideline owns reusable system behavior and the images remain supporting visual evidence.
+
+If a visual detail conflicts with domain/API truth, domain/API truth wins.
 
 ## 10. Rendered iteration and human acceptance
 
@@ -291,6 +302,7 @@ Codex execution profile   → ../docs/project/codex-frontend-execution-profile.m
 UI/UX authority map       → ../docs/ui-ux/README.md
 product-design authority  → ../docs/ui-ux/product-design-principles.md
 brand/product UI direction→ ../docs/ui-ux/brand-product-ui-brief.md
+visual system             → ../docs/ui-ux/design-guidelines.md
 UX behavior               → ../docs/ui-ux/patterns.md (matching pattern)
 asset governance          → ../docs/ui-ux/asset-governance.md
 route/persona inventory   → ../docs/ui-ux/page-map.md (matching route/persona)
