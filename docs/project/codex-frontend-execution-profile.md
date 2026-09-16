@@ -2,7 +2,7 @@
 
 > Status: Current project-specific execution guidance
 >
-> Effective as of: 2026-09-13
+> Last reconciled: 2026-09-16
 >
 > Purpose: Route Codex client/model/capability choices for Kencleng frontend work without redefining the Harscode lifecycle or generic model-routing policy.
 
@@ -162,9 +162,19 @@ Keep the acceptance scope proportional to the change; this is not a requirement 
 
 Playwright is an **independent, on-demand browser automation capability**, not a Harscode phase requirement for Kencleng.
 
-Ordinary Exploration, Techplan, Build, Code Review, Testing, and PR sessions must not add or run Playwright merely because the lifecycle reached a particular phase.
+Ordinary Exploration, Techplan, Build, Code Review, Testing, and PR sessions must not add or run broad Playwright coverage merely because the lifecycle reached a particular phase.
 
-A human decides when a browser behavior is valuable enough to automate and explicitly asks the agent to add/run the relevant Playwright coverage (or opens a task whose purpose is browser automation/regression maintenance).
+For a non-trivial proposed browser check/regression, the planning/verification contract should state:
+
+```text
+why browser automation is useful
+risk if omitted
+which phase owns the authoritative run
+```
+
+An agent may recommend Playwright when concrete browser, interaction, responsive, or regression risk justifies repeatable automation. It becomes part of the task when the human explicitly requests it **or approves a task/spec/Techplan that includes that verification contract**. Do not require a second redundant permission prompt after the human has already approved the plan containing it.
+
+Code Review may use a targeted browser reproduction when needed to prove or disprove a suspected finding; this is not permission to rerun broad final verification by default. Build should use focused implementation feedback. Broad/final independent verification belongs to Testing when the workflow uses a Testing phase.
 
 Committed browser tests live under `frontend/tests/browser/` and are scoped by the behavior they protect, for example:
 
@@ -175,7 +185,7 @@ regression for a known bug
 broad critical-journey regression
 ```
 
-The workflow task path does not define Playwright scope. The automation request defines the behavior, environment, and breadth to protect.
+The workflow task path does not define Playwright scope. The protected behavior and approved verification contract define the automation breadth.
 
 Human rendered acceptance and Playwright serve different purposes:
 
@@ -184,7 +194,7 @@ human rendered acceptance
 → product/UX acceptance before delivery
 
 Playwright
-→ optional repeatable regression automation when explicitly warranted
+→ optional repeatable regression automation when risk justifies it
 ```
 
 Do not use Playwright availability as a reason to turn every visual check into a permanent E2E test.
