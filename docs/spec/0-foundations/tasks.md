@@ -1,7 +1,7 @@
 # Task List — Foundations
 
 > Status: agreed
-> Last updated: 2026-09-16
+> Last updated: 2026-09-17
 
 ## Scope
 
@@ -19,14 +19,14 @@ Implementation/session boundaries follow the active Harscode workflow. Kencleng 
 
 ## Parallel / serial grouping
 
-Task 01 is the first real frontend development task after the completed frontend reboot.
+Task 01 was the first real frontend development task after the completed frontend reboot.
 
 The preparation/reboot work itself was project maintenance/orchestration, not Task 01 implementation and not a Harscode feature-development run.
 
-Task 01 establishes enough frontend experience foundation before new domain feature surfaces proliferate. It does not require completing the landing page, and it does not block unrelated backend work.
+Task 01 established enough frontend experience foundation before new domain feature surfaces proliferate. It did not require completing the landing page and did not block unrelated backend work.
 
 ## Status tracker
 
 | # | Status | Notes |
 |---|---|---|
-| 1 | ready to start | Frontend reboot readiness gate is green. Start from the frozen clean frontend generation, capture CRTV telemetry before the first agent session, then enter Harscode Exploration. See `features/01-frontend-experience-foundation.md`. |
+| 1 | delivered | Implemented and verified in PR #24 (`71093b687cd7135495bc6ed62d520a621f96f586`) with human rendered acceptance PASS. Validation 02 closeout merged in PR #25 (`fca5a8f3178b53e5eec006064d8bcf2b078771b3`). See `features/01-frontend-experience-foundation.md`. |
