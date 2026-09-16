@@ -1,10 +1,12 @@
 # Kencleng Frontend
 
-> Status: reboot preparation — old product implementation is being retired
+> Status: clean-start baseline — ready for frontend development
 > Last updated: 2026-09-16
-> Reboot plan: `../docs/project/frontend-reboot-plan.md`
+> Reboot record: `../docs/project/frontend-reboot-plan.md`
 
-Kencleng's frontend is a Next.js App Router application. The project is intentionally resetting the active product/UI implementation so the next frontend generation starts from current product/API/design authorities rather than inheriting the superseded UI.
+Kencleng's frontend is a Next.js App Router application. The previous product/UI implementation has been intentionally retired, and the active tree is now a clean engineering scaffold for the new frontend generation.
+
+New implementation must derive from current product/API/design authorities rather than inheriting superseded UI or historical implementation structure. Git history remains archive/evidence, not current implementation precedent.
 
 This README describes how to work inside `frontend/`. Generic lifecycle instructions belong to Harscode; project-specific rules live in `AGENTS.md` and the architecture/design authorities it routes to.
 
@@ -68,7 +70,7 @@ The narrowest truthful owner wins.
 
 ## Running the scaffold
 
-After reboot preparation completes, ordinary local commands remain defined by `package.json`, typically:
+Ordinary local commands are defined by `package.json`, including:
 
 ```bash
 npm install
@@ -83,7 +85,7 @@ Do not assume every command must run in every Harscode phase; current workflow/p
 
 ## API types
 
-When the bundled OpenAPI contract changes and generated frontend types are needed, use the project-selected `openapi-typescript` generation path rather than hand-editing generated schema types.
+When the bundled OpenAPI contract changes and generated frontend types are needed, use the project-selected `openapi-typescript` generation capability rather than hand-editing generated schema types.
 
 The exact generated-file location should follow the active implementation. Do not preserve an old path solely for compatibility with retired frontend code.
 
@@ -101,12 +103,16 @@ Material UI still requires proportional human rendered acceptance.
 
 Kencleng is a learning-by-doing project, so representative workflow evidence should remain readable by other people. Old work directories may be retired from the active tree during major resets, while Git history remains the archive. New Harscode runs should create fresh task evidence rather than treating historical artifacts as current authority.
 
-## Before starting new frontend development
+## Starting new frontend development
 
-Do not begin a new Harscode frontend run until the ready-for-development gate in:
+The frontend reboot is complete and the clean-start gate has passed.
 
-```text
-../docs/project/frontend-reboot-plan.md
-```
+New frontend work should:
 
-has passed and the reboot baseline is frozen.
+1. start from the current clean `main` baseline;
+2. use the authoritative task/spec under `../docs/spec/`;
+3. use current UI/UX and frontend architecture authorities;
+4. invoke the current canonical Harscode phase prompt rather than project-local lifecycle wrappers;
+5. create fresh committed process evidence under `.local-agents/works/`.
+
+The reboot plan remains durable history for why the clean baseline exists; it is not a per-task implementation playbook.
