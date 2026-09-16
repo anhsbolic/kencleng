@@ -2,8 +2,7 @@
 
 > Status: Living project status
 > Last reconciled: 2026-09-16
-> Current main before reboot merge: `cc6552e5ae36e354388f5d9d3230672929b11055`
-> Frontend reboot branch: `frontend-reboot-preparation`
+> Frontend reboot implementation checkpoint: `main@6b5cdd3d4710a64be0d00ce4479bad118fd6cf48`
 > Harscode workflow-v2 candidate for the next frontend run: `4199c6db1b26ef1920ba670f222aff0c6d0f9e59`
 > Purpose: Keep cross-domain delivery state visible without turning dated progress into workflow policy.
 
@@ -48,7 +47,7 @@ Code existing in history is not sufficient evidence for a verified milestone.
 
 ## 3. Current domain snapshot
 
-The frontend reboot intentionally retires the previous frontend product implementation. Historical frontend commits remain evidence of what was previously built, but they do **not** represent active completion state for the new frontend generation.
+The frontend reboot intentionally retired the previous frontend product implementation. Historical frontend commits remain evidence of what was previously built, but they do **not** represent active completion state for the new frontend generation.
 
 | Domain | Contract/spec state | Backend | Frontend | Integration | Current notes |
 |---|---|---|---|---|---|
@@ -100,7 +99,7 @@ Removed legacy design/prototype generations are available only through Git histo
 Current state:
 
 ```text
-READY FOR MERGE
+COMPLETE — READY FOR DEVELOPMENT
 ```
 
 Authority:
@@ -110,20 +109,27 @@ docs/project/frontend-reboot-plan.md
 docs/project/frontend-reboot-deletion-manifest.md
 ```
 
-The reboot has:
+Implementation checkpoint:
+
+```text
+main@6b5cdd3d4710a64be0d00ce4479bad118fd6cf48
+```
+
+The reboot:
 
 - reconciled project/spec/frontend documentation with the new design generation;
 - classified retained engineering scaffold versus retired implementation;
-- removed previous product/UI implementation and old reusable-component contracts from the active branch tree;
+- removed previous product/UI implementation and old reusable-component contracts from the active tree;
 - removed old active `.local-agents/works/**` while preserving Git history as archive;
 - kept `.local-agents/` tracked for future learning-by-doing process evidence;
 - reduced the frontend to a minimal technical scaffold;
 - synchronized the dependency lockfile;
-- received operator-reported successful verification of dependency install, `npm run verify`, `npm run build`, and minimal boot/render inspection.
+- received operator-reported successful verification of dependency install, `npm run verify`, `npm run build`, and minimal boot/render inspection;
+- was squash-merged through PR #20.
 
 ChatGPT verified the resulting Git tree and lockfile synchronization from GitHub but did not execute the local verification commands itself.
 
-The reboot is project preparation/maintenance, **not** Frontend Experience Foundation implementation and not a Harscode feature-development run.
+The reboot was project preparation/maintenance, **not** Frontend Experience Foundation implementation and not a Harscode feature-development run.
 
 ## 7. Cross-cutting frontend readiness
 
@@ -137,24 +143,24 @@ The reboot is project preparation/maintenance, **not** Frontend Experience Found
 | Next.js/TypeScript/Tailwind tooling | OPERATOR VERIFIED | Minimal scaffold verification reported successful on 2026-09-16. |
 | Vitest/RTL/MSW capability | OPERATOR VERIFIED | Test configuration initialized through the requested verification run; old product tests/fixtures remain retired. |
 | Playwright capability | RETAINED | On-demand browser automation capability retained; no old product browser regression is carried forward by inertia. |
-| Previous frontend product implementation | RETIRED | Git history is archive; active branch tree no longer treats it as precedent. |
+| Previous frontend product implementation | RETIRED | Git history is archive; active tree no longer treats it as precedent. |
 | Previous `.local-agents/works/**` history | RETIRED FROM ACTIVE TREE | Git history remains archive; new runs will be committed fresh. |
-| Frontend Experience Foundation Task 01 | READY_TO_START AFTER MERGE | First real frontend development task from the clean baseline. |
+| Frontend Experience Foundation Task 01 | READY_TO_START | First real frontend development task from the clean baseline. |
 
 ## 8. Frontend readiness gate before new development
 
-The detailed gate is green in `docs/project/frontend-reboot-plan.md`.
+The detailed reboot gate is green in `docs/project/frontend-reboot-plan.md`.
 
-Remaining repository transition:
+Next sequence:
 
 ```text
-merge frontend-reboot-preparation
-→ record exact merged main commit as Frontend Reboot Baseline
-→ begin CRTV telemetry before first Exploration session
-→ start Frontend Experience Foundation through Harscode
+freeze exact CRTV start baseline
+→ create fresh validation/development branch from that baseline
+→ capture benchmark pre-session telemetry
+→ start Frontend Experience Foundation with Harscode Exploration
 ```
 
-The next real development task remains:
+The next real development task is:
 
 ```text
 Frontend Experience Foundation
@@ -168,7 +174,7 @@ This is intentionally not a requirement to finish the landing page or recreate t
 
 The previous frontend validation run remains historical evidence.
 
-The next CRTV measurement begins only from the merged clean frontend baseline. Preparation/reset work before that baseline is not part of the feature validation benchmark.
+The next CRTV measurement begins from the clean frontend generation after the reboot completion status is reconciled. Preparation/reset work before that baseline is not part of the feature validation benchmark.
 
 Session-level telemetry should preserve both:
 
@@ -181,6 +187,12 @@ correctness
 ```
 
 Do not optimize token usage at the expense of correctness.
+
+The Harscode candidate baseline remains:
+
+```text
+workflow-v2@4199c6db1b26ef1920ba670f222aff0c6d0f9e59
+```
 
 ## 10. Update discipline
 
