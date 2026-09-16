@@ -1,42 +1,12 @@
 # Kencleng — UX Pattern System
 
-> Intended path: `docs/ui-ux/patterns.md`
->
-> Status: Draft v2
->
-> Purpose: Define reusable page structures and interaction behavior for Kencleng.
->
-> This document answers:
->
-> **"When users encounter a recurring kind of task or state, how should the experience behave?"**
->
-> It does not define visual tokens, component APIs, or business rules.
+> Status: Canonical
+> Purpose: Reusable interaction behavior and state semantics.
+> Boundary: This document does not define visual tokens, component APIs, frontend architecture, or business rules.
 
-## Context
+## 1. Pattern Rule
 
-Kencleng uses reusable UX patterns instead of maintaining pixel-level wireframes for every route.
-
-This keeps behavioral intent stable while allowing the visual system and production implementation to evolve.
-
-Related authority:
-
-* `product-design-principles.md` — why the experience behaves and feels a certain way
-* `page-map.md` — which route/persona uses which page pattern
-* `design-guidelines.md` — visual language and tokens
-* `brand-and-visual-assets.md` — icons, illustrations, placeholders, and expressive assets
-* `prototype-reference.md` — visual reference authority
-* `frontend/components/README.md` — production component ownership and contracts
-* feature/domain specs — business rules and product truth
-
-Patterns describe reusable experience behavior.
-
-They do not authorize the frontend to invent domain capabilities.
-
----
-
-# A. Pattern Reuse and Evolution
-
-Before creating a new UX pattern:
+Reuse a pattern when the user interaction contract is materially the same.
 
 ```text
 existing pattern fits
@@ -46,174 +16,84 @@ existing pattern mostly fits
 → extend intentionally
 
 meaningfully different recurring interaction
-→ propose new pattern
+→ propose a new pattern
 
-one-off page detail
+one-off composition detail
 → keep local
 ```
 
-Do not create a new named pattern merely because:
+A useful test is:
 
-* markup differs;
-* a page has additional fields;
-* the visual composition changes;
-* another component would be convenient.
+> Would we want the next ten similar surfaces to inherit this behavior?
 
-A new pattern is justified when the **user interaction contract** is meaningfully different and likely to recur.
+Pattern reuse must never invent product capabilities unsupported by domain/API truth.
 
-When extending a pattern, ask:
+## 2. List / Browse
 
-* Is the variation meaningful across more than one surface?
-* Would future features benefit from inheriting this behavior?
-* Does the extension preserve existing consumers?
-* Is this still one interaction model or now a different pattern?
-
-A useful test:
-
-> **Would we want the next ten similar surfaces to inherit this behavior?**
-
-If not, keep the behavior local.
-
----
-
-# B. Page Patterns
-
-These names are stable because `page-map.md` references them.
-
-## 1. List / Browse
-
-Purpose:
-
-Help users scan, compare, search, filter, or select from a collection.
+Purpose: help users scan, compare, search, filter, or select from a collection.
 
 Typical structure:
 
 ```text
-Page header
-→ optional search/filter controls
+context / heading
+→ optional search or filters
 → collection
-→ pagination/navigation
+→ navigation/pagination where required
 ```
 
-The collection may render as cards, rows, or another approved representation depending on content density and task.
+The collection may be editorial cards, rows, or another appropriate representation. Visual form is not owned by this pattern.
 
-### States
+### Loading
+Prefer structure-preserving skeletons when useful rather than blocking the whole page with a spinner.
 
-**Loading**
+### Empty
+Explain what is absent. Show a CTA only when an allowed action meaningfully resolves the empty state.
 
-Use skeletons shaped like the expected collection rather than a page-level spinner.
+Distinguish first-use empty, query-empty, permission-limited, and true no-content states when the distinction matters.
 
-**Empty**
+### Error
+Provide safe explanation and recovery when recovery is meaningful. Never expose raw backend errors.
 
-Explain what is absent.
+### Search / filter / sort
+Only expose semantics supported by product/API truth. Do not invent “featured”, “trending”, popularity, ranking, or sort meaning from UI convention alone.
 
-Show a primary CTA only when:
+## 3. Detail
 
-* an action meaningfully resolves the empty state; and
-* the viewer is allowed to perform it.
-
-A functional search-empty state usually needs less visual expression than a meaningful first-use empty state.
-
-**Error**
-
-Show a safe, user-facing explanation and retry when retry is meaningful.
-
-Do not render raw backend errors.
-
-**Success**
-
-Render the collection and only expose navigation controls that have a meaningful effect.
-
-### Search and filters
-
-Search/filter controls should not dominate the page when browsing is the primary task.
-
-When filter/search state should be shareable or participate meaningfully in browser navigation, prefer URL-backed state according to frontend state-ownership guidance.
-
-Do not invent sort/filter semantics unsupported by the backend or product specification.
-
----
-
-## 2. Detail
-
-Purpose:
-
-Help users understand one entity, its current state, relevant trust/context, and available actions.
+Purpose: help users understand one entity, its current state, relevant trust/context, and available actions.
 
 Typical structure:
 
 ```text
-Identity / title / status
-→ primary information
-→ trust or contextual information
+identity / title / state
+→ primary facts
+→ trust/context
 → supporting detail
 → actions appropriate to viewer + state
 ```
 
-Public and dashboard detail pages may have different information priorities while still using the same underlying pattern.
+Public and authenticated detail surfaces may use different composition while preserving the same truth.
 
-### Long content
+Long content may use progressive disclosure when it improves scanability, but disclosure must not hide information needed for the current decision.
 
-Long narrative content may use progressive disclosure when displaying everything at once harms scanability.
+## 4. Form
 
-The collapsed view must not:
-
-* hide information necessary for the current decision;
-* imply that omitted content does not exist;
-* trap keyboard or screen-reader users.
-
-### Trust-sensitive public detail
-
-When product/domain data contains an applicable organization verification state, public/donor surfaces should communicate it near the organization identity rather than burying it in secondary metadata.
-
-Do not create additional trust scores or labels beyond the actual domain state.
-
-### States
-
-**Loading**
-
-Use a skeleton matching the expected section structure.
-
-**Not found**
-
-Distinguish a genuine unavailable/not-found experience from transient request failure when doing so does not leak sensitive existence information.
-
-**Error**
-
-Show safe retry behavior appropriate to the failure.
-
-**Success**
-
-Render content and only actions authorized by the viewer's actual role/state.
-
----
-
-## 3. Form
-
-Purpose:
-
-Help users provide or modify structured information with clear validation and submission consequences.
+Purpose: help users provide or modify structured information with clear validation and consequences.
 
 Typical structure:
 
 ```text
-Context
+context
 → grouped fields
-→ field guidance
+→ guidance
 → validation
 → primary submit action
-→ secondary/cancel action
+→ secondary/cancel action where meaningful
 ```
 
 ### Validation
+Client validation improves UX; server validation remains authoritative.
 
-Client validation improves UX.
-
-Server validation remains authoritative.
-
-Field-specific validation belongs with the relevant field.
-
-Request-level failures belong at the form or section level.
+Keep field-specific validation near the field. Keep request/business failures at the form or section level.
 
 Do not collapse:
 
@@ -227,765 +107,230 @@ and:
 request could not be completed
 ```
 
-into the same error presentation.
+into one error treatment.
 
 ### Submission
+Prevent accidental duplicate non-idempotent submission, communicate progress, and preserve user input unless successful flow intentionally transitions away.
 
-While a non-idempotent submit is in flight:
+### Revisable submission
+When domain truth defines a lifecycle such as draft → review → rejected → revise → resubmit, editing availability and state presentation must follow that lifecycle. A reviewing state should not look like an editable form merely with disabled controls.
 
-* prevent accidental duplicate submission;
-* communicate progress;
-* preserve entered data unless the successful flow explicitly transitions away.
+## 5. Dashboard / Summary
 
-Do not disable unrelated page behavior merely because one form control is submitting unless interaction correctness requires it.
+Purpose: give an authenticated user a prioritized overview of information requiring awareness or action.
 
-### Success
+A dashboard is not a collection of every available metric.
 
-Use the treatment that best explains what happens next.
+Each summary should answer at least one of:
 
-Possible patterns include:
+- What is happening?
+- What changed?
+- What needs attention?
+- Where should I go next?
 
-* inline completion state;
-* navigation to the resulting resource;
-* explicit next-step screen;
-* lightweight toast when the surrounding context remains valid.
+Independent sections may load/fail independently when their data is independent.
 
-Do not use a toast as the only confirmation for a terminal or consequential flow when the user needs to understand the resulting state.
+Do not invent analytics, ranking, percentages, or KPIs merely because dashboards conventionally contain stat cards.
 
-### Revisable Submission
+## 6. Curation / Review
 
-Some domain flows follow:
-
-```text
-draft
-→ submit
-→ locked/reviewing
-→ rejected
-→ revise
-→ resubmit
-```
-
-When a spec defines such a lifecycle:
-
-* editing availability must follow domain state;
-* rejection/revision must expose the approved reason/context needed to continue;
-* locked/reviewing state must not look like an editable form merely with disabled controls.
-
-This is a Form sub-pattern, not a separate page pattern.
-
----
-
-## 4. Dashboard / Summary
-
-Purpose:
-
-Give an authenticated user a prioritized overview of information requiring awareness or action.
-
-A dashboard is not a collection of every metric available.
-
-Each summary item should answer at least one of:
-
-```text
-What is happening?
-What needs attention?
-What changed?
-Where should I go next?
-```
+Purpose: help an authorized reviewer understand submitted material and make an accountable decision.
 
 Typical structure:
 
 ```text
-Dashboard shell
-→ high-priority summary
-→ actionable status
-→ supporting overview
-```
-
-### Independent sections
-
-Where data sources are independent, sections should be allowed to load or fail independently.
-
-One secondary failure should not unnecessarily block the entire dashboard.
-
-### Empty sections
-
-Prefer section-level empty states when the dashboard itself still provides meaningful navigation/context.
-
-### Metric discipline
-
-Do not invent analytics, rankings, percentages, or KPIs merely because dashboards conventionally contain stat cards.
-
-Every metric must correspond to real domain data and understandable user value.
-
----
-
-## 5. Curation / Review
-
-Purpose:
-
-Help an authorized reviewer understand submitted material and make an accountable decision.
-
-Typical structure:
-
-```text
-Submission context
-→ material being reviewed
-→ relevant history/context
+submission context
+→ material under review
+→ relevant evidence/history
 → decision action
 → decision reasoning when required
 ```
 
-The item under review should remain visually distinct from the reviewer controls.
+The reviewed material should remain visually distinct from reviewer controls.
 
-### Decision states
+If a negative decision requires a reason, gather and explain the reason as part of the decision flow rather than after the decision is already committed.
 
-**Loading**
+## 7. Status / Tracking
 
-Show the review content structure, not only the controls.
+Purpose: answer:
 
-**Already decided**
-
-Present recorded outcome/history and remove misleading active decision affordances.
-
-**Submitting**
-
-Prevent accidental duplicate decisions and communicate progress.
-
-**Failure**
-
-Preserve reviewer context and allow safe retry when the domain permits it.
-
-### Rejection/negative decisions
-
-When domain rules require a reason:
-
-* make the reason part of the decision flow;
-* explain why it is needed;
-* do not ask for the reason only after the destructive/negative action has already occurred.
-
-The same interaction semantics may be reused across multiple curation domains.
-
-That does **not** automatically require one highly parameterized production component. Component boundaries follow the component-governance rules.
-
----
-
-## 6. Status / Tracking
-
-Purpose:
-
-Answer:
-
-> **"What happened to the thing I submitted or initiated?"**
+> What happened to the thing I submitted or initiated?
 
 Typical structure:
 
 ```text
 minimal context
-→ current status
+→ current state
 → meaning / consequence
 → relevant next action
 ```
 
-A status badge alone is insufficient when the state has an important consequence.
+A status badge alone is insufficient when the state has meaningful consequence.
 
-Examples:
+For sensitive unauthenticated lookup flows, visible failure distinctions must respect anti-enumeration/security requirements.
+
+## 8. Evidence Journal
+
+Purpose: help a donor follow what happened after donation without confusing funding, execution, and outcome.
+
+Typical structure:
 
 ```text
-PENDING
-→ still being processed
-
-FAILED
-→ what the user can do next
-
-SUCCESS
-→ what has completed and where to continue
+donation fact
+→ chronological campaign/program milestones
+→ source/provenance
+→ evidence or report context
+→ pending next update where known
 ```
 
-### Sensitive token-based tracking
+The Evidence Journal is factual first and human second.
 
-For unauthenticated lookup flows, error messaging must respect anti-enumeration/security requirements from the relevant domain spec.
+It must distinguish:
 
-Do not make visually different failure states reveal information the API intentionally conceals.
+### Funding Progress
+Money collected relative to the campaign's funding model.
 
----
+### Operational Progress
+Execution/distribution/activity milestones supported by product data or reports.
 
-# C. Cross-Pattern Interaction Patterns
+### Reported Outcome
+Outcome information reported by the appropriate source.
 
-## 1. Primary Action Hierarchy
+These categories must not collapse into one universal “impact progress” scale.
+
+## 9. Primary Action Hierarchy
 
 A surface should communicate one confident next action whenever one exists.
 
-Actions are typically:
+Actions may be primary, secondary, tertiary, or destructive.
 
-```text
-primary
-secondary
-tertiary
-destructive
-```
+Hierarchy follows user goal and consequence, not whichever button variant is visually strongest.
 
-Do not promote an action because:
+## 10. Loading
 
-* it looks visually interesting;
-* the button component has a primary variant;
-* another application commonly does so.
+Loading treatment should be proportional to scope.
 
-Hierarchy follows the user's current goal and the consequence of the action.
+- page/section content: preserve expected structure where helpful;
+- inline action: localized progress;
+- background refresh: keep already-useful content visible when safe.
 
-A destructive action should not visually compete with a safe primary action except when destruction itself is genuinely the user's current task.
+Avoid unnecessary layout shifts.
 
----
+## 11. Empty States
 
-## 2. Loading
-
-Use loading treatment proportional to scope.
-
-### Page/section content
-
-Prefer skeletons that preserve expected layout.
-
-### Inline action
-
-Use localized progress such as a spinner/progress label within the action.
-
-### Background refresh
-
-Do not replace already-usable content with a full loading skeleton merely because background revalidation is occurring.
-
-Loading UI should answer:
-
-```text
-What is waiting?
-Can I still use anything?
-```
-
-Avoid unnecessary layout shifts between loading and loaded states.
-
----
-
-## 3. Empty
-
-First classify the empty state.
+First classify the state.
 
 ### Query/search empty
-
-Meaning:
-
-> Nothing matches the current criteria.
-
-Usually provide:
-
-* concise explanation;
-* reset/change-filter action when useful.
+Nothing matches current criteria. Usually provide concise explanation and reset/change-filter action when useful.
 
 ### First-use empty
+The user has not created/received anything yet. May justify stronger guidance or an expressive approved asset.
 
-Meaning:
+### Permission-limited
+Do not disguise lack of permission as ordinary emptiness when the user should understand the distinction.
 
-> The user has not created or received anything yet.
+### True no-content
+Do not invent an action just because empty-state templates usually have buttons.
 
-May provide:
+## 12. Error and Recovery
 
-* stronger guidance;
-* primary next action;
-* expressive asset when appropriate.
+Distinguish where useful and safe:
 
-### Permission empty
+- field validation;
+- request failure;
+- unavailable/not found;
+- permission failure;
+- stale/freshness uncertainty;
+- terminal business state.
 
-Do not disguise lack of permission as ordinary emptiness when the user should understand why data/actions are unavailable.
+A retry action is appropriate only when retry could reasonably succeed.
 
-### True no-content state
+## 13. Success and Completion
 
-Do not invent CTA simply because empty-state components usually have buttons.
+Treatment should match significance.
 
----
+A lightweight action may need only localized confirmation. A terminal or consequential flow should explicitly explain what completed, resulting state, what happens next, and relevant next destination/action.
 
-## 4. Error and Recovery
+Avoid excessive celebration around money, security, or other sensitive operations.
 
-Errors should help the user recover without exposing implementation detail.
+## 14. Status Communication
 
-Distinguish:
+Status is a semantic system, not a badge style.
 
-```text
-field validation
-request failure
-not found/unavailable
-permission failure
-stale/offline
-terminal business state
-```
-
-when the distinction is both useful and safe.
-
-A retry action is only appropriate when repeating the operation can reasonably succeed.
-
-Never make "Try again" the universal response to every failure.
-
----
-
-## 5. Success and Completion
-
-Success treatment should match the significance of the completed action.
-
-### Lightweight action
-
-A toast/status update may be enough.
-
-### Terminal flow
-
-Use an explicit success state that explains:
-
-* what completed;
-* resulting status;
-* what happens next;
-* relevant destination/action.
-
-Avoid excessive celebration around sensitive money/security operations.
-
-Warmth and delight remain subordinate to clarity.
-
----
-
-## 6. Stale / Offline Data
-
-Kencleng's current PWA scope may allow cached content to remain visible while fresh data is unavailable.
-
-When stale state is materially relevant:
-
-* keep usable cached data visible;
-* communicate that freshness is uncertain;
-* distinguish stale content from a hard failure.
-
-Freshness indicators are particularly important when old data could change user interpretation of:
-
-* money;
-* status;
-* permissions;
-* actionable deadlines.
-
-Do not present stale values as known-current truth.
-
----
-
-## 7. Status Communication
-
-Status is a semantic system, not only a badge style.
-
-Communicate status through:
+Use:
 
 ```text
 label
 +
 visual semantic
 +
-context/consequence when necessary
+context/consequence where necessary
 ```
 
 Do not rely on color alone.
 
-Use exact domain states where meaningful rather than inventing friendly labels that change semantics.
+Friendly copy may explain a domain state but must not change its meaning.
 
-Friendly explanatory copy may accompany the state.
+## 15. Money Presentation
 
-If multiple states share the same visual semantic, their labels must still preserve the distinction.
+Every important amount requires an explicit semantic label.
 
----
+When multiple currency values appear, users must be able to distinguish them without relying on color or position alone.
 
-## 8. Money Presentation
+Funding progress should make the relationship between amount collected and applicable target/limit understandable when those concepts exist in product truth.
 
-Every important amount needs an explicit semantic label.
+## 16. Confirmation and Consequential Actions
 
-Avoid surfaces where multiple currency amounts appear without clear distinction.
+Use confirmation when an action is consequential, difficult to reverse, easy to trigger accidentally, or needs consequence explanation.
 
-When presenting progress, make the relationship understandable:
+A good confirmation states the action and meaningful consequence using domain truth.
 
-```text
-amount collected
-relative to
-campaign target
-```
+Avoid generic confirmation ceremony for low-risk reversible actions.
 
-When presenting financial actions, distinguish clearly between:
+## 17. Destructive Actions
 
-* amount being entered;
-* amount already collected;
-* amount available;
-* amount requested;
-* amount completed/disbursed/reported.
+Use appropriate friction, not maximum friction.
 
-Use Indonesian currency formatting consistently according to the project's formatting utility/component contract.
+For high-impact deletion/removal/revocation, identify the affected object and meaningful consequence. Keep destructive actions visually distinguishable from ordinary safe actions.
 
-Do not encode financial meaning through typography/color alone.
+## 18. Progressive Disclosure
 
----
-
-## 9. Confirmation and Consequential Actions
-
-Do not use generic confirmation dialogs reflexively.
-
-Ask first:
-
-```text
-Is the action consequential?
-Is it difficult to reverse?
-Could the user reasonably trigger it accidentally?
-Does the consequence need explanation?
-```
-
-For consequential actions, confirmation should state:
-
-* the action;
-* the consequence;
-* whether it is reversible when relevant;
-* any immediate state transition the user needs to understand.
-
-Bad:
-
-```text
-Are you sure?
-```
-
-Better:
-
-```text
-Publish this campaign?
-
-Once published, it becomes visible to donors.
-[Cancel] [Publish]
-```
-
-Exact consequences must come from domain truth, not invented copy.
-
-For low-risk reversible actions, avoid confirmation ceremony.
-
----
-
-## 10. Destructive Actions
-
-Destructive actions require appropriate friction, not maximum friction.
-
-Use visual semantics that distinguish destructive actions from ordinary primary actions.
-
-For high-impact deletion/removal/revocation:
-
-* name the affected object;
-* explain the meaningful consequence;
-* require confirmation when accidental activation would be costly.
-
-Do not place destructive controls immediately beside high-frequency safe actions without sufficient visual separation.
-
----
-
-## 11. Progressive Disclosure
-
-Use progressive disclosure when content is useful but not necessary for the current decision.
-
-Common mechanisms:
-
-* expandable section;
-* disclosure panel;
-* drawer;
-* secondary detail page;
-* tabs when content represents stable peer categories.
-
-Choose the mechanism according to information relationship, not visual novelty.
+Use progressive disclosure for useful but non-essential current-decision content.
 
 Do not bury:
 
-* trust-critical information;
-* financial consequences;
-* validation errors;
-* required next actions.
+- trust-critical information;
+- financial consequences;
+- validation errors;
+- required next actions;
+- material uncertainty.
 
----
-
-## 12. Search, Filter, Sort, and Pagination
-
-Use search when users can reasonably identify items by terms.
-
-Use filters for meaningful domain dimensions.
-
-Use sort only when the ordering has a real defined meaning.
-
-Do not expose controls with only one meaningful option.
-
-Pagination remains the default for v1 collection navigation unless a feature explicitly establishes another approach.
-
-If filter/sort/search state should support sharing or browser navigation, consider URL ownership rather than local-only state.
-
-The frontend must not create a filter/sort option unsupported by product/API truth.
-
----
-
-## 13. Responsive Transformation
+## 19. Responsive Transformation
 
 Responsive design preserves task and information priority; it does not merely stack desktop boxes.
 
 When space becomes constrained:
 
-1. preserve the primary task;
+1. preserve primary task;
 2. preserve trust/consequence information;
-3. allow secondary content to reflow or disclose progressively;
+3. preserve essential content;
 4. keep actions reachable;
-5. avoid silently deleting content.
+5. reflow/disclose secondary content intentionally.
 
-A desktop sidebar may become:
+Exact responsive mechanics belong to engineering.
 
-* inline content;
-* drawer;
-* disclosure section;
+## 20. Pattern vs Component
 
-depending on its role.
+A UX pattern and a production component are not the same thing.
 
-Responsive behavior should reuse established transformations when available rather than inventing a new mobile interaction per page.
+This document owns interaction semantics, state behavior, information relationships, and reusable experience rules.
 
-Exact robustness requirements live in frontend engineering guidance and visual verification.
+Production component boundaries are an engineering concern.
 
----
+## 21. Relationship to Other Authority
 
-# D. Pattern vs Component
-
-A UX pattern and a React component are not the same thing.
-
-Example:
-
-```text
-Curation / Review UX pattern
-```
-
-may be implemented through several components.
-
-Likewise:
-
-```text
-Button
-```
-
-is a reusable UI component but not a UX pattern by itself.
-
-This document owns:
-
-* interaction semantics;
-* state behavior;
-* information relationships;
-* reusable experience rules.
-
-`frontend/components/README.md` owns:
-
-* component taxonomy;
-* semantic ownership;
-* stability;
-* reuse boundary;
-* change-impact policy.
-
-Dedicated component contracts own component-specific behavior when necessary.
-
-Do not place detailed component APIs in this file.
-
----
-
-# E. Existing Named Component Behaviors
-
-Earlier versions of this document contained specifications for:
-
-* `MaskedField`;
-* `SecureUploadNote`;
-* `CurationDecisionPanel`.
-
-These should migrate to the living component documentation because they describe concrete production components rather than generic UX patterns.
-
-The UX principles they embody remain valid:
-
-### Sensitive-field reveal
-
-Sensitive information should remain masked by default when required by domain/security policy.
-
-Reveal behavior must follow the actual audit/security specification.
-
-### Secure upload reassurance
-
-Sensitive/legal upload surfaces may provide contextual reassurance when it improves user confidence and accurately reflects product behavior.
-
-### Curation decision
-
-Review flows should share consistent decision semantics across domains where the business rules are genuinely equivalent.
-
-The component architecture implementing those semantics is not prescribed here.
-
----
-
-# F. Introducing a New Pattern
-
-When an existing pattern does not fit, design exploration should establish:
-
-```text
-Problem
-User goal
-Existing pattern considered
-Why it does not fit
-Proposed interaction
-States
-Responsive behavior
-Accessibility implications
-Consequential/trust implications
-Expected reuse
-```
-
-Classify the proposal:
-
-### Local variation
-
-Only one feature needs it.
-
-Keep it local.
-
-### Pattern extension
-
-Existing pattern still represents the same user interaction but needs a reusable additional rule.
-
-Update the existing pattern.
-
-### New pattern
-
-A genuinely distinct interaction recurs or is expected to recur.
-
-Add a named pattern.
-
-New patterns with material product/interaction consequences require appropriate human/product review before becoming precedent.
-
-Do not add patterns simply to document an implementation after the fact.
-
----
-
-# G. Pattern Change Impact
-
-Changing an established UX pattern can affect multiple routes even when no shared React component exists.
-
-Before materially changing a pattern:
-
-```text
-identify routes that reference it
-→ determine which behavior changes
-→ inspect affected personas/states
-→ determine component impact
-→ verify representative consumers
-→ update page-map or component contracts when necessary
-```
-
-Classify changes:
-
-### Clarification
-
-Makes existing intent less ambiguous.
-
-Usually low risk.
-
-### Additive
-
-Adds a new optional state/variation without changing existing behavior.
-
-Check relevant adopters.
-
-### Behavioral
-
-Changes how existing consumers behave.
-
-Requires downstream impact analysis.
-
-### Semantic
-
-Changes what an action/status/information structure means.
-
-Requires product/domain authority and broader review.
-
-Do not assume a markdown-only pattern update has no product blast radius.
-
----
-
-# H. Relationship to Design Readiness
-
-`product-design-principles.md` classifies design readiness as:
-
-```text
-READY
-PARTIAL
-OPEN
-```
-
-Patterns help resolve that classification.
-
-### READY
-
-An existing pattern covers the interaction with no meaningful unresolved UX decision.
-
-### PARTIAL
-
-A known pattern applies but requires a small extension or local variation.
-
-### OPEN
-
-No existing pattern adequately represents the required interaction, or the feature introduces a material new UX/product decision.
-
-OPEN surfaces require design exploration before engineering implementation.
-
----
-
-# I. Relationship to Visual Assets
-
-Patterns may identify when an asset has a functional role.
-
-Examples:
-
-```text
-first-use empty state
-→ expressive illustration may be valuable
-
-search-empty state
-→ usually lightweight treatment
-
-landing storytelling
-→ expressive asset likely material
-```
-
-Patterns do not prescribe the illustration style or generate the asset.
-
-That authority belongs to `brand-and-visual-assets.md`.
-
-A missing expressive asset should remain an explicit design gap rather than silently becoming a generic icon fallback.
-
----
-
-# J. Evolution
-
-Patterns should evolve from repeated product evidence.
-
-Update this document when:
-
-* the same interaction ambiguity appears repeatedly;
-* multiple pages are independently solving the same UX problem;
-* an existing pattern consistently fails a real use case;
-* a new feature establishes a reusable behavior worth preserving.
-
-Do not expand this document for every local design choice.
-
-Prefer:
-
-```text
-stable product principle
-→ product-design-principles.md
-
-reusable interaction behavior
-→ patterns.md
-
-visual language
-→ design-guidelines.md
-
-asset/illustration behavior
-→ brand-and-visual-assets.md
-
-component contract
-→ frontend component documentation
-
-route-specific behavior
-→ page-map / feature specification
-```
+- `product-design-principles.md` — stable design judgment
+- `brand-product-ui-brief.md` — selected brand/Product UI direction
+- `asset-governance.md` — visual asset governance
+- `page-map.md` — surface/persona inventory
+- domain specs/OpenAPI — product truth
