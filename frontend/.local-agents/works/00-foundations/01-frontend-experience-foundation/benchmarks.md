@@ -1,6 +1,6 @@
 # Validation 02 — Frontend Experience Foundation Benchmark
 
-> Status: Active measurement — agent phases complete; human rendered acceptance and delivery still pending
+> Status: Active measurement — workflow and human rendered acceptance complete; delivery/closeout pending
 > Run ID: `validation-02`
 > Measurement owner: Anhar Solehudin
 > Prepared with: ChatGPT — GPT-5.6 Sol
@@ -85,7 +85,7 @@ new/resumed thread
 
 Raw snapshots and operator notes belong in `benchmark-logs.md`. This file stores only the synthesized benchmark view.
 
-Do not reconstruct unavailable values or silently repair suspicious measurements. Mark them unknown/ambiguous instead.
+Do not reconstruct unavailable values or silently repair suspicious measurements. Mark them unknown/ambiguous instead. Operator-recovered corrections should be recorded explicitly as corrections rather than silently replacing the historical capture.
 
 ### Rescue prompt definition
 
@@ -98,8 +98,8 @@ Normal human gates, explicit approvals, requested decisions, permission approval
 | Session | Phase(s) | Model / reasoning | Posture | Observed context / limits | Human interaction | Rescue | Clarifications | Outcome |
 |---|---|---|---|---|---|---:|---:|---|
 | 1 | Exploration + Techplan | GPT-5.6 Terra · Medium | Fresh → continued | Exploration checkpoint: 68.8K used / 77% left; Techplan final: 89.1K used / 69% left. 5h 100% → 92%; weekly 83% → 82%. | Stage 2 + Stage 3 gates logged; Techplan human approval occurred outside the logged prompt count. | 0 | 0 | Exploration converged; Techplan synthesized; independent review Skip; decomposition Skip; Build fresh-preferred. |
-| 2 | Build | GPT-5.6 Sol · Medium | Fresh | Final: 69.8K used / 77% left. 5h 92% → 86%; weekly 82% → 81%. | No task-direction prompt; environment/tool permission approvals only. | 0 | 0 | Static `/` calibration surface implemented; focused verification/build and rendered desktop/mobile inspection passed; human acceptance deferred. |
-| 3 | Code Review | GPT-5.6 Terra · Medium | Fresh independent | Final: 77K used / 74% left. 5h final 82%; weekly final 81%. **Valid fresh-thread BEFORE snapshot was not captured in the raw log.** | None logged. | 0 | 0 | Four-pass review approved with no findings; targeted verification passed; no patch plan. |
+| 2 | Build | GPT-5.6 Sol · Medium | Fresh | Final: 69.8K used / 77% left. 5h 92% → 86%; weekly 82% → 81%. | No task-direction prompt; environment/tool permission approvals only. | 0 | 0 | Static `/` calibration surface implemented; focused verification/build and rendered desktop/mobile inspection passed; human acceptance deferred to the explicit human gate. |
+| 3 | Code Review | GPT-5.6 Terra · Medium | Fresh independent | Final: 77K used / 74% left. 5h final 82%; weekly final 81%. **Valid fresh-thread BEFORE snapshot was not captured in the raw log due copy/paste error.** | None logged. | 0 | 0 | Four-pass review approved with no findings; targeted verification passed; no patch plan. |
 | 4 | Testing | GPT-5.6 Terra · Medium | Fresh independent | Final: 49.3K used / 85% left. 5h 82% → 80%; weekly 81% → 80%. | No meaningful task-direction prompt logged; raw log contains one blank human-prompt list item. | 0 | 0 | Pass with flagged follow-up: human rendered desktop/mobile acceptance only; no code defect or patch plan. |
 
 ## Secondary token totals recorded by the operator
@@ -110,10 +110,9 @@ These totals were recorded separately from `/status`; treat them as secondary ev
 |---|---:|---:|---:|---:|---:|---|
 | 1 — Exploration + Techplan | 48,272 | 42,843 | 470,784 | 5,429 | 1,544 | Recorded |
 | 2 — Build | 136,757 | 114,116 | 1,412,096 | 22,641 | 6,228 | Recorded |
-| 3 — Code Review | 48,272 | 42,843 | 470,784 | 5,429 | 1,544 | **Untrusted: exact duplicate of Session 1 values; exclude from aggregate comparison unless independently recovered.** |
+| 3 — Code Review | 75,894 | 62,130 | 1,266,560 | 13,764 | 1,460 | **Operator-corrected after identifying the original copy/paste duplication.** |
 | 4 — Testing | 78,172 | 71,292 | 447,232 | 6,880 | 2,537 | Recorded |
-
-Do not aggregate the run into a single token total while Session 3 remains unverified.
+| **Run total** | **339,095** | **290,381** | **3,596,672** | **48,714** | **11,769** | Secondary aggregate; cached input remains separate and must not be treated as equivalent to non-cached input. |
 
 ## Quality evidence
 
@@ -128,24 +127,24 @@ Do not aggregate the run into a single token total while Session 3 remains unver
 | Decomposition recommendation | `Skip`. Build remained a cohesive single implementation slice; no later phase exposed a need for child-task decomposition. |
 | Verification rationale/ownership clarity | Build ran focused implementation verification and rendered inspection; Code Review used targeted checks; Testing independently reran final repo verification; human visual acceptance remained explicitly Human-owned. |
 | Code Review findings | Approved with no findings across Safety, Quality, stack-specific best practices, and Consistency; no patch plan. |
-| Testing findings | Pass with flagged follow-up; no implementation defect; human rendered acceptance remains. |
-| Verification repetition / avoidable reruns | `npm run verify`/`build` were run in Build and independently in Testing. This matches authored-code confidence vs final independent evidence; no broad Playwright suite was ceremonially repeated. |
+| Testing findings | Pass with flagged follow-up; no implementation defect; human rendered acceptance was the only remaining gate. |
+| Verification repetition / avoidable reruns | `npm run verify`/`build` were run in Build and independently in Testing. This matches authored-code confidence vs final independent evidence; no broad Playwright suite was ceremonially repeated. Code Review also reran narrowly scoped test/lint checks; this remains a candidate efficiency observation for future validations rather than a correctness issue. |
 | Browser automation posture | Build used one-off Chromium inspection for desktop/mobile overflow, fragment navigation, and keyboard focus. No committed Playwright scenario was added; Testing did not repeat broad browser automation. |
 | Environment friction | Production build needed network access for approved Google Fonts; initial sandbox restrictions were reported rather than misclassified as product failure. |
-| Final human rendered acceptance | **Pending.** Testing explicitly leaves hierarchy, responsive usability, fragment-link comprehension, and truthfulness/no-implied-evidence to the human gate. |
+| Final human rendered acceptance | **PASS for this foundation/calibration scope.** Operator reviewed desktop and mobile renders and reported satisfaction. The result was judged as a coherent foundation rather than a full-content landing page, consistent with the task boundary. |
 
 ## Data-quality notes
 
 These are benchmark-observation issues, not product/workflow defects:
 
-1. Code Review's raw **Before** snapshot is the prior Build thread (`gpt-5.6-sol`, Build session id), while the Review **After** snapshot is a different fresh Terra thread. Treat Review's initial usage/context as unknown.
-2. The footer token totals for Session 3 exactly duplicate Session 1. Treat Session 3 token totals as untrusted unless recovered independently.
-3. Testing's `Human prompts` section contains a blank numbered entry. Treat meaningful human task-direction prompts as none unless the operator recalls otherwise.
+1. Code Review's raw **Before** snapshot is the prior Build thread (`gpt-5.6-sol`, Build session id), while the Review **After** snapshot is a different fresh Terra thread. Treat Review's initial `/status` usage/context as unknown.
+2. The original footer token totals for Session 3 accidentally duplicated Session 1. The operator later recovered and supplied the corrected Session 3 totals recorded above; preserve the raw log as historical capture and use the corrected values in synthesized analysis.
+3. Testing's `Human prompts` section contains a blank numbered entry. Treat meaningful human task-direction prompts as none unless later evidence shows otherwise.
 4. Raw `/status` output may expose account-identifying metadata that is irrelevant to benchmarking; omit/redact such fields in future durable captures.
 
 ## Current lifecycle state
 
-Agent-controlled workflow phases are complete through Testing:
+Workflow correctness gates through human acceptance are complete:
 
 ```text
 Exploration ✅
@@ -155,12 +154,12 @@ Exploration ✅
 → Build ✅
 → Code Review ✅
 → Testing ✅
-→ Human rendered acceptance ⏳
+→ Human rendered acceptance ✅
 → Pull Request ⏳
 → Validation closeout ⏳
 ```
 
-Testing's verdict is **Pass with flagged follow-up**, with no code patch required. Do not mark Validation 02 complete until the Human-owned rendered acceptance and delivery/closeout evidence are recorded.
+Testing's verdict was **Pass with flagged follow-up**, with no code patch required. The flagged follow-up was the Human-owned rendered acceptance, which has now passed for the intended foundation/calibration scope.
 
 ## Benchmark hygiene
 
