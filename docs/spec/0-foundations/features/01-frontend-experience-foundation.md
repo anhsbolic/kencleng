@@ -1,10 +1,11 @@
 # Feature Spec — Frontend Experience Foundation
 
 > File: `docs/spec/0-foundations/features/01-frontend-experience-foundation.md`
-> Status: agreed
+> Status: delivered
 > Risk tier: 2
 > Scope: cross-domain frontend foundation; not a business domain
-> Last updated: 2026-09-16
+> Last updated: 2026-09-17
+> Delivery evidence: PR #24 / `71093b687cd7135495bc6ed62d520a621f96f586`; Validation 02 closeout PR #25 / `fca5a8f3178b53e5eec006064d8bcf2b078771b3`
 
 ## Feature surface
 
@@ -98,3 +99,7 @@ Tier 2 — standard verified frontend work. The task is material and foundationa
 - The minimum representative slice is intentionally not prescribed here; Exploration determines it from current authorities and the clean live scaffold.
 - The first implementation may establish only a small set of reusable tokens/primitives. Absence of a complete component library is acceptable.
 - The task establishes enough foundation for the current project stage, not a permanently finished design system.
+
+## Delivery record
+
+Task 01 was implemented through PR #24 and accepted with human rendered acceptance PASS. Validation 02 was then closed through PR #25. This record changes project status only; the feature requirements above remain historical evidence of what the delivered foundation was required to establish.
