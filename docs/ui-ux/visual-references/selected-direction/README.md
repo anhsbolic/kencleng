@@ -1,14 +1,23 @@
 # Selected Direction Visual References
 
-> Status: Approved direction references
+> Status: Approved direction references — binary handoff pending
 > Selected direction: **Sunlit Editorial**
 > Core thesis: **Evidence-Led Optimism**
 
-This directory contains the human-approved visual proof used to validate the selected Kencleng brand/Product UI direction across public and authenticated surfaces.
+Two visual studies were human-approved in the design session and are part of the selected-direction evidence. Their authority is established here; the binary image files are not yet committed on this branch because the current repository connector does not support attaching the available binary file handles directly.
+
+This pending binary handoff does **not** reopen the design decision and must not be filled with newly generated substitute artwork without review.
+
+Expected reference filenames:
+
+```text
+sunlit-editorial-public.jpg
+sunlit-editorial-evidence-journal.jpg
+```
 
 ## Authority
 
-These images are evidence for:
+The approved references are evidence for:
 
 - overall visual character;
 - public vs authenticated expressive intensity;
@@ -33,12 +42,11 @@ They are **not** authority for:
 
 If a visual detail conflicts with product/domain truth, product/domain truth wins.
 
-## References
+## Reference 1 — Public Composition
 
-### `sunlit-editorial-public.jpg`
-Representative public/landing composition.
+Expected file: `sunlit-editorial-public.jpg`
 
-Proves the direction can combine:
+Representative public/landing composition proving that the direction can combine:
 
 - transparency/trust explanation;
 - campaign story;
@@ -46,10 +54,11 @@ Proves the direction can combine:
 - visible campaign context/progress;
 - expressive editorial composition without sadness-led persuasion.
 
-### `sunlit-editorial-evidence-journal.jpg`
-Representative authenticated donor post-donation composition.
+## Reference 2 — Evidence Journal
 
-Proves the direction can become more disciplined while preserving the same identity and support:
+Expected file: `sunlit-editorial-evidence-journal.jpg`
+
+Representative authenticated donor post-donation composition proving that the direction can become more disciplined while preserving the same identity and support:
 
 - donation facts;
 - chronology;
@@ -75,4 +84,6 @@ Do not reproduce an illustrative label, number, campaign, organization, or state
 
 ## Asset Status
 
-These files are **Selected Direction References**, not production campaign assets and not documentary evidence.
+The approved visuals are **Selected Direction References**, not production campaign assets and not documentary evidence.
+
+The binary handoff is the only remaining repository-materialization step for these two already-approved references.
