@@ -1,6 +1,6 @@
 # Validation 02 — Frontend Experience Foundation Benchmark
 
-> Status: Active measurement
+> Status: Active measurement — agent phases complete; human rendered acceptance and delivery still pending
 > Run ID: `validation-02`
 > Measurement owner: Anhar Solehudin
 > Prepared with: ChatGPT — GPT-5.6 Sol
@@ -8,15 +8,16 @@
 > Updated: 2026-09-16
 > Task authority: `docs/spec/0-foundations/features/01-frontend-experience-foundation.md`
 > Task root: `frontend/.local-agents/works/00-foundations/01-frontend-experience-foundation`
+> Raw operator log: `benchmark-logs.md`
 > Validation branch: `validation-02-frontend-experience-foundation-cleanstart`
 > Kencleng target baseline: `main@0273c4f2b7f3140efe53a3736547fe73fdd2aefe`
 > Harscode workflow baseline: `workflow-v2@4199c6db1b26ef1920ba670f222aff0c6d0f9e59`
 
 ## Purpose
 
-This file is **operator telemetry**, not task authority and not a Harscode phase artifact.
+This file is **operator benchmark synthesis**, not task authority and not a Harscode phase artifact.
 
-Phase agents should not use benchmark data to decide implementation, verification, or workflow behavior. The benchmark observes the workflow; it must not change how the workflow is executed merely to produce nicer numbers.
+`benchmark-logs.md` preserves the observed per-phase `/status` snapshots and operator notes. This file summarizes those observations into benchmark units and quality evidence without changing phase-agent reasoning.
 
 Validation 02 tests the refined workflow on a different real task shape: the first frontend experience foundation built from Kencleng's clean frontend scaffold and current Sunlit Editorial design authority.
 
@@ -56,117 +57,110 @@ The optimization target is **minimum sufficient context with same-or-better corr
 | Testing | GPT-5.6 Terra | Medium | Fresh |
 | PR/report/admin | GPT-5.6 Luna or Terra | Low | Flexible |
 
-Escalation remains evidence-based. Record the actual model/reasoning used when it differs.
-
 ## Measurement protocol
 
 ### Benchmark unit
 
 One **Codex thread/session** is one benchmark unit, even when the same healthy thread spans more than one workflow phase.
 
-Examples:
+Observed in this run:
 
-- Exploration → Techplan in one continued thread = one benchmark session;
-- Exploration fresh thread + Techplan fresh thread = two benchmark sessions;
-- Build resumed later for a narrow Review/Testing patch remains the same Build thread; note the resume/patch activity in that session rather than pretending it is an unrelated new thread.
+- Exploration → Techplan correctly continued in one healthy thread;
+- Build used a fresh thread;
+- Code Review used a fresh independent thread;
+- Testing used a fresh independent thread.
 
-### Required measurement
+### Primary measurement source
 
-For every new Codex thread:
+Use `/status` as the primary observable snapshot.
 
 ```text
-open fresh/resumed thread
-→ /status before the first work prompt in that active session
+new/resumed thread
+→ /status before work
 → perform workflow work normally
-→ /status before finally leaving that thread / when its useful work for this validation is complete
+→ /status before leaving the thread
 ```
 
-Copy the `/status` output as observed. Do not reconstruct unavailable metrics from logs and do not invent values.
+`/resume` is navigation, not measurement.
 
-For a resumed thread, an extra `/status` checkpoint before the resumed patch is useful but optional. The required benchmark remains the thread's observed starting and final state.
+Raw snapshots and operator notes belong in `benchmark-logs.md`. This file stores only the synthesized benchmark view.
 
-### What `/status` is for
+Do not reconstruct unavailable values or silently repair suspicious measurements. Mark them unknown/ambiguous instead.
 
-Use `/status` as the canonical operator snapshot. Record whatever the installed Codex client exposes, for example model/reasoning, thread/session identity, cumulative usage/context information, or rate-limit state.
-
-Do **not** require a field merely because this document names it. Codex output may change over time.
-
-`/resume` is navigation, not measurement. Use it only when the workflow handoff calls for returning to an existing thread.
-
-### Human interaction counters
-
-Record:
-
-- normal canonical prompt invocation;
-- normal human gates (`lanjut Stage 2`, `lanjut Stage 3`, Techplan approve/revise, etc.);
-- factual/boundary corrections;
-- clarifications requested by the agent;
-- rescue prompts.
+### Rescue prompt definition
 
 A **rescue prompt** is human coaching added mainly to make the agent succeed because canonical workflow/project guidance was insufficient or missed.
 
-Normal human gates, requested decisions, and factual corrections are **not automatically rescue prompts**.
+Normal human gates, explicit approvals, requested decisions, permission approvals, and factual corrections are not automatically rescue prompts.
 
 ## Session summary
 
-Add a row when a new Codex thread starts. Do not add a new row merely because a healthy thread crosses a phase boundary.
+| Session | Phase(s) | Model / reasoning | Posture | Observed context / limits | Human interaction | Rescue | Clarifications | Outcome |
+|---|---|---|---|---|---|---:|---:|---|
+| 1 | Exploration + Techplan | GPT-5.6 Terra · Medium | Fresh → continued | Exploration checkpoint: 68.8K used / 77% left; Techplan final: 89.1K used / 69% left. 5h 100% → 92%; weekly 83% → 82%. | Stage 2 + Stage 3 gates logged; Techplan human approval occurred outside the logged prompt count. | 0 | 0 | Exploration converged; Techplan synthesized; independent review Skip; decomposition Skip; Build fresh-preferred. |
+| 2 | Build | GPT-5.6 Sol · Medium | Fresh | Final: 69.8K used / 77% left. 5h 92% → 86%; weekly 82% → 81%. | No task-direction prompt; environment/tool permission approvals only. | 0 | 0 | Static `/` calibration surface implemented; focused verification/build and rendered desktop/mobile inspection passed; human acceptance deferred. |
+| 3 | Code Review | GPT-5.6 Terra · Medium | Fresh independent | Final: 77K used / 74% left. 5h final 82%; weekly final 81%. **Valid fresh-thread BEFORE snapshot was not captured in the raw log.** | None logged. | 0 | 0 | Four-pass review approved with no findings; targeted verification passed; no patch plan. |
+| 4 | Testing | GPT-5.6 Terra · Medium | Fresh independent | Final: 49.3K used / 85% left. 5h 82% → 80%; weekly 81% → 80%. | No meaningful task-direction prompt logged; raw log contains one blank human-prompt list item. | 0 | 0 | Pass with flagged follow-up: human rendered desktop/mobile acceptance only; no code defect or patch plan. |
 
-| Session | Phase(s) | Model / reasoning | Posture | `/status` before | `/status` after | Human prompts | Rescue prompts | Clarifications | Outcome / notes |
-|---|---|---|---|---|---|---:|---:|---:|---|
-| 1 | Exploration | GPT-5.6 Terra · Medium | Fresh | pending | pending | pending | 0 | pending | Not started |
+## Secondary token totals recorded by the operator
 
-## Raw `/status` snapshots
+These totals were recorded separately from `/status`; treat them as secondary evidence rather than the benchmark contract.
 
-Preserve raw snapshots here so later analysis does not depend on remembered values.
+| Session | Recorded total | Input | Cached input | Output | Reasoning | Data quality |
+|---|---:|---:|---:|---:|---:|---|
+| 1 — Exploration + Techplan | 48,272 | 42,843 | 470,784 | 5,429 | 1,544 | Recorded |
+| 2 — Build | 136,757 | 114,116 | 1,412,096 | 22,641 | 6,228 | Recorded |
+| 3 — Code Review | 48,272 | 42,843 | 470,784 | 5,429 | 1,544 | **Untrusted: exact duplicate of Session 1 values; exclude from aggregate comparison unless independently recovered.** |
+| 4 — Testing | 78,172 | 71,292 | 447,232 | 6,880 | 2,537 | Recorded |
 
-### Session 1 — Exploration
-
-**Before**
-
-```text
-pending
-```
-
-**After**
-
-```text
-pending
-```
-
-**Intermediate checkpoints (optional)**
-
-```text
-none
-```
-
-**Operator notes**
-
-```text
-Human prompts: pending
-Rescue prompts: 0
-Clarifications: pending
-Outcome: pending
-```
-
-Add another session section only when a genuinely new Codex thread starts.
+Do not aggregate the run into a single token total while Session 3 remains unverified.
 
 ## Quality evidence
 
-Track lifecycle quality separately from usage snapshots.
-
 | Signal | Evidence |
 |---|---|
-| Requirement/authority misses | — |
-| Human redirections caused by agent misunderstanding | — |
-| Rescue prompts | — |
-| Techplan review recommendation quality | — |
-| Decomposition recommendation quality | — |
-| Verification rationale/ownership clarity | — |
-| Code Review findings | — |
-| Testing findings | — |
-| Verification repetition / avoidable reruns | — |
-| Final human rendered acceptance | — |
-| Reusable workflow/project learning | — |
+| Requirement/authority misses | None surfaced by Code Review or Testing. Testing's fresh Techplan consistency read reported no contradiction/gap. |
+| Human redirections caused by agent misunderstanding | None recorded. |
+| Rescue prompts | `0` in Exploration/Techplan, Build, Code Review, and Testing. |
+| Clarifications | `0` across all recorded sessions. |
+| Exploration → Techplan routing | Continued in the same thread because authorities/anchors/decisions were durable and the session remained healthy; Techplan completed without rescue. |
+| Independent Techplan review recommendation | `Skip`. Later independent Code Review and Testing found no evidence that the bounded plan omitted a material contract decision. |
+| Decomposition recommendation | `Skip`. Build remained a cohesive single implementation slice; no later phase exposed a need for child-task decomposition. |
+| Verification rationale/ownership clarity | Build ran focused implementation verification and rendered inspection; Code Review used targeted checks; Testing independently reran final repo verification; human visual acceptance remained explicitly Human-owned. |
+| Code Review findings | Approved with no findings across Safety, Quality, stack-specific best practices, and Consistency; no patch plan. |
+| Testing findings | Pass with flagged follow-up; no implementation defect; human rendered acceptance remains. |
+| Verification repetition / avoidable reruns | `npm run verify`/`build` were run in Build and independently in Testing. This matches authored-code confidence vs final independent evidence; no broad Playwright suite was ceremonially repeated. |
+| Browser automation posture | Build used one-off Chromium inspection for desktop/mobile overflow, fragment navigation, and keyboard focus. No committed Playwright scenario was added; Testing did not repeat broad browser automation. |
+| Environment friction | Production build needed network access for approved Google Fonts; initial sandbox restrictions were reported rather than misclassified as product failure. |
+| Final human rendered acceptance | **Pending.** Testing explicitly leaves hierarchy, responsive usability, fragment-link comprehension, and truthfulness/no-implied-evidence to the human gate. |
+
+## Data-quality notes
+
+These are benchmark-observation issues, not product/workflow defects:
+
+1. Code Review's raw **Before** snapshot is the prior Build thread (`gpt-5.6-sol`, Build session id), while the Review **After** snapshot is a different fresh Terra thread. Treat Review's initial usage/context as unknown.
+2. The footer token totals for Session 3 exactly duplicate Session 1. Treat Session 3 token totals as untrusted unless recovered independently.
+3. Testing's `Human prompts` section contains a blank numbered entry. Treat meaningful human task-direction prompts as none unless the operator recalls otherwise.
+4. Raw `/status` output may expose account-identifying metadata that is irrelevant to benchmarking; omit/redact such fields in future durable captures.
+
+## Current lifecycle state
+
+Agent-controlled workflow phases are complete through Testing:
+
+```text
+Exploration ✅
+→ Techplan synthesis ✅
+→ Independent Techplan review skipped by gate ✅
+→ Decomposition skipped by gate ✅
+→ Build ✅
+→ Code Review ✅
+→ Testing ✅
+→ Human rendered acceptance ⏳
+→ Pull Request ⏳
+→ Validation closeout ⏳
+```
+
+Testing's verdict is **Pass with flagged follow-up**, with no code patch required. Do not mark Validation 02 complete until the Human-owned rendered acceptance and delivery/closeout evidence are recorded.
 
 ## Benchmark hygiene
 
@@ -181,8 +175,6 @@ In particular, do not:
 - feed benchmark observations into phase-agent reasoning;
 - treat lower usage as success when correctness or outcome quality degrades.
 
-When a session transition, model escalation, browser check, or extra verification is justified by the actual task/workflow, execute it normally and record the reason.
-
 ## Baseline note
 
 The target code/document baseline for this run is exactly:
@@ -195,4 +187,4 @@ Harscode workflow-v2
 4199c6db1b26ef1920ba670f222aff0c6d0f9e59
 ```
 
-The benchmark/runbook commits on the validation branch are operator instrumentation only; they do not change the product/task baseline.
+Operator instrumentation/history exists only on the validation branch; it does not change the original product/task baseline.
