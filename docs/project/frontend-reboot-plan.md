@@ -1,21 +1,22 @@
 # Kencleng — Frontend Reboot Plan
 
-> Status: Ready for merge
+> Status: Complete — development-ready
 > Decision owner: Anhar Solehudin
 > Prepared with: ChatGPT — GPT-5.6 Sol
 > Prepared: 2026-09-16
 > Last updated: 2026-09-16
 > Scope: project preparation before the next frontend Harscode development run
 > Base design authority: `docs/ui-ux/README.md`
+> Frontend reboot implementation checkpoint: `main@6b5cdd3d4710a64be0d00ce4479bad118fd6cf48`
 > Harscode candidate baseline: `workflow-v2@4199c6db1b26ef1920ba670f222aff0c6d0f9e59`
 
 ## 1. Purpose
 
-Kencleng intentionally retires the previous frontend product implementation before the next frontend development cycle.
+Kencleng intentionally retired the previous frontend product implementation before the next frontend development cycle.
 
-The goal is not to delete the frontend repository or discard proven engineering tooling. The goal is to return the active frontend tree to a clean engineering scaffold so the next product UI implementation is derived from current canonical product/design authorities rather than inherited accidentally from the superseded frontend generation.
+The goal was not to delete the frontend repository or discard proven engineering tooling. The goal was to return the active frontend tree to a clean engineering scaffold so the next product UI implementation is derived from current canonical product/design authorities rather than inherited accidentally from the superseded frontend generation.
 
-This reboot is project preparation/maintenance, not a Harscode feature-development run. Exploration, Techplan, Build, Code Review, and Testing for the new frontend begin only from the merged reboot baseline.
+This reboot was project preparation/maintenance, not a Harscode feature-development run. The next real frontend development run now begins from the clean reboot baseline through the active Harscode workflow.
 
 ## 2. Human decisions
 
@@ -24,7 +25,7 @@ This reboot is project preparation/maintenance, not a Harscode feature-developme
 - Existing product/UI implementation has no preservation privilege merely because it already exists.
 - Git history remains the archive for retired implementation and removed design generations; repository history is not rewritten.
 - `frontend/.local-agents/` remains intentionally tracked because Kencleng is a learning-by-doing project and process evidence should be inspectable by readers.
-- Old `.local-agents/works/**` artifacts tied to the retired frontend generation are removed from the active tree; their history remains in Git. New development runs will create fresh committed process history.
+- Old `.local-agents/works/**` artifacts tied to the retired frontend generation were removed from the active tree; their history remains in Git. New development runs create fresh committed process history.
 
 ## 3. Reboot principle
 
@@ -63,7 +64,7 @@ Retention is about capability, not preservation of old product code.
 
 ## 5. Retired active implementation
 
-The reboot removes from the active tree the previous generation's:
+The reboot removed from the active tree the previous generation's:
 
 - public/authenticated route UI and layouts;
 - product components and old reusable UI/shared implementations;
@@ -108,7 +109,7 @@ Rules after reboot:
 
 ## 8. Documentation reconciliation
 
-The reboot reconciles:
+The reboot reconciled:
 
 - `docs/spec/0-foundations/tasks.md`;
 - `docs/spec/0-foundations/features/01-frontend-experience-foundation.md`;
@@ -135,7 +136,7 @@ The manifest classifies active frontend areas as `RETAIN`, `RESET / REPLACE WITH
 
 ## 10. Resulting minimal baseline
 
-The active frontend tree now intentionally contains only a minimal technical application shell plus retained tooling/governance.
+The active frontend tree intentionally contains only a minimal technical application shell plus retained tooling/governance.
 
 Representative shape:
 
@@ -175,7 +176,15 @@ The resulting `package-lock.json` was pushed in commit:
 6fd4663c4fe3e8d9d5e89f4f6a9a71c8d18a2ba2
 ```
 
-GitHub inspection confirms that commit only synchronized `frontend/package-lock.json`, and the lockfile root dependency set now matches the cleaned `package.json`.
+GitHub inspection confirmed that commit only synchronized `frontend/package-lock.json`, and the lockfile root dependency set matches the cleaned `package.json`.
+
+PR #20 was squash-merged into `main` as:
+
+```text
+6b5cdd3d4710a64be0d00ce4479bad118fd6cf48
+```
+
+This commit is the **Frontend Reboot implementation checkpoint**. Subsequent docs-only status reconciliation does not restore any retired frontend implementation.
 
 ## 12. Ready-for-development gate
 
@@ -193,13 +202,11 @@ GitHub inspection confirms that commit only synchronized `frontend/package-lock.
 - [x] The first new frontend development task/spec is clear and points to current authorities.
 - [x] Harscode candidate baseline for the first new run is frozen at `4199c6db1b26ef1920ba670f222aff0c6d0f9e59`.
 
-**Gate result: READY FOR MERGE.**
+**Gate result: READY FOR DEVELOPMENT.**
 
-The clean frontend becomes the new frozen project baseline only after this reboot branch is merged to `main`; the exact merged `main` commit then becomes the Kencleng baseline for the first new frontend run.
+No further reboot preparation is required before the first new frontend Harscode run.
 
 ## 13. Intended next development sequence
-
-After merge/freeze:
 
 ```text
 clean frontend scaffold
