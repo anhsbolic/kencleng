@@ -2,7 +2,8 @@
 
 > Status: Living project status
 > Last reconciled: 2026-09-16
-> Kencleng reference baseline: `main@cc6552e5ae36e354388f5d9d3230672929b11055`
+> Current main before reboot merge: `cc6552e5ae36e354388f5d9d3230672929b11055`
+> Frontend reboot branch: `frontend-reboot-preparation`
 > Harscode workflow-v2 candidate for the next frontend run: `4199c6db1b26ef1920ba670f222aff0c6d0f9e59`
 > Purpose: Keep cross-domain delivery state visible without turning dated progress into workflow policy.
 
@@ -29,7 +30,7 @@ NOT_STARTED
 IN_PROGRESS
 BLOCKED
 NEEDS_RECONCILIATION
-REBOOT_PREPARATION
+READY_TO_START
 ```
 
 Evidence-backed milestones:
@@ -43,24 +44,24 @@ DOMAIN_FINALIZED
 DELIVERED
 ```
 
-Code existing on `main` is not sufficient evidence for a verified milestone.
+Code existing in history is not sufficient evidence for a verified milestone.
 
 ## 3. Current domain snapshot
 
-The frontend reboot intentionally retires the current frontend product implementation. Historical frontend commits remain evidence of what was previously built, but after the reboot they do **not** represent active production/frontend completion state.
+The frontend reboot intentionally retires the previous frontend product implementation. Historical frontend commits remain evidence of what was previously built, but they do **not** represent active completion state for the new frontend generation.
 
 | Domain | Contract/spec state | Backend | Frontend | Integration | Current notes |
 |---|---|---|---|---|---|
-| Account | `NEEDS_RECONCILIATION` | `IN_PROGRESS` | `NOT_STARTED` for the new frontend generation | `NEEDS_RECONCILIATION` | Backend/account history remains. Existing frontend account implementation is being intentionally retired during the frontend reboot and must not be counted as delivered in the new generation. |
-| Notification | Draft specs present | `NOT_STARTED` as standalone domain delivery | `NOT_STARTED` | `NOT_STARTED` | Existing incidental frontend/backend infrastructure does not equal standalone domain delivery. |
-| Organization | Draft specs present | `NOT_STARTED` | `NOT_STARTED` | `NOT_STARTED` | Future frontend work begins only after reboot baseline and required domain preflight. |
-| Campaign | Draft specs present | `NOT_STARTED` | `NOT_STARTED` | `NOT_STARTED` | Retired landing/campaign presentation components do not count as new-generation Campaign delivery. |
+| Account | `NEEDS_RECONCILIATION` | `IN_PROGRESS` | `NOT_STARTED` for the new frontend generation | `NEEDS_RECONCILIATION` | Backend/account history remains. Retired frontend account implementation is archived in Git and is not active delivery. |
+| Notification | Draft specs present | `NOT_STARTED` as standalone domain delivery | `NOT_STARTED` | `NOT_STARTED` | Historical incidental infrastructure does not equal standalone domain delivery. |
+| Organization | Draft specs present | `NOT_STARTED` | `NOT_STARTED` | `NOT_STARTED` | Future frontend work starts from the new reboot baseline and still requires normal domain preflight. |
+| Campaign | Draft specs present | `NOT_STARTED` | `NOT_STARTED` | `NOT_STARTED` | Retired landing/campaign components do not count as new-generation Campaign delivery. |
 | Donation | Draft specs present | `NOT_STARTED` | `NOT_STARTED` | `NOT_STARTED` | Correctness-critical money/ledger work includes Tier-0 fenced areas. |
 | Disbursement | Draft specs present | `NOT_STARTED` | `NOT_STARTED` | `NOT_STARTED` | State-machine core includes Tier-0 fenced areas. |
 
 ## 4. Historical account/backend reconciliation evidence
 
-Historical mainline evidence remains useful for backend/account reconciliation and is not erased by the frontend reboot.
+Historical backend/account evidence remains useful and is not erased by the frontend reboot.
 
 Known historical commits include:
 
@@ -75,13 +76,11 @@ Known historical commits include:
 | Account backend task 07 | `6a846bd` |
 | Account backend task 08 | `0798c5d` — exploration only at the older checkpoint |
 
-These entries prove historical work happened. They do not automatically prove current completion/verification, and old frontend portions will be retired from the active tree.
-
-Backend/account status reconciliation remains a separate evidence task; do not hide it inside the frontend reboot.
+These entries prove historical work happened. They do not automatically prove current completion/verification. Backend/account status reconciliation remains a separate evidence task.
 
 ## 5. Current UI/UX authority readiness
 
-The upstream product-brand/UI design exploration is complete and human-approved.
+The upstream Product Brand + UI Design Exploration is complete and human-approved.
 
 Active authority:
 
@@ -101,58 +100,58 @@ Removed legacy design/prototype generations are available only through Git histo
 Current state:
 
 ```text
-FRONTEND REBOOT PREPARATION
+READY FOR MERGE
 ```
 
 Authority:
 
 ```text
 docs/project/frontend-reboot-plan.md
+docs/project/frontend-reboot-deletion-manifest.md
 ```
 
-Purpose:
+The reboot has:
 
-- reconcile project/spec/frontend documentation with the new design generation;
-- explicitly classify what engineering scaffold is retained;
-- retire current product/UI implementation and old reusable-component contracts;
-- retire old active `.local-agents/works/**` history while keeping Git history as archive;
-- keep `.local-agents/` tracked for new learning-by-doing process evidence;
-- verify a minimal clean frontend scaffold;
-- freeze a new frontend baseline before any new Harscode development run.
+- reconciled project/spec/frontend documentation with the new design generation;
+- classified retained engineering scaffold versus retired implementation;
+- removed previous product/UI implementation and old reusable-component contracts from the active branch tree;
+- removed old active `.local-agents/works/**` while preserving Git history as archive;
+- kept `.local-agents/` tracked for future learning-by-doing process evidence;
+- reduced the frontend to a minimal technical scaffold;
+- synchronized the dependency lockfile;
+- received operator-reported successful verification of dependency install, `npm run verify`, `npm run build`, and minimal boot/render inspection.
 
-The reboot itself is project preparation/maintenance, **not** Frontend Experience Foundation implementation and not a Harscode feature-development run.
+ChatGPT verified the resulting Git tree and lockfile synchronization from GitHub but did not execute the local verification commands itself.
+
+The reboot is project preparation/maintenance, **not** Frontend Experience Foundation implementation and not a Harscode feature-development run.
 
 ## 7. Cross-cutting frontend readiness
 
 | Capability / authority | Status | Notes |
 |---|---|---|
-| Canonical product-design direction | READY | Sunlit Editorial / Evidence-Led Optimism is approved. |
+| Canonical product-design direction | READY | Sunlit Editorial / Evidence-Led Optimism approved. |
 | Concrete visual system | READY | Newsreader + Instrument Sans; warm-paper/Sun/Berry; semantic colors separate; border/spacing-first; restrained radius/elevation; Phosphor utility baseline; provenance/progress grammar. |
-| Selected direction visual evidence | READY | Public composition + Evidence Journal PNGs are committed. |
-| Frontend architecture v3 | PREPARED | Clean-start architecture in `docs/project/kencleng-frontend-tech-stack.md`. |
-| Component governance | PREPARED | Semantic-owner-first; new-generation reusable registry intentionally starts empty. |
-| Next.js/TypeScript/Tailwind tooling | TO VERIFY AFTER RESET | Capability expected to be retained; reboot verification will prove scaffold health. |
-| Vitest/RTL/MSW capability | TO VERIFY AFTER RESET | Retain tooling/capability, not old product tests/fixtures by inertia. |
-| Playwright capability | TO VERIFY AFTER RESET | Retained as on-demand browser automation, not phase ritual. |
-| Old frontend product implementation | RETIRING | Must not become precedent for the new generation. |
-| Old `.local-agents/works/**` frontend history | RETIRING FROM ACTIVE TREE | Git history remains archive; new runs remain committed for learning. |
-| Frontend Experience Foundation Task 01 | BLOCKED | Starts only after reboot ready gate is green and baseline frozen. |
+| Selected direction visual evidence | READY | Public composition + Evidence Journal PNGs committed. |
+| Frontend architecture v3 | READY | Clean-start architecture in `docs/project/kencleng-frontend-tech-stack.md`. |
+| Component governance | READY | Semantic-owner-first; new-generation reusable registry intentionally starts empty. |
+| Next.js/TypeScript/Tailwind tooling | OPERATOR VERIFIED | Minimal scaffold verification reported successful on 2026-09-16. |
+| Vitest/RTL/MSW capability | OPERATOR VERIFIED | Test configuration initialized through the requested verification run; old product tests/fixtures remain retired. |
+| Playwright capability | RETAINED | On-demand browser automation capability retained; no old product browser regression is carried forward by inertia. |
+| Previous frontend product implementation | RETIRED | Git history is archive; active branch tree no longer treats it as precedent. |
+| Previous `.local-agents/works/**` history | RETIRED FROM ACTIVE TREE | Git history remains archive; new runs will be committed fresh. |
+| Frontend Experience Foundation Task 01 | READY_TO_START AFTER MERGE | First real frontend development task from the clean baseline. |
 
 ## 8. Frontend readiness gate before new development
 
-Follow the checklist in `docs/project/frontend-reboot-plan.md`.
+The detailed gate is green in `docs/project/frontend-reboot-plan.md`.
 
-High-level sequence:
+Remaining repository transition:
 
 ```text
-documentation reconciliation
-→ deletion manifest
-→ retire old frontend implementation/process tree
-→ leave minimal clean scaffold
-→ verify scaffold health
-→ reconcile tracker/status
-→ freeze Frontend Reboot Baseline
-→ start real Harscode frontend development
+merge frontend-reboot-preparation
+→ record exact merged main commit as Frontend Reboot Baseline
+→ begin CRTV telemetry before first Exploration session
+→ start Frontend Experience Foundation through Harscode
 ```
 
 The next real development task remains:
@@ -169,9 +168,9 @@ This is intentionally not a requirement to finish the landing page or recreate t
 
 The previous frontend validation run remains historical evidence.
 
-The next CRTV measurement should begin only after the new clean frontend baseline is frozen. Preparation/reset work before that baseline is not part of the feature validation benchmark.
+The next CRTV measurement begins only from the merged clean frontend baseline. Preparation/reset work before that baseline is not part of the feature validation benchmark.
 
-For the next run, preserve apples-to-apples operator telemetry at the session level and evaluate both:
+Session-level telemetry should preserve both:
 
 ```text
 efficiency
@@ -190,8 +189,9 @@ Update this file when project-level state materially changes.
 For each update:
 
 - point to concrete evidence when available;
+- distinguish operator-reported verification from checks actually executed by an agent/tool;
 - avoid copying detailed acceptance criteria from feature specs;
 - avoid copying Harscode phase reports;
 - keep blockers/provisional dependencies visible;
 - do not mark work complete because implementation merely exists;
-- when a historical status cannot be proven, use `NEEDS_RECONCILIATION`.
+- when historical status cannot be proven, use `NEEDS_RECONCILIATION`.
