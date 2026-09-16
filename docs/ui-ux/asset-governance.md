@@ -1,7 +1,7 @@
 # Kencleng — Asset Governance
 
 > Status: Canonical
-> Last updated: 2026-09-16
+> Last updated: 2026-09-17
 > Purpose: Govern truthfulness, approval, lifecycle, reuse, and change impact for visual assets.
 > Relationship: `brand-product-ui-brief.md` owns the approved direction; `design-guidelines.md` owns the concrete visual system; this document owns how assets enter and evolve within that system.
 
@@ -51,6 +51,8 @@ Principle:
 > Illustration may communicate a concept. It must not fabricate evidence.
 
 Synthetic documentary-style beneficiary imagery must not be used as if it were campaign evidence.
+
+When real evidence is unavailable, show a truthful missing/provisional state rather than generating a synthetic replacement that could be interpreted as factual evidence.
 
 ## 3. Photography
 
@@ -195,7 +197,35 @@ Whitespace and typography are valid when no meaningful asset is required.
 
 When an expressive asset is materially required but unresolved, record the asset need rather than hiding it behind filler.
 
-## 11. Generated asset review
+## 11. Agent asset decision path
+
+An agent may identify, recommend, brief, or generate an asset when the active surface materially benefits from one. Tool availability must not silently dictate the design direction.
+
+Use this order:
+
+```text
+asset need identified
+→ canonical asset already exists? reuse it
+→ ordinary utility icon sufficient? use approved library
+→ expressive/custom asset materially justified? continue
+→ current tool can generate an adequate candidate? generate + review
+→ otherwise produce asset options/brief + ready-to-use generation prompt
+```
+
+The agent should not create an asset merely because empty space exists.
+
+For a material unresolved asset need, the agent may:
+
+1. recommend a small set of meaningfully different asset directions and explain the role/trade-offs;
+2. provide a production-ready generation prompt when generation must happen in another tool;
+3. directly generate a candidate when the current execution environment provides an appropriate generation capability;
+4. integrate an approved/provisional candidate according to its lifecycle state.
+
+Generated output starts as `EXPLORATION` or `PROPOSED`; tool generation does not make an asset canonical.
+
+Level 4 assets still require human approval before becoming canonical. A Level 3 asset may also require human review when it establishes a reusable visual precedent or carries material product meaning.
+
+## 12. Generated asset review
 
 Before approval, review generated output for:
 
@@ -217,7 +247,7 @@ Does it avoid generic AI/startup visual language?
 ### Robustness
 Can it work in the expected crop, aspect ratio, density, and surrounding content?
 
-## 12. Asset brief requirement
+## 13. Asset brief and generation prompt
 
 Significant Level 3 or Level 4 assets should begin with a brief covering:
 
@@ -233,9 +263,22 @@ Significant Level 3 or Level 4 assets should begin with a brief covering:
 - expected format/aspect ratio;
 - approval requirement.
 
+When the agent cannot generate the asset directly, the handoff should include a ready-to-use generation prompt rather than only stating that an asset is missing.
+
+A generation prompt should include, where relevant:
+
+- subject/concept;
+- composition and focal hierarchy;
+- approved style/brand direction;
+- palette/tone constraints;
+- aspect ratio and intended placement;
+- truthfulness constraints;
+- explicit exclusions/negative constraints;
+- variant requirements.
+
 Generation prompts may be preserved when they materially help future regeneration of an approved/canonical style. Exploratory prompt noise should not become canonical documentation.
 
-## 13. Shared asset change impact
+## 14. Shared asset change impact
 
 Canonical shared assets can have blast radius similar to shared components.
 
@@ -252,7 +295,7 @@ identify consumers
 
 Do not maintain a stale manual list of every consumer when repository search can discover them at change time.
 
-## 14. Change classification
+## 15. Change classification
 
 ### Additive
 New asset without changing existing semantics.
@@ -266,7 +309,7 @@ Changes what the asset communicates. Requires product/design review.
 ### Brand-breaking
 Changes core identity, illustration language, logo, signature motif, or primary brand treatment. Requires explicit human approval and broad impact analysis.
 
-## 15. Current open asset decisions
+## 16. Current open asset decisions
 
 Still intentionally OPEN:
 
