@@ -1,9 +1,9 @@
 # Kencleng — Development Tracker
 
 > Status: Living project status
-> Last reconciled: 2026-09-16
-> Frontend reboot implementation checkpoint: `main@6b5cdd3d4710a64be0d00ce4479bad118fd6cf48`
-> Harscode workflow-v2 candidate for the next frontend run: `4199c6db1b26ef1920ba670f222aff0c6d0f9e59`
+> Last reconciled: 2026-09-17
+> Current Kencleng checkpoint: `main@fca5a8f3178b53e5eec006064d8bcf2b078771b3`
+> Harscode operational baseline: `main@b64fa11082a094d0e1b6e9488c20eac1c7f9777b`
 > Purpose: Keep cross-domain delivery state visible without turning dated progress into workflow policy.
 
 ## 1. What this tracker owns
@@ -15,6 +15,7 @@ It does not replace:
 - `docs/spec/<domain-dir>/tasks.md` for task definition;
 - feature specs for acceptance criteria;
 - UI/UX authorities for design truth;
+- `docs/project/kencleng-integration-map.md` for cross-stack structural dependency mapping;
 - Harscode artifacts for one development run;
 - `docs/kencleng-agentic-workflow.md` for project orchestration policy.
 
@@ -53,7 +54,7 @@ The frontend reboot intentionally retired the previous frontend product implemen
 |---|---|---|---|---|---|
 | Account | `NEEDS_RECONCILIATION` | `IN_PROGRESS` | `NOT_STARTED` for the new frontend generation | `NEEDS_RECONCILIATION` | Backend/account history remains. Retired frontend account implementation is archived in Git and is not active delivery. |
 | Notification | Draft specs present | `NOT_STARTED` as standalone domain delivery | `NOT_STARTED` | `NOT_STARTED` | Historical incidental infrastructure does not equal standalone domain delivery. |
-| Organization | Draft specs present | `NOT_STARTED` | `NOT_STARTED` | `NOT_STARTED` | Future frontend work starts from the new reboot baseline and still requires normal domain preflight. |
+| Organization | Draft specs present | `NOT_STARTED` | `NOT_STARTED` | `NOT_STARTED` | Future frontend work starts from the new frontend foundation and still requires normal domain preflight. |
 | Campaign | Draft specs present | `NOT_STARTED` | `NOT_STARTED` | `NOT_STARTED` | Retired landing/campaign components do not count as new-generation Campaign delivery. |
 | Donation | Draft specs present | `NOT_STARTED` | `NOT_STARTED` | `NOT_STARTED` | Correctness-critical money/ledger work includes Tier-0 fenced areas. |
 | Disbursement | Draft specs present | `NOT_STARTED` | `NOT_STARTED` | `NOT_STARTED` | State-machine core includes Tier-0 fenced areas. |
@@ -85,31 +86,33 @@ Active authority:
 
 - `docs/ui-ux/README.md` — routing map;
 - `docs/ui-ux/brand-product-ui-brief.md` — Sunlit Editorial / Evidence-Led Optimism;
-- `docs/ui-ux/product-design-principles.md` — stable design judgment;
+- `docs/ui-ux/product-design-principles.md` — stable design judgment and frontend design-readiness/autonomy boundary;
 - `docs/ui-ux/design-guidelines.md` — concrete visual system;
 - `docs/ui-ux/patterns.md` — recurring interaction behavior;
-- `docs/ui-ux/asset-governance.md` — asset lifecycle/truthfulness;
+- `docs/ui-ux/asset-governance.md` — asset lifecycle, truthfulness, recommendation/generation flow;
 - `docs/ui-ux/page-map.md` — persona/surface intent;
 - `docs/ui-ux/visual-references/selected-direction/` — approved direction evidence.
 
 Removed legacy design/prototype generations are available only through Git history and are not current authority.
 
-## 6. Frontend reboot status
+High-fidelity UI is not a universal prerequisite for frontend implementation. Frontend work proceeds from sufficient canonical product/design authority; material ambiguity is resolved through low-fidelity alternatives/recommendation, while missing product/domain truth is routed back to its owning authority.
 
-Current state:
+## 6. Frontend reboot and foundation status
+
+Frontend reboot:
 
 ```text
-COMPLETE — READY FOR DEVELOPMENT
+COMPLETE
 ```
 
-Authority:
+Reboot authority:
 
 ```text
 docs/project/frontend-reboot-plan.md
 docs/project/frontend-reboot-deletion-manifest.md
 ```
 
-Implementation checkpoint:
+Reboot implementation checkpoint:
 
 ```text
 main@6b5cdd3d4710a64be0d00ce4479bad118fd6cf48
@@ -127,9 +130,18 @@ The reboot:
 - received operator-reported successful verification of dependency install, `npm run verify`, `npm run build`, and minimal boot/render inspection;
 - was squash-merged through PR #20.
 
-ChatGPT verified the resulting Git tree and lockfile synchronization from GitHub but did not execute the local verification commands itself.
+The reboot was project preparation/maintenance, not Frontend Experience Foundation implementation and not a Harscode feature-development run.
 
-The reboot was project preparation/maintenance, **not** Frontend Experience Foundation implementation and not a Harscode feature-development run.
+Frontend Experience Foundation Task 01:
+
+```text
+DELIVERED
+```
+
+Evidence:
+
+- PR #24 / `71093b687cd7135495bc6ed62d520a621f96f586` implemented the representative `/` calibration surface and received human rendered acceptance PASS;
+- PR #25 / `fca5a8f3178b53e5eec006064d8bcf2b078771b3` closed Validation 02.
 
 ## 7. Cross-cutting frontend readiness
 
@@ -137,44 +149,61 @@ The reboot was project preparation/maintenance, **not** Frontend Experience Foun
 |---|---|---|
 | Canonical product-design direction | READY | Sunlit Editorial / Evidence-Led Optimism approved. |
 | Concrete visual system | READY | Newsreader + Instrument Sans; warm-paper/Sun/Berry; semantic colors separate; border/spacing-first; restrained radius/elevation; Phosphor utility baseline; provenance/progress grammar. |
+| Frontend design autonomy | READY | High-fidelity design files are optional; clear intent may be implemented directly, material ambiguity uses low-fi alternatives, and product-truth gaps must be resolved at authority. |
+| Asset recommendation/generation governance | READY | Canonical reuse first; agent may recommend, brief, prompt, or generate candidates when justified; synthetic assets may not masquerade as evidence. |
 | Selected direction visual evidence | READY | Public composition + Evidence Journal PNGs committed. |
 | Frontend architecture v3 | READY | Clean-start architecture in `docs/project/kencleng-frontend-tech-stack.md`. |
+| Contract-parallel coordination map | READY | `docs/project/kencleng-integration-map.md` owns structural surface→capability→contract→backend-owner mapping without duplicating delivery status. |
 | Component governance | READY | Semantic-owner-first; new-generation reusable registry intentionally starts empty. |
 | Next.js/TypeScript/Tailwind tooling | OPERATOR VERIFIED | Minimal scaffold verification reported successful on 2026-09-16. |
 | Vitest/RTL/MSW capability | OPERATOR VERIFIED | Test configuration initialized through the requested verification run; old product tests/fixtures remain retired. |
 | Playwright capability | RETAINED | On-demand browser automation capability retained; no old product browser regression is carried forward by inertia. |
 | Previous frontend product implementation | RETIRED | Git history is archive; active tree no longer treats it as precedent. |
 | Previous `.local-agents/works/**` history | RETIRED FROM ACTIVE TREE | Git history remains archive; new runs will be committed fresh. |
-| Frontend Experience Foundation Task 01 | READY_TO_START | First real frontend development task from the clean baseline. |
+| Frontend Experience Foundation Task 01 | DELIVERED | PR #24 implemented and verified the foundation; PR #25 closed Validation 02. |
 
-## 8. Frontend readiness gate before new development
+## 8. Next development selection
 
-The detailed reboot gate is green in `docs/project/frontend-reboot-plan.md`.
+The project is no longer waiting for frontend foundation work.
 
-Next sequence:
+The next frontend/backend sequence should select a **real product surface/capability** and determine whether backend-first or contract-parallel delivery is appropriate.
+
+Preferred CRTV candidate characteristics:
+
+- meaningful page/flow rather than another foundation-only task;
+- stable-enough product/API contract or a small clearly resolvable contract gap;
+- useful frontend presentation behavior and states;
+- suitable for MSW-backed frontend progress before the real backend is available when contract-parallel is chosen;
+- not unnecessarily combining first-time contract-parallel validation with the highest-risk money/security core.
+
+Before implementation of the selected cross-stack surface:
 
 ```text
-freeze exact CRTV start baseline
-→ create fresh validation/development branch from that baseline
-→ capture benchmark pre-session telemetry
-→ start Frontend Experience Foundation with Harscode Exploration
+select page/flow
+→ add only the actionable mapping to docs/project/kencleng-integration-map.md
+→ confirm product/design readiness
+→ confirm API contract readiness
+→ choose backend-first or contract-parallel sequencing
+→ run the normal Harscode lifecycle for each coherent task
+→ perform real integration verification when both sides are available
 ```
 
-The next real development task is:
-
-```text
-Frontend Experience Foundation
-→ representative `/` slice
-→ first production expression of Sunlit Editorial
-```
-
-This is intentionally not a requirement to finish the landing page or recreate the retired `/` implementation.
+The exact next surface is intentionally not guessed in this tracker.
 
 ## 9. Continuous Real-Task Validation posture
 
-The previous frontend validation run remains historical evidence.
+Validation 02 is complete. The Harscode workflow-v2 candidate was subsequently promoted to the operational default on Harscode `main`.
 
-The next CRTV measurement begins from the clean frontend generation after the reboot completion status is reconciled. Preparation/reset work before that baseline is not part of the feature validation benchmark.
+Current Harscode authority:
+
+```text
+main@b64fa11082a094d0e1b6e9488c20eac1c7f9777b
+Operational Default / Level 2
+```
+
+The historical `workflow-v2` branch is experimental lineage, not authority for new Kencleng work.
+
+CRTV now continues through ordinary Kencleng development. Harscode process changes should be driven by evidence from real tasks rather than speculative workflow iteration.
 
 Session-level telemetry should preserve both:
 
@@ -188,12 +217,6 @@ correctness
 
 Do not optimize token usage at the expense of correctness.
 
-The Harscode candidate baseline remains:
-
-```text
-workflow-v2@4199c6db1b26ef1920ba670f222aff0c6d0f9e59
-```
-
 ## 10. Update discipline
 
 Update this file when project-level state materially changes.
@@ -206,4 +229,5 @@ For each update:
 - avoid copying Harscode phase reports;
 - keep blockers/provisional dependencies visible;
 - do not mark work complete because implementation merely exists;
+- keep structural cross-stack mappings in `kencleng-integration-map.md` instead of duplicating them here;
 - when historical status cannot be proven, use `NEEDS_RECONCILIATION`.
