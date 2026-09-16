@@ -50,6 +50,8 @@ API request/response shape comes from generated OpenAPI types based on the canon
 
 For contract inspection, start with `../api/README.md`, then prefer the active domain source (`../api/openapi/<domain>.yaml`) plus only the referenced components from `../api/openapi/common.yaml`. Use the bundled `../api/openapi.yaml` when an aggregate/cross-domain view or generated-client correspondence is actually needed; do not load the whole bundle by default for a domain-local task.
 
+For contract-parallel frontend work, keep production data access pointed at the real API contract. Use MSW at the network boundary for contract-faithful mock responses while the backend implementation is unavailable; do not add production service branches that return mock JSON based on environment/mode.
+
 ## 3. State ownership
 
 Before creating state, use this order:
@@ -126,13 +128,39 @@ At the clean-start baseline the reusable registry is intentionally empty. Do not
 
 ## 6. Product design readiness and authority routing
 
+Frontend development is **design-authority-driven, not design-file-driven**. A high-fidelity UI artifact is not a universal prerequisite for Build.
+
 For material UI work classify design readiness according to `../docs/ui-ux/product-design-principles.md`:
 
 ```text
-READY   → implement established intent
-PARTIAL → resolve small gaps using established principles/patterns
-OPEN    → resolve material product/design intent before canonical Build
+READY   → implement established intent directly
+PARTIAL → resolve ordinary presentation gaps autonomously from established authority
+OPEN    → distinguish material design ambiguity from missing product/domain truth
 ```
+
+Use this decision path:
+
+```text
+clear intent / READY
+→ implement
+
+ordinary presentation ambiguity
+→ derive from principles + patterns + visual system + production precedent
+→ implement
+
+material design ambiguity
+→ propose a small set of low-fidelity alternatives
+→ recommend a default with trade-offs
+→ obtain human decision when material
+→ implement
+
+missing product/domain truth
+→ surface the authority gap
+→ resolve owning spec/contract
+→ do not invent it in frontend code
+```
+
+Low-fidelity alternatives may be textual, diagrammatic, or wireframe-like. They exist to resolve meaningful hierarchy/interaction choices, not to create approval ceremony. Do not stop for routine micro-decisions already governed by current design authority.
 
 Do not silently invent consequential product or interaction intent while coding.
 
@@ -153,7 +181,7 @@ The approved direction is **Sunlit Editorial / Evidence-Led Optimism** and the c
 
 Do not resurrect removed legacy visual guidelines, prototype exports, green identity rules, old fonts, old tokens, or retired component decisions from Git history as current precedent.
 
-Material UI normally needs product-design readiness plus only the specific behavior/visual/asset authorities relevant to the feature. It does not require reading every UI/UX document.
+Material UI normally needs product-design readiness plus only the specific behavior/visual/asset authorities relevant to the feature. It does not require reading every UI/UX document or producing a high-fidelity design artifact first.
 
 ## 7. Visual assets
 
@@ -166,12 +194,14 @@ Do not silently replace a materially important expressive/brand asset need with 
 When a required asset is missing, follow `../docs/ui-ux/asset-governance.md`:
 
 - reuse a canonical asset when one exists;
+- use the approved utility-icon library when that is semantically sufficient;
+- when a custom/expressive asset is justified, recommend materially distinct directions when a design choice is needed;
 - generate a candidate when the current harness can do so adequately;
 - otherwise produce an asset brief + ready-to-use generation prompt for human/tool handoff;
-- keep temporary assets explicitly provisional;
-- require human approval for brand-defining assets.
+- keep generated/temporary assets explicitly provisional until their lifecycle state changes;
+- require human approval for brand-defining assets and other reusable precedent where governance requires it.
 
-Illustration must not masquerade as real campaign evidence. Photography or imagery must not imply beneficiary identity, distribution, verification, or impact without supporting product truth.
+Illustration must not masquerade as real campaign evidence. Photography or imagery must not imply beneficiary identity, distribution, verification, or impact without supporting product truth. When evidence is unavailable, preserve a truthful missing/provisional state instead of generating synthetic evidence.
 
 Tool limitation must not silently become design limitation.
 
@@ -316,6 +346,7 @@ Historical feature/task/local-agent docs may contain older workflow/design assum
 business/domain behavior  → ../docs/spec/<domain-dir>/
 API shape                 → ../api/README.md → ../api/openapi/<domain>.yaml + referenced common.yaml components
 aggregate API view        → ../api/openapi.yaml only when cross-domain/generated-bundle context is needed
+cross-stack dependency map→ ../docs/project/kencleng-integration-map.md when a frontend surface crosses/depends on backend capabilities
 frontend architecture     → ../docs/project/kencleng-frontend-tech-stack.md (active concern sections)
 frontend reboot gate      → ../docs/project/frontend-reboot-plan.md (pre-development only)
 Codex execution profile   → ../docs/project/codex-frontend-execution-profile.md (current routing concern)
