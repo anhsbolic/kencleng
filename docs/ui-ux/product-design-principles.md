@@ -178,36 +178,62 @@ Do not mechanically stack desktop boxes or silently remove consequential informa
 
 ## 14. Design Readiness
 
+High-fidelity UI is **not** a universal prerequisite for frontend implementation. Kencleng frontend development is driven by canonical design authority, not by mandatory design-file handoff.
+
 Before material UI implementation, classify design readiness.
 
 ### READY
-The user goal, hierarchy, states, and relevant precedent are sufficiently defined.
+The user goal, information hierarchy, states, interaction intent, and relevant precedent are sufficiently defined. Implement directly from canonical product/design authority. A high-fidelity mockup is optional unless the task explicitly establishes one as required evidence.
 
 ### PARTIAL
-The main experience is understood but limited non-semantic details remain unresolved. Use established principles and patterns; surface material assumptions.
+The main experience is understood but limited non-semantic details remain unresolved. Resolve ordinary presentation details autonomously from established principles, patterns, visual-system rules, and existing production precedent. Surface only material assumptions.
 
 ### OPEN
-The feature requires meaningful new product, interaction, or brand decisions without established precedent.
+The feature requires meaningful new product, interaction, information-architecture, or brand decisions without established precedent.
+
+Do not silently design an OPEN experience while writing production code. First determine whether the gap is a material design ambiguity or missing product truth.
 
 Default flow:
 
 ```text
-Design exploration
-→ resolve intent
-→ human approval where material
-→ engineering planning
-→ implementation
+READY / ordinary PARTIAL
+→ implement directly
+→ render
+→ inspect
+→ refine
+
+material design ambiguity
+→ propose low-fidelity alternatives
+→ recommend one with trade-offs
+→ obtain human decision when material
+→ implement
+
+missing product/domain truth
+→ surface the authority gap
+→ resolve the owning spec/contract
+→ implement only after the truth is established
 ```
 
-Do not silently design an OPEN experience while writing production code.
+Low-fidelity exploration exists to resolve structure, hierarchy, and behavior. It may be textual, diagrammatic, wireframe-like, or otherwise intentionally low-cost. Do not create high-fidelity design artifacts merely as workflow ceremony.
 
 ## 15. Agent Decision Boundary
 
 An agent may autonomously decide ordinary presentation details when they preserve established principles and patterns.
 
-Material new decisions should be proposed and reviewed, including new interaction architecture, materially different information hierarchy, major navigation changes, new brand-defining visual treatment, and new shared UX patterns likely to influence future features.
+Do **not** request human approval for routine micro-decisions such as ordinary spacing choices, icon sizing, divider use, local alignment, or other presentation details already governed by the visual system and precedent.
 
-An agent must not invent business rules, permission semantics, privacy behavior, financial calculations, status meanings, verification claims, ranking/recommendation concepts, security guarantees, or evidence of impact.
+Material new decisions should be proposed and reviewed, including:
+
+- new interaction architecture;
+- materially different information hierarchy;
+- major navigation changes;
+- consequential action placement or behavior;
+- new brand-defining visual treatment;
+- new shared UX patterns likely to influence future features.
+
+When material design ambiguity exists, the agent should provide a small set of meaningfully distinct low-fidelity options, recommend a default, and explain relevant trade-offs. Do not multiply options when one established pattern clearly applies.
+
+An agent must not invent business rules, permission semantics, privacy behavior, financial calculations, status meanings, verification claims, ranking/recommendation concepts, security guarantees, or evidence of impact. Those are product/domain authority gaps, not design ambiguity.
 
 ## 16. Evaluation Heuristics
 
