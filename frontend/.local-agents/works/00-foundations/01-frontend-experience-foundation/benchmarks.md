@@ -1,6 +1,6 @@
 # Validation 02 — Frontend Experience Foundation Benchmark
 
-> Status: Active measurement — workflow and human rendered acceptance complete; delivery/closeout pending
+> Status: Complete — workflow, human acceptance, delivery, and closeout recorded
 > Run ID: `validation-02`
 > Measurement owner: Anhar Solehudin
 > Prepared with: ChatGPT — GPT-5.6 Sol
@@ -12,6 +12,7 @@
 > Validation branch: `validation-02-frontend-experience-foundation-cleanstart`
 > Kencleng target baseline: `main@0273c4f2b7f3140efe53a3736547fe73fdd2aefe`
 > Harscode workflow baseline: `workflow-v2@4199c6db1b26ef1920ba670f222aff0c6d0f9e59`
+> Delivery: PR `#24`, merged as `main@71093b687cd7135495bc6ed62d520a621f96f586`
 
 ## Purpose
 
@@ -132,6 +133,7 @@ These totals were recorded separately from `/status`; treat them as secondary ev
 | Browser automation posture | Build used one-off Chromium inspection for desktop/mobile overflow, fragment navigation, and keyboard focus. No committed Playwright scenario was added; Testing did not repeat broad browser automation. |
 | Environment friction | Production build needed network access for approved Google Fonts; initial sandbox restrictions were reported rather than misclassified as product failure. |
 | Final human rendered acceptance | **PASS for this foundation/calibration scope.** Operator reviewed desktop and mobile renders and reported satisfaction. The result was judged as a coherent foundation rather than a full-content landing page, consistent with the task boundary. |
+| Delivery | PR `#24` merged successfully as `main@71093b687cd7135495bc6ed62d520a621f96f586`. |
 
 ## Data-quality notes
 
@@ -142,9 +144,9 @@ These are benchmark-observation issues, not product/workflow defects:
 3. Testing's `Human prompts` section contains a blank numbered entry. Treat meaningful human task-direction prompts as none unless later evidence shows otherwise.
 4. Raw `/status` output may expose account-identifying metadata that is irrelevant to benchmarking; omit/redact such fields in future durable captures.
 
-## Current lifecycle state
+## Final lifecycle state
 
-Workflow correctness gates through human acceptance are complete:
+Validation 02 completed the intended lifecycle:
 
 ```text
 Exploration ✅
@@ -155,11 +157,11 @@ Exploration ✅
 → Code Review ✅
 → Testing ✅
 → Human rendered acceptance ✅
-→ Pull Request ⏳
-→ Validation closeout ⏳
+→ Pull Request / delivery ✅
+→ Validation closeout ✅
 ```
 
-Testing's verdict was **Pass with flagged follow-up**, with no code patch required. The flagged follow-up was the Human-owned rendered acceptance, which has now passed for the intended foundation/calibration scope.
+Testing's verdict was **Pass with flagged follow-up**, with no code patch required. The flagged follow-up was the Human-owned rendered acceptance, which subsequently passed for the intended foundation/calibration scope. Delivery then merged through PR `#24` without requiring another implementation loop.
 
 ## Benchmark hygiene
 
@@ -174,9 +176,9 @@ In particular, do not:
 - feed benchmark observations into phase-agent reasoning;
 - treat lower usage as success when correctness or outcome quality degrades.
 
-## Baseline note
+## Baseline and delivery note
 
-The target code/document baseline for this run is exactly:
+The target code/document baseline for this run was exactly:
 
 ```text
 Kencleng main
@@ -186,4 +188,14 @@ Harscode workflow-v2
 4199c6db1b26ef1920ba670f222aff0c6d0f9e59
 ```
 
-Operator instrumentation/history exists only on the validation branch; it does not change the original product/task baseline.
+The delivered Kencleng result is:
+
+```text
+PR #24
+Establish frontend experience foundation
+
+Kencleng main
+71093b687cd7135495bc6ed62d520a621f96f586
+```
+
+The benchmark/runbook/process artifacts are intentionally tracked and were merged with the task as inspectable process evidence. They remain non-authoritative for product/task semantics; canonical project/workflow authorities continue to own those decisions.
