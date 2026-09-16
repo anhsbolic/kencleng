@@ -16,27 +16,33 @@ The active tree is intentionally kept free from superseded design generations. H
 | API/server contract | `api/openapi.yaml` |
 | Stable product-design principles | `product-design-principles.md` |
 | Selected brand + Product UI direction | `brand-product-ui-brief.md` |
+| Concrete visual system | `design-guidelines.md` |
 | Reusable interaction behavior | `patterns.md` |
 | Asset truthfulness, approval, lifecycle | `asset-governance.md` |
 | Persona/surface inventory | `page-map.md` |
 | Exploration rationale/history | `exploration/2026-09-product-brand/` |
 | Approved direction-level visual evidence | `visual-references/selected-direction/` |
 
-## Important absence: concrete visual-system specification
+## Visual-system authority
 
-There is currently **no canonical concrete visual-system document** defining exact production:
+`design-guidelines.md` is the canonical concrete visual-system authority derived from the approved Sunlit Editorial direction.
 
-- color values;
-- font families;
-- radii;
-- spacing tokens;
-- shadows;
-- icon family;
-- motion values.
+It owns the currently approved reusable rules for:
 
-That absence is intentional.
+- exact core color roles and values;
+- Newsreader / Instrument Sans typography roles and scales;
+- spacing and density posture;
+- surfaces, borders, radius, and elevation;
+- Phosphor utility-icon baseline;
+- action hierarchy;
+- provenance/truth presentation grammar;
+- funding vs operational vs reported-outcome visual grammar;
+- campaign imagery and placeholder treatment;
+- public-vs-product expressive intensity.
 
-The brand/product direction has been approved, but the production visual system must still be deliberately derived from it. Existing implementation values must not be mistaken for design authority.
+Some design decisions remain intentionally OPEN inside that document, including final logo/wordmark, detailed photography/illustration specifications, exact motion tokens, final provenance terminology, and any implementation-discovered visual tokens not yet justified.
+
+Do not treat existing frontend CSS/token values as higher authority than `design-guidelines.md`.
 
 ## Precedence
 
@@ -60,17 +66,17 @@ Supporting phrase:
 
 ## Selected visual references
 
-The public-composition and Evidence-Journal studies approved in the design session are **Selected Direction References**.
-
-Their authority and intended filenames are recorded in:
+Approved public-composition and Evidence-Journal studies are stored in:
 
 ```text
-visual-references/selected-direction/README.md
+visual-references/selected-direction/
 ```
 
-The binary image handoff is explicitly pending because the current repository connector cannot attach the available binary file handles directly. This does not reopen the approved direction and must not be filled with substitute artwork without review.
+The folder currently contains the approved reference images plus its interpretation/authority README.
 
 The visual references demonstrate design thesis, brand character, hierarchy, and the relationship between public and authenticated surfaces. They are not pixel-perfect specifications or component contracts.
+
+The Concrete Visual System exploration additionally validated the foundations and evidence/progress grammar now promoted into `design-guidelines.md`. The system rules in the canonical document own reusable visual behavior; exploration imagery remains supporting evidence rather than screenshot specification.
 
 ## Historical design generations
 
