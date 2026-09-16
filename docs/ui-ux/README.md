@@ -42,14 +42,7 @@ The brand/product direction has been approved, but the production visual system 
 
 For the same concern, product/domain truth always outranks visual/design artifacts.
 
-Visual references do not establish:
-
-- business rules;
-- API fields;
-- permissions;
-- lifecycle semantics;
-- verification guarantees;
-- real-world impact.
+Visual references do not establish business rules, API fields, permissions, lifecycle semantics, verification guarantees, or real-world impact.
 
 When documents appear to conflict, resolve the question through the authority that owns that concern rather than selecting whichever artifact is easiest to implement.
 
@@ -65,11 +58,19 @@ Supporting phrase:
 
 > **Hope, structured by evidence.**
 
-## Visual references
+## Selected visual references
 
-The approved images under `visual-references/selected-direction/` are **Selected Direction References**.
+The public-composition and Evidence-Journal studies approved in the design session are **Selected Direction References**.
 
-They demonstrate design thesis, brand character, hierarchy, and the relationship between public and authenticated surfaces. They are not pixel-perfect specifications or component contracts.
+Their authority and intended filenames are recorded in:
+
+```text
+visual-references/selected-direction/README.md
+```
+
+The binary image handoff is explicitly pending because the current repository connector cannot attach the available binary file handles directly. This does not reopen the approved direction and must not be filled with substitute artwork without review.
+
+The visual references demonstrate design thesis, brand character, hierarchy, and the relationship between public and authenticated surfaces. They are not pixel-perfect specifications or component contracts.
 
 ## Historical design generations
 
