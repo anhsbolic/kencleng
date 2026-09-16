@@ -129,64 +129,73 @@ OPEN    → use Exploration to resolve material product/design intent before can
 
 Do not silently invent consequential product or interaction intent while coding.
 
-Route design context by the question being answered; do not automatically read every UI/UX document:
+Use `../docs/ui-ux/README.md` as the active UI/UX routing entrypoint. Open only the concern owner needed for the task:
 
 | Active concern | Authority to open |
 |---|---|
 | design readiness, product/design decision authority, trust/clarity principles | `../docs/ui-ux/product-design-principles.md` |
-| an established recurring interaction/feedback/form/review pattern | matching section(s) of `../docs/ui-ux/patterns.md` |
-| typography, spacing, color, layout, responsive or visual-system rule | matching section(s) of `../docs/ui-ux/design-guidelines.md` |
-| expressive/product-semantic/brand asset need, asset status or generation/handoff | `../docs/ui-ux/brand-and-visual-assets.md` |
+| approved brand/product UI thesis, public-vs-product expression, trust language, visual invariants | `../docs/ui-ux/brand-product-ui-brief.md` |
+| established recurring interaction/feedback/form/review pattern | matching section(s) of `../docs/ui-ux/patterns.md` |
+| expressive/product-semantic/brand asset need, asset status or generation/handoff | `../docs/ui-ux/asset-governance.md` |
 | route, persona, navigation/IA relationship | matching route/persona section of `../docs/ui-ux/page-map.md` |
-| prototype-derived implementation | `../docs/ui-ux/prototype-reference.md` + `../docs/ui-ux/design-reference-usage.md` |
+| approved visual-direction evidence | `../docs/ui-ux/visual-references/selected-direction/` |
 | broad component contract/placement/change blast radius | `components/README.md` |
 
-Material UI normally needs product-design readiness plus the specific behavior/visual authorities relevant to the feature. It does **not** require reading brand assets, the full page map, prototype guidance, and the component system when those concerns are not active.
+The approved upstream direction is **Sunlit Editorial / Evidence-Led Optimism**.
+
+Concrete production visual-system authority is intentionally absent until deliberately derived. Do not resurrect removed `design-guidelines.md`, legacy prototype exports, or their exact green/font/token decisions from Git history as current precedent.
+
+Material UI normally needs product-design readiness plus only the specific behavior/brand/asset authorities relevant to the feature. It does not require reading every UI/UX document.
 
 ## 7. Visual assets
 
 Standard library icons are appropriate for ordinary utility actions.
 
-Do not silently replace a materially important expressive/brand asset need with generic iconography, random gradients, stock-like imagery, or generic AI decoration.
+Do not silently replace a materially important expressive/brand asset need with generic iconography, random gradients, stock-like imagery, synthetic documentary people, or generic AI decoration.
 
-When a required asset is missing, follow `../docs/ui-ux/brand-and-visual-assets.md`:
+When a required asset is missing, follow `../docs/ui-ux/asset-governance.md`:
 
-- reuse canonical asset when one exists;
+- reuse a canonical asset when one exists;
 - generate a candidate when the current harness can do so adequately;
 - otherwise produce an asset brief + ready-to-use generation prompt for human/tool handoff;
 - keep temporary assets explicitly provisional;
-- human approval is required for brand-defining assets.
+- require human approval for brand-defining assets.
+
+Illustration must not masquerade as real campaign evidence. Photography or imagery must not imply beneficiary identity, distribution, verification, or impact without supporting product truth.
 
 Tool limitation must not silently become design limitation.
 
-## 8. Visual system
+## 8. Visual direction
 
-Kencleng uses Tailwind CSS v4 CSS-first tokens from `app/globals.css` via `@theme inline`.
+Current upstream direction comes from `../docs/ui-ux/brand-product-ui-brief.md`:
 
-There is no `tailwind.config.js` design-token authority.
+- light, warm, editorial foundation;
+- restrained clear-bright yellow as brand energy, not semantic proof;
+- mature warm neutrals;
+- expressive human/editorial public surfaces;
+- disciplined authenticated/product surfaces;
+- editorial-documentary photography;
+- mature human illustration for explanatory/brand roles;
+- information/trust structure as the primary signature;
+- Progress as Evidence as a secondary product-language signature.
 
-Prefer canonical tokens and existing primitives. Do not push feature-specific styling into global tokens/primitive variants merely to avoid local composition.
+Do not infer exact hex values, final fonts, token scales, radii, shadows, or motion values from this summary. Those decisions require deliberate visual-system derivation.
 
-Target action hierarchy:
+Avoid generic SaaS composition, endless rounded cards, glassmorphism, excessive gradients, fintech-blue/charity-green trust shorthand, badge theatre, and manipulative donation urgency.
+
+## 9. Selected visual references
+
+Approved direction evidence lives under:
 
 ```text
-Primary   → filled green
-Secondary → neutral / outlined
-Accent    → restrained warm emphasis
+../docs/ui-ux/visual-references/selected-direction/
 ```
 
-## 9. Prototype/reference translation
+Use it to understand visual character, hierarchy, public-vs-product expressive intensity, restrained editorial-yellow usage, and the Evidence Journal concept.
 
-`../design-reference/` is frozen read-only prototype/reference output.
+Do not treat those references as product/domain truth, component architecture, exact token values, route contracts, or pixel-perfect screenshots to clone.
 
-Only when implementation is actually prototype-derived, read:
-
-- `../docs/ui-ux/prototype-reference.md`;
-- `../docs/ui-ux/design-reference-usage.md`.
-
-Preserve route-specific hierarchy, composition, states, interaction intent, and responsive intent. Translate through current domain/API truth, applicable UX patterns, visual system, asset system, and component architecture.
-
-Do not wholesale-copy prototype code. Prototype component boundaries, mock data, local state, exact CSS, and provisional assets are not production authority.
+If a visual detail conflicts with domain/API truth, domain/API truth wins. If a later deliberately derived authority owns a more specific visual-system concern, that concern owner wins.
 
 ## 10. Rendered iteration and human acceptance
 
@@ -279,12 +288,13 @@ API shape                 → ../api/README.md → ../api/openapi/<domain>.yaml 
 aggregate API view        → ../api/openapi.yaml only when cross-domain/generated-bundle context is needed
 frontend architecture     → ../docs/project/kencleng-frontend-tech-stack.md (active concern sections)
 Codex execution profile   → ../docs/project/codex-frontend-execution-profile.md (current routing concern)
+UI/UX authority map       → ../docs/ui-ux/README.md
 product-design authority  → ../docs/ui-ux/product-design-principles.md
+brand/product UI direction→ ../docs/ui-ux/brand-product-ui-brief.md
 UX behavior               → ../docs/ui-ux/patterns.md (matching pattern)
-visual system             → ../docs/ui-ux/design-guidelines.md (matching concern)
-brand/assets              → ../docs/ui-ux/brand-and-visual-assets.md
+asset governance          → ../docs/ui-ux/asset-governance.md
 route/persona inventory   → ../docs/ui-ux/page-map.md (matching route/persona)
-prototype authority       → ../docs/ui-ux/prototype-reference.md + design-reference-usage.md, only when prototype-derived
+selected visual evidence  → ../docs/ui-ux/visual-references/selected-direction/
 component contracts       → components/README.md, for broad contract/placement concerns
 project status            → ../docs/project/kencleng-development-tracker.md
 ```

@@ -30,6 +30,9 @@ frontend architecture
 frontend product/design/component detail
 → frontend/AGENTS.md
 
+active UI/UX design authority map
+→ docs/ui-ux/README.md
+
 project status
 → docs/project/kencleng-development-tracker.md
 
@@ -45,6 +48,8 @@ Treat this map as routing, not as an instruction to read every target in full. S
 For API work, prefer the split source for the active domain plus only the referenced shared components from `api/openapi/common.yaml`. `api/openapi.yaml` is the generated bundled aggregate and remains useful for aggregate/cross-domain inspection and generated-client correspondence; do not load it in full by default for a domain-local task.
 
 For business behavior, domain invariants/threat models and feature specs are authoritative over narrative project background; the OpenAPI source owns API shape. Do not apply that precedence to unrelated concerns owned by architecture or design documents.
+
+For frontend design work, use `docs/ui-ux/README.md` as the routing entrypoint. The active approved direction is **Sunlit Editorial / Evidence-Led Optimism**. Removed legacy design guidelines and prototype exports are historical Git evidence, not current authority.
 
 If authorities genuinely conflict on the same concern, surface the contradiction instead of choosing whichever interpretation makes implementation easiest.
 
@@ -65,12 +70,9 @@ The following paths are read-only to an agent unless a human explicitly authoriz
 - `backend/internal/domain/donation/ledger.go` and any file implementing transaction/locking logic for balance updates;
 - the state-machine implementation under `backend/internal/domain/disbursement/`;
 - `backend/internal/platform/crypto/` (encryption, HMAC, key handling);
-- `backend/internal/platform/auth/` when changing security-critical JWT signing, TOTP, refresh-token/session, or equivalent authentication core logic;
-- `design-reference/` at repo root.
+- `backend/internal/platform/auth/` when changing security-critical JWT signing, TOTP, refresh-token/session, or equivalent authentication core logic.
 
-The first four are Tier-0 / human-authored or human-paired areas. Agents may read them for context, critique, test ideas, or adversarial review but must not modify them without explicit authorization.
-
-`design-reference/` is protected for a different reason: it is frozen prototype/reference output. Agents may inspect it for visual/structural precedent, but must never modify it, wholesale-copy it into production, or treat prototype state/data/component architecture as production authority.
+These are Tier-0 / human-authored or human-paired areas. Agents may read them for context, critique, test ideas, or adversarial review but must not modify them without explicit authorization.
 
 More-specific scoped `AGENTS.md` files may add protections; they must not silently weaken this root fencing.
 
