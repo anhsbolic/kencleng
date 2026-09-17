@@ -1,8 +1,8 @@
 # Kencleng — Product Overview
 
-> Status: **Candidate Product Authority — not yet canonical**
+> Status: **Canonical Product Authority — promoted 2026-09-17**
 > Created: 2026-09-17
-> Updated: 2026-09-17 — Design-to-Product reconciliation pass
+> Updated: 2026-09-17 — Product Authority promotion
 > Scope: Whole-product business/product model at deliberately lower resolution than delivery specifications.
 > Source basis: existing business-process, actor/entity, phase, design/page-map, domain-spec, API, implementation, and September 2026 product-brand exploration evidence. Detailed old decisions are not automatically promoted here.
 
@@ -455,7 +455,7 @@ When evidence is unavailable, a truthful missing/provisional state is preferable
 
 ## 11. Strong current product truths
 
-The following appear consistently across the existing product, design, spec, and implementation evidence and are strong candidates for promotion when this document is reviewed:
+The following are canonical whole-product truths unless deliberately revised through Product Authority:
 
 1. **Kencleng is evidence-led, not persuasion-led.** Trust should be earned through ordered truth, evidence, provenance, chronology, and candid uncertainty.
 2. **Confidence comes before conversion.** Donation actions should not outrun the context users need for a considered decision.
@@ -539,23 +539,31 @@ These are active design authority, not historical reference. They are excluded h
 
 The reframe should not reopen every historical decision at once. Revalidation is triggered by delivery.
 
-### Forward probe — Public Campaign Detail
+### Public Campaign / MVP slices
 
-- What evidence and context must a skeptical-but-open visitor understand before donation becomes a meaningful next action?
-- Which trust/accountability facts are actually available at this lifecycle stage?
-- What organizer/campaign information is platform fact versus organizer-provided content?
-- What remains unknown or pending and how should that truth remain visible?
-- Which image/media state is truthful when real campaign evidence is absent?
-- What is the honest CTA boundary while Donation Flow is a separate delivery slice?
-- What backend/data capabilities are actually required by this surface?
+Probe 01 established the current public Campaign direction, including persistent public identity after eligible closure and explicit public-safe projection. Remaining detail should now be resolved through the approved MVP slices rather than by re-specifying the whole Campaign domain upfront.
 
-### Backward probe — Registration + Email Verification
+Questions that may still arise include:
 
-- What user outcome actually requires verified email in Kencleng?
-- Which downstream capabilities depend on account verification?
-- Is the current identity model/product behavior still justified independently from the backend implementation?
-- Which current Account security behaviors are product requirements versus implementation/security architecture choices?
-- Does the existing contract match the simplest correct end-to-end account experience?
+- what exact public facts are required by the active slice;
+- what organizer/campaign information is platform fact versus organizer-provided content;
+- what remains unknown or pending and how that truth remains visible;
+- which image/media state is truthful and revocable;
+- what backend/data capabilities are actually required by the current surface.
+
+### Account when it becomes real scope
+
+Probe 02 is intentionally paused/reframed. Account is outside the baseline MVP critical path.
+
+When an Account-dependent capability enters scope, revalidate:
+
+- what user outcome actually requires an account;
+- what proof/verification the capability truly needs;
+- which existing security/correctness mechanisms remain applicable;
+- whether historical provider/linking/recovery breadth is still justified;
+- what the smallest coherent Account experience is for that real need.
+
+Do not resume the historical Account roadmap merely because implementation already exists.
 
 ## 14. Product development posture
 
@@ -565,6 +573,8 @@ Kencleng should use **progressive commitment**, not all-product detailed specifi
 whole-product clarity at product level
         +
 canonical product-design / brand authority
+        +
+approved release scope
         ↓
 select next valuable delivery slice
         ↓
@@ -585,15 +595,15 @@ A future area may remain high-level until it becomes relevant. A high-risk, hard
 
 Product, design, and implementation discovery are bidirectional. Durable learning discovered downstream should be promoted deliberately to the authority that owns it rather than remaining trapped in a feature implementation or visual artifact.
 
-## 15. Promotion criteria
+## 15. Promotion checkpoint
 
-This candidate should not become canonical merely because it exists.
+Product Authority was promoted on **2026-09-17** after:
 
-Before promotion:
+1. human review accepted the product thesis, product character, whole-product model, and business direction;
+2. canonical design authority and Product Authority were reconciled as peer upstream authorities;
+3. Public Campaign Detail forward validation demonstrated that Product + Design authority can derive delivery/contract needs without task-specific steering;
+4. Account backward reconciliation demonstrated that detailed specs/implementation can be treated as evidence while preserving useful security/correctness work;
+5. the MVP scope and vertical delivery sequencing were explicitly approved, preventing historical domain breadth from defining current delivery scope;
+6. repository routing was deliberately promoted so Product/MVP authority sits above delivery specs/contracts for the concerns it owns.
 
-1. Human review confirms that the product thesis, product character, whole-product model, and business direction are directionally correct.
-2. Canonical design authority and Product Authority do not conflict on product-level meaning; design-only concerns retain design ownership rather than being duplicated here.
-3. The Public Campaign Detail forward probe demonstrates that Product Authority + Product Design / Brand Authority can derive FE/BE delivery and contract needs without task-specific steering.
-4. The Account Registration + Email Verification backward probe demonstrates that existing detailed specs/implementation can be reconciled without either blindly preserving or unnecessarily deleting prior work.
-5. Any product-level contradictions surfaced by those probes are resolved here rather than hidden downstream.
-6. Repository routing is updated in one deliberate promotion change so there is never an ambiguous long-lived dual authority.
+Future changes to these durable product truths require explicit Product Authority revision; downstream implementation detail must not silently redefine them.
