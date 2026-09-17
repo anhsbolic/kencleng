@@ -102,12 +102,11 @@ During the migration they are treated according to their concern:
 
 Reference does not mean incorrect. It means that the artifact does not automatically define higher-level product truth merely because it is more detailed.
 
-## Candidate documents
+## Candidate document
 
-- `product-overview.md` — whole-product purpose, actors, capability map, end-to-end journey model, trust/accountability model, progressive-delivery posture, and revalidation register.
-- `product-thesis.md` — durable product thesis and character extracted from product-design learning, including Evidence-Led Optimism, confidence before conversion, facts-first storytelling, truthful uncertainty, dignity, provenance, and accountability after fundraising.
+`product-overview.md` is the single candidate Product Authority owner for this reframe. It contains the whole-product thesis and character, actors, capability map, end-to-end journey model, trust/accountability model, progressive-delivery posture, and revalidation register.
 
-Additional product documents should be added only when a distinct durable product concern genuinely needs its own owner. Do not rebuild the old all-domain spec tree at a higher directory level.
+Do not split those concerns into parallel product-authority files merely for neatness. Add another product document only when a genuinely distinct durable concern becomes large enough to need an independent owner.
 
 ## Promotion discipline
 
