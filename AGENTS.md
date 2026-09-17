@@ -9,15 +9,28 @@ Kencleng is a sandbox donation/crowdfunding project for correctness-critical, se
 ## 1. Route to the authority that owns the concern
 
 ```text
-domain invariants / threats
+whole-product purpose / actors / concepts / durable business truth
+→ docs/product/README.md
+→ docs/product/product-overview.md
+
+current MVP inclusion / exclusion / release boundary
+→ docs/product/mvp-scope.md
+
+current MVP vertical delivery order / slice boundaries
+→ docs/product/mvp-delivery-slices.md
+
+product-design / UX / visual / asset expression
+→ docs/ui-ux/README.md
+
+reconciled domain/delivery invariants / threats
 → docs/spec/<domain-dir>/invariants.md
 → docs/spec/<domain-dir>/threat-model.md
 
-feature behavior / acceptance criteria
+reconciled feature behavior / acceptance criteria
 → docs/spec/<domain-dir>/features/*.md
 
-API contract
-→ api/README.md (routing/editing rules)
+API contract shape for the active reconciled slice
+→ api/README.md
 → api/openapi/<domain>.yaml + referenced common.yaml components
 → api/openapi.yaml only when an aggregate/generated view is needed
 
@@ -27,11 +40,8 @@ backend architecture
 frontend architecture
 → docs/project/kencleng-frontend-tech-stack.md
 
-frontend product/design/component detail
+frontend component/execution detail
 → frontend/AGENTS.md
-
-active UI/UX design authority map
-→ docs/ui-ux/README.md
 
 project status
 → docs/project/kencleng-development-tracker.md
@@ -45,9 +55,31 @@ feature lifecycle / generic engineering practice
 
 Treat this map as routing, not as an instruction to read every target in full. Start from the concern that is active, locate the authoritative section/operation/heading, follow its referenced dependencies, and expand only when the task needs broader consistency context.
 
-For API work, prefer the split source for the active domain plus only the referenced shared components from `api/openapi/common.yaml`. `api/openapi.yaml` is the generated bundled aggregate and remains useful for aggregate/cross-domain inspection and generated-client correspondence; do not load it in full by default for a domain-local task.
+### Product-first precedence
 
-For business behavior, domain invariants/threat models and feature specs are authoritative over narrative project background; the OpenAPI source owns API shape. Do not apply that precedence to unrelated concerns owned by architecture or design documents.
+Product/MVP authority owns **what should be true and what is currently in scope**. Product Design / Brand Authority owns the concrete experience/design concerns assigned to it. Delivery specs and OpenAPI own lower-level detail **after that detail has been reconciled for the active slice**.
+
+Use this direction:
+
+```text
+Product Authority + approved MVP scope/sequencing
+        +
+Product Design / Brand Authority when relevant
+        ↓
+active delivery slice
+        ↓
+domain/delivery specification
+        ↓
+shared API contract
+        ↓
+implementation
+```
+
+Existing detailed specs, OpenAPI, ERD/data-model material, migrations, tests, and code may contain valuable implementation evidence. They do **not** silently override Product/MVP authority merely because they are more detailed or already implemented.
+
+If Product/MVP truth is clear and a historical delivery artifact conflicts, treat the lower-level artifact as needing reconciliation. If Product Authority is genuinely missing a material product decision, surface that gap rather than inventing the answer in a spec, contract, or implementation.
+
+For API work, prefer the split source for the active slice/domain plus only the referenced shared components from `api/openapi/common.yaml`. `api/openapi.yaml` is the generated bundled aggregate and remains useful for aggregate/cross-domain inspection and generated-client correspondence; do not load it in full by default for a domain-local task.
 
 For frontend design work, use `docs/ui-ux/README.md` as the routing entrypoint. The active approved direction is **Sunlit Editorial / Evidence-Led Optimism**. Removed legacy design guidelines and prototype exports are historical Git evidence, not current authority.
 
@@ -60,8 +92,9 @@ If authorities genuinely conflict on the same concern, surface the contradiction
 - **SQL:** use the established parameterized `goqu` approach; never construct SQL from user-controlled values via interpolation/concatenation.
 - **Sensitive data:** never log secrets, raw tokens, or PII payloads.
 - **Client errors:** never leak stack traces, raw SQL, internal filesystem paths, or other implementation internals. Follow the applicable Problem Details contract in the OpenAPI source.
-- **PII:** follow the established encryption/HMAC storage pattern; do not invent a second convention.
+- **PII:** follow the established encryption/HMAC storage pattern while it remains applicable; do not invent a second convention casually. If an active slice materially changes the data semantics, re-evaluate the pattern explicitly rather than weakening protection.
 - **Authorization:** backend authorization checks are explicit. Frontend role gates or hidden controls are UX, not security authority.
+- **Simulation:** sandbox behavior must never be presented as real external settlement, independent verification, or real-world evidence.
 
 ## 3. File-path fencing
 
@@ -78,18 +111,22 @@ More-specific scoped `AGENTS.md` files may add protections; they must not silent
 
 If a task appears to require a protected write, surface the boundary and re-scope the work instead of routing around it.
 
-## 4. Spec / test / code authority separation
+## 4. Product / spec / contract / test / code separation
 
-An implementation agent must not change an established requirement merely to make its code pass.
+An implementation agent must not change an established higher-level requirement merely to make its code pass.
 
 Do not:
 
-- weaken a feature acceptance criterion to match implementation;
-- alter a domain invariant because code violates it;
+- use a historical domain spec to override canonical Product/MVP truth;
+- weaken an active reconciled feature acceptance criterion to match implementation;
+- alter an applicable invariant because code violates it;
 - loosen an already-approved test solely to obtain green output;
-- lower a verification threshold silently.
+- lower a verification/security threshold silently;
+- expand MVP scope because a historical feature is already implemented.
 
-If a spec or test appears wrong, report the contradiction, explain the evidence, and route the correction through the appropriate human/project authority.
+If a Product/MVP, design, spec, contract, test, or implementation artifact appears wrong, report the contradiction, explain the evidence, and route the correction through the authority that owns that concern.
+
+For an active slice, old specs/contracts/code may be classified `KEEP`, `ADAPT`, `REPLACE`, or `DEFER`. Existing work is evidence, not sunk-cost authority and not disposable by default.
 
 ## 5. Workflow authority
 
@@ -106,15 +143,24 @@ Exploration
 
 Harscode owns phase responsibilities, session/context boundaries, patch routing, reports, and generic engineering best-practices. Same-session vs fresh-session choices follow the active Harscode context/session guidance; the arrow above is lifecycle order, not a requirement that adjacent phases share a session.
 
-When manually invoking a Harscode phase, start from that phase's current canonical `workflow/*-prompt.md` entrypoint. Fill its variables and add only narrow Kencleng/task context that is not already owned by the prompt. Do not maintain a second Kencleng-authored copy of generic phase instructions.
+When manually invoking a Harscode phase, start from that phase's current canonical `workflow/*-prompt.md` entrypoint.
 
-Use `docs/kencleng-agentic-workflow.md` for Kencleng-specific orchestration such as domain sequencing, risk tiers, human authority, backend/frontend coordination, design readiness, mock-first integration, and domain finalization. Read the relevant section(s); it is not mandatory startup prose for every phase.
+For CRTV and normal new work, use the canonical kickoff with its normal variables/context. Do **not** add a task-specific solution-steering prompt that tells the agent which authorities, gaps, or conclusions it is supposed to discover. Repository authority and the task reference should be sufficient; inability to discover derivable information is validation evidence.
+
+Use `docs/kencleng-agentic-workflow.md` for Kencleng-specific orchestration such as MVP slice sequencing, risk tiers, human authority, backend/frontend coordination, design readiness, mock-first integration, and delivery/finalization. Read the relevant section(s); it is not mandatory startup prose for every phase.
 
 Older feature/task docs may contain numeric section references to previous workflow revisions. Follow the current named rule/source owner rather than reviving superseded policy from an old `§NN` reference.
 
 ## 6. Scope and directory boundaries
 
 Work on one coherent Harscode work unit at a time. Do not combine unrelated changes merely because they are nearby.
+
+For the current MVP, the approved scope and sequencing live in:
+
+- `docs/product/mvp-scope.md`;
+- `docs/product/mvp-delivery-slices.md`.
+
+Historical numbered domain order is not the current MVP delivery order.
 
 Backend and frontend production writes remain separate by default:
 
@@ -146,7 +192,7 @@ Distinguish `verified`, `assumed`, `deferred`, and `not tested`. A known materia
 
 A behavior-changing PR must identify:
 
-- **Scope:** feature/spec/task fulfilled.
+- **Scope:** active product slice/spec/task fulfilled.
 - **Verification:** commands/checks actually run.
 - **Risk note:**
 
@@ -166,7 +212,9 @@ Human approval is required where defined for:
 
 - Tier-0 implementation;
 - Tier-1 merge/review;
-- product/domain contract changes;
+- durable Product Authority changes;
+- current MVP scope/sequencing changes;
+- product/domain contract changes where the owning authority requires it;
 - protected spec/test changes;
 - brand-defining visual assets;
 - material `OPEN` product/design decisions;
@@ -177,6 +225,6 @@ An agent must not approve its own work where independent human authority is requ
 
 ## 10. One-off docs and generated artifacts
 
-One-off setup/playbook documents, when present, are on-demand context only. They do not override canonical specs, architecture/design authorities, root/scoped `AGENTS.md`, or Harscode workflow.
+One-off setup/playbook documents, when present, are on-demand context only. They do not override canonical Product/MVP authority, canonical design authority, reconciled delivery specs/contracts, architecture, root/scoped `AGENTS.md`, or Harscode workflow.
 
 Generated exploration, techplan, build, review, testing, and PR artifacts are task evidence/history, not automatically project-wide precedent. Promote reusable truth into the source that owns that concern.
