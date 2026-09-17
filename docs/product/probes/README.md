@@ -53,8 +53,26 @@ Probe 01 therefore provides positive evidence that the new hierarchy can derive 
 
 ### Probe 02 — Account Registration + Email Verification
 
-**READY TO START**
+**IN PROGRESS — backward reconciliation complete enough for a human product decision**
 
-This backward-reconciliation probe starts from current Product Authority and derives the simplest correct registration/email-verification outcome before comparing it against the existing Account specs, OpenAPI, backend implementation, migrations, and tests.
+Artifact:
 
-Its goal is to classify existing Account work as `KEEP`, `ADAPT`, `REPLACE`, or `DEFER` and provide evidence for the backend soft-reset decision.
+- `02-account-registration-email-verification.md`
+
+Key findings:
+
+- the core registration/email-verification security work is valuable and mostly reusable;
+- allowing login before email verification is directionally correct when verification is enforced only at capabilities that genuinely depend on proof of email control;
+- the existing generic `202` registration behavior, anti-enumeration intent, transactional/concurrency guards, single-use token mechanics, PII protection, and applicable tests are strong `KEEP` candidates;
+- the Account Login spec contains stale cross-domain wording that implies authenticated donation requires verified email, while the Donation submission spec does not impose that requirement;
+- guest-donation claim correctly depends on verified control of the matching email because email ownership is the authorization fact for that capability;
+- the current `User.email_verified` boolean means "some `email_password` identity is verified", which becomes ambiguous because Account Linking permits an `email_password` identity whose email differs from `User.primary_email`;
+- this ambiguity can cause a consumer to treat the canonical/primary email as verified when only a different login-identity email was actually verified;
+- whole-backend reset and Account clean-room rewrite are not supported by current evidence;
+- a **scoped Account semantic reset** is recommended around canonical account email, authentication-identity identifiers, and verified-email semantics while preserving surviving security/correctness work.
+
+Current human product decision gate:
+
+> A Kencleng account has one canonical account/contact email. "Verified email" for cross-product capabilities means verified control of that canonical email, not merely that some authentication identity has a verified email identifier. Adding/changing an authentication method must not silently change the canonical account email; changing the canonical email is an explicit, verified account action.
+
+If approved, Probe 02 can be marked PASS and the backend soft-reset decision can be closed as **no whole-backend reset; scoped Account semantic adaptation only**.
