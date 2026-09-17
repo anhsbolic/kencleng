@@ -1,9 +1,8 @@
 # Kencleng — MVP Delivery Slices
 
-> Status: **Candidate delivery sequencing — human review required**
-> Created: 2026-09-17
+> Status: **Approved MVP Delivery Sequencing — 2026-09-17**
 > Upstream release scope: `docs/product/mvp-scope.md`
-> Whole-product authority candidate: `docs/product/product-overview.md`
+> Whole-product authority: `docs/product/product-overview.md`
 > Product Design / Brand authority: canonical `docs/ui-ux/`
 >
 > This document sequences the approved MVP scope into vertical delivery slices. It does not define endpoint names, database schemas, frontend component trees, or final technical architecture. Those are derived slice-by-slice through Exploration, FE/BE delivery planning, and contract reconciliation.
@@ -385,7 +384,7 @@ Old contracts outside the active slice remain reference material until their tur
 
 ## 11. CRTV relationship
 
-These slices are intended to become real Continuous Real-Task Validation inputs for Harscode after Product Authority/routing promotion is complete.
+These slices become real Continuous Real-Task Validation inputs for Harscode after Product Authority/routing promotion is complete.
 
 When CRTV begins for a slice:
 
@@ -397,10 +396,12 @@ When CRTV begins for a slice:
 
 This document defines product delivery sequencing; it must not become a replacement for the Harscode workflow.
 
-## 12. Human review gate
+## 12. Approval checkpoint
 
-Confirm or revise the proposed delivery order:
+Human approval: **2026-09-17**.
 
-> **Slice 1 Public Campaign Understanding → Slice 2 Guest Donation + Truthful Donation State → Slice 3 Campaign Closure + Persistent Public Result → Slice 4 Accountability Follow-up. Account is outside the baseline MVP critical path and is resumed only when a real scoped capability requires it.**
+Approved order:
 
-If approved, the remaining authority-reframe work should focus on repository routing/promotion and preparing Slice 1 as the first real post-promotion CRTV task.
+> **Slice 1 Public Campaign Understanding → Slice 2 Guest Donation + Truthful Donation State → Slice 3 Campaign Closure + Persistent Public Result → Slice 4 Accountability Follow-up. Account remains outside the baseline MVP critical path and resumes only when a real scoped capability requires it.**
+
+With this approval, conceptual MVP sequencing is closed. Remaining reframe work is repository authority promotion/routing, followed by Slice 1 as the first real post-promotion CRTV task.
