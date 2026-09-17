@@ -1,7 +1,7 @@
 # Kencleng — Product Authority
 
 > Status: **Candidate — not yet canonical**
-> Promotion gate: human review plus successful forward/backward slice probes
+> Promotion gate: human review plus sufficient forward/backward validation and deliberate repository-routing promotion
 > Purpose: Own Kencleng product/business truth independently of frontend/backend decomposition while preserving the canonical Product Design / Brand Authority as a peer upstream input to delivery.
 
 This directory is being introduced as part of the Product Authority reframe recorded in:
@@ -102,11 +102,39 @@ During the migration they are treated according to their concern:
 
 Reference does not mean incorrect. It means that the artifact does not automatically define higher-level product truth merely because it is more detailed.
 
-## Candidate document
+## Candidate whole-product document
 
 `product-overview.md` is the single candidate Product Authority owner for this reframe. It contains the whole-product thesis and character, actors, capability map, end-to-end journey model, trust/accountability model, progressive-delivery posture, and revalidation register.
 
-Do not split those concerns into parallel product-authority files merely for neatness. Add another product document only when a genuinely distinct durable concern becomes large enough to need an independent owner.
+Do not split those concerns into parallel product-authority files merely for neatness. Add another product document only when a genuinely distinct concern needs separate ownership.
+
+## MVP scope is a separate concern
+
+`mvp-scope.md` is the candidate **time-bounded release-scope decision** for the first MVP iteration.
+
+It does not redefine whole-product truth and must not compete with `product-overview.md`.
+
+Relationship:
+
+```text
+product-overview.md
+→ what Kencleng is / durable whole-product truth
+
+mvp-scope.md
+→ what subset we deliberately prove first
+```
+
+The current MVP draft prioritizes one complete public trust loop over broad platform automation:
+
+```text
+truthful campaign understanding
+→ guest donation
+→ truthful donation state
+→ campaign closure
+→ persistent result/accountability follow-up
+```
+
+Account and operational breadth are included only when required to make that loop real, safe, and coherent.
 
 ## Promotion discipline
 
@@ -114,6 +142,7 @@ The candidate Product Authority should be promoted only after:
 
 1. human review confirms that the whole-product model and product thesis represent the Kencleng we actually intend to build;
 2. a forward slice demonstrates that Product + Design authorities can derive coherent FE/BE delivery needs and a shared contract without task-specific steering;
-3. a backward slice demonstrates that existing detailed specs/code can be reconciled as evidence rather than blindly preserved or discarded;
+3. backward reconciliation demonstrates that existing detailed specs/code can be treated as evidence rather than blindly preserved or discarded;
 4. contradictions between product and design assumptions are resolved explicitly;
-5. root/scoped routing is updated deliberately so there is no long-lived dual authority.
+5. the current MVP scope is reviewed far enough that delivery is not driven by historical domain breadth;
+6. root/scoped routing is updated deliberately so there is no long-lived dual authority.
