@@ -15,7 +15,7 @@ A probe may identify product, design, contract, or implementation gaps. Its conc
 
 `docs/product/product-overview.md` has been reviewed by the human product authority and is directionally accepted as the Kencleng product model for validation purposes.
 
-It remains non-canonical until the forward/backward probes complete and repository routing is deliberately promoted.
+It remains non-canonical until the forward/backward validation is complete enough and repository routing is deliberately promoted.
 
 ### Probe 01 — Public Campaign Detail
 
@@ -53,26 +53,37 @@ Probe 01 therefore provides positive evidence that the new hierarchy can derive 
 
 ### Probe 02 — Account Registration + Email Verification
 
-**IN PROGRESS — backward reconciliation complete enough for a human product decision**
+**PAUSED / REFRAMED — useful backward-reconciliation evidence, but Account scope must now be reconsidered through the MVP definition first**
 
 Artifact:
 
 - `02-account-registration-email-verification.md`
 
-Key findings:
+The probe remains valuable evidence. It found that:
 
 - the core registration/email-verification security work is valuable and mostly reusable;
 - allowing login before email verification is directionally correct when verification is enforced only at capabilities that genuinely depend on proof of email control;
 - the existing generic `202` registration behavior, anti-enumeration intent, transactional/concurrency guards, single-use token mechanics, PII protection, and applicable tests are strong `KEEP` candidates;
 - the Account Login spec contains stale cross-domain wording that implies authenticated donation requires verified email, while the Donation submission spec does not impose that requirement;
 - guest-donation claim correctly depends on verified control of the matching email because email ownership is the authorization fact for that capability;
-- the current `User.email_verified` boolean means "some `email_password` identity is verified", which becomes ambiguous because Account Linking permits an `email_password` identity whose email differs from `User.primary_email`;
-- this ambiguity can cause a consumer to treat the canonical/primary email as verified when only a different login-identity email was actually verified;
+- the current `User.email_verified` / `primary_email` / auth-identity relationship is semantically ambiguous once provider identifiers can diverge;
 - whole-backend reset and Account clean-room rewrite are not supported by current evidence;
-- a **scoped Account semantic reset** is recommended around canonical account email, authentication-identity identifiers, and verified-email semantics while preserving surviving security/correctness work.
+- if Account continues with the previous breadth, a scoped semantic reset would be required around canonical account email, authentication identities, and verification meaning.
 
-Current human product decision gate:
+However, the probe also exposed a more upstream problem: previous Account planning was too technical-first and may include feature breadth that the first Kencleng MVP does not need at all.
 
-> A Kencleng account has one canonical account/contact email. "Verified email" for cross-product capabilities means verified control of that canonical email, not merely that some authentication identity has a verified email identifier. Adding/changing an authentication method must not silently change the canonical account email; changing the canonical email is an explicit, verified account action.
+Therefore the previous human decision gate about canonical email is **not being promoted yet**. The project intentionally moved one level up first to define the MVP product loop.
 
-If approved, Probe 02 can be marked PASS and the backend soft-reset decision can be closed as **no whole-backend reset; scoped Account semantic adaptation only**.
+Current upstream artifact:
+
+- `../mvp-scope.md` — **Candidate MVP Scope — human review required**
+
+The next Account question is no longer:
+
+> How should we repair the full existing Account model?
+
+It is:
+
+> What Account capability, if any, is actually required to complete the approved MVP trust loop safely and coherently?
+
+After MVP scope is approved, Probe 02 should be revisited as a narrower backward-reconciliation exercise. Existing security/correctness work remains salvage evidence even if much of the historical Account feature breadth is deferred.
