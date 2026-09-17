@@ -104,6 +104,17 @@ Reference does not mean incorrect. It means that the artifact does not automatic
 
 ## Candidate documents
 
-- `product-overview.md` — whole-product thesis, character, actors, capability map, end-to-end journey model, trust/accountability model, and revalidation register.
+- `product-overview.md` — whole-product purpose, actors, capability map, end-to-end journey model, trust/accountability model, progressive-delivery posture, and revalidation register.
+- `product-thesis.md` — durable product thesis and character extracted from product-design learning, including Evidence-Led Optimism, confidence before conversion, facts-first storytelling, truthful uncertainty, dignity, provenance, and accountability after fundraising.
 
 Additional product documents should be added only when a distinct durable product concern genuinely needs its own owner. Do not rebuild the old all-domain spec tree at a higher directory level.
+
+## Promotion discipline
+
+The candidate Product Authority should be promoted only after:
+
+1. human review confirms that the whole-product model and product thesis represent the Kencleng we actually intend to build;
+2. a forward slice demonstrates that Product + Design authorities can derive coherent FE/BE delivery needs and a shared contract without task-specific steering;
+3. a backward slice demonstrates that existing detailed specs/code can be reconciled as evidence rather than blindly preserved or discarded;
+4. contradictions between product and design assumptions are resolved explicitly;
+5. root/scoped routing is updated deliberately so there is no long-lived dual authority.
