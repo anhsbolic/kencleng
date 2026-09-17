@@ -1,62 +1,38 @@
 # Kencleng — Product Authority
 
 > Status: **Candidate — not yet canonical**
-> Promotion gate: human review plus sufficient forward/backward validation and deliberate repository-routing promotion
-> Purpose: Own Kencleng product/business truth independently of frontend/backend decomposition while preserving the canonical Product Design / Brand Authority as a peer upstream input to delivery.
+> Promotion gate: human-reviewed whole-product model, validated product hierarchy, approved MVP scope, and deliberate repository-routing promotion.
+> Purpose: Own Kencleng product/business truth independently of frontend/backend decomposition while preserving canonical Product Design / Brand Authority as a peer upstream input.
 
-This directory is being introduced as part of the Product Authority reframe recorded in:
+This directory is part of the Product Authority reframe recorded in:
 
 `docs/project/kencleng-product-authority-reframe-audit.md`
 
-Until this candidate is explicitly promoted, the current repository authorities remain operational. The candidate must therefore not be used to silently override existing specs/contracts during the migration.
+Until this candidate is explicitly promoted, current repository authorities remain operational. Candidate product material must not silently override existing specs/contracts during migration.
 
-## Intended authority boundary
+## Authority boundary
 
-When promoted, Product Authority will own:
+When promoted, Product Authority owns durable product/business truth such as:
 
 - product purpose and boundaries;
-- product thesis and durable product character;
-- actors/personas in business terms;
-- major capabilities;
-- end-to-end user/business journeys;
+- product thesis and character;
+- actors/personas;
+- major capabilities and end-to-end journeys;
 - core business concepts and relationships;
 - major lifecycle semantics;
-- durable business permissions and invariants;
-- trust/accountability semantics at product level;
+- durable permissions/invariants;
+- trust/accountability semantics;
 - material unresolved product questions.
 
-It will **not** own implementation decomposition such as:
+It does **not** own implementation decomposition such as routes/components, endpoint names, exact request/response fields, database design, package boundaries, framework mechanisms, low-level security implementation, or concrete visual-system rules.
 
-- route/component structure;
-- frontend folder/component architecture;
-- endpoint/method names;
-- exact request/response fields;
-- database/table/column design;
-- package/module boundaries;
-- framework-specific mechanisms;
-- low-level transaction/locking/crypto implementation;
-- exact typography, colors, spacing, composition, iconography, illustration system, or other concrete visual-system rules.
+Those concerns are derived through design, delivery, architecture, contract, and implementation authorities.
 
-Those concerns are derived later through design, delivery, architecture, and contract authorities.
+## Product Authority and Product Design / Brand Authority
 
-## Product Authority and Product Design / Brand Authority are peer upstream inputs
+Canonical design sources under `docs/ui-ux/` remain active authorities for product experience and visual expression.
 
-The September 2026 design work demonstrated that design exploration can surface durable product insight, not merely visual choices.
-
-Canonical design sources such as:
-
-- `docs/ui-ux/product-design-principles.md`;
-- `docs/ui-ux/brand-product-ui-brief.md`;
-- `docs/ui-ux/page-map.md`;
-- `docs/ui-ux/patterns.md`;
-- `docs/ui-ux/design-guidelines.md`;
-- `docs/ui-ux/asset-governance.md`;
-
-remain active authorities for their design/experience concerns.
-
-Some design discoveries are also durable product character — for example Evidence-Led Optimism, confidence before conversion, dignity over pity, trust through ordered evidence, and accountability continuing after donation. Those product-level implications belong in Product Authority, while their concrete experience and visual expression remains owned by `docs/ui-ux/`.
-
-The target relationship is therefore not a one-way `product → design` chain. Both product/business truth and canonical product-design/brand authority constrain a delivery slice:
+Product/business truth and Product Design / Brand Authority are peer upstream inputs to delivery:
 
 ```text
               KENCLENG PRODUCT
@@ -85,34 +61,32 @@ Authority                 Authority
         when real evidence warrants
 ```
 
-Design must not invent business truth. Product Authority must also not flatten away durable product insight merely because that insight was discovered during design exploration.
+Design must not invent business truth. Product Authority must not discard durable product insight merely because it was discovered during design exploration.
 
 ## Relationship to existing material
 
-Existing artifacts are not discarded.
+During the migration:
 
-During the migration they are treated according to their concern:
+- project/business/phase docs → product-source evidence;
+- `docs/ui-ux/` → active Product Design / Brand Authority plus explicit product discoveries;
+- `docs/spec/<domain>/...` → delivery/domain reference pending slice-by-slice reconciliation;
+- `api/openapi/` → shared-contract reference pending slice-by-slice reconciliation;
+- ERD/data-model docs → technical reference;
+- backend/frontend code, tests, migrations, and Harscode artifacts → implementation/workflow evidence.
 
-- `docs/project/kencleng-business-process-overview.md`, `kencleng-actors-entities.md`, and product portions of phase docs → **product-source evidence**;
-- `docs/ui-ux/` → **active Product Design / Brand Authority** plus a source of product discoveries when explicitly promoted into Product Authority;
-- `docs/spec/<domain>/...` → **domain/delivery reference pending slice-by-slice reconciliation**;
-- `api/openapi/` → **shared-contract reference pending slice-by-slice reconciliation**;
-- `kencleng-erd.md` → **technical/data-model reference**;
-- current backend/frontend code, tests, migrations, and Harscode artifacts → **implementation/workflow evidence**.
+Reference does not mean incorrect. It means the artifact does not automatically define higher-level product truth merely because it is more detailed.
 
-Reference does not mean incorrect. It means that the artifact does not automatically define higher-level product truth merely because it is more detailed.
+## Whole-product authority candidate
 
-## Candidate whole-product document
+`product-overview.md` is the single candidate owner for durable whole-product truth in this reframe.
 
-`product-overview.md` is the single candidate Product Authority owner for this reframe. It contains the whole-product thesis and character, actors, capability map, end-to-end journey model, trust/accountability model, progressive-delivery posture, and revalidation register.
+It contains the product thesis, character, actors, capability map, connected journey, trust/accountability model, progressive-delivery posture, and revalidation register.
 
-Do not split those concerns into parallel product-authority files merely for neatness. Add another product document only when a genuinely distinct concern needs separate ownership.
+Do not split those concerns into parallel product-authority files without a genuinely distinct ownership need.
 
-## MVP scope is a separate concern
+## Approved MVP release scope
 
-`mvp-scope.md` is the candidate **time-bounded release-scope decision** for the first MVP iteration.
-
-It does not redefine whole-product truth and must not compete with `product-overview.md`.
+`mvp-scope.md` is the **approved time-bounded release scope** for the first MVP iteration.
 
 Relationship:
 
@@ -124,7 +98,9 @@ mvp-scope.md
 → what subset we deliberately prove first
 ```
 
-The current MVP draft prioritizes one complete public trust loop over broad platform automation:
+Human approval: **2026-09-17**.
+
+The approved MVP prioritizes one complete public trust loop:
 
 ```text
 truthful campaign understanding
@@ -134,15 +110,43 @@ truthful campaign understanding
 → persistent result/accountability follow-up
 ```
 
-Account and operational breadth are included only when required to make that loop real, safe, and coherent.
+Account and operational breadth enter MVP only when required to make that loop real, safe, and coherent. Security remains a non-negotiable floor without turning every future security feature into an MVP requirement.
+
+## MVP delivery sequencing
+
+`mvp-delivery-slices.md` is the current **candidate sequencing artifact** derived from the approved MVP scope.
+
+It proposes:
+
+```text
+Slice 1 — Public Campaign Understanding
+→ Slice 2 — Guest Donation + Truthful Donation State
+→ Slice 3 — Campaign Closure + Persistent Public Result
+→ Slice 4 — Accountability Follow-up
+```
+
+This sequencing is vertical and product-loop-driven, not domain-order-driven.
+
+Account is outside the baseline MVP critical path unless real slice exploration proves an enabling dependency.
+
+## Validation evidence
+
+`probes/` contains validation evidence rather than authority.
+
+- Probe 01 — Public Campaign Detail: **PASS**; demonstrated forward derivation and narrow contract reconciliation.
+- Probe 02 — Account Registration + Email Verification: **PAUSED / REFRAMED**; useful backward-reconciliation evidence, but historical Account breadth is no longer allowed to drive MVP scope.
+
+Probe 02's security/correctness findings remain salvage evidence for a future Account-dependent slice.
 
 ## Promotion discipline
 
-The candidate Product Authority should be promoted only after:
+The Product Authority candidate should be promoted only after:
 
-1. human review confirms that the whole-product model and product thesis represent the Kencleng we actually intend to build;
-2. a forward slice demonstrates that Product + Design authorities can derive coherent FE/BE delivery needs and a shared contract without task-specific steering;
-3. backward reconciliation demonstrates that existing detailed specs/code can be treated as evidence rather than blindly preserved or discarded;
-4. contradictions between product and design assumptions are resolved explicitly;
-5. the current MVP scope is reviewed far enough that delivery is not driven by historical domain breadth;
-6. root/scoped routing is updated deliberately so there is no long-lived dual authority.
+1. human review confirms the whole-product model;
+2. forward validation demonstrates Product + Design can derive coherent delivery needs;
+3. backward reconciliation demonstrates detailed specs/code can be treated as evidence rather than blindly preserved/discarded;
+4. product/design contradictions are explicitly resolved;
+5. approved MVP scope prevents historical domain breadth from driving delivery;
+6. repository root/scoped routing is deliberately updated so no long-lived dual authority remains.
+
+After promotion, real MVP slices should resume CRTV against Harscode `main` through the canonical Exploration kickoff without custom solution-steering prompts.
