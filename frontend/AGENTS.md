@@ -36,17 +36,34 @@ Canonical component governance: `components/README.md`.
 
 The previous frontend product implementation was intentionally retired. Git history is archive/evidence, not current implementation precedent. During the reboot/readiness window, follow `../docs/project/frontend-reboot-plan.md`; after the clean baseline is frozen, normal Harscode feature development resumes.
 
-## 2. Business and API authority
+## 2. Product, business, and API authority
 
-Frontend is not business authority.
+Frontend is not product/business authority.
+
+Start from the active product slice:
+
+```text
+../docs/product/product-overview.md
++ ../docs/product/mvp-scope.md
++ ../docs/product/mvp-delivery-slices.md
++ relevant ../docs/ui-ux authority
+        ↓
+reconciled delivery/domain spec
+        ↓
+reconciled API contract
+        ↓
+frontend implementation
+```
 
 Do not recreate backend decisions for money, eligibility, permissions, verification, lifecycle transitions, or financial validity.
 
+Do not let an old domain spec or OpenAPI shape silently override canonical Product/MVP truth. Existing contracts/code are evidence until reconciled for the active slice.
+
 Client validation, presentation logic, formatting, interaction state, and derived presentation values are legitimate frontend responsibilities.
 
-If required product information is missing from the API/spec, surface the contract gap instead of inventing business behavior in React.
+If required **product meaning** is missing, surface the Product Authority gap. If product meaning is clear but API/spec data is missing, surface the delivery/contract gap instead of inventing business behavior in React.
 
-API request/response shape comes from generated OpenAPI types based on the canonical OpenAPI sources. Do not maintain parallel handwritten API models for shapes the contract already owns.
+API request/response shape comes from generated OpenAPI types based on the reconciled canonical OpenAPI sources. Do not maintain parallel handwritten API models for shapes the contract already owns.
 
 For contract inspection, start with `../api/README.md`, then prefer the active domain source (`../api/openapi/<domain>.yaml`) plus only the referenced components from `../api/openapi/common.yaml`. Use the bundled `../api/openapi.yaml` when an aggregate/cross-domain view or generated-client correspondence is actually needed; do not load the whole bundle by default for a domain-local task.
 
@@ -135,7 +152,7 @@ For material UI work classify design readiness according to `../docs/ui-ux/produ
 ```text
 READY   → implement established intent directly
 PARTIAL → resolve ordinary presentation gaps autonomously from established authority
-OPEN    → distinguish material design ambiguity from missing product/domain truth
+OPEN    → distinguish material design ambiguity from missing product truth
 ```
 
 Use this decision path:
@@ -154,10 +171,14 @@ material design ambiguity
 → obtain human decision when material
 → implement
 
-missing product/domain truth
-→ surface the authority gap
-→ resolve owning spec/contract
+missing durable product/MVP truth
+→ surface the Product Authority gap
+→ resolve in ../docs/product/
 → do not invent it in frontend code
+
+product truth clear but delivery/contract data missing
+→ surface owning spec/API gap
+→ do not invent backend semantics in frontend code
 ```
 
 Low-fidelity alternatives may be textual, diagrammatic, or wireframe-like. They exist to resolve meaningful hierarchy/interaction choices, not to create approval ceremony. Do not stop for routine micro-decisions already governed by current design authority.
@@ -229,7 +250,7 @@ Use it for the approved:
 
 Bootstrap `app/globals.css`, package availability, Git history, or incidental implementation choices are not higher visual authority. New production tokens/components are derived deliberately from current design authority and real usage; do not rebuild the retired token/component taxonomy for compatibility.
 
-Visual-system semantics are not permission to invent business behavior. Domain/API truth remains authoritative for what a status, report, verification state, amount, or outcome actually means.
+Visual-system semantics are not permission to invent business behavior. Product/MVP truth plus the reconciled domain/API contract remain authoritative for what a status, report, verification state, amount, or outcome actually means.
 
 ## 9. Selected visual references
 
@@ -245,7 +266,7 @@ Do not treat those references as product/domain truth, component architecture, r
 
 When a concern is concretely owned by `design-guidelines.md`, the guideline owns reusable system behavior and the images remain supporting visual evidence.
 
-If a visual detail conflicts with domain/API truth, domain/API truth wins.
+If visual evidence conflicts with canonical Product/MVP truth or a reconciled domain/API fact, the owning semantic authority wins.
 
 ## 10. Rendered iteration and human acceptance
 
@@ -323,6 +344,7 @@ Do not claim any verification that was not actually run.
 
 - frontend role-aware rendering does not provide authorization security;
 - backend authorization remains authoritative;
+- public-facing fields must come from deliberate public-safe contracts, not raw internal models;
 - never expose secrets, raw tokens, or PII through logs/debug UI;
 - follow root `AGENTS.md` for security/fencing rules.
 
@@ -332,34 +354,37 @@ Harscode owns the generic feature lifecycle and generic frontend engineering pra
 
 During frontend reboot preparation, do **not** manufacture Exploration/Techplan/Build artifacts for the reset itself. The reboot is project preparation/maintenance governed by `../docs/project/frontend-reboot-plan.md`.
 
-After the clean reboot baseline is verified/frozen, when manually invoking a Harscode phase, start from the current canonical Harscode `workflow/*-prompt.md` entrypoint. Fill its variables and add only narrow task/project context that is not already owned there. Do not create a parallel frontend copy of the Harscode lifecycle prompts.
+After the clean reboot baseline is verified/frozen, when manually invoking a Harscode phase, start from the current canonical Harscode `workflow/*-prompt.md` entrypoint. Fill its normal variables/context. Do not create a parallel frontend copy of the Harscode lifecycle prompts or add solution-steering instructions that tell the agent what repository conclusions to discover.
 
-`../docs/kencleng-agentic-workflow.md` owns Kencleng-specific sequencing, risk/human authority, integration states, and domain delivery. Read the specific project-precondition/risk/integration section needed for the current decision; the full orchestration overlay is not a default per-phase read.
+`../docs/kencleng-agentic-workflow.md` owns Kencleng-specific MVP slice sequencing, risk/human authority, and integration states. Read the specific project-precondition/risk/integration section needed for the current decision; the full orchestration overlay is not a default per-phase read.
 
 For Codex frontend work, `../docs/project/codex-frontend-execution-profile.md` owns project-specific model/reasoning/client/capability routing. Read the routing section(s) needed to choose or reconsider the current execution capability; do not repeatedly reload unrelated rendered-acceptance/Playwright rationale that is already enforced here.
 
-Historical feature/task/local-agent docs may contain older workflow/design assumptions. Treat the **current named rule/source owner** as authoritative rather than inferring policy from historical artifacts.
+Historical feature/task/local-agent docs may contain older workflow/design/domain-order assumptions. Treat the **current named rule/source owner** as authoritative rather than inferring policy from historical artifacts.
 
 ## 14. Source routing
 
 ```text
-business/domain behavior  → ../docs/spec/<domain-dir>/
-API shape                 → ../api/README.md → ../api/openapi/<domain>.yaml + referenced common.yaml components
-aggregate API view        → ../api/openapi.yaml only when cross-domain/generated-bundle context is needed
-cross-stack dependency map→ ../docs/project/kencleng-integration-map.md when a frontend surface crosses/depends on backend capabilities
-frontend architecture     → ../docs/project/kencleng-frontend-tech-stack.md (active concern sections)
-frontend reboot gate      → ../docs/project/frontend-reboot-plan.md (pre-development only)
-Codex execution profile   → ../docs/project/codex-frontend-execution-profile.md (current routing concern)
-UI/UX authority map       → ../docs/ui-ux/README.md
-product-design authority  → ../docs/ui-ux/product-design-principles.md
-brand/product UI direction→ ../docs/ui-ux/brand-product-ui-brief.md
-visual system             → ../docs/ui-ux/design-guidelines.md
-UX behavior               → ../docs/ui-ux/patterns.md (matching pattern)
-asset governance          → ../docs/ui-ux/asset-governance.md
-route/persona inventory   → ../docs/ui-ux/page-map.md (matching route/persona)
-selected visual evidence  → ../docs/ui-ux/visual-references/selected-direction/
-component contracts       → components/README.md, when broad contracts exist
-project status            → ../docs/project/kencleng-development-tracker.md
+whole-product truth        → ../docs/product/README.md → ../docs/product/product-overview.md
+current MVP boundary       → ../docs/product/mvp-scope.md
+current MVP slice          → ../docs/product/mvp-delivery-slices.md
+reconciled domain behavior → ../docs/spec/<domain-dir>/
+API shape                  → ../api/README.md → ../api/openapi/<domain>.yaml + referenced common.yaml components
+aggregate API view         → ../api/openapi.yaml only when cross-domain/generated-bundle context is needed
+cross-stack dependency map → ../docs/project/kencleng-integration-map.md when a surface crosses/depends on backend capabilities
+frontend architecture      → ../docs/project/kencleng-frontend-tech-stack.md (active concern sections)
+frontend reboot gate       → ../docs/project/frontend-reboot-plan.md (pre-development only)
+Codex execution profile    → ../docs/project/codex-frontend-execution-profile.md (current routing concern)
+UI/UX authority map        → ../docs/ui-ux/README.md
+product-design authority   → ../docs/ui-ux/product-design-principles.md
+brand/product UI direction → ../docs/ui-ux/brand-product-ui-brief.md
+visual system              → ../docs/ui-ux/design-guidelines.md
+UX behavior                → ../docs/ui-ux/patterns.md (matching pattern)
+asset governance           → ../docs/ui-ux/asset-governance.md
+route/persona inventory    → ../docs/ui-ux/page-map.md (matching route/persona)
+selected visual evidence   → ../docs/ui-ux/visual-references/selected-direction/
+component contracts        → components/README.md, when broad contracts exist
+project status             → ../docs/project/kencleng-development-tracker.md
 ```
 
 This is a clue map, not a checklist of documents to preload. If authorities genuinely conflict on the same concern, surface the contradiction.
