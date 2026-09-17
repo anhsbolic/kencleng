@@ -2,25 +2,158 @@
 
 > Status: **Candidate Product Authority — not yet canonical**
 > Created: 2026-09-17
+> Updated: 2026-09-17 — Design-to-Product reconciliation pass
 > Scope: Whole-product business/product model at deliberately lower resolution than delivery specifications.
-> Source basis: existing business-process, actor/entity, phase, design/page-map, domain-spec, API, and implementation evidence. Detailed old decisions are not automatically promoted here.
+> Source basis: existing business-process, actor/entity, phase, design/page-map, domain-spec, API, implementation, and September 2026 product-brand exploration evidence. Detailed old decisions are not automatically promoted here.
 
-## 1. Product purpose
+## 1. Product thesis
 
-Kencleng is a sandbox donation/crowdfunding product centered on Indonesian non-profit organizations, public fundraising campaigns, donations, and post-campaign accountability.
+Kencleng is an evidence-led donation/crowdfunding product centered on Indonesian non-profit organizations, public fundraising campaigns, donations, and post-campaign accountability.
 
-The product exists both as a usable product model and as a realistic learning environment for full-stack, correctness-conscious development. The sandbox nature allows payment/disbursement infrastructure to be simulated where appropriate, but simulation must not weaken the product's truthfulness around money, identity, lifecycle state, or evidence.
+Its core product thesis is:
 
-At product level, Kencleng aims to let people:
+> **Evidence-Led Optimism**
 
-- understand who is organizing a campaign and what the campaign is for;
-- donate with clear consequences and without requiring an account when the product permits guest participation;
-- distinguish funding progress from later operational/accountability claims;
-- follow what happened after fundraising rather than treating payment as the end of the relationship;
-- let organizations raise funds through an explicit lifecycle with curation/accountability gates;
-- let platform roles perform review/administration without collapsing distinct verification concepts into a generic trust badge.
+Supporting phrase:
 
-## 2. Product boundary
+> **Hope, structured by evidence.**
+
+The desired product sequence is:
+
+```text
+evidence
+→ confidence
+→ optimism
+→ action
+→ continued understanding after action
+```
+
+Kencleng should help people act because they understand enough to make a considered decision — not because the interface manufactures urgency, guilt, symbolic trust, or emotional pressure.
+
+The product should remain useful as a realistic full-stack learning environment, but the sandbox nature must not weaken truthfulness around money, identity, lifecycle state, evidence, or accountability.
+
+## 2. Product character
+
+The following characteristics were discovered and validated during the September 2026 Product Brand + UI exploration. They are not merely visual adjectives; they constrain product behavior and communication.
+
+### Thoughtful
+
+Kencleng gives users enough context to understand consequential decisions. It does not rush emotionally or financially sensitive actions.
+
+### Candid
+
+Unknown, pending, delayed, changed, rejected, incomplete, or not-yet-reported information may remain visible as such. The product should not replace uncertainty with optimistic inference.
+
+### Composed
+
+Difficult content, money, verification, privacy, and negative states are communicated calmly and specifically rather than dramatized.
+
+### Human
+
+Real people and real context matter. Campaign participants must retain dignity, privacy, agency, and context rather than becoming conversion assets.
+
+### Optimistic
+
+Kencleng can show possibility, participation, progress, and constructive next steps without promising outcomes it cannot prove.
+
+### Refined but accessible
+
+The product should feel intentional and trustworthy without becoming exclusive, institutional-financial, intimidating, or sterile.
+
+## 3. Durable product principles discovered through design
+
+These principles sit at the product layer. Their exact UI expression remains owned by `docs/ui-ux/`.
+
+### 3.1 Confidence before conversion
+
+Donation is a consequential user decision, not a conversion event to maximize.
+
+Before donation becomes the dominant next action, users should be able to understand enough relevant context about the campaign, steward, funding state, and available accountability information to make an informed decision.
+
+### 3.2 Facts first, story with them
+
+Preferred model:
+
+> **facts that have a story**
+
+Not:
+
+> story decorated with selective facts.
+
+Campaign storytelling may provide human context, but it must not obscure or selectively reshape the facts that matter to the user's decision.
+
+### 3.3 Trust comes from structure, not trust theatre
+
+Trust should emerge through ordered truth, provenance, chronology, clear status meaning, consistent behavior, and respectful transparency.
+
+Badges, colors, icons, and certification-like language must not substitute for the actual facts the platform possesses.
+
+Working trust equation from the design exploration:
+
+> **Trust = ordered truth + calm candor + respectful transparency.**
+
+### 3.4 Dignity over pity
+
+Hardship may be shown because it is real context. Suffering must not become the primary persuasion mechanism.
+
+The product should avoid guilt, exaggerated vulnerability, pity framing, and other coercive fundraising patterns.
+
+### 3.5 Optimism remains evidence-aware
+
+Optimism should come from possibility, participation, visible progress, reported milestones, continuity, and constructive next steps.
+
+It must not imply causality, success, verification, or real-world impact beyond available evidence.
+
+### 3.6 Unknown is a valid product state
+
+Information may legitimately be unavailable, pending, under review, delayed, changed, disputed, or not yet reported.
+
+Kencleng should preserve that uncertainty rather than hide it or manufacture a complete-looking story.
+
+### 3.7 Progress is evidence, not gamification
+
+Keep these concepts distinct:
+
+```text
+funding progress
+≠ operational progress
+≠ organizer-reported outcome
+≠ independently verified real-world impact
+```
+
+A full funding target proves only the applicable funding fact.
+
+### 3.8 Accountability continues after donation
+
+Donation is not the conceptual endpoint of Kencleng.
+
+Post-donation and post-campaign follow-up are part of the core trust proposition. Where relevant information exists, donors and the public should be able to understand what happened next, where information came from, and what remains pending.
+
+The **Evidence Journal** is the strongest current experience concept expressing this principle: chronological factual updates, provenance, reports, milestones, and pending next states without collapsing them into one universal “impact” score.
+
+### 3.9 Kencleng facilitates; it does not guarantee outcomes
+
+Curation, organization review, publication state, report verification, and other platform mechanisms have specific meanings.
+
+Kencleng must not imply that its review processes guarantee beneficiary identity, program execution, or real-world outcome unless the product actually possesses that evidence.
+
+## 4. Audience posture
+
+The primary public behavioral model is a **skeptical-but-open donor**.
+
+The product respects that a user may reasonably want to understand:
+
+- what the campaign is for;
+- who manages it;
+- what Kencleng itself knows;
+- what the organizer says or reports;
+- what is still pending or unknown;
+- what happened after donation;
+- what action is meaningful now.
+
+Kencleng should earn trust rather than demand it.
+
+## 5. Product boundary
 
 Kencleng v1 is intentionally a sandbox rather than a production financial institution or payment processor.
 
@@ -34,9 +167,11 @@ The product model includes:
 - curator/admin operational roles;
 - product notifications where relevant to lifecycle/accountability.
 
-The product model does not need to emulate every real-world fundraising platform concern. Real payment rails, real bank settlement, government registry integrations, and other external systems are included only when a delivery slice explicitly requires them; sandbox substitutes may be used when the learning/product goal does not depend on the real integration.
+The product model does not need to emulate every real-world fundraising-platform concern. Real payment rails, real bank settlement, government registry integrations, and other external systems are included only when a delivery slice explicitly requires them; sandbox substitutes may be used when the learning/product goal does not depend on the real integration.
 
-## 3. Primary actors
+Simulation must never be presented as real evidence.
+
+## 6. Primary actors
 
 ### Public Visitor / Guest Donor
 
@@ -44,8 +179,9 @@ A person who can understand Kencleng and public campaigns without signing in, an
 
 Primary goals:
 
+- understand Kencleng's trust/transparency model;
 - discover and understand campaigns;
-- inspect organizer and trust/accountability context;
+- inspect organizer, funding, and accountability context;
 - decide whether to donate;
 - track a guest donation through an appropriate safe mechanism when supported.
 
@@ -68,7 +204,7 @@ A registered user who represents an Organization. Representation has at least tw
 - **Owner** — responsible for sensitive/authoritative organization actions;
 - **Staff** — may assist with permitted operational work but does not automatically inherit every Owner capability.
 
-The exact permission matrix is delivery/product-detail that must be referenced or reconciled per slice rather than duplicated here.
+The exact permission matrix is delivery/product detail that must be referenced or reconciled per slice rather than duplicated here.
 
 ### Curator
 
@@ -80,7 +216,7 @@ A curator must not review work where a relevant conflict of interest exists with
 
 ### Admin
 
-A platform-level operational role for product-defined administrative/review-assignment/exceptional actions.
+A platform-level operational role for product-defined administrative, review-assignment, and exceptional actions.
 
 Admin is not a synonym for Curator or Organization Owner and should not casually collapse those responsibilities.
 
@@ -88,9 +224,9 @@ Admin is not a synonym for Curator or Organization Owner and should not casually
 
 The platform itself performs lifecycle-triggered behavior such as state transitions, progress/result generation, notifications, scheduled actions, and simulated settlement where defined by the relevant delivery slice.
 
-## 4. Core product concepts
+## 7. Core product concepts
 
-These are product concepts, not commitments to a particular table/class/module design.
+These are product concepts, not commitments to a particular table, class, package, or module design.
 
 ### User
 
@@ -130,6 +266,12 @@ A product mechanism for routing review work to eligible reviewers. Organization 
 
 The product information that helps users understand what happened after fundraising, including funding/result facts and later organizer/accountability reporting where available.
 
+### Evidence Journal
+
+A donor-facing product concept for following what happened after donation through chronology, factual progress, source/provenance, reports, milestones, and pending updates.
+
+It is not a universal impact score.
+
 ### Disbursement
 
 The controlled movement/release of collected campaign funds to the responsible Organization after the required product conditions are met.
@@ -144,13 +286,13 @@ Structured accountability from the Organization after disbursement, subject to t
 
 Lifecycle/product communication to users when the product requires active awareness beyond pull-based page viewing.
 
-## 5. Whole-product journey
+## 8. Whole-product journey
 
-The product can be understood as one connected loop rather than independent backend domains.
+Kencleng should be understood as one connected loop rather than independent backend domains.
 
 ```text
-ACCOUNT / IDENTITY
-A person may participate publicly, create an account, or authenticate
+PUBLIC UNDERSTANDING / ACCOUNT IDENTITY
+A person may understand the platform publicly, create an account, or authenticate
         │
         ▼
 ORGANIZATION ESTABLISHMENT
@@ -178,7 +320,7 @@ Guest or registered donors may contribute while the campaign accepts donations
         │
         ▼
 FUNDING PROGRESS
-Public/donors can understand funding state without confusing it with real-world outcome
+Public/donors can understand funding state without confusing it with outcome
         │
         ▼
 CAMPAIGN CLOSURE
@@ -202,9 +344,9 @@ Users can distinguish collected funding, platform/system facts, organizer report
 verification state, and still-unknown real-world outcome
 ```
 
-Not every delivery slice must implement this entire loop. The point of the model is to preserve end-to-end meaning while slices are delivered progressively.
+Not every delivery slice must implement this entire loop. The model preserves end-to-end meaning while slices are delivered progressively.
 
-## 6. Major capability map
+## 9. Major capability map
 
 ### Identity and account
 
@@ -231,8 +373,9 @@ Not every delivery slice must implement this entire loop. The point of the model
 ### Public campaign experience
 
 - discover eligible public campaigns;
-- inspect a campaign's purpose, organizer context, funding context, story, and relevant accountability context;
-- reach a truthful next action without unsupported urgency/ranking/trust claims.
+- inspect a campaign's purpose, organizer/steward context, factual funding context, story, and relevant accountability context;
+- distinguish platform fact, organizer-provided content, system state, and unknown/pending information;
+- reach a truthful next action without unsupported urgency, ranking, popularity, recommendation, trust score, or impact claim.
 
 ### Donation
 
@@ -246,7 +389,8 @@ Not every delivery slice must implement this entire loop. The point of the model
 - preserve campaign/funding result after closure;
 - let relevant users receive or inspect post-campaign follow-up;
 - let Organizations provide product-supported reporting/context;
-- distinguish organizer narrative/reporting from platform-verified facts.
+- distinguish organizer narrative/reporting from platform-known/verified facts;
+- support the Evidence Journal concept where product data and source semantics are sufficient.
 
 ### Disbursement and fund usage
 
@@ -259,17 +403,17 @@ Not every delivery slice must implement this entire loop. The point of the model
 
 - route appropriate work to eligible Curators;
 - maintain conflict-of-interest boundaries;
-- support product-defined Admin-only operational actions without inventing a generic all-powerful dashboard model.
+- support product-defined Admin-only operational actions without inventing a generic all-powerful control-center model.
 
 ### Notifications
 
 - notify users when active communication is part of the product journey rather than requiring all awareness to come from repeatedly checking pages.
 
-## 7. Trust and accountability model
+## 10. Trust and accountability model
 
 Kencleng's product meaning depends on keeping several truth classes distinct.
 
-### 7.1 Verification concepts are not interchangeable
+### 10.1 Verification concepts are not interchangeable
 
 At minimum, distinguish:
 
@@ -277,51 +421,60 @@ At minimum, distinguish:
 - Campaign curation/publication state;
 - Donation/payment state;
 - Fund-usage report verification;
-- Organizer-provided narrative/reporting;
+- organizer-provided narrative/reporting;
 - real-world outcome/impact claims.
 
-A campaign must not be described broadly as "verified" when the actual known fact is narrower.
+A campaign must not be described broadly as “verified” when the actual known fact is narrower.
 
-### 7.2 Funding is not impact
+### 10.2 Product truth classes remain visible
 
-Keep these product concepts separate:
+Where relevant, users should be able to distinguish:
 
-```text
-funding progress
-≠ operational progress
-≠ organizer-reported outcome
-≠ independently verified real-world impact
-```
+- platform/system fact;
+- organizer-provided information;
+- organizer report;
+- system/lifecycle status;
+- pending or unavailable information;
+- reported outcome.
 
-A fully funded campaign proves only the applicable funding fact.
+Exact terminology remains a design/product-detail decision and should not be invented globally before real surfaces need it.
 
-### 7.3 Unknown/pending information remains legitimate
+### 10.3 Transparency is ordered, not maximal
 
-The product may not yet know whether an activity happened, whether an outcome was achieved, or whether a report has been reviewed. Unknown/pending is a real product state and should not be filled with optimistic inference.
+Transparency does not mean displaying every available field at once.
 
-### 7.4 Accountability continues after donation
+The product should expose what matters to the current decision while keeping consequential supporting detail inspectable.
 
-Donation is not the conceptual endpoint of the product. The post-campaign result/disbursement/fund-usage loop is part of the trust model and should remain connected to donor/public understanding when the relevant information exists.
+Trust-critical uncertainty and consequences must not be hidden merely to create a cleaner or more optimistic story.
 
-## 8. Strong current product truths
+### 10.4 Campaign imagery and evidence remain truthful
 
-The following appear consistently across the existing product/design/spec evidence and are strong candidates for promotion when this document is reviewed:
+Real campaign imagery belongs to campaign reality. Illustration or generated expressive assets may explain product concepts, onboarding, process, or empty states, but must never masquerade as beneficiary, campaign, distribution, or real-world impact evidence.
 
-1. **Organizations and Campaigns are distinct concepts.** Campaign fundraising/accountability belongs to an Organization.
-2. **Guest donation is a supported product capability.** An account is not universally required to contribute.
-3. **Registered and anonymous are different axes.** Public identity display must not be inferred solely from account/guest status.
-4. **Organization review, Campaign curation, and fund-usage verification are distinct product concepts.**
-5. **Owner and Staff represent meaningfully different authority levels.** Exact permissions are reconciled per capability.
-6. **Curator conflicts of interest are product-significant.** A curator must not review the relevant work of an Organization they represent.
-7. **Campaign lifecycle governs public/donation behavior.** A campaign is not always public or eligible to accept donations merely because it exists.
-8. **Money semantics and accountability states must be explicit.** Funding progress must not become a proxy for execution or impact.
-9. **Post-campaign accountability is in the core Kencleng concept, not optional decorative content.**
+When evidence is unavailable, a truthful missing/provisional state is preferable to fabricated documentary-looking completeness.
 
-## 9. Deliberately not promoted from old detailed specs yet
+## 11. Strong current product truths
+
+The following appear consistently across the existing product, design, spec, and implementation evidence and are strong candidates for promotion when this document is reviewed:
+
+1. **Kencleng is evidence-led, not persuasion-led.** Trust should be earned through ordered truth, evidence, provenance, chronology, and candid uncertainty.
+2. **Confidence comes before conversion.** Donation actions should not outrun the context users need for a considered decision.
+3. **Dignity over pity.** Human hardship may be real context but must not be exploited as a conversion device.
+4. **Funding is not impact.** Funding, operational progress, reported outcome, and independently verified impact remain distinct.
+5. **Unknown/pending is valid product truth.** The product should not manufacture certainty.
+6. **Post-donation accountability is core.** Donation is not the conceptual end of the user relationship.
+7. **Organizations and Campaigns are distinct concepts.** Campaign fundraising/accountability belongs to an Organization.
+8. **Guest donation is a supported product capability.** An account is not universally required to contribute.
+9. **Registered and anonymous are different axes.** Public identity display must not be inferred solely from account/guest status.
+10. **Organization review, Campaign curation, and fund-usage verification are distinct product concepts.**
+11. **Owner and Staff represent meaningfully different authority levels.** Exact permissions are reconciled per capability.
+12. **Curator conflicts of interest are product-significant.** A curator must not review the relevant work of an Organization they represent.
+13. **Campaign lifecycle governs public/donation behavior.** A campaign is not always public or eligible to accept donations merely because it exists.
+14. **Money semantics and accountability states must be explicit.** Consequential numbers and states must retain their real meaning.
+
+## 12. Deliberately not promoted from old detailed specs yet
 
 The previous generation made many detailed decisions. They remain references and may be correct, but should be revalidated when the corresponding slice approaches delivery rather than copied into whole-product authority now.
-
-Examples include:
 
 ### Account / security delivery detail
 
@@ -367,19 +520,31 @@ Security architecture may independently retain stricter implementation requireme
 - exact consequences of late/rejected reports;
 - exact notification mechanism/cadence.
 
-These details should be promoted into Product Authority only when they are genuinely durable product decisions rather than convenient current implementation choices.
+### Concrete design-system detail
 
-## 10. Product questions to revalidate through real slices
+The following remain in canonical `docs/ui-ux/` rather than Product Authority:
+
+- Sunlit Editorial color values and visual-role rules;
+- typography choices/scales;
+- spacing, surfaces, border, radius, elevation, and component grammar;
+- iconography implementation;
+- illustration/photography production rules;
+- responsive composition mechanics;
+- exact page/surface composition;
+- reusable interaction-pattern implementation detail.
+
+These are active design authority, not historical reference. They are excluded here only to avoid duplicate ownership.
+
+## 13. Product questions to revalidate through real slices
 
 The reframe should not reopen every historical decision at once. Revalidation is triggered by delivery.
 
-Initial questions include:
-
 ### Forward probe — Public Campaign Detail
 
-- What information must a visitor understand before donation becomes a meaningful next action?
-- Which trust/accountability facts are available at this lifecycle stage?
-- What organizer/campaign information is product truth versus organizer-provided content?
+- What evidence and context must a skeptical-but-open visitor understand before donation becomes a meaningful next action?
+- Which trust/accountability facts are actually available at this lifecycle stage?
+- What organizer/campaign information is platform fact versus organizer-provided content?
+- What remains unknown or pending and how should that truth remain visible?
 - Which image/media state is truthful when real campaign evidence is absent?
 - What is the honest CTA boundary while Donation Flow is a separate delivery slice?
 - What backend/data capabilities are actually required by this surface?
@@ -392,12 +557,14 @@ Initial questions include:
 - Which current Account security behaviors are product requirements versus implementation/security architecture choices?
 - Does the existing contract match the simplest correct end-to-end account experience?
 
-## 11. Product development posture
+## 14. Product development posture
 
 Kencleng should use **progressive commitment**, not all-product detailed specification before coding.
 
 ```text
 whole-product clarity at product level
+        +
+canonical product-design / brand authority
         ↓
 select next valuable delivery slice
         ↓
@@ -416,14 +583,17 @@ refine authority when warranted
 
 A future area may remain high-level until it becomes relevant. A high-risk, hard-to-reverse business rule may require earlier precision than a reversible API/UI detail.
 
-## 12. Promotion criteria
+Product, design, and implementation discovery are bidirectional. Durable learning discovered downstream should be promoted deliberately to the authority that owns it rather than remaining trapped in a feature implementation or visual artifact.
+
+## 15. Promotion criteria
 
 This candidate should not become canonical merely because it exists.
 
 Before promotion:
 
-1. Human review confirms that the whole-product model is directionally correct.
-2. The Public Campaign Detail forward probe demonstrates that product → design → FE/BE delivery → contract derivation is workable.
-3. The Account Registration + Email Verification backward probe demonstrates that existing detailed specs/implementation can be reconciled without either blindly preserving or unnecessarily deleting prior work.
-4. Any product-level contradictions surfaced by those probes are resolved here rather than hidden downstream.
-5. Repository routing is updated in one deliberate promotion change so there is never an ambiguous long-lived dual authority.
+1. Human review confirms that the product thesis, product character, whole-product model, and business direction are directionally correct.
+2. Canonical design authority and Product Authority do not conflict on product-level meaning; design-only concerns retain design ownership rather than being duplicated here.
+3. The Public Campaign Detail forward probe demonstrates that Product Authority + Product Design / Brand Authority can derive FE/BE delivery and contract needs without task-specific steering.
+4. The Account Registration + Email Verification backward probe demonstrates that existing detailed specs/implementation can be reconciled without either blindly preserving or unnecessarily deleting prior work.
+5. Any product-level contradictions surfaced by those probes are resolved here rather than hidden downstream.
+6. Repository routing is updated in one deliberate promotion change so there is never an ambiguous long-lived dual authority.
