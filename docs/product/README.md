@@ -161,13 +161,13 @@ Probe 02 does not block MVP delivery. Its findings should be revisited when an A
 
 ## Promotion checkpoint
 
-Promotion criteria are considered satisfied as of **2026-09-17**:
+Promotion criteria were satisfied on **2026-09-17**:
 
 1. the whole-product model received human review;
 2. forward validation demonstrated Product + Design can derive coherent delivery needs;
 3. backward reconciliation demonstrated detailed specs/code can be treated as evidence rather than blindly preserved/discarded;
 4. material product/design contradictions were surfaced rather than hidden downstream;
 5. MVP scope and sequencing were explicitly approved so historical domain breadth no longer drives delivery;
-6. repository routing is being updated in this promotion pass to remove long-lived dual authority.
+6. root, backend, frontend, delivery-spec, and orchestration routing were updated in the same promotion pass to remove long-lived dual authority.
 
 After this promotion, real MVP slices resume CRTV against Harscode `main` through the canonical Exploration kickoff without custom solution-steering prompts.
