@@ -24,7 +24,10 @@ Explorer
 Specialization:
 None
 
-Project Communication Profile:
+Communication Language:
+Bahasa Indonesia
+
+Communication Profile Path:
 `docs/project/communication-profile.md`
 
 ## Outcome
