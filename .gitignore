@@ -35,3 +35,9 @@ Thumbs.db
 
 # --- Logs ---
 *.log
+
+# --- Harscode local runtime ---
+# Normally ignore the machine-local runtime config:
+# .harscode-spaces/.local-config.yaml
+# Pilot exception: intentionally committed on validation-03-orchestrator-slice-1
+# as public CRTV/history evidence. Keep committed values public-safe and prefer relative paths.
