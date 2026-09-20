@@ -4,7 +4,10 @@ Protocol:
 Harscode Orchestrator Protocol v0.1 — Pilot Candidate
 
 Pilot Branch:
-validation-03-orchestrator-slice-1
+`validation-03-orchestrator-slice-1`
+
+Project Communication Profile:
+`docs/project/communication-profile.md`
 
 Parent Outcome:
 S1 — Public Campaign Understanding
@@ -16,10 +19,17 @@ NOT_STARTED
 
 ### WU-S1-001 — Slice 1 Authority & Current-State Exploration
 
-Type: ENABLER
-Status: NOT_STARTED
-Scheduling: QUEUED
-Horizon: NOW
+Type:
+ENABLER
+
+Status:
+NOT_STARTED
+
+Scheduling:
+QUEUED
+
+Horizon:
+NOW
 
 Current Run:
 EXP-001
@@ -31,42 +41,43 @@ Specialization:
 None
 
 Next Action:
-Dispatch EXP-001 using the Harscode Orchestrator v0.1 Exploration wrapper.
+Dispatch `EXP-001` menggunakan Harscode Orchestrator v0.1 Exploration wrapper.
 
 ## NEXT
 
-Not yet committed.
+Belum committed.
 
-Candidate downstream work must be derived from Exploration evidence rather than pre-created from the pilot hypothesis.
+Candidate downstream work harus diturunkan dari evidence hasil Exploration, bukan dibuat lebih dulu berdasarkan hypothesis pilot.
 
 ## LATER
 
-Not yet committed.
+Belum committed.
 
 ## Human Attention
 
-None currently.
+Tidak ada saat ini.
 
 ## Active Blockers
 
-None.
+Tidak ada.
 
 ## Stalled Work
 
-None.
+Tidak ada.
 
 ## Pilot Observations
 
-None yet.
+Belum ada.
 
 ## State Integrity
 
-This file is a current-state projection of orchestration records. It is not an independent source of truth.
+File ini adalah current-state projection dari orchestration records. File ini bukan source of truth yang berdiri sendiri.
 
-If this projection conflicts with the Work Unit / Run records, reconcile the underlying orchestration state and refresh this surface.
+Jika projection ini bertentangan dengan Work Unit / Run records, reconcile underlying orchestration state lalu refresh Control Surface ini.
 
 ## Pilot Discipline
 
-- Do not create downstream Work Units merely because they were proposed during pilot preparation.
-- Do not treat historical specs, contracts, or implementation as higher authority than current Product / Design authority.
-- Do not alter Orchestrator Protocol v0.1 during the pilot unless execution exposes a hard contradiction, authority-integrity problem, safety problem, or pilot-blocking representational gap.
+- Jangan membuat downstream Work Unit hanya karena pernah muncul di pilot-preparation hypothesis.
+- Jangan memperlakukan historical specs, contracts, migrations, tests, atau implementation sebagai authority yang lebih tinggi daripada current Product / Design authority.
+- Jangan mengubah Orchestrator Protocol v0.1 selama pilot kecuali execution menemukan hard contradiction, authority-integrity problem, safety problem, atau pilot-blocking representational gap.
+- Gunakan Bahasa Indonesia untuk human-facing prose, tetapi pertahankan canonical Harscode terms/enums serta code/API/schema identifiers dalam English.
