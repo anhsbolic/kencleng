@@ -33,7 +33,10 @@ Target Branch:
 Workflow Branch:
 `pilot/orchestrator-v0.1`
 
-Project Language Profile:
+Communication Language:
+Bahasa Indonesia
+
+Communication Profile Path:
 `docs/project/communication-profile.md`
 
 ## Operator Binding Before Dispatch
@@ -63,7 +66,7 @@ Wrapper tersebut harus menerapkan:
 
 `Kencleng — Go backend + Next.js frontend`
 
-## Project Language Directive
+## Communication Directive
 
 Human-facing prose:
 Bahasa Indonesia
@@ -108,7 +111,8 @@ Jalankan canonical Exploration contract dengan:
 - `ROLE = Explorer`
 - `SPECIALIZATION = none`
 - `PRIOR_ARTIFACTS = none`
-- `PROJECT_LANGUAGE_PROFILE = docs/project/communication-profile.md`
+- `COMMUNICATION_LANGUAGE = Bahasa Indonesia`
+- `COMMUNICATION_PROFILE_PATH = docs/project/communication-profile.md`
 - `TASK = Task section di atas`
 - `CODEBASE_CONTEXT = Kencleng — Go backend + Next.js frontend`
 
@@ -129,5 +133,5 @@ Sebelum dispatch, verifikasi:
 - [ ] Product / Design authority tetap upstream terhadap historical implementation evidence.
 - [ ] Run Path unik untuk `EXP-001`.
 - [ ] Prior Artifacts benar-benar `none`.
-- [ ] Project Language Directive mengikuti Kencleng communication profile tanpa menerjemahkan canonical protocol semantics.
+- [ ] Communication Directive mengikuti Kencleng communication profile tanpa menerjemahkan canonical protocol semantics.
 - [ ] Satu-satunya operator-specific mutation adalah binding `HARSCODE_WORKSPACE_ROOT`.
