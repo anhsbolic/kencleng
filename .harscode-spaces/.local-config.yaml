@@ -8,6 +8,9 @@ paths:
   project_root: .
   harscode_workspace_root: ../harscode-workspace
 
+runtime:
+  harness: codex-cli
+
 # Human-owned, Orchestrator-read-only.
 # Only the Human may add/remove models or change capabilities, cost_tier,
 # or approval_required. The Orchestrator may select from this registry but
@@ -16,4 +19,30 @@ paths:
 # cost_tier: low | standard | high
 # approval_required: true means explicit Human approval is required
 # before that model can be dispatched.
-available_models: []
+available_models:
+  - id: gpt-5.6-luna
+    capabilities:
+      - general
+      - fast
+      - routine-coding
+    cost_tier: low
+    approval_required: false
+
+  - id: gpt-5.6-terra
+    capabilities:
+      - general
+      - coding
+      - reasoning
+      - repository-work
+    cost_tier: standard
+    approval_required: false
+
+  - id: gpt-5.6-sol
+    capabilities:
+      - strong-reasoning
+      - coding
+      - repository-work
+      - architecture
+      - cross-cutting-analysis
+    cost_tier: high
+    approval_required: true
