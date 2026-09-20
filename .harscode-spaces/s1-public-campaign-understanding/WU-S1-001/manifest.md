@@ -24,29 +24,32 @@ Explorer
 Specialization:
 None
 
+Project Communication Profile:
+`docs/project/communication-profile.md`
+
 ## Outcome
 
-Produce sufficient durable evidence to understand the authority, current implementation, existing contracts, and material gaps relevant to Kencleng MVP Slice 1 without prematurely designing implementation.
+Menghasilkan durable evidence yang cukup untuk memahami authority, current implementation, existing contracts, dan material gaps yang relevan terhadap Kencleng MVP Slice 1 tanpa prematurely designing implementation.
 
 ## Scope
 
-- Product Authority relevant to Slice 1.
-- Product Design / Brand Authority relevant to Public Campaign Understanding.
-- Existing delivery/domain specifications relevant to the slice.
+- Product Authority yang relevan terhadap Slice 1.
+- Product Design / Brand Authority yang relevan terhadap Public Campaign Understanding.
+- Existing delivery/domain specifications yang relevan terhadap slice.
 - Existing shared API contract evidence.
 - Relevant backend implementation evidence.
 - Relevant frontend implementation evidence.
-- Applicable reusable project evidence / Project Learning when discoverable and sufficiently fresh.
+- Applicable reusable project evidence / Project Learning ketika discoverable dan sufficiently fresh.
 
 ## Out of Scope
 
-- Implementing Slice 1.
-- Writing the detailed Techplan.
-- Inventing unresolved Product, Design, Security, or shared-contract semantics.
-- Pre-deciding backend/frontend decomposition.
-- Pre-deciding shared contract changes.
-- Creating downstream Work Units without evidence.
-- Treating the pilot-preparation hypothesis as delivery authority.
+- Mengimplementasikan Slice 1.
+- Menulis detailed Techplan.
+- Mengarang unresolved Product, Design, Security, atau shared-contract semantics.
+- Menentukan backend/frontend decomposition lebih awal.
+- Menentukan shared contract changes lebih awal.
+- Membuat downstream Work Unit tanpa evidence.
+- Memperlakukan pilot-preparation hypothesis sebagai delivery authority.
 
 ## Authority Entry Points
 
@@ -58,7 +61,7 @@ Primary routing sources:
 - `docs/product/mvp-delivery-slices.md`
 - `docs/ui-ux/README.md`
 
-The Explorer must follow target-repo routing from those sources and applicable `AGENTS.md` files rather than reading every adjacent document by default.
+Explorer harus mengikuti target-repo routing dari sources tersebut dan applicable `AGENTS.md` files, bukan membaca semua adjacent documents secara default.
 
 ## Current Run
 
@@ -77,16 +80,22 @@ Applicable Human Authority:
 Anhar
 
 Orchestration Operator:
-Anhar during the v0 pilot
+Anhar selama v0 pilot
 
-A material authority gap or conflict must be surfaced for human decision rather than resolved by the Explorer.
+Material authority gap atau conflict harus surfaced untuk human decision, bukan diselesaikan oleh Explorer.
 
 ## Completion
 
-This Work Unit is complete when Exploration has produced durable evidence sufficient to determine the next real delivery / reconciliation structure, including material authority gaps, without inventing unresolved authority.
+Work Unit ini complete ketika Exploration telah menghasilkan durable evidence yang cukup untuk menentukan real downstream delivery / reconciliation structure, termasuk material authority gaps, tanpa mengarang unresolved authority.
+
+## Communication
+
+Human-facing prose menggunakan Bahasa Indonesia.
+
+Canonical Harscode terms/enums serta code/API/schema identifiers tetap dalam English.
 
 ## Pilot Notes
 
-This Work Unit is intentionally broader than a backend or frontend concern.
+Work Unit ini sengaja lebih luas daripada concern backend atau frontend.
 
-Its purpose is to establish the real Slice 1 delivery shape before downstream Work Units are committed.
+Tujuannya adalah menemukan real Slice 1 delivery shape sebelum downstream Work Units committed.
