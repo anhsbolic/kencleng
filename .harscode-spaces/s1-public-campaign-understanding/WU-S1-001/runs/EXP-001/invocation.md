@@ -33,44 +33,61 @@ Target Branch:
 Workflow Branch:
 `pilot/orchestrator-v0.1`
 
+Project Language Profile:
+`docs/project/communication-profile.md`
+
 ## Operator Binding Before Dispatch
 
 Bind:
 
 `HARSCODE_WORKSPACE_ROOT`
 
-to the local checkout of `harscode-workspace` currently on:
+ke local checkout `harscode-workspace` yang sedang berada di branch:
 
 `pilot/orchestrator-v0.1`
 
-This is an environment/path binding only. Do not rewrite the task or add solution-steering instructions.
+Ini hanya environment/path binding. Jangan rewrite Task dan jangan menambahkan solution-steering instructions.
 
 ## Entrypoint
 
-Use:
+Gunakan:
 
 `{HARSCODE_WORKSPACE_ROOT}/orchestration/exploration-kickoff-prompt.md`
 
-That wrapper must apply:
+Wrapper tersebut harus menerapkan:
 
-- canonical Exploration authority from `workflow/1-exploration-kickoff-prompt.md`;
-- orchestrated identity/path semantics from `workflow/orchestrated-run-overlay.md`.
+- canonical Exploration authority dari `workflow/1-exploration-kickoff-prompt.md`;
+- orchestrated identity/path semantics dari `workflow/orchestrated-run-overlay.md`.
 
 ## Codebase Context
 
 `Kencleng — Go backend + Next.js frontend`
 
+## Project Language Directive
+
+Human-facing prose:
+Bahasa Indonesia
+
+Preserve in English:
+
+- canonical Harscode terms;
+- protocol enums/status/type values;
+- code/API/schema identifiers;
+- file paths, branch names, commit SHAs, dan CLI commands.
+
+Jika exact wording dari authority source materially important, pertahankan wording sumber apa adanya.
+
 ## Task
 
-Explore what is required to deliver Kencleng MVP Slice 1 — Public Campaign Understanding — based on the current authoritative Product and Product Design sources and the existing project specifications, shared contracts, backend/frontend implementation, and other relevant current evidence.
+Eksplorasi apa saja yang diperlukan untuk deliver Kencleng MVP Slice 1 — Public Campaign Understanding — berdasarkan current authoritative Product dan Product Design sources serta existing project specifications, shared contracts, backend/frontend implementation, dan current evidence lain yang relevan.
 
-The governing slice source is:
+Governing slice source:
 
 `docs/product/mvp-delivery-slices.md`
 
-Do not assume historical specs, contracts, migrations, tests, or implementation are automatically current authority. Surface material gaps or conflicts through the authority that owns the concern.
+Jangan mengasumsikan historical specs, contracts, migrations, tests, atau implementation otomatis menjadi current authority. Surface material gaps atau conflicts melalui authority yang memiliki concern tersebut.
 
-Do not assume the downstream Work Unit graph, frontend/backend split, or contract changes in advance. Derive only what current authority and evidence support.
+Jangan mengasumsikan downstream Work Unit graph, frontend/backend split, atau contract changes lebih awal. Derive hanya hal yang didukung current authority dan evidence.
 
 ## Optional Routing Inputs
 
@@ -78,11 +95,11 @@ Ticket:
 None
 
 Area:
-Not sure yet — Stage 1 must determine the relevant areas.
+Not sure yet — Stage 1 harus menentukan relevant areas.
 
 ## Dispatch Contract
 
-Run the canonical Exploration contract with:
+Jalankan canonical Exploration contract dengan:
 
 - `WORK_UNIT_ID = WU-S1-001`
 - `RUN_ID = EXP-001`
@@ -91,24 +108,26 @@ Run the canonical Exploration contract with:
 - `ROLE = Explorer`
 - `SPECIALIZATION = none`
 - `PRIOR_ARTIFACTS = none`
-- `TASK = the Task section above`
+- `PROJECT_LANGUAGE_PROFILE = docs/project/communication-profile.md`
+- `TASK = Task section di atas`
 - `CODEBASE_CONTEXT = Kencleng — Go backend + Next.js frontend`
 
 ## Mandatory First Stop
 
 Execute **Stage 1 — Plan Announcement only**.
 
-Do not proceed to Stage 2 until the human checkpoint confirms the Stage 1 understanding and exploration routing.
+Jangan lanjut ke Stage 2 sampai human checkpoint mengonfirmasi Stage 1 understanding dan exploration routing.
 
 ## Invocation Review Checklist
 
-Before dispatch, verify:
+Sebelum dispatch, verifikasi:
 
-- [ ] Correct Work Unit selected.
-- [ ] Exploration is the correct next workflow phase.
-- [ ] Explorer is the correct Role.
-- [ ] No downstream solution / Work Unit hypothesis is injected as fact.
-- [ ] Product / Design authority remains upstream of historical implementation evidence.
-- [ ] Run Path is unique to EXP-001.
-- [ ] Prior Artifacts correctly equals `none`.
-- [ ] The only operator-specific mutation is binding `HARSCODE_WORKSPACE_ROOT`.
+- [ ] Work Unit yang dipilih benar.
+- [ ] Exploration adalah next workflow phase yang benar.
+- [ ] Explorer adalah Role yang benar.
+- [ ] Tidak ada downstream solution / Work Unit hypothesis yang di-inject sebagai fact.
+- [ ] Product / Design authority tetap upstream terhadap historical implementation evidence.
+- [ ] Run Path unik untuk `EXP-001`.
+- [ ] Prior Artifacts benar-benar `none`.
+- [ ] Project Language Directive mengikuti Kencleng communication profile tanpa menerjemahkan canonical protocol semantics.
+- [ ] Satu-satunya operator-specific mutation adalah binding `HARSCODE_WORKSPACE_ROOT`.
