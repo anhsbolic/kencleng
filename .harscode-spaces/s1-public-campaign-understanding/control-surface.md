@@ -17,38 +17,62 @@ ACTIVE
 
 ## NOW
 
+### WU-S1-002 — Slice 1 Public Contract & Delivery Reconciliation
+
+Type:
+RECONCILIATION
+
+Status:
+NOT_STARTED
+
+Scheduling:
+QUEUED
+
+Horizon:
+NOW
+
+Current Run:
+`TP-001`
+
+Role:
+Planner
+
+Run State:
+PLANNED
+
+Runtime:
+`codex-cli`
+
+Selected Model Candidate:
+`gpt-5.6-sol`
+
+Reasoning Effort Candidate:
+`high`
+
+Human Attention:
+Model approval required for `TP-001`.
+
+Next Action:
+Obtain Human approval for `gpt-5.6-sol / high`, then dispatch Techplan synthesis.
+
+## COMPLETED
+
 ### WU-S1-001 — Slice 1 Authority & Current-State Exploration
 
 Type:
 ENABLER
 
 Status:
-ACTIVE
+DONE
 
-Scheduling:
-RUNNING
+Completed Run:
+`EXP-001`
 
-Horizon:
-NOW
-
-Current Run:
-EXP-001
-
-Role:
-Explorer
-
-Specialization:
-None
-
-Next Action:
-Review Stage 1 checkpoint untuk `EXP-001`; jika accepted, lanjutkan Run yang sama ke Stage 2 — Gap Analysis.
-
-Model Approval:
-APPROVED_BY_HUMAN for `EXP-001` only.
+Evidence:
+- `WU-S1-001/runs/EXP-001/evidence/gap-analysis.md`
+- `WU-S1-001/runs/EXP-001/evidence/solutioning.md`
 
 ## NEXT
-
-Belum committed.
 
 Backend, frontend, topology, dan final verification Work Units belum committed. Mereka tetap candidate downstream work sampai reconciliation mencapai contract-ready shape.
 
@@ -58,11 +82,11 @@ Belum committed.
 
 ## Human Attention
 
-Tidak ada saat ini.
+- Approve/reject `gpt-5.6-sol` untuk `TP-001`.
 
 ## Active Blockers
 
-Tidak ada.
+Tidak ada delivery blocker. Dispatch `TP-001` menunggu required Human model approval.
 
 ## Stalled Work
 
@@ -72,15 +96,23 @@ Tidak ada.
 
 ### OBS-ORCH-001 — Stage 1 routing specificity
 
-Stage 1 berhasil memahami authority hierarchy, Run identity, communication profile, dan hard stop tanpa Human menulis custom kickoff prompt.
+Stage 1 berhasil memahami authority hierarchy, Run identity, communication profile, dan hard stop tanpa Human menulis custom kickoff prompt. Early specificity tidak berubah menjadi closed scope pada Stage 2.
 
-Namun Explorer sudah menyebut beberapa file/state spesifik pada Plan Announcement (mis. `campaign.yaml`, `organization.yaml`, dan daftar UI states). Ini belum menjadi blocker, tetapi perlu dipantau agar Stage 2 tidak memperlakukan daftar tersebut sebagai scope tertutup sebelum evidence mendukungnya.
+### OBS-ORCH-002 — Minimal Human checkpoints
+
+Stage 1 dan Stage 2 dapat dilanjutkan dengan Human response yang sangat singkat tanpa mengulang workflow semantics.
+
+### OBS-ORCH-003 — Run / Session separation
+
+`EXP-001` selesai dalam dua Session: Stage 1+2 pada Session pertama dan Stage 3 pada fresh Session. Durable evidence cukup untuk re-ground tanpa membuat Run baru.
+
+### OBS-ORCH-004 — Exploration-derived decomposition
+
+`WU-S1-002` diinstansiasi dari Exploration evidence. Backend/frontend/topology tetap provisional sampai reconciliation menutup contract ambiguity.
 
 ## State Integrity
 
-File ini adalah current-state projection dari orchestration records. File ini bukan source of truth yang berdiri sendiri.
-
-Jika projection ini bertentangan dengan Work Unit / Run records, reconcile underlying orchestration state lalu refresh Control Surface ini.
+File ini adalah current-state projection dari orchestration records. Jika projection ini bertentangan dengan Work Unit / Run records, reconcile underlying orchestration state lalu refresh Control Surface.
 
 ## Pilot Discipline
 
