@@ -50,10 +50,10 @@ Reasoning Effort Candidate:
 `medium`
 
 Human Attention:
-Model approval required for `TPR-001`.
+None currently.
 
 Next Action:
-Obtain Human approval, then dispatch independent Techplan review in a fresh Session.
+Dispatch `TPR-001` independent Techplan review in a fresh Session.
 
 ## COMPLETED
 
@@ -82,11 +82,11 @@ Belum committed.
 
 ## Human Attention
 
-- Approve/reject `gpt-5.6-sol / medium` untuk `TPR-001`.
+Tidak ada saat ini.
 
 ## Active Blockers
 
-Draft Techplan sudah tersedia. Independent review dispatch menunggu required Human model approval.
+Draft Techplan sudah tersedia dan `TPR-001` runtime approval sudah lengkap.
 
 ## Stalled Work
 
