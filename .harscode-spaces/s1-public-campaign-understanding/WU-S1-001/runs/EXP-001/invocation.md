@@ -1,7 +1,7 @@
 # EXP-001 — Orchestrated Exploration Invocation
 
 Status:
-READY_TO_DISPATCH
+ACTIVE
 
 Prepared By Role:
 Orchestration Operator
@@ -168,3 +168,11 @@ Sebelum dispatch, verifikasi:
 - Approval scope: this Run only
 
 Do not generalize this approval to another Run or future use of `gpt-5.6-sol`.
+
+## Stage 1 Checkpoint
+
+Status:
+AWAITING_HUMAN_CONFIRMATION
+
+Pilot Observation:
+Stage 1 routing is broadly correct. Some file/state specificity appeared earlier than ideal; Stage 2 must treat those as provisional routing hypotheses, not closed scope.
