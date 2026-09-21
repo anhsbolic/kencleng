@@ -110,31 +110,45 @@ DRAFT
 Independent Review:
 RECOMMENDED_AND_GATE_APPLIES
 
+## Planning State
+
+Draft Techplan:
+`.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/TP-001/techplan.md`
+
+Synthesis Run:
+`TP-001` — COMPLETED
+
+Independent Review Run:
+`TPR-001` — COMPLETED
+
+Review Result:
+1 MATERIAL / BLOCKING security-interface finding: public exact-allowlist schemas do not yet explicitly close additional properties.
+
 ## Current Run
 
-`TPR-001`
+`TPR-RES-001`
 
 Run State:
-PLANNED
+READY_TO_DISPATCH
 
 Role:
-Reviewer
+Planner
 
 Run Path:
-`.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/TPR-001`
+`.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/TPR-RES-001`
 
 Runtime Harness:
 `codex-cli`
 
-Selected Model Candidate:
-`gpt-5.6-sol`
+Selected Model:
+`gpt-5.6-terra`
 
-Reasoning Effort Candidate:
+Reasoning Effort:
 `medium`
 
 Model Approval:
-APPROVED_BY_HUMAN
+NOT_REQUIRED
 
 ## Next Action
 
-Dispatch `TPR-001` in a fresh Codex Session using `gpt-5.6-sol` with reasoning effort `medium`.
+Dispatch focused Techplan resolution in a fresh Planner Session. After the amendment, route to Human Techplan gate unless the resolver reports a material contract/security change that requires re-review.
