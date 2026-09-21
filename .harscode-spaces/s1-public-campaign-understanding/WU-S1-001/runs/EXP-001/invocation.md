@@ -1,7 +1,7 @@
 # EXP-001 — Orchestrated Exploration Invocation
 
 Status:
-READY_FOR_REVIEW
+READY_TO_DISPATCH
 
 Prepared By Role:
 Orchestration Operator
@@ -38,6 +38,21 @@ Bahasa Indonesia
 
 Communication Profile Path:
 `docs/project/communication-profile.md`
+
+Runtime Harness:
+`codex-cli`
+
+Selected Model:
+`gpt-5.6-sol`
+
+Model Selection Basis:
+EXP-001 membutuhkan cross-cutting analysis lintas Product Authority, Product Design, contracts, backend, dan frontend. Dari Human-owned registry saat ini, `gpt-5.6-sol` adalah kandidat yang memenuhi kebutuhan tersebut.
+
+Model Approval:
+APPROVED_BY_HUMAN
+
+Approval Scope:
+`EXP-001` only
 
 ## Operator Binding Before Dispatch
 
@@ -115,6 +130,9 @@ Jalankan canonical Exploration contract dengan:
 - `COMMUNICATION_PROFILE_PATH = docs/project/communication-profile.md`
 - `TASK = Task section di atas`
 - `CODEBASE_CONTEXT = Kencleng — Go backend + Next.js frontend`
+- `RUNTIME_HARNESS = codex-cli`
+- `SELECTED_MODEL = gpt-5.6-sol`
+- `MODEL_APPROVAL = APPROVED_BY_HUMAN for EXP-001`
 
 ## Mandatory First Stop
 
@@ -135,3 +153,13 @@ Sebelum dispatch, verifikasi:
 - [ ] Prior Artifacts benar-benar `none`.
 - [ ] Communication Directive mengikuti Kencleng communication profile tanpa menerjemahkan canonical protocol semantics.
 - [ ] Satu-satunya operator-specific mutation adalah binding `HARSCODE_WORKSPACE_ROOT`.
+
+## Dispatch Readiness
+
+`EXP-001` is approved for dispatch with:
+
+- Harness: `codex-cli`
+- Model: `gpt-5.6-sol`
+- Approval scope: this Run only
+
+Do not generalize this approval to another Run or future use of `gpt-5.6-sol`.
