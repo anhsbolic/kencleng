@@ -113,8 +113,8 @@ Reasoning Effort Candidate:
 `high`
 
 Model Approval:
-WAITING_HUMAN
+APPROVED_BY_HUMAN
 
 ## Next Action
 
-Obtain explicit Human approval for `gpt-5.6-sol` on `TP-001`, then mark the Run ready for dispatch.
+Dispatch `TP-001` using the prepared invocation with `codex-cli`, `gpt-5.6-sol`, and reasoning effort `high`.
