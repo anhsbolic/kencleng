@@ -45,6 +45,9 @@ Runtime Harness:
 Selected Model:
 `gpt-5.6-sol`
 
+Reasoning Effort:
+`high`
+
 Model Selection Basis:
 EXP-001 membutuhkan cross-cutting analysis lintas Product Authority, Product Design, contracts, backend, dan frontend. Dari Human-owned registry saat ini, `gpt-5.6-sol` adalah kandidat yang memenuhi kebutuhan tersebut.
 
@@ -132,6 +135,7 @@ Jalankan canonical Exploration contract dengan:
 - `CODEBASE_CONTEXT = Kencleng — Go backend + Next.js frontend`
 - `RUNTIME_HARNESS = codex-cli`
 - `SELECTED_MODEL = gpt-5.6-sol`
+- `REASONING_EFFORT = high`
 - `MODEL_APPROVAL = APPROVED_BY_HUMAN for EXP-001`
 
 ## Mandatory First Stop
@@ -160,6 +164,7 @@ Sebelum dispatch, verifikasi:
 
 - Harness: `codex-cli`
 - Model: `gpt-5.6-sol`
+- Reasoning effort: `high`
 - Approval scope: this Run only
 
 Do not generalize this approval to another Run or future use of `gpt-5.6-sol`.
