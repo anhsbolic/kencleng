@@ -32,10 +32,10 @@ Horizon:
 NOW
 
 Current Run:
-`TP-001`
+`TPR-001`
 
 Role:
-Planner
+Reviewer
 
 Run State:
 PLANNED
@@ -47,13 +47,13 @@ Selected Model Candidate:
 `gpt-5.6-sol`
 
 Reasoning Effort Candidate:
-`high`
+`medium`
 
 Human Attention:
-None currently.
+Model approval required for `TPR-001`.
 
 Next Action:
-Dispatch `TP-001` Techplan synthesis using `codex-cli`, `gpt-5.6-sol`, reasoning effort `high`.
+Obtain Human approval, then dispatch independent Techplan review in a fresh Session.
 
 ## COMPLETED
 
@@ -82,11 +82,11 @@ Belum committed.
 
 ## Human Attention
 
-Tidak ada saat ini.
+- Approve/reject `gpt-5.6-sol / medium` untuk `TPR-001`.
 
 ## Active Blockers
 
-Tidak ada delivery blocker. `TP-001` runtime approval sudah lengkap; belum ada delivery blocker.
+Draft Techplan sudah tersedia. Independent review dispatch menunggu required Human model approval.
 
 ## Stalled Work
 
@@ -109,6 +109,10 @@ Stage 1 dan Stage 2 dapat dilanjutkan dengan Human response yang sangat singkat 
 ### OBS-ORCH-004 — Exploration-derived decomposition
 
 `WU-S1-002` diinstansiasi dari Exploration evidence. Backend/frontend/topology tetap provisional sampai reconciliation menutup contract ambiguity.
+
+### OBS-ORCH-005 — Independent planning review gate
+
+`TP-001` menghasilkan Draft Techplan dengan 14 Rules. Independent review tetap warranted karena plan crosses contracts, carries a breaking contract change, dan menyentuh security-sensitive public/media boundaries. Review dipisahkan ke fresh reviewer Session/Run agar independence nyata.
 
 ## State Integrity
 
