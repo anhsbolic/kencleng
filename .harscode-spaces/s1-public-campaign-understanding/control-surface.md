@@ -13,7 +13,7 @@ Parent Outcome:
 S1 — Public Campaign Understanding
 
 Overall Status:
-NOT_STARTED
+ACTIVE
 
 ## NOW
 
@@ -23,10 +23,10 @@ Type:
 ENABLER
 
 Status:
-NOT_STARTED
+ACTIVE
 
 Scheduling:
-QUEUED
+RUNNING
 
 Horizon:
 NOW
@@ -41,7 +41,7 @@ Specialization:
 None
 
 Next Action:
-Dispatch `EXP-001` menggunakan Harscode Orchestrator v0.1 Exploration wrapper dengan `codex-cli`, model `gpt-5.6-sol`, dan reasoning effort `high`.
+Review Stage 1 checkpoint untuk `EXP-001`; jika accepted, lanjutkan Run yang sama ke Stage 2 — Gap Analysis.
 
 Model Approval:
 APPROVED_BY_HUMAN for `EXP-001` only.
@@ -70,7 +70,11 @@ Tidak ada.
 
 ## Pilot Observations
 
-Belum ada.
+### OBS-ORCH-001 — Stage 1 routing specificity
+
+Stage 1 berhasil memahami authority hierarchy, Run identity, communication profile, dan hard stop tanpa Human menulis custom kickoff prompt.
+
+Namun Explorer sudah menyebut beberapa file/state spesifik pada Plan Announcement (mis. `campaign.yaml`, `organization.yaml`, dan daftar UI states). Ini belum menjadi blocker, tetapi perlu dipantau agar Stage 2 tidak memperlakukan daftar tersebut sebagai scope tertutup sebelum evidence mendukungnya.
 
 ## State Integrity
 
