@@ -7,10 +7,10 @@ Parent Outcome:
 S1 — Public Campaign Understanding
 
 Status:
-NOT_STARTED
+ACTIVE
 
 Scheduling:
-QUEUED
+RUNNING
 
 Horizon:
 NOW
@@ -71,7 +71,7 @@ Explorer harus mengikuti target-repo routing dari sources tersebut dan applicabl
 `EXP-001`
 
 Run State:
-PLANNED
+ACTIVE
 
 Runtime Harness:
 `codex-cli`
