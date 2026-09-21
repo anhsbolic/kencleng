@@ -79,6 +79,9 @@ Runtime Harness:
 Selected Model:
 `gpt-5.6-sol`
 
+Reasoning Effort:
+`high`
+
 Model Approval:
 APPROVED_BY_HUMAN for `EXP-001` only
 
