@@ -30,6 +30,10 @@ available_models:
       - general
       - fast
       - routine-coding
+    supported_reasoning_efforts:
+      - minimal
+      - low
+      - medium
     cost_tier: low
     approval_required: false
 
@@ -39,6 +43,10 @@ available_models:
       - coding
       - reasoning
       - repository-work
+    supported_reasoning_efforts:
+      - low
+      - medium
+      - high
     cost_tier: standard
     approval_required: false
 
@@ -49,5 +57,9 @@ available_models:
       - repository-work
       - architecture
       - cross-cutting-analysis
+    supported_reasoning_efforts:
+      - medium
+      - high
+      - xhigh
     cost_tier: high
     approval_required: true
