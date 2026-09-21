@@ -11,6 +11,11 @@ paths:
 runtime:
   harness: codex-cli
 
+orchestrator_pairing:
+  default_model: gpt-5.6-terra
+  escalation_model: gpt-5.6-sol
+  escalation_requires_human_approval: true
+
 # Human-owned, Orchestrator-read-only.
 # Only the Human may add/remove models or change capabilities, cost_tier,
 # or approval_required. The Orchestrator may select from this registry but
