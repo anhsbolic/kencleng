@@ -93,8 +93,28 @@ If reconciliation introduces a public Organization review/verification claim who
 
 This Work Unit is complete when the touched Slice-1 delivery/spec/threat/contract surfaces are reconciled sufficiently to support a truthful `CONTRACT_READY` milestone and downstream backend/frontend planning without unresolved material contract ambiguity.
 
-## Next Run
+## Current Run
 
-Not yet dispatched.
+`TP-001`
 
-The Orchestrator must prepare a new Techplan Run for this Work Unit, resolve runtime/model selection separately, and obtain any required Human approval before dispatch.
+Run State:
+PLANNED
+
+Run Path:
+`.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/TP-001`
+
+Runtime Harness:
+`codex-cli`
+
+Selected Model Candidate:
+`gpt-5.6-sol`
+
+Reasoning Effort Candidate:
+`high`
+
+Model Approval:
+WAITING_HUMAN
+
+## Next Action
+
+Obtain explicit Human approval for `gpt-5.6-sol` on `TP-001`, then mark the Run ready for dispatch.
