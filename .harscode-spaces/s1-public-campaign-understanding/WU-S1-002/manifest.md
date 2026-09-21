@@ -133,8 +133,8 @@ Reasoning Effort Candidate:
 `medium`
 
 Model Approval:
-WAITING_HUMAN
+APPROVED_BY_HUMAN
 
 ## Next Action
 
-Obtain explicit Human approval for `gpt-5.6-sol / medium` on `TPR-001`, then dispatch the review in a fresh Session.
+Dispatch `TPR-001` in a fresh Codex Session using `gpt-5.6-sol` with reasoning effort `medium`.
