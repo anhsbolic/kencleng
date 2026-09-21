@@ -124,31 +124,33 @@ Independent Review Run:
 Review Result:
 1 MATERIAL / BLOCKING security-interface finding: public exact-allowlist schemas do not yet explicitly close additional properties.
 
-## Current Run
+## Planning State
 
-`TPR-RES-001`
+Draft Techplan:
+`.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/TP-001/techplan.md`
 
-Run State:
-READY_TO_DISPATCH
+Synthesis Run:
+`TP-001` — COMPLETED
 
-Role:
-Planner
+Independent Review Run:
+`TPR-001` — COMPLETED
 
-Run Path:
-`.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/TPR-RES-001`
+Resolution Run:
+`TPR-RES-001` — COMPLETED
 
-Runtime Harness:
-`codex-cli`
+Review Outcome:
+Blocking closed-object finding resolved. Amendment makes the already-settled exact-allowlist semantics executable and does not materially change interface/security meaning.
 
-Selected Model:
-`gpt-5.6-terra`
+Techplan Status:
+DRAFT — AWAITING_HUMAN_APPROVAL
 
-Reasoning Effort:
-`medium`
-
-Model Approval:
+Re-review:
 NOT_REQUIRED
+
+## Current Gate
+
+Human Techplan approval
 
 ## Next Action
 
-Dispatch focused Techplan resolution in a fresh Planner Session. After the amendment, route to Human Techplan gate unless the resolver reports a material contract/security change that requires re-review.
+Human reviews and either approves or requests revision of the amended Techplan. Do not start Build before approval.
