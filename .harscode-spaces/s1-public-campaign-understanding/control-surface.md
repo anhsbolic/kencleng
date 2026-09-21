@@ -32,28 +32,22 @@ Horizon:
 NOW
 
 Current Run:
-`TPR-RES-001`
+None active — planning gate
 
 Role:
-Planner
+Human Authority
 
 Run State:
-READY_TO_DISPATCH
+WAITING_HUMAN
 
 Runtime:
-`codex-cli`
-
-Selected Model:
-`gpt-5.6-terra`
-
-Reasoning Effort:
-`medium`
+N/A
 
 Human Attention:
-None currently.
+Approve or request revision of the amended `TP-001` Techplan.
 
 Next Action:
-Dispatch focused Techplan resolution in a fresh Planner Session.
+Human Techplan gate.
 
 ## COMPLETED
 
@@ -86,7 +80,7 @@ Tidak ada saat ini.
 
 ## Active Blockers
 
-Independent review selesai dengan 1 blocking security/interface finding. Resolution Run siap didispatch.
+Independent review finding sudah resolved tanpa material semantic change. Amended Techplan menunggu Human approval.
 
 ## Stalled Work
 
@@ -117,6 +111,10 @@ Stage 1 dan Stage 2 dapat dilanjutkan dengan Human response yang sangat singkat 
 ### OBS-ORCH-006 — Review finding routed without over-escalation
 
 Independent review menemukan satu blocking security/interface gap yang sempit. Orchestrator merutekannya ke fresh Planner resolution Run dengan lower-cost sufficient model (`gpt-5.6-terra / medium`) karena problem sudah terlokalisasi dan tidak memerlukan fresh cross-cutting architecture synthesis.
+
+### OBS-ORCH-007 — Narrow resolution avoided redundant re-review
+
+`TPR-RES-001` menutup blocking finding dengan membuat exact allowlist executable melalui closed-object semantics. Karena field set, runtime behavior, dan material interface/security meaning tidak berubah, flow kembali langsung ke Human Techplan gate tanpa mandatory re-review.
 
 ## State Integrity
 
