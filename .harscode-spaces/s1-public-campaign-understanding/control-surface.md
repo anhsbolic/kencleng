@@ -32,28 +32,28 @@ Horizon:
 NOW
 
 Current Run:
-`TPR-001`
+`TPR-RES-001`
 
 Role:
-Reviewer
+Planner
 
 Run State:
-PLANNED
+READY_TO_DISPATCH
 
 Runtime:
 `codex-cli`
 
-Selected Model Candidate:
-`gpt-5.6-sol`
+Selected Model:
+`gpt-5.6-terra`
 
-Reasoning Effort Candidate:
+Reasoning Effort:
 `medium`
 
 Human Attention:
 None currently.
 
 Next Action:
-Dispatch `TPR-001` independent Techplan review in a fresh Session.
+Dispatch focused Techplan resolution in a fresh Planner Session.
 
 ## COMPLETED
 
@@ -86,7 +86,7 @@ Tidak ada saat ini.
 
 ## Active Blockers
 
-Draft Techplan sudah tersedia dan `TPR-001` runtime approval sudah lengkap.
+Independent review selesai dengan 1 blocking security/interface finding. Resolution Run siap didispatch.
 
 ## Stalled Work
 
@@ -113,6 +113,10 @@ Stage 1 dan Stage 2 dapat dilanjutkan dengan Human response yang sangat singkat 
 ### OBS-ORCH-005 — Independent planning review gate
 
 `TP-001` menghasilkan Draft Techplan dengan 14 Rules. Independent review tetap warranted karena plan crosses contracts, carries a breaking contract change, dan menyentuh security-sensitive public/media boundaries. Review dipisahkan ke fresh reviewer Session/Run agar independence nyata.
+
+### OBS-ORCH-006 — Review finding routed without over-escalation
+
+Independent review menemukan satu blocking security/interface gap yang sempit. Orchestrator merutekannya ke fresh Planner resolution Run dengan lower-cost sufficient model (`gpt-5.6-terra / medium`) karena problem sudah terlokalisasi dan tidak memerlukan fresh cross-cutting architecture synthesis.
 
 ## State Integrity
 
