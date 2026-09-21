@@ -1,7 +1,7 @@
 # TP-001 — Orchestrated Techplan Synthesis Invocation
 
 Status:
-WAITING_HUMAN
+READY_TO_DISPATCH
 
 Prepared By Role:
 Orchestration Operator
@@ -54,7 +54,7 @@ Model Selection Basis:
 `WU-S1-002` memerlukan synthesis lintas Product/MVP authority, Product Design, delivery specs, threat model, public OpenAPI contract, backend/frontend ownership, dan integration topology. Human-owned registry saat ini hanya memberi `gpt-5.6-sol` capability `architecture` dan `cross-cutting-analysis` yang dibutuhkan untuk Run ini.
 
 Model Approval:
-REQUIRED
+APPROVED_BY_HUMAN
 
 Approval Scope:
 `TP-001` only
@@ -104,12 +104,22 @@ Jalankan canonical Techplan synthesis dengan:
 
 ## Human Gate Before Dispatch
 
-Do not dispatch `TP-001` until explicit Human approval is recorded for `gpt-5.6-sol`.
+Approval recorded:
+`gpt-5.6-sol / high` is approved by Human for `TP-001` only.
 
-Approval for `EXP-001` does not carry forward.
+Approval for this Run must not be generalized to another Run.
 
 ## Expected Phase Boundary
 
 Techplan output remains Draft / In Review until the canonical Human Techplan gate approves it.
 
 Do not automatically continue into Build after synthesis.
+
+## Dispatch Readiness
+
+`TP-001` is READY_TO_DISPATCH with:
+
+- Harness: `codex-cli`
+- Model: `gpt-5.6-sol`
+- Reasoning effort: `high`
+- Approval scope: `TP-001` only
