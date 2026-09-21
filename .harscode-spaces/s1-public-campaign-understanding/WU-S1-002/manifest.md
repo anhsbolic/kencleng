@@ -93,15 +93,35 @@ If reconciliation introduces a public Organization review/verification claim who
 
 This Work Unit is complete when the touched Slice-1 delivery/spec/threat/contract surfaces are reconciled sufficiently to support a truthful `CONTRACT_READY` milestone and downstream backend/frontend planning without unresolved material contract ambiguity.
 
+## Planning State
+
+Draft Techplan:
+`.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/TP-001/techplan.md`
+
+Synthesis Run:
+`TP-001`
+
+Synthesis State:
+COMPLETED
+
+Techplan Status:
+DRAFT
+
+Independent Review:
+RECOMMENDED_AND_GATE_APPLIES
+
 ## Current Run
 
-`TP-001`
+`TPR-001`
 
 Run State:
 PLANNED
 
+Role:
+Reviewer
+
 Run Path:
-`.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/TP-001`
+`.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/TPR-001`
 
 Runtime Harness:
 `codex-cli`
@@ -110,11 +130,11 @@ Selected Model Candidate:
 `gpt-5.6-sol`
 
 Reasoning Effort Candidate:
-`high`
+`medium`
 
 Model Approval:
-APPROVED_BY_HUMAN
+WAITING_HUMAN
 
 ## Next Action
 
-Dispatch `TP-001` using the prepared invocation with `codex-cli`, `gpt-5.6-sol`, and reasoning effort `high`.
+Obtain explicit Human approval for `gpt-5.6-sol / medium` on `TPR-001`, then dispatch the review in a fresh Session.
