@@ -50,10 +50,10 @@ Reasoning Effort Candidate:
 `high`
 
 Human Attention:
-Model approval required for `TP-001`.
+None currently.
 
 Next Action:
-Obtain Human approval for `gpt-5.6-sol / high`, then dispatch Techplan synthesis.
+Dispatch `TP-001` Techplan synthesis using `codex-cli`, `gpt-5.6-sol`, reasoning effort `high`.
 
 ## COMPLETED
 
@@ -82,11 +82,11 @@ Belum committed.
 
 ## Human Attention
 
-- Approve/reject `gpt-5.6-sol` untuk `TP-001`.
+Tidak ada saat ini.
 
 ## Active Blockers
 
-Tidak ada delivery blocker. Dispatch `TP-001` menunggu required Human model approval.
+Tidak ada delivery blocker. `TP-001` runtime approval sudah lengkap; belum ada delivery blocker.
 
 ## Stalled Work
 
