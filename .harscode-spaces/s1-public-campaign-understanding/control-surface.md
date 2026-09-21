@@ -50,7 +50,7 @@ APPROVED_BY_HUMAN for `EXP-001` only.
 
 Belum committed.
 
-Candidate downstream work harus diturunkan dari evidence hasil Exploration, bukan dibuat lebih dulu berdasarkan hypothesis pilot.
+Backend, frontend, topology, dan final verification Work Units belum committed. Mereka tetap candidate downstream work sampai reconciliation mencapai contract-ready shape.
 
 ## LATER
 
