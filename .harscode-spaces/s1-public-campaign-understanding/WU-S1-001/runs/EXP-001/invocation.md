@@ -1,7 +1,7 @@
 # EXP-001 — Orchestrated Exploration Invocation
 
 Status:
-ACTIVE
+COMPLETED
 
 Prepared By Role:
 Orchestration Operator
@@ -169,10 +169,25 @@ Sebelum dispatch, verifikasi:
 
 Do not generalize this approval to another Run or future use of `gpt-5.6-sol`.
 
-## Stage 1 Checkpoint
+## Completion
 
-Status:
-AWAITING_HUMAN_CONFIRMATION
+Run State:
+COMPLETED
 
-Pilot Observation:
-Stage 1 routing is broadly correct. Some file/state specificity appeared earlier than ideal; Stage 2 must treat those as provisional routing hypotheses, not closed scope.
+Durable Evidence:
+
+- `evidence/gap-analysis.md`
+- `evidence/solutioning.md`
+
+Session History:
+- Session A — Stage 1 + Stage 2
+- Session B — Stage 3
+
+Session Transition Evidence:
+Stage 3 dilanjutkan di fresh Session karena context hygiene, tetapi tetap berada pada Run `EXP-001`. Ini memvalidasi bahwa `Run != Session`.
+
+Human Decision:
+None required at Exploration completion.
+
+Recommended Orchestration Route:
+Instantiate Slice-1 Reconciliation as the next Work Unit; downstream delivery Work Units remain provisional until reconciliation reaches a contract-ready state.
