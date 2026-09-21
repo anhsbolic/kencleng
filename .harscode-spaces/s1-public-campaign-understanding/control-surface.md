@@ -41,7 +41,7 @@ Specialization:
 None
 
 Next Action:
-Dispatch `EXP-001` menggunakan Harscode Orchestrator v0.1 Exploration wrapper dengan `codex-cli` dan model `gpt-5.6-sol`.
+Dispatch `EXP-001` menggunakan Harscode Orchestrator v0.1 Exploration wrapper dengan `codex-cli`, model `gpt-5.6-sol`, dan reasoning effort `high`.
 
 Model Approval:
 APPROVED_BY_HUMAN for `EXP-001` only.
