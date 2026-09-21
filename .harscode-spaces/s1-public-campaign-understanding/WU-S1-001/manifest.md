@@ -7,10 +7,10 @@ Parent Outcome:
 S1 — Public Campaign Understanding
 
 Status:
-ACTIVE
+DONE
 
 Scheduling:
-RUNNING
+PARKED
 
 Horizon:
 NOW
@@ -71,7 +71,7 @@ Explorer harus mengikuti target-repo routing dari sources tersebut dan applicabl
 `EXP-001`
 
 Run State:
-ACTIVE
+COMPLETED
 
 Runtime Harness:
 `codex-cli`
@@ -114,3 +114,18 @@ Canonical Harscode terms/enums serta code/API/schema identifiers tetap dalam Eng
 Work Unit ini sengaja lebih luas daripada concern backend atau frontend.
 
 Tujuannya adalah menemukan real Slice 1 delivery shape sebelum downstream Work Units committed.
+
+## Completion Evidence
+
+Exploration selesai dan menghasilkan durable evidence yang cukup untuk menentukan downstream delivery structure tanpa mengarang unresolved authority.
+
+Current-effective artifacts:
+
+- `.harscode-spaces/s1-public-campaign-understanding/WU-S1-001/runs/EXP-001/evidence/gap-analysis.md`
+- `.harscode-spaces/s1-public-campaign-understanding/WU-S1-001/runs/EXP-001/evidence/solutioning.md`
+
+Outcome:
+- Product/MVP authority cukup untuk melanjutkan tanpa immediate authority revision.
+- Historical public contract perlu narrow reconciliation sebelum Build.
+- Public projection, media revocation, contract safety, topology, backend/frontend delivery boundaries sudah cukup jelas untuk Techplan synthesis.
+- Downstream shape pertama yang evidence-supported adalah Slice-1 Reconciliation.
