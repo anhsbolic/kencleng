@@ -73,6 +73,15 @@ Explorer harus mengikuti target-repo routing dari sources tersebut dan applicabl
 Run State:
 PLANNED
 
+Runtime Harness:
+`codex-cli`
+
+Selected Model:
+`gpt-5.6-sol`
+
+Model Approval:
+APPROVED_BY_HUMAN for `EXP-001` only
+
 Run Path:
 
 `.harscode-spaces/s1-public-campaign-understanding/WU-S1-001/runs/EXP-001`
