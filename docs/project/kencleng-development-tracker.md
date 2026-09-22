@@ -1,8 +1,8 @@
 # Kencleng — Development Tracker
 
 > Status: Living project status
-> Last reconciled: 2026-09-17
-> Current Kencleng main baseline before Product Authority promotion: `main@15a3e02cc88d00e8dee70f8dfb07c36cb1e2fe5a`
+> Last reconciled: 2026-09-22
+> Current Kencleng authoritative Product Authority baseline: `main@e32916b597412094976e3e6263095e861ec18391` (`Promote Product Authority and MVP delivery model (#27)`)
 > Harscode operational baseline: `main@b64fa11082a094d0e1b6e9488c20eac1c7f9777b`
 > Purpose: Keep cross-domain and product-slice delivery state visible without turning dated progress into workflow policy.
 
@@ -53,11 +53,11 @@ Code existing in history is not sufficient evidence for a verified milestone.
 
 | Concern | Status | Evidence / notes |
 |---|---|---|
-| Whole-product Product Authority | `PROMOTION_READY` on PR #27 branch | `docs/product/product-overview.md` promoted in branch; human product review PASS. Becomes repository authority on merge. |
+| Whole-product Product Authority | `ACTIVE / AUTHORITATIVE` | `docs/product/product-overview.md`; promoted to `main` by PR #27 at `e32916b597412094976e3e6263095e861ec18391`. |
 | Product Design / Brand Authority | `READY` | Canonical `docs/ui-ux/`; Sunlit Editorial / Evidence-Led Optimism approved. |
 | MVP release scope | `APPROVED` | `docs/product/mvp-scope.md`; human approval 2026-09-17. |
 | MVP delivery sequencing | `APPROVED` | `docs/product/mvp-delivery-slices.md`; human approval 2026-09-17. |
-| Product Authority routing | `PROMOTION_READY` on PR #27 branch | Root/scoped AGENTS, spec routing, and orchestration aligned in the promotion branch. |
+| Product Authority routing | `ACTIVE / AUTHORITATIVE` | Root/scoped AGENTS, product/spec routing, and orchestration were promoted with PR #27. |
 | Probe 01 — Public Campaign Detail | `PASS` | Forward derivation + public lifecycle decision + narrow contract reconciliation recorded. |
 | Probe 02 — Account Registration + Email Verification | `PAUSED_REFRAMED` | Useful salvage evidence; Account is outside baseline MVP critical path. |
 
@@ -79,7 +79,7 @@ Domain rows remain useful for semantic/implementation evidence, but they do **no
 | Account | `NEEDS_RECONCILIATION` when next needed | Historical implementation exists | `NOT_STARTED` for new generation | Outside baseline MVP critical path. Preserve security/correctness evidence; do not resume historical roadmap by inertia. |
 | Notification | Historical/draft reference | `NOT_STARTED` as standalone delivery | `NOT_STARTED` | Include only when a real slice requires active notification behavior. |
 | Organization | Historical/draft reference | `NOT_STARTED` | `NOT_STARTED` | Slice 1 needs only minimum persisted/public-safe steward context; full self-service is deferred. |
-| Campaign | `NEEDS_RECONCILIATION` for Slice 1 | `NOT_STARTED` active generation | `NOT_STARTED` active product surface | First active MVP semantic area through Public Campaign Understanding. |
+| Campaign | `CONTRACT_READY` for Slice 1 | `NOT_STARTED` active generation | `NOT_STARTED` active product surface | `WU-S1-002` reconciliation passed independent Testing and Human milestone acceptance on 2026-09-22. Runtime backend/frontend/topology/integration milestones remain unclaimed. |
 | Donation | Historical/draft reference | `NOT_STARTED` active generation | `NOT_STARTED` | Enters baseline in Slice 2; correctness-critical money areas retain Tier-0 fencing. |
 | Disbursement | Historical/draft reference | `NOT_STARTED` | `NOT_STARTED` | Not baseline MVP critical path; do not pull in merely to make accountability look complete. |
 
@@ -139,33 +139,46 @@ Evidence:
 
 Cross-cutting frontend readiness remains sufficient for real vertical product work.
 
-## 7. Next development selection
+## 7. Current development selection
 
-The next product surface is now explicitly selected:
+Active product outcome remains:
 
 ```text
 Slice 1 — Public Campaign Understanding
 ```
 
-This is the first real post-promotion CRTV candidate.
-
-Its high-level outcome is defined in `docs/product/mvp-delivery-slices.md`: a skeptical-but-open visitor can inspect a persisted public Campaign and correctly understand campaign/steward/funding/source context without internal-data leakage or fake downstream actions.
-
-Do **not** pre-reconcile the whole Campaign domain/OpenAPI before Exploration.
-
-Post-promotion execution path:
+The Slice-1 reconciliation milestone is now:
 
 ```text
-Product Authority + MVP Slice 1 reference
-→ canonical Harscode Exploration kickoff
-→ agent discovers relevant Design Authority + historical Campaign/Organization/API/code evidence
-→ gap analysis / solutioning through Harscode
-→ reconcile only Slice 1 delivery specs/contracts
-→ FE/BE delivery
-→ real integration evidence
+CONTRACT_READY
 ```
 
-The backend-first vs contract-parallel choice should emerge from Slice 1 Exploration/Techplan based on actual contract stability and dependency shape; it is not pre-decided here.
+Evidence:
+
+- `WU-S1-001 / EXP-001` established current authority and delivery gaps;
+- `WU-S1-002 / TP-001` reconciled the public Campaign contract and was Human-approved;
+- independent planning review/resolution closed the public closed-object gap;
+- Build/Code Review/targeted patch cycles closed the TypeScript verification and controlled-media URL findings;
+- `TST-001` independently verified R1–R13 at the artifact/contract/generated-contract boundary;
+- Human Authority accepted `CONTRACT_READY` on 2026-09-22.
+
+Current boundary:
+
+```text
+CONTRACT_READY
+✓ delivery/spec/threat/API/generated-contract authority reconciled
+
+BACKEND_VERIFIED
+✗ not yet earned
+
+FRONTEND_MOCK_VERIFIED
+✗ not yet earned
+
+INTEGRATED_VERIFIED
+✗ not yet earned
+```
+
+Downstream execution may now be decomposed from the reconciled contract. Backend and frontend may proceed contract-parallel where dependencies permit, while topology and final integration remain explicit owned work.
 
 ## 8. Continuous Real-Task Validation posture
 
@@ -188,20 +201,22 @@ If an agent cannot discover information that the repository should make derivabl
 
 Session-level telemetry should preserve both efficiency and correctness evidence.
 
-## 9. Current merge gate
+## 9. Current delivery gate
 
-PR #27 (`docs/product-authority-reframe`) is the Product Authority promotion vehicle.
+The Product Authority promotion gate is closed. PR #27 is historical promotion evidence, not an active blocker.
 
-Before real Slice 1 development starts:
+Current gate:
 
 ```text
-PR #27 promotion branch review
-→ merge to main
-→ confirm main promotion checkpoint
-→ start Slice 1 CRTV from canonical Harscode kickoff
+Slice 1 CONTRACT_READY
+→ derive downstream backend / frontend / topology Work Units
+→ earn BACKEND_VERIFIED and FRONTEND_MOCK_VERIFIED independently
+→ integrate against the same reconciled contract
+→ earn INTEGRATED_VERIFIED
+→ complete Slice-1 Human/product acceptance before SLICE_FINALIZED
 ```
 
-Do not start a competing Slice 1 contract rewrite on `main` while PR #27 remains unmerged.
+Do not infer runtime completion from contract readiness. Downstream work must preserve the reconciled public projection, anti-enumeration, funding truth, controlled media, no-store, provenance, and unavailable-donation semantics unless new evidence triggers an explicit authority/reconciliation change.
 
 ## 10. Update discipline
 
