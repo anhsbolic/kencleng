@@ -8,7 +8,7 @@
 > Created           : 2026-09-21
 > Target revision   : `e31e23b60ef2a8f994db623f8943a4eac3595e7e`
 > Workflow revision : `396b9ba664aaab9cb959786a97fd2594346c700e`
-> Status            : Draft
+> Status            : Approved by @anhsbolic
 > Approach          : Reconcile the smallest explicit public Campaign contract and its owning delivery/security records before any backend or frontend production Build.
 > Refs              : `WU-S1-001 / EXP-001` gap analysis and solutioning; `docs/product/product-overview.md`; `docs/product/mvp-scope.md`; `docs/product/mvp-delivery-slices.md`; applicable `docs/ui-ux/`; current Campaign specs and split OpenAPI sources
 
