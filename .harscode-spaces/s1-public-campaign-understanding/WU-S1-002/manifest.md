@@ -196,33 +196,27 @@ Invocation:
 
 ## Current Route
 
-BLD-001:
-COMPLETED_WITH_FINDING
-
-TP-002:
-COMPLETED — mechanical/non-material amendment
-
-BLD-002:
-COMPLETED — TypeScript verification finding resolved
-
 CR-001:
 COMPLETED — REQUEST_CHANGES
 
-Blocking Finding:
-`CR-001-F01` — `content_url` does not yet enforce the approved controlled same-origin path.
+BLD-003:
+COMPLETED — CR-001-F01 patch applied and focused checks passed
 
-Non-blocking Comment:
-`CR-001-C01` — stale threat-model reference labels; deferred.
+Blocking Finding Under Confirmation:
+`CR-001-F01`
+
+Deferred Non-blocking Comment:
+`CR-001-C01` — stale threat-model reference labels
 
 Current Run:
-`BLD-003` — PLANNED / DISPATCHED
+`CR-002` — PLANNED / DISPATCHED
 
-Patch Scope:
-Add executable controlled-path constraint to `PublicCampaignMediaItem.content_url`, regenerate bundle/types, and run focused negative validation.
+Review Mode:
+TARGETED_CONFIRMATION
 
-Human Re-approval:
-NOT_REQUIRED — patch makes already-approved media URL semantics executable and does not introduce a new material decision.
+Human Attention:
+None unless CR-002 reports a new material finding.
 
 ## Next Action
 
-Start a fresh Codex CLI session and execute `runs/BLD-003/invocation.md`. If the patch passes, route to targeted Code Review confirmation of CR-001-F01 before Testing.
+Start a fresh Codex CLI session and execute `runs/CR-002/invocation.md`. If CR-001-F01 is confirmed closed, route next to fresh independent Testing.
