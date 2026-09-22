@@ -821,6 +821,7 @@ components:
         content_url:
           type: string
           format: uri-reference
+          pattern: ^/api/campaigns/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/media/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/content$
           description: Opaque same-origin URI-reference rooted at the controlled media-content operation.
           example: "/api/campaigns/4f9d83f0-3c71-4f04-93d9-90bfbf868bf3/media/26a0a959-86ca-4df7-8e8d-00d1f1e247f3/content"
         content_type:
