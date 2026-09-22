@@ -13,19 +13,19 @@ Status:
 NOT_STARTED
 
 Scheduling:
-QUEUED
+DISPATCHED
 
 Horizon:
 NOW
 
 Readiness:
-DEFINED
+READY
 
 Coordination Owner Role:
 Orchestration Operator
 
 Primary Execution Role:
-Planner
+Implementer
 
 Specialization:
 None
@@ -149,8 +149,51 @@ NOT_REQUIRED
 
 ## Current Gate
 
-Human Techplan approval
+Planning gate closed — Human-approved `TP-001`.
+
+## Planning Outcome
+
+Current-effective Techplan:
+`.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/TP-001/techplan.md`
+
+Techplan Status:
+APPROVED
+
+Independent Review:
+`TPR-001` — COMPLETED
+
+Resolution:
+`TPR-RES-001` — COMPLETED
+
+Re-review:
+NOT_REQUIRED
+
+Decomposition:
+SKIP — reconciliation is cohesive and dependency-linear; splitting would create partial contract authority without a meaningful execution-context benefit.
+
+## Build Dispatch
+
+Build Run:
+`BLD-001`
+
+Run State:
+PLANNED
+
+Session:
+Fresh preferred / required for this dispatch
+
+Model:
+`gpt-5.6-terra`
+
+Reasoning:
+`high`
+
+Model Approval:
+NOT_REQUIRED
+
+Invocation:
+`.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/BLD-001/invocation.md`
 
 ## Next Action
 
-Human reviews and either approves or requests revision of the amended Techplan. Do not start Build before approval.
+Start a fresh Codex CLI session and execute `BLD-001/invocation.md`. Do not start backend/frontend production work from this Work Unit.
