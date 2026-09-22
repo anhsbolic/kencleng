@@ -199,21 +199,24 @@ Invocation:
 BLD-001:
 COMPLETED_WITH_FINDING
 
-Finding:
-Approved `tsc --noEmit` verification is not executable because existing Vitest globals are not included in the frontend TypeScript project typing configuration. This is a pre-existing configuration gap, not a generated-contract defect.
+TP-002:
+COMPLETED — mechanical/non-material amendment
 
-Planning Re-entry:
-`TP-002` — PLANNED / DISPATCHED
+Materiality:
+NON_MATERIAL
 
-Materiality hypothesis:
-MECHANICAL / NON-MATERIAL, subject to TP-002 live verification.
+Human Re-approval:
+NOT_REQUIRED
 
 Independent Re-review:
-NOT_REQUIRED unless TP-002 discovers material semantic expansion.
+NOT_REQUIRED
 
-Human Gate:
-NOT_REQUIRED for a purely mechanical amendment; required if TP-002 changes verification strategy or material scope/semantics.
+Build/Patch Run:
+`BLD-002` — PLANNED / DISPATCHED
+
+Patch Scope:
+Only `frontend/tsconfig.json` → add `types: ["vitest/globals"]`, then rerun the approved focused checks.
 
 ## Next Action
 
-Start a fresh Codex CLI session and execute `runs/TP-002/invocation.md`. If TP-002 confirms the narrow correction, dispatch a new Build/Patch Run; do not continue to Code Review/Testing until the approved Build verification passes.
+Start a fresh Codex CLI session and execute `runs/BLD-002/invocation.md`. If the patch resolves the finding, route next to fresh independent Code Review; do not claim `CONTRACT_READY` yet.
