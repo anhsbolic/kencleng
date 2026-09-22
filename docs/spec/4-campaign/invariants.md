@@ -1,8 +1,8 @@
 # Domain Invariant — campaign
 
 > File: `docs/spec/campaign/invariants.md`
-> Status: draft — authored directly against `api/openapi/campaign.yaml` 2026-08-20
-> Last updated: 2026-08-20
+> Status: Slice-1 public-boundary reconciliation active; remaining historical invariants are deferred evidence
+> Last updated: 2026-09-22
 
 ## Domain summary
 
@@ -17,17 +17,12 @@ cross-domain ownership convention. Authored directly against the
 actual `api/openapi/campaign.yaml` (no separate reconciliation pass
 needed, unlike `organization`).
 
-## Open item flagged during authoring — resolved 2026-08-20
+## Slice-1 reconciliation note
 
-**`GET /campaigns/{campaignId}/attachments` had `security: []`
-(fully public, no auth), with no visibility gate tied to the parent
-campaign's `status`** — inconsistent with `GET
-/campaigns/{campaignId}` itself, which *is* gated (non-`published`
-campaigns restricted to representatives/Kurator/Admin). **Decided:
-match the two endpoints' gating** — see INV-campaign-14. The current
-`api/openapi/campaign.yaml` still needs a small update
-(`security: []` removed from the attachment-list endpoint) to reflect
-this at implementation time.
+Historical mixed-auth detail and anonymous attachment-list behavior is
+superseded at the public boundary by INV-campaign-14. Historical lifecycle,
+listing, upload, and privileged-read artifacts remain deferred evidence; they
+do not define the active public contract.
 
 ## Invariants
 
@@ -239,31 +234,47 @@ this at implementation time.
   it must reference this entry for the closure side effect, rather
   than redefining it.
 
-### INV-campaign-14: Campaign visibility — public for `published`, restricted otherwise
+### INV-campaign-14: Public Campaign eligibility, projection, and media visibility
 
-- **Statement**: `GET /campaigns/{campaignId}` (the composite detail
-  endpoint) is publicly readable (no auth) when `status = 'published'`.
-  For any other status, only the owning organization's representatives
-  (any `level`), the assigned/historical Kurator, or Admin may view it
-  — everyone else gets `403` ("Campaign is not published and requester
-  lacks visibility," confirmed explicit — note this is a `403`, not
-  the anti-enumeration `404` pattern used elsewhere in this project;
-  worth confirming that's intentional, since it *does* confirm a
-  non-public campaign's existence to an unauthorized prober, just not
-  its content).
-- **`[RESOLVED — 2026-08-20]`**: `GET
-  /campaigns/{campaignId}/attachments` must adopt the **same** gating
-  as the detail endpoint — public when the parent campaign's `status
-  = 'published'`, otherwise restricted to representatives/Kurator/
-  Admin (`403` for anyone else). This closes the inconsistency flagged
-  above; `api/openapi/campaign.yaml`'s current `security: []` on this
-  endpoint needs updating to match at implementation time.
-- **Holds after operations**: `GET /campaigns/{campaignId}`, `GET
-  /campaigns/{campaignId}/attachments` (both, as of this decision).
-- **Verification**: Test — `published` campaign: attachments listable
-  without auth. Non-`published` campaign: representative/Kurator/Admin
-  succeed, unrelated/unauthenticated caller gets `403` — same test
-  shape as the detail endpoint, now applied to both.
+- **Statement**: `GET /campaigns/{campaignId}` and `GET
+  /campaigns/{campaignId}/media/{mediaId}/content` are public-only
+  operations. In Slice 1, only an internally `published` fundraising
+  Campaign is publicly eligible. Draft, pending, approved-but-not-published,
+  scheduled, rejected, unpublished/retracted, and historical closed states
+  are non-public until later Slice reconciliation explicitly changes this.
+- **Anti-enumeration**: absent, malformed/non-resolvable, and non-public
+  Campaigns return the same `PublicCampaignNotFound` `404` Problem Details
+  response. The media-content operation returns that same response for an
+  absent/non-member media ID. Presence, absence, validity, or role content
+  of optional `Authorization` cannot vary visibility, status, fields, or
+  public error shape.
+- **Projection**: the detail response is the standalone closed
+  `PublicCampaignDetail` allowlist, never an internal `Campaign` or
+  authenticated `Organization` serialization. It contains exactly `id`,
+  `title`, `purpose`, `story`, `steward`, `lifecycle`, `funding`, `media`,
+  and `donation_action`, with closed nested exact projections. It excludes
+  raw status/reasons, contact/legal data, actor IDs, audit timestamps,
+  `donor_count`, and operational metadata. Organizer text is plain text
+  marked `source: organizer`; it is not verification evidence.
+- **Funding/action truth**: funding uses tagged availability with IDR decimal
+  strings, backend-authored uncapped progress/relationship, and distinct
+  zero/unavailable semantics. `donation_action` is required but unavailable
+  with no activation target in Slice 1.
+- **Media**: metadata follows the same parent eligibility predicate. Public
+  bytes remain in private storage and are delivered only after parent and
+  member recheck at the origin; a storage/object dependency failure for an
+  eligible member is `PublicCampaignUnavailable` `503`, never false absence.
+  No direct object-storage URL or redirect is public.
+- **Withdrawal/cache**: success and public `404`/`503` responses specify
+  `Cache-Control: private, no-store`. Retraction prevents new origin fetches
+  from a previously known controlled URL; already downloaded client-held
+  bytes remain outside this guarantee.
+- **Holds after operations**: `GET /campaigns/{campaignId}` and `GET
+  /campaigns/{campaignId}/media/{mediaId}/content`.
+- **Verification**: downstream implementation/tests must prove allowlist
+  mapping, absent/non-public/auth parity (including timing), private-storage
+  retraction, no-store behavior, storage failure distinction, exact decimal
+  progress, and safe plain-text rendering.
 
 ### INV-campaign-15: `campaign_logs` is append-only
 

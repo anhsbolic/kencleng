@@ -7,8 +7,8 @@
 ```
 api/
   openapi.yaml          # GENERATED — bundled single-file spec, used by
-                         # openapi-typescript (frontend) and as the
-                         # canonical reference for backend handlers.
+                         # openapi-typescript (frontend) and aggregate
+                         # inspection; never hand-edit this generated file.
                          # Do not edit directly.
   openapi/
     index.yaml           # Root: openapi/info/servers/tags/security +
@@ -57,13 +57,18 @@ needs to read `api/openapi/organization.yaml` (~740 lines) plus
    ```
    This overwrites `api/openapi.yaml`. Commit both the source
    (`api/openapi/*.yaml`) and the regenerated bundle in the same
-   change — same discipline as the existing "keep `openapi.yaml` in
-   sync with the handler in the same commit" rule from
-   `kencleng-backend-tech-stack.md`, just with one more generated
-   artifact in the loop now.
+   change. The split files are authored authority; the bundle is a
+   generated artifact, not a second hand-authored source.
 4. `npm run validate` runs `redocly lint` against the split source
    directly (catches unresolved `$ref`s and basic spec issues without
    needing to bundle first).
+5. Generate the committed frontend types from the bundle:
+   ```
+   cd frontend && npm run generate:api-types
+   ```
+   This writes `frontend/lib/api/generated/openapi.ts`. Do not hand-edit
+   that file. A touched contract change must have zero validation errors and
+   must not add warning coordinates beyond the documented historical backlog.
 
 ## Known pre-existing issue (not introduced by this split)
 

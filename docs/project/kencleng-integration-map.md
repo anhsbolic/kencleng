@@ -108,11 +108,11 @@ Architecture boundaries may be separate, but delivery should normally remain sco
 
 ## 6. Active mappings
 
-No cross-stack surface is pre-populated at this checkpoint.
+| Frontend surface / flow | Product capability | API contract / operation | Backend owner(s) | Contract gap / coordination note |
+|---|---|---|---|---|
+| Public Campaign Detail | A visitor understands one persisted eligible Campaign, its steward, funding truth, organizer provenance, and truthful media/action state without a fake donation flow. | `getPublicCampaignDetail`; `getPublicCampaignMediaContent` | Campaign public projection and controlled media delivery | Detail embeds the narrow public steward projection; no Organization-detail request is needed. Frontend consumes generated types and uses the opaque same-origin `content_url`; backend/topology must later enforce private storage, parent/member recheck, `/api` routing, and `private, no-store`. |
 
-The Frontend Experience Foundation has already been delivered as a cross-domain calibration/foundation task and does not need a synthetic API mapping retrofitted onto it.
-
-Add the first mapping when the next real frontend surface/flow is selected for development.
+The Frontend Experience Foundation remains a cross-domain calibration/foundation task and does not need a synthetic API mapping retrofitted onto it.
 
 ## 7. Update discipline
 

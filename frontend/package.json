@@ -12,6 +12,7 @@
     "test:browser:headed": "playwright test --headed",
     "test:browser:ui": "playwright test --ui",
     "browser:install": "playwright install chromium",
+    "generate:api-types": "openapi-typescript ../api/openapi.yaml -o lib/api/generated/openapi.ts",
     "verify": "npm run lint && npm run test"
   },
   "dependencies": {

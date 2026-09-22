@@ -33,7 +33,7 @@ Guiding principles for all decisions below:
 | Password Policy | **Length-only, min 8 characters, no complexity requirement** [RESOLVED — NEW] | Follows NIST 800-63B-style guidance: length contributes more to entropy than forced character-class rules, which tend to push users toward predictable patterns ("Password1!"). |
 | Breach-List Check | **`pwnedpasswords.com` (HaveIBeenPwned) API, k-anonymity model, fail-open on API failure** [RESOLVED — NEW] | Included as an explicit learning goal (external API integration), not just a default. Only the first 5 characters of the SHA-1 hash of the candidate password are sent — the plaintext password and full hash never leave the server. Checked at registration, password reset, and set-password (Google-only users). If the API is unreachable, the flow proceeds without the check (logged) rather than blocking — this is a defense-in-depth layer, not the primary defense, and availability of core auth flows shouldn't depend on a third-party API's uptime. See `kencleng-phase0-detail.md` Fitur 1. |
 | MFA | `pquerna/otp` (TOTP, RFC 6238) | Lightweight, standard-compliant, no framework overhead. Optional for all roles in v1. |
-| File Storage | MinIO (S3-compatible) | Used for organization legal documents, campaign media, and fund-usage-report attachments. Public bucket for campaign media, private bucket + signed URLs for sensitive documents. Max file size **5 MB** across all contexts (legal docs, campaign media, fund-usage attachments); signed URL expiry **5 minutes** [RESOLVED — NEW]. |
+| File Storage | MinIO (S3-compatible) | Used for organization legal documents, campaign media, and fund-usage-report attachments. Slice-1 Campaign media stays private and is delivered through a parent/member-authorizing same-origin operation; it is never an anonymously readable bucket or redirect target. Other storage policy remains deferred/reconciled by its owning slice. Max file size **5 MB** is historical upload evidence, not an active Slice-1 upload contract. |
 | OAuth | `golang.org/x/oauth2` + Google's `idtoken` verification (`google.golang.org/api/idtoken` or manual JWKS verify) | "Login/Register dengan Google" is a v1-required feature. Official Go extended package, avoids pulling in a heavier third-party OAuth framework. Activates Fitur 4 (Account Linking) in `kencleng-phase0-detail.md`. `state` + `nonce` CSRF/replay protection detail: see Open Items #1 below. |
 | Config Management | `godotenv` | Simple `.env` loading, no need for heavier config libs (e.g. viper) at this scale |
 | Testing | `go test` stdlib (+ `net/http/httptest`) | `testify` and coverage tooling to be added only if/when assertion verbosity becomes a real pain point |
@@ -47,9 +47,10 @@ Guiding principles for all decisions below:
  
 ## API Contract & Codegen [RESOLVED — Step 2]
  
-**Format**: OpenAPI 3.x, spec-first — `api/openapi.yaml` is the single
-source of truth for all HTTP endpoints, hand-authored *before*
-implementation (not generated from code).
+**Format**: OpenAPI 3.x, spec-first — split source files under
+`api/openapi/` are hand-authored before implementation. `api/openapi.yaml`
+is the generated bundled aggregate used for aggregate inspection and
+frontend type generation; do not edit it directly.
  
 **Design philosophy** (agreed 2026-07-20, prior to the format decision
 above): domain/resource-driven REST as the default endpoint shape,
@@ -61,8 +62,9 @@ primary conversion surface.
 **Backend usage — documentation/contract only, no codegen.** Handlers,
 request/response structs, and validation in
 `internal/transport/http/` are 100% hand-written. The spec is kept in
-sync by developer discipline (updating `openapi.yaml` as part of the
-same change as the handler), not by tooling.
+sync by developer discipline (updating the owning split source and its
+regenerated `openapi.yaml` bundle as part of the same change as the handler),
+not by tooling.
 - Rejected: `oapi-codegen` (or similar Go server-stub/type generation
   from the spec). Would guarantee spec/implementation parity at
   compile time, but adds a build step and a generated-code layer that

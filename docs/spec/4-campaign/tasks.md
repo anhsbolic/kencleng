@@ -1,8 +1,8 @@
 # Domain Tasks — campaign
 
 > File: `docs/spec/campaign/tasks.md`
-> Status: draft — authored directly against `api/openapi/campaign.yaml` 2026-08-20
-> Last updated: 2026-08-20
+> Status: Slice-1 reconciliation active for Task 02/03; remaining historical tasks are deferred
+> Last updated: 2026-09-22
 
 Task order follows dependency: creation and read paths first, then
 the linear lifecycle (submit → curate → publish → close), then the
@@ -11,8 +11,8 @@ independent Event entity last (depends only on campaigns existing).
 | # | Task | Endpoint / surface | Depends on | Related invariants |
 |---|---|---|---|---|
 | 01 | Campaign creation & draft CRUD | `POST /organizations/{id}/campaigns`, `PATCH/DELETE /campaigns/{id}` | organization domain (Task 01/04) | INV-campaign-01, 02, 03, 04 |
-| 02 | Campaign detail & listing | `GET /campaigns`, `GET /organizations/{id}/campaigns`, `GET /campaigns/{id}` | 01 | INV-campaign-14 |
-| 03 | Campaign media | `GET/POST /campaigns/{id}/attachments` | 01, 02 | INV-campaign-14 (resolved 2026-08-20) |
+| 02 | Campaign detail & listing | Slice 1: `GET /campaigns/{id}` only; historical listing surfaces are `DEFER` | seeded/operator-assisted eligible Campaign prerequisite | INV-campaign-14 |
+| 03 | Campaign media | Slice 1: `GET /campaigns/{id}/media/{mediaId}/content`; historical attachment list/upload is `DEFER` | 02 | INV-campaign-14 |
 | 04 | Submit for curation | `POST /campaigns/{id}/submit` | 01 | INV-campaign-03, 04 |
 | 05 | Curation assignment | `POST /campaigns/{id}/curation/assign`, `GET /campaigns/curation-queue` | 04 | INV-campaign-05, 06 |
 | 06 | Curation decision | `POST /campaigns/{id}/curation/decision`, `GET /campaigns/curation-assignments/mine` | 05 | INV-campaign-07 |
@@ -40,38 +40,47 @@ INV-organization-13).
 
 ## Task 02 — Campaign detail & listing
 
-**What**: `GET /campaigns` (public, published-only, filterable by
-`category`/`q`), `GET /organizations/{organizationId}/campaigns`
-(Owner/Staff dashboard, any status, filterable by `status`), `GET
-/campaigns/{campaignId}` (composite detail — campaign + organization
-summary + progress; public for `published`, gated otherwise).
+**Slice 1 active subset**: `GET /campaigns/{campaignId}` is the single
+public-only composite read. It returns the closed `PublicCampaignDetail`
+projection for an eligible internally `published` fundraising Campaign;
+absent, malformed/non-resolvable, and non-public IDs all return the same
+public `404`. Authorization is optional only in the transport sense: its
+presence, validity, and role content cannot change visibility or payload.
 
-**KPI / metrics**:
-- Public list returns only `published` campaigns.
-- Org-scoped list returns all statuses, scoped correctly, `403` for
-  non-representatives.
-- Detail endpoint: public for `published`; `403` for non-`published`
-  when requester lacks visibility (representative/Kurator/Admin).
-- `CampaignDetail`'s embedded `organization`/`progress` data is
-  internally consistent with what `organization`/`donation` domains
-  would report independently (composite-endpoint correctness check).
+The response includes only the public Campaign, embedded public steward,
+public lifecycle, decimal-string funding truth, organizer provenance,
+truthful media state, and unavailable donation action defined by the
+reconciled feature/API contract. A seeded or operator-assisted eligible
+Campaign is a prerequisite for later implementation verification; this
+does not make creation/self-service part of Slice 1.
+
+**Deferred historical breadth**: public listing, organization dashboard
+listing, authenticated/non-public detail, filters, and `CampaignDetail` /
+`OrganizationSummary` / `CampaignProgress` semantics are historical
+evidence only. They are not acceptance criteria for Slice 1 and must be
+reconciled before later use.
 
 ## Task 03 — Campaign media
 
-**What**: `GET`/`POST /campaigns/{campaignId}/attachments`. Upload:
-JPG/PNG only, 5 MB max, owner/staff representative. List: gated to
-match the detail endpoint's visibility rule
-(`[RESOLVED — 2026-08-20]` — public only when `status = 'published'`,
-otherwise representative/Kurator/Admin only). **Implementation note**:
-`api/openapi/campaign.yaml` currently has `security: []` on the list
-endpoint — needs updating to remove that and add the same auth/gating
-logic as Task 02's detail endpoint.
+**Slice 1 active subset**: public media metadata is embedded in
+`PublicCampaignDetail`; bytes are delivered only by `GET
+/campaigns/{campaignId}/media/{mediaId}/content`. The operation is
+public-only, rechecks parent public eligibility and media membership for
+every origin request, returns the same public `404` for absent/non-public/
+non-member resources, and returns `503` when eligible metadata exists but
+bytes or their dependency cannot be served. JPEG/PNG bytes use
+`Cache-Control: private, no-store`; there is no redirect or anonymous
+object-storage URL.
 
-**KPI / metrics**:
-- Non-representative/non-staff upload attempt → `403`.
-- Invalid file type/oversized file → `422`.
-- List gating matches detail endpoint exactly, same test matrix
-  (public-when-published, restricted otherwise).
+`media.absent` means no public media is associated, while
+`media.unavailable` means expected media cannot be presented. Retraction
+must prevent new origin fetches through a previously known controlled URL;
+already downloaded client-held bytes are outside that guarantee.
+
+**Deferred historical breadth**: anonymous attachment listing, upload,
+attachment operational metadata, and representative/self-service workflow
+remain `DEFER`. They must not imply a public bucket or direct media URL in
+the Slice-1 contract.
 
 ## Task 04 — Submit for curation
 

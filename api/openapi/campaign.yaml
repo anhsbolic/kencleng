@@ -117,24 +117,27 @@ paths:
           format: uuid
     get:
       tags: [campaign]
-      summary: Campaign detail (composite — campaign + organization + progress)
+      operationId: getPublicCampaignDetail
+      summary: Get a public Campaign detail projection
       description: >
-        Public for `status = published` campaigns. Non-published campaigns
-        are only visible to the organization's representatives, the assigned
-        Kurator, or Admin.
+        Public-only Slice-1 projection. An absent, malformed/non-resolvable,
+        or non-public Campaign receives the same public not-found response;
+        optional Authorization never changes visibility or response fields.
       security: []
       responses:
         "200":
           description: OK
+          headers:
+            Cache-Control:
+              $ref: "#/components/headers/PublicCampaignCacheControl"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CampaignDetail"
+                $ref: "#/components/schemas/PublicCampaignDetail"
         "404":
-          $ref: "./common.yaml#/components/responses/NotFound"
-        "403":
-          description: Campaign is not published and requester lacks visibility.
-          $ref: "./common.yaml#/components/responses/Forbidden"
+          $ref: "#/components/responses/PublicCampaignNotFound"
+        "503":
+          $ref: "#/components/responses/PublicCampaignUnavailable"
 
     patch:
       tags: [campaign]
@@ -217,24 +220,13 @@ paths:
         schema:
           type: string
           format: uuid
-    get:
-      tags: [campaign]
-      summary: List campaign media
-      security: []
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/CampaignAttachment"
-
     post:
       tags: [campaign]
       summary: Upload campaign media
-      description: Public bucket — JPG/PNG only, max 5 MB. Owner or Staff.
+      description: >
+        Historical operational endpoint, explicitly deferred outside Slice 1.
+        Its storage and public-visibility semantics are not the Slice-1
+        public media contract.
       requestBody:
         required: true
         content:
@@ -253,6 +245,49 @@ paths:
           $ref: "./common.yaml#/components/responses/ValidationError"
         "403":
           $ref: "./common.yaml#/components/responses/Forbidden"
+
+  /campaigns/{campaignId}/media/{mediaId}/content:
+    parameters:
+      - name: campaignId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: mediaId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [campaign]
+      operationId: getPublicCampaignMediaContent
+      summary: Deliver public Campaign media bytes through a controlled origin
+      description: >
+        Public-only Slice-1 byte delivery. The origin rechecks parent public
+        eligibility and media membership for every request and never redirects
+        to or reveals an anonymously readable object-storage URL.
+      security: []
+      responses:
+        "200":
+          description: JPEG or PNG bytes.
+          headers:
+            Cache-Control:
+              $ref: "#/components/headers/PublicCampaignCacheControl"
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+        "404":
+          $ref: "#/components/responses/PublicCampaignNotFound"
+        "503":
+          $ref: "#/components/responses/PublicCampaignUnavailable"
 
   /campaigns/curation-queue:
     get:
@@ -572,6 +607,7 @@ components:
   schemas:
     # Campaign domain schemas
     # ---------------------------------------------------------------------
+
     CampaignStatus:
       type: string
       enum: [draft, pending_curation, approved, rejected, scheduled, published, unpublished, closed]
@@ -587,6 +623,230 @@ components:
     ClosedReason:
       type: string
       enum: [max_amount_reached, deadline_reached, admin_force_closed]
+
+    # Slice-1 public Campaign projection. These schemas are deliberately
+    # standalone from the historical internal Campaign/Organization shapes.
+    PublicCampaignDetail:
+      type: object
+      additionalProperties: false
+      required: [id, title, purpose, story, steward, lifecycle, funding, media, donation_action]
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          minLength: 1
+        purpose:
+          $ref: "#/components/schemas/PublicCampaignOrganizerText"
+        story:
+          $ref: "#/components/schemas/PublicCampaignOrganizerText"
+        steward:
+          $ref: "#/components/schemas/PublicCampaignSteward"
+        lifecycle:
+          $ref: "#/components/schemas/PublicCampaignLifecycle"
+        funding:
+          $ref: "#/components/schemas/PublicCampaignFunding"
+        media:
+          $ref: "#/components/schemas/PublicCampaignMedia"
+        donation_action:
+          $ref: "#/components/schemas/PublicCampaignDonationAction"
+
+    PublicCampaignOrganizerText:
+      type: object
+      additionalProperties: false
+      required: [content, source]
+      properties:
+        content:
+          type: string
+          minLength: 1
+          description: Plain organizer-authored text; HTML and Markdown are not accepted.
+        source:
+          type: string
+          enum: [organizer]
+
+    PublicCampaignSteward:
+      type: object
+      additionalProperties: false
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+
+    PublicCampaignLifecycle:
+      type: object
+      additionalProperties: false
+      required: [public_state, published_at, fundraising_ends_at]
+      properties:
+        public_state:
+          type: string
+          enum: [fundraising]
+        published_at:
+          type: string
+          format: date-time
+        fundraising_ends_at:
+          type: string
+          format: date-time
+
+    PublicCampaignFunding:
+      oneOf:
+        - $ref: "#/components/schemas/PublicCampaignFundingAvailable"
+        - $ref: "#/components/schemas/PublicCampaignFundingUnavailable"
+      discriminator:
+        propertyName: availability
+        mapping:
+          available: "#/components/schemas/PublicCampaignFundingAvailable"
+          unavailable: "#/components/schemas/PublicCampaignFundingUnavailable"
+
+    PublicCampaignFundingAvailable:
+      type: object
+      additionalProperties: false
+      required: [availability, currency, target_amount, collected_amount, progress]
+      properties:
+        availability:
+          type: string
+          enum: [available]
+        currency:
+          type: string
+          enum: [IDR]
+        target_amount:
+          type: string
+          pattern: "^(0|[1-9][0-9]{0,16})\\.[0-9]{2}$"
+          example: "5000000.00"
+        collected_amount:
+          type: string
+          pattern: "^(0|[1-9][0-9]{0,16})\\.[0-9]{2}$"
+          example: "0.00"
+        progress:
+          $ref: "#/components/schemas/PublicCampaignFundingProgress"
+
+    PublicCampaignFundingUnavailable:
+      type: object
+      additionalProperties: false
+      required: [availability, reason]
+      properties:
+        availability:
+          type: string
+          enum: [unavailable]
+        reason:
+          type: string
+          enum: [not_available]
+
+    PublicCampaignFundingProgress:
+      type: object
+      additionalProperties: false
+      required: [state, percentage, relationship]
+      properties:
+        state:
+          type: string
+          enum: [computed, not_computable]
+        percentage:
+          type: string
+          nullable: true
+          pattern: "^(0|[1-9][0-9]*)(\\.[0-9]{1,2})?$"
+          example: "125.50"
+        relationship:
+          type: string
+          enum: [below_target, target_reached, above_target, not_computable]
+
+    PublicCampaignMedia:
+      oneOf:
+        - $ref: "#/components/schemas/PublicCampaignMediaAvailable"
+        - $ref: "#/components/schemas/PublicCampaignMediaAbsent"
+        - $ref: "#/components/schemas/PublicCampaignMediaUnavailable"
+      discriminator:
+        propertyName: state
+        mapping:
+          available: "#/components/schemas/PublicCampaignMediaAvailable"
+          absent: "#/components/schemas/PublicCampaignMediaAbsent"
+          unavailable: "#/components/schemas/PublicCampaignMediaUnavailable"
+
+    PublicCampaignMediaAvailable:
+      type: object
+      additionalProperties: false
+      required: [state, items]
+      properties:
+        state:
+          type: string
+          enum: [available]
+        items:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/PublicCampaignMediaItem"
+
+    PublicCampaignMediaAbsent:
+      type: object
+      additionalProperties: false
+      required: [state, items]
+      properties:
+        state:
+          type: string
+          enum: [absent]
+        items:
+          type: array
+          maxItems: 0
+          items:
+            $ref: "#/components/schemas/PublicCampaignMediaItem"
+
+    PublicCampaignMediaUnavailable:
+      type: object
+      additionalProperties: false
+      required: [state, reason, items]
+      properties:
+        state:
+          type: string
+          enum: [unavailable]
+        reason:
+          type: string
+          enum: [temporarily_unavailable]
+        items:
+          type: array
+          maxItems: 0
+          items:
+            $ref: "#/components/schemas/PublicCampaignMediaItem"
+
+    PublicCampaignMediaItem:
+      type: object
+      additionalProperties: false
+      required: [id, content_url, content_type, alt_text, caption, source]
+      properties:
+        id:
+          type: string
+          format: uuid
+        content_url:
+          type: string
+          format: uri-reference
+          description: Opaque same-origin URI-reference rooted at the controlled media-content operation.
+          example: "/api/campaigns/4f9d83f0-3c71-4f04-93d9-90bfbf868bf3/media/26a0a959-86ca-4df7-8e8d-00d1f1e247f3/content"
+        content_type:
+          type: string
+          enum: [image/jpeg, image/png]
+        alt_text:
+          type: string
+          minLength: 1
+        caption:
+          type: string
+          nullable: true
+        source:
+          type: string
+          enum: [organizer]
+
+    PublicCampaignDonationAction:
+      type: object
+      additionalProperties: false
+      required: [availability, reason]
+      properties:
+        availability:
+          type: string
+          enum: [unavailable]
+        reason:
+          type: string
+          enum: [donation_flow_not_available]
 
     Campaign:
       type: object
@@ -657,18 +917,6 @@ components:
           type: string
           format: date-time
 
-    OrganizationSummary:
-      type: object
-      description: Minimal organization projection embedded in CampaignDetail — not the full Organization resource.
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        status:
-          $ref: "./organization.yaml#/components/schemas/OrganizationStatus"
-
     CampaignProgress:
       type: object
       properties:
@@ -683,21 +931,6 @@ components:
           type: integer
           nullable: true
           description: "Null if already `closed`."
-
-    CampaignDetail:
-      description: >
-        Response shape for `GET /campaigns/{campaignId}` — the deliberate
-        composite endpoint. Aggregates campaign + organization + progress in
-        one call to avoid client-side N+1 fetches on the platform's primary
-        conversion surface (`/campaign/[id]` per kencleng-ux-page-map.md).
-      allOf:
-        - $ref: "#/components/schemas/Campaign"
-        - type: object
-          properties:
-            organization:
-              $ref: "#/components/schemas/OrganizationSummary"
-            progress:
-              $ref: "#/components/schemas/CampaignProgress"
 
     CampaignListItem:
       allOf:
@@ -768,7 +1001,9 @@ components:
 
     CampaignAttachment:
       type: object
-      description: Public-bucket media (no signed URL needed — publicly readable per kencleng-erd.md).
+      description: >
+        Historical/deferred attachment operation schema. It is not the
+        Slice-1 public media projection or controlled content-delivery shape.
       properties:
         id:
           type: string
@@ -919,3 +1154,30 @@ components:
           description: All must belong to the same organization as the creator, with status `published` or `scheduled`.
 
     # ---------------------------------------------------------------------
+
+  headers:
+    PublicCampaignCacheControl:
+      description: Public visibility boundary responses must not be stored by browser or intermediary caches.
+      schema:
+        type: string
+        enum: ["private, no-store"]
+
+  responses:
+    PublicCampaignNotFound:
+      description: Campaign is absent, not publicly eligible, or (for media delivery) the member is absent/not associated.
+      headers:
+        Cache-Control:
+          $ref: "#/components/headers/PublicCampaignCacheControl"
+      content:
+        application/problem+json:
+          schema:
+            $ref: "./common.yaml#/components/schemas/Problem"
+    PublicCampaignUnavailable:
+      description: An eligible public Campaign dependency or eligible media bytes cannot currently be served.
+      headers:
+        Cache-Control:
+          $ref: "#/components/headers/PublicCampaignCacheControl"
+      content:
+        application/problem+json:
+          schema:
+            $ref: "./common.yaml#/components/schemas/Problem"

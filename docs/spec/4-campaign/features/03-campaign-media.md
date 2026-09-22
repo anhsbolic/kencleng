@@ -3,92 +3,77 @@
 > File: `docs/spec/campaign/features/03-campaign-media.md`
 > Domain: `campaign`
 > Task: 03 (see `docs/spec/campaign/tasks.md`)
-> Status: draft — includes the 2026-08-20 visibility-gating decision
-> Last updated: 2026-08-20
+> Status: reconciled for Slice 1 — Public Campaign Understanding
+> Last updated: 2026-09-22
 
 ## Summary
 
-`GET`/`POST /campaigns/{campaignId}/attachments` — campaign media
-(images), public bucket. Upload is owner/staff representative only.
-**List visibility is gated to match the campaign detail endpoint**
-(`[RESOLVED — 2026-08-20]`) — public only when the parent campaign's
-`status = 'published'`, otherwise representative/Kurator/Admin only.
-This **changes** `api/openapi/campaign.yaml`'s current `security: []`
-on the list endpoint — that needs updating at implementation time to
-add the same gating as `GET /campaigns/{campaignId}` (Task 02).
+Slice 1 exposes truthful public media metadata only within
+`PublicCampaignDetail`, and delivers bytes through a controlled same-origin
+operation. Campaign media remains private in object storage; no public
+bucket, direct object URL, redirect, or long-lived signed URL is permitted.
 
 ## Endpoints
 
-`GET`/`POST /campaigns/{campaignId}/attachments` (confirmed paths in
-`api/openapi/campaign.yaml`; auth on `GET` needs the change described
-above)
+`GET /campaigns/{campaignId}/media/{mediaId}/content` —
+`getPublicCampaignMediaContent`
 
 ## Auth
 
-- `GET`: public if the parent campaign's `status = 'published'`;
-  otherwise `bearerAuth` + representative/Kurator/Admin, `403`
-  otherwise — identical rule to Task 02's detail endpoint.
-- `POST`: `bearerAuth` + owner/staff representative of the owning
-  organization.
+- `security: []`; this is a public-only controlled byte operation.
+- Every origin request rechecks the parent Slice-1 public-eligibility
+  predicate and that the media member belongs to that parent.
+- Optional Authorization never enriches visibility or response shape.
 
 ## Request
 
-### `POST` — `UploadCampaignMediaRequest`
-`multipart/form-data`:
-
-| Field | Type | Required | Notes |
-|---|---|---|---|
-| `file` | binary | Yes | JPG/PNG only, 5 MB max |
+`campaignId` and `mediaId` are UUID path parameters. Success delivers only
+`image/jpeg` or `image/png` bytes.
 
 ## Behavior
 
-### List
-1. Load the campaign — `404` if it doesn't exist.
-2. If `status = 'published'`: return `CampaignAttachment[]` to anyone.
-3. Otherwise: resolve caller's relationship (representative/Kurator/
-   Admin) — `403` if none.
-4. Each item includes a direct public `url` (no signed URL needed —
-   public bucket, per `CampaignAttachment`'s schema note) once access
-   is granted.
-
-### Upload
-1. Reject (`403`) if caller isn't a representative (owner or staff) of
-   the owning organization.
-2. Validate file type (JPG/PNG) and size (≤ 5 MB) — `422` otherwise.
-3. Store in the public bucket, insert `campaign_attachments`.
-4. Return `201` with the `CampaignAttachment`.
+1. Resolve the parent and media member, then recheck public eligibility.
+2. Return JPEG/PNG bytes only when both predicates hold.
+3. Return the same `PublicCampaignNotFound` `404` Problem Details response
+   for absent/non-public parent or absent/non-member media, without revealing
+   which condition failed.
+4. Return `PublicCampaignUnavailable` `503` when eligible metadata exists
+   but storage/dependency or the object cannot serve bytes; never turn that
+   failure into `media.absent`.
+5. Apply `Cache-Control: private, no-store` to `200`, `404`, and `503`.
+   Retraction prevents new origin fetches through a known content URL;
+   already downloaded client-held bytes are outside the guarantee.
 
 ## Validation & error cases
 
 | Case | Response |
 |---|---|
-| No/invalid bearer token (on gated list, or on upload) | `401` |
-| List, non-`published` campaign, caller lacks visibility | `403` |
-| Upload, caller not a representative | `403` |
-| Invalid file type/oversized file | `422` |
-| Campaign doesn't exist | `404` |
+| Absent/non-public parent or absent/non-member media | identical `404` `PublicCampaignNotFound` |
+| Eligible metadata but unavailable bytes/dependency | `503` `PublicCampaignUnavailable` |
 
 ## Concurrency & correctness notes
 
-None specific — plain file upload/list, no cross-row locking needed.
+Visibility and membership must be checked at the delivery origin on every
+request; a metadata check alone is insufficient for retraction.
 
 ## Test checklist
 
-- [ ] List: `published` campaign → readable without auth.
-- [ ] List: non-`published` campaign — representative/Kurator/Admin
-      succeed, unrelated/unauthenticated caller → `403` (same test
-      matrix as Task 02's detail endpoint).
-- [ ] Upload: non-representative → `403`.
-- [ ] Upload: invalid file type/oversized → `422`.
-- [ ] Uploaded media's `url` is directly publicly fetchable (no signed
-      URL, unlike `organization` domain's legal documents) once list
-      access is granted.
+- [ ] Only JPEG/PNG bytes are returned; no object-storage URL/redirect is
+      exposed.
+- [ ] Missing/non-public/non-member requests have identical `404` behavior,
+      including the no-store header.
+- [ ] Storage/object failure produces `503`, not a false absence state.
+- [ ] Retraction prevents a new origin fetch through a previously known URL.
 
 ## References
 
-- `docs/spec/campaign/invariants.md` — INV-campaign-14 (resolved
-  2026-08-20)
+- `docs/spec/campaign/invariants.md` — INV-campaign-14
 - `docs/spec/campaign/threat-model.md` — "Campaign media" section
 - `docs/spec/campaign/tasks.md` — Task 03
-- `api/openapi/campaign.yaml` — attachment endpoints (list `security`
-  needs updating per the decision above)
+- `api/openapi/campaign.yaml` — public media metadata/content schemas and operation
+
+## Deferred historical breadth
+
+`GET`/`POST /campaigns/{campaignId}/attachments`, upload validation,
+curation, and operational media metadata remain `DEFER`. They must be
+reconciled later and do not authorize a public-bucket implementation.

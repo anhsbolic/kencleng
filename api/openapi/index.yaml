@@ -153,6 +153,8 @@ paths:
     $ref: './campaign.yaml#/paths/~1organizations~1{organizationId}~1campaigns'
   /campaigns/{campaignId}:
     $ref: './campaign.yaml#/paths/~1campaigns~1{campaignId}'
+  /campaigns/{campaignId}/media/{mediaId}/content:
+    $ref: './campaign.yaml#/paths/~1campaigns~1{campaignId}~1media~1{mediaId}~1content'
   /campaigns/{campaignId}/submit:
     $ref: './campaign.yaml#/paths/~1campaigns~1{campaignId}~1submit'
   /campaigns/{campaignId}/attachments:
@@ -219,3 +221,8 @@ paths:
     $ref: './notification.yaml#/paths/~1notifications~1unread-count'
   /notifications/mark-read:
     $ref: './notification.yaml#/paths/~1notifications~1mark-read'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: './common.yaml#/components/securitySchemes/bearerAuth'

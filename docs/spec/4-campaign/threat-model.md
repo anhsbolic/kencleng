@@ -1,14 +1,14 @@
 # Threat Model — campaign
 
 > File: `docs/spec/campaign/threat-model.md`
-> Status: draft — authored directly against `api/openapi/campaign.yaml` 2026-08-20
-> Last updated: 2026-08-20
+> Status: Slice-1 public-boundary reconciliation active; remaining historical areas are deferred evidence
+> Last updated: 2026-09-22
 
 ## Actors & trust boundaries
 
 | Actor | Authenticated? | Trust boundary crossed |
 |---|---|---|
-| Public / anonymous visitor | No | `GET /campaigns` (published-only list), `GET /campaigns/{id}` (published only), `GET /campaigns/{id}/attachments` (published only, per the 2026-08-20 decision), `GET /events/{id}` — the platform's public browse/conversion surface |
+| Public / anonymous visitor | No | Slice 1: `GET /campaigns/{id}` and controlled `GET /campaigns/{id}/media/{mediaId}/content`; listing and attachment-list/upload are deferred |
 | Owner/Staff representative | Yes | Draft CRUD, media upload, submit-for-curation (owner-only), publish/unpublish/republish (owner-only), event creation |
 | Admin | Yes | Curation assignment, force-close, broad org-scoped campaign listing |
 | Kurator | Yes | Curation review & decision — must recuse if a representative of the campaign's organization |
@@ -16,25 +16,27 @@
 
 ## STRIDE per operation
 
-### Public campaign listing & detail — `GET /campaigns`, `GET /campaigns/{campaignId}`
+### Slice-1 public Campaign detail — `GET /campaigns/{campaignId}`
 
 | Category | Concrete threat | Existing mitigation | Residual risk |
 |---|---|---|---|
 | Spoofing | N/A — explicitly `security: []`, no auth expected | — | — |
 | Tampering | N/A — read-only | — | — |
 | Repudiation | N/A | — | — |
-| Information disclosure | Non-`published` campaign detail exposed to the public | `403` for non-representative/Kurator/Admin on non-`published` campaigns (INV-campaign-14) | **Existence-confirming `403`**: unlike this project's usual anti-enumeration `404` pattern, this endpoint returns `403` (not `404`) for a non-public campaign — confirming a `draft`/`pending_curation` campaign *exists* at that id, just not its content. Low severity (campaign ids aren't sequential/guessable, and no sensitive data leaks beyond existence), but a deliberate departure from the pattern used elsewhere — worth a conscious sign-off, not an oversight. |
-| Denial of service | `q` free-text search param (`# INFERRED`, not in the phase doc) — unindexed `LIKE`/full-text search could be expensive at scale | Low real-world risk at this project's sandbox scale | Low, accepted |
+| Information disclosure | Internal Campaign/Organization fields, non-public existence, or auth-dependent payload leaks | Public eligibility before a standalone closed allowlist mapping; identical `404` for absent/invalid/non-public; optional auth invariant; no `allOf` inheritance | Timing parity and runtime forbidden-field tests remain required downstream. |
+| Information disclosure | Organizer prose rendered as markup or provenance presented as platform verification | Plain strings plus `source: organizer`; no HTML/Markdown contract | Frontend must use framework escaping and human-reviewed final wording. |
+| Denial of service | Detail/funding dependency is unavailable | Documented `503` rather than fabricated unavailable product truth | Availability/rate limits are deferred to backend/topology work. |
 | Elevation of privilege | N/A | — | — |
 
-### Campaign media (attachments) — `GET .../attachments`, `POST .../attachments`
+### Slice-1 Campaign media delivery — `GET .../media/{mediaId}/content`
 
 | Category | Concrete threat | Existing mitigation | Residual risk |
 |---|---|---|---|
-| Spoofing | N/A on list (public when published, per decision); `bearerAuth` + representative check on upload | — | None |
-| Tampering | `staff`/unrelated user attempts upload | `403`, owner/staff representative required | None |
-| Information disclosure — **`[RESOLVED — 2026-08-20]`** | List endpoint was unconditionally public regardless of campaign status, inconsistent with the detail endpoint's gating | Now matches the detail endpoint's gating (INV-campaign-14) | None — see `invariants.md` for the decision record |
-| Denial of service | Repeated uploads to exhaust storage | File type/size limits (JPG/PNG, 5 MB max, confirmed) | Low — no per-campaign upload count cap documented; likely fine for a sandbox project, flag if it ever matters |
+| Spoofing | Optional Authorization alters the public response | `security: []` and INV-campaign-14 auth invariance | Runtime parity tests remain required downstream. |
+| Tampering | N/A — read-only byte delivery | — | — |
+| Information disclosure | Direct public-bucket/signed URL bypasses retraction, or media membership leaks | Private storage; parent/member recheck on every origin request; same `404` for absent/non-public/non-member; no redirect/object URL | Already downloaded client-held bytes cannot be withdrawn. |
+| Information disclosure | Shared/browser cache serves stale public bytes or metadata after retraction | `Cache-Control: private, no-store` on success and public errors | Topology must preserve header; real proxy/cache evidence remains required. |
+| Denial of service | Storage/object dependency cannot serve eligible bytes | Explicit `503`, distinct from `media.absent` and `404` | Dependency outage behavior requires downstream integration evidence. |
 | Elevation of privilege | N/A beyond the tampering case above | — | — |
 
 ### Campaign draft CRUD — `POST .../campaigns`, `PATCH/DELETE /campaigns/{id}`
@@ -111,12 +113,11 @@ in `campaign.yaml`.
 
 ## Knowingly accepted residual risk
 
-- **`403` (not `404`) on non-public campaign detail/attachments** —
-  existence-confirming, departs from this project's usual
-  anti-enumeration pattern. Accepted as low-severity (campaign ids
-  aren't sequential, no content leaks) but flagged as a conscious
-  choice to revisit if it ever matters more (e.g. if campaign ids
-  become guessable/sequential in a future iteration).
+- **Already downloaded media cannot be withdrawn** — `private, no-store` and
+  origin rechecks prevent new system-controlled fetches after retraction,
+  but cannot erase bytes previously saved by a client.
+- **Historical listing/upload/privileged behavior is deferred** — it is not
+  active Slice-1 authority and needs later reconciliation before runtime use.
 - **No draft-creation rate cap per organization** — accepted for a
   sandbox project.
 - **Stale `campaign_events` links after a linked campaign closes** —
