@@ -10,7 +10,7 @@ Derived From:
 WU-S1-001 / EXP-001
 
 Status:
-NOT_STARTED
+ACTIVE
 
 Scheduling:
 DISPATCHED
@@ -25,7 +25,7 @@ Coordination Owner Role:
 Orchestration Operator
 
 Primary Execution Role:
-Implementer
+Verifier
 
 Specialization:
 None
@@ -200,23 +200,38 @@ CR-001:
 COMPLETED — REQUEST_CHANGES
 
 BLD-003:
-COMPLETED — CR-001-F01 patch applied and focused checks passed
+COMPLETED — CR-001-F01 patched
 
-Blocking Finding Under Confirmation:
-`CR-001-F01`
+CR-002:
+COMPLETED — CONFIRMED_CLOSED
+
+Full Code Re-review:
+NOT_REQUIRED
 
 Deferred Non-blocking Comment:
 `CR-001-C01` — stale threat-model reference labels
 
 Current Run:
-`CR-002` — PLANNED / DISPATCHED
+`TST-001` — PLANNED / DISPATCHED
 
-Review Mode:
-TARGETED_CONFIRMATION
+Role:
+Verifier
 
-Human Attention:
-None unless CR-002 reports a new material finding.
+Specialization:
+Contract / security-boundary verification
+
+Session:
+Fresh independent session
+
+Model:
+`gpt-5.6-terra`
+
+Reasoning:
+`high`
+
+Human Gate After Testing:
+R14 / `CONTRACT_READY` milestone acceptance.
 
 ## Next Action
 
-Start a fresh Codex CLI session and execute `runs/CR-002/invocation.md`. If CR-001-F01 is confirmed closed, route next to fresh independent Testing.
+Start a fresh Codex CLI session and execute `runs/TST-001/invocation.md`. Testing must distinguish artifact-level proof from runtime evidence deferred to downstream Work Units.
