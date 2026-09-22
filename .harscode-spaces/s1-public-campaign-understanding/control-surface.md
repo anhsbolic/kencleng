@@ -32,25 +32,25 @@ Horizon:
 NOW
 
 Current Run:
-`BLD-002`
+`CR-001`
 
 Role:
-Implementer
+Reviewer
 
 Run State:
 PLANNED
 
 Runtime:
-Codex CLI — fresh session
+Codex CLI — fresh independent session
 
 Selected Model:
-`gpt-5.6-luna / medium`
+`gpt-5.6-terra / high`
 
 Human Attention:
-Run the dispatched narrow Build/Patch.
+Run the dispatched independent Code Review.
 
 Next Action:
-Execute `WU-S1-002/runs/BLD-002/invocation.md`.
+Execute `WU-S1-002/runs/CR-001/invocation.md`.
 
 ## COMPLETED
 
@@ -83,7 +83,7 @@ Tidak ada saat ini.
 
 ## Active Blockers
 
-None requiring Human decision. TP-002 authorized a narrow mechanical TypeScript/Vitest typing correction; BLD-002 is dispatched to verify it.
+None. BLD-001 finding was resolved by TP-002 + BLD-002. Independent Code Review is now dispatched.
 
 ## Stalled Work
 
