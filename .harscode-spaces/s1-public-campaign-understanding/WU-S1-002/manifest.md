@@ -194,7 +194,7 @@ NOT_REQUIRED
 Invocation:
 `.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/BLD-001/invocation.md`
 
-## Current Corrective Route
+## Current Route
 
 BLD-001:
 COMPLETED_WITH_FINDING
@@ -202,21 +202,27 @@ COMPLETED_WITH_FINDING
 TP-002:
 COMPLETED — mechanical/non-material amendment
 
-Materiality:
-NON_MATERIAL
+BLD-002:
+COMPLETED — finding resolved; focused checks passed
 
-Human Re-approval:
+Current Run:
+`CR-001` — PLANNED / DISPATCHED
+
+Role:
+Reviewer
+
+Session:
+Fresh independent session
+
+Model:
+`gpt-5.6-terra`
+
+Reasoning:
+`high`
+
+Model Approval:
 NOT_REQUIRED
-
-Independent Re-review:
-NOT_REQUIRED
-
-Build/Patch Run:
-`BLD-002` — PLANNED / DISPATCHED
-
-Patch Scope:
-Only `frontend/tsconfig.json` → add `types: ["vitest/globals"]`, then rerun the approved focused checks.
 
 ## Next Action
 
-Start a fresh Codex CLI session and execute `runs/BLD-002/invocation.md`. If the patch resolves the finding, route next to fresh independent Code Review; do not claim `CONTRACT_READY` yet.
+Start a fresh Codex CLI session and execute `runs/CR-001/invocation.md`. If Code Review approves, route next to fresh independent Testing. If it requests changes, route the specific patch plan back to Build/Patch.
