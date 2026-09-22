@@ -32,25 +32,25 @@ Horizon:
 NOW
 
 Current Run:
-`CR-001`
+`BLD-003`
 
 Role:
-Reviewer
+Implementer
 
 Run State:
 PLANNED
 
 Runtime:
-Codex CLI — fresh independent session
+Codex CLI — fresh session
 
 Selected Model:
-`gpt-5.6-terra / high`
+`gpt-5.6-terra / medium`
 
 Human Attention:
-Run the dispatched independent Code Review.
+Run the dispatched narrow patch for CR-001-F01.
 
 Next Action:
-Execute `WU-S1-002/runs/CR-001/invocation.md`.
+Execute `WU-S1-002/runs/BLD-003/invocation.md`.
 
 ## COMPLETED
 
@@ -83,7 +83,7 @@ Tidak ada saat ini.
 
 ## Active Blockers
 
-None. BLD-001 finding was resolved by TP-002 + BLD-002. Independent Code Review is now dispatched.
+CR-001-F01 is the only blocking Code Review finding: `content_url` does not yet enforce the approved controlled same-origin path. BLD-003 is dispatched with a narrow patch plan.
 
 ## Stalled Work
 
