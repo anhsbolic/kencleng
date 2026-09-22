@@ -17,42 +17,41 @@ ACTIVE
 
 ## NOW
 
+No active Run.
+
+Current orchestration gate:
+`WU-S1-002` is complete and Human-accepted as `CONTRACT_READY`.
+
+Human Attention:
+None.
+
+Next Action:
+Derive downstream Slice-1 backend, frontend, topology, and integration Work Units from the reconciled contract. Preserve contract-parallel execution where dependencies permit.
+
+## COMPLETED
+
 ### WU-S1-002 — Slice 1 Public Contract & Delivery Reconciliation
 
 Type:
 RECONCILIATION
 
 Status:
-ACTIVE
+DONE
 
-Scheduling:
-DISPATCHED
+Milestone:
+`CONTRACT_READY` — Human-approved 2026-09-22
 
-Horizon:
-NOW
+Final Verification:
+`TST-001` — PASS_WITH_FLAGGED_FOLLOW_UPS
 
-Current Run:
-`TST-001`
+Runtime milestones intentionally unclaimed:
+- `BACKEND_VERIFIED`
+- `FRONTEND_MOCK_VERIFIED`
+- `INTEGRATED_VERIFIED`
 
-Role:
-Verifier
+Deferred non-blocking follow-up:
+- `CR-001-C01` stale threat-model reference labels
 
-Run State:
-PLANNED
-
-Runtime:
-Codex CLI — fresh independent session
-
-Selected Model:
-`gpt-5.6-terra / high`
-
-Human Attention:
-Run independent Testing; Human milestone decision follows only if evidence passes.
-
-Next Action:
-Execute `WU-S1-002/runs/TST-001/invocation.md`.
-
-## COMPLETED
 
 ### WU-S1-001 — Slice 1 Authority & Current-State Exploration
 
@@ -71,7 +70,13 @@ Evidence:
 
 ## NEXT
 
-Backend, frontend, topology, dan final verification Work Units belum committed. Mereka tetap candidate downstream work sampai reconciliation mencapai contract-ready shape.
+Derive separately owned downstream Work Units for:
+- backend Slice-1 public Campaign implementation;
+- frontend Slice-1 Public Campaign Understanding implementation against the reconciled contract;
+- topology/private-media + same-origin `/api` obligations;
+- integration/final verification.
+
+Backend and frontend may run in parallel after their own Work Units are ready because `CONTRACT_READY` now provides the shared boundary.
 
 ## LATER
 
@@ -83,7 +88,7 @@ Tidak ada saat ini.
 
 ## Active Blockers
 
-None. CR-001-F01 is independently confirmed closed. TST-001 is dispatched for final reconciliation verification before the Human-owned CONTRACT_READY gate.
+None.
 
 ## Stalled Work
 
