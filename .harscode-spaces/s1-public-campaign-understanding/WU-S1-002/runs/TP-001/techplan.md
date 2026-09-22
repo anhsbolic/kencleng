@@ -13,6 +13,8 @@
 > Refs              : `WU-S1-001 / EXP-001` gap analysis and solutioning; `docs/product/product-overview.md`; `docs/product/mvp-scope.md`; `docs/product/mvp-delivery-slices.md`; applicable `docs/ui-ux/`; current Campaign specs and split OpenAPI sources
 
 > Amendment — `TPR-RES-001` (2026-09-21): The reviewed exact-allowlist intent is made executable by requiring closed-object semantics; this does not add, remove, or reinterpret a public field or public behavior.
+>
+> Amendment — `TP-002` (2026-09-22): Mechanical/non-material verification-enabler. `frontend/tsconfig.json` may declare `types: ["vitest/globals"]` so its existing included Vitest test globals type-check under the already-approved `./node_modules/.bin/tsc --noEmit` command. This preserves production behavior, test semantics, all public contracts, and the verification strategy; see `.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/TP-002/amendment.md`.
 
 ---
 
@@ -32,6 +34,7 @@ Live contract validation pada target revision juga masih gagal dengan satu error
 - Define exact `GET /campaigns/{campaignId}` public contract and a controlled `GET /campaigns/{campaignId}/media/{mediaId}/content` byte-delivery contract.
 - Remove the historical anonymous attachment-list operation from the active public contract; keep unreconciled upload/operational behavior explicitly deferred.
 - Fix the root `bearerAuth` reference error, regenerate the aggregate OpenAPI bundle, and establish one committed OpenAPI-generated TypeScript type artifact.
+- Make the existing approved TypeScript verification executable by declaring the existing Vitest globals in the TypeScript configuration; no test body, Vitest runtime setting, or production behavior changes.
 - Narrowly correct backend architecture text that still prescribes a public Campaign-media bucket or treats the generated bundle as the hand-authored source.
 - Add the first Public Campaign Detail integration mapping and reconcile project tracker state only after contract evidence passes.
 - Preserve future extension to Slice 2 donation availability and Slice 3 closed-result continuity without exposing those behaviors now.
@@ -239,6 +242,7 @@ private MinIO policy + /api proxy correction → real same-origin integration
 | `api/openapi.yaml` | Generated aggregate used for Swagger/type generation. | Regenerate only; never hand-edit. Review diff for unexpected cross-domain changes. |
 | `frontend/package.json` — scripts | `openapi-typescript` exists but no generation command. | Add `generate:api-types` invoking `openapi-typescript ../api/openapi.yaml -o lib/api/generated/openapi.ts`; no SDK/client generation. |
 | `frontend/lib/api/generated/openapi.ts` | First generated frontend contract artifact. | Generate and commit; never hand-edit. Downstream frontend imports contract types from it. |
+| `frontend/tsconfig.json` — `compilerOptions` | Existing `include` covers `app/page.test.tsx`; Vitest runtime globals are enabled in `vitest.config.ts`, but their declarations are absent from this TypeScript program. | Add only `types: ["vitest/globals"]`. Retain the existing include/exclude/compiler behavior and the `tsc --noEmit` verification command; do not alter test code or Vitest runtime configuration. |
 | `docs/project/kencleng-integration-map.md` — Active mappings | No cross-stack mapping exists. | Add Public Campaign Detail row referencing both operationIds, Campaign backend owner, embedded steward projection, and controlled media coordination note; add no status column. |
 | `docs/project/kencleng-development-tracker.md` — Product Authority, Campaign, next selection, merge gate | Contains stale pre-promotion/PR #27 wording and `NEEDS_RECONCILIATION`. | Record Product Authority as canonical, replace obsolete merge gate, and set Campaign/Slice 1 contract to `CONTRACT_READY` only after evidence; keep backend/frontend/integration unverified. |
 
@@ -258,6 +262,7 @@ private MinIO policy + /api proxy correction → real same-origin integration
 | `api/openapi.yaml` | Regenerate | Bundled aggregate. |
 | `frontend/package.json` | Modify | Add deterministic types generation script. |
 | `frontend/lib/api/generated/openapi.ts` | Add/generated | Committed aggregate TypeScript type definitions. |
+| `frontend/tsconfig.json` | Modify | Declare existing Vitest globals for test files already included in the TypeScript program. |
 | `docs/project/kencleng-integration-map.md` | Modify | First active structural mapping. |
 | `docs/project/kencleng-development-tracker.md` | Modify last | Current authority/contract state and obsolete gate cleanup. |
 
@@ -268,7 +273,7 @@ private MinIO policy + /api proxy correction → real same-origin integration
 | Other Campaign features/invariants/OpenAPI operations | Full lifecycle/listing/upload reconciliation is outside Slice 1. |
 | `api/openapi/common.yaml` | Existing `Problem` schema and security-scheme definition suffice; campaign-local cache-bearing `404`/`503` response components reference `Problem` without changing shared responses. |
 | `backend/**` | Production backend is explicitly outside this Reconciliation Work Unit; protected Tier-0 paths remain untouched. |
-| Frontend files other than package script/generated types | No production route, data access, mock, component, copy, or test is implemented here. |
+| Frontend files other than package script/generated types/`tsconfig.json` | No production route, data access, mock, component, copy, or test is implemented here. |
 | `Caddyfile`, `docker-compose.yml` | Root topology/private-bucket implementation belongs to downstream explicitly owned work. |
 | `.harscode-spaces/**/manifest.md`, `control-surface.md` | Orchestration Operator owns Run/Work Unit state; Build must not self-promote orchestration records. |
 
@@ -288,7 +293,7 @@ private MinIO policy + /api proxy correction → real same-origin integration
 | R10 | Inspect exact `Cache-Control` header contract on success and error responses in dereferenced bundle and threat/spec text. | Testing | A stale intermediary could defeat visibility withdrawal. |
 | R11 | `cd api && npm run validate`; require zero errors and no new touched warning coordinates. Also inspect output against the recorded baseline of 1 error/130 warnings. | Build | This is the fastest executable proof that references and touched OpenAPI structure are usable; skipping it risks broken bundling/generation. |
 | R11 | `cd api && npm run bundle`, then review the generated diff for only intended contract changes. | Build | Bundle success alone can still preserve an unintended schema diff; both execution and review matter. |
-| R12 | `cd frontend && npm run generate:api-types`; `./node_modules/.bin/tsc --noEmit`; `npm run lint`. | Build | Proves the generated artifact is syntactically/type-tool compatible without paying for an unrelated production build. |
+| R12 | `cd frontend && npm run generate:api-types`; `./node_modules/.bin/tsc --noEmit`; `npm run lint`. `frontend/tsconfig.json` MUST declare the already-enabled Vitest globals (`types: ["vitest/globals"]`) because the TypeScript program includes `app/page.test.tsx`. | Build | Proves the generated artifact is syntactically/type-tool compatible without paying for an unrelated production build. Retaining the command proves the correction enables rather than bypasses the approved verification. |
 | R12 | Independently generate bundle/types to `/tmp` and `cmp` them with committed artifacts; inspect both operationIds in generated output. | Testing | Detects hand edits or stale generated artifacts. Full Next build is not cost-effective because no production frontend code imports the artifact yet. |
 | R13 | Path-by-path semantic consistency review across all files in §11, including `KEEP/ADAPT/REPLACE/DEFER` wording. | Testing | Individual green tools cannot detect contradictory delivery authority prose. |
 | R14 | Inspect tracker last: `CONTRACT_READY` evidence links are present while backend/frontend/topology/integration milestones remain unclaimed; inspect Git diff for no Control Surface mutation. | Human | Milestone meaning and cross-authority acceptance require conscious human review. |
@@ -318,3 +323,4 @@ private MinIO policy + /api proxy correction → real same-origin integration
 3. ~~**Frontend generated-type location**~~ **RESOLVED — `frontend/lib/api/generated/openapi.ts`, generated by `generate:api-types` (D10).**
 4. ~~**Organization detail dependency**~~ **RESOLVED — no separate Organization fetch or Organization-spec change; use embedded `PublicCampaignSteward` (D12).**
 5. ~~**Reusable placeholder asset needed for contract readiness**~~ **RESOLVED — no; truthful route-local treatment is sufficient, with later Human Design review if it becomes reusable/expressive (D14).**
+6. ~~**Existing TypeScript verification cannot resolve Vitest globals**~~ **RESOLVED — `TP-002` confirmed that `app/page.test.tsx` is already in the `tsconfig.json` program, `vitest.config.ts` already enables runtime globals, and `tsc --noEmit --types vitest/globals` succeeds. The current-effective plan permits only `types: ["vitest/globals"]` in `frontend/tsconfig.json`; it is a mechanical/non-material enabler and does not require independent re-review or renewed Human approval.**
