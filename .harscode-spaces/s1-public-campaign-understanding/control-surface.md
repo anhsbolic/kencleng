@@ -26,28 +26,31 @@ Status:
 NOT_STARTED
 
 Scheduling:
-QUEUED
+DISPATCHED
 
 Horizon:
 NOW
 
 Current Run:
-None active — planning gate
+`BLD-001`
 
 Role:
-Human Authority
+Implementer
 
 Run State:
-WAITING_HUMAN
+PLANNED
 
 Runtime:
-N/A
+Codex CLI — fresh session
+
+Selected Model:
+`gpt-5.6-terra / high`
 
 Human Attention:
-Approve or request revision of the amended `TP-001` Techplan.
+Start the dispatched Build Run in a fresh Codex CLI session.
 
 Next Action:
-Human Techplan gate.
+Execute `WU-S1-002/runs/BLD-001/invocation.md`.
 
 ## COMPLETED
 
@@ -80,7 +83,7 @@ Tidak ada saat ini.
 
 ## Active Blockers
 
-Independent review finding sudah resolved tanpa material semantic change. Amended Techplan menunggu Human approval.
+None. Human approval is durable; `BLD-001` is dispatched and not yet started.
 
 ## Stalled Work
 
