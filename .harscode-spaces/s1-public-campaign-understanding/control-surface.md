@@ -23,7 +23,7 @@ Type:
 RECONCILIATION
 
 Status:
-NOT_STARTED
+ACTIVE
 
 Scheduling:
 DISPATCHED
@@ -32,25 +32,25 @@ Horizon:
 NOW
 
 Current Run:
-`CR-002`
+`TST-001`
 
 Role:
-Reviewer
+Verifier
 
 Run State:
 PLANNED
 
 Runtime:
-Codex CLI — fresh targeted review session
+Codex CLI — fresh independent session
 
 Selected Model:
-`gpt-5.6-terra / medium`
+`gpt-5.6-terra / high`
 
 Human Attention:
-Run the dispatched targeted confirmation of CR-001-F01.
+Run independent Testing; Human milestone decision follows only if evidence passes.
 
 Next Action:
-Execute `WU-S1-002/runs/CR-002/invocation.md`.
+Execute `WU-S1-002/runs/TST-001/invocation.md`.
 
 ## COMPLETED
 
@@ -83,7 +83,7 @@ Tidak ada saat ini.
 
 ## Active Blockers
 
-CR-001-F01 is patched and awaiting targeted independent confirmation in CR-002.
+None. CR-001-F01 is independently confirmed closed. TST-001 is dispatched for final reconciliation verification before the Human-owned CONTRACT_READY gate.
 
 ## Stalled Work
 
