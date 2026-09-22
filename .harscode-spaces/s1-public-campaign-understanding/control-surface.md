@@ -32,10 +32,10 @@ Horizon:
 NOW
 
 Current Run:
-`BLD-001`
+`TP-002`
 
 Role:
-Implementer
+Planner
 
 Run State:
 PLANNED
@@ -44,13 +44,13 @@ Runtime:
 Codex CLI — fresh session
 
 Selected Model:
-`gpt-5.6-terra / high`
+`gpt-5.6-terra / medium`
 
 Human Attention:
-Start the dispatched Build Run in a fresh Codex CLI session.
+None unless the corrective amendment becomes material.
 
 Next Action:
-Execute `WU-S1-002/runs/BLD-001/invocation.md`.
+Execute `WU-S1-002/runs/TP-002/invocation.md`.
 
 ## COMPLETED
 
@@ -83,7 +83,7 @@ Tidak ada saat ini.
 
 ## Active Blockers
 
-None. Human approval is durable; `BLD-001` is dispatched and not yet started.
+BLD-001 found a pre-existing frontend TypeScript/Vitest typing configuration gap that blocks the approved `tsc --noEmit` verification. Tracker was correctly left unpromoted. TP-002 is dispatched to authorize only the smallest corrective amendment.
 
 ## Stalled Work
 
