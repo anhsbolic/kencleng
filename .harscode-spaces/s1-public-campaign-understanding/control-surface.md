@@ -17,16 +17,47 @@ ACTIVE
 
 ## NOW
 
-No active Run.
+### WU-S1-003 — Slice 1 Backend Public Campaign Delivery
+- Type: DELIVERY
+- Status: NOT_STARTED
+- Scheduling: DISPATCHED
+- Horizon: NOW
+- Current Run: `EXP-BE-001`
+- Role: Explorer
+- Session: fresh
+- Model: `gpt-5.6-terra / high`
+- Hard dependency: WU-S1-002 `CONTRACT_READY` — satisfied
+- Coordination dependency: WU-S1-005 for real topology/storage integration
+- Next: run Stage 1 Exploration and stop for Human confirmation.
 
-Current orchestration gate:
-`WU-S1-002` is complete and Human-accepted as `CONTRACT_READY`.
+### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
+- Type: DELIVERY
+- Status: NOT_STARTED
+- Scheduling: DISPATCHED
+- Horizon: NOW
+- Current Run: `EXP-FE-001`
+- Role: Explorer
+- Session: fresh
+- Model: `gpt-5.6-terra / high`
+- Hard dependency: WU-S1-002 `CONTRACT_READY` — satisfied
+- Coordination dependency: backend/topology only for later real integration; mock-parallel work may proceed independently
+- Next: run Stage 1 Exploration and stop for Human confirmation.
+
+### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
+- Type: ENABLER
+- Status: NOT_STARTED
+- Scheduling: DISPATCHED
+- Horizon: NOW
+- Current Run: `EXP-TOP-001`
+- Role: Explorer
+- Session: fresh
+- Model: `gpt-5.6-terra / medium`
+- Hard dependency: WU-S1-002 `CONTRACT_READY` — satisfied
+- Coordination dependency: align with backend storage boundary
+- Next: run Stage 1 Exploration and stop for Human confirmation.
 
 Human Attention:
-None.
-
-Next Action:
-Derive downstream Slice-1 backend, frontend, topology, and integration Work Units from the reconciled contract. Preserve contract-parallel execution where dependencies permit.
+Confirm Stage 1 independently in each Exploration session. No additional orchestration decision is required before starting them.
 
 ## COMPLETED
 
@@ -70,13 +101,17 @@ Evidence:
 
 ## NEXT
 
-Derive separately owned downstream Work Units for:
-- backend Slice-1 public Campaign implementation;
-- frontend Slice-1 Public Campaign Understanding implementation against the reconciled contract;
-- topology/private-media + same-origin `/api` obligations;
-- integration/final verification.
-
-Backend and frontend may run in parallel after their own Work Units are ready because `CONTRACT_READY` now provides the shared boundary.
+### WU-S1-006 — Slice 1 Real Integration & Final Verification
+- Type: VERIFICATION
+- Status: NOT_STARTED
+- Scheduling: PARKED
+- Horizon: NEXT
+- Readiness: DEFINED
+- HARD dependencies:
+  - WU-S1-003 → `BACKEND_VERIFIED`
+  - WU-S1-004 → `FRONTEND_MOCK_VERIFIED`
+  - WU-S1-005 → topology/private-media evidence complete
+- Target: real same-origin integration evidence for `INTEGRATED_VERIFIED`, followed by Human Slice-finalization input.
 
 ## LATER
 
