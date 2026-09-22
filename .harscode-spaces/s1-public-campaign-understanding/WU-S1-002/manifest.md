@@ -10,10 +10,10 @@ Derived From:
 WU-S1-001 / EXP-001
 
 Status:
-ACTIVE
+DONE
 
 Scheduling:
-DISPATCHED
+PARKED
 
 Horizon:
 NOW
@@ -25,7 +25,7 @@ Coordination Owner Role:
 Orchestration Operator
 
 Primary Execution Role:
-Verifier
+None — completed
 
 Specialization:
 None
@@ -194,44 +194,32 @@ NOT_REQUIRED
 Invocation:
 `.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/BLD-001/invocation.md`
 
-## Current Route
+## Completion State
 
-CR-001:
-COMPLETED — REQUEST_CHANGES
+Testing Run:
+`TST-001` — COMPLETED
 
-BLD-003:
-COMPLETED — CR-001-F01 patched
+Testing Verdict:
+PASS_WITH_FLAGGED_FOLLOW_UPS
 
-CR-002:
-COMPLETED — CONFIRMED_CLOSED
+Contract Rules:
+R1–R13 verified at the artifact/contract/generated-contract boundary.
 
-Full Code Re-review:
-NOT_REQUIRED
+Human Milestone Decision:
+`CONTRACT_READY` — APPROVED by Human Authority on 2026-09-22.
 
-Deferred Non-blocking Comment:
-`CR-001-C01` — stale threat-model reference labels
+Runtime Verification Boundary:
+`BACKEND_VERIFIED`, `FRONTEND_MOCK_VERIFIED`, and `INTEGRATED_VERIFIED` remain unclaimed. Runtime eligibility, response/timing parity, controlled storage recheck/retraction, proxy/cache preservation, storage `503`, decimal computation, and hostile plain-text rendering remain downstream evidence.
 
-Current Run:
-`TST-001` — PLANNED / DISPATCHED
+Deferred Non-blocking Follow-up:
+`CR-001-C01` — stale threat-model reference labels.
 
-Role:
-Verifier
+## Completion Outcome
 
-Specialization:
-Contract / security-boundary verification
+`WU-S1-002` is DONE. The Slice-1 public Campaign contract is reconciled and Human-accepted as `CONTRACT_READY`.
 
-Session:
-Fresh independent session
-
-Model:
-`gpt-5.6-terra`
-
-Reasoning:
-`high`
-
-Human Gate After Testing:
-R14 / `CONTRACT_READY` milestone acceptance.
+Downstream backend, frontend, topology, and integration Work Units may now be derived from this contract without reopening settled product/security/interface semantics unless new evidence invalidates them.
 
 ## Next Action
 
-Start a fresh Codex CLI session and execute `runs/TST-001/invocation.md`. Testing must distinguish artifact-level proof from runtime evidence deferred to downstream Work Units.
+Orchestration Operator derives the smallest downstream Work Units and dependency graph for Slice 1 implementation. Backend and frontend may proceed contract-parallel where dependencies permit; topology remains explicitly owned and runtime milestones must be earned independently.
