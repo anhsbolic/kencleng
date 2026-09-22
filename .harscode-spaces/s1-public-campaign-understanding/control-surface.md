@@ -32,10 +32,10 @@ Horizon:
 NOW
 
 Current Run:
-`TP-002`
+`BLD-002`
 
 Role:
-Planner
+Implementer
 
 Run State:
 PLANNED
@@ -44,13 +44,13 @@ Runtime:
 Codex CLI — fresh session
 
 Selected Model:
-`gpt-5.6-terra / medium`
+`gpt-5.6-luna / medium`
 
 Human Attention:
-None unless the corrective amendment becomes material.
+Run the dispatched narrow Build/Patch.
 
 Next Action:
-Execute `WU-S1-002/runs/TP-002/invocation.md`.
+Execute `WU-S1-002/runs/BLD-002/invocation.md`.
 
 ## COMPLETED
 
@@ -83,7 +83,7 @@ Tidak ada saat ini.
 
 ## Active Blockers
 
-BLD-001 found a pre-existing frontend TypeScript/Vitest typing configuration gap that blocks the approved `tsc --noEmit` verification. Tracker was correctly left unpromoted. TP-002 is dispatched to authorize only the smallest corrective amendment.
+None requiring Human decision. TP-002 authorized a narrow mechanical TypeScript/Vitest typing correction; BLD-002 is dispatched to verify it.
 
 ## Stalled Work
 
