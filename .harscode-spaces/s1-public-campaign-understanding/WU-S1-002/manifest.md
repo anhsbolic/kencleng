@@ -194,6 +194,26 @@ NOT_REQUIRED
 Invocation:
 `.harscode-spaces/s1-public-campaign-understanding/WU-S1-002/runs/BLD-001/invocation.md`
 
+## Current Corrective Route
+
+BLD-001:
+COMPLETED_WITH_FINDING
+
+Finding:
+Approved `tsc --noEmit` verification is not executable because existing Vitest globals are not included in the frontend TypeScript project typing configuration. This is a pre-existing configuration gap, not a generated-contract defect.
+
+Planning Re-entry:
+`TP-002` — PLANNED / DISPATCHED
+
+Materiality hypothesis:
+MECHANICAL / NON-MATERIAL, subject to TP-002 live verification.
+
+Independent Re-review:
+NOT_REQUIRED unless TP-002 discovers material semantic expansion.
+
+Human Gate:
+NOT_REQUIRED for a purely mechanical amendment; required if TP-002 changes verification strategy or material scope/semantics.
+
 ## Next Action
 
-Start a fresh Codex CLI session and execute `BLD-001/invocation.md`. Do not start backend/frontend production work from this Work Unit.
+Start a fresh Codex CLI session and execute `runs/TP-002/invocation.md`. If TP-002 confirms the narrow correction, dispatch a new Build/Patch Run; do not continue to Code Review/Testing until the approved Build verification passes.
