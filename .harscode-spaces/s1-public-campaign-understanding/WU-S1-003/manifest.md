@@ -232,3 +232,20 @@ Testing if review approves; Build/Patch if review requests changes.
 
 Milestone:
 NOT_YET_VERIFIED
+
+## Testing Dispatch
+
+Code Review:
+`CR-BE-001` — APPROVE
+
+Testing Run:
+`TST-BE-001` — PLANNED / DISPATCHED
+
+Session:
+Fresh independent Testing
+
+Model:
+`gpt-5.6-terra / high`
+
+Milestone:
+NOT_YET_VERIFIED
