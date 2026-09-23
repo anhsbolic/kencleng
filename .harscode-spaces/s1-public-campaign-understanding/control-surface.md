@@ -13,7 +13,7 @@ Parent Outcome:
 S1 — Public Campaign Understanding
 
 Overall Status:
-ACTIVE
+SLICE_FINALIZED
 
 ## NOW
 
@@ -51,12 +51,11 @@ ACTIVE
 - Slice 1 finalization: NOT_YET_APPROVED
 - Non-blocking follow-ups: pre-existing repository gosec/cache; historical FE exact-copy evidence mismatch
 
-Human Attention:
-All Slice-1 delivery milestones are complete:
-- CONTRACT_READY
-- BACKEND_VERIFIED
-- FRONTEND_MOCK_VERIFIED
-- TOPOLOGY_VERIFIED
-- INTEGRATED_VERIFIED
+Slice Finalization:
+- Status: `SLICE_FINALIZED`
+- Human approval: APPROVED
+- Scope: Slice 1 — Public Campaign Understanding
+- Downstream Slice 2 capability: NOT_STARTED
 
-The remaining decision is separate: whether to mark Slice 1 as `SLICE_FINALIZED`.
+Human Attention:
+No further Slice-1 delivery decision is required. Next recommended activity is CRTV / Orchestrator Pilot Review before starting Slice 2.
