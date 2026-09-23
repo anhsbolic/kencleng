@@ -28,20 +28,20 @@ ACTIVE
 
 ### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
 - Status: ACTIVE
-- Current Run: `TPRPT-FE-001`
-- Role: Planner — Human-facing report generation
+- Current Run: `TPRPT-FE-002`
+- Role: Planner — Human report localization correction
 - Independent review: `TPR-FE-001` — CLEAN
-- Human gate: PENDING regenerated report
+- Human gate: PENDING corrected Bahasa Indonesia report
 - Build: NOT_AUTHORIZED
-- Previous Orchestrator-authored report: INVALIDATED / REMOVED
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
 - Status: ACTIVE
-- Current Run: `TPR-RES-TOP-001`
-- Role: Planner / narrow resolution
-- Independent review: `TPR-TOP-001` — 1 MATERIAL BLOCKING finding
-- Finding: retraction-through-Caddy verification obligation is not executable in the current checklist
-- Human gate: BLOCKED until resolution converges
+- Current Run: `TPR-CONF-TOP-001`
+- Role: Reviewer — targeted resolution confirmation
+- Independent review: `TPR-TOP-001` — 1 MATERIAL finding
+- Resolution: `TPR-RES-TOP-001` — COMPLETED
+- Material semantics changed: NO
+- Human gate: BLOCKED pending targeted confirmation
 - Build: NOT_AUTHORIZED
 
 Human Attention:
