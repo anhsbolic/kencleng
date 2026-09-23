@@ -23,12 +23,13 @@ ACTIVE
 - Scheduling: DISPATCHED
 - Horizon: NOW
 - Exploration: `EXP-BE-001` — COMPLETED
-- Current Run: `TP-BE-001`
-- Role: Planner
-- Session: continue existing healthy BE session
+- Current Run: `TPR-BE-001`
+- Role: Reviewer
+- Session: fresh independent
 - Model: `gpt-5.6-terra / high`
-- Target milestone: `BACKEND_VERIFIED`
-- Next: Techplan synthesis; no Build before plan gate.
+- Draft: `TP-BE-001`
+- Build: NOT_AUTHORIZED
+- Next: independent Techplan review.
 
 ### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
 - Type: DELIVERY
@@ -36,12 +37,13 @@ ACTIVE
 - Scheduling: DISPATCHED
 - Horizon: NOW
 - Exploration: `EXP-FE-001` — COMPLETED
-- Current Run: `TP-FE-001`
-- Role: Planner
-- Session: continue existing healthy FE session
+- Current Run: `TPR-FE-001`
+- Role: Reviewer
+- Session: fresh independent
 - Model: `gpt-5.6-terra / high`
-- Target milestone: `FRONTEND_MOCK_VERIFIED`
-- Next: Techplan synthesis; no Build before plan gate.
+- Draft: `TP-FE-001`
+- Build: NOT_AUTHORIZED
+- Next: independent Techplan review.
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
 - Type: ENABLER
@@ -49,12 +51,13 @@ ACTIVE
 - Scheduling: DISPATCHED
 - Horizon: NOW
 - Exploration: `EXP-TOP-001` — COMPLETED
-- Current Run: `TP-TOP-001`
-- Role: Planner
-- Session: fresh
+- Current Run: `TPR-TOP-001`
+- Role: Reviewer
+- Session: fresh independent
 - Model: `gpt-5.6-terra / medium`
-- Target: topology/private-media evidence complete
-- Next: Techplan synthesis; no Build before plan gate.
+- Draft: `TP-TOP-001`
+- Build: NOT_AUTHORIZED
+- Next: independent Techplan review.
 
 Human Attention:
 Confirm Stage 1 independently in each Exploration session. No additional orchestration decision is required before starting them.
