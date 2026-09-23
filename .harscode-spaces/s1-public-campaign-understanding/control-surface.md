@@ -18,34 +18,34 @@ ACTIVE
 ## NOW
 
 ### WU-S1-003 — Slice 1 Backend Public Campaign Delivery
-- Status: VERIFYING
-- Current Run: `TST-BE-001`
-- Role: Verifier
-- Code Review: `CR-BE-001` — APPROVE
-- Session: fresh independent Testing
-- Model: `gpt-5.6-terra / high`
+- Status: ACTIVE
+- Current Run: `BLD-BE-PATCH-001`
+- Role: Implementer / Testing re-entry patch
+- Testing: `TST-BE-001` — FAIL / RETURN_TO_BUILD
+- Patch scope: integration harness, R5 matrix/timing, Campaign-scope gosec
+- Unrelated pre-existing security findings: out of WU scope
 - Milestone: NOT_YET_VERIFIED
 
 ### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
-- Status: ACTIVE
-- Current Run: `BLD-FE-PATCH-001`
-- Role: Implementer / Patch
-- Code Review: `CR-FE-001` — REQUEST_CHANGES
-- Blocking findings: F1, F2
-- Testing: BLOCKED pending patch confirmation
+- Status: VERIFYING
+- Current Run: `CR-CONF-FE-001`
+- Role: Reviewer / targeted confirmation
+- Patch: `BLD-FE-PATCH-001` — COMPLETED
+- Testing: BLOCKED pending confirmation
 - Milestone: NOT_YET_VERIFIED
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
-- Status: ACTIVE
-- Current Run: `BLD-TOP-PATCH-001`
-- Role: Implementer / Patch
-- Code Review: `CR-TOP-001` — REQUEST_CHANGES
-- Blocking finding: S1
-- Testing: BLOCKED pending targeted confirmation
-- Local runtime: Podman; sandbox write restrictions are distinct from Human runtime capability
+- Status: VERIFYING
+- Current Run: `CR-CONF-TOP-001`
+- Role: Reviewer / targeted confirmation
+- Patch: `BLD-TOP-PATCH-001` — COMPLETED
+- Testing: BLOCKED pending confirmation
+- Runtime verification remains Podman-capable Testing work
 - Milestone: NOT_YET_VERIFIED
 
 Human Attention:
+No new decision required. Unrelated pre-existing repository security-tool findings must not be absorbed into WU-S1-003 without explicit owner/authority routing.
+
 None unless Testing/Patch uncovers a material contract or protected-write issue.
 
 None unless Code Review raises a material decision or protected-write boundary.
