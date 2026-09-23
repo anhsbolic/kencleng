@@ -266,3 +266,17 @@ REQUIRED again after patch.
 
 Milestone:
 NOT_YET_VERIFIED
+
+## Testing Re-entry Round 2
+
+Patch:
+`BLD-BE-PATCH-001` — COMPLETED
+
+Testing Run:
+`TST-BE-002` — PLANNED / DISPATCHED
+
+Goal:
+Close previously failing/partial Campaign-owned verification gaps.
+
+Milestone:
+NOT_YET_VERIFIED
