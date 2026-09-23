@@ -147,3 +147,26 @@ Non-blocking follow-ups:
 
 Authority Sync:
 NONE
+
+
+## Slice Finalization
+
+Human Approval:
+APPROVED — `SLICE_FINALIZED`
+
+Scope:
+Slice 1 — Public Campaign Understanding
+
+Evidence Basis:
+- `CONTRACT_READY`
+- `BACKEND_VERIFIED`
+- `FRONTEND_MOCK_VERIFIED`
+- `TOPOLOGY_VERIFIED`
+- `INTEGRATED_VERIFIED`
+- Human integrated rendered/product acceptance
+
+Final State:
+`SLICE_FINALIZED`
+
+Important Boundary:
+Slice 2 capability is NOT_STARTED and is not implied by this finalization.
