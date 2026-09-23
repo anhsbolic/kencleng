@@ -18,32 +18,33 @@ ACTIVE
 ## NOW
 
 ### WU-S1-003 — Slice 1 Backend Public Campaign Delivery
-- Status: ACTIVE
-- Current Run: `BLD-BE-PATCH-001`
-- Role: Implementer / Testing re-entry patch
-- Testing: `TST-BE-001` — FAIL / RETURN_TO_BUILD
-- Patch scope: integration harness, R5 matrix/timing, Campaign-scope gosec
-- Unrelated pre-existing security findings: out of WU scope
+- Status: VERIFYING
+- Current Run: `TST-BE-002`
+- Role: Verifier
+- Patch: `BLD-BE-PATCH-001` — COMPLETED
+- Focus: close Campaign-owned Testing gaps
 - Milestone: NOT_YET_VERIFIED
 
 ### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
-- Status: VERIFYING
-- Current Run: `CR-CONF-FE-001`
-- Role: Reviewer / targeted confirmation
-- Patch: `BLD-FE-PATCH-001` — COMPLETED
-- Testing: BLOCKED pending confirmation
+- Status: ACTIVE
+- Current Run: `BLD-FE-PATCH-002`
+- Role: Implementer / Patch
+- Targeted confirmation: STILL_BLOCKING
+- Remaining: F1-R, F2-R
+- Testing: BLOCKED
 - Milestone: NOT_YET_VERIFIED
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
 - Status: VERIFYING
-- Current Run: `CR-CONF-TOP-001`
-- Role: Reviewer / targeted confirmation
-- Patch: `BLD-TOP-PATCH-001` — COMPLETED
-- Testing: BLOCKED pending confirmation
-- Runtime verification remains Podman-capable Testing work
+- Current Run: `TST-TOP-001`
+- Role: Verifier
+- Targeted confirmation: CONFIRMED_CLOSED
+- Runtime path: Podman-aware
 - Milestone: NOT_YET_VERIFIED
 
 Human Attention:
+No new decision required at this point.
+
 No new decision required. Unrelated pre-existing repository security-tool findings must not be absorbed into WU-S1-003 without explicit owner/authority routing.
 
 None unless Testing/Patch uncovers a material contract or protected-write issue.
