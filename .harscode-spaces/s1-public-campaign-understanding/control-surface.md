@@ -44,13 +44,13 @@ ACTIVE
 - External non-blocking follow-up: pre-existing repository-wide gosec findings
 
 ### WU-S1-006 — Slice 1 Real Integration & Final Verification
-- Status: VERIFYING
-- Scheduling: RUNNING
-- Current Run: `TST-INT-001`
-- Role: Verifier / cross-stack integration
-- Dependencies: SATISFIED
+- Status: WAITING_HUMAN
+- Testing: `TST-INT-001` — PASS_WITH_FLAGGED_FOLLOWUPS
+- Evidence: sufficient for `INTEGRATED_VERIFIED`
+- Human integrated rendered/product acceptance: REQUIRED
 - Target milestone: `INTEGRATED_VERIFIED`
-- Human Slice-finalization gate: NOT_YET_REACHED
+- `SLICE_FINALIZED`: NOT_YET_APPROVED; separate Human/project decision
+- Non-blocking follow-ups: pre-existing repository gosec/cache; historical FE exact-copy evidence mismatch
 
 Human Attention:
-None during integration Testing unless a material product/contract contradiction or Human-only decision is surfaced.
+Review the real integrated Slice-1 experience and, if accepted, explicitly approve integrated rendered/product acceptance and promotion to `INTEGRATED_VERIFIED`. Do not combine this yet with `SLICE_FINALIZED`.
