@@ -324,3 +324,30 @@ Testing Run:
 
 Milestone:
 NOT_YET_VERIFIED
+
+
+## Frontend Milestone Promotion
+
+Human Approval:
+APPROVED — Human Design wording and rendered acceptance
+
+Evidence Basis:
+- `TST-FE-001` — PASS_WITH_FLAGGED_FOLLOWUPS
+- Human Design wording accepted
+- Human rendered acceptance accepted
+
+Milestone:
+`FRONTEND_MOCK_VERIFIED`
+
+Status:
+DONE
+
+Important Boundary:
+This milestone covers mock-parallel frontend correctness and Human acceptance only.
+It does NOT grant live backend/proxy/media/storage/cache/timing integration verification.
+
+Downstream:
+Hard dependency for `WU-S1-006` is satisfied.
+
+Authority Sync:
+NONE
