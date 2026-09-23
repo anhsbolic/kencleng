@@ -79,7 +79,7 @@ Domain rows remain useful for semantic/implementation evidence, but they do **no
 | Account | `NEEDS_RECONCILIATION` when next needed | Historical implementation exists | `NOT_STARTED` for new generation | Outside baseline MVP critical path. Preserve security/correctness evidence; do not resume historical roadmap by inertia. |
 | Notification | Historical/draft reference | `NOT_STARTED` as standalone delivery | `NOT_STARTED` | Include only when a real slice requires active notification behavior. |
 | Organization | Historical/draft reference | `NOT_STARTED` | `NOT_STARTED` | Slice 1 needs only minimum persisted/public-safe steward context; full self-service is deferred. |
-| Campaign | `INTEGRATED_VERIFIED` for Slice 1 | `BACKEND_VERIFIED` | `FRONTEND_MOCK_VERIFIED` | Contract, backend, frontend mock-parallel experience, topology/private media, and real cross-stack integration are verified. Slice-level finalization remains a separate Human decision. |
+| Campaign | `SLICE_FINALIZED` for Slice 1 | `BACKEND_VERIFIED` | `FRONTEND_MOCK_VERIFIED` | Contract, backend, frontend mock-parallel experience, topology/private media, and real cross-stack integration are verified; Human finalization approved for Slice 1. |
 | Donation | Historical/draft reference | `NOT_STARTED` active generation | `NOT_STARTED` | Enters baseline in Slice 2; correctness-critical money areas retain Tier-0 fencing. |
 | Disbursement | Historical/draft reference | `NOT_STARTED` | `NOT_STARTED` | Not baseline MVP critical path; do not pull in merely to make accountability look complete. |
 
@@ -150,7 +150,7 @@ Slice 1 — Public Campaign Understanding
 The Slice-1 delivery milestone is now:
 
 ```text
-INTEGRATED_VERIFIED
+SLICE_FINALIZED
 ```
 
 Evidence:
@@ -181,10 +181,10 @@ INTEGRATED_VERIFIED
 ✓ earned
 
 SLICE_FINALIZED
-✗ awaiting explicit Human/project finalization decision
+✓ Human-approved
 ```
 
-Slice 1 has completed technical and integrated verification. The remaining gate is the explicit Slice-1 Human/project finalization decision; this does not imply Slice 2 capability has begun.
+Slice 1 has completed technical, integrated, and Human finalization. Slice 2 remains NOT_STARTED and requires its own Exploration/reconciliation/delivery lifecycle.
 
 ## 8. Continuous Real-Task Validation posture
 
