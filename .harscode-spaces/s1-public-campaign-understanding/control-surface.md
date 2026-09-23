@@ -19,19 +19,21 @@ ACTIVE
 
 ### WU-S1-003 — Slice 1 Backend Public Campaign Delivery
 - Status: ACTIVE
-- Current gate: HUMAN_TECHPLAN_APPROVAL
-- Techplan: `TP-BE-001`
+- Current Run: `TPRPT-BE-001`
+- Role: Planner — Human-facing report generation
 - Independent review: `TPR-BE-001` — CLEAN
-- Human report: `TP-BE-001/report-techplan.md`
-- Build: NOT_AUTHORIZED pending Human approval
+- Human gate: PENDING regenerated report
+- Build: NOT_AUTHORIZED
+- Previous Orchestrator-authored report: INVALIDATED / REMOVED
 
 ### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
 - Status: ACTIVE
-- Current gate: HUMAN_TECHPLAN_APPROVAL
-- Techplan: `TP-FE-001`
+- Current Run: `TPRPT-FE-001`
+- Role: Planner — Human-facing report generation
 - Independent review: `TPR-FE-001` — CLEAN
-- Human report: `TP-FE-001/report-techplan.md`
-- Build: NOT_AUTHORIZED pending Human approval
+- Human gate: PENDING regenerated report
+- Build: NOT_AUTHORIZED
+- Previous Orchestrator-authored report: INVALIDATED / REMOVED
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
 - Status: ACTIVE
@@ -144,6 +146,10 @@ Independent review menemukan satu blocking security/interface gap yang sempit. O
 ### OBS-ORCH-007 — Narrow resolution avoided redundant re-review
 
 `TPR-RES-001` menutup blocking finding dengan membuat exact allowlist executable melalui closed-object semantics. Karena field set, runtime behavior, dan material interface/security meaning tidak berubah, flow kembali langsung ke Human Techplan gate tanpa mandatory re-review.
+
+### OBS-ORCH-010 — Orchestrator role bleed in Human report generation
+
+Manual Orchestrator directly authored two `report-techplan.md` artifacts after clean independent review. Although the reports were derived from valid Techplans, this blurred coordination ownership with planning-artifact production and also bypassed the Kencleng Bahasa Indonesia communication profile. The reports were invalidated and removed; replacement generation is routed through explicit Planner Runs using the canonical report template and project communication profile. Candidate learning: orchestration should dispatch derived planning/report artifacts rather than silently authoring them when a participant/workflow boundary exists.
 
 ## State Integrity
 

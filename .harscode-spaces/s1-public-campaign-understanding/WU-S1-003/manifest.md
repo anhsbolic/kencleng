@@ -142,16 +142,19 @@ Build:
 NOT_AUTHORIZED
 
 
-## Human Techplan Gate
+## Human Techplan Report State
 
 Independent Review:
 `TPR-BE-001` — COMPLETED / CLEAN
 
-Human Review Report:
-`runs/TP-BE-001/report-techplan.md`
+Previous Orchestrator-authored report:
+INVALIDATED / REMOVED — role ownership and communication-profile violation.
 
-Techplan Approval:
-AWAITING_HUMAN_APPROVAL
+Report Generation Run:
+`TPRPT-BE-001` — PLANNED / DISPATCHED
+
+Human Techplan Gate:
+PENDING report generation.
 
 Build:
-NOT_AUTHORIZED until Human approval.
+NOT_AUTHORIZED
