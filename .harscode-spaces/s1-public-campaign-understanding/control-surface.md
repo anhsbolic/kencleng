@@ -28,21 +28,21 @@ ACTIVE
 
 ### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
 - Status: VERIFYING
-- Current Run: `CR-CONF-FE-002`
-- Role: Reviewer / targeted confirmation
-- Patch: `BLD-FE-PATCH-002` — COMPLETED
-- Testing: BLOCKED pending confirmation
+- Current Run: `TST-FE-001`
+- Role: Verifier
+- Targeted confirmation: `CR-CONF-FE-002` — CONFIRMED_CLOSED
 - Milestone: NOT_YET_VERIFIED
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
-- Status: VERIFYING
-- Current Run: `TST-TOP-002`
-- Role: Verifier / joint runtime re-entry
-- TST-TOP-001: PASS_WITH_FLAGGED_FOLLOWUPS
-- Remaining: R4 200/404, Campaign-specific R5, R7 retraction fresh-fetch
-- Milestone: NOT_YET_COMPLETE
+- Status: WAITING_HUMAN
+- Testing: `TST-TOP-002` — PASS
+- Runtime closure: R4 / Campaign-specific R5 / R7 closed
+- Milestone: READY_FOR_HUMAN_PROMOTION
+- Integrated Slice claim: NOT_GRANTED; WU-S1-006 remains separate
 
 Human Attention:
+WU-S1-005 is ready for explicit Human completion/promotion. WU-S1-004 continues in independent Testing.
+
 WU-S1-003 is ready for explicit Human promotion to BACKEND_VERIFIED. FE and TOP continue independently.
 
 No new decision required at this point.
