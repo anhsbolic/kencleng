@@ -313,3 +313,14 @@ BLOCKED pending confirmation.
 
 Milestone:
 NOT_YET_VERIFIED
+
+## Frontend Testing Dispatch
+
+Targeted Confirmation:
+`CR-CONF-FE-002` — CONFIRMED_CLOSED
+
+Testing Run:
+`TST-FE-001` — PLANNED / DISPATCHED
+
+Milestone:
+NOT_YET_VERIFIED
