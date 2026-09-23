@@ -10,10 +10,10 @@ Derived From:
 WU-S1-002 — CONTRACT_READY
 
 Status:
-WAITING_HUMAN
+DONE
 
 Scheduling:
-QUEUED
+DONE
 
 Horizon:
 NOW
@@ -121,3 +121,29 @@ NOT_YET_APPROVED — remains a separate Human/project decision after integration
 Non-blocking follow-ups:
 - repository-wide pre-existing `gosec` / Go cache reproducibility;
 - historical `TST-FE-001` absent-media literal differs from current UI wording, without semantic product mismatch.
+
+
+## Integration Milestone Promotion
+
+Human Approval:
+APPROVED — integrated rendered/product acceptance and `INTEGRATED_VERIFIED`
+
+Evidence Basis:
+- `TST-INT-001` — PASS_WITH_FLAGGED_FOLLOWUPS
+- Human integrated rendered/product acceptance — APPROVED
+
+Milestone:
+`INTEGRATED_VERIFIED`
+
+Status:
+DONE for WU-S1-006 integration-verification scope.
+
+Important Boundary:
+`SLICE_FINALIZED` is NOT implied by this milestone and remains a separate Human/project decision.
+
+Non-blocking follow-ups:
+- pre-existing repository-wide `gosec` / Go cache reproducibility;
+- historical `TST-FE-001` exact absent-media literal differs from current UI wording without semantic mismatch.
+
+Authority Sync:
+NONE
