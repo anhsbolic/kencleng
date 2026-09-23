@@ -27,7 +27,7 @@ services:
     depends_on:
       - minio
     entrypoint: >
-      /bin/sh -c "
+      /bin/sh -ec "
       until mc alias set local http://minio:9000 kencleng kencleng123; do sleep 1; done;
       mc mb -p local/kencleng-public;
       mc mb -p local/kencleng-private;

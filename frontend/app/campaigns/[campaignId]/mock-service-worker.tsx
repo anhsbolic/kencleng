@@ -14,9 +14,23 @@ export default function MockServiceWorker({ children }: { children: ReactNode })
     }
 
     let active = true;
+    let startedWorker: (typeof import("@/mocks/browser"))["worker"] | undefined;
 
     void import("@/mocks/browser")
-      .then(({ worker }) => worker.start({ onUnhandledRequest: "bypass" }))
+      .then(async ({ worker }) => {
+        if (!active) {
+          return;
+        }
+
+        await worker.start({ onUnhandledRequest: "bypass" });
+
+        if (!active) {
+          worker.stop();
+          return;
+        }
+
+        startedWorker = worker;
+      })
       .then(() => {
         if (active) {
           setReady(true);
@@ -30,6 +44,8 @@ export default function MockServiceWorker({ children }: { children: ReactNode })
 
     return () => {
       active = false;
+      startedWorker?.stop();
+      startedWorker = undefined;
     };
   }, [enabled]);
 

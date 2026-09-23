@@ -67,7 +67,11 @@ function StatePage({
       ref={mainRef}
       tabIndex={-1}
     >
-      <section className={styles.state} role={state === "loading" ? "status" : undefined}>
+      <section
+        aria-live={state === "not-found" ? undefined : "polite"}
+        className={styles.state}
+        role={state === "not-found" ? undefined : "status"}
+      >
         <p className={styles.kicker}>{content.eyebrow}</p>
         <h1 id="campaign-state-title">{content.title}</h1>
         <p>{content.description}</p>

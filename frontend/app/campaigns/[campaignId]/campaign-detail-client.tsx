@@ -32,7 +32,11 @@ function CampaignDetailQuery({ campaignId }: { campaignId: string }) {
       : query.data.kind;
 
   useEffect(() => {
-    if (state === "success" && previousState.current === "request-failure") {
+    if (
+      state === "success" &&
+      (previousState.current === "request-failure" ||
+        previousState.current === "temporarily-unavailable")
+    ) {
       mainRef.current?.focus();
     }
     previousState.current = state;

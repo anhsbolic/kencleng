@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
 import { describe, expect, it } from "vitest";
-import { campaignFixtureIds } from "@/mocks/fixtures/public-campaign";
+import { campaignFixtureIds, publicCampaignFixtures } from "@/mocks/fixtures/public-campaign";
 import { server } from "@/mocks/server";
 import CampaignDetailClient from "./campaign-detail-client";
 
@@ -52,6 +52,25 @@ describe("CampaignDetailClient", () => {
     retry.focus();
     fireEvent.click(retry);
     expect(retry).toHaveFocus();
+  });
+
+  it("announces unavailable state and moves focus to campaign content after a successful retry", async () => {
+    render(<CampaignDetailClient campaignId="unavailable" />);
+
+    expect(
+      await screen.findByRole("heading", { name: "Detail campaign sedang tidak tersedia." }),
+    ).toBeVisible();
+    expect(screen.getByRole("status")).toHaveAttribute("aria-live", "polite");
+
+    server.use(
+      http.get("/api/campaigns/unavailable", () =>
+        HttpResponse.json(publicCampaignFixtures[campaignFixtureIds.available]),
+      ),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Coba lagi" }));
+
+    expect(await screen.findByRole("heading", { name: /Dapur bersama/i })).toBeVisible();
+    expect(screen.getByRole("main")).toHaveFocus();
   });
 
   it("renders hostile-looking organizer text literally and distinguishes unavailable media", async () => {
