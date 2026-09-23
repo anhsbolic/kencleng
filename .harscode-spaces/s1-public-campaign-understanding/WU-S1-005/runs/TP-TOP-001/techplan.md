@@ -50,6 +50,7 @@ Compose menyediakan bucket MinIO public dan private, tetapi hanya mengeset anony
 | Q5 | MINIO_BUCKET_PRIVATE adalah handoff backend Campaign; semantic delivery tetap WU-S1-003. | .env.example; backend main initMinIO; WU-S1-003 manifest; integration map |
 | Q6 | Topology tidak mengubah atau menggantikan Cache-Control: private, no-store yang diproduksi backend untuk media 200/404/503. | Feature 03; INV-campaign-14; getPublicCampaignMediaContent |
 | Q7 | Setup document tidak lagi menyatakan prefix mismatch sebagai caveat aktif dan membedakan source change dari bukti runtime. | repo setup §8; EXP solutioning source boundary |
+| Q8 | Setelah WU-S1-003 menarik eligibility Campaign atau membership media, fresh request melalui root Caddy pada `content_url` yang sama dan telah diketahui tidak boleh mengirim byte baru; byte yang sudah diunduh/dipegang client berada di luar jaminan ini. | Feature 03; INV-campaign-14; EXP solutioning runtime item 6; WU-S1-003 TP-BE-001 RISK-3/§13 |
 
 ## 4. Rules & Validation
 
@@ -59,6 +60,7 @@ Compose menyediakan bucket MinIO public dan private, tetapi hanya mengeset anony
 - **R4 — Controlled boundary preservation.** Given backend WU-S1-003 menyediakan operation media, when valid content URL melewati localhost:8080, then Caddy meneruskan respons tanpa redirect, object URL, cache override, atau response synthesis; Cache-Control: private, no-store pada 200, public 404, dan eligible-dependency 503 tetap sampai client.
 - **R5 — No topology ownership leak.** Given Work Unit ini selesai di source boundary, then tidak ada perubahan API contract, backend handler/domain, frontend rewrite/UI, bucket public, volume/port, atau policy storage lain; consumer Campaign memakai handoff MINIO_BUCKET_PRIVATE di WU-S1-003.
 - **R6 — Documentation truth.** Given setup document dibaca setelah Build, then ia menyatakan path invariant baru serta deferred runtime evidence, bukan claim verified.
+- **R7 — Retraction through proxy.** Given `WU-S1-003` menyediakan seeded eligible media dan kemudian menarik public eligibility parent Campaign **atau** membership media, when Testing melakukan fresh request melalui root Caddy (`localhost:8080`) ke `content_url` yang sama yang sebelumnya menghasilkan media, then respons tidak mengirim byte media baru dan tetap mengikuti public non-disclosure semantics backend (`404` serta `Cache-Control: private, no-store`, bukan redirect, object URL, signed URL, atau proxy-synthesized substitute). Jaminan ini tidak mencakup byte yang sudah sebelumnya diunduh atau dipegang client. `WU-S1-003` memiliki mutasi persisted eligibility/membership dan endpoint; Testing bersama WU-S1-005 memiliki evidence proxy/runtime. Ketiadaan fixture atau capability runtime backend menunda eksekusi bukti ini, tetapi tidak menghapus kewajiban R7 maupun mengizinkan klaim retraction/integrasi selesai.
 
 ## 5. Decision Log
 
@@ -86,7 +88,7 @@ Compose menyediakan bucket MinIO public dan private, tetapi hanya mengeset anony
 |---|---|---:|---:|---|
 | RISK-1 | Prefix tidak di-strip atau fallback menangkap API. | Medium | High | R1 source/config validation dan test root GET /api/healthz; juga test frontend. |
 | RISK-2 | Persistent volume menyimpan private policy salah atau initializer belum selesai. | Medium | High | R3 inspeksi running persisted policy kedua bucket, termasuk volume reuse. |
-| RISK-3 | Campaign object masuk public bucket dan melewati origin checks. | Medium | High | D2+D3; WU-S1-003 select bucket private; Testing membuktikan direct anonymous object request ditolak. |
+| RISK-3 | Campaign object masuk public bucket, bypass origin checks, atau known `content_url` tetap mengirim byte baru setelah retraction. | Medium | High | D2+D3; WU-S1-003 select/mutates private persisted Campaign state; Testing membuktikan direct anonymous object request ditolak dan R7 fresh fetch melalui root Caddy setelah eligibility/member withdrawal tidak mengirim byte baru. |
 | RISK-4 | Proxy error/header menyamarkan 404/503 backend atau membuang no-store. | Medium | High | R4 end-to-end setelah endpoint backend tersedia; pisahkan upstream failure Caddy dari response contract. |
 | RISK-5 | Source configuration dianggap runtime/integrated verification. | High | Medium | R6 dan Open Items; jangan claim BACKEND_VERIFIED, FRONTEND_MOCK_VERIFIED, atau INTEGRATED_VERIFIED. |
 | RISK-6 | Caddy belum memiliki hardening security headers/TLS umum. | Existing | Medium | Explicitly outside scope (D5); route sebagai work unit terpisah bila diprioritaskan manusia. |
@@ -104,7 +106,7 @@ Compose menyediakan bucket MinIO public dan private, tetapi hanya mengeset anony
 1. Re-open Caddyfile dan ganti hanya API handler menjadi handle_path /api/*; upstream host.containers.internal:8090 serta fallback handle frontend tidak berubah.
 2. Re-open docker-compose.yml dan, setelah dua mc mb -p yang ada, pertahankan mc anonymous set download local/kencleng-public lalu tambahkan mc anonymous set none local/kencleng-private. Jangan ubah credentials, aliases, bucket/volume/ports, atau lifecycle service.
 3. Re-open repo setup §8: ganti caveat dengan root-to-backend path invariant, nyatakan ownership root, dan rujuk bukti runtime/persisted policy yang tersisa.
-4. Jalankan source-level checks yang tersedia. Caddy/Compose runtime dan integration evidence hanya dilakukan pada environment dengan Compose runtime, backend native, dan untuk media fixture/operation WU-S1-003.
+4. Jalankan source-level checks yang tersedia. Caddy/Compose runtime dan integration evidence hanya dilakukan pada environment dengan Compose runtime, backend native, dan media fixture/operation WU-S1-003; evidence itu mencakup R7 fresh retraction fetch melalui root Caddy, bukan hanya fetch eligible awal.
 
 Tidak ada runbook terpisah: tiga perubahan source dan verifikasi topology adalah satu lifecycle enablement.
 
@@ -147,12 +149,13 @@ Tidak ada runbook terpisah: tiga perubahan source dan verifikasi topology adalah
 | R4 | Setelah WU-S1-003 menyediakan seeded eligible media operation, fetch contract URL melalui localhost:8080; cek JPEG/PNG 200 dan exact Cache-Control. Uji absent/non-public/non-member identical backend 404 body/header; induce eligible storage/object failure untuk backend 503 + header. Pisahkan Caddy upstream failure dari response contract. | Testing coordinated with WU-S1-003 | Membuktikan proxy tidak mengganti header/error. Tanpanya retraction/anti-enumeration dapat gagal pada browser entrypoint. |
 | R5 | Review git diff --check dan changed-file scope; re-open WU-S1-003 manifest dan .env.example. Di integration environment, direct anonymous request ke seeded private Campaign object harus ditolak dan public response tidak memuat object URL, redirect, atau signed URL. | Build for scope; Testing with WU-S1-003 for security observable | Menjaga root work tidak menyerap domain work dan policy menutup bypass origin. |
 | R6 | Inspect §8 update terhadap executable Caddyfile/docker-compose.yml; document menyebut path translation dan deferred evidence, bukan claim verified. | Build | Mencegah caveat usang dan false completion signal. |
+| R7 | Bersama WU-S1-003, seed satu Campaign eligible dengan media yang `content_url`-nya dicatat. Fetch URL tersebut sekali melalui `localhost:8080` untuk membuktikan precondition. Kemudian WU-S1-003 menarik **salah satu per skenario**: public eligibility parent Campaign atau membership media yang sama pada persisted state. Tanpa memakai respons/cache client sebelumnya, lakukan fresh request baru melalui root Caddy ke `content_url` yang persis sama; assert tidak ada byte JPEG/PNG baru yang delivered, `404` public non-disclosure backend dan `Cache-Control: private, no-store` diteruskan, serta tidak ada redirect/object URL/signed URL. Ulangi untuk jalur withdrawal lain bila fixture mendukungnya. Catat bahwa byte yang telah diunduh/dipegang client bukan objek jaminan. | WU-S1-003 untuk fixture dan mutasi persisted eligibility/membership; Testing + WU-S1-005 untuk eksekusi/evidence Caddy/proxy | Hanya recheck backend pada fresh browser-facing request yang membuktikan known URL tidak bertahan melalui proxy/cache setelah withdrawal; source inspection atau direct-backend test tidak cukup. Bila fixture/capability runtime belum tersedia, tandai eksekusi deferred/not tested tanpa menghapus R7 atau mengklaim retraction/integrasi verified. |
 
 ### Test Focus Pointer
 
 | Area | Why sensitive | Evidence anchor from Exploration | Still relevant post-synthesis? |
 |---|---|---|---|
-| Private bucket / direct object bypass / retraction | Anonymous read melewati parent/member origin check dan retraction. | EXP-TOP-001/evidence/solutioning.md#runtime-verification-required-not-performed-here items 2, 5–6 | Yes — R3/R5; retraction final perlu WU-S1-003 endpoint. |
+| Private bucket / direct object bypass / retraction | Anonymous read melewati parent/member origin check dan retraction; known URL perlu dibuktikan kembali setelah withdrawal. | EXP-TOP-001/evidence/solutioning.md#runtime-verification-required-not-performed-here items 2, 5–6 | Yes — R3/R5/R7; retraction fresh-fetch melalui Caddy memerlukan endpoint dan mutasi persisted state WU-S1-003. |
 | Proxy cache and public error preservation | Header/error substitution dapat meniadakan no-store, 404 anti-enumeration, atau 503 distinction. | EXP-TOP-001/evidence/gap-analysis.md#stage-2-carry-forward-evidence | Yes — R4. |
 | Same-origin API path boundary | Salah prefix membuat security/delivery logic backend tidak tercapai. | EXP-TOP-001/evidence/gap-analysis.md#area-1--root-caddy-same-origin-api-boundary | Yes — R1/R2. |
 
@@ -162,9 +165,9 @@ Tidak ada runbook terpisah: tiga perubahan source dan verifikasi topology adalah
 
 1. **Compose/Caddy/MinIO runtime evidence unavailable in this session.** Environment Compose-capable harus validate rendered Caddy config dan inspeksi policy pada volume kencleng_miniodata sebenarnya setelah init. Owner: Testing/environment operator. Ini tidak menghalangi narrow source Build, tetapi menghalangi claim topology runtime complete.
 2. **Controlled-media integration fixture belum ada.** WU-S1-003 harus menyediakan backend operation dan seeded eligible/non-eligible/media states sebelum R4/R5 end-to-end, no-store, direct-bypass, dan retraction checks dapat berjalan. Owner: WU-S1-003 untuk capability; Testing untuk joint evidence. Ini tidak mengizinkan root Build menambah Campaign code.
+3. **R7 retraction-through-proxy evidence belum dapat dieksekusi tanpa capability WU-S1-003 dan Compose runtime.** WU-S1-003 harus menyediakan fixture yang dapat menarik persisted public eligibility parent dan membership media setelah `content_url` diketahui; Testing bersama owner root topology harus melakukan fresh request ke URL yang sama via `localhost:8080`. Owner mutasi: WU-S1-003; owner evidence proxy/runtime: Testing dan WU-S1-005. Sampai itu tersedia, R7 adalah deferred/not tested, bukan kewajiban yang hilang dan bukan dasar untuk klaim retraction atau integrasi selesai; already-downloaded/client-held bytes tetap di luar jaminan kontrak.
 
 ### Resolved — retained as decision history
 
 1. ~~**Owner /api correction dan private policy.**~~ **RESOLVED — root topology memiliki Caddy path translation dan Compose policy assertion; Campaign delivery semantics tetap WU-S1-003.** Direkam EXP-TOP-001 dan D1–D4.
 2. ~~**Apakah bucket/configuration baru diperlukan.**~~ **RESOLVED — MINIO_BUCKET_PRIVATE yang ada adalah handoff; hanya anonymous none policy-nya yang ditegaskan.** Bucket/variable redesign tidak diotorisasi.
-
