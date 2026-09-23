@@ -299,3 +299,17 @@ BLOCKED pending targeted confirmation.
 
 Milestone:
 NOT_YET_VERIFIED
+
+## Targeted Review Confirmation Round 2
+
+Patch:
+`BLD-FE-PATCH-002` — COMPLETED
+
+Confirmation Run:
+`CR-CONF-FE-002` — PLANNED / DISPATCHED
+
+Testing:
+BLOCKED pending confirmation.
+
+Milestone:
+NOT_YET_VERIFIED
