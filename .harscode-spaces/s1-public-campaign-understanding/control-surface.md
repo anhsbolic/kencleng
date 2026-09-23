@@ -18,46 +18,29 @@ ACTIVE
 ## NOW
 
 ### WU-S1-003 — Slice 1 Backend Public Campaign Delivery
-- Type: DELIVERY
 - Status: ACTIVE
-- Scheduling: DISPATCHED
-- Horizon: NOW
-- Exploration: `EXP-BE-001` — COMPLETED
-- Current Run: `TPR-BE-001`
-- Role: Reviewer
-- Session: fresh independent
-- Model: `gpt-5.6-terra / high`
-- Draft: `TP-BE-001`
-- Build: NOT_AUTHORIZED
-- Next: independent Techplan review.
+- Current gate: HUMAN_TECHPLAN_APPROVAL
+- Techplan: `TP-BE-001`
+- Independent review: `TPR-BE-001` — CLEAN
+- Human report: `TP-BE-001/report-techplan.md`
+- Build: NOT_AUTHORIZED pending Human approval
 
 ### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
-- Type: DELIVERY
 - Status: ACTIVE
-- Scheduling: DISPATCHED
-- Horizon: NOW
-- Exploration: `EXP-FE-001` — COMPLETED
-- Current Run: `TPR-FE-001`
-- Role: Reviewer
-- Session: fresh independent
-- Model: `gpt-5.6-terra / high`
-- Draft: `TP-FE-001`
-- Build: NOT_AUTHORIZED
-- Next: independent Techplan review.
+- Current gate: HUMAN_TECHPLAN_APPROVAL
+- Techplan: `TP-FE-001`
+- Independent review: `TPR-FE-001` — CLEAN
+- Human report: `TP-FE-001/report-techplan.md`
+- Build: NOT_AUTHORIZED pending Human approval
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
-- Type: ENABLER
 - Status: ACTIVE
-- Scheduling: DISPATCHED
-- Horizon: NOW
-- Exploration: `EXP-TOP-001` — COMPLETED
-- Current Run: `TPR-TOP-001`
-- Role: Reviewer
-- Session: fresh independent
-- Model: `gpt-5.6-terra / medium`
-- Draft: `TP-TOP-001`
+- Current Run: `TPR-RES-TOP-001`
+- Role: Planner / narrow resolution
+- Independent review: `TPR-TOP-001` — 1 MATERIAL BLOCKING finding
+- Finding: retraction-through-Caddy verification obligation is not executable in the current checklist
+- Human gate: BLOCKED until resolution converges
 - Build: NOT_AUTHORIZED
-- Next: independent Techplan review.
 
 Human Attention:
 Confirm Stage 1 independently in each Exploration session. No additional orchestration decision is required before starting them.
