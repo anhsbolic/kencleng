@@ -108,7 +108,16 @@ Stage 2 Assessment:
 SOUND — no ownership collision or hidden hard dependency requiring re-decomposition.
 
 Current Gate:
-AWAITING_STAGE_3_CONFIRMATION
+EXPLORATION_COMPLETED
+
+Exploration Run:
+EXP-FE-001 — COMPLETED
+
+Planning Run:
+`TP-FE-001` — PLANNED / DISPATCHED
+
+Planning Session:
+Continue existing healthy EXP-FE-001 session
 
 Next Action:
-Continue the existing Exploration Run to Stage 3 — Solutioning. Preserve Work Unit ownership boundaries and settled CONTRACT_READY semantics.
+Execute `runs/TP-FE-001/invocation.md`. Do not begin Build before the Techplan gate closes.
