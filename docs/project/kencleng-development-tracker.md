@@ -1,7 +1,7 @@
 # Kencleng — Development Tracker
 
 > Status: Living project status
-> Last reconciled: 2026-09-22
+> Last reconciled: 2026-09-23
 > Current Kencleng authoritative Product Authority baseline: `main@e32916b597412094976e3e6263095e861ec18391` (`Promote Product Authority and MVP delivery model (#27)`)
 > Harscode operational baseline: `main@b64fa11082a094d0e1b6e9488c20eac1c7f9777b`
 > Purpose: Keep cross-domain and product-slice delivery state visible without turning dated progress into workflow policy.
@@ -79,7 +79,7 @@ Domain rows remain useful for semantic/implementation evidence, but they do **no
 | Account | `NEEDS_RECONCILIATION` when next needed | Historical implementation exists | `NOT_STARTED` for new generation | Outside baseline MVP critical path. Preserve security/correctness evidence; do not resume historical roadmap by inertia. |
 | Notification | Historical/draft reference | `NOT_STARTED` as standalone delivery | `NOT_STARTED` | Include only when a real slice requires active notification behavior. |
 | Organization | Historical/draft reference | `NOT_STARTED` | `NOT_STARTED` | Slice 1 needs only minimum persisted/public-safe steward context; full self-service is deferred. |
-| Campaign | `CONTRACT_READY` for Slice 1 | `NOT_STARTED` active generation | `NOT_STARTED` active product surface | `WU-S1-002` reconciliation passed independent Testing and Human milestone acceptance on 2026-09-22. Runtime backend/frontend/topology/integration milestones remain unclaimed. |
+| Campaign | `INTEGRATED_VERIFIED` for Slice 1 | `BACKEND_VERIFIED` | `FRONTEND_MOCK_VERIFIED` | Contract, backend, frontend mock-parallel experience, topology/private media, and real cross-stack integration are verified. Slice-level finalization remains a separate Human decision. |
 | Donation | Historical/draft reference | `NOT_STARTED` active generation | `NOT_STARTED` | Enters baseline in Slice 2; correctness-critical money areas retain Tier-0 fencing. |
 | Disbursement | Historical/draft reference | `NOT_STARTED` | `NOT_STARTED` | Not baseline MVP critical path; do not pull in merely to make accountability look complete. |
 
@@ -147,10 +147,10 @@ Active product outcome remains:
 Slice 1 — Public Campaign Understanding
 ```
 
-The Slice-1 reconciliation milestone is now:
+The Slice-1 delivery milestone is now:
 
 ```text
-CONTRACT_READY
+INTEGRATED_VERIFIED
 ```
 
 Evidence:
@@ -166,19 +166,25 @@ Current boundary:
 
 ```text
 CONTRACT_READY
-✓ delivery/spec/threat/API/generated-contract authority reconciled
+✓ reconciled
 
 BACKEND_VERIFIED
-✗ not yet earned
+✓ earned
 
 FRONTEND_MOCK_VERIFIED
-✗ not yet earned
+✓ earned
+
+TOPOLOGY_VERIFIED
+✓ earned
 
 INTEGRATED_VERIFIED
-✗ not yet earned
+✓ earned
+
+SLICE_FINALIZED
+✗ awaiting explicit Human/project finalization decision
 ```
 
-Downstream execution may now be decomposed from the reconciled contract. Backend and frontend may proceed contract-parallel where dependencies permit, while topology and final integration remain explicit owned work.
+Slice 1 has completed technical and integrated verification. The remaining gate is the explicit Slice-1 Human/project finalization decision; this does not imply Slice 2 capability has begun.
 
 ## 8. Continuous Real-Task Validation posture
 
