@@ -10,10 +10,10 @@ Derived From:
 WU-S1-002 — CONTRACT_READY
 
 Status:
-VERIFYING
+WAITING_HUMAN
 
 Scheduling:
-RUNNING
+QUEUED
 
 Horizon:
 NOW
@@ -99,3 +99,25 @@ Target Milestone:
 
 Human Gate After Testing:
 Integrated rendered/product acceptance and later `SLICE_FINALIZED` decision remain Human-owned.
+
+
+## Integration Milestone Gate
+
+Testing:
+`TST-INT-001` — PASS_WITH_FLAGGED_FOLLOWUPS
+
+Evidence:
+SUFFICIENT_FOR_INTEGRATED_VERIFIED
+
+Human Gate:
+REQUIRED — integrated rendered/product acceptance before milestone promotion.
+
+Target Milestone:
+`INTEGRATED_VERIFIED`
+
+Slice Finalization:
+NOT_YET_APPROVED — remains a separate Human/project decision after integration milestone promotion.
+
+Non-blocking follow-ups:
+- repository-wide pre-existing `gosec` / Go cache reproducibility;
+- historical `TST-FE-001` absent-media literal differs from current UI wording, without semantic product mismatch.
