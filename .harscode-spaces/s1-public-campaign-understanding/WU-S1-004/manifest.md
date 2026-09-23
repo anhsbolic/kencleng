@@ -191,3 +191,21 @@ READY
 
 Build:
 NOT_AUTHORIZED until explicit Human approval.
+
+
+## Human Techplan Gate — Ready
+
+Current-effective Techplan:
+`runs/TP-FE-001/techplan.md`
+
+Review State:
+`TPR-FE-001` — COMPLETE / CLEAN FOR HUMAN GATE
+
+Human Review Report:
+`runs/TP-FE-001/report-techplan.md`
+
+Human Approval:
+READY
+
+Build:
+NOT_AUTHORIZED until explicit Human approval of the current-effective Techplan.
