@@ -19,41 +19,38 @@ ACTIVE
 
 ### WU-S1-003 — Slice 1 Backend Public Campaign Delivery
 - Status: ACTIVE
-- Scheduling: RUNNING
-- Current Run: `BLD-BE-001`
-- Role: Implementer
-- Techplan: `TP-BE-001` — APPROVED
-- Session: fresh
+- Current Run: `CR-BE-001`
+- Role: Reviewer
+- Build: `BLD-BE-001` — COMPLETED
+- Review session: fresh independent
 - Model: `gpt-5.6-terra / high`
-- Target milestone: `BACKEND_VERIFIED`
-- Next gate: Code Review
+- Next gate: Testing if approved
 - Milestone: NOT_YET_VERIFIED
 
 ### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
 - Status: ACTIVE
-- Scheduling: RUNNING
-- Current Run: `BLD-FE-001`
-- Role: Implementer
-- Techplan: `TP-FE-001` — APPROVED
-- Session: fresh
+- Current Run: `CR-FE-001`
+- Role: Reviewer
+- Build: `BLD-FE-001` — COMPLETED
+- Review session: fresh independent
 - Model: `gpt-5.6-terra / high`
-- Target milestone: `FRONTEND_MOCK_VERIFIED`
-- Next gate: Code Review
+- Next gate: Testing if approved
 - Milestone: NOT_YET_VERIFIED
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
 - Status: ACTIVE
-- Scheduling: RUNNING
-- Current Run: `BLD-TOP-001`
-- Role: Implementer
-- Techplan: `TP-TOP-001` — APPROVED
-- Session: fresh
+- Current Run: `CR-TOP-001`
+- Role: Reviewer
+- Build: `BLD-TOP-001` — COMPLETED
+- Review session: fresh independent
 - Model: `gpt-5.6-terra / medium`
-- Next gate: Code Review
-- Runtime R4/R5/R7 evidence may remain deferred until WU-S1-003 + Compose-capable environment exist
+- Runtime note: local container engine is Podman; Docker CLI absence alone is not runtime unavailability
+- Next gate: Testing if approved
 - Milestone: NOT_YET_VERIFIED
 
 Human Attention:
+None unless Code Review raises a material decision or protected-write boundary.
+
 None during Build unless an Implementer surfaces a material contract contradiction.
 
 Human approval is now required for TP-BE-001, TP-FE-001, and TP-TOP-001 before any Build Run is dispatched.
@@ -167,6 +164,10 @@ Manual Orchestrator directly authored two `report-techplan.md` artifacts after c
 ### OBS-ORCH-011 — Human report generation timing authority conflict
 
 Harscode `workflow/2-techplan/report-template.md` says `report-techplan.md` is generated when the current-effective Techplan is ready to enter the Human approval gate after review/resolution convergence. `workflow/2-techplan/guardrails.md §8` says the report is generated only after Approval. The pilot encountered this conflict directly while preparing WU-S1-003/004/005 Human gates. Human approval subsequently occurred, so no Build contract is ambiguous, but the workflow sources should be reconciled after the pilot rather than relying on operator interpretation.
+
+### OBS-ORCH-012 — Local runtime capability was under-specified
+
+BLD-TOP-001 reported runtime Compose validation as unavailable because the `docker` CLI was absent. The Human clarified that the local development environment uses Podman and the repository already exposes `make up-podman` / `make down-podman`. The pilot local config now declares Podman as the container runtime and explicitly states that Docker CLI absence is not equivalent to container-runtime unavailability. Testcontainers compatibility remains probe-at-runtime rather than assumed.
 
 ## State Integrity
 
