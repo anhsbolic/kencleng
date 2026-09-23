@@ -282,3 +282,20 @@ BLOCKED pending confirmation.
 
 Milestone:
 NOT_YET_VERIFIED
+
+## Review Patch Round 2
+
+Targeted Confirmation:
+`CR-CONF-FE-001` — STILL_BLOCKING
+
+Remaining Findings:
+F1-R Strict Mode singleton worker ownership; F2-R request-failure recovery evidence.
+
+Patch Run:
+`BLD-FE-PATCH-002` — PLANNED / DISPATCHED
+
+Testing:
+BLOCKED pending targeted confirmation.
+
+Milestone:
+NOT_YET_VERIFIED
