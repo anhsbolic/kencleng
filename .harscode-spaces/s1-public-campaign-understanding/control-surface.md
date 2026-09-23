@@ -34,13 +34,17 @@ ACTIVE
 - Milestone: NOT_YET_VERIFIED
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
-- Status: WAITING_HUMAN
+- Status: DONE
+- Milestone: `TOPOLOGY_VERIFIED`
+- Human approval: APPROVED
 - Testing: `TST-TOP-002` — PASS
 - Runtime closure: R4 / Campaign-specific R5 / R7 closed
-- Milestone: READY_FOR_HUMAN_PROMOTION
 - Integrated Slice claim: NOT_GRANTED; WU-S1-006 remains separate
+- External non-blocking follow-up: pre-existing repository-wide gosec findings
 
 Human Attention:
+WU-S1-004 remains in independent Testing. WU-S1-006 stays parked until frontend milestone evidence is sufficient.
+
 WU-S1-005 is ready for explicit Human completion/promotion. WU-S1-004 continues in independent Testing.
 
 WU-S1-003 is ready for explicit Human promotion to BACKEND_VERIFIED. FE and TOP continue independently.
