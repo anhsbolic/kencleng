@@ -1,7 +1,7 @@
 # Kencleng — Integration Map
 
 > Status: Living cross-stack coordination map
-> Last updated: 2026-09-17
+> Last updated: 2026-09-23
 > Purpose: Map frontend surfaces/flows to product capabilities, API contracts, and backend ownership without forcing frontend and backend to share the same decomposition.
 
 ## 1. What this document owns
@@ -110,7 +110,7 @@ Architecture boundaries may be separate, but delivery should normally remain sco
 
 | Frontend surface / flow | Product capability | API contract / operation | Backend owner(s) | Contract gap / coordination note |
 |---|---|---|---|---|
-| Public Campaign Detail | A visitor understands one persisted eligible Campaign, its steward, funding truth, organizer provenance, and truthful media/action state without a fake donation flow. | `getPublicCampaignDetail`; `getPublicCampaignMediaContent` | Campaign public projection and controlled media delivery | Detail embeds the narrow public steward projection; no Organization-detail request is needed. Frontend consumes generated types and uses the opaque same-origin `content_url`; backend/topology must later enforce private storage, parent/member recheck, `/api` routing, and `private, no-store`. |
+| Public Campaign Detail | A visitor understands one persisted eligible Campaign, its steward, funding truth, organizer provenance, and truthful media/action state without a fake donation flow. | `getPublicCampaignDetail`; `getPublicCampaignMediaContent` | Campaign public projection and controlled media delivery | Detail embeds the narrow public steward projection; no Organization-detail request is needed. Frontend consumes generated types and uses the opaque same-origin `content_url`; backend/topology enforce private storage, parent/member recheck, `/api` routing, and `private, no-store` at the shared integration boundary. |
 
 The Frontend Experience Foundation remains a cross-domain calibration/foundation task and does not need a synthetic API mapping retrofitted onto it.
 
