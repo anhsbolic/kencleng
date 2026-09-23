@@ -19,30 +19,43 @@ ACTIVE
 
 ### WU-S1-003 — Slice 1 Backend Public Campaign Delivery
 - Status: ACTIVE
-- Current gate: HUMAN_TECHPLAN_APPROVAL
-- Techplan: `TP-BE-001`
-- Review: CLEAN
-- Human report: READY
-- Build: NOT_AUTHORIZED pending explicit Human approval
+- Scheduling: RUNNING
+- Current Run: `BLD-BE-001`
+- Role: Implementer
+- Techplan: `TP-BE-001` — APPROVED
+- Session: fresh
+- Model: `gpt-5.6-terra / high`
+- Target milestone: `BACKEND_VERIFIED`
+- Next gate: Code Review
+- Milestone: NOT_YET_VERIFIED
 
 ### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
 - Status: ACTIVE
-- Current gate: HUMAN_TECHPLAN_APPROVAL
-- Techplan: `TP-FE-001`
-- Review: CLEAN
-- Human report: READY
-- Build: NOT_AUTHORIZED pending explicit Human approval
+- Scheduling: RUNNING
+- Current Run: `BLD-FE-001`
+- Role: Implementer
+- Techplan: `TP-FE-001` — APPROVED
+- Session: fresh
+- Model: `gpt-5.6-terra / high`
+- Target milestone: `FRONTEND_MOCK_VERIFIED`
+- Next gate: Code Review
+- Milestone: NOT_YET_VERIFIED
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
 - Status: ACTIVE
-- Current gate: HUMAN_TECHPLAN_APPROVAL
-- Techplan: `TP-TOP-001`
-- Independent review: finding resolved
-- Targeted confirmation: `CONFIRMED_CLOSED`
-- Human report: READY
-- Build: NOT_AUTHORIZED pending explicit Human approval
+- Scheduling: RUNNING
+- Current Run: `BLD-TOP-001`
+- Role: Implementer
+- Techplan: `TP-TOP-001` — APPROVED
+- Session: fresh
+- Model: `gpt-5.6-terra / medium`
+- Next gate: Code Review
+- Runtime R4/R5/R7 evidence may remain deferred until WU-S1-003 + Compose-capable environment exist
+- Milestone: NOT_YET_VERIFIED
 
 Human Attention:
+None during Build unless an Implementer surfaces a material contract contradiction.
+
 Human approval is now required for TP-BE-001, TP-FE-001, and TP-TOP-001 before any Build Run is dispatched.
 
 Confirm Stage 1 independently in each Exploration session. No additional orchestration decision is required before starting them.
@@ -150,6 +163,10 @@ Independent review menemukan satu blocking security/interface gap yang sempit. O
 ### OBS-ORCH-010 — Orchestrator role bleed in Human report generation
 
 Manual Orchestrator directly authored two `report-techplan.md` artifacts after clean independent review. Although the reports were derived from valid Techplans, this blurred coordination ownership with planning-artifact production and also bypassed the Kencleng Bahasa Indonesia communication profile. The reports were invalidated and removed; replacement generation is routed through explicit Planner Runs using the canonical report template and project communication profile. Candidate learning: orchestration should dispatch derived planning/report artifacts rather than silently authoring them when a participant/workflow boundary exists.
+
+### OBS-ORCH-011 — Human report generation timing authority conflict
+
+Harscode `workflow/2-techplan/report-template.md` says `report-techplan.md` is generated when the current-effective Techplan is ready to enter the Human approval gate after review/resolution convergence. `workflow/2-techplan/guardrails.md §8` says the report is generated only after Approval. The pilot encountered this conflict directly while preparing WU-S1-003/004/005 Human gates. Human approval subsequently occurred, so no Build contract is ambiguous, but the workflow sources should be reconciled after the pilot rather than relying on operator interpretation.
 
 ## State Integrity
 
