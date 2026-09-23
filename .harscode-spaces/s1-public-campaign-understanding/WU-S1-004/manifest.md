@@ -160,3 +160,20 @@ PENDING report generation.
 
 Build:
 NOT_AUTHORIZED
+
+## Human Report Localization Correction
+
+Prior Report Generation:
+`TPRPT-FE-001` — COMPLETED
+
+Finding:
+Human-facing report retained ordinary English headings despite Bahasa Indonesia communication profile.
+
+Correction Run:
+`TPRPT-FE-002` — PLANNED / DISPATCHED
+
+Human Techplan Gate:
+PENDING corrected report.
+
+Build:
+NOT_AUTHORIZED
