@@ -18,12 +18,13 @@ ACTIVE
 ## NOW
 
 ### WU-S1-003 — Slice 1 Backend Public Campaign Delivery
-- Status: WAITING_HUMAN
-- Current gate: BACKEND_VERIFIED promotion / Tier-1 Human gate
+- Status: DONE
+- Milestone: `BACKEND_VERIFIED`
+- Human approval: APPROVED
 - Testing: `TST-BE-002` — PASS_WITH_FLAGGED_FOLLOWUPS
-- Campaign-owned verification: sufficient
-- Milestone: READY_FOR_HUMAN_PROMOTION, not yet promoted
-- External flags: pre-existing repo gosec + runner-limited full race
+- Campaign-owned verification: sufficient and promoted
+- External non-blocking follow-ups: pre-existing repo gosec + runner-limited full race
+- Downstream dependency: available to WU-S1-005 / WU-S1-006
 
 ### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
 - Status: VERIFYING
