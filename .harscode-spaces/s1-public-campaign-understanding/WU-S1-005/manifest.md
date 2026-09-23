@@ -190,3 +190,21 @@ PENDING report generation.
 
 Build:
 NOT_AUTHORIZED
+
+
+## Human Techplan Gate — Ready
+
+Current-effective Techplan:
+`runs/TP-TOP-001/techplan.md`
+
+Review State:
+`TPR-CONF-TOP-001` — COMPLETE / CLEAN FOR HUMAN GATE
+
+Human Review Report:
+`runs/TP-TOP-001/report-techplan.md`
+
+Human Approval:
+READY
+
+Build:
+NOT_AUTHORIZED until explicit Human approval of the current-effective Techplan.
