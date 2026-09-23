@@ -292,3 +292,17 @@ Testing Run:
 
 Milestone:
 NOT_YET_VERIFIED
+
+## Joint Runtime Testing Re-entry
+
+Testing Round 1:
+`TST-TOP-001` — PASS_WITH_FLAGGED_FOLLOWUPS
+
+Remaining:
+R4 media 200/404 matrix, Campaign-specific R5, R7 fresh-fetch retraction.
+
+Testing Run:
+`TST-TOP-002` — PLANNED / DISPATCHED
+
+Milestone:
+NOT_YET_COMPLETE
