@@ -43,10 +43,14 @@ ACTIVE
 - Integrated Slice claim: NOT_GRANTED; WU-S1-006 remains separate
 - External non-blocking follow-up: pre-existing repository-wide gosec findings
 
-Human Attention:
-All three hard dependencies for WU-S1-006 are now satisfied:
-- WU-S1-003: BACKEND_VERIFIED
-- WU-S1-004: FRONTEND_MOCK_VERIFIED
-- WU-S1-005: TOPOLOGY_VERIFIED
+### WU-S1-006 — Slice 1 Real Integration & Final Verification
+- Status: VERIFYING
+- Scheduling: RUNNING
+- Current Run: `TST-INT-001`
+- Role: Verifier / cross-stack integration
+- Dependencies: SATISFIED
+- Target milestone: `INTEGRATED_VERIFIED`
+- Human Slice-finalization gate: NOT_YET_REACHED
 
-WU-S1-006 may now be unparked and dispatched for real integration verification.
+Human Attention:
+None during integration Testing unless a material product/contract contradiction or Human-only decision is surfaced.
