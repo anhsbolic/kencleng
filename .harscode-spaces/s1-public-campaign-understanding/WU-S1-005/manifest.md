@@ -229,3 +229,24 @@ CODE_REVIEW after Build completion.
 
 Milestone:
 NOT_YET_VERIFIED
+
+
+## Code Review Dispatch
+
+Build Run:
+`BLD-TOP-001` — COMPLETED
+
+Code Review Run:
+`CR-TOP-001` — PLANNED / DISPATCHED
+
+Review Session:
+Fresh independent
+
+Model:
+`gpt-5.6-terra / medium`
+
+Next Gate:
+Testing if review approves; Build/Patch if review requests changes.
+
+Milestone:
+NOT_YET_VERIFIED
