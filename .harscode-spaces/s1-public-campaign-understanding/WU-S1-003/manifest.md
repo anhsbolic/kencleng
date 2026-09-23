@@ -158,3 +158,17 @@ PENDING report generation.
 
 Build:
 NOT_AUTHORIZED
+
+## Human Techplan Gate Ready
+
+Report:
+`runs/TP-BE-001/report-techplan.md`
+
+Independent Review:
+`TPR-BE-001` — CLEAN
+
+Human Approval:
+READY
+
+Build:
+NOT_AUTHORIZED until explicit Human approval.
