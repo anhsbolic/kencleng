@@ -250,3 +250,20 @@ Testing if review approves; Build/Patch if review requests changes.
 
 Milestone:
 NOT_YET_VERIFIED
+
+## Review Patch Dispatch
+
+Code Review:
+`CR-TOP-001` — REQUEST_CHANGES
+
+Blocking Finding:
+S1 MinIO initializer fail-fast behavior.
+
+Patch Run:
+`BLD-TOP-PATCH-001` — PLANNED / DISPATCHED
+
+Testing:
+BLOCKED pending patch + targeted review confirmation.
+
+Milestone:
+NOT_YET_VERIFIED
