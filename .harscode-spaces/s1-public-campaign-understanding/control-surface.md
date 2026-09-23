@@ -19,29 +19,27 @@ ACTIVE
 
 ### WU-S1-003 — Slice 1 Backend Public Campaign Delivery
 - Status: ACTIVE
-- Current Run: `TPRPT-BE-001`
-- Role: Planner — Human-facing report generation
-- Independent review: `TPR-BE-001` — CLEAN
-- Human gate: PENDING regenerated report
-- Build: NOT_AUTHORIZED
-- Previous Orchestrator-authored report: INVALIDATED / REMOVED
+- Current gate: HUMAN_TECHPLAN_APPROVAL
+- Techplan: `TP-BE-001`
+- Independent review: CLEAN
+- Human report: READY
+- Build: NOT_AUTHORIZED pending explicit Human approval
 
 ### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
 - Status: ACTIVE
-- Current Run: `TPRPT-FE-002`
-- Role: Planner — Human report localization correction
-- Independent review: `TPR-FE-001` — CLEAN
-- Human gate: PENDING corrected Bahasa Indonesia report
-- Build: NOT_AUTHORIZED
+- Current gate: HUMAN_TECHPLAN_APPROVAL
+- Techplan: `TP-FE-001`
+- Independent review: CLEAN
+- Human report: READY
+- Build: NOT_AUTHORIZED pending explicit Human approval
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
 - Status: ACTIVE
-- Current Run: `TPR-CONF-TOP-001`
-- Role: Reviewer — targeted resolution confirmation
-- Independent review: `TPR-TOP-001` — 1 MATERIAL finding
-- Resolution: `TPR-RES-TOP-001` — COMPLETED
-- Material semantics changed: NO
-- Human gate: BLOCKED pending targeted confirmation
+- Current Run: `TPRPT-TOP-001`
+- Independent review: finding resolved
+- Targeted confirmation: `CONFIRMED_CLOSED`
+- Human report: PENDING generation
+- Human gate: PENDING report
 - Build: NOT_AUTHORIZED
 
 Human Attention:
