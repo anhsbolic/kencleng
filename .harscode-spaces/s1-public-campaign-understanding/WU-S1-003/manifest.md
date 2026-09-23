@@ -190,3 +190,24 @@ READY
 
 Build:
 NOT_AUTHORIZED until explicit Human approval of the current-effective Techplan.
+
+
+## Build Dispatch
+
+Human Techplan Approval:
+APPROVED — current-effective `TP-BE-001`
+
+Build Run:
+`BLD-BE-001` — PLANNED / DISPATCHED
+
+Build Session:
+Fresh
+
+Model:
+`gpt-5.6-terra / high`
+
+Next Gate:
+CODE_REVIEW after Build completion.
+
+Milestone:
+NOT_YET_VERIFIED
