@@ -32,6 +32,7 @@ services:
       mc mb -p local/kencleng-public;
       mc mb -p local/kencleng-private;
       mc anonymous set download local/kencleng-public;
+      mc anonymous set none local/kencleng-private;
       "
 
   caddy:

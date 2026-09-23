@@ -1,0 +1,261 @@
+.page {
+  width: min(100% - 48px, 1080px);
+  min-height: 100dvh;
+  margin-inline: auto;
+  padding-block: clamp(48px, 8vw, 104px);
+  outline: none;
+}
+
+.page:focus-visible {
+  outline: 3px solid var(--berry);
+  outline-offset: 8px;
+}
+
+.detail {
+  display: grid;
+  gap: clamp(40px, 7vw, 80px);
+}
+
+.hero {
+  max-width: 800px;
+  padding-bottom: clamp(40px, 6vw, 72px);
+  border-bottom: 1px solid var(--border);
+}
+
+.kicker {
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.kicker::before {
+  display: inline-block;
+  width: 24px;
+  height: 3px;
+  margin-right: 12px;
+  vertical-align: 3px;
+  background: var(--sun);
+  content: "";
+}
+
+.hero h1,
+.state h1,
+.funding h2,
+.action h2,
+.story h2,
+.media h2,
+.mediaState h2 {
+  font-family: var(--font-newsreader), serif;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+
+.hero h1 {
+  margin: 24px 0;
+  font-size: clamp(42px, 6vw, 68px);
+  line-height: 1.04;
+  overflow-wrap: anywhere;
+}
+
+.steward,
+.lifecycle {
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.lifecycle {
+  margin-top: 8px;
+}
+
+.primaryFacts {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  gap: clamp(24px, 5vw, 64px);
+  align-items: start;
+}
+
+.funding,
+.action,
+.story,
+.media,
+.mediaState {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+
+.funding h2,
+.action h2,
+.story h2,
+.media h2,
+.mediaState h2 {
+  margin: 16px 0 12px;
+  font-size: clamp(26px, 3vw, 34px);
+  line-height: 1.16;
+}
+
+.funding > p:not(.kicker),
+.action > p:not(.kicker),
+.story > p:not(.kicker),
+.mediaState > p:not(.kicker),
+.media figcaption {
+  color: var(--muted-ink);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.amount {
+  margin: 20px 0 24px;
+  font-size: clamp(28px, 3.3vw, 40px);
+  font-weight: 650;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.fundingFacts {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+}
+
+.fundingFacts div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.fundingFacts dt,
+.fundingFacts dd {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.fundingFacts dt {
+  color: var(--muted-ink);
+}
+
+.fundingFacts dd {
+  font-weight: 650;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.action {
+  background: var(--warm-surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.story {
+  max-width: 760px;
+}
+
+.story > p:not(.kicker) {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.provenance {
+  margin: 16px 0 0;
+  color: var(--muted-ink);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.mediaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.media figure {
+  margin: 0;
+}
+
+.media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.media figcaption {
+  margin-top: 12px;
+}
+
+.state {
+  max-width: 620px;
+  padding: clamp(32px, 7vw, 72px) 0;
+  border-top: 1px solid var(--ink);
+}
+
+.state h1 {
+  margin: 20px 0 16px;
+  font-size: clamp(36px, 5vw, 52px);
+  line-height: 1.08;
+}
+
+.state > p:not(.kicker) {
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.retry {
+  min-height: 48px;
+  margin-top: 28px;
+  border: 1px solid var(--ink);
+  border-radius: 10px;
+  background: var(--sun);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 650;
+  padding: 10px 16px;
+}
+
+.retry:hover {
+  background: var(--sun-strong, #e5b62e);
+}
+
+.retry:focus-visible {
+  outline: 3px solid var(--berry);
+  outline-offset: 4px;
+}
+
+@media (max-width: 700px) {
+  .page {
+    width: min(100% - 40px, 600px);
+    padding-block: 48px 64px;
+  }
+
+  .primaryFacts {
+    grid-template-columns: 1fr;
+  }
+
+  .fundingFacts div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .fundingFacts dd {
+    text-align: left;
+  }
+}

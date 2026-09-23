@@ -24,12 +24,14 @@ import (
 	"github.com/minio/minio-go/v7/pkg/credentials"
 
 	"github.com/anhsbolic/kencleng/backend/internal/domain/account"
+	"github.com/anhsbolic/kencleng/backend/internal/domain/campaign"
 	"github.com/anhsbolic/kencleng/backend/internal/platform/auth"
 	platformbreachcheck "github.com/anhsbolic/kencleng/backend/internal/platform/breachcheck"
 	platformcrypto "github.com/anhsbolic/kencleng/backend/internal/platform/crypto"
 	"github.com/anhsbolic/kencleng/backend/internal/platform/db"
 	"github.com/anhsbolic/kencleng/backend/internal/platform/googleoauth"
 	platformnotification "github.com/anhsbolic/kencleng/backend/internal/platform/notification"
+	"github.com/anhsbolic/kencleng/backend/internal/platform/storage"
 	transporthttp "github.com/anhsbolic/kencleng/backend/internal/transport/http"
 )
 
@@ -91,7 +93,8 @@ func run() error {
 	defer pool.Close()
 
 	// 4. Object storage: initialize MinIO and verify both buckets exist.
-	if err := initMinIO(ctx); err != nil {
+	minioClient, err := initMinIO(ctx)
+	if err != nil {
 		return err
 	}
 
@@ -133,6 +136,10 @@ func run() error {
 	accountSvc := account.NewService(account.NewRepositoryDB(pool, keys), pool, breachClient, emailSender, keys,
 		googleClient, authKeys, os.Getenv("FRONTEND_URL"),
 		mfaVerifier, nil, nil, mintAccess, mintMFAPending, verifyPending)
+	// Campaign's public routes are deliberately independent from session/auth
+	// middleware. Media reads use the configured private bucket only.
+	campaignSvc := campaign.NewService(campaign.NewRepositoryDB(pool),
+		storage.NewPrivateReader(minioClient, os.Getenv("MINIO_BUCKET_PRIVATE")))
 
 	// 7. Rate-limit configuration (fail fast if unset — Open Item #3).
 	rps, err := strconv.ParseFloat(os.Getenv("AUTH_RATE_RPS"), 64)
@@ -149,6 +156,8 @@ func run() error {
 	mux.HandleFunc("GET /healthz", healthz)
 	mux.HandleFunc("GET /docs", transporthttp.SwaggerHandler())
 	mux.HandleFunc("GET /openapi.yaml", transporthttp.OpenAPIHandler())
+	mux.HandleFunc("GET /campaigns/{campaignId}", transporthttp.PublicCampaignDetailHandler(campaignSvc))
+	mux.HandleFunc("GET /campaigns/{campaignId}/media/{mediaId}/content", transporthttp.PublicCampaignMediaContentHandler(campaignSvc))
 
 	authMux := http.NewServeMux()
 	authMux.HandleFunc("POST /auth/register", transporthttp.RegisterHandler(accountSvc))
@@ -273,7 +282,7 @@ func newEmailSender(appEnv string) platformnotification.Sender {
 }
 
 // initMinIO connects to the MinIO endpoint and verifies both buckets exist.
-func initMinIO(ctx context.Context) error {
+func initMinIO(ctx context.Context) (*minio.Client, error) {
 	endpoint := os.Getenv("MINIO_ENDPOINT")
 	useSSL := os.Getenv("MINIO_USE_SSL") == "true"
 
@@ -282,17 +291,17 @@ func initMinIO(ctx context.Context) error {
 		Secure: useSSL,
 	})
 	if err != nil {
-		return fmt.Errorf("create minio client: %w", err)
+		return nil, fmt.Errorf("create minio client: %w", err)
 	}
 
 	for _, bucket := range []string{os.Getenv("MINIO_BUCKET_PUBLIC"), os.Getenv("MINIO_BUCKET_PRIVATE")} {
 		ok, err := client.BucketExists(ctx, bucket)
 		if err != nil {
-			return fmt.Errorf("check minio bucket %q: %w", bucket, err)
+			return nil, fmt.Errorf("check minio bucket %q: %w", bucket, err)
 		}
 		if !ok {
-			return fmt.Errorf("minio bucket %q does not exist", bucket)
+			return nil, fmt.Errorf("minio bucket %q does not exist", bucket)
 		}
 	}
-	return nil
+	return client, nil
 }

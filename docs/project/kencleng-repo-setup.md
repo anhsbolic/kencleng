@@ -4,7 +4,7 @@
 >
 > Status: Current project context
 >
-> Last updated: 2026-09-12
+> Last updated: 2026-09-23
 >
 > Purpose: Explain the repository layout and local-development topology. Executable files in the repository remain authoritative for exact commands, ports, and dependency versions.
 
@@ -214,19 +214,37 @@ At the time of this update, executable configuration exposes:
 
 Use `.env.example` and current configuration when running the stack.
 
-## 8. Known proxy caveat
+## 8. Root proxy path invariant
 
-The current `Caddyfile` uses:
+The browser-facing API base is `/api`, while the native backend receives the
+remainder path without that prefix. `Caddyfile` enforces this at the root
+boundary with:
 
 ```caddyfile
-handle /api/* {
+handle_path /api/* {
     reverse_proxy host.containers.internal:8090
 }
 ```
 
-This does not strip the `/api` prefix before proxying. Backend tooling has historically worked around this for manual Swagger testing by calling the backend directly.
+For example, `localhost:8080/api/healthz` is proxied to the backend as
+`/healthz`; requests outside `/api/*` continue through the frontend fallback.
+The browser URL remains same-origin and unchanged.
 
-Treat a proxy fix as an explicit root-scoped infrastructure task. Do not silently modify Caddy from a backend-only or frontend-only feature Build.
+The Compose initializer creates both MinIO buckets on every run, preserves
+anonymous download policy for `kencleng-public`, and converges
+`kencleng-private` to anonymous `none`, including when `kencleng_miniodata` is
+reused. Campaign media must use the private bucket and remain available only
+through its controlled backend origin; this setup does not create the Campaign
+delivery endpoint or replace its authorization and cache-header behavior.
+
+These are source-level invariants, not runtime evidence. A Compose-capable
+environment must still validate the rendered Caddy configuration, root request
+path translation and frontend fallback, and persisted MinIO policies after
+initialization (including volume reuse). Controlled-media and retraction
+evidence additionally require the WU-S1-003 backend operation and fixture:
+after eligibility or media membership is withdrawn, a fresh request through
+the same root `content_url` must not deliver new media bytes. Do not treat this
+document or source changes alone as integrated verification.
 
 ## 9. Authority boundaries
 
