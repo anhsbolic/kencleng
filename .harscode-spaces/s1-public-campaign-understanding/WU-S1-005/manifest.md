@@ -306,3 +306,20 @@ Testing Run:
 
 Milestone:
 NOT_YET_COMPLETE
+
+## Topology Milestone Gate
+
+Testing:
+`TST-TOP-002` — PASS
+
+Runtime closure:
+R4 / Campaign-specific R5 / R7 closed.
+
+Human Gate:
+REQUIRED before WU-S1-005 completion/promotion.
+
+Integrated Slice Claim:
+NOT_GRANTED — WU-S1-006 remains separate.
+
+Milestone:
+READY_FOR_HUMAN_PROMOTION
