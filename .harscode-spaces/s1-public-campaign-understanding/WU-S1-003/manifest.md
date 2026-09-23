@@ -249,3 +249,20 @@ Model:
 
 Milestone:
 NOT_YET_VERIFIED
+
+## Testing Patch Re-entry
+
+Testing Run:
+`TST-BE-001` — FAIL / RETURN_TO_BUILD
+
+Patch Run:
+`BLD-BE-PATCH-001` — PLANNED / DISPATCHED
+
+Scope:
+Campaign integration harness/evidence, R5 matrix/timing, Campaign-scope gosec findings only.
+
+Testing:
+REQUIRED again after patch.
+
+Milestone:
+NOT_YET_VERIFIED
