@@ -280,3 +280,20 @@ Close previously failing/partial Campaign-owned verification gaps.
 
 Milestone:
 NOT_YET_VERIFIED
+
+## Backend Milestone Gate
+
+Testing:
+`TST-BE-002` — PASS_WITH_FLAGGED_FOLLOWUPS
+
+Testing-owned Campaign evidence:
+SUFFICIENT_FOR_BACKEND_VERIFIED
+
+Human Gate:
+REQUIRED before milestone promotion / Tier-1 completion.
+
+External follow-ups:
+Repository-wide pre-existing gosec findings and full-repository race runner limitation; neither is a Campaign defect.
+
+Milestone:
+READY_FOR_HUMAN_PROMOTION — not yet promoted.
