@@ -140,3 +140,18 @@ PENDING review convergence
 
 Build:
 NOT_AUTHORIZED
+
+
+## Human Techplan Gate
+
+Independent Review:
+`TPR-BE-001` — COMPLETED / CLEAN
+
+Human Review Report:
+`runs/TP-BE-001/report-techplan.md`
+
+Techplan Approval:
+AWAITING_HUMAN_APPROVAL
+
+Build:
+NOT_AUTHORIZED until Human approval.
