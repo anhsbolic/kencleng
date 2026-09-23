@@ -119,3 +119,24 @@ Continue existing healthy EXP-BE-001 session
 
 Next Action:
 Execute `runs/TP-BE-001/invocation.md`. Do not begin Build before the Techplan gate closes.
+
+
+## Planning Review State
+
+Draft Techplan:
+`runs/TP-BE-001/techplan.md`
+
+Independent Review:
+`TPR-BE-001` — PLANNED / DISPATCHED
+
+Review Session:
+Fresh independent session
+
+Model:
+`gpt-5.6-terra / high`
+
+Human Approval:
+PENDING review convergence
+
+Build:
+NOT_AUTHORIZED
