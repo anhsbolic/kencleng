@@ -153,3 +153,20 @@ BLOCKED until resolution converges.
 
 Build:
 NOT_AUTHORIZED
+
+## Targeted Review Confirmation
+
+Resolution Run:
+`TPR-RES-TOP-001` — COMPLETED
+
+Resolution Assessment:
+No material scope/architecture/ownership/security/interface semantic change; existing verification obligation made executable.
+
+Confirmation Run:
+`TPR-CONF-TOP-001` — PLANNED / DISPATCHED
+
+Human Approval:
+BLOCKED until targeted confirmation closes the prior finding.
+
+Build:
+NOT_AUTHORIZED
