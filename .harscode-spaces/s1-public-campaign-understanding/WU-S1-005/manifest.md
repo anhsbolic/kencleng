@@ -281,3 +281,14 @@ BLOCKED pending confirmation.
 
 Milestone:
 NOT_YET_VERIFIED
+
+## Testing Dispatch
+
+Targeted Confirmation:
+`CR-CONF-TOP-001` — CONFIRMED_CLOSED
+
+Testing Run:
+`TST-TOP-001` — PLANNED / DISPATCHED
+
+Milestone:
+NOT_YET_VERIFIED
