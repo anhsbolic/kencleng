@@ -135,3 +135,21 @@ PENDING review convergence
 
 Build:
 NOT_AUTHORIZED
+
+
+## Planning Review Resolution
+
+Independent Review:
+`TPR-TOP-001` — COMPLETED / 1 MATERIAL BLOCKING finding
+
+Blocking Finding:
+Missing executable retraction-through-Caddy verification coverage.
+
+Resolution Run:
+`TPR-RES-TOP-001` — PLANNED / DISPATCHED
+
+Human Approval:
+BLOCKED until resolution converges.
+
+Build:
+NOT_AUTHORIZED
