@@ -10,13 +10,13 @@ Derived From:
 WU-S1-002 — CONTRACT_READY
 
 Status:
-NOT_STARTED
+VERIFYING
 
 Scheduling:
-PARKED
+RUNNING
 
 Horizon:
-NEXT
+NOW
 
 Readiness:
 DEFINED
@@ -75,3 +75,27 @@ Material rendered UI requires Human acceptance. `SLICE_FINALIZED` remains a Huma
 ## Completion
 
 Complete when real cross-stack evidence supports `INTEGRATED_VERIFIED` and all remaining Slice-1 Human acceptance inputs are explicit. It must not claim downstream Slice 2 capability.
+
+
+## Integration Verification Dispatch
+
+Dependency Gate:
+SATISFIED
+- `WU-S1-003 = BACKEND_VERIFIED`
+- `WU-S1-004 = FRONTEND_MOCK_VERIFIED`
+- `WU-S1-005 = TOPOLOGY_VERIFIED`
+
+Current Run:
+`TST-INT-001`
+
+Session:
+Fresh independent integration Testing
+
+Model:
+`gpt-5.6-terra / high`
+
+Target Milestone:
+`INTEGRATED_VERIFIED`
+
+Human Gate After Testing:
+Integrated rendered/product acceptance and later `SLICE_FINALIZED` decision remain Human-owned.
