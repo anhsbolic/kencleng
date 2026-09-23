@@ -323,3 +323,32 @@ NOT_GRANTED — WU-S1-006 remains separate.
 
 Milestone:
 READY_FOR_HUMAN_PROMOTION
+
+
+## Topology Work Unit Completion
+
+Human Approval:
+APPROVED — completion of `WU-S1-005`
+
+Evidence Basis:
+- `TST-TOP-001` — PASS_WITH_FLAGGED_FOLLOWUPS
+- `TST-TOP-002` — PASS
+- R4 controlled media proxy preservation closed
+- Campaign-specific R5 private-origin/direct-bypass boundary closed
+- R7 fresh-fetch retraction closed for parent eligibility and media membership
+
+Status:
+DONE
+
+Milestone:
+`TOPOLOGY_VERIFIED`
+
+Important Boundary:
+This completion does NOT grant `INTEGRATED_VERIFIED` for Slice 1.
+Cross-work-unit product integration remains owned by `WU-S1-006`.
+
+External / non-blocking follow-ups:
+- pre-existing repository-wide `gosec` findings outside this WU.
+
+Authority Sync:
+NONE
