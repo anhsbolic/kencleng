@@ -80,7 +80,7 @@ func run(ctx context.Context, manifestPath, mediaPath string, replace bool) erro
 	}
 	reader := storage.NewPrivateReader(client, os.Getenv("MINIO_BUCKET_PRIVATE"))
 	if media != nil {
-		file, err := os.Open(mediaPath)
+		file, err := os.Open(mediaPath) // #nosec G304 -- explicit operator-only --media-file input is validated as a local JPEG/PNG.
 		if err != nil {
 			return fmt.Errorf("open media file: %w", err)
 		}
@@ -114,7 +114,7 @@ func run(ctx context.Context, manifestPath, mediaPath string, replace bool) erro
 }
 
 func loadSeedManifest(path, mediaPath string) (campaign.SeedRecord, *campaign.SeedMedia, error) {
-	file, err := os.Open(path)
+	file, err := os.Open(path) // #nosec G304 -- explicit operator-only --manifest input is decoded with a size limit and strict schema.
 	if err != nil {
 		return campaign.SeedRecord{}, nil, fmt.Errorf("open manifest: %w", err)
 	}
@@ -211,7 +211,7 @@ func validateAmounts(target, collected *string) error {
 	return nil
 }
 func localImageContentType(path string) (string, error) {
-	file, err := os.Open(path)
+	file, err := os.Open(path) // #nosec G304 -- this is the already validated operator media path, re-opened only to inspect its image format.
 	if err != nil {
 		return "", fmt.Errorf("open media file: %w", err)
 	}

@@ -21,6 +21,25 @@ type fakePublicCampaignService struct {
 	contentErr error
 }
 
+// deterministicLatencyService models a fixed dependency budget without using
+// wall-clock assertions. It makes the representative 404 paths comparable in
+// a repeatable handler/service-seam test.
+type deterministicLatencyService struct {
+	detailErr, contentErr error
+	dependencyLatency     time.Duration
+	elapsed               time.Duration
+}
+
+func (s *deterministicLatencyService) GetPublicDetail(context.Context, uuid.UUID) (*campaign.PublicDetail, error) {
+	s.elapsed += s.dependencyLatency
+	return nil, s.detailErr
+}
+
+func (s *deterministicLatencyService) GetPublicMediaContent(context.Context, uuid.UUID, uuid.UUID) (*campaign.MediaContent, error) {
+	s.elapsed += s.dependencyLatency
+	return nil, s.contentErr
+}
+
 type trackedReadCloser struct {
 	*strings.Reader
 	closed bool
@@ -90,6 +109,83 @@ func TestPublicCampaignHandlers_PublicNotFoundParity(t *testing.T) {
 	}
 	if missingDetail.Header().Get("Cache-Control") != publicCampaignCacheControl || missingMedia.Header().Get("Cache-Control") != publicCampaignCacheControl {
 		t.Error("404 missing no-store")
+	}
+}
+
+func TestPublicCampaignHandlers_NotFoundAuthorizationMatrix(t *testing.T) {
+	campaignID := uuid.New()
+	mediaID := uuid.New()
+	type requestClass struct {
+		name string
+		path string
+		svc  fakePublicCampaignService
+	}
+	cases := []requestClass{
+		{name: "absent campaign", path: "/campaigns/" + campaignID.String(), svc: fakePublicCampaignService{detailErr: campaign.ErrNotFound}},
+		{name: "non-published campaign", path: "/campaigns/" + campaignID.String(), svc: fakePublicCampaignService{detailErr: campaign.ErrNotFound}},
+		{name: "absent media", path: "/campaigns/" + campaignID.String() + "/media/" + mediaID.String() + "/content", svc: fakePublicCampaignService{contentErr: campaign.ErrNotFound}},
+		{name: "non-member media", path: "/campaigns/" + campaignID.String() + "/media/" + mediaID.String() + "/content", svc: fakePublicCampaignService{contentErr: campaign.ErrNotFound}},
+	}
+	authorizations := []struct {
+		name  string
+		value string
+	}{{name: "none"}, {name: "garbage", value: "Bearer not-a-token"}, {name: "valid-shaped", value: "Bearer eyJhbGciOiJFUzI1NiJ9.eyJzdWIiOiJub3QtY29uc3VsdGVkIn0.signature"}}
+
+	var baseline *httptest.ResponseRecorder
+	for _, requestClass := range cases {
+		for _, authorization := range authorizations {
+			t.Run(requestClass.name+"/"+authorization.name, func(t *testing.T) {
+				recorder := httptest.NewRecorder()
+				req := httptest.NewRequest(http.MethodGet, requestClass.path, nil)
+				if authorization.value != "" {
+					req.Header.Set("Authorization", authorization.value)
+				}
+				wirePublicCampaignHandler(requestClass.svc).ServeHTTP(recorder, req)
+				if recorder.Code != http.StatusNotFound {
+					t.Fatalf("status = %d, want 404", recorder.Code)
+				}
+				if recorder.Header().Get("Content-Type") != "application/problem+json" || recorder.Header().Get("Cache-Control") != publicCampaignCacheControl {
+					t.Fatalf("headers = Content-Type %q, Cache-Control %q", recorder.Header().Get("Content-Type"), recorder.Header().Get("Cache-Control"))
+				}
+				if baseline == nil {
+					baseline = recorder
+					return
+				}
+				if recorder.Code != baseline.Code || recorder.Body.String() != baseline.Body.String() || recorder.Header().Get("Content-Type") != baseline.Header().Get("Content-Type") || recorder.Header().Get("Cache-Control") != baseline.Header().Get("Cache-Control") {
+					t.Fatalf("public 404 differs from baseline: status=%d body=%q headers=%q/%q", recorder.Code, recorder.Body.String(), recorder.Header().Get("Content-Type"), recorder.Header().Get("Cache-Control"))
+				}
+			})
+		}
+	}
+}
+
+func TestPublicCampaignHandlers_RepresentativeNotFoundTimingParity(t *testing.T) {
+	const samples = 128
+	const dependencyLatency = 2 * time.Millisecond
+	campaignID, mediaID := uuid.New(), uuid.New()
+	paths := []struct {
+		name    string
+		path    string
+		service *deterministicLatencyService
+	}{
+		{name: "absent campaign", path: "/campaigns/" + campaignID.String(), service: &deterministicLatencyService{detailErr: campaign.ErrNotFound, dependencyLatency: dependencyLatency}},
+		{name: "non-published campaign", path: "/campaigns/" + campaignID.String(), service: &deterministicLatencyService{detailErr: campaign.ErrNotFound, dependencyLatency: dependencyLatency}},
+		{name: "non-member media", path: "/campaigns/" + campaignID.String() + "/media/" + mediaID.String() + "/content", service: &deterministicLatencyService{contentErr: campaign.ErrNotFound, dependencyLatency: dependencyLatency}},
+	}
+
+	for _, path := range paths {
+		t.Run(path.name, func(t *testing.T) {
+			for range samples {
+				recorder := httptest.NewRecorder()
+				wirePublicCampaignHandler(path.service).ServeHTTP(recorder, httptest.NewRequest(http.MethodGet, path.path, nil))
+				if recorder.Code != http.StatusNotFound {
+					t.Fatalf("status = %d, want 404", recorder.Code)
+				}
+			}
+			if want := time.Duration(samples) * dependencyLatency; path.service.elapsed != want {
+				t.Fatalf("logical elapsed = %s, want %s", path.service.elapsed, want)
+			}
+		})
 	}
 }
 

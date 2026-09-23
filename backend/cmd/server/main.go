@@ -210,10 +210,7 @@ func run() error {
 			transporthttp.RequireSession(googleVerifyToken)(
 				transporthttp.AccountMeHandler(accountSvc))))
 
-	srv := &http.Server{
-		Addr:    ":" + os.Getenv("APP_PORT"),
-		Handler: mux,
-	}
+	srv := newHTTPServer(":"+os.Getenv("APP_PORT"), mux)
 
 	// 7. Graceful shutdown on SIGINT/SIGTERM.
 	notifyCtx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
@@ -240,6 +237,12 @@ func run() error {
 		return fmt.Errorf("graceful shutdown: %w", err)
 	}
 	return nil
+}
+
+const serverReadHeaderTimeout = 5 * time.Second
+
+func newHTTPServer(addr string, handler http.Handler) *http.Server {
+	return &http.Server{Addr: addr, Handler: handler, ReadHeaderTimeout: serverReadHeaderTimeout}
 }
 
 // healthz reports that the process is up and listening.
