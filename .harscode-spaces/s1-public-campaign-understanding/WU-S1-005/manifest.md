@@ -170,3 +170,23 @@ BLOCKED until targeted confirmation closes the prior finding.
 
 Build:
 NOT_AUTHORIZED
+
+## Human Report Generation
+
+Independent Review:
+`TPR-TOP-001` — blocking finding resolved.
+
+Resolution:
+`TPR-RES-TOP-001` — COMPLETED
+
+Targeted Confirmation:
+`TPR-CONF-TOP-001` — CONFIRMED_CLOSED
+
+Report Generation Run:
+`TPRPT-TOP-001` — PLANNED / DISPATCHED
+
+Human Approval:
+PENDING report generation.
+
+Build:
+NOT_AUTHORIZED
