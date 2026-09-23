@@ -21,7 +21,7 @@ ACTIVE
 - Status: ACTIVE
 - Current gate: HUMAN_TECHPLAN_APPROVAL
 - Techplan: `TP-BE-001`
-- Independent review: CLEAN
+- Review: CLEAN
 - Human report: READY
 - Build: NOT_AUTHORIZED pending explicit Human approval
 
@@ -29,20 +29,22 @@ ACTIVE
 - Status: ACTIVE
 - Current gate: HUMAN_TECHPLAN_APPROVAL
 - Techplan: `TP-FE-001`
-- Independent review: CLEAN
+- Review: CLEAN
 - Human report: READY
 - Build: NOT_AUTHORIZED pending explicit Human approval
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
 - Status: ACTIVE
-- Current Run: `TPRPT-TOP-001`
+- Current gate: HUMAN_TECHPLAN_APPROVAL
+- Techplan: `TP-TOP-001`
 - Independent review: finding resolved
 - Targeted confirmation: `CONFIRMED_CLOSED`
-- Human report: PENDING generation
-- Human gate: PENDING report
-- Build: NOT_AUTHORIZED
+- Human report: READY
+- Build: NOT_AUTHORIZED pending explicit Human approval
 
 Human Attention:
+Human approval is now required for TP-BE-001, TP-FE-001, and TP-TOP-001 before any Build Run is dispatched.
+
 Confirm Stage 1 independently in each Exploration session. No additional orchestration decision is required before starting them.
 
 ## COMPLETED
