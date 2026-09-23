@@ -18,37 +18,36 @@ ACTIVE
 ## NOW
 
 ### WU-S1-003 — Slice 1 Backend Public Campaign Delivery
-- Status: ACTIVE
-- Current Run: `CR-BE-001`
-- Role: Reviewer
-- Build: `BLD-BE-001` — COMPLETED
-- Review session: fresh independent
+- Status: VERIFYING
+- Current Run: `TST-BE-001`
+- Role: Verifier
+- Code Review: `CR-BE-001` — APPROVE
+- Session: fresh independent Testing
 - Model: `gpt-5.6-terra / high`
-- Next gate: Testing if approved
 - Milestone: NOT_YET_VERIFIED
 
 ### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
 - Status: ACTIVE
-- Current Run: `CR-FE-001`
-- Role: Reviewer
-- Build: `BLD-FE-001` — COMPLETED
-- Review session: fresh independent
-- Model: `gpt-5.6-terra / high`
-- Next gate: Testing if approved
+- Current Run: `BLD-FE-PATCH-001`
+- Role: Implementer / Patch
+- Code Review: `CR-FE-001` — REQUEST_CHANGES
+- Blocking findings: F1, F2
+- Testing: BLOCKED pending patch confirmation
 - Milestone: NOT_YET_VERIFIED
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
 - Status: ACTIVE
-- Current Run: `CR-TOP-001`
-- Role: Reviewer
-- Build: `BLD-TOP-001` — COMPLETED
-- Review session: fresh independent
-- Model: `gpt-5.6-terra / medium`
-- Runtime note: local container engine is Podman; Docker CLI absence alone is not runtime unavailability
-- Next gate: Testing if approved
+- Current Run: `BLD-TOP-PATCH-001`
+- Role: Implementer / Patch
+- Code Review: `CR-TOP-001` — REQUEST_CHANGES
+- Blocking finding: S1
+- Testing: BLOCKED pending targeted confirmation
+- Local runtime: Podman; sandbox write restrictions are distinct from Human runtime capability
 - Milestone: NOT_YET_VERIFIED
 
 Human Attention:
+None unless Testing/Patch uncovers a material contract or protected-write issue.
+
 None unless Code Review raises a material decision or protected-write boundary.
 
 None during Build unless an Implementer surfaces a material contract contradiction.
