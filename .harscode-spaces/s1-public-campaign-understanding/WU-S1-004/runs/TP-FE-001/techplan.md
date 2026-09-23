@@ -12,7 +12,7 @@
 > Created           : 2026-09-23
 > Target revision   : `a053b48ef3fef35a073c5fe57e5ee4581f848e07`
 > Workflow revision : not exposed by this Run
-> Status            : Draft
+> Status            : Approved by Anhar Solehudin[@anhsbolic]
 > Approach          : Route detail publik yang memakai satu jalur request nyata bertipe; MSW hanya mengganti respons pada network boundary sampai integrasi nyata tersedia.
 > Refs              : `EXP-FE-001/evidence/gap-analysis.md`; `EXP-FE-001/evidence/solutioning.md`; `WU-S1-002/TP-001/techplan.md`; `WU-S1-002/TST-001/testing-report-1.md`; `docs/project/kencleng-integration-map.md`
 

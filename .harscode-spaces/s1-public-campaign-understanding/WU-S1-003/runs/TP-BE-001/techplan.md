@@ -11,7 +11,7 @@
 > Created           : 2026-09-23
 > Target revision   : `a053b48ef3fef35a073c5fe57e5ee4581f848e07`
 > Workflow revision : `d46358563942c7e015b97aa7c5767c880ef1bc63`
-> Status            : Draft
+> Status            : Approved by Anhar Solehudin[@anhsbolic]
 > Approach          : Dua public read berbasis data persisted, explicit projection, controlled private-object delivery, dan opt-in operator seed tanpa mengambil kepemilikan topology.
 > Refs              : `EXP-BE-001` gap analysis/solutioning; `WU-S1-002/TP-001`; `WU-S1-002/TST-001`; `WU-S1-005/EXP-TOP-001`; Product/MVP Slice 1; `INV-campaign-14`; Campaign feature 02/03; `api/openapi/campaign.yaml`; `docs/project/kencleng-integration-map.md`
 

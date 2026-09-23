@@ -9,7 +9,7 @@
 > Created           : 2026-09-23
 > Target revision   : a053b48ef3fef35a073c5fe57e5ee4581f848e07
 > Workflow revision : not exposed by the invocation
-> Status            : Draft
+> Status            : Approved by Anhar Solehudin[@anhsbolic]
 > Approach          : Perbaikan root topology yang sempit: strip prefix /api di Caddy dan tegaskan policy anonymous none hanya untuk bucket private, tanpa mengambil alih delivery Campaign.
 > Refs              : EXP-TOP-001 gap analysis + solutioning; WU-S1-002/TP-001; WU-S1-002/TST-001; Caddyfile; docker-compose.yml; docs/spec/4-campaign/features/03-campaign-media.md; docs/spec/4-campaign/invariants.md (INV-campaign-14); docs/spec/4-campaign/threat-model.md; api/openapi/index.yaml; api/openapi/campaign.yaml; docs/project/kencleng-integration-map.md
 
