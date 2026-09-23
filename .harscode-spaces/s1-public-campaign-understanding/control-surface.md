@@ -19,42 +19,43 @@ ACTIVE
 
 ### WU-S1-003 — Slice 1 Backend Public Campaign Delivery
 - Type: DELIVERY
-- Status: NOT_STARTED
-- Scheduling: DISPATCHED
+- Status: ACTIVE
+- Scheduling: RUNNING
 - Horizon: NOW
 - Current Run: `EXP-BE-001`
 - Role: Explorer
-- Session: fresh
-- Model: `gpt-5.6-terra / high`
-- Hard dependency: WU-S1-002 `CONTRACT_READY` — satisfied
-- Coordination dependency: WU-S1-005 for real topology/storage integration
-- Next: run Stage 1 Exploration and stop for Human confirmation.
+- Stage 1: CONFIRMED
+- Stage 2: COMPLETED
+- Current Gate: AWAITING_STAGE_3_CONFIRMATION
+- Key coordination boundary: backend owns Campaign persistence/domain/HTTP/storage interface; WU-S1-005 owns root proxy/MinIO policy.
+- Next: Stage 3 Solutioning.
 
 ### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
 - Type: DELIVERY
-- Status: NOT_STARTED
-- Scheduling: DISPATCHED
+- Status: ACTIVE
+- Scheduling: RUNNING
 - Horizon: NOW
 - Current Run: `EXP-FE-001`
 - Role: Explorer
-- Session: fresh
-- Model: `gpt-5.6-terra / high`
-- Hard dependency: WU-S1-002 `CONTRACT_READY` — satisfied
-- Coordination dependency: backend/topology only for later real integration; mock-parallel work may proceed independently
-- Next: run Stage 1 Exploration and stop for Human confirmation.
+- Stage 1: CONFIRMED
+- Stage 2: COMPLETED
+- Current Gate: AWAITING_STAGE_3_CONFIRMATION
+- Key coordination boundary: frontend owns route/presentation/data boundary/MSW/rendered evidence; live proxy/storage remain external integration concerns.
+- Next: Stage 3 Solutioning.
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
 - Type: ENABLER
-- Status: NOT_STARTED
-- Scheduling: DISPATCHED
+- Status: ACTIVE
+- Scheduling: RUNNING
 - Horizon: NOW
 - Current Run: `EXP-TOP-001`
 - Role: Explorer
-- Session: fresh
-- Model: `gpt-5.6-terra / medium`
-- Hard dependency: WU-S1-002 `CONTRACT_READY` — satisfied
-- Coordination dependency: align with backend storage boundary
-- Next: run Stage 1 Exploration and stop for Human confirmation.
+- Stage 1: CONFIRMED
+- Stage 2: COMPLETED
+- Current Gate: AWAITING_STAGE_3_CONFIRMATION
+- Confirmed gaps: Caddy preserves `/api` while backend routes are unprefixed; Campaign media has no executable private-bucket binding/policy evidence.
+- Key coordination boundary: topology owns root proxy/policy; backend owns authorization/media runtime semantics.
+- Next: Stage 3 Solutioning.
 
 Human Attention:
 Confirm Stage 1 independently in each Exploration session. No additional orchestration decision is required before starting them.
