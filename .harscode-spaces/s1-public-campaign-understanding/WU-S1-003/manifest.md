@@ -297,3 +297,26 @@ Repository-wide pre-existing gosec findings and full-repository race runner limi
 
 Milestone:
 READY_FOR_HUMAN_PROMOTION — not yet promoted.
+
+
+## Backend Milestone Promotion
+
+Human Approval:
+APPROVED — `BACKEND_VERIFIED`
+
+Approval Basis:
+`TST-BE-002` — PASS_WITH_FLAGGED_FOLLOWUPS, with Campaign-owned Testing evidence sufficient for milestone promotion.
+
+Milestone:
+`BACKEND_VERIFIED`
+
+Status:
+DONE for WU-S1-003 backend capability scope.
+
+External / non-blocking follow-ups:
+- pre-existing repository-wide `gosec` findings outside Campaign ownership;
+- runner-limited full-repository race execution;
+- topology/proxy/policy/browser integration owned by WU-S1-005/WU-S1-006.
+
+Authority Sync:
+NONE
