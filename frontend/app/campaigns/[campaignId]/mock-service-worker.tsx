@@ -3,6 +3,70 @@
 import { type ReactNode, useEffect, useState } from "react";
 import styles from "./campaign-detail.module.css";
 
+type BrowserWorker = (typeof import("@/mocks/browser"))["worker"];
+
+let activeOwnerCount = 0;
+let startedWorker: BrowserWorker | undefined;
+let startupPromise: Promise<void> | undefined;
+
+function startWorker() {
+  if (!startupPromise) {
+    const pendingStartup = import("@/mocks/browser").then(async ({ worker }) => {
+      if (activeOwnerCount === 0) {
+        return;
+      }
+
+      await worker.start({ onUnhandledRequest: "bypass" });
+
+      if (activeOwnerCount === 0) {
+        worker.stop();
+        return;
+      }
+
+      startedWorker = worker;
+    });
+
+    startupPromise = pendingStartup;
+    void pendingStartup.then(
+      () => {
+        if (startupPromise === pendingStartup) {
+          startupPromise = undefined;
+        }
+      },
+      () => {
+        if (startupPromise === pendingStartup) {
+          startupPromise = undefined;
+        }
+      },
+    );
+  }
+
+  return startupPromise;
+}
+
+async function retainWorker() {
+  while (!startedWorker) {
+    if (activeOwnerCount === 0) {
+      return;
+    }
+
+    await startWorker();
+
+    if (activeOwnerCount === 0) {
+      return;
+    }
+  }
+}
+
+function releaseWorker() {
+  activeOwnerCount -= 1;
+
+  if (activeOwnerCount === 0 && startedWorker) {
+    startedWorker.stop();
+    startedWorker = undefined;
+  }
+}
+
 export default function MockServiceWorker({ children }: { children: ReactNode }) {
   const enabled = process.env.NEXT_PUBLIC_MSW_ENABLED === "true";
   const [ready, setReady] = useState(!enabled);
@@ -14,23 +78,9 @@ export default function MockServiceWorker({ children }: { children: ReactNode })
     }
 
     let active = true;
-    let startedWorker: (typeof import("@/mocks/browser"))["worker"] | undefined;
+    activeOwnerCount += 1;
 
-    void import("@/mocks/browser")
-      .then(async ({ worker }) => {
-        if (!active) {
-          return;
-        }
-
-        await worker.start({ onUnhandledRequest: "bypass" });
-
-        if (!active) {
-          worker.stop();
-          return;
-        }
-
-        startedWorker = worker;
-      })
+    void retainWorker()
       .then(() => {
         if (active) {
           setReady(true);
@@ -44,8 +94,7 @@ export default function MockServiceWorker({ children }: { children: ReactNode })
 
     return () => {
       active = false;
-      startedWorker?.stop();
-      startedWorker = undefined;
+      releaseWorker();
     };
   }, [enabled]);
 

@@ -22,6 +22,7 @@ describe("CampaignDetailClient", () => {
     ).toBeVisible();
     expect(screen.queryByRole("link", { name: /donasi|donate/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /donasi|donate/i })).not.toBeInTheDocument();
+    expect(screen.getByRole("main")).not.toHaveFocus();
   });
 
   it("shows one safe non-disclosing not-found state", async () => {
@@ -34,24 +35,27 @@ describe("CampaignDetailClient", () => {
     expect(screen.queryByText(/malformed|non-public|diagnostic/i)).not.toBeInTheDocument();
   });
 
-  it("offers named retry controls for temporary and generic request failures", async () => {
-    const { rerender } = render(<CampaignDetailClient campaignId="unavailable" />);
-
-    expect(
-      await screen.findByRole("heading", { name: "Detail campaign sedang tidak tersedia." }),
-    ).toBeVisible();
-    expect(screen.getByRole("button", { name: "Coba lagi" })).toBeVisible();
-
+  it("recovers a generic request failure through retry and restores focus to campaign content", async () => {
     server.use(http.get("/api/campaigns/network-failure", () => HttpResponse.error()));
-    rerender(<CampaignDetailClient campaignId="network-failure" />);
+    render(<CampaignDetailClient campaignId="network-failure" />);
 
     expect(
       await screen.findByRole("heading", { name: "Detail campaign belum dapat dimuat." }),
     ).toBeVisible();
+
     const retry = screen.getByRole("button", { name: "Coba lagi" });
     retry.focus();
-    fireEvent.click(retry);
     expect(retry).toHaveFocus();
+
+    server.use(
+      http.get("/api/campaigns/network-failure", () =>
+        HttpResponse.json(publicCampaignFixtures[campaignFixtureIds.available]),
+      ),
+    );
+    fireEvent.click(retry);
+
+    expect(await screen.findByRole("heading", { name: /Dapur bersama/i })).toBeVisible();
+    expect(screen.getByRole("main")).toHaveFocus();
   });
 
   it("announces unavailable state and moves focus to campaign content after a successful retry", async () => {
