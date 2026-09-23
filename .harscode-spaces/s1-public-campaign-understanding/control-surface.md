@@ -18,31 +18,32 @@ ACTIVE
 ## NOW
 
 ### WU-S1-003 — Slice 1 Backend Public Campaign Delivery
-- Status: VERIFYING
-- Current Run: `TST-BE-002`
-- Role: Verifier
-- Patch: `BLD-BE-PATCH-001` — COMPLETED
-- Focus: close Campaign-owned Testing gaps
-- Milestone: NOT_YET_VERIFIED
+- Status: WAITING_HUMAN
+- Current gate: BACKEND_VERIFIED promotion / Tier-1 Human gate
+- Testing: `TST-BE-002` — PASS_WITH_FLAGGED_FOLLOWUPS
+- Campaign-owned verification: sufficient
+- Milestone: READY_FOR_HUMAN_PROMOTION, not yet promoted
+- External flags: pre-existing repo gosec + runner-limited full race
 
 ### WU-S1-004 — Slice 1 Frontend Public Campaign Understanding
-- Status: ACTIVE
-- Current Run: `BLD-FE-PATCH-002`
-- Role: Implementer / Patch
-- Targeted confirmation: STILL_BLOCKING
-- Remaining: F1-R, F2-R
-- Testing: BLOCKED
+- Status: VERIFYING
+- Current Run: `CR-CONF-FE-002`
+- Role: Reviewer / targeted confirmation
+- Patch: `BLD-FE-PATCH-002` — COMPLETED
+- Testing: BLOCKED pending confirmation
 - Milestone: NOT_YET_VERIFIED
 
 ### WU-S1-005 — Slice 1 Topology & Controlled Media Enablement
 - Status: VERIFYING
-- Current Run: `TST-TOP-001`
-- Role: Verifier
-- Targeted confirmation: CONFIRMED_CLOSED
-- Runtime path: Podman-aware
-- Milestone: NOT_YET_VERIFIED
+- Current Run: `TST-TOP-002`
+- Role: Verifier / joint runtime re-entry
+- TST-TOP-001: PASS_WITH_FLAGGED_FOLLOWUPS
+- Remaining: R4 200/404, Campaign-specific R5, R7 retraction fresh-fetch
+- Milestone: NOT_YET_COMPLETE
 
 Human Attention:
+WU-S1-003 is ready for explicit Human promotion to BACKEND_VERIFIED. FE and TOP continue independently.
+
 No new decision required at this point.
 
 No new decision required. Unrelated pre-existing repository security-tool findings must not be absorbed into WU-S1-003 without explicit owner/authority routing.
