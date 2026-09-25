@@ -38,7 +38,7 @@ Exploration menghasilkan evidence durable yang cukup untuk mengidentifikasi auth
 - Execution status: `NOT_STARTED`
 - Scheduling state: `QUEUED`
 - Horizon: `NOW`
-- Current Run: None
+- Current Run: `EXP-S2-001-001` — invocation prepared; not dispatched
 - Current milestone: None
 - Human gate: Stage 1 confirmation sebelum Exploration Stage 2, sesuai canonical Exploration kickoff
 - Authority sync: Not applicable at bootstrap; belum ada authority change yang diajukan
@@ -47,8 +47,8 @@ Exploration menghasilkan evidence durable yang cukup untuk mengidentifikasi auth
 
 ## Current-effective artifacts
 
-Belum ada Run artifact.
+Belum ada Participant-produced Run artifact. Invocation Orchestrator-prepared yang current: `runs/EXP-S2-001-001/invocation.md`.
 
 ## Routing note
 
-Run berikutnya, jika di-dispatch, harus memakai `workflow/1-exploration-kickoff-prompt.md` dan `workflow/orchestrated-run-overlay.md` canonical Harscode. Gunakan prompt kickoff tipis yang dirutekan melalui `orchestration/exploration-kickoff-prompt.md`; jangan menambahkan solution-steering conclusions. Runtime configuration lokal hanya konteks runtime; model registry Human-owned dan read-only bagi Orchestrator.
+Run `EXP-S2-001-001`, jika di-dispatch, harus memakai `workflow/1-exploration-kickoff-prompt.md` dan `workflow/orchestrated-run-overlay.md` canonical Harscode. Gunakan prompt kickoff tipis yang dirutekan melalui `orchestration/exploration-kickoff-prompt.md`; jangan menambahkan solution-steering conclusions. Runtime configuration lokal hanya konteks runtime; model registry Human-owned dan read-only bagi Orchestrator.

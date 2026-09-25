@@ -23,8 +23,8 @@ Current delivery state:
 - Horizon: `NOW`
 - Role: Explorer
 - Dependency: none identified
-- Current Run: none
-- Next action: dispatch canonical Harscode Exploration kickoff when orchestration proceeds.
+- Current Run: `EXP-S2-001-001` — invocation prepared, not dispatched
+- Next action: launch the assigned Explorer Participant from `WU-S2-001/runs/EXP-S2-001-001/invocation.md`.
 - Human checkpoint: canonical Exploration Stage 1 requires confirmation before Stage 2.
 
 ## NEXT / LATER

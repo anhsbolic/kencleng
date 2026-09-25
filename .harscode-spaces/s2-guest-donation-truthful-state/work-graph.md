@@ -14,7 +14,7 @@ Belum ada dependency edge antar-Work Unit. Hanya satu Work Unit yang saat ini di
 
 ## Runnable frontier
 
-`WU-S2-001` siap dijadwalkan untuk canonical Harscode Exploration kickoff. Belum ada Participant Run yang di-dispatch. Canonical Exploration Stage 1 berhenti untuk Human confirmation sebelum Stage 2.
+`WU-S2-001` siap untuk canonical Harscode Exploration kickoff. Invocation `EXP-S2-001-001` sudah disiapkan; belum ada Participant Run yang di-dispatch dan scheduling tetap `QUEUED`. Canonical Exploration Stage 1 berhenti untuk Human confirmation sebelum Stage 2.
 
 ## Batas derivasi
 
