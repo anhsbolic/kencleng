@@ -35,45 +35,42 @@ runtime:
     testcontainers_compatibility: verify-at-runtime
 
 orchestrator_pairing:
-  default_model: gpt-5.6-terra
-  escalation_model: gpt-5.6-sol
+  default_model: gpt-6-luna
+  escalation_model: gpt-6-sol
   escalation_requires_human_approval: true
 
 # Human-owned, Orchestrator-read-only.
 # Only the Human may add/remove models or change capabilities, cost_tier,
-# or approval_required. The Orchestrator may select from this registry but
-# must never mutate it.
+# approval_required, or selectable reasoning efforts. The Orchestrator may
+# select from this registry but must never mutate it.
+#
+# Runtime note:
+# Current GPT-6 runtime also supports `max`.
+# `max` is intentionally excluded from normal Orchestrator-selectable efforts.
+# If a concrete Run demonstrates that `xhigh` is insufficient, the Human may
+# explicitly reconsider the registry for that case. Do not infer authorization
+# from runtime capability alone.
 #
 # cost_tier: low | standard | high
 # approval_required: true means explicit Human approval is required
 # before that model can be dispatched.
 available_models:
-  - id: gpt-5.6-luna
+  - id: gpt-6-luna
     capabilities:
       - general
       - fast
-      - routine-coding
-    supported_reasoning_efforts:
-      - minimal
-      - low
-      - medium
-    cost_tier: low
-    approval_required: false
-
-  - id: gpt-5.6-terra
-    capabilities:
-      - general
       - coding
       - reasoning
       - repository-work
     supported_reasoning_efforts:
+      - none
       - low
       - medium
       - high
-    cost_tier: standard
+    cost_tier: low
     approval_required: false
 
-  - id: gpt-5.6-sol
+  - id: gpt-6-sol
     capabilities:
       - strong-reasoning
       - coding
