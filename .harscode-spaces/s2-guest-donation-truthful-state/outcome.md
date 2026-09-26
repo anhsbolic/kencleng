@@ -28,7 +28,7 @@ Pengunjung dapat beralih dari Public Campaign Detail yang memenuhi syarat ke gue
 
 ## Batas saat ini
 
-Slice 1 berstatus `SLICE_FINALIZED`. Untuk Slice 2, `WU-S2-001` Exploration telah selesai dan `WU-S2-002` contract reconciliation berstatus `WAITING_HUMAN` / `PARKED`; Techplan telah disetujui Human dan statusnya diselaraskan Planner. O1–O6/O9 masih menunggu owner decisions sebelum finalisasi contract terkait; O9 menahan final submit contract dan `CONTRACT_READY`. Belum ada implementation atau delivery Work Unit FE/BE.
+Slice 1 berstatus `SLICE_FINALIZED`. Untuk Slice 2, `WU-S2-001` Exploration telah selesai. Human memperbarui dan menyetujui `docs/product/mvp-scope.md` serta `docs/product/mvp-delivery-slices.md` untuk memuat keputusan Slice 2 dari OIR. Approved Techplan `TP-S2-002-003` mendahului perubahan tersebut, sehingga Planner amendment `TP-S2-002-006` disiapkan dan menunggu Human-Assisted dispatch. Sesudah amendment, independent review, report generation, dan Human approval perlu konvergen sebelum WU bisa melanjutkan finalisasi spec/API. O1/O2/O3/O4/O5 masih punya detail teknis/owner review; O6/O9 policy sudah diputuskan tetapi perlu diterjemahkan. O9 tetap menahan final submit contract dan `CONTRACT_READY`. Belum ada implementation atau delivery Work Unit FE/BE.
 
 Historical Donation specs, OpenAPI, migrations, tests, dan code adalah evidence sampai direkonsiliasi untuk Slice 2. Account bukan prasyarat baseline kecuali Exploration menemukan bukti enabling-critical yang mengubah pemahaman ini dan merutekannya ke authority yang sesuai.
 

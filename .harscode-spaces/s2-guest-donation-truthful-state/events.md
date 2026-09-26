@@ -163,3 +163,34 @@ Evidence sources: `docs/product/mvp-scope.md`, `docs/product/mvp-delivery-slices
 - No substantive Techplan content, report, or authority was changed. No Open Item was resolved and no Build, implementation, tests, or milestone are claimed.
 - The remaining runnable frontier is authority sync for O1–O6 and O9 with their named owners. O7 remains conditional; O8 applies before any breaking API removal/replacement. Product/Donation owner decision O9 blocks final submit contract acceptance and `CONTRACT_READY`.
 - `WU-S2-002` is `WAITING_HUMAN` / `PARKED` under `AUTHORITY_SYNC`; Human routes the open decisions to the owners and records their durable outcomes. Orchestrator prepares Build when the necessary decisions permit a bounded execution without assumptions.
+
+## 2026-09-26 — Open-Item Resolution Run evaluated as applicable and prepared
+
+- Reconstructed the current state from WU manifest, Approved Techplan, Planner status launch record, Work Graph, Outcome, Events, and Control Surface. No owner decision artifact resolving O1–O6/O9 was present.
+- Read current Harscode Pilot #2 candidate guidance at workflow revision `b122a75d494250d04eb93e71f4c391e82c847842`. Its optional Open-Item Resolution Run applies when the decision surface is complex/interdependent or costly for Human to reconstruct, using Role Explorer and specialization `Open-Item Decision Resolution / Product-Contract Facilitation`.
+- Applicability: `REQUIRED` for this concrete frontier. O1–O6/O9 span Product, Donation, Security/PII, Campaign, Design, and API authorities/evidence; O2 precedes O7, O1–O5/O9 inform spec/API shape, O6 crosses Campaign/Donation, and O8 is conditional on a breaking API change. A durable facilitated map reduces decision reconstruction cost without taking owner authority.
+- Prepared `OIR-S2-002-001` with a fresh Explorer Session and `gpt-6-luna` / `high`. The Run will report per-item outcomes/options/pros-cons/risks/owners/dependencies/recommendations and continuation prompts; it cannot force decisions or edit the approved Techplan/contracts.
+- `WU-S2-002` is `ACTIVE` / `QUEUED`; next action is Human-assisted dispatch and confirmation of Explorer Stage 1 plan. Authority decisions remain unresolved; O9 still blocks final submit contract acceptance and `CONTRACT_READY`.
+
+## 2026-09-26 — Open-Item Resolution brief completed; authority reconciliation remains
+
+- Human reported `OIR-S2-002-001` completion; durable `resolution-brief.md` records per-item outcomes, evidence, options, risks, recommendations, owners, and continuation routes. No Session ID is exposed.
+- The brief reports O6 and O9 as Human-resolved policies: `max_amount` is a close threshold with accepted donations settling in full, and retry uses the same key per logical donation while fresh keys are reserved for deliberate new donations. It also records partial Human directions for O1–O5; O7 needs Design review and O8 is conditional on historical API removal/replacement.
+- Orchestrator review found unresolved authority reconciliation: O1's display-only four-method direction conflicts with MVP's explicit exclusion of payment-method breadth; O3 guest email verification/terminal notifications need Product/MVP and Security/PII review. O4 token URL/risk controls and O5 transport parity remain Security/API decisions. The brief does not update the Approved Techplan or canonical authority.
+- Decision provenance in the brief names a Human discussion but does not identify the authority role/owner for O6/O9. Do not promote those results into Approved Techplan/contract until the relevant owner attribution is confirmed and any canonical Product/MVP reconciliation is made.
+- `WU-S2-002` transitions to `WAITING_HUMAN` / `PARKED` under `AUTHORITY_SYNC`. Human confirmation of owner authority and Product/MVP scope direction is next. No Build, final contract acceptance, `CONTRACT_READY`, or milestone is claimed.
+
+## 2026-09-26 — Human confirms OIR priority register; authority route advances
+
+- Human confirmed the OIR decisions are theirs and are priorities for `WU-S2-002`, even where they differ from the current approved MVP boundary. The updated brief explicitly records this as a Human priority register for O1–O6/O9.
+- This resolves the prior owner-attribution/priority confirmation checkpoint. It does not by itself close technical follow-ups: O1/O3 still need written Product/MVP reconciliation; O3 Security/PII controls, O2 simulator timing and Design review, O4/O5 Security/API controls, and Planner contract translation remain open. No residual security/privacy risk is accepted.
+- Current-effective Approved Techplan remains unchanged. Next route is a fresh Planner amendment/reconciliation Run consuming the updated OIR brief and Human direction, followed by the required approval/re-review gate. Human-Assisted dispatch remains required; no Participant has been dispatched.
+- `WU-S2-002` remains `WAITING_HUMAN` / `PARKED` pending preparation of that Run. No Build, final contract acceptance, `CONTRACT_READY`, or milestone is claimed.
+
+## 2026-09-26 — Product/MVP authority amended; Planner revision prepared
+
+- Human updated `docs/product/mvp-scope.md` and `docs/product/mvp-delivery-slices.md` with an explicit Slice 2 addendum, approval provenance, and decisions from OIR O1–O6/O9. The addendum preserves the approved slice order and security/correctness floor. Product/MVP authority conflict for the recorded Slice 2 direction is resolved; owner-level technical/security/design/API follow-ups remain.
+- Current-effective `TP-S2-002-003` is still marked Approved but predates the current Product/MVP authority and is no longer a sufficient planning baseline. It remains immutable history.
+- Prepared `TP-S2-002-006`, fresh Planner Session, `gpt-6-luna` / `high`, to produce a material revised Techplan in its own Run path. It must reconcile the OIR decisions/current Product/MVP sources, preserve unresolved owner controls, declare materiality, and not generate the report or start Build.
+- Because the Techplan is Complex and this revision changes product/domain/interface/verification semantics, next after Planner is a fresh independent Techplan review. Planner regenerates `report-techplan.md` only after review/resolution converges; then Human approval applies to the revised Techplan.
+- `WU-S2-002` is `ACTIVE` / `QUEUED`; immediate next action is Human-Assisted dispatch of `TP-S2-002-006`. No Participant has been dispatched. No Build, `CONTRACT_READY`, or milestone is claimed.

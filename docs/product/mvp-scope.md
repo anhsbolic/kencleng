@@ -1,6 +1,6 @@
 # Kencleng — MVP Scope
 
-> Status: **Approved MVP Release Scope — 2026-09-17**
+> Status: **Approved MVP Release Scope — 2026-09-17; Slice 2 decisions amended by Human approval — 2026-09-26**
 > Scope: Time-bounded product commitment for the first Kencleng MVP iteration.
 > Upstream: `docs/product/product-overview.md` + canonical `docs/ui-ux/` Product Design / Brand Authority.
 >
@@ -101,12 +101,19 @@ A visitor can submit a guest donation to an eligible Campaign.
 The donation capability must preserve:
 
 - truthful eligibility;
-- money/amount integrity;
-- duplicate-submission protection where required;
-- clear sandbox semantics;
+- IDR amount input as whole Rupiah, with minimum Rp5.000 and Rp1 increments (Rp5.001 is valid);
+- exact decimal representation for stored and calculated monetary values, including derived values; tax rules and derived-value rounding remain out of scope until separately defined;
+- duplicate-submission protection: an ambiguous retry reuses the same idempotency key and refers to the same donation; the same key with a different payload is rejected; the client prevents double-click submission and does not rotate the key while the result is ambiguous; a new key creates a new donation only after an intentional donor action;
+- clear sandbox semantics: the backend simulator owns the `pending` → `success`/`failed` result; a failure is produced only by a clearly labeled demo scenario, never by donor selection or a browser request;
 - no false implication of real external payment settlement.
 
-One deliberately supported sandbox payment/processing path is sufficient if it exercises the real product loop. Payment-method breadth is not an MVP goal.
+The donation screen displays familiar Indonesian methods: QRIS, GoPay, ShopeePay, and bank transfer. **QRIS is the only method that runs the sandbox simulation.** The other methods are visibly unavailable and non-interactive. This Human-approved display choice takes priority over the earlier MVP wording that excluded payment-method breadth; it does not add functional payment-method breadth or real provider integration. No displayed method may move real money or provide usable real-payment instructions.
+
+While the backend simulator is processing a donation, the status copy is “Menunggu hasil simulasi,” without a time estimate or instruction to make a real payment. If the result is `failed`, the donor may explicitly begin a new donation; `pending` must not trigger an automatic resubmission. The sandbox must not promise a real-world verification time or an SLA.
+
+Guest name is optional and is not public by default. Email is optional and may be supplied only by donors who opt in to donation-status notifications. This is guest notification-email verification, separate from Account email verification. Verify ownership before sending a donation status or access link. Send at most one status-only email when the donation reaches `success` or `failed`, not while it is `pending`, and clearly identify the result as simulated rather than provider settlement. If the donation reaches a terminal state before email verification, hold the notification within a Security/PII-approved verification window; if that window expires, delete the unverified address without sending the status. Security/PII defines the verification and post-terminal delivery-retry windows and the corresponding retention controls. Campaign-wide update emails are not part of this capability.
+
+Provide a temporary guest status URL with a hard 24-hour validity period, a hard-to-guess token, and access limited to the donation status. The donor does not need to revisit it after expiry. An invalid, missing, or expired status link has one generic public behavior and copy, for example: “Link status tidak tersedia atau mungkin kedaluwarsa.” Optional email/Account benefit information may appear after status access but must not block the guest flow or promise benefits that do not exist.
 
 ### Stage C — Donation state
 
@@ -116,9 +123,13 @@ The state must be real within the sandbox model, not a frontend-only success ill
 
 Account history is not required if a safe guest-tracking mechanism can complete this need.
 
+The temporary guest status URL described in Stage B is available for 24 hours only and reveals donation status only. Without email, the donor does not need continued status access after the link expires. If the donor opts in to email status notifications, the verified address receives one terminal status notification as defined in Stage B; this remains a sandbox result, not evidence of provider settlement.
+
 ### Stage D — Campaign closure
 
 The Campaign can truthfully transition out of fundraising.
+
+`max_amount` is a closure threshold, not a hard cap on a donation amount or total funding. A donation submitted while the Campaign is eligible may be accepted in full even if that donation takes funding above the threshold. Donations already accepted while eligible and still pending when the Campaign closes remain eligible to settle in full; total funding may therefore exceed the threshold further. New donation submissions after the Campaign is closed are rejected.
 
 After closure:
 
@@ -185,6 +196,8 @@ The MVP does **not** automatically require MFA, multiple authentication provider
 - guest donation;
 - sandbox donation processing/result;
 - safe guest donation status/tracking;
+- the approved QRIS-only simulated processing path, with other familiar Indonesian methods shown as unavailable;
+- optional guest name and verified, opt-in terminal donation-status email as defined in Stage B;
 - Campaign closure;
 - persistent closed-Campaign public identity;
 - final funding/result context;
@@ -200,7 +213,7 @@ The MVP does **not** automatically require MFA, multiple authentication provider
 - guest-donation claim;
 - minimal Organization Owner surface;
 - minimal Curator review surface;
-- notifications beyond minimum guest tracking/follow-up;
+- notifications beyond the approved minimum guest donation-status email and guest tracking/follow-up;
 - Campaign Discovery beyond a minimal way to reach available public Campaigns.
 
 These do not become MVP requirements merely because historical specs/code exist.
@@ -276,7 +289,7 @@ It should prove that **Evidence-Led Optimism can exist as a coherent working pro
 
 ## 12. Approval record and next derivation
 
-Human product review: **APPROVED — 2026-09-17**.
+Human product review: **APPROVED — 2026-09-17**. Human follow-up approval for the Slice 2 product decisions in this document: **APPROVED — 2026-09-26**.
 
 Approved direction:
 
@@ -287,3 +300,5 @@ The current delivery sequencing derived from this scope is recorded in:
 - `docs/product/mvp-delivery-slices.md`
 
 Delivery planning must proceed from that product loop rather than historical domain order.
+
+The 2026-09-26 Human-approved Slice 2 decisions take priority over conflicting pre-amendment MVP wording. Product and delivery documents must reflect those decisions; technical, contract, Design, and Security/PII details remain subject to their owning reviews.

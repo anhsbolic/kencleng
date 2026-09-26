@@ -18,13 +18,13 @@ Current delivery state:
 
 ### WU-S2-002 — Slice 2 Donation Domain & Contract Reconciliation
 
-- Status: `WAITING_HUMAN`
-- Scheduling state: `PARKED`
+- Status: `ACTIVE`
+- Scheduling state: `QUEUED`
 - Horizon: `NOW`
 - Dependency: HARD on `WU-S2-001 = DONE`
-- Current Run: `TP-S2-002-005` — selesai; Techplan kini berstatus `Approved`
-- Next action: Sinkronkan keputusan owner O1–O6 dan O9 sesuai Techplan §13, lalu berikan hasilnya secara durable. Build belum dapat menulis bagian final spec/API yang bergantung pada keputusan tersebut.
-- Human checkpoint: Product/Donation owner perlu menetapkan ketiga skenario O9 sebelum final submit contract acceptance dan `CONTRACT_READY`. O1–O6 dimiliki Product/Donation, Security, Campaign, Design, dan API owners sesuai Techplan; O7 bersyarat, O8 berlaku sebelum breaking API change.
+- Current Run: `TP-S2-002-006` — invocation siap untuk amendment material; gunakan Product/MVP amendment Human-approved dan brief OIR sebagai current authority.
+- Next action: Human-Assisted dispatch `TP-S2-002-006` ke fresh Planner Session (`gpt-6-luna`, `high`), sesuai invocation durable. Planner menghasilkan Techplan amendment only; jangan membuat report atau mulai Build. Setelah completion, lakukan independent review, lalu report generation dan Human approval setelah review/resolution konvergen.
+- Human checkpoint: dispatch mekanis invocation yang sudah disiapkan; setelah dispatch, laporkan hanya masalah material atau completion. Belum ada keputusan otoritas baru yang diperlukan sekarang. O9 tetap memblokir final submit contract/`CONTRACT_READY` sampai diterjemahkan ke kontrak dan bukti yang diperlukan.
 
 ## NEXT / LATER
 
@@ -39,7 +39,7 @@ Setelah `CONTRACT_READY`, Orchestrator akan menurunkan backend/frontend delivery
 
 ## Blockers
 
-Blocker aktif: `AUTHORITY_SYNC` — keputusan O1–O6/O9 belum tersedia untuk bagian contract yang bergantung padanya. O9 memblokir final submit contract/`CONTRACT_READY`. Human sudah approve Techplan dan Planner sudah menyelaraskan status; tunggu outcome owner sebelum menulis bagian kontrak yang terpengaruh. Decomposition dievaluasi `NOT_APPLICABLE` karena satu cohesive contract-reconciliation flow.
+Blocker aktif: `AUTHORITY_SYNC` — konflik Product/MVP O1/O3 telah diselesaikan melalui Human-approved amendments di `docs/product/mvp-scope.md` dan `mvp-delivery-slices.md`; current-effective Approved Techplan masih stale dan perlu amendment. O1/O2/O3/O4/O5 masih memerlukan detail/review owner; O6/O9 perlu diterjemahkan ke spec/API. Run Planner `TP-S2-002-006` siap dispatch. O9 tetap blocker contract readiness.
 
 ## Bootstrap boundary
 

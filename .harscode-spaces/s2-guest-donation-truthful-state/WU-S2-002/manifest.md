@@ -47,15 +47,15 @@ Handoff reconciliation menyatakan sumber contract Slice 2 yang berlaku dan statu
 
 ## Current State
 
-- Execution status: `WAITING_HUMAN`
-- Scheduling state: `PARKED`
+- Execution status: `ACTIVE`
+- Scheduling state: `QUEUED`
 - Horizon: `NOW`
-- Current Run: `TP-S2-002-005` — completed; Planner synchronized Techplan status to `Approved`
+- Current Run: `TP-S2-002-006` — prepared; material amendment from current Product/MVP decisions and OIR brief, ready for Human-Assisted dispatch
 - Current milestone: None
-- Human gate: Techplan approved by Human on 2026-09-26; Planner status metadata now matches. Authority sync is pending: resolve O1–O6 and O9 with named owners before finalizing affected contract portions. O7 is conditional; O8 is required before breaking API changes. Product/Donation delivery owner must decide O9 before final submit contract acceptance and `CONTRACT_READY`.
-- Authority sync: Pending bila Techplan menemukan keputusan yang memerlukan owner authority.
-- Active blocker: `AUTHORITY_SYNC` — required owner decisions O1–O6 and O9 are unresolved; affected final spec/API contract portions must not be authored by assumption. O9 blocks final submit contract acceptance and `CONTRACT_READY`.
-- Blocker owner/action: Product/Donation, Security, Campaign, Design, and API owners as identified in Techplan §13 resolve their respective items. Human routes O1–O6/O9 to those owners and records durable outcomes; Orchestrator prepares Build when enough authority inputs exist to execute a bounded portion without assumptions. O7 is conditional; O8 is required only before historical operations are removed/replaced.
+- Human gate: Human amended and approved `docs/product/mvp-scope.md` and `docs/product/mvp-delivery-slices.md` on 2026-09-26, incorporating the OIR priority register. This resolves the prior Product/MVP scope conflict for Slice 2. Current-effective Techplan `TP-S2-002-003` remains Approved but predates those amendments and is stale as a planning baseline; its material replacement requires independent review and a new Human approval. O6/O9 policy is resolved; O1–O5 have remaining technical/owner details; O7 needs Design review; O8 is conditional on API removal/replacement.
+- Authority sync: Product/MVP direction is now canonical and must be used by Planner. Security/PII risk acceptance and technical controls, Design expression, and API response/contract details remain with their respective owners. O9's policy must be preserved in final submit contract before `CONTRACT_READY`.
+- Active blocker: `AUTHORITY_SYNC` — O1 amount schema/derived precision, O2 internal timing + Design review, O3 guest-email verification/retention/retry controls, O4 token exposure/security controls, O5 response parity/anti-enumeration, and API translation of resolved O6/O9. No Build or `CONTRACT_READY` yet.
+- Blocker owner/action: Human-Assisted dispatch of prepared `TP-S2-002-006` to Planner. After amendment, run fresh independent Techplan review because the plan is Complex and the change is material; Planner then regenerates the report only after review/resolution converges, followed by Human approval. O8 is required only before historical operations are removed/replaced.
 - Updated: 2026-09-26
 
 ## Current-effective prior artifacts
@@ -81,8 +81,11 @@ Handoff reconciliation menyatakan sumber contract Slice 2 yang berlaku dan statu
 - `runs/TP-S2-002-004/report-techplan.md` and `launch-record.md` — completed Planner report handoff; Human approved the Techplan
 - `runs/TP-S2-002-005/invocation.md` — prepared Planner-owned status reconciliation from the explicit Human approval
 - `runs/TP-S2-002-005/launch-record.md` — completed status reconciliation; no substantive plan edits
+- `runs/OIR-S2-002-001/invocation.md` — prepared Explorer facilitation run for the Approved Techplan's complex, interdependent Open Items
+- `runs/OIR-S2-002-001/resolution-brief.md` — completed Open-Item Resolution handoff; O1–O9 outcomes and owner continuations
+- `runs/TP-S2-002-006/invocation.md` — prepared material Techplan amendment using updated Product/MVP authority and OIR outcomes; awaiting Human-Assisted dispatch
 - `runs/RV-S2-002-003/invocation.md` — prepared required independent re-review
 
 ## Routing note
 
-`RV-S2-002-001` menemukan atomic coupling gap; Planner menutupnya di `TP-S2-002-002`. `RV-S2-002-002` menemukan gap guest submission retry/double-submit idempotency. Planner resolution `TP-S2-002-003` mencatat R8, D9, RISK-8, dan O9 sebagai owner decision serta request-level Test Focus dengan Stage 2 Area 1/3/5 anchors; policy tetap terbuka. `RV-S2-002-003` menyelesaikan re-review tanpa finding baru. Human menyetujui Techplan setelah membaca `report-techplan.md`; status metadata Planner-owned masih perlu diselaraskan di `TP-S2-002-005`. O1–O6/O9 tetap memerlukan keputusan owner sebelum contract terkait difinalkan; O9 memblokir `CONTRACT_READY`. Decomposition dievaluasi `NOT_APPLICABLE` karena alur rekonsiliasi cohesive dan berurutan. Belum ada Build atau `CONTRACT_READY`.
+`RV-S2-002-001` menemukan atomic coupling gap; Planner menutupnya di `TP-S2-002-002`. `RV-S2-002-002` menemukan guest submission idempotency gap; Planner mencatat R8/O9 di `TP-S2-002-003`, lalu `RV-S2-002-003` mengonfirmasi penutupan review. Human menyetujui Techplan; Planner menyelaraskan status di `TP-S2-002-005`. OIR `OIR-S2-002-001` memetakan O1–O9; Human kemudian memperbarui Product/MVP authority untuk keputusan Slice 2. Techplan lama kini mendahului authority dan perlu amendment material. `TP-S2-002-006` disiapkan; next action Human-Assisted dispatch. Setelah Planner, independent re-review, lalu report dan Human approval untuk amended Techplan. O1–O5 masih punya owner/technical follow-up; O6/O9 harus tercermin di contract. O9 tetap menghalangi final submit contract/`CONTRACT_READY`. Decomposition `NOT_APPLICABLE`; belum ada Build atau `CONTRACT_READY`.

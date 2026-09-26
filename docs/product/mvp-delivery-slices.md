@@ -1,11 +1,13 @@
 # Kencleng — MVP Delivery Slices
 
-> Status: **Approved MVP Delivery Sequencing — 2026-09-17**
+> Status: **Approved MVP Delivery Sequencing — 2026-09-17; Slice 2 product decisions amended by Human approval — 2026-09-26**
 > Upstream release scope: `docs/product/mvp-scope.md`
 > Whole-product authority: `docs/product/product-overview.md`
 > Product Design / Brand authority: canonical `docs/ui-ux/`
 >
 > This document sequences the approved MVP scope into vertical delivery slices. It does not define endpoint names, database schemas, frontend component trees, or final technical architecture. Those are derived slice-by-slice through Exploration, FE/BE delivery planning, and contract reconciliation.
+
+The Human-approved Slice 2 product decisions recorded on 2026-09-26 update the earlier scope wording below. Those decisions take priority over conflicting pre-amendment MVP wording. This is a deliberate Slice 2 product decision, not an implementation detail; contract, design, and Security/PII reviews still apply to their respective concerns.
 
 ## 1. Sequencing principle
 
@@ -162,17 +164,25 @@ The slice must provide:
 
 - donation eligibility for an active public Campaign;
 - one coherent guest donation flow;
-- amount semantics and validation;
-- one deliberately supported sandbox payment/processing path if one is sufficient;
-- truthful pending/success/failure behavior;
-- a safe guest mechanism to revisit/check donation status;
+- IDR amount input as whole Rupiah, minimum Rp5.000, increments of Rp1 (Rp5.001 is valid), with exact decimal representation for stored and calculated monetary values; tax rules and derived-value rounding are not defined by this slice;
+- familiar Indonesian payment-method choices displayed as QRIS, GoPay, ShopeePay, and bank transfer, with **QRIS as the only active sandbox simulation** and all other choices visibly unavailable and non-interactive;
+- truthful backend-simulator-owned `pending`/`success`/`failed` behavior; failure is produced only by a clearly labeled demo scenario, not a donor choice or browser request;
+- pending status copy “Menunggu hasil simulasi,” without time estimate or real-payment instruction; after `failed`, the donor may explicitly start a new donation, while `pending` never causes automatic resubmission;
+- duplicate-submission protection where an ambiguous retry reuses the same idempotency key and resolves to the same donation; reject the same key with a different payload, prevent client double-click submission, and do not rotate the key while the result is ambiguous; a new key represents a new donation only after intentional donor action;
+- optional guest name (not public by default) and optional, opt-in guest email for donation-status notifications only;
+- ownership verification before a guest email receives donation status or an access link; send at most one status-only email on terminal `success` or `failed`, not on initial `pending`, and identify the result as a simulation rather than provider settlement;
+- a 24-hour temporary guest status URL with a difficult-to-guess token and access limited to donation status; invalid, missing, and expired links use one generic public behavior/copy;
 - clear copy that the sandbox mechanism is not real external payment settlement.
+
+If terminal status arrives before email ownership is verified, hold the notification only within a Security/PII-approved verification window. If the address remains unverified when that window expires, delete it without sending the status. Security/PII defines the verification window, post-terminal delivery-retry window, retention controls, and credential exposure mitigations. These guest-notification controls are distinct from Account email verification. Email or Account benefit messaging after status access is informational and must not gate the guest flow or promise unavailable functionality. Campaign-wide update email is out of this slice.
+
+The user-facing method list is an explicit Human-approved display exception to the earlier rule against payment-method breadth. It does not introduce additional functional payment methods or real provider rails. No displayed option may expose a usable real-payment instruction or imply that external settlement occurred.
 
 ### Correctness/security floor
 
 At minimum:
 
-- duplicate client submissions cannot create unintended duplicate contributions where idempotency is required;
+- duplicate client submissions cannot create unintended duplicate contributions; an ambiguous retry reuses the same key and does not silently create another donation;
 - settlement/result transitions cannot be forged through an exposed public/internal HTTP transition;
 - successful settlement updates funding exactly once;
 - concurrent successful donations cannot lose/corrupt funding increments;
@@ -181,11 +191,13 @@ At minimum:
 - logs do not leak guest email or tracking secrets;
 - Campaign eligibility is enforced by backend state, not frontend visibility alone.
 
+`max_amount` is a closure threshold, not a hard cap. A donation submitted while the Campaign is eligible may be accepted in full even if it takes funding above the threshold. Donations already accepted while eligible and still pending when the Campaign closes remain eligible to settle in full, so funding may exceed the threshold further. New submissions after closure are rejected. Slice 3 owns the broader closure/public-result experience; this Slice 2 rule defines donation acceptance and pending-settlement behavior at the threshold.
+
 ### Existing implementation posture
 
 Historical Donation specs/OpenAPI are reference evidence only.
 
-Likely salvage candidates include idempotency, guarded settlement transition, atomic funding increment, and guest status-token concepts, but the exact payment-method breadth, delays, percentages, minimum amount, endpoint shape, and guest-data requirements must be revalidated for this slice.
+Likely salvage candidates include idempotency, guarded settlement transition, atomic funding increment, and guest status-token concepts. Human has now decided the displayed method list, active QRIS simulation, amount minimum/increment, guest fields, notification boundaries, and status-link lifetime recorded above. Delivery still owns exact simulator timing, authored contract/schema representation, and detailed technical/security controls; historical values do not override the Human-approved product direction.
 
 ### Account consequence
 
@@ -198,14 +210,14 @@ The primary journey is Guest Donation. Authentication must not be pulled into th
 - account registration/login as a prerequisite;
 - guest-donation claim into an account;
 - registered donation history;
-- multiple payment methods merely for completeness;
-- real banking/payment rails;
+- active GoPay, ShopeePay, or bank-transfer simulation/processing;
+- real banking/payment rails or provider integrations;
 - public donor/social-proof list;
-- campaign closure/result behavior beyond what is needed to keep donation eligibility correct.
+- campaign closure/result behavior beyond the donation-eligibility and threshold rules defined above.
 
 ### Slice 2 completion evidence
 
-A visitor can move from an eligible Public Campaign Detail into a real guest donation, observe pending/success/failure accurately, revisit the donation through the safe guest mechanism, and see Campaign funding reflect successful settlement exactly once.
+A visitor can move from an eligible Public Campaign Detail into a guest donation, sees QRIS as the only active simulated method and other familiar methods as unavailable, observes truthful simulator-owned pending/success/failure state, and can revisit status through the safe 24-hour guest mechanism. Optional name/email behavior follows the product rules above. Campaign funding reflects successful settlement exactly once, and threshold crossing follows the accepted-full-amount/pending-settlement rule without accepting new submissions after closure.
 
 ## 6. Slice 3 — Campaign Closure + Persistent Public Result
 
@@ -218,6 +230,7 @@ When fundraising ends, the Campaign does not disappear. A visitor/donor can retu
 The slice must provide:
 
 - at least one truthful supported Campaign closure path;
+- the Human-approved `max_amount` threshold rule: it closes fundraising but is not a hard cap; donations that cross it and donations already accepted while eligible settle at their full amount, so final funding may exceed the threshold;
 - no donation acceptance after closure;
 - the same public Campaign identity/URL after closure for Campaigns that were genuinely public;
 - final funding/result facts;
@@ -398,10 +411,12 @@ This document defines product delivery sequencing; it must not become a replacem
 
 ## 12. Approval checkpoint
 
-Human approval: **2026-09-17**.
+Initial Human approval: **2026-09-17**. Follow-up Human approval of the Slice 2 product decisions above: **2026-09-26**.
 
 Approved order:
 
 > **Slice 1 Public Campaign Understanding → Slice 2 Guest Donation + Truthful Donation State → Slice 3 Campaign Closure + Persistent Public Result → Slice 4 Accountability Follow-up. Account remains outside the baseline MVP critical path and resumes only when a real scoped capability requires it.**
 
-With this approval, conceptual MVP sequencing is closed. Remaining reframe work is repository authority promotion/routing, followed by Slice 1 as the first real post-promotion CRTV task.
+The 2026-09-26 Human-approved Slice 2 decisions take priority over conflicting wording approved on 2026-09-17. This amendment changes the guest-donation product requirements while preserving the approved slice order and the non-negotiable security/correctness floor.
+
+As recorded at the original 2026-09-17 approval checkpoint, conceptual MVP sequencing was closed and Slice 1 was the first post-promotion CRTV task. The 2026-09-26 addendum above updates Slice 2 product requirements without changing slice order.
