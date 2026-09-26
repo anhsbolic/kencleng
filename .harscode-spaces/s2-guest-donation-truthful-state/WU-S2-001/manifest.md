@@ -35,19 +35,19 @@ Exploration menghasilkan evidence durable yang cukup untuk mengidentifikasi auth
 
 ## Current State
 
-- Execution status: `NOT_STARTED`
-- Scheduling state: `QUEUED`
+- Execution status: `ACTIVE`
+- Scheduling state: `RUNNING`
 - Horizon: `NOW`
-- Current Run: `EXP-S2-001-001` — invocation prepared; not dispatched
+- Current Run: `EXP-S2-001-001` — Stage 2 active after Human confirmation
 - Current milestone: None
-- Human gate: Stage 1 confirmation sebelum Exploration Stage 2, sesuai canonical Exploration kickoff
+- Human gate: Human confirmation diperlukan setelah Stage 2 sebelum Stage 3, sesuai canonical Exploration kickoff
 - Authority sync: Not applicable at bootstrap; belum ada authority change yang diajukan
 - Active blocker: None identified
 - Updated: 2026-09-25
 
 ## Current-effective artifacts
 
-Belum ada Participant-produced Run artifact. Invocation Orchestrator-prepared yang current: `runs/EXP-S2-001-001/invocation.md`.
+Invocation Orchestrator-prepared: `runs/EXP-S2-001-001/invocation.md`. Run launch evidence: `runs/EXP-S2-001-001/launch-record.md`. Stage 2 evidence belum selesai/current-effective.
 
 ## Routing note
 

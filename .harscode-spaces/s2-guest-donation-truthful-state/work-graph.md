@@ -6,7 +6,7 @@
 
 | ID | Work Unit | Type | Status | Milestone yang dihasilkan |
 |---|---|---|---|---|
-| `WU-S2-001` | Slice 2 Authority & Current-State Exploration | `ENABLER` | `NOT_STARTED` | Evidence cukup untuk menetapkan delivery/reconciliation shape dan unresolved authority questions |
+| `WU-S2-001` | Slice 2 Authority & Current-State Exploration | `ENABLER` | `ACTIVE` | Evidence cukup untuk menetapkan delivery/reconciliation shape dan unresolved authority questions |
 
 ## Dependency edges
 
@@ -14,7 +14,7 @@ Belum ada dependency edge antar-Work Unit. Hanya satu Work Unit yang saat ini di
 
 ## Runnable frontier
 
-`WU-S2-001` siap untuk canonical Harscode Exploration kickoff. Invocation `EXP-S2-001-001` sudah disiapkan; belum ada Participant Run yang di-dispatch dan scheduling tetap `QUEUED`. Canonical Exploration Stage 1 berhenti untuk Human confirmation sebelum Stage 2.
+`WU-S2-001` sedang menjalankan Stage 2 pada Run `EXP-S2-001-001`; scheduling `RUNNING`. Stage 1 selesai dan Human memberi confirmation eksplisit sebelum Stage 2. Tidak ada Work Unit lain yang runnable/diturunkan. Stage 3 menunggu Human confirmation setelah Stage 2 selesai.
 
 ## Batas derivasi
 

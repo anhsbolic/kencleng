@@ -18,14 +18,15 @@ Current delivery state:
 
 ### WU-S2-001 — Slice 2 Authority & Current-State Exploration
 
-- Status: `NOT_STARTED`
-- Scheduling: `QUEUED`
+- Status: `ACTIVE`
+- Scheduling: `RUNNING`
 - Horizon: `NOW`
 - Role: Explorer
 - Dependency: none identified
-- Current Run: `EXP-S2-001-001` — invocation prepared, not dispatched
-- Next action: launch the assigned Explorer Participant from `WU-S2-001/runs/EXP-S2-001-001/invocation.md`.
-- Human checkpoint: canonical Exploration Stage 1 requires confirmation before Stage 2.
+- Current Run: `EXP-S2-001-001` — Participant Session active; Stage 2 in progress
+- Session: `01a0d8ea-1404-7521-99b0-5623057b0519`
+- Next action: allow Stage 2 to complete; require Human confirmation before Stage 3.
+- Human checkpoint: Stage 1 confirmation was received (`Lanjutkan ke Stage 2`); Stage 3 confirmation remains pending after Stage 2.
 
 ## NEXT / LATER
 
@@ -33,8 +34,8 @@ Belum ada downstream Work Unit yang dapat diturunkan dari current evidence. Perb
 
 ## Human Attention
 
-- Belum ada unresolved Human Authority Decision yang ditemukan pada bootstrap.
-- Human confirmation akan dibutuhkan setelah Explorer menyampaikan Stage 1 plan dan sebelum Stage 2 dimulai.
+- Human memberikan confirmation untuk Stage 2 di Participant Session.
+- Tidak ada Human confirmation untuk Stage 3; keputusan itu baru relevan setelah Stage 2 selesai.
 
 ## Blockers
 
@@ -42,4 +43,4 @@ Tidak ada Blocker aktif yang teridentifikasi.
 
 ## Bootstrap boundary
 
-Belum ada workflow Participant yang di-dispatch; belum ada implementasi Slice 2. Slice 1 tetap `SLICE_FINALIZED` sesuai tracker dan tidak disalin sebagai state Slice 2.
+Participant Run `EXP-S2-001-001` sudah di-dispatch dan Stage 2 sedang berlangsung setelah Human confirmation. Implementasi Slice 2 belum dimulai. Slice 1 tetap `SLICE_FINALIZED` sesuai tracker dan tidak disalin sebagai state Slice 2.
