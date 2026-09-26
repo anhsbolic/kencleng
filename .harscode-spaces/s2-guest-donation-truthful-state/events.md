@@ -70,3 +70,11 @@ Evidence sources: `docs/product/mvp-scope.md`, `docs/product/mvp-delivery-slices
 - Independent Techplan review direkomendasikan karena melintasi contract dan payment/PII boundary, tetapi belum dijalankan. Decomposition dilewati.
 - Run selesai; `WU-S2-002` menjadi `WAITING_HUMAN`. `CONTRACT_READY` belum earned dan Build belum dimulai.
 - Next action: Human memilih independent review atau direct review, lalu memberi approve/revise serta arahan routing owner untuk O1–O6.
+
+## 2026-09-26 — Pilot #2 report and visibility audit
+
+- Audit terhadap canonical Techplan prompt/report template dan Pilot #2 candidate operating/observability targets menemukan report gate dibuat oleh Orchestrator, padahal report-techplan adalah workflow-owned output Planner; report juga dibuat sebelum Human memilih apakah recommended independent review dijalankan.
+- Report Orchestrator ditarik. Techplan substantif tidak diubah; Session provenance saja direkonsiliasi ke Codex Session ID yang aktual.
+- Dispatch aktual memakai `codex exec --json` tanpa visible Participant terminal. Ini adalah deviasi dari Automated Visible Fleet target Pilot #2; detail dan batas dampak dicatat pada Run launch record. Hasil fase tetap ada, tetapi tidak dihitung sebagai bukti visibility.
+- `WU-S2-002` tetap `WAITING_HUMAN`. Setelah Human memilih review route dan jalur review/resolution konvergen, Planner menghasilkan `report-techplan.md` sebelum approval gate.
+- Next action: Human memilih independent review atau direct review.

@@ -22,8 +22,8 @@ Current delivery state:
 - Horizon: `NOW`
 - Dependency: HARD on `WU-S2-001 = DONE`
 - Current Run: `TP-S2-002-001` — Techplan Synthesis selesai; artifacts Draft/In-Review menunggu Human gate
-- Next action: Human memilih independent review atau direct review, lalu approve/revise Techplan dan mengarahkan O1–O6 kepada owner authority sebelum kontrak difinalisasi.
-- Human checkpoint: keputusan atas review route dan Techplan; O1–O6 tetap material authority gates untuk final contract.
+- Next action: Human memilih independent review atau direct review. Setelah review/resolution route konvergen, Planner menghasilkan report-techplan pada gate; Human lalu approve/revise Techplan dan mengarahkan O1–O6 kepada owner sebelum kontrak difinalisasi.
+- Human checkpoint: review route sekarang; Techplan approval setelah report disiapkan oleh Planner pada timing kanonis. O1–O6 tetap material authority gates untuk final contract.
 
 ## NEXT / LATER
 
@@ -32,8 +32,9 @@ Setelah `CONTRACT_READY`, Orchestrator akan menurunkan backend/frontend delivery
 ## Human Attention
 
 - Exploration Stage 3 mendapat Human authorization yang tercatat pada artifact handoff.
-- Techplan approval gate terbuka: pilih independent review atau direct review, lalu approve/revise.
+- Techplan gate terbuka: pilih independent review atau direct review; Planner menyiapkan report setelah jalur review/resolution konvergen sebelum Human approval.
 - O1–O6 pada Techplan memerlukan keputusan owner sebelum finalisasi contract yang terpengaruh; O7 bersyarat dan O8 berlaku sebelum breaking change. Belum ada keputusan produk/security baru yang dibuat.
+- Pilot #2 visibility deviation: Techplan Run selesai di Codex CLI non-interaktif tanpa visible Participant terminal; tercatat pada Run launch record.
 
 ## Blockers
 

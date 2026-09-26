@@ -51,10 +51,10 @@ Handoff reconciliation menyatakan sumber contract Slice 2 yang berlaku dan statu
 - Horizon: `NOW`
 - Current Run: `TP-S2-002-001` — Techplan Synthesis completed; Draft/In-Review artifacts await Human gate
 - Current milestone: None
-- Human gate: Pilih independent review atau direct review; approve/revise Techplan. Jika disetujui, O1–O6 tetap harus diputuskan owner sebelum bagian contract terkait difinalisasi; O7 bersyarat dan O8 wajib sebelum perubahan breaking.
+- Human gate: Pilih independent review atau direct review. Planner menghasilkan `report-techplan.md` pada gate setelah jalur review/resolution yang dipilih konvergen; lalu Human approve/revise Techplan. Jika disetujui, O1–O6 tetap harus diputuskan owner sebelum bagian contract terkait difinalisasi; O7 bersyarat dan O8 wajib sebelum perubahan breaking.
 - Authority sync: Pending bila Techplan menemukan keputusan yang memerlukan owner authority.
 - Active blocker: `HUMAN_DECISION` — Human Techplan gate belum selesai; material Open Items O1–O6 mencegah finalisasi contract sampai owner berwenang memberi keputusan.
-- Blocker owner/action: Human Authority memilih review route dan memutuskan approve/revise; Orchestration Operator merutekan O1–O6 ke owner yang sesuai setelah arahan Human.
+- Blocker owner/action: Human Authority memilih review route; Planner menghasilkan report pada timing yang benar setelah review/resolution; Human Authority memberi approve/revise; Orchestration Operator merutekan O1–O6 ke owner yang sesuai setelah arahan Human.
 - Updated: 2026-09-26
 
 ## Current-effective prior artifacts
@@ -65,9 +65,8 @@ Handoff reconciliation menyatakan sumber contract Slice 2 yang berlaku dan statu
 - `../work-graph.md`
 - `../outcome.md`
 - `runs/TP-S2-002-001/techplan.md` — current Draft/In-Review Techplan
-- `runs/TP-S2-002-001/report-techplan.md` — Human approval digest
 - `runs/TP-S2-002-001/launch-record.md` — completed Run handoff
 
 ## Routing note
 
-Run `TP-S2-002-001` selesai dengan `techplan.md` Draft/In-Review dan `report-techplan.md`. Work Unit menunggu Human gate; tidak ada scheduling aktif. Jangan memulai Build sebelum Techplan disetujui dan gate material yang relevan dijelaskan.
+Run `TP-S2-002-001` selesai dengan `techplan.md` Draft/In-Review. Report yang dibuat Orchestrator ditarik sebagai premature/misowned; Planner akan menghasilkan report setelah review/resolution route konvergen. Work Unit menunggu Human gate; tidak ada scheduling aktif. Jangan memulai Build sebelum Techplan disetujui dan gate material yang relevan dijelaskan.

@@ -157,7 +157,7 @@ Slice-2 orchestration evidence:
 
 - `WU-S2-001 / EXP-S2-001-001` completed Stage 2 gap analysis and Stage 3 solutioning; the Stage 3 Human gate is recorded in its artifact provenance.
 - `WU-S2-002` — Donation Domain & Contract Reconciliation — is `WAITING_HUMAN`; Techplan `TP-S2-002-001` is Draft/In-Review after completing synthesis.
-- Human must choose whether to run the recommended independent review or directly review the Techplan. Material Open Items remain unresolved; no contract or implementation milestone has been earned.
+- Human must choose whether to run the recommended independent review or proceed to direct review. Planner-owned `report-techplan.md` is pending until the applicable review/resolution route converges; the premature Orchestrator-authored digest was withdrawn. Material Open Items remain unresolved; no contract or implementation milestone has been earned.
 - Backend/frontend delivery Work Units remain underived until the shared Slice-2 contract is reconciled.
 
 Slice-1 completion evidence:
