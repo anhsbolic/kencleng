@@ -6,7 +6,7 @@
 
 - Outcome ID: `S2-GUEST-DONATION-TRUTHFUL-STATE`
 - Product slice: `Slice 2 — Guest Donation + Truthful Donation State`
-- Status delivery saat ini: `IN_PROGRESS` — Exploration selesai; contract reconciliation queued; belum ada milestone Slice 2.
+- Status delivery saat ini: `IN_PROGRESS` — Exploration selesai; Human menyetujui Techplan rekonsiliasi setelah independent re-review bersih. Owner decisions O1–O6/O9 masih diperlukan untuk bagian kontrak terkait; O9 menahan final submit contract dan `CONTRACT_READY`. Belum ada milestone Slice 2.
 
 ## Approved outcome
 
@@ -28,7 +28,7 @@ Pengunjung dapat beralih dari Public Campaign Detail yang memenuhi syarat ke gue
 
 ## Batas saat ini
 
-Slice 1 berstatus `SLICE_FINALIZED`. Untuk Slice 2, `WU-S2-001` Exploration telah selesai dan `WU-S2-002` contract reconciliation berstatus `NOT_STARTED` / `QUEUED`. Belum ada milestone `CONTRACT_READY`, implementation, atau delivery Work Unit FE/BE.
+Slice 1 berstatus `SLICE_FINALIZED`. Untuk Slice 2, `WU-S2-001` Exploration telah selesai dan `WU-S2-002` contract reconciliation berstatus `WAITING_HUMAN` / `PARKED`; Techplan telah disetujui Human dan statusnya diselaraskan Planner. O1–O6/O9 masih menunggu owner decisions sebelum finalisasi contract terkait; O9 menahan final submit contract dan `CONTRACT_READY`. Belum ada implementation atau delivery Work Unit FE/BE.
 
 Historical Donation specs, OpenAPI, migrations, tests, dan code adalah evidence sampai direkonsiliasi untuk Slice 2. Account bukan prasyarat baseline kecuali Exploration menemukan bukti enabling-critical yang mengubah pemahaman ini dan merutekannya ke authority yang sesuai.
 

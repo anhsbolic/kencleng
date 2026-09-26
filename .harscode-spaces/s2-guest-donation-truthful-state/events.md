@@ -78,3 +78,88 @@ Evidence sources: `docs/product/mvp-scope.md`, `docs/product/mvp-delivery-slices
 - Dispatch aktual memakai `codex exec --json` tanpa visible Participant terminal. Ini adalah deviasi dari Automated Visible Fleet target Pilot #2; detail dan batas dampak dicatat pada Run launch record. Hasil fase tetap ada, tetapi tidak dihitung sebagai bukti visibility.
 - `WU-S2-002` tetap `WAITING_HUMAN`. Setelah Human memilih review route dan jalur review/resolution konvergen, Planner menghasilkan `report-techplan.md` sebelum approval gate.
 - Next action: Human memilih independent review atau direct review.
+
+## 2026-09-26 — Reconstruction reconciled stale Run and blocker projections
+
+- Rekonstruksi dari Parent Outcome, Work Graph, WU manifests, Run handoff, dan Event history memastikan `TP-S2-002-001` selesai; bagian `Current observation` pada launch record yang menyebut Run masih aktif adalah stale dan diganti dengan status selesai.
+- Control Surface blocker line diregenerasi agar mencerminkan `HUMAN_DECISION` yang tercatat pada manifest `WU-S2-002`; tidak ada Dispatch/Run baru.
+- Human gate tetap terbuka: pilih independent review atau direct review. Review/revisi/approval dan keputusan O1–O6 tetap milik Human/authority owners.
+
+## 2026-09-26 — Independent Techplan review selected; visible dispatch blocked
+
+- Human memilih independent Techplan review untuk `WU-S2-002`. Orchestrator menyiapkan Run `RV-S2-002-001`, Role Reviewer, fresh independent Session, model `gpt-6-luna` / effort `high` menurut Human-owned registry; model ini tidak memerlukan approval tambahan.
+- Upaya launch visible Ghostty + interactive Codex CLI dilakukan. CUA inventory tidak menampilkan app/window, sehingga minimum successful visible dispatch tidak terpenuhi dan invocation tidak dapat dipastikan telah diserahkan ke Participant.
+- Tidak ada Session Reviewer yang terkonfirmasi dan tidak ada review yang dijalankan. Tidak ada background/non-visible fallback yang dipakai.
+- `WU-S2-002` direkonsiliasi menjadi `BLOCKED` pada blocker `ENVIRONMENT`; owner Orchestration Operator harus memulihkan visible surface atau menggunakan terminal Human-visible. Tidak ada Build atau report-techplan yang dimulai.
+
+## 2026-09-26 — Human observation corrected Reviewer dispatch state
+
+- Human mengonfirmasi Ghostty dan interactive Codex CLI berhasil terbuka dan terlihat. Ketidakmampuan CUA menginventarisasi window bukan bukti bahwa visible launch gagal; kesimpulan environment-blocked sebelumnya ditarik.
+- Invocation durable `RV-S2-002-001` belum diserahkan ke Codex session tersebut, sehingga Run belum mulai dan dispatch belum sukses.
+- `WU-S2-002` kembali ke `NOT_STARTED` / `QUEUED`, tanpa active blocker. Next action hanya menyerahkan invocation ke session yang sudah terbuka. Tidak ada background fallback.
+
+## 2026-09-26 — Current Pilot #2 guidance reconciled to Human-Assisted Orchestration
+
+- Current Harscode Pilot #2 candidate guidance at workflow revision `cb5dca028b1d6ba49d43300dd06ec1bf2a9c984b` places Automated Visible Fleet on hold and uses Human-Assisted Orchestration: Orchestrator prepares the dispatch package; Human mechanically delivers it to the Participant; then supervision is fire-and-forget.
+- Durable invocation `RV-S2-002-001` was updated with the current workflow revision and a concrete Human dispatch package. The existing visible interactive Codex launch is considered successful per Human observation; invocation delivery remains pending and the Run has not started.
+- No environment blocker or new authority decision is active. Human action is mechanical invocation delivery; report a material problem or completion after dispatch.
+
+## 2026-09-26 — Independent Techplan Review completed with blocking finding
+
+- Human reported Reviewer completion; durable artifact `RV-S2-002-001/review-findings.md` provides the phase handoff. Run is reconciled complete; no Session ID is claimed because it was not present in the durable report or Human signal.
+- One blocking `[MONEY / VERIFICATION]` finding: the Techplan does not state/verify an atomic business outcome coupling Donation success state and funding reflection. The source constraint is already present in approved Product/MVP requirements and Exploration Stage 3; this is a Techplan fidelity/completeness gap, not a new authority decision.
+- Orchestrator prepared `TP-S2-002-002`, one fresh Planner resolution pass. No implementation or protected ledger/locking changes are authorized. After resolution, independent re-review is required if the change materially alters contract/verification unless Human gate explicitly waives it.
+- `WU-S2-002` is `ACTIVE` / `QUEUED`; Human-assisted dispatch of `TP-S2-002-002` is the immediate next action. `CONTRACT_READY` and Build remain unearned/not started.
+
+## 2026-09-26 — Planner resolution completed; material re-review required
+
+- Human reported `TP-S2-002-002` completion; durable Techplan artifact is available. Session ID was not exposed and is not inferred.
+- The resolution updates R3, §8 business/persistence contract, §12 R3 checklist, RISK-3, and settlement/concurrency Test Focus. This materially clarifies the atomic business outcome and expands verification obligations while remaining grounded in Product/MVP and Exploration; it does not choose a Tier-0 implementation primitive or create a new authority decision.
+- Per the canonical review gate, independent re-review is required unless Human explicitly waives it. No waiver is recorded. Orchestrator prepared `RV-S2-002-002` with a fresh Reviewer Session.
+- Current-effective Techplan pointer advances to `TP-S2-002-002/techplan.md`. `WU-S2-002` remains `ACTIVE` / `QUEUED`; Human mechanical dispatch is next. No `report-techplan`, approval, implementation, or `CONTRACT_READY` is claimed.
+
+## 2026-09-26 — Independent re-review completed; idempotency finding opened
+
+- Human reported Reviewer completion; durable artifact `RV-S2-002-002/review-findings.md` confirms the handoff. No Reviewer Session ID is inferred.
+- The review confirms the original atomic success/funding-coupling finding is closed by `TP-S2-002-002`.
+- The review raises one blocking `[MONEY / VERIFICATION]` finding: guest submission retry/double-submit idempotency is not separately settled or covered. Product/MVP wording is conditional (“where idempotency is required”); Exploration anchors describe ambiguous-response retry, same-key retry, and double activation/fresh keys but do not decide the policy. No product decision is invented.
+- Orchestrator prepared `TP-S2-002-003`, a Planner resolution pass to capture the authority gap and verification focus as Active Open Item(s) if source authority remains insufficient. Human dispatches mechanically; after resolution, route any material re-review condition and required Product/Donation owner decision before Human Techplan approval/`CONTRACT_READY`.
+- `WU-S2-002` remains `ACTIVE` / `QUEUED`; no approval, report-techplan, implementation, or `CONTRACT_READY` is claimed.
+
+## 2026-09-26 — Idempotency resolution recorded; independent re-review required
+
+- Human reported `TP-S2-002-003` completion; durable Techplan artifact is available. Session ID was not exposed and is not inferred.
+- The Planner added R8, D9, RISK-8, O9, two R8 verification-owner rows, and a request-level Test Focus pointer anchored to Exploration Stage 2 Areas 1/3/5. This separates ambiguous-response retry/same-key retry/double activation from settlement replay and leaves the actual idempotency policy to Product/Donation owner.
+- Materiality classification: **material**, because a new request-level money rule and verification obligations were added. Independent re-review is required unless Human explicitly waives it; no waiver is recorded.
+- O9 remains an Active authority decision and blocks final submit contract acceptance/`CONTRACT_READY` until the owner decides. Orchestrator prepared `RV-S2-002-003`.
+- `WU-S2-002` remains `ACTIVE` / `QUEUED`. Human-assisted dispatch of re-review is next. No approval, `report-techplan`, implementation, or milestone is claimed.
+
+## 2026-09-26 — Independent re-review completed cleanly; Planner report route opened
+
+- Human reported `RV-S2-002-003` completion; durable `review-findings.md` confirms the independent Complex review has no blocking or non-blocking findings. No Session ID is inferred.
+- The review confirms R8/O9 remains an owner decision, the request-level Test Focus uses the required Stage 2 Area 1/3/5 anchors with appropriate verification ownership, and the previously resolved atomic success/funding coupling remains intact.
+- Review/resolution path is converged. Per current Harscode Pilot #2 guidance, `report-techplan.md` is Planner-owned and must be generated from the current-effective Techplan before Human approval. Orchestrator prepared `TP-S2-002-004`; Human-assisted Planner dispatch is next.
+- O9 remains unresolved and blocks final submit contract acceptance and `CONTRACT_READY`; it is surfaced as owner decision, not inferred or resolved by Orchestrator. Human approval/revision follows the report. No Build, `CONTRACT_READY`, or milestone is claimed.
+
+## 2026-09-26 — Planner human review report completed; approval gate opened
+
+- Human reported Planner completion for `TP-S2-002-004`; durable `report-techplan.md` and phase handoff are present. Planner Session ID is unavailable and not inferred.
+- The report is derived from current-effective `TP-S2-002-003/techplan.md`, follows the canonical report template, and summarizes scope, decisions, risks, review/resolution history, Open Items, and approval boundary. It explicitly preserves O9 as unresolved and required before final submit contract acceptance/`CONTRACT_READY`.
+- No source Techplan or authority was changed; no decomposition, Build, validation, tests, approval, or milestone is claimed.
+- `WU-S2-002` changes to `ACTIVE` / `WAITING_HUMAN`. Next gate: Human reviews report and Techplan, then approves or requests revision. Orchestrator will derive the next route after that decision.
+
+## 2026-09-26 — Human approved Techplan; authority sync is next
+
+- Human explicitly approved the current-effective Techplan after reviewing `report-techplan.md`. This approves the reconciliation plan; it does not resolve O1–O9 or accept any residual security/product risk.
+- Post-approval Techplan decomposition evaluated `NOT_APPLICABLE`: the Techplan describes one cohesive contract-reconciliation flow with shared owner decisions and a sequential spec→API dependency. Splitting by files/domains would create artificial task boundaries before the common decision surface is resolved; the existing Techplan and Build report provide sufficient execution context.
+- Current route is authority synchronization for O1–O6 and O9 before finalizing dependent contract portions. O7 is conditional; O8 is required before any breaking API removal/replacement. Do not invent decisions or dispatch a Participant to author final spec/API while its required authority input is absent.
+- `WU-S2-002` is `WAITING_HUMAN` / `PARKED` under `AUTHORITY_SYNC`. O9 remains a blocker to final submit contract acceptance and `CONTRACT_READY`; no Build, implementation, or milestone is claimed.
+- The Planner-owned Techplan frontmatter still says `Draft / In Review`, inconsistent with the explicit Human approval. Orchestrator did not edit the Planner-owned artifact; it prepared `TP-S2-002-005` to reconcile only the status field.
+- `WU-S2-002` is `ACTIVE` / `QUEUED` for that metadata Run, under the remaining `AUTHORITY_SYNC` blocker for contract work. O9 remains a blocker to final submit contract acceptance and `CONTRACT_READY`; no Build, implementation, or milestone is claimed.
+
+## 2026-09-26 — Planner approval-status reconciliation completed
+
+- Human reported completion of `TP-S2-002-005`; its durable launch record confirms the approval event matched current-effective Techplan `TP-S2-002-003` and only the frontmatter `Status` changed from `Draft / In Review` to `Approved`.
+- No substantive Techplan content, report, or authority was changed. No Open Item was resolved and no Build, implementation, tests, or milestone are claimed.
+- The remaining runnable frontier is authority sync for O1–O6 and O9 with their named owners. O7 remains conditional; O8 applies before any breaking API removal/replacement. Product/Donation owner decision O9 blocks final submit contract acceptance and `CONTRACT_READY`.
+- `WU-S2-002` is `WAITING_HUMAN` / `PARKED` under `AUTHORITY_SYNC`; Human routes the open decisions to the owners and records their durable outcomes. Orchestrator prepares Build when the necessary decisions permit a bounded execution without assumptions.

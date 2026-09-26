@@ -35,6 +35,4 @@ Human-facing prose: Bahasa Indonesia. Run identity remains `WU-S2-002` / `TP-S2-
 
 ## Current observation
 
-- Participant read the canonical Techplan prompt, orchestrated-run overlay, invocation, and began gathering the required authorities and live repository evidence.
-- Run remains active; no final Techplan handoff has been observed yet.
-- No implementation or test execution is claimed.
+Superseded by the completed phase handoff above: `TP-S2-002-001` completed with `techplan.md`; the Run is not active. No implementation or test execution is claimed.

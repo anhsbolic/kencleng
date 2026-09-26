@@ -19,11 +19,12 @@ Current delivery state:
 ### WU-S2-002 — Slice 2 Donation Domain & Contract Reconciliation
 
 - Status: `WAITING_HUMAN`
+- Scheduling state: `PARKED`
 - Horizon: `NOW`
 - Dependency: HARD on `WU-S2-001 = DONE`
-- Current Run: `TP-S2-002-001` — Techplan Synthesis selesai; artifacts Draft/In-Review menunggu Human gate
-- Next action: Human memilih independent review atau direct review. Setelah review/resolution route konvergen, Planner menghasilkan report-techplan pada gate; Human lalu approve/revise Techplan dan mengarahkan O1–O6 kepada owner sebelum kontrak difinalisasi.
-- Human checkpoint: review route sekarang; Techplan approval setelah report disiapkan oleh Planner pada timing kanonis. O1–O6 tetap material authority gates untuk final contract.
+- Current Run: `TP-S2-002-005` — selesai; Techplan kini berstatus `Approved`
+- Next action: Sinkronkan keputusan owner O1–O6 dan O9 sesuai Techplan §13, lalu berikan hasilnya secara durable. Build belum dapat menulis bagian final spec/API yang bergantung pada keputusan tersebut.
+- Human checkpoint: Product/Donation owner perlu menetapkan ketiga skenario O9 sebelum final submit contract acceptance dan `CONTRACT_READY`. O1–O6 dimiliki Product/Donation, Security, Campaign, Design, dan API owners sesuai Techplan; O7 bersyarat, O8 berlaku sebelum breaking API change.
 
 ## NEXT / LATER
 
@@ -32,13 +33,13 @@ Setelah `CONTRACT_READY`, Orchestrator akan menurunkan backend/frontend delivery
 ## Human Attention
 
 - Exploration Stage 3 mendapat Human authorization yang tercatat pada artifact handoff.
-- Techplan gate terbuka: pilih independent review atau direct review; Planner menyiapkan report setelah jalur review/resolution konvergen sebelum Human approval.
+- Re-review kedua menutup atomic-coupling gap dan mengangkat retry/double-submit idempotency sebagai blocker money/verification. Planner mencatat R8/O9 tetapi tidak memilih policy; revisi material, sehingga report Techplan ditahan hingga independent re-review konvergen.
 - O1–O6 pada Techplan memerlukan keputusan owner sebelum finalisasi contract yang terpengaruh; O7 bersyarat dan O8 berlaku sebelum breaking change. Belum ada keputusan produk/security baru yang dibuat.
-- Pilot #2 visibility deviation: Techplan Run selesai di Codex CLI non-interaktif tanpa visible Participant terminal; tercatat pada Run launch record.
+- Historical Pilot #2 CRTV: Techplan Synthesis sebelumnya memakai Codex CLI non-interaktif; latest guidance kini menggunakan Human-Assisted Orchestration dan tidak menjadikan fleet/window automation sebagai success criterion.
 
 ## Blockers
 
-Belum ada Blocker aktif yang menghalangi Techplan; open item dari Exploration tetap harus dirutekan ke owner berwenang bila menjadi prasyarat keputusan.
+Blocker aktif: `AUTHORITY_SYNC` — keputusan O1–O6/O9 belum tersedia untuk bagian contract yang bergantung padanya. O9 memblokir final submit contract/`CONTRACT_READY`. Human sudah approve Techplan dan Planner sudah menyelaraskan status; tunggu outcome owner sebelum menulis bagian kontrak yang terpengaruh. Decomposition dievaluasi `NOT_APPLICABLE` karena satu cohesive contract-reconciliation flow.
 
 ## Bootstrap boundary
 
