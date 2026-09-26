@@ -1,7 +1,7 @@
 # Kencleng — Development Tracker
 
 > Status: Living project status
-> Last reconciled: 2026-09-23
+> Last reconciled: 2026-09-26
 > Current Kencleng authoritative Product Authority baseline: `main@e32916b597412094976e3e6263095e861ec18391` (`Promote Product Authority and MVP delivery model (#27)`)
 > Harscode operational baseline: `main@b64fa11082a094d0e1b6e9488c20eac1c7f9777b`
 > Purpose: Keep cross-domain and product-slice delivery state visible without turning dated progress into workflow policy.
@@ -80,7 +80,7 @@ Domain rows remain useful for semantic/implementation evidence, but they do **no
 | Notification | Historical/draft reference | `NOT_STARTED` as standalone delivery | `NOT_STARTED` | Include only when a real slice requires active notification behavior. |
 | Organization | Historical/draft reference | `NOT_STARTED` | `NOT_STARTED` | Slice 1 needs only minimum persisted/public-safe steward context; full self-service is deferred. |
 | Campaign | `SLICE_FINALIZED` for Slice 1 | `BACKEND_VERIFIED` | `FRONTEND_MOCK_VERIFIED` | Contract, backend, frontend mock-parallel experience, topology/private media, and real cross-stack integration are verified; Human finalization approved for Slice 1. |
-| Donation | Historical/draft reference | `NOT_STARTED` active generation | `NOT_STARTED` | Enters baseline in Slice 2; correctness-critical money areas retain Tier-0 fencing. |
+| Donation | Slice-2 Techplan `WAITING_HUMAN`; historical/draft artifacts remain reference evidence | `NOT_STARTED` active generation | `NOT_STARTED` | `WU-S2-001` Exploration and `WU-S2-002` Techplan Synthesis are complete; Techplan awaits Human gate. No Slice-2 contract or delivery milestone is earned. Correctness-critical money areas retain Tier-0 fencing. |
 | Disbursement | Historical/draft reference | `NOT_STARTED` | `NOT_STARTED` | Not baseline MVP critical path; do not pull in merely to make accountability look complete. |
 
 ## 5. Historical Account/backend evidence
@@ -141,19 +141,26 @@ Cross-cutting frontend readiness remains sufficient for real vertical product wo
 
 ## 7. Current development selection
 
-Active product outcome remains:
+Active product outcome is now:
 
 ```text
-Slice 1 — Public Campaign Understanding
+Slice 2 — Guest Donation + Truthful Donation State
 ```
 
-The Slice-1 delivery milestone is now:
+Slice 1 remains finalized:
 
 ```text
 SLICE_FINALIZED
 ```
 
-Evidence:
+Slice-2 orchestration evidence:
+
+- `WU-S2-001 / EXP-S2-001-001` completed Stage 2 gap analysis and Stage 3 solutioning; the Stage 3 Human gate is recorded in its artifact provenance.
+- `WU-S2-002` — Donation Domain & Contract Reconciliation — is `WAITING_HUMAN`; Techplan `TP-S2-002-001` is Draft/In-Review after completing synthesis.
+- Human must choose whether to run the recommended independent review or directly review the Techplan. Material Open Items remain unresolved; no contract or implementation milestone has been earned.
+- Backend/frontend delivery Work Units remain underived until the shared Slice-2 contract is reconciled.
+
+Slice-1 completion evidence:
 
 - `WU-S1-001 / EXP-001` established current authority and delivery gaps;
 - `WU-S1-002 / TP-001` reconciled the public Campaign contract and was Human-approved;
@@ -184,7 +191,7 @@ SLICE_FINALIZED
 ✓ Human-approved
 ```
 
-Slice 1 has completed technical, integrated, and Human finalization. Slice 2 remains NOT_STARTED and requires its own Exploration/reconciliation/delivery lifecycle.
+Slice 1 has completed technical, integrated, and Human finalization. Slice 2 is in progress: Exploration is complete and contract reconciliation is queued; implementation has not started.
 
 ## 8. Continuous Real-Task Validation posture
 
@@ -214,15 +221,16 @@ The Product Authority promotion gate is closed. PR #27 is historical promotion e
 Current gate:
 
 ```text
-Slice 1 CONTRACT_READY
-→ derive downstream backend / frontend / topology Work Units
-→ earn BACKEND_VERIFIED and FRONTEND_MOCK_VERIFIED independently
-→ integrate against the same reconciled contract
-→ earn INTEGRATED_VERIFIED
-→ complete Slice-1 Human/product acceptance before SLICE_FINALIZED
+Slice 2 Exploration complete
+→ reconcile Donation domain detail and shared contract (`WU-S2-002`)
+→ earn Slice-2 CONTRACT_READY
+→ derive backend/frontend Work Units from the reconciled contract
+→ earn their applicable independent verification milestones
+→ integrate against the same contract
+→ complete Slice-2 Human/product acceptance before SLICE_FINALIZED
 ```
 
-Do not infer runtime completion from contract readiness. Downstream work must preserve the reconciled public projection, anti-enumeration, funding truth, controlled media, no-store, provenance, and unavailable-donation semantics unless new evidence triggers an explicit authority/reconciliation change.
+Open amount/payment/timing, guest-data/status access, `401`/`404`, and `max_amount`/eligibility questions remain unresolved in the Exploration handoff. Route them to owning authorities when the reconciliation plan needs a decision; do not promote historical draft values silently. Do not infer runtime completion from contract readiness.
 
 ## 10. Update discipline
 

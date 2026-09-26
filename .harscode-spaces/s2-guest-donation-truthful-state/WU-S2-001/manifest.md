@@ -35,20 +35,18 @@ Exploration menghasilkan evidence durable yang cukup untuk mengidentifikasi auth
 
 ## Current State
 
-- Execution status: `ACTIVE`
-- Scheduling state: `RUNNING`
-- Horizon: `NOW`
-- Current Run: `EXP-S2-001-001` — Stage 2 active after Human confirmation
+- Execution status: `DONE`
+- Current Run: `EXP-S2-001-001` — Exploration complete; Stage 2 and Stage 3 handoff artifacts current
 - Current milestone: None
-- Human gate: Human confirmation diperlukan setelah Stage 2 sebelum Stage 3, sesuai canonical Exploration kickoff
-- Authority sync: Not applicable at bootstrap; belum ada authority change yang diajukan
+- Human gate: Stage 1→2 confirmation tercatat di launch record; Stage 2→3 Human authorization tercatat pada provenance Stage 3 artifact. Tidak ada Exploration Human gate tersisa.
+- Authority sync: Tidak ada authority yang diubah oleh Run ini.
 - Active blocker: None identified
-- Updated: 2026-09-25
+- Updated: 2026-09-26
 
 ## Current-effective artifacts
 
-Invocation Orchestrator-prepared: `runs/EXP-S2-001-001/invocation.md`. Run launch evidence: `runs/EXP-S2-001-001/launch-record.md`. Stage 2 evidence belum selesai/current-effective.
+`runs/EXP-S2-001-001/evidence/stage-2-gap-analysis.md`; `runs/EXP-S2-001-001/evidence/stage-3-solutioning.md`; `runs/EXP-S2-001-001/launch-record.md`; `runs/EXP-S2-001-001/invocation.md`.
 
 ## Routing note
 
-Run `EXP-S2-001-001`, jika di-dispatch, harus memakai `workflow/1-exploration-kickoff-prompt.md` dan `workflow/orchestrated-run-overlay.md` canonical Harscode. Gunakan prompt kickoff tipis yang dirutekan melalui `orchestration/exploration-kickoff-prompt.md`; jangan menambahkan solution-steering conclusions. Runtime configuration lokal hanya konteks runtime; model registry Human-owned dan read-only bagi Orchestrator.
+Exploration `WU-S2-001` selesai. Work Unit rekonsiliasi contract turunannya adalah `WU-S2-002`; re-entry ke Exploration hanya bila evidence baru atau perubahan material membenarkannya. Runtime configuration lokal hanya konteks runtime; model registry Human-owned dan read-only bagi Orchestrator.

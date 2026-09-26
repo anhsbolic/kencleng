@@ -37,3 +37,36 @@ Evidence sources: `docs/product/mvp-scope.md`, `docs/product/mvp-delivery-slices
 - Human mengirim `Lanjutkan ke Stage 2` melalui Participant Session.
 - Participant memulai Stage 2 pada 14:17:14Z. Checkpoint terakhir yang terlihat pada 14:19:27Z berada di Area 3 — Spec/API dan pemeriksaan repository hidup. Run masih aktif; Stage 2 belum selesai.
 - Next Human gate: confirmation setelah Stage 2 sebelum Stage 3. Belum ada confirmation untuk Stage 3.
+
+## 2026-09-26 — Exploration reconciled; contract Work Unit derived
+
+- Orchestrator merekonsiliasi `WU-S2-001` menjadi `DONE` setelah artifact Stage 2 dan Stage 3 tersedia; Stage 3 provenance mencatat Human authorization `lanjut ke stage 3` setelah Stage 2 selesai. Current state yang sebelumnya stale (`ACTIVE` / `RUNNING` di Stage 2) diganti.
+- Run `EXP-S2-001-001` diakui selesai pada scope Exploration berdasarkan phase handoff durable; tidak ada implementasi atau test execution yang diklaim.
+- `WU-S2-002` diturunkan sebagai `RECONCILIATION` untuk menyelaraskan kebutuhan Slice 2 dengan Donation domain artifacts dan split OpenAPI hingga kontrak siap untuk delivery planning.
+- Dependency HARD: `WU-S2-002` bergantung pada `WU-S2-001 = DONE` dan menggunakan Stage 2 serta Stage 3 artifacts sebagai current-effective evidence.
+- Runnable frontier berikutnya adalah Techplan Synthesis untuk `WU-S2-002`, Role Planner. Run belum disiapkan atau di-dispatch.
+- Belum ada FE/BE delivery Work Unit; topology diturunkan setelah `CONTRACT_READY`.
+- Tracker diperbarui untuk mencerminkan Slice 2 sebagai active delivery selection, tanpa mengklaim milestone Slice 2.
+
+## 2026-09-26 — Techplan Synthesis invocation prepared
+
+- Orchestrator menyiapkan Run `TP-S2-002-001` untuk `WU-S2-002`, Role Planner, dengan route canonical Techplan Synthesis.
+- Invocation mencatat current-effective Exploration inputs, authority routing, execution envelope, model `gpt-6-luna` / effort `high`, serta target/workflow revision.
+- Run berstatus `READY_TO_DISPATCH`; belum ada Participant Session atau dispatch. Work Unit tetap `NOT_STARTED` / `QUEUED`.
+- Next action: dispatch invocation; Techplan hasil synthesis tetap memerlukan Human approval sebelum Build.
+
+## 2026-09-26 — Techplan Synthesis dispatched
+
+- Run `TP-S2-002-001` untuk `WU-S2-002` diluncurkan ke Participant `Codex Planner` dengan model `gpt-6-luna`, effort `high`, dan runtime `codex-cli`.
+- Session ID: `01a0db72-a100-7db0-a28e-27aded08d7ff`.
+- Work Unit berubah ke `ACTIVE` / `RUNNING`; invocation tetap di `.harscode-spaces/s2-guest-donation-truthful-state/WU-S2-002/runs/TP-S2-002-001/invocation.md`.
+- Next action: tunggu phase handoff; Techplan tetap memerlukan Human approval sebelum Build.
+
+## 2026-09-26 — Techplan Synthesis completed; Human gate opened
+
+- Participant Session `01a0db72-a100-7db0-a28e-27aded08d7ff` menyelesaikan Run `TP-S2-002-001` dan menghasilkan `techplan.md` Draft/In-Review.
+- `report-techplan.md` disiapkan sebagai ringkasan gate. Planner melaporkan 7/7 Rules & Validation memiliki Testing Checklist coverage; tidak menjalankan API validation, test, atau runtime verification.
+- Techplan mencatat 8 Open Items; O1–O6 merupakan gate material sebelum finalisasi bagian kontrak yang terdampak, O7 bersyarat, dan O8 diperlukan sebelum breaking change terhadap operasi historis.
+- Independent Techplan review direkomendasikan karena melintasi contract dan payment/PII boundary, tetapi belum dijalankan. Decomposition dilewati.
+- Run selesai; `WU-S2-002` menjadi `WAITING_HUMAN`. `CONTRACT_READY` belum earned dan Build belum dimulai.
+- Next action: Human memilih independent review atau direct review, lalu memberi approve/revise serta arahan routing owner untuk O1–O6.

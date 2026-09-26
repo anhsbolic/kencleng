@@ -12,35 +12,33 @@ Parent Outcome:
 `S2-GUEST-DONATION-TRUTHFUL-STATE` — Slice 2 — Guest Donation + Truthful Donation State
 
 Current delivery state:
-`NOT_STARTED`
+`IN_PROGRESS`
 
 ## NOW
 
-### WU-S2-001 — Slice 2 Authority & Current-State Exploration
+### WU-S2-002 — Slice 2 Donation Domain & Contract Reconciliation
 
-- Status: `ACTIVE`
-- Scheduling: `RUNNING`
+- Status: `WAITING_HUMAN`
 - Horizon: `NOW`
-- Role: Explorer
-- Dependency: none identified
-- Current Run: `EXP-S2-001-001` — Participant Session active; Stage 2 in progress
-- Session: `01a0d8ea-1404-7521-99b0-5623057b0519`
-- Next action: allow Stage 2 to complete; require Human confirmation before Stage 3.
-- Human checkpoint: Stage 1 confirmation was received (`Lanjutkan ke Stage 2`); Stage 3 confirmation remains pending after Stage 2.
+- Dependency: HARD on `WU-S2-001 = DONE`
+- Current Run: `TP-S2-002-001` — Techplan Synthesis selesai; artifacts Draft/In-Review menunggu Human gate
+- Next action: Human memilih independent review atau direct review, lalu approve/revise Techplan dan mengarahkan O1–O6 kepada owner authority sebelum kontrak difinalisasi.
+- Human checkpoint: keputusan atas review route dan Techplan; O1–O6 tetap material authority gates untuk final contract.
 
 ## NEXT / LATER
 
-Belum ada downstream Work Unit yang dapat diturunkan dari current evidence. Perbarui setelah Exploration menghasilkan evidence.
+Setelah `CONTRACT_READY`, Orchestrator akan menurunkan backend/frontend delivery topology dari contract dan dependency yang sudah direkonsiliasi.
 
 ## Human Attention
 
-- Human memberikan confirmation untuk Stage 2 di Participant Session.
-- Tidak ada Human confirmation untuk Stage 3; keputusan itu baru relevan setelah Stage 2 selesai.
+- Exploration Stage 3 mendapat Human authorization yang tercatat pada artifact handoff.
+- Techplan approval gate terbuka: pilih independent review atau direct review, lalu approve/revise.
+- O1–O6 pada Techplan memerlukan keputusan owner sebelum finalisasi contract yang terpengaruh; O7 bersyarat dan O8 berlaku sebelum breaking change. Belum ada keputusan produk/security baru yang dibuat.
 
 ## Blockers
 
-Tidak ada Blocker aktif yang teridentifikasi.
+Belum ada Blocker aktif yang menghalangi Techplan; open item dari Exploration tetap harus dirutekan ke owner berwenang bila menjadi prasyarat keputusan.
 
 ## Bootstrap boundary
 
-Participant Run `EXP-S2-001-001` sudah di-dispatch dan Stage 2 sedang berlangsung setelah Human confirmation. Implementasi Slice 2 belum dimulai. Slice 1 tetap `SLICE_FINALIZED` sesuai tracker dan tidak disalin sebagai state Slice 2.
+`WU-S2-001` / `EXP-S2-001-001` selesai berdasarkan durable Stage 2 dan Stage 3 handoff. `WU-S2-002` menjadi frontier rekonsiliasi. `CONTRACT_READY` belum tercapai dan implementasi Slice 2 belum dimulai. Slice 1 tetap `SLICE_FINALIZED` sesuai tracker.

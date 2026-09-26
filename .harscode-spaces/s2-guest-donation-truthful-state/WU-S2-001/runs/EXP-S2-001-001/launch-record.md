@@ -17,11 +17,13 @@ Human-facing prose: Bahasa Indonesia. Operational process/terminal handles di ba
 
 ## Stage and Human gate observations
 
+- Run status kini direkonsiliasi `DONE` oleh Orchestrator berdasarkan handoff Stage 2 dan Stage 3 yang durable serta konfirmasi Human bahwa Explorer selesai. Catatan observasi historis di bawah tetap dipertahankan sebagai checkpoint saat itu, bukan current state.
 - `2026-09-25T14:14:26.111Z`: Participant menyampaikan Stage 1 plan announcement dan meminta confirmation. Transcript tetap berada di Participant Session; canonical prompt tidak mewajibkan artifact durable untuk Stage 1.
 - `2026-09-25T14:17:03.761Z`: input Human pada Participant Session: `Lanjutkan ke Stage 2`.
 - `2026-09-25T14:17:14.659Z`: Participant mengonfirmasi melanjutkan Stage 2 setelah approval.
 - `2026-09-25T14:19:27.147Z`: pesan Participant terakhir yang diamati merangkum pemeriksaan awal repository hidup dan menyatakan sedang melanjutkan Area 3 — Spec/API serta pemeriksaan boundary Campaign, frontend, dan test evidence. Stage 2 masih berlangsung pada observasi terakhir; tidak ada Stage 3 yang dijalankan.
-- Status observasi ini tidak membuktikan penyelesaian Run. Human confirmation berikutnya diperlukan setelah Stage 2 sebelum Stage 3.
+- `evidence/stage-2-gap-analysis.md` dan `evidence/stage-3-solutioning.md` adalah handoff artifacts current-effective. Provenance Stage 3 mencatat authorization Human `lanjut ke stage 3` setelah Stage 2.
+- Tidak ada Exploration Human gate tersisa. Tidak ada implementasi atau test execution yang diklaim.
 
 ## Revision traceability finding
 
@@ -32,3 +34,9 @@ Invocation disiapkan dengan `TARGET_REVISION` `ee0d4b072d9f5cf279952fe309049f687
 - Actual Ghostty GUI launch dan pemeriksaan host process memerlukan managed escalation; keduanya berhasil.
 - Tidak ada Codex Participant approval prompt yang teramati pada checkpoint ini. Codex berjalan dengan sandbox `workspace-write` dan `on-request`.
 - Warning terminal di atas tidak menghentikan Codex Session.
+
+## Orchestrator reconciliation
+
+- Direkonsiliasi: `2026-09-26`.
+- Dasar: current-effective Stage 2/Stage 3 artifacts dan Human update bahwa Explorer selesai; tidak ada live-session inspection karena tidak diperlukan untuk mengatasi ambiguity atau missing durable signal.
+- Revision discrepancy tetap tercatat sebagai CRTV evidence; tidak mengubah fakta bahwa Exploration handoff tersedia dan tidak ada perubahan checkout yang diklaim.

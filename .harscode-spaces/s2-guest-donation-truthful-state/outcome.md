@@ -6,7 +6,7 @@
 
 - Outcome ID: `S2-GUEST-DONATION-TRUTHFUL-STATE`
 - Product slice: `Slice 2 — Guest Donation + Truthful Donation State`
-- Status delivery saat bootstrap: `NOT_STARTED`
+- Status delivery saat ini: `IN_PROGRESS` — Exploration selesai; contract reconciliation queued; belum ada milestone Slice 2.
 
 ## Approved outcome
 
@@ -28,8 +28,8 @@ Pengunjung dapat beralih dari Public Campaign Detail yang memenuhi syarat ke gue
 
 ## Batas saat ini
 
-Slice 1 berstatus `SLICE_FINALIZED`; Slice 2 berstatus `NOT_STARTED` dan memerlukan Exploration/reconciliation/delivery lifecycle tersendiri. Work Graph saat ini hanya menetapkan Work Unit Exploration yang diperlukan untuk menemukan delivery shape. Work Unit delivery lain belum diturunkan.
+Slice 1 berstatus `SLICE_FINALIZED`. Untuk Slice 2, `WU-S2-001` Exploration telah selesai dan `WU-S2-002` contract reconciliation berstatus `NOT_STARTED` / `QUEUED`. Belum ada milestone `CONTRACT_READY`, implementation, atau delivery Work Unit FE/BE.
 
 Historical Donation specs, OpenAPI, migrations, tests, dan code adalah evidence sampai direkonsiliasi untuk Slice 2. Account bukan prasyarat baseline kecuali Exploration menemukan bukti enabling-critical yang mengubah pemahaman ini dan merutekannya ke authority yang sesuai.
 
-Belum ada implementasi Slice 2 atau Participant Run yang dimulai dalam bootstrap ini.
+Run `EXP-S2-001-001` adalah Participant Exploration yang telah selesai. Belum ada implementasi Slice 2 atau Participant Run downstream yang dimulai.
