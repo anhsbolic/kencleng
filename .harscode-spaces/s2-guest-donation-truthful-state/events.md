@@ -194,3 +194,50 @@ Evidence sources: `docs/product/mvp-scope.md`, `docs/product/mvp-delivery-slices
 - Prepared `TP-S2-002-006`, fresh Planner Session, `gpt-6-luna` / `high`, to produce a material revised Techplan in its own Run path. It must reconcile the OIR decisions/current Product/MVP sources, preserve unresolved owner controls, declare materiality, and not generate the report or start Build.
 - Because the Techplan is Complex and this revision changes product/domain/interface/verification semantics, next after Planner is a fresh independent Techplan review. Planner regenerates `report-techplan.md` only after review/resolution converges; then Human approval applies to the revised Techplan.
 - `WU-S2-002` is `ACTIVE` / `QUEUED`; immediate next action is Human-Assisted dispatch of `TP-S2-002-006`. No Participant has been dispatched. No Build, `CONTRACT_READY`, or milestone is claimed.
+## 2026-09-27 — Material Techplan amendment completed; independent review prepared
+
+- Human reported completion of the Human-Assisted dispatch for `TP-S2-002-006`. Durable `launch-record.md` and `techplan.md` confirm the Planner phase handoff; no Session ID is claimed because it was not exposed.
+- The amended Techplan is `Draft / In Review` and declares material product/domain/interface/verification changes. The prior Approved Techplan and its report remain historical; prior approval does not apply to this revision.
+- No report was generated, no Build was started, and `CONTRACT_READY` was not claimed.
+- Prepared `RV-S2-002-004` for a fresh independent Reviewer Session using `gpt-6-luna` / `high`. Invocation is ready for Human-Assisted dispatch; no Participant delivery or review start is claimed.
+- Reconciled Parent Outcome, Work Graph, Work Unit manifest, and Control Surface to the completed Planner handoff and current review frontier. O1–O5 retain owner/technical follow-up; O6/O9 policy is resolved but contract translation remains; O8 remains conditional on historical API operation removal/replacement.
+- Next action: Human mechanically dispatches `RV-S2-002-004`; after the Reviewer reports completion, Orchestrator reconciles findings and routes any required Planner resolution. Report generation and the new Human Techplan approval gate follow only after review/resolution convergence.
+
+## 2026-09-27 — Independent Techplan review completed; Planner resolution/report prepared
+
+- Human reported completion of `RV-S2-002-004`; durable Reviewer findings and launch record confirm a completed fresh independent Complex review. No Session ID is claimed because it was not exposed.
+- Review found no blocking findings and one mechanical, non-blocking correction: §7 `RISK-7` and `RISK-10` should reference R3 for atomic success/funding correctness; `RISK-7` should retain R7 for threshold/eligibility. Meaning and evidence are unambiguous; no re-review is required unless the resolution changes material meaning.
+- Review confirms R1–R10 checklist coverage, O1–O6/O9 decision fidelity, exact Exploration Test Focus anchors, atomic settlement/funding coupling, separate request idempotency, and Slice 2 boundary. No tests or API validator were run; no residual Security/PII risk was accepted; no Build or `CONTRACT_READY` was claimed.
+- Prepared Planner Run `TP-S2-002-007` in a fresh Session (`gpt-6-luna` / `medium`) to make only the cross-reference correction in a new Techplan artifact and generate the canonical report once review/resolution has converged.
+- Reconciled Parent Outcome, Work Graph, Work Unit manifest, and Control Surface to the completed review and prepared Planner frontier. `TP-S2-002-007` has not been dispatched; no Run start is claimed.
+- Next action: Human-Assisted dispatch `TP-S2-002-007`. After completion, Human reviews the new report and current-effective Techplan and approves or requests revision. No Build begins before that gate.
+
+## 2026-09-27 — Planner resolution/report completed; Human approval gate opened
+
+- Human reported completion of `TP-S2-002-007`; durable `techplan.md`, `report-techplan.md`, and `launch-record.md` confirm the phase handoff. Planner Session ID was not exposed and is not inferred.
+- The new current-effective Techplan resolves the sole mechanical finding from `RV-S2-002-004`: RISK-7 references R3 for atomic success/funding and retains R7 for threshold/eligibility; RISK-10 references R3. Comparison with `TP-S2-002-006/techplan.md` confirms the only semantic edits are those cross-references; other changes are Run provenance, Files Changed scope, and review/report handoff metadata. No material meaning or verification obligation changed; no re-review was required.
+- Planner generated the human-facing report from the corrected Techplan after review/resolution converged. The report records no blocking review finding, preserves unresolved owner follow-up, and states the approval boundary. Prior approval of `TP-S2-002-003` does not apply to this material revision.
+- No test, runtime check, or API validation was run. No residual Security/PII risk was accepted. Build and `CONTRACT_READY` remain unclaimed.
+- Reconciled Parent Outcome, Work Graph, Work Unit manifest, and Control Surface: `WU-S2-002` is `WAITING_HUMAN` / `PARKED`, with no runnable Participant Run until the Human Techplan decision.
+- Human action: review `TP-S2-002-007/report-techplan.md` and `techplan.md`, then approve or request revision. If approved, Orchestrator reconstructs the next route from remaining owner decisions/evidence; approval does not itself start Build or establish `CONTRACT_READY`.
+## 2026-09-27 — Human approved amended Techplan; status reconciliation next
+
+- Human explicitly approved current-effective Techplan `WU-S2-002/runs/TP-S2-002-007/techplan.md` after review of its matching `report-techplan.md`.
+- Approval applies to this amended Techplan revision only; prior approval of `TP-S2-002-003` does not substitute for it. Approval authorizes continued reconciliation within the plan boundary; it does not resolve O1–O8 owner follow-up, accept residual Security/PII risk, authorize Build, or claim `CONTRACT_READY`.
+- The Planner-owned Techplan frontmatter still says `Draft / In Review`. Orchestrator will not edit that artifact; prepared `TP-S2-002-008` to reconcile only the status field from this explicit approval evidence.
+- Next route after status reconciliation: authority/contract follow-up for Active Open Items and owner evidence in the approved Techplan. No implementation or delivery Work Unit is ready to dispatch yet.
+- `WU-S2-002` is `ACTIVE` / `QUEUED` for the narrow status metadata Run. Human-Assisted dispatch is the immediate action; no Participant dispatch is claimed here.
+
+## 2026-09-27 — Planner approval status reconciliation completed; authority sync is next
+
+- Human reported completion of `TP-S2-002-008`. Its durable launch record confirms that the approval event matched current-effective Techplan `TP-S2-002-007` and its report, and only the frontmatter `Status` changed from `Draft / In Review` to `Approved`.
+- No Open Item, report, Product/spec/API authority, or substantive Techplan content changed. No `CONTRACT_READY`, Build, implementation, or tests are claimed.
+- Human approval completes the Techplan gate but does not decide unresolved owner details or accept Security/PII residual risk. Active O1–O5 and O7 still require owner outcomes/evidence before dependent contract portions can be finalized; O8 audit remains conditional on historical operation removal/replacement. Resolved O6/O9 policies still require API/spec translation.
+- The repository records responsible owner roles but does not identify named individuals. No downstream Participant Run can safely author dependent spec/API detail until required authority inputs are available.
+- Reconciled Parent Outcome, Work Graph, manifest, and Control Surface: `WU-S2-002` returns to `WAITING_HUMAN` / `PARKED` under `AUTHORITY_SYNC`.
+- Next action: Human coordinates the relevant Product/Donation/API, Security/PII, Campaign, and Design owners and records their outcomes/evidence. Orchestrator then determines the bounded reconciliation Run and implementation topology. O9 continues to block final submit contract acceptance and `CONTRACT_READY`.
+
+## 2026-09-27 — Techplan approver identity clarified
+
+- Anhar Solehudin clarified that he is the owner who approved current-effective Techplan `WU-S2-002/runs/TP-S2-002-007/techplan.md`.
+- This attributes the Human approval recorded above. It does not change the approval scope or assign him as the Security/PII, Design, API, Campaign, or Donation owner for separate Active Open Items; those remain with the roles identified in the Techplan unless separately assigned.

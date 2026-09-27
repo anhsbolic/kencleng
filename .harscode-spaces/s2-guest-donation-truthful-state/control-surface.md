@@ -18,13 +18,15 @@ Current delivery state:
 
 ### WU-S2-002 — Slice 2 Donation Domain & Contract Reconciliation
 
-- Status: `ACTIVE`
-- Scheduling state: `QUEUED`
+- Status: `WAITING_HUMAN`
+- Scheduling state: `PARKED`
 - Horizon: `NOW`
 - Dependency: HARD on `WU-S2-001 = DONE`
-- Current Run: `TP-S2-002-006` — invocation siap untuk amendment material; gunakan Product/MVP amendment Human-approved dan brief OIR sebagai current authority.
-- Next action: Human-Assisted dispatch `TP-S2-002-006` ke fresh Planner Session (`gpt-6-luna`, `high`), sesuai invocation durable. Planner menghasilkan Techplan amendment only; jangan membuat report atau mulai Build. Setelah completion, lakukan independent review, lalu report generation dan Human approval setelah review/resolution konvergen.
-- Human checkpoint: dispatch mekanis invocation yang sudah disiapkan; setelah dispatch, laporkan hanya masalah material atau completion. Belum ada keputusan otoritas baru yang diperlukan sekarang. O9 tetap memblokir final submit contract/`CONTRACT_READY` sampai diterjemahkan ke kontrak dan bukti yang diperlukan.
+- Current-effective Techplan: `TP-S2-002-007/techplan.md` — disetujui Human; field `Status` telah direkonsiliasi menjadi `Approved` oleh `TP-S2-002-008`.
+- Human approval evidence: `.harscode-spaces/s2-guest-donation-truthful-state/events.md` mencatat approval atas Techplan dan report yang cocok; `TP-S2-002-008/launch-record.md` membuktikan rekonsiliasi metadata.
+- Current Run: `TP-S2-002-008` — selesai. Belum ada Participant Run selanjutnya yang runnable; Work Unit menunggu authority/owner outcomes.
+- Next action: koordinasikan owner decisions/evidence untuk O1–O5 dan Design review O7; setelah hasil tercatat, Orchestrator menurunkan bounded spec/API reconciliation Run. O6/O9 policy sudah resolved tetapi wajib diterjemahkan ke contract. O8 hanya jika operasi historis dihapus/diganti. Approval tidak memulai Build dan tidak menetapkan `CONTRACT_READY`.
+- Human checkpoint: fasilitasi outcome dari Product/Donation/API, Security/PII, Campaign, dan Design owners sesuai item; sumber mencatat owner roles, bukan nama individu. O9 tetap memblokir final submit contract/`CONTRACT_READY` sampai diterjemahkan ke contract dan bukti yang diperlukan.
 
 ## NEXT / LATER
 
@@ -33,13 +35,13 @@ Setelah `CONTRACT_READY`, Orchestrator akan menurunkan backend/frontend delivery
 ## Human Attention
 
 - Exploration Stage 3 mendapat Human authorization yang tercatat pada artifact handoff.
-- Re-review kedua menutup atomic-coupling gap dan mengangkat retry/double-submit idempotency sebagai blocker money/verification. Planner mencatat R8/O9 tetapi tidak memilih policy; revisi material, sehingga report Techplan ditahan hingga independent re-review konvergen.
-- O1–O6 pada Techplan memerlukan keputusan owner sebelum finalisasi contract yang terpengaruh; O7 bersyarat dan O8 berlaku sebelum breaking change. Belum ada keputusan produk/security baru yang dibuat.
+- Re-review sebelumnya menutup atomic-coupling gap dan menemukan gap kebijakan retry/double-submit. Human kemudian menetapkan kebijakan O9 dalam OIR dan amendmen Product/MVP; Techplan `TP-S2-002-006` menerjemahkan arah tersebut sambil mempertahankan detail contract yang terbuka.
+- Keputusan produk O1–O6/O9 tercatat dalam OIR dan dokumen Product/MVP yang Human-approved. O1–O5 masih memerlukan penyelesaian teknis/owner; O7 memerlukan Design review; O8 hanya berlaku sebelum operasi historis dihapus/diganti. Tidak ada residual security/privacy risk yang diterima.
 - Historical Pilot #2 CRTV: Techplan Synthesis sebelumnya memakai Codex CLI non-interaktif; latest guidance kini menggunakan Human-Assisted Orchestration dan tidak menjadikan fleet/window automation sebagai success criterion.
 
 ## Blockers
 
-Blocker aktif: `AUTHORITY_SYNC` — konflik Product/MVP O1/O3 telah diselesaikan melalui Human-approved amendments di `docs/product/mvp-scope.md` dan `mvp-delivery-slices.md`; current-effective Approved Techplan masih stale dan perlu amendment. O1/O2/O3/O4/O5 masih memerlukan detail/review owner; O6/O9 perlu diterjemahkan ke spec/API. Run Planner `TP-S2-002-006` siap dispatch. O9 tetap blocker contract readiness.
+Blocker aktif: `AUTHORITY_SYNC` — status approval Techplan sudah direkonsiliasi. O1–O5 dan O7 memerlukan owner outcomes/evidence sebelum bagian contract terkait difinalisasi; O6/O9 perlu diterjemahkan ke spec/API. O8 conditional pada removal/replacement. O9 tetap blocker contract readiness.
 
 ## Bootstrap boundary
 
