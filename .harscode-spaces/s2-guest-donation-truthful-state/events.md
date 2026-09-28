@@ -255,3 +255,27 @@ Evidence sources: `docs/product/mvp-scope.md`, `docs/product/mvp-delivery-slices
 - Created `.harscode-spaces/participant-profiles/registry.md` and `profiles.md` with the five evidence-backed broad Role Profiles identified in `readiness-reconciliation.md`. They grant no decision authority and carry no Work Unit/Session state.
 - Reconciled `docs/project/kencleng-development-tracker.md` from its stale `TP-S2-002-001` gate and regenerated the Slice 2 Control Surface continuation text to point at the Authority Map and Profile Registry. Work Graph topology and Work Unit status are unchanged.
 - Authority Sync is still active. No owner answer, new Run dispatch, Work Unit state change, or milestone promotion is claimed by these setup artifacts.
+
+## 2026-09-28 — Security/PII authority owner attributed for current Slice 2
+
+- Anhar Solehudin explicitly identified himself as the named Security/PII authority owner for current Slice 2, covering guest-email verification/retention decisions, status URL/token controls, anti-enumeration, and residual Security/PII risk acceptance. `.harscode-spaces/authority-map.md` now records this attribution with a Slice-2-only effective scope.
+- This is owner attribution, not a decision on O3–O5 controls/windows or an acceptance of residual risk. It does not establish permanent project-wide Security/PII ownership.
+- Other currently needed authority areas remain unmapped. `WU-S2-002` remains `WAITING_HUMAN / PARKED` under `AUTHORITY_SYNC`; no Participant dispatch, contract readiness, or milestone is claimed.
+
+## 2026-09-28 — API/contract authority owner attributed for current Slice 2
+
+- Anhar Solehudin explicitly identified himself as the named API/contract authority owner for current Slice 2, covering Donation request/response shape, status access, error parity, and idempotency contract. `.harscode-spaces/authority-map.md` records this separately from his Security/PII ownership, both with Slice-2-only scope.
+- This owner attribution does not settle O1/O3–O5/O9 contract details or accept any residual Security/PII risk. Donation delivery/domain, Campaign delivery/domain, and Product Design ownership remain unmapped.
+- `WU-S2-002` remains `WAITING_HUMAN / PARKED` under `AUTHORITY_SYNC`; no new Participant Run or milestone is claimed.
+
+## 2026-09-28 — Current Slice 2 authority mapping completed
+
+- Anhar Solehudin explicitly identified himself as the named current Slice 2 owner for the remaining Donation delivery/domain, Campaign delivery/domain, and Product Design areas. Together with the prior API/contract and Security/PII attributions, `.harscode-spaces/authority-map.md` now has named owners for the five areas needed by `WU-S2-002`.
+- The attribution is scoped to current Slice 2 and does not establish permanent project-wide ownership or make any substantive O1–O8 decision. Product/MVP owner mapping remains conditional on a new product-semantic decision.
+- The `AUTHORITY_SYNC` blocker based on unknown owner identity is closed. Remaining Open Items need bounded specialist analysis, owner decisions, contract translation, and later verification according to their own routes. No `CONTRACT_READY`, Build, or delivery milestone is claimed by the mapping itself.
+
+## 2026-09-28 — Focused O3–O5 Explorer Run prepared
+
+- Orchestrator selected a new Explorer Open-Item Resolution occurrence `OIR-S2-002-002` for unresolved Security/PII and API technical detail in current-effective Approved Techplan O3–O5. Meaningful delta from `OIR-S2-002-001`: approved amended Product/MVP and Techplan are current, authority owners are named, and this Run narrows to controls/response decision preparation instead of reopening broad product policy.
+- `OIR-S2-002-002/invocation.md` binds `KC-EXPLORER` by content revision, `gpt-6-luna` / `high`, a fresh Session, canonical Exploration stages, and Human-assisted dispatch. It is prepared only; no Participant has been launched, no Human control/risk decision is claimed.
+- `WU-S2-002` changes to `ACTIVE / QUEUED`; prior `AUTHORITY_SYNC` blocker is closed. Work Graph, manifest, Parent Outcome, tracker, and Control Surface reflect the prepared runnable frontier. Dependent contract finalization remains blocked by its own unresolved items; `CONTRACT_READY` and Build remain unclaimed.

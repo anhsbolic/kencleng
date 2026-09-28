@@ -47,16 +47,16 @@ Handoff reconciliation menyatakan sumber contract Slice 2 yang berlaku dan statu
 
 ## Current State
 
-- Execution status: `WAITING_HUMAN`
-- Scheduling state: `PARKED`
+- Execution status: `ACTIVE`
+- Scheduling state: `QUEUED`
 - Horizon: `NOW`
-- Current Run: `TP-S2-002-008` — completed approval status reconciliation; current-effective Techplan is `Approved`
+- Current Run: `OIR-S2-002-002` — invocation prepared, not dispatched; current-effective Techplan `TP-S2-002-007` remains `Approved`
 - Current milestone: None
 - Human gate: Human approved current-effective `TP-S2-002-007/techplan.md` after reviewing its matching report on 2026-09-27; `TP-S2-002-008` reconciled only its `Status` field to `Approved`. Prior approval of `TP-S2-002-003` does not substitute for this revision. O6/O9 policy is resolved; O1–O5 retain technical/owner details; O7 needs Design review; O8 is conditional on API removal/replacement.
-- Authority sync: Product/MVP direction is now canonical and must be used by Planner. Security/PII risk acceptance and technical controls, Design expression, and API response/contract details remain with their respective owners. O9's policy must be preserved in final submit contract before `CONTRACT_READY`.
-- Active blocker: `AUTHORITY_SYNC` — owner decisions/evidence for O1–O5, O7 Design review, and API translation of resolved O6/O9 are needed before dependent spec/API portions can be finalized. O8 audit is conditional on historical API operation removal/replacement. No Build or `CONTRACT_READY` yet.
-- Blocker owner/action: Human coordinates the relevant Product/Donation/API, Security/PII, Campaign, and Design owners and records their outcomes/evidence against the Active Open Items. The repository identifies owner roles, not named individuals. Orchestrator then routes bounded reconciliation work when prerequisites are available. Approval alone does not close follow-up, authorize Build, or establish `CONTRACT_READY`.
-- Updated: 2026-09-27
+- Authority sync: COMPLETE for the five areas needed by this frontier; `.harscode-spaces/authority-map.md` names Anhar Solehudin in each, limited to current Slice 2. Product/MVP direction is canonical. Named ownership does not decide Security/PII controls/risk, Design expression, API response detail, or contract ordering. O9 policy must be preserved in final submit contract before `CONTRACT_READY`.
+- Active blocker: None for the prepared O3–O5 Explorer Run. Dependent spec/API finalization remains held by material unresolved owner decisions/evidence for O1–O5, O7 Design review, and contract translation of O6/O9. O8 audit is conditional on historical API removal/replacement. No Build or `CONTRACT_READY` yet.
+- Next action owner/action: Human mechanically dispatches `OIR-S2-002-002` using its invocation; canonical Explorer Stage 1/Stage 3 checkpoints apply. Explorer facilitates O3–O5 analysis/owner discussion and writes its own handoff. Orchestrator reconciles after completion. Other items retain separate routes; approval alone did not authorize Build or establish `CONTRACT_READY`.
+- Updated: 2026-09-28
 
 ## Current-effective prior artifacts
 
@@ -91,7 +91,10 @@ Handoff reconciliation menyatakan sumber contract Slice 2 yang berlaku dan statu
 - `../events.md` — explicit Human approval of `TP-S2-002-007` recorded 2026-09-27
 - `runs/TP-S2-002-008/invocation.md` — dispatch package for Planner-owned approval status reconciliation
 - `runs/TP-S2-002-008/launch-record.md` — completed status reconciliation from explicit Human approval; only Techplan Status metadata changed
+- `../../authority-map.md` — current named authority areas for Slice 2; scoped ownership, no substantive decisions
+- `../../participant-profiles/registry.md` — reusable Profile registry; `KC-EXPLORER` selected for the prepared Run
+- `runs/OIR-S2-002-002/invocation.md` — prepared focused O3–O5 decision-preparation Run, not dispatched
 
 ## Routing note
 
-`RV-S2-002-001` menemukan atomic coupling gap; Planner menutupnya di `TP-S2-002-002`. `RV-S2-002-002` menemukan guest submission idempotency gap; Planner mencatat R8/O9 di `TP-S2-002-003`, lalu `RV-S2-002-003` mengonfirmasi penutupan review. Human menyetujui Techplan lama; Planner menyelaraskan status di `TP-S2-002-005`. OIR `OIR-S2-002-001` memetakan O1–O9; Human kemudian memperbarui Product/MVP authority. Planner menyelesaikan amendmen material `TP-S2-002-006`. Independent review `RV-S2-002-004` selesai tanpa temuan blocking dan mengangkat satu koreksi mekanis pada referensi R3/R4 di RISK-7/RISK-10. Planner menyelesaikan koreksi dan report di `TP-S2-002-007`; Human menyetujui Techplan tersebut pada 2026-09-27 dan Planner menyelaraskan field status di `TP-S2-002-008`. Runnable frontier kini menunggu owner decisions/evidence untuk Active Open Items. O1–O5 masih punya owner/technical follow-up; O6/O9 perlu diterjemahkan ke contract. O9 tetap menghalangi final submit contract/`CONTRACT_READY`. Decomposition `NOT_APPLICABLE`; belum ada Build atau `CONTRACT_READY`.
+`RV-S2-002-001` menemukan atomic coupling gap; Planner menutupnya di `TP-S2-002-002`. `RV-S2-002-002` menemukan guest submission idempotency gap; Planner mencatat R8/O9 di `TP-S2-002-003`, lalu `RV-S2-002-003` mengonfirmasi penutupan review. Human menyetujui Techplan lama; Planner menyelaraskan status di `TP-S2-002-005`. OIR `OIR-S2-002-001` memetakan O1–O9; Human kemudian memperbarui Product/MVP authority. Planner menyelesaikan amendmen material `TP-S2-002-006`. Independent review `RV-S2-002-004` selesai tanpa temuan blocking dan mengangkat satu koreksi mekanis pada referensi R3/R4 di RISK-7/RISK-10. Planner menyelesaikan koreksi dan report di `TP-S2-002-007`; Human menyetujui Techplan tersebut pada 2026-09-27 dan Planner menyelaraskan field status di `TP-S2-002-008`. Authority Sync kini selesai untuk current Slice 2; runnable frontier adalah prepared Explorer `OIR-S2-002-002` untuk O3–O5. O1–O5 masih punya owner/technical follow-up; O6/O9 perlu diterjemahkan ke contract. O9 tetap menghalangi final submit contract/`CONTRACT_READY`. Decomposition `NOT_APPLICABLE`; belum ada Build atau `CONTRACT_READY`.
