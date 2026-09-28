@@ -1,6 +1,6 @@
 # Kencleng — Current Authority Map (Pilot #2)
 
-> Status: COMPLETE for the five authority areas currently needed by Slice 2 `WU-S2-002`; later areas remain event-driven.
+> Status: COMPLETE for the six authority areas now material to Slice 2 `WU-S2-002`; later areas remain event-driven.
 > Scope: only authority areas material to the current `WU-S2-002` frontier. Paths below are relative to the Kencleng repository root.
 > This map records current ownership; it does not replace canonical Product/Design/spec/API authority or historical Decision provenance.
 
@@ -11,10 +11,11 @@
 | API/contract | Authored request/response and credential shape, idempotency/status parity, conditional consumer/distribution decision | Anhar Solehudin | Current Slice 2 only; effective 2026-09-28 | Human owner attribution, 2026-09-28; same Techplan §13 O1/O3–O5/O8/O9 |
 | Security/PII | Email verification/retention windows, status credential exposure, abuse/anti-enumeration controls, residual security/privacy risk decision | Anhar Solehudin | Current Slice 2 only; effective 2026-09-28 | Human owner attribution, 2026-09-28; same Techplan §13 O3–O5 |
 | Product Design | Truthful state/method labels, notification and recovery presentation, material interaction/visual decisions | Anhar Solehudin | Current Slice 2 only; effective 2026-09-28 | Human owner attribution, 2026-09-28; same Techplan §13 O7; `docs/ui-ux/README.md` |
+| Product/MVP — conditional O3 notification meaning | Whether an independent pending-email retention cap may end terminal-email eligibility before Donation reaches terminal state, and any resulting current-Slice-2 Product/MVP wording change | Anhar Solehudin | Current Slice 2 and this material Product/MVP decision only; effective 2026-09-28 | Explicit Human owner attribution, 2026-09-28; `TP-S2-002-009/o2-delivery-proposal.md` O3 retention consequences; `docs/product/mvp-scope.md` Stage B/C |
 
-## Conditional area
+## Conditional Product/MVP area now mapped
 
-Product/MVP policy for Slice 2 is already approved in `docs/product/mvp-scope.md` and `docs/product/mvp-delivery-slices.md`. Map its named current owner if a new or changed product-semantic decision actually becomes necessary. The current technical/owner gaps do not authorize reopening settled O1–O6/O9 policy.
+Product/MVP policy for Slice 2 is already approved in `docs/product/mvp-scope.md` and `docs/product/mvp-delivery-slices.md`. The Product/MVP row above was added only after the independent pending-email cap route made a possible terminal-notification exception material. It does not reopen settled O1–O6/O9 policy by itself, decide the exception, or establish permanent project-wide Product ownership.
 
 ## Known decision provenance, distinct from this map
 
@@ -24,4 +25,4 @@ Product/MVP policy for Slice 2 is already approved in `docs/product/mvp-scope.md
 
 At an authority decision boundary, confirm the area has a named current owner and applicable scope/effective context. Record a new owner attribution from explicit Human/owner evidence; do not infer it from previous Run participation, generic approval, or this table. Prior Decisions retain their original provenance if ownership later changes. `UNMAPPED` routes to Authority Sync; a known owner with a bounded unresolved question routes to that owner or to useful specialist analysis first.
 
-All five named-owner attributions above apply to current Slice 2 only. They do **not** choose request/response shapes, set verification/retention windows, select token or anti-enumeration controls, decide simulator timing or Design expression, accept residual risk, or imply permanent project-wide ownership of any area.
+All six named-owner attributions above apply to current Slice 2 only; the Product/MVP row is further limited to the identified O3 notification-meaning question. They do **not** choose request/response shapes, set verification/retention windows, select token or anti-enumeration controls, decide simulator timing or Design expression, decide the new notification exception, accept residual risk, or imply permanent project-wide ownership of any area.

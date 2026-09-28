@@ -80,7 +80,7 @@ Domain rows remain useful for semantic/implementation evidence, but they do **no
 | Notification | Historical/draft reference | `NOT_STARTED` as standalone delivery | `NOT_STARTED` | Include only when a real slice requires active notification behavior. |
 | Organization | Historical/draft reference | `NOT_STARTED` | `NOT_STARTED` | Slice 1 needs only minimum persisted/public-safe steward context; full self-service is deferred. |
 | Campaign | `SLICE_FINALIZED` for Slice 1 | `BACKEND_VERIFIED` | `FRONTEND_MOCK_VERIFIED` | Contract, backend, frontend mock-parallel experience, topology/private media, and real cross-stack integration are verified; Human finalization approved for Slice 1. |
-| Donation | Slice-2 current-effective Techplan `TP-S2-002-007` Approved; `WU-S2-002` is `ACTIVE / QUEUED` for focused O3–O5 Explorer Run. Historical/draft domain artifacts remain reference evidence | `NOT_STARTED` active generation | `NOT_STARTED` | Five current Slice-2 owner areas are attributed; open contract details remain. No Slice-2 contract or delivery milestone is earned. Correctness-critical money areas retain Tier-0 fencing. |
+| Donation | Slice-2 current-effective Techplan `TP-S2-002-007` Approved; O7 Design review and O1 amount-contract evidence Run are complete. `WU-S2-002` is `ACTIVE / QUEUED` for independent Campaign/Donation ordering Run `OIR-S2-002-006`; O1 cross-feature currency-standard authority sync and O2/O3 delivery-direction conflict remain scoped open items. Historical/draft domain artifacts remain reference evidence | `NOT_STARTED` active generation | `NOT_STARTED` | Current Slice-2 authority areas have named ownership; the newly surfaced project-wide currency-standard area has no named owner. O1 and other contract details remain open. No Slice-2 contract or delivery milestone is earned. Correctness-critical money areas retain Tier-0 fencing. |
 | Disbursement | Historical/draft reference | `NOT_STARTED` | `NOT_STARTED` | Not baseline MVP critical path; do not pull in merely to make accountability look complete. |
 
 ## 5. Historical Account/backend evidence
@@ -156,9 +156,10 @@ SLICE_FINALIZED
 Slice-2 orchestration evidence:
 
 - `WU-S2-001 / EXP-S2-001-001` completed Stage 2 gap analysis and Stage 3 solutioning; the Stage 3 Human gate is recorded in its artifact provenance.
-- `WU-S2-002` — Donation Domain & Contract Reconciliation — is `ACTIVE / QUEUED` for focused O3–O5 Explorer Run `OIR-S2-002-002`, prepared but not dispatched. Current-effective `TP-S2-002-007` and its Planner-owned report completed independent review/resolution and received Human approval on 2026-09-27; `TP-S2-002-008` reconciled the plan's status metadata to `Approved`.
-- The Product/MVP amendment resolved Slice-2 product policy O1–O6/O9. Active owner/technical questions O1–O5, Design review O7, and Campaign/Donation contract ordering remain; O8 is conditional on historical API operation removal/replacement. O6/O9 policy still needs spec/API translation. No residual Security/PII risk was accepted and no contract or implementation milestone has been earned.
-- Pilot #2 bounded readiness assessment is at `.harscode-spaces/s2-guest-donation-truthful-state/readiness-reconciliation.md`; the project Authority Map names Anhar Solehudin for all five currently needed areas, each limited to current Slice 2. The five baseline Participant Profiles and Registry are present. Authority identity sync is complete; `OIR-S2-002-002` is the next prepared Run for bounded evidence/owner facilitation.
+- `WU-S2-002` — Donation Domain & Contract Reconciliation — is `ACTIVE / QUEUED` for independent Campaign/Donation ordering Run `OIR-S2-002-006`. OIR `OIR-S2-002-005` completed evidence/owner resolution and recorded direction for a shared currency standard across currencies, tables, and features, but did not select wire/storage representation or a project-wide authority owner. O1 remains partially resolved pending owner/scope attribution; this scoped blocker does not stop the queued ordering route. `OIR-S2-002-004` completed O7 Design review with two explicit current-Slice-2 wording decisions, without rendered acceptance. `OIR-S2-002-002` recorded current-Slice-2 owner decisions for O3–O5. `OIR-S2-002-003` completed O2/O3 analysis without a numeric decision; Planner `TP-S2-002-009` completed its bounded proposal without revising the Approved Techplan. Current-effective `TP-S2-002-007` and its report received Human approval on 2026-09-27; `TP-S2-002-008` reconciled its status metadata to `Approved`.
+- The Product/MVP amendment resolved Slice-2 product policy O1–O6/O9. Anhar chose independent pending-email cap route B as Donation delivery owner, then as the newly named current-Slice-2 Product/MVP owner rejected loss of terminal-email notification for verified opt-in addresses. Those directions conflict if a cap expires before an unbounded pending Donation becomes terminal; no route is silently superseded. O3–O5 contract/control detail and residual-risk acceptance remain open. O1/O2 detail and Campaign/Donation contract ordering remain; O8 conditional. O6/O9 policy and O7 wording need spec/API translation. No contract or implementation milestone has been earned.
+- Anhar confirmed current-Slice-2 UX disclosure near the optional guest-email choice: verify within 24 hours from email capture or the unverified address is deleted without a status email. O7 Design review selected the exact near-opt-in label/helper and source-first terminal status/notice labels; it does not settle verified-email retention while Donation remains `pending`.
+- Pilot #2 bounded readiness assessment is at `.harscode-spaces/s2-guest-donation-truthful-state/readiness-reconciliation.md`; the project Authority Map names Anhar Solehudin for five initial areas and the conditional Product/MVP O3 question, each limited to current Slice 2. It does not name an owner for the new cross-feature currency-standard authority area. The five baseline Participant Profiles and Registry are present. OIR-S2-002-005 is reconciled; OIR-S2-002-006 is queued for independent Campaign/Donation ordering while O1 owner/scope attribution remains a separate Human action.
 - Backend/frontend delivery Work Units remain underived until the shared Slice-2 contract is reconciled.
 
 Slice-1 completion evidence:
@@ -192,7 +193,7 @@ SLICE_FINALIZED
 ✓ Human-approved
 ```
 
-Slice 1 has completed technical, integrated, and Human finalization. Slice 2 is in progress: Exploration, amended Techplan approval, and current-frontier owner attribution are complete; focused O3–O5 decision preparation is queued. Implementation has not started.
+Slice 1 has completed technical, integrated, and Human finalization. Slice 2 is in progress: Exploration, amended Techplan approval, current-frontier owner attribution, focused O3–O5 decisions, O2/O3 gap analysis, bounded Planner delivery proposal, O7 Design review, and O1 evidence gathering are complete. O1 remains partially resolved pending owner/scope attribution for the shared currency standard; `OIR-S2-002-006` is queued for independent Campaign/Donation ordering. The O2/O3 policy conflict awaits a separate owner resolution. Implementation has not started.
 
 ## 8. Continuous Real-Task Validation posture
 
@@ -222,8 +223,10 @@ The Product Authority promotion gate is closed. PR #27 is historical promotion e
 Current gate:
 
 ```text
-Slice 2 Exploration, amended Techplan approval, and current owner attribution complete
-→ focused O3–O5 decision preparation (`OIR-S2-002-002`)
+Slice 2 Exploration, amended Techplan approval, current owner attribution, O3–O5 decision preparation, O2/O3 gap analysis, bounded Planner proposal, and O7 Design review complete
+→ dispatch OIR-S2-002-006 for independent Campaign/Donation ordering
+→ separately reconcile O1's shared currency-standard owner/scope attribution; OIR-S2-002-005 found cross-feature authority is required
+→ reconcile O2/O3 Delivery route separately with mandatory verified-email terminal notification
 → route remaining open items and record owner decisions/evidence
 → reconcile Donation domain detail and shared contract (`WU-S2-002`)
 → earn Slice-2 CONTRACT_READY
