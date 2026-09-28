@@ -241,3 +241,10 @@ Evidence sources: `docs/product/mvp-scope.md`, `docs/product/mvp-delivery-slices
 
 - Anhar Solehudin clarified that he is the owner who approved current-effective Techplan `WU-S2-002/runs/TP-S2-002-007/techplan.md`.
 - This attributes the Human approval recorded above. It does not change the approval scope or assign him as the Security/PII, Design, API, Campaign, or Donation owner for separate Active Open Items; those remain with the roles identified in the Techplan unless separately assigned.
+
+## 2026-09-28 — Bounded Slice 2 readiness reconciliation
+
+- Reconstructed current Slice 2 state from the Parent Outcome, Work Graph, `WU-S2-002` manifest, current-effective Approved Techplan, approval Events, and Human-owned runtime registry; compared it with current Pilot #2 candidate guidance at Harscode `7a4dbf2c065bd8fd02c86c24073d7309046bff30`.
+- Recorded the minimum authority-area discovery target and evidence-backed reusable Participant Profile baseline in `readiness-reconciliation.md`. This is a derived readiness assessment, not an authority assignment or a new Run.
+- The project-local Authority Map and Participant Profile Registry/definitions are not yet present. Anhar's named Techplan approval does not assign the separate Donation, Campaign, API, Security/PII, or Design owner areas needed now; Product/MVP ownership is conditional on a new product-semantic decision.
+- `WU-S2-002` remains `WAITING_HUMAN / PARKED` under `AUTHORITY_SYNC`. No Participant dispatch, spec/API Build, contract milestone, or backend/frontend delivery topology is claimed. Next coordination action is named owner/scope attribution, then per-item routing and bounded Profile creation before relevant Run dispatch.
