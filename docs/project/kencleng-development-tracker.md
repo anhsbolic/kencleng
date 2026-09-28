@@ -1,7 +1,7 @@
 # Kencleng — Development Tracker
 
 > Status: Living project status
-> Last reconciled: 2026-09-26
+> Last reconciled: 2026-09-28
 > Current Kencleng authoritative Product Authority baseline: `main@e32916b597412094976e3e6263095e861ec18391` (`Promote Product Authority and MVP delivery model (#27)`)
 > Harscode operational baseline: `main@b64fa11082a094d0e1b6e9488c20eac1c7f9777b`
 > Purpose: Keep cross-domain and product-slice delivery state visible without turning dated progress into workflow policy.
@@ -80,7 +80,7 @@ Domain rows remain useful for semantic/implementation evidence, but they do **no
 | Notification | Historical/draft reference | `NOT_STARTED` as standalone delivery | `NOT_STARTED` | Include only when a real slice requires active notification behavior. |
 | Organization | Historical/draft reference | `NOT_STARTED` | `NOT_STARTED` | Slice 1 needs only minimum persisted/public-safe steward context; full self-service is deferred. |
 | Campaign | `SLICE_FINALIZED` for Slice 1 | `BACKEND_VERIFIED` | `FRONTEND_MOCK_VERIFIED` | Contract, backend, frontend mock-parallel experience, topology/private media, and real cross-stack integration are verified; Human finalization approved for Slice 1. |
-| Donation | Slice-2 Techplan `WAITING_HUMAN`; historical/draft artifacts remain reference evidence | `NOT_STARTED` active generation | `NOT_STARTED` | `WU-S2-001` Exploration and `WU-S2-002` Techplan Synthesis are complete; Techplan awaits Human gate. No Slice-2 contract or delivery milestone is earned. Correctness-critical money areas retain Tier-0 fencing. |
+| Donation | Slice-2 current-effective Techplan `TP-S2-002-007` Approved; `WU-S2-002` is `WAITING_HUMAN / PARKED` for authority sync. Historical/draft domain artifacts remain reference evidence | `NOT_STARTED` active generation | `NOT_STARTED` | Owner attribution and open contract details remain; no Slice-2 contract or delivery milestone is earned. Correctness-critical money areas retain Tier-0 fencing. |
 | Disbursement | Historical/draft reference | `NOT_STARTED` | `NOT_STARTED` | Not baseline MVP critical path; do not pull in merely to make accountability look complete. |
 
 ## 5. Historical Account/backend evidence
@@ -156,8 +156,9 @@ SLICE_FINALIZED
 Slice-2 orchestration evidence:
 
 - `WU-S2-001 / EXP-S2-001-001` completed Stage 2 gap analysis and Stage 3 solutioning; the Stage 3 Human gate is recorded in its artifact provenance.
-- `WU-S2-002` — Donation Domain & Contract Reconciliation — is `WAITING_HUMAN`; Techplan `TP-S2-002-001` is Draft/In-Review after completing synthesis.
-- Human must choose whether to run the recommended independent review or proceed to direct review. Planner-owned `report-techplan.md` is pending until the applicable review/resolution route converges; the premature Orchestrator-authored digest was withdrawn. Material Open Items remain unresolved; no contract or implementation milestone has been earned.
+- `WU-S2-002` — Donation Domain & Contract Reconciliation — is `WAITING_HUMAN / PARKED` under `AUTHORITY_SYNC`. Current-effective `TP-S2-002-007` and its Planner-owned report completed independent review/resolution and received Human approval on 2026-09-27; `TP-S2-002-008` reconciled the plan's status metadata to `Approved`.
+- The Product/MVP amendment resolved Slice-2 product policy O1–O6/O9. Active owner/technical questions O1–O5, Design review O7, and Campaign/Donation contract ordering remain; O8 is conditional on historical API operation removal/replacement. O6/O9 policy still needs spec/API translation. No residual Security/PII risk was accepted and no contract or implementation milestone has been earned.
+- Pilot #2 bounded readiness assessment is at `.harscode-spaces/s2-guest-donation-truthful-state/readiness-reconciliation.md`; the project Authority Map currently marks needed named owners `UNMAPPED`, while the five baseline Participant Profiles and Registry are present. Attribution and per-item routing are next.
 - Backend/frontend delivery Work Units remain underived until the shared Slice-2 contract is reconciled.
 
 Slice-1 completion evidence:
@@ -191,7 +192,7 @@ SLICE_FINALIZED
 ✓ Human-approved
 ```
 
-Slice 1 has completed technical, integrated, and Human finalization. Slice 2 is in progress: Exploration is complete and contract reconciliation is queued; implementation has not started.
+Slice 1 has completed technical, integrated, and Human finalization. Slice 2 is in progress: Exploration and the amended Techplan approval gate are complete; contract reconciliation awaits owner attribution and decisions/evidence. Implementation has not started.
 
 ## 8. Continuous Real-Task Validation posture
 
@@ -221,7 +222,8 @@ The Product Authority promotion gate is closed. PR #27 is historical promotion e
 Current gate:
 
 ```text
-Slice 2 Exploration complete
+Slice 2 Exploration and amended Techplan approval complete
+→ attribute current decision owners and route open items
 → reconcile Donation domain detail and shared contract (`WU-S2-002`)
 → earn Slice-2 CONTRACT_READY
 → derive backend/frontend Work Units from the reconciled contract
@@ -230,7 +232,7 @@ Slice 2 Exploration complete
 → complete Slice-2 Human/product acceptance before SLICE_FINALIZED
 ```
 
-Open amount/payment/timing, guest-data/status access, `401`/`404`, and `max_amount`/eligibility questions remain unresolved in the Exploration handoff. Route them to owning authorities when the reconciliation plan needs a decision; do not promote historical draft values silently. Do not infer runtime completion from contract readiness.
+The current-effective approved Techplan distinguishes settled Product/MVP policy from remaining amount representation, simulator timing, guest email/security, status-access/response parity, Design review, and Campaign/Donation ordering detail. Route each item to its named owner or applicable specialist evidence without promoting historical draft values. Do not infer runtime completion from contract readiness.
 
 ## 10. Update discipline
 

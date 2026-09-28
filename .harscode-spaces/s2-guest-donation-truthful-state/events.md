@@ -248,3 +248,10 @@ Evidence sources: `docs/product/mvp-scope.md`, `docs/product/mvp-delivery-slices
 - Recorded the minimum authority-area discovery target and evidence-backed reusable Participant Profile baseline in `readiness-reconciliation.md`. This is a derived readiness assessment, not an authority assignment or a new Run.
 - The project-local Authority Map and Participant Profile Registry/definitions are not yet present. Anhar's named Techplan approval does not assign the separate Donation, Campaign, API, Security/PII, or Design owner areas needed now; Product/MVP ownership is conditional on a new product-semantic decision.
 - `WU-S2-002` remains `WAITING_HUMAN / PARKED` under `AUTHORITY_SYNC`. No Participant dispatch, spec/API Build, contract milestone, or backend/frontend delivery topology is claimed. Next coordination action is named owner/scope attribution, then per-item routing and bounded Profile creation before relevant Run dispatch.
+
+## 2026-09-28 — Bounded readiness completion started
+
+- Created a project-local Authority Map at `.harscode-spaces/authority-map.md` with the five authority areas currently needed by Slice 2 and explicit `UNMAPPED` named-owner gaps. The map does not attribute new authority to the known Techplan approver.
+- Created `.harscode-spaces/participant-profiles/registry.md` and `profiles.md` with the five evidence-backed broad Role Profiles identified in `readiness-reconciliation.md`. They grant no decision authority and carry no Work Unit/Session state.
+- Reconciled `docs/project/kencleng-development-tracker.md` from its stale `TP-S2-002-001` gate and regenerated the Slice 2 Control Surface continuation text to point at the Authority Map and Profile Registry. Work Graph topology and Work Unit status are unchanged.
+- Authority Sync is still active. No owner answer, new Run dispatch, Work Unit state change, or milestone promotion is claimed by these setup artifacts.

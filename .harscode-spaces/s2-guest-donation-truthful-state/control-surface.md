@@ -25,8 +25,8 @@ Current delivery state:
 - Current-effective Techplan: `TP-S2-002-007/techplan.md` — disetujui Human; field `Status` telah direkonsiliasi menjadi `Approved` oleh `TP-S2-002-008`.
 - Human approval evidence: `.harscode-spaces/s2-guest-donation-truthful-state/events.md` mencatat approval atas Techplan dan report yang cocok; `TP-S2-002-008/launch-record.md` membuktikan rekonsiliasi metadata.
 - Current Run: `TP-S2-002-008` — selesai. Belum ada Participant Run selanjutnya yang runnable; Work Unit menunggu authority/owner outcomes.
-- Next action: koordinasikan owner decisions/evidence untuk O1–O5 dan Design review O7; setelah hasil tercatat, Orchestrator menurunkan bounded spec/API reconciliation Run. O6/O9 policy sudah resolved tetapi wajib diterjemahkan ke contract. O8 hanya jika operasi historis dihapus/diganti. Approval tidak memulai Build dan tidak menetapkan `CONTRACT_READY`.
-- Human checkpoint: fasilitasi outcome dari Product/Donation/API, Security/PII, Campaign, dan Design owners sesuai item; sumber mencatat owner roles, bukan nama individu. O9 tetap memblokir final submit contract/`CONTRACT_READY` sampai diterjemahkan ke contract dan bukti yang diperlukan.
+- Next action: atribusikan pemilik bernama untuk lima area yang diperlukan di `.harscode-spaces/authority-map.md`, lalu rute O1–O5 dan O7 per item ke owner decision, specialist evidence, atau later Build/Testing. Setelah prasyarat hasilnya tercatat, Orchestrator menurunkan bounded spec/API reconciliation Run. O6/O9 policy sudah resolved tetapi wajib diterjemahkan ke contract. O8 hanya jika operasi historis dihapus/diganti. Approval tidak memulai Build dan tidak menetapkan `CONTRACT_READY`.
+- Human checkpoint: tentukan pemilik dan cakupan untuk Donation delivery, Campaign delivery, API/contract, Security/PII, dan Product Design. Anhar tercatat sebagai approver Techplan, bukan otomatis owner area tersebut. O9 tetap memblokir final submit contract/`CONTRACT_READY` sampai diterjemahkan ke contract dan bukti yang diperlukan.
 
 ## NEXT / LATER
 
@@ -41,7 +41,7 @@ Setelah `CONTRACT_READY`, Orchestrator akan menurunkan backend/frontend delivery
 
 ## Blockers
 
-Blocker aktif: `AUTHORITY_SYNC` — status approval Techplan sudah direkonsiliasi. O1–O5 dan O7 memerlukan owner outcomes/evidence sebelum bagian contract terkait difinalisasi; O6/O9 perlu diterjemahkan ke spec/API. O8 conditional pada removal/replacement. O9 tetap blocker contract readiness.
+Blocker aktif: `AUTHORITY_SYNC` — status approval Techplan sudah direkonsiliasi. Authority Map ada dengan pemilik yang masih `UNMAPPED`; baseline Participant Profile Registry/definitions sudah tersedia di `.harscode-spaces/participant-profiles/`. O1–O5 dan O7 memerlukan owner outcomes/evidence sebelum bagian contract terkait difinalisasi; O6/O9 perlu diterjemahkan ke spec/API. O8 conditional pada removal/replacement. O9 tetap blocker contract readiness.
 
 ## Bootstrap boundary
 
