@@ -46,7 +46,13 @@ Guiding principles for all decisions below:
 | Event-driven / Kafka | *Deferred — as-needed* | Kencleng starts as a monolith; in-process function calls or a Postgres outbox/`LISTEN-NOTIFY` pattern are the default fallback for anything looking like "events." Kafka would only be introduced for genuine multi-consumer/async/replay needs, or as an explicit learning goal in itself. |
  
 ## API Contract & Codegen [RESOLVED — Step 2]
- 
+
+Project-wide monetary representation is defined in
+[`kencleng-monetary-data-standard.md`](kencleng-monetary-data-standard.md).
+Backend calculation and persistence follow its exact-decimal rule; the
+concrete database type and scale remain dependent on supported currencies and
+real computation needs.
+
 **Format**: OpenAPI 3.x, spec-first — split source files under
 `api/openapi/` are hand-authored before implementation. `api/openapi.yaml`
 is the generated bundled aggregate used for aggregate inspection and

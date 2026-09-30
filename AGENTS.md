@@ -37,6 +37,9 @@ API contract shape for the active reconciled slice
 backend architecture
 → docs/project/kencleng-backend-tech-stack.md
 
+project-wide monetary representation across API/domain/storage
+→ docs/project/kencleng-monetary-data-standard.md
+
 frontend architecture
 → docs/project/kencleng-frontend-tech-stack.md
 

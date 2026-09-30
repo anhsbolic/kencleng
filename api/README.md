@@ -2,6 +2,12 @@
 
 > File: `api/README.md`
 
+Project-wide monetary representation is owned by
+`docs/project/kencleng-monetary-data-standard.md`. Reconcile each active
+domain contract against that direction and current Product Authority; this
+shared standard does not set feature business limits or a universal database
+precision/scale.
+
 ## Structure
 
 ```
