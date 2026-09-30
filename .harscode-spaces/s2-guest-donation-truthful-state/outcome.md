@@ -6,7 +6,7 @@
 
 - Outcome ID: `S2-GUEST-DONATION-TRUTHFUL-STATE`
 - Product slice: `Slice 2 — Guest Donation + Truthful Donation State`
-- Status delivery saat ini: `IN_PROGRESS` — `TP-S2-002-007` tetap current-effective Approved Techplan. OIR `OIR-S2-002-006` selesai dan mencatat owner D1 untuk Campaign/Donation eligibility dan settlement ordering; source spec/API belum direkonsiliasi dan belum ada runtime proof. Planner amendment `TP-S2-002-010` disiapkan untuk memasukkan D1 ke execution spine; fresh independent Techplan review dan Human approval gate mengikuti. O1 shared-currency owner/scope dan O2/O3 email-retention conflict tetap blocker terpisah; O4/O5 controls/evidence, O7/O9 translation, dan conditional O8 masih memerlukan rute. Tidak ada milestone Slice 2 atau `CONTRACT_READY`.
+- Status delivery saat ini: `IN_PROGRESS` — `TP-S2-002-007` tetap current-effective Approved Techplan sampai Human menyetujui amendmen material TP-011. TP-011 menyelesaikan findings RV-005 dengan mempropagasikan O7 decisions dan mencatat O1/O11 sebagai scoped gates; D1 tetap unchanged. Independent review `RV-S2-002-006` selesai clean, dan Planner menghasilkan report pada `TP-S2-002-012`. Next route: Human review report + TP-011 lalu approve atau request revision. Source spec/API belum direkonsiliasi, belum ada runtime proof, dan tidak ada milestone Slice 2 atau `CONTRACT_READY`.
 
 ## Approved outcome
 
@@ -32,4 +32,4 @@ Slice 1 berstatus `SLICE_FINALIZED`. Untuk Slice 2, `WU-S2-001` Exploration tela
 
 Historical Donation specs, OpenAPI, migrations, tests, dan code adalah evidence sampai direkonsiliasi untuk Slice 2. Account bukan prasyarat baseline kecuali Exploration menemukan bukti enabling-critical yang mengubah pemahaman ini dan merutekannya ke authority yang sesuai.
 
-Run `EXP-S2-001-001` dan beberapa Run Techplan/Reviewer/Explorer downstream, termasuk `OIR-S2-002-002` sampai `OIR-S2-002-006` serta `TP-S2-002-009`, telah selesai sebagaimana dicatat di `events.md`. OIR-S2-002-006 merekam owner D1; TP-S2-002-010 disiapkan untuk merekonsiliasikannya ke current Techplan. OIR-S2-002-005 belum menetapkan global currency standard. Belum ada implementasi Slice 2.
+Run `EXP-S2-001-001` dan beberapa Run Techplan/Reviewer/Explorer downstream, termasuk `OIR-S2-002-002` sampai `OIR-S2-002-006` serta `TP-S2-002-009`, telah selesai sebagaimana dicatat di `events.md`. OIR-S2-002-006 merekam owner D1; TP-010 membawanya ke Techplan. Review `RV-S2-002-005` menemukan tiga blocker yang ditangani TP-S2-002-011; independent review `RV-S2-002-006` selesai tanpa findings. OIR-S2-002-005 belum menetapkan global currency standard. Belum ada implementasi Slice 2.
