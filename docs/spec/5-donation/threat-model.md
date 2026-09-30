@@ -1,133 +1,95 @@
-# Threat Model — donation
+# Threat Model — Donation
 
-> File: `docs/spec/donation/threat-model.md`
-> Status: draft — authored directly against `api/openapi/donation.yaml` 2026-08-20
-> Last updated: 2026-08-20
+> File: `docs/spec/5-donation/threat-model.md`
+> Status: draft — Slice 2 reconciliation; Security/PII and applicable Human review required before `agreed`
+> Last updated: 2026-09-30
+> Active slice: Slice 2 — Guest Donation + Truthful Donation State
 
-## Actors & trust boundaries
+## Scope and trust boundaries
 
-| Actor | Authenticated? | Trust boundary crossed |
+Active surfaces are guest submission, backend-controlled sandbox processing, status-only guest revisit, and the Campaign eligibility/funding boundary. Account history, public donor list, claim, guest-email reveal, and real payment rails are deferred. Historical risk acceptances are not current authority.
+
+| Actor / component | Authenticated? | Trust boundary |
 |---|---|---|
-| Public / anonymous donor | No | `POST /campaigns/{id}/donations` (guest path), `GET /campaigns/{id}/donations` (public list), `GET /donations/{id}/status` (token-guarded, not identity-guarded) |
-| Registered donor | Yes | Same submit endpoint (authenticated path), `GET /account/donations`, `GET /account/donations/claimable`, `POST /account/donations/{id}/claim` |
-| Admin | Yes | New: `GET /donations/{id}/guest-email` (INV-donation-14) |
-| Kurator (assigned/historical to the donation's campaign) | Yes | Same new endpoint, scoped |
-| Internal settlement process | N/A — in-process, no HTTP endpoint | The simulated payment "callback" — explicitly never exposed externally (`kencleng-phase2-detail.md` Fitur 1 Security notes) |
-| Anyone holding a `status_token` string | No (token-based, not session-based) | `GET /donations/{id}/status` — the token itself is the credential, for the token's entire (non-expiring) lifetime |
+| Guest donor | No | Sends amount, optional name, opt-in email, and submission request; may revisit status through temporary bearer URL. All request data is untrusted. |
+| Donation API | Server-side | Validates request and eligibility, persists Donation state, and returns only approved public data. |
+| Donation simulator | Backend-controlled | Owns terminal sandbox result; request/UI cannot select outcome. No client-callable settlement transition. Timing/scenario detail remains O2. |
+| Campaign state | Server-side, Campaign-owned | Submission eligibility and close are ordered under D1; successful funding reflection remains atomic and exact-once. |
+| Email delivery | External delivery boundary | No status/access content before ownership verification; delivery windows, retries, retention, and controls remain O3/O11. |
+| Holder of guest status URL | No | Possession grants temporary status-only access for 24 hours; token/control design and residual-risk decision remain O4/O5. |
 
-## STRIDE per operation
+## STRIDE by active surface
 
-### Submit donation — `POST /campaigns/{campaignId}/donations`
+### Guest submission and retry
 
-| Category | Concrete threat | Existing mitigation | Residual risk |
+| Category | Concrete threat | Required mitigation / current direction | Residual risk / owner gate |
 |---|---|---|---|
-| Spoofing | An authenticated request with a forged/stale token attempts to submit under someone else's identity | Standard `bearerAuth` validation, same as every other authenticated endpoint | None |
-| Tampering | Authenticated caller supplies `guest_name`/`guest_email` in the body, hoping to submit "as guest" under a different identity while still being authenticated | Body guest fields are ignored when authenticated (INV-donation-07) — session identity always wins | None |
-| Tampering | Double-submit (accidental double-click, or a malicious retry) creates two donation records | `Idempotency-Key` header required (INV-donation-11) | None, assuming the client correctly reuses the key on retry — a client bug that generates a new key each time would still create duplicates; this is a client-correctness concern, not a server-side gap |
-| Tampering | Submission raced against the campaign closing (deadline/max_amount/force-close) between page load and submit | `WHERE status = 'published'` guard at submit time (INV-donation-02) | None |
-| Repudiation | N/A — the donation record itself is the record; no separate "who submitted" ambiguity for registered donors. For guest donations, there's inherently no stronger identity than what was voluntarily provided. | — | — |
-| Information disclosure | `status_token` returned in the `201` response and (if `guest_email` provided) emailed — if intercepted, grants read access to that donation's status | Token is random and long enough to resist brute-force (INV-donation-05); transport is HTTPS (project-wide assumption); the token only grants **read** access to non-sensitive-beyond-amount/method data, not a destructive action | Accepted — same risk class as any bookmarkable, non-expiring access token; consistent with the project's own explicit trade-off reasoning in `kencleng-phase2-detail.md` |
-| Denial of service | Automated mass-submission of tiny (Rp 5.000) donations to spam a campaign's donor list / inflate `donor_count` | Minimum amount (INV-donation-01) raises the cost per spam unit somewhat, but doesn't prevent it; no CAPTCHA/rate-limiting documented for this public endpoint | **Accepted for a sandbox project** — a real deployment would want bot-mitigation on a public, unauthenticated financial-adjacent endpoint; flagged as an intentional gap given this project's stated non-production scope |
-| Elevation of privilege | N/A | — | — |
+| Spoofing | A caller submits as another registered identity or forges authenticated context. | If authenticated, use validated session identity; guest fields cannot override it. Explicit backend authorization remains required where applicable. | Authentication implementation is outside this spec change. |
+| Tampering | Invalid or fractional amount, unavailable method, altered payload on retry, or client-selected terminal outcome. | Whole IDR, minimum Rp5.000, Rp1 increments; exact decimal/no float. Only QRIS is active sandbox; backend owns result. Same key/same payload returns original, same key/different payload rejects. | O1 amount encoding/scale and O2 simulator mechanics remain open; do not invent them. |
+| Repudiation | Guest disputes whether a new donation was intentionally submitted after an ambiguous response. | Same idempotency key remains through ambiguity; client suppresses double-click; deliberate new intent uses a new key. | Retry-record lifetime/serialization is delivery detail for contract reconciliation. |
+| Information disclosure | Guest name/email or Donation details leak through response/log/email before ownership verification. | Name not public by default; email opt-in/status-only; verify ownership before status/access email; established encryption/HMAC and safe-logging pattern. | O3/O11 retention and controls remain open; no accepted residual risk. |
+| Denial of service | Automated public submission burdens the service or creates unwanted records. | Minimum amount is a product validation, not a sufficient abuse control. | Security/API owner must determine applicable abuse controls; no prior sandbox acceptance is carried forward. |
+| Elevation of privilege | External caller invokes a success/failure settlement transition. | No client-callable transition; backend simulator exclusively owns terminal state. | Requires later route/security review and runtime evidence. |
 
-### Public donor list — `GET /campaigns/{campaignId}/donations`
+### Simulator and money-state transition
 
-| Category | Concrete threat | Existing mitigation | Residual risk |
+| Category | Concrete threat | Required mitigation / current direction | Residual risk / owner gate |
 |---|---|---|---|
-| Spoofing | N/A — public, no auth | — | — |
-| Tampering | N/A — read-only | — | — |
-| Repudiation | N/A | — | — |
-| Information disclosure | `guest_email` or any PII leaking into the public shape | `DonationListItem` schema explicitly excludes it — confirmed at the schema level, not just a runtime check to remember (INV-donation-06) | None, assuming implementation matches the schema exactly (i.e. no accidental over-fetching in the query that then gets serialized) |
-| Information disclosure | `is_anonymous` donors still identifiable via amount/timing correlation (e.g. "an anonymous Rp 50.000.000 donation right after a known donor viewed the page") | Not mitigated — inherent to any public amount+timestamp list | Low, accepted — this is a general public-transparency-vs-privacy trade-off inherent to the feature's design (public donor lists are the explicit product requirement), not something this domain's spec can fix without changing the feature itself |
-| Denial of service | N/A beyond standard pagination limits | `LimitParam` cap | None |
-| Elevation of privilege | N/A | — | — |
+| Spoofing | Forged settlement causes a false successful donation. | Simulator is backend-controlled; no exposed HTTP settlement route. | Implementation and route audit remain downstream. |
+| Tampering | Replay, concurrent transition, or partial commit changes status without matching funding or increments twice. | Successful status and full funding reflection commit atomically and exactly once; pending/failed do not count. | Mechanism is deliberately unspecified; Tier-1 review and specialized runtime Testing remain required. |
+| Repudiation | Observable status and funding disagree about whether settlement occurred. | Every committed/observable state includes both success and full funding reflection, or neither. | Runtime atomicity, failure, replay, and concurrency evidence is deferred. |
+| Information disclosure | Simulator leaks internal scenario configuration or non-public Donation data. | Expose only approved status; no internal fixture/configuration details in public responses. | O2 scenario detail remains open. |
+| Denial of service | Simulator work is delayed or exhausted. | No timing/SLA is promised; pending copy is “Menunggu hasil simulasi.” | Timing and operational controls are O2; no availability promise is set. |
+| Elevation of privilege | Donor controls whether the simulator returns success or failure. | Failure only through clearly labeled backend-configured/fixture demo scenario, never donor choice/request. | O2 mechanics remain open. |
 
-### Token-based status check — `GET /donations/{donationId}/status`
+### Temporary guest status URL
 
-| Category | Concrete threat | Existing mitigation | Residual risk |
+| Category | Concrete threat | Required mitigation / current direction | Residual risk / owner gate |
 |---|---|---|---|
-| Spoofing | N/A — token-based by design, not identity-based | — | — |
-| Tampering | N/A — read-only | — | — |
-| Repudiation | N/A | — | — |
-| Information disclosure | Token brute-forcing (guessing `token` query params against a known/guessed `donationId`) | Token is long/random (INV-donation-05); `401` on mismatch gives no signal distinguishing "wrong token" from "donation doesn't exist" — check this is actually implemented as a uniform response, not two distinguishable error paths | Low, worth an explicit test that the `401` response is identical regardless of *why* it failed (donation not found vs. token mismatch) |
-| Denial of service | Brute-force token-guessing at scale | No rate-limiting documented on this specific endpoint | Low — token space is large enough that this is impractical even without rate-limiting, but a real deployment would still want one; accepted for sandbox scope |
-| Elevation of privilege | N/A | — | — |
+| Spoofing | Attacker guesses or steals the bearer credential. | Product sets difficult-to-guess URL, 24-hour validity, status-only access. | Token entropy, carrier/storage, lifecycle, comparison, and exposure controls remain O4. |
+| Tampering | URL or parameters alter Donation or request a broader response. | Read-only status surface; do not expose mutation or details beyond status. | API shape is not defined in this task. |
+| Repudiation | A donor cannot distinguish the legitimate status URL from an invalid/expired one. | User-facing generic copy is “Link status tidak tersedia atau mungkin kedaluwarsa.” | Design does not resolve technical response parity. |
+| Information disclosure | Token appears in browser history, referrer, logs, cache, or forwarded URL; response reveals Donation existence. | Status-only response and 24-hour product direction. | Security/API must select and evidence carrier, history/referrer/log/cache protections and residual-risk acceptance (O4); code/body/header/cache/timing parity (O5). |
+| Denial of service | Token guessing or repeated lookup exhausts resources. | No product-level abuse control selected here. | Security/API must decide and evidence rate/abuse handling (O4/O5). |
+| Elevation of privilege | Credential grants access to email, account, or mutation capability. | Scope access to Donation status only. | Verify against final contract and implementation. |
 
-### Account donation history & claimable list — `GET /account/donations`, `GET /account/donations/claimable`
+### Optional notification email
 
-| Category | Concrete threat | Existing mitigation | Residual risk |
+| Category | Concrete threat | Required mitigation / current direction | Residual risk / owner gate |
 |---|---|---|---|
-| Spoofing | N/A | `bearerAuth` | None |
-| Tampering | N/A — read-only | — | — |
-| Repudiation | N/A | — | — |
-| Information disclosure | Claimable-list matching leaks whether *any* guest donation exists for an email the caller doesn't actually own | Matching is against the caller's **own verified** `primary_email` only (`guest_email_hash` comparison) — no path to query by an arbitrary email | None |
-| Denial of service | N/A | — | — |
-| Elevation of privilege | Unverified-email user attempts to view claimable donations | `403`, confirmed explicit | None |
+| Spoofing | Unverified address is used to access a Donation or receive its status. | Verify ownership before sending any status or access link. | Verification window and controls remain O3. |
+| Tampering | Donor-controlled content changes the notice into a payment request or implies real settlement. | Status-only notice; terminal result labeled simulation; no real-payment instructions. | Delivery template review is downstream. |
+| Repudiation | Notice is sent more than once or before terminal result. | At most one notice for terminal success/failed; never initial pending. | Retry/deduplication and retention details remain O3. |
+| Information disclosure | PII or Donation status reaches an unverified recipient or persists too long. | Optional opt-in, verify first, encrypt/HMAC, safe logs, delete unverified address after approved window. | O3 owner controls and O11 policy conflict remain unresolved; no risk accepted. |
+| Denial of service | Repeated opt-ins or verification messages abuse delivery. | No detailed control selected in this spec. | O3 Security/PII and delivery owners decide controls. |
+| Elevation of privilege | Email link grants broader access than status-only guest URL. | Any access link follows INV-donation-05 and O4/O5 gates. | Do not finalize contract fields until owner decisions. |
 
-### Claim — `POST /account/donations/{donationId}/claim`
+## Campaign eligibility, threshold, and close
 
-| Category | Concrete threat | Existing mitigation | Residual risk |
-|---|---|---|---|
-| Spoofing | N/A | `bearerAuth` | None |
-| Tampering | Claim a donation whose `guest_email` doesn't actually match the caller | `403`, confirmed explicit ("this donation's `guest_email` doesn't match") | None |
-| Tampering | Double-claim race (two users sharing an email, or a retried request) | `WHERE donor_user_id IS NULL` guard, confirmed (INV-donation-12) | None |
-| Repudiation | Claim itself isn't separately logged to `donation_logs` per the ERD's comment (only guest-email reveal is anticipated there) — worth confirming this is intentional, since claiming does change ownership of a financial record | Not currently in scope per the ERD | **Open, low priority** — flag for a decision on whether `claimed_at`/`donor_user_id` changes should also produce a `donation_logs` entry; not blocking, since `claimed_at` itself on the row is already a durable record of *when*, just not a separate immutable log entry |
-| Information disclosure | N/A | — | — |
-| Denial of service | N/A | — | — |
-| Elevation of privilege | Unverified-email user attempts claim | `403` | None |
-
-### Guest-email reveal — `GET /donations/{donationId}/guest-email` (new, INV-donation-14)
-
-| Category | Concrete threat | Existing mitigation | Residual risk |
-|---|---|---|---|
-| Spoofing | N/A | `bearerAuth` + Admin/scoped-Kurator check | None |
-| Tampering | N/A — read-only | — | — |
-| Repudiation | Every reveal must log — this is the entire point of the endpoint | `donation_logs` entry per call (INV-donation-14) | None, assuming implementation doesn't allow a reveal to succeed without the log write also succeeding — recommend the same transaction (reveal query + log insert), not two independent operations where one could fail silently |
-| Information disclosure | An unrelated Kurator (not assigned to this donation's campaign) attempts reveal | Assignment-scoped check (mirrors `organization`'s legal-document pattern) | None if enforced correctly — verify against the *current or historical* assignment, not just "any Kurator," same care as the curation-decision endpoints elsewhere in this project |
-| Denial of service | Admin/Kurator mass-revealing guest emails across many donations (internal misuse, not an external attacker) | Every reveal is logged — provides an audit trail for after-the-fact review, doesn't prevent the action itself | Accepted — same posture as `organization`'s NPWP reveal; logging deters/detects misuse rather than preventing it outright, consistent with this project's audit-log philosophy |
-| Elevation of privilege | Non-Admin, non-Kurator caller | `403` | None |
-
-### Internal settlement process (no HTTP endpoint)
-
-| Category | Concrete threat | Existing mitigation | Residual risk |
-|---|---|---|---|
-| Spoofing | If this were ever accidentally exposed as a real endpoint, anyone could forge a "payment succeeded" callback | Explicitly documented as internal-only, never exposed externally (`kencleng-phase2-detail.md`) — this is an architectural requirement, not just a convention; implementation must ensure no route registers this | **Critical to get right at implementation time** — flag prominently in the feature spec, since this is the one place in the whole domain where a routing mistake would be a severe vulnerability (fake payment confirmations) |
-| Tampering | N/A beyond the above | — | — |
-| Repudiation | N/A — internal process | — | — |
-| Information disclosure | N/A | — | — |
-| Denial of service | N/A | — | — |
-| Elevation of privilege | The spoofing case above, reframed | — | — |
+| Threat | Required mitigation / current direction | Deferred evidence |
+|---|---|---|
+| Submission/close race accepts a new Donation after close or rejects one that won eligibility. | Apply D1: atomically order eligibility against close; close-first rejects; accepted Donation remains settleable in full. | Runtime concurrency evidence; no lock/isolation mechanism selected. |
+| Accepted pending Donation settles after close and is lost or changes close reason. | Success and full funding commit exactly once; later settlement cannot reopen Campaign or replace winning close reason; funding can exceed `max_amount`. | Runtime integration evidence. |
+| Donation spec imports unrelated closure/result lifecycle. | Scope this reference to eligibility, threshold, accepted pending Donation, and rejection after close only. | Broader closure/result remains Slice 3. |
 
 ## Knowingly accepted residual risk
 
-- **No bot-mitigation on public donation submission** — accepted for
-  a sandbox project; a real deployment would want CAPTCHA/rate-limiting
-  on this public, unauthenticated endpoint.
-- **`status_token` as a bookmarkable, non-expiring credential** —
-  accepted, matches the project's own explicit reasoning (read-only,
-  non-destructive lookup).
-- **Public donor-list correlation risk for anonymous donors** —
-  inherent to the feature's public-transparency design, not fixable
-  at this domain's level without changing product requirements.
-- **No rate-limiting on token-guessing at the status-check endpoint**
-  — accepted, token space is large enough to make this impractical.
+None is accepted by this reconciliation. Historical statements accepting non-expiring credentials, missing abuse controls, public-list correlation, or other sandbox risks are not carried forward. Security/PII and API owners must resolve applicable controls and residual-risk decisions through O3–O5; O11 requires the scoped Human decision before dependent email detail can be finalized.
 
-## Open items to resolve
+## Open items and downstream evidence
 
-1. Should claiming a donation (`donor_user_id`/`claimed_at` change)
-   also produce a `donation_logs` entry, beyond the row's own
-   `claimed_at` timestamp? Low priority, not blocking.
-2. **Critical implementation-time requirement**: the internal
-   settlement process must never be reachable via any registered HTTP
-   route — this needs explicit verification during code review, not
-   just documentation.
+- **O1 `AUTHORITY_SYNC`**: amount representation and shared currency standard owner/scope.
+- **O2**: simulator timing and backend-controlled scenario mechanics.
+- **O3**: email verification, retention, retry, and control evidence.
+- **O4/O5**: token exposure, anti-enumeration parity, abuse controls, and residual-risk decision.
+- **O8 conditional**: consumer/distribution evidence before any historical operation removal/replacement.
+- **O11 `HUMAN_DECISION`**: terminal notice obligation versus independent pending-email cap.
+- Runtime Testing must cover atomic success/funding, replay, concurrency, submit/close ordering, accepted-pending settlement after close, stable winning close reason, threshold overshoot, status privacy, and retry behavior as assigned by the Approved Techplan.
 
 ## References
 
-- Related domain invariants: `docs/spec/donation/invariants.md`
-- Related ERD: `docs/project/kencleng-erd.md` §4
-- Related business process: `docs/project/kencleng-phase2-detail.md`
-  Fitur 1, 4
-- Related threat model precedent: `docs/spec/organization/threat-model.md`
-  (reveal-endpoint pattern, referenced for INV-donation-14)
-- **Actual API (ground truth)**: `api/openapi/donation.yaml`
+- `docs/spec/5-donation/invariants.md`
+- `docs/product/mvp-scope.md` §§4–7
+- `docs/product/mvp-delivery-slices.md` §§5–6
+- `docs/spec/4-campaign/invariants.md#inv-campaign-13`
+- `.harscode-spaces/s2-guest-donation-truthful-state/WU-S2-002/runs/TP-S2-002-011/techplan.md` §§7–13

@@ -15,7 +15,7 @@
 > Updated           : 2026-09-30
 > Target revision   : dfbcf7b9241dbe73e2dc2b4c7707f0f829b6cff5 (checkout; TP-010/RV-005 artifacts are current working-tree inputs)
 > Workflow revision : 06a38c668b66227c3531431471b32f4f7df3699b
-> Status            : Draft / In Review
+> Status            : Approved
 > Approach          : Resolve RV-S2-002-005 findings against current authority while preserving D1 and all scoped Open Items.
 > Refs              : `RV-S2-002-005/review-findings.md`; `TP-S2-002-010/techplan.md` (prior Draft/In Review); `TP-S2-002-007/techplan.md` (current-effective Approved spine); OIR-004 Design brief; OIR-005 amount brief; OIR-006 D1 brief; current Product/MVP and Authority Map.
 

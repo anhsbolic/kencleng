@@ -1,146 +1,86 @@
-# Feature Spec — 01: Submit Donation & Async Settlement
+# Feature Spec — 01: Guest Donation Submission and Sandbox Result
 
-> File: `docs/spec/donation/features/01-submit-donation-settlement.md`
-> Domain: `donation`
-> Task: 01 (see `docs/spec/donation/tasks.md`)
-> Status: draft — authored against `api/openapi/donation.yaml` 2026-08-20
-> Last updated: 2026-08-20
+> File: `docs/spec/5-donation/features/01-submit-donation-settlement.md`
+> Status: draft — Slice 2 reconciliation; Donation/Security owner and applicable Human review required before `agreed`
+> Risk tier: 1
+> Domain: Donation
+> Active product slice: Slice 2 — Guest Donation + Truthful Donation State
+> Last updated: 2026-09-30
 
-## Summary
+## Reconciliation
 
-`POST /campaigns/{campaignId}/donations` — public, works with or
-without authentication. Creates a `donations` row (`status =
-'pending'`), then an **internal, non-HTTP** settlement process
-resolves it after a simulated 2–5s delay (5% failure rate). On
-success: atomic `collected_amount` increment, and a check for
-campaign closure.
+Historical public-or-authenticated submission and 2–5 second / 5% settlement are **ADAPT/REPLACE**. This feature covers the guest path and persisted sandbox result from current Product/MVP. Registered-donor behavior and real rails are not in this acceptance. The historical async mechanism is not authoritative.
 
-## `[CRITICAL — implementation requirement]`
+## Feature surface
 
-The settlement process **must never** be reachable via any registered
-HTTP route, internal or external. This is the one place in the whole
-`donation` domain where a routing mistake creates a severe
-vulnerability (anyone could forge a "payment succeeded" callback and
-inflate `collected_amount` arbitrarily). Verify explicitly during code
-review — don't rely on "we just didn't add a route for it," add a
-test that asserts no such route exists if the router setup allows it.
+Guest donation submission, backend-controlled simulator, and the Campaign eligibility/funding boundary. Exact API paths, request/response fields, amount encoding, and simulator control are left to the authorized contract task and relevant owners; this document does not define them.
 
-## Endpoint
+## Acceptance criteria
 
-`POST /campaigns/{campaignId}/donations` (confirmed,
-`api/openapi/donation.yaml`) + internal settlement process (no
-endpoint)
+- Given a guest without an Account, when a valid donation is submitted to an eligible Campaign, then the Donation is persisted as `pending` and the guest flow does not require account creation.
+- Given an amount, when validation runs, then only IDR whole Rupiah amounts at least Rp5.000 in Rp1 increments are accepted; Rp5.001 is valid. Stored/calculated money is exact decimal and never `float64`. Wire encoding, storage precision/scale, and derived-value precision/rounding remain gated by O1 `AUTHORITY_SYNC` and owner decisions.
+- Given the method display, then QRIS, GoPay, ShopeePay, and bank transfer may be shown; QRIS is the only active, clearly labeled sandbox simulation. Other methods are visibly unavailable and non-interactive. Nothing implies real settlement or gives usable real-payment instructions.
+- Given a backend simulator, when it processes a Donation, then only backend-controlled behavior chooses `success` or `failed`; a failure can occur only through a clearly labeled demo scenario controlled by backend configuration/fixture, never by donor choice/request. Exact timing/scenario mechanics remain O2.
+- Given `pending`, then the copy is “Menunggu hasil simulasi,” with no estimate and no instruction to make a real payment. Pending never triggers automatic resubmission. Given `failed`, the donor may explicitly start another Donation using a new key.
+- Given an ambiguous submission outcome, when the client retries with the same key and payload, then the original Donation is returned; same key with a different payload is rejected. Client prevents double-click and does not rotate key while ambiguous. New key means deliberate new intent. Retry record lifetime/serialization remains contract detail.
+- Given a submission racing Campaign close, then eligibility is ordered atomically against close: close-first rejects the new submission; submission-first accepts it. This expresses D1 and does not prescribe a mechanism.
+- Given an accepted Donation still pending when Campaign closes, when the simulator later succeeds, then the full amount remains settleable and Donation success plus full funding reflection commit atomically and exactly once. Later settlement does not reopen Campaign or change its winning close reason; funding may exceed `max_amount`.
+- Given an unsuccessful or still-pending Donation, then it does not count as collected funding. Settlement replay cannot add funding twice. Request idempotency and settlement idempotency are separate guarantees.
+- Given optional guest fields, then name is optional and not public by default. Email is optional and opt-in for Donation status only, separate from Account email verification and not for campaign-wide updates.
+- Given an email notice or access link, then ownership is verified before sending. At most one status-only notice may be sent at terminal `success`/`failed`, never initial `pending`, and it is clearly labeled as simulation. Unverified email is held/deleted only under Security/PII-approved controls/windows.
+- Given an independent pending-email cap that could delete the only verified address before terminal state, then this feature does not resolve the conflict: preserve O11 as `HUMAN_DECISION`. Do not invent a cap, alternate retention mechanism, terminal bound, timeout-as-failed behavior, or residual-risk acceptance.
 
-## Auth
+### Exact Design direction for dependent UI/notice
 
-None required (`security: []`). Optional `Authorization` header — if
-present and valid, the donation is recorded as the authenticated
-user's own; if absent, as a guest donation.
+- Terminal label family: **“Hasil simulasi donasi: berhasil/gagal”**.
+- Optional-email label: **“Kirim pemberitahuan status donasi melalui email (opsional)”**.
+- Helper: **“Verifikasi email dalam 24 jam sejak alamat dicatat. Jika tidak diverifikasi, alamat dihapus dan pemberitahuan tidak dikirim. Donasi tetap berjalan.”**
 
-## Request
+These choices are carried from Q11/R11 and D16 exactly; this spec does not establish rendered visual acceptance or resolve O3/O11 delivery behavior. Rendered acceptance is later Human review.
 
-`IdempotencyKeyHeader` required. Body — `SubmitDonationRequest`:
+## Error and recovery behavior
 
-| Field | Type | Required | Notes |
-|---|---|---|---|
-| `amount` | decimal string | Yes | `≥ 5000` |
-| `payment_method` | enum | Yes | `transfer`/`debit`/`gopay`/`shopeepay`/`ovo`/`qris` — recorded only, no validation logic in v1 |
-| `guest_name` | string, nullable | No | Ignored if authenticated |
-| `guest_email` | string (email), nullable | No | Ignored if authenticated. If omitted for a guest donation, this donation can never be claimed and the donor gets no outcome notification (deliberate, INV-donation-03) |
-| `is_anonymous` | boolean | No | Default `false` |
-| `event_id` | UUID, nullable | No | Optional Event context |
-
-## Behavior
-
-### Submission
-1. Resolve `current_user_id` if `Authorization` is present and valid;
-   otherwise proceed as guest.
-2. Validate `amount ≥ 5000` (`422` otherwise).
-3. Validate `payment_method` is a known enum value (`422` otherwise).
-4. Load the campaign — reject (`409 campaign-not-published`) if
-   `status != 'published'`.
-5. If authenticated: `donor_user_id = current_user_id`,
-   `guest_name`/`guest_email` both `null` on the row regardless of
-   what the body contained (INV-donation-07).
-6. If guest: `guest_name` stored as-is (nullable). `guest_email`, if
-   provided, encrypted (AES-GCM) + hashed (HMAC) before storage
-   (INV-donation-04).
-7. Generate `status_token` (random, long, unique — retry generation on
-   the rare collision against `ux_donations_status_token`).
-8. Insert `donations` (`status = 'pending'`).
-9. If `guest_email` was provided: best-effort email containing the
-   `status_token`/status-check link.
-10. Return `201` with the `Donation` object — this is the **only**
-    response that ever includes `status_token`.
-11. Enqueue the async settlement job (2–5s simulated delay).
-
-### Settlement (internal, no HTTP endpoint)
-1. After the delay: 5% chance → `status = 'failed'`. 95% chance →
-   proceed to step 2.
-2. `UPDATE donations SET status = 'success' WHERE id = :id AND status
-   = 'pending'` — guard makes this idempotent (INV-donation-09).
-3. If the update affected a row (i.e. wasn't already resolved): within
-   the same transaction, `UPDATE campaigns SET collected_amount =
-   collected_amount + :amount WHERE id = :campaign_id AND status =
-   'published' RETURNING collected_amount` (INV-donation-08).
-4. If the returned `collected_amount ≥ max_amount` (when set): trigger
-   campaign closure (`closed_reason = 'max_amount_reached'`) — see
-   `docs/spec/campaign/features/09-closure.md`.
-5. On the 5% failure path: `UPDATE donations SET status = 'failed'
-   WHERE id = :id AND status = 'pending'` — no change to
-   `collected_amount`.
-
-## Validation & error cases
-
-| Case | Response |
+| Condition | Expected behavior |
 |---|---|
-| `amount < 5000` | `422` |
-| Invalid `payment_method` | `422` |
-| Campaign not `published` | `409 campaign-not-published` |
-| Retried request, same `Idempotency-Key` | Original response returned, no new row |
+| Amount below minimum or not whole Rupiah | Reject according to final contract validation; exact status/code is not defined here. |
+| Campaign close wins before submission eligibility | Reject the new Donation; do not specify transport shape here. |
+| Same idempotency key with changed payload | Reject; exact API problem shape belongs to contract reconciliation. |
+| Simulator remains pending | Show “Menunggu hasil simulasi”; no timing promise, payment instruction, or automatic resubmission. |
+| Simulator returns failed | Show simulation failure truthfully; allow a deliberate new Donation with a new key. |
 
-## Concurrency & correctness notes
+## Applicable invariants
 
-- Step 3's atomic conditional `UPDATE` is the entire correctness
-  mechanism for concurrent donations to the same campaign — Postgres
-  row-level locking serializes them. No application-level locking
-  needed.
-- Settlement idempotency (`WHERE status = 'pending'`) prevents
-  double-increment if the job somehow runs twice for the same
-  donation.
-- `Idempotency-Key` prevents duplicate `donations` rows from a
-  double-submit at the HTTP layer — a separate concern from
-  settlement idempotency (one guards row creation, the other guards
-  the pending→success/failed transition).
+- `docs/spec/5-donation/invariants.md#inv-donation-01` through `#inv-donation-04`
+- `docs/spec/5-donation/invariants.md#inv-donation-07` through `#inv-donation-11`
+- `docs/spec/4-campaign/invariants.md#inv-campaign-13` (narrow D1 eligibility/threshold boundary only)
 
-## Test checklist
+## Threat breakdown
 
-- [ ] `amount < 5000` → `422`.
-- [ ] Invalid `payment_method` → `422`.
-- [ ] Non-`published` campaign → `409 campaign-not-published`.
-- [ ] Authenticated submission with guest fields populated in the body
-      → `donor_user_id` set, `guest_name`/`guest_email` both `null` on
-      the stored row.
-- [ ] Guest submission with no `guest_email` → never appears in any
-      claimable list later.
-- [ ] Retried submission, same `Idempotency-Key` → exactly one row
-      created.
-- [ ] `status_token` present only in the `201` response, never again.
-- [ ] Settlement invoked twice for the same donation → `collected_amount`
-      incremented exactly once, second invocation is a no-op.
-- [ ] Concurrent donations to the same campaign: no lost increments
-      (load test with N simultaneous submissions, assert final
-      `collected_amount` = sum of all successful amounts).
-- [ ] A donation crossing `max_amount` triggers closure in the same
-      transaction as its own increment.
-- [ ] **Route audit**: confirm no HTTP route exists for the settlement
-      transition.
+| Threat | Feature-level mitigation | Evidence required |
+|---|---|---|
+| Forged terminal state | Backend simulator owns result; no client-callable settlement transition. | Independent review and downstream route/security evidence. |
+| Duplicate submission or changed-payload replay | Same-key rules; client retains key through ambiguity and suppresses double-click. | Contract/client/runtime retry evidence. |
+| Partial or repeated funding | Atomic success/full-funding outcome, exact-once settlement. | Downstream failure, replay, and concurrency Testing; mechanism not selected. |
+| Ineligible or lost accepted Donation during close | D1 ordering and accepted-pending full settlement. | Runtime concurrency/integration Testing. |
+| PII exposure or premature notification | Optional opt-in, verification before delivery, established encryption/HMAC and safe logs. | O3/O11 owner resolution and Security/PII review. |
+
+## Risk tier and verification boundary
+
+Tier 1 because this feature controls donation status, money reflection, guest PII, and Campaign close ordering. Independent Code Review, applicable Human/domain-owner review, and specialized downstream runtime Testing remain required. This documentation Run does not establish implementation behavior.
+
+## Open questions and gates
+
+- O1 `AUTHORITY_SYNC`: currency standard owner/scope and amount representation/storage details.
+- O2: simulator timing and backend-controlled scenario mechanics.
+- O3: verification, retention, delivery retry, and controls.
+- O11 `HUMAN_DECISION`: terminal notice obligation versus pending-email cap.
+- O8 is conditional only if a historical operation is proposed for removal/replacement; consumer/distribution evidence is required first.
 
 ## References
 
-- `docs/spec/donation/invariants.md` — INV-donation-01 through 11
-- `docs/spec/donation/threat-model.md` — "Submit donation" and
-  "Internal settlement process" sections
-- `docs/spec/donation/tasks.md` — Task 01
-- `docs/spec/campaign/invariants.md` — INV-campaign-13 (referenced)
-- `api/openapi/donation.yaml` — `POST /campaigns/{id}/donations`
+- `docs/spec/5-donation/invariants.md`
+- `docs/spec/5-donation/threat-model.md`
+- `docs/spec/5-donation/tasks.md#task-01--guest-submit-and-truthful-sandbox-result`
+- `docs/product/mvp-scope.md` §§4–7
+- `docs/product/mvp-delivery-slices.md` §5
+- `.harscode-spaces/s2-guest-donation-truthful-state/WU-S2-002/runs/TP-S2-002-011/techplan.md` §§3–13

@@ -1,10 +1,12 @@
 # Feature Spec — 03: Public Donor List
 
-> File: `docs/spec/donation/features/03-public-donor-list.md`
+> File: `docs/spec/5-donation/features/03-public-donor-list.md`
 > Domain: `donation`
-> Task: 03 (see `docs/spec/donation/tasks.md`)
-> Status: draft — authored against `api/openapi/donation.yaml` 2026-08-20
-> Last updated: 2026-08-20
+> Task: 03 (see `docs/spec/5-donation/tasks.md`)
+> Status: deferred — historical evidence only; excluded from Slice 2
+> Last updated: 2026-09-30
+
+> **Slice 2 disposition: DEFER.** The approved guest trust loop does not require a public donor list. The behavior below is preserved as historical evidence, not active acceptance or authorization to expose donation, name, amount, or timestamp data. Reconcile afresh only if a later Product/MVP scope requires it.
 
 ## Summary
 
@@ -72,8 +74,8 @@ None specific — plain read.
 
 ## References
 
-- `docs/spec/donation/invariants.md` — INV-donation-06
-- `docs/spec/donation/threat-model.md` — "Public donor list" section
-- `docs/spec/donation/tasks.md` — Task 03
+- `docs/spec/5-donation/invariants.md` — INV-donation-06 (deferred)
+- `docs/spec/5-donation/threat-model.md` — future reconciliation only
+- `docs/spec/5-donation/tasks.md` — Task 03 (deferred)
 - `api/openapi/donation.yaml` — `DonationListItem`,
   `DonationListResponse` schemas

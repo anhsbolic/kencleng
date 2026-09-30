@@ -1,10 +1,12 @@
 # Feature Spec — 05: Guest Donation Claim
 
-> File: `docs/spec/donation/features/05-guest-donation-claim.md`
+> File: `docs/spec/5-donation/features/05-guest-donation-claim.md`
 > Domain: `donation`
-> Task: 05 (see `docs/spec/donation/tasks.md`)
-> Status: draft — authored against `api/openapi/donation.yaml` 2026-08-20
-> Last updated: 2026-08-20
+> Task: 05 (see `docs/spec/5-donation/tasks.md`)
+> Status: deferred — historical evidence only; excluded from Slice 2
+> Last updated: 2026-09-30
+
+> **Slice 2 disposition: DEFER.** Guest-donation claim and account linking are not in the approved Slice 2 scope. The behavior below is historical evidence, not active acceptance or authorization to expose claim endpoints or retain guest data for future claims. Reconcile afresh only if a later Product/MVP scope requires it.
 
 ## Summary
 
@@ -89,9 +91,8 @@ Path: `donationId`. No body.
 
 ## References
 
-- `docs/spec/donation/invariants.md` — INV-donation-12, 13
-- `docs/spec/donation/threat-model.md` — "Account donation history &
-  claimable list" and "Claim" sections
-- `docs/spec/donation/tasks.md` — Task 05
+- `docs/spec/5-donation/invariants.md` — INV-donation-12, 13 (deferred)
+- `docs/spec/5-donation/threat-model.md` — future reconciliation only
+- `docs/spec/5-donation/tasks.md` — Task 05 (deferred)
 - `api/openapi/donation.yaml` — `ClaimableDonation`,
   `ClaimableDonationListResponse`, `MyDonation` schemas

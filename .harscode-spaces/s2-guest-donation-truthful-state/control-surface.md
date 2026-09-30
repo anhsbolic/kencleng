@@ -19,11 +19,11 @@ Current delivery state:
 ### WU-S2-002 — Slice 2 Donation Domain & Contract Reconciliation
 
 - Status: `WAITING_HUMAN`
-- Scheduling state: `PARKED` for material Techplan approval after completed report Run `TP-S2-002-012`; O1 `AUTHORITY_SYNC` and O11 O2/O3 `HUMAN_DECISION` remain scoped open items
+- Scheduling state: `PARKED` after Build `BLD-S2-002-003` completed without an authored/generated API diff; scoped O1/O11 and applicable O2–O5 authority decisions remain
 - Horizon: `NOW`
 - Dependency: HARD on `WU-S2-001 = DONE`
-- Current-effective Techplan: `TP-S2-002-007/techplan.md` — disetujui Human; field `Status` telah direkonsiliasi menjadi `Approved` oleh `TP-S2-002-008`.
-- Human approval evidence: `.harscode-spaces/s2-guest-donation-truthful-state/events.md` mencatat approval atas Techplan dan report yang cocok; `TP-S2-002-008/launch-record.md` membuktikan rekonsiliasi metadata.
+- Current-effective Techplan: `TP-S2-002-011/techplan.md` — disetujui Human pada 2026-09-30; field `Status` direkonsiliasi menjadi `Approved` oleh `TP-S2-002-013`.
+- Human approval evidence: `.harscode-spaces/s2-guest-donation-truthful-state/events.md` mencatat approval TP-011 setelah review report TP-012; `TP-S2-002-013/launch-record.md` membuktikan rekonsiliasi metadata.
 - Completed Run: `OIR-S2-002-002` — terminal handoff/brief mencatat keputusan owner O3–O5: verifikasi email dengan jendela 24 jam dan retensi terikat, fragment status URL plus one-way HMAC verifier, serta generic `404` dengan public failure parity. Tidak ada residual-risk acceptance atau runtime proof.
 - Completed Run: `OIR-S2-002-003` — terminal handoff/brief menandai O2 `NEEDS_FURTHER_EVIDENCE` dan O3 pending retention `DEFERRED`; tidak ada numeric owner decision. Historical simulator values dan generic scheduler tidak menetapkan batas terminal.
 - Completed Run: `TP-S2-002-009` — bounded Planner proposal/handoff selesai; internal terminal bound technically specifiable but unproven; tidak ada duration, architecture, timeout result, PII cap, atau risk acceptance yang dipilih.
@@ -34,9 +34,16 @@ Current delivery state:
 - Completed Run: `RV-S2-002-005` — independent review mencatat tiga blocker planning-fidelity/authority; D1 sendiri lulus. Lihat `runs/RV-S2-002-005/review-findings.md`.
 - Completed Run: `TP-S2-002-011` — Planner menyelesaikan tiga review finding: O7 decisions dipropagasikan; O1 `AUTHORITY_SYNC` dan O2/O3 `HUMAN_DECISION` dijaga sebagai scoped open items; D1 tetap unchanged. Plan Draft / In Review.
 - Completed Run: `RV-S2-002-006` — independent Complex review of TP-011 completed without blocking or non-blocking findings. D1 preserved; O7 remains resolved; O1 and O11 remain scoped. No approval or `CONTRACT_READY` was claimed.
-- Completed Run: `TP-S2-002-012` — Planner generated the report from TP-011 after review convergence. Techplan remains Draft / In Review; no Product or authority decision was added.
-- Next action: Human reviews `runs/TP-S2-002-012/report-techplan.md` and TP-011 together, then explicitly approves or requests revision at the material approval gate. O1 `AUTHORITY_SYNC` and O11 O2/O3 `HUMAN_DECISION` remain scoped follow-up. No Build or `CONTRACT_READY`.
-- Human checkpoint: Human approval/revision of the material Techplan is required now. O1 currency owner/scope and O2/O3 route-B versus terminal-notice remain separate authority decisions for their affected contract details; no D1/O7 decision is repeated.
+- Completed Run: `TP-S2-002-012` — Planner generated the report from TP-011 after review convergence.
+- Completed Run: `TP-S2-002-013` — Planner verified Human approval and changed only TP-011 frontmatter Status to `Approved`; no Product or authority decision was added.
+- Completed Run: `TPD-S2-002-001` — canonical post-approval decomposition gate completed. Task 01 is Donation domain spec reconciliation; Task 02 is authored Donation OpenAPI and depends on Task 01. Human accepted the split on 2026-09-30; no spec/API files were changed in the decomposition Run.
+- Completed Run: `BLD-S2-002-001` — Task 01 Donation domain specs reconciled with focused manual traceability/diff checks; no tests or runtime checks. Affected specs remain `draft`.
+- Completed Run: `RV-S2-002-007` — independent four-pass Review requested changes for one blocking finding F-01 in the Campaign closure feature Summary. It identified an unsupported shared SQL guard claim that conflicts with the D1 boundary leaving the mechanism unselected.
+- Completed Run: `BLD-S2-002-002` — removed the unsupported shared-SQL-guard claim from the Campaign closure Summary, retained trigger context, and made the unselected mechanism boundary explicit. Focused reread and `git diff --check` passed; no tests ran. Spec remains `draft`.
+- Completed Run: `RV-S2-002-008` — targeted independent Review confirmed F-01 resolved; no new contradiction. Task 01 Review loop is complete; Donation specs remain `draft` pending applicable owner/Human review.
+- Completed Run: `BLD-S2-002-003` — Task 02 re-grounding completed; `cd api && npm run validate` passed with 126 warnings and no errors; no authored or generated API files changed because operation/credential details remain gated. Under current Code Review guidance, independent Review is N/A because there is no Build diff; no skipped-phase Run was created. Task 02 remains incomplete.
+- Next action: Human/API owner resolves the scoped decisions identified in `BLD-S2-002-003/report.md` before another source-changing Build: O1 shared-currency owner/scope; O11/O2–O3 verified-email cap versus terminal notice; and applicable O2–O5 simulator, credential/transport-parity, and abuse-control details. O8 consumer/distribution evidence is needed only before historical operation removal/replacement. Then Orchestrator prepares a fresh Build Run for Task 02. Do not claim `CONTRACT_READY`.
+- Human checkpoint: Please resolve or explicitly bound the listed contract decisions. Domain specs remain `draft` pending applicable owner/Human acceptance; D1/O7 decisions are not reopened; no residual risk is accepted.
 
 ## NEXT / LATER
 

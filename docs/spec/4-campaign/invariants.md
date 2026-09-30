@@ -1,8 +1,8 @@
 # Domain Invariant — campaign
 
-> File: `docs/spec/campaign/invariants.md`
+> File: `docs/spec/4-campaign/invariants.md`
 > Status: Slice-1 public-boundary reconciliation active; remaining historical invariants are deferred evidence
-> Last updated: 2026-09-22
+> Last updated: 2026-09-30
 
 ## Domain summary
 
@@ -207,32 +207,35 @@ do not define the active public contract.
 - **Verification**: Test — after auto-unpublish, wait/advance time,
   assert `status` remains `unpublished` with no automatic transition.
 
-### INV-campaign-13: Three independent close triggers, idempotent via a shared status guard
+### INV-campaign-13: Campaign close has one stable winning trigger; Donation ordering follows D1
 
 - **Statement**: A `published` campaign closes (`status = 'closed'`)
-  via exactly one of three independent triggers — `max_amount`
-  reached (same transaction as the donation that crosses the
-  threshold), `deadline` reached (periodic scheduler), or Admin
-  force-close (`POST /campaigns/{campaignId}/force-close`, requires
-  `decision_note`, records `closed_by`). All three are guarded by
-  `WHERE status = 'published'` — whichever fires first wins, the
-  others become no-ops, never errors, regardless of near-simultaneous
-  timing.
-- **Holds after operations**: the successful-donation transaction (see
-  `donation` domain, forward reference), the deadline scheduler, and
-  `force-close`.
-- **Verification**: Confirmed — force-close's `409` explicitly notes
-  "e.g. already closed by another trigger," and
-  `kencleng-phase2-detail.md` Fitur 3 states all three triggers share
-  this guard explicitly. Test: simulate a donation crossing
-  `max_amount` and a concurrent force-close request; assert exactly
-  one `closed_reason` is recorded, the other request gets `409` with
-  no error/crash. Same for deadline-vs-force-close timing.
-- **Cross-domain note**: the `max_amount`-reached trigger fires from
-  within `donation` domain's donation-success transaction (not yet
-  spec'd in `docs/spec/`) — when `donation/invariants.md` is written,
-  it must reference this entry for the closure side effect, rather
-  than redefining it.
+  through its applicable threshold, deadline, or Admin force-close
+  trigger. The first close transition wins and its `closed_reason`
+  remains stable. Donation submission eligibility is ordered
+  atomically against close: if close wins first, a new submission is
+  rejected; if an eligible submission wins, that Donation remains
+  settleable in full after close. A later successful settlement and
+  full funding reflection commit atomically and exactly once, but
+  cannot reopen the Campaign or replace the winning close reason.
+  Funding may therefore exceed `max_amount`. This is the narrow
+  Slice-2 D1 boundary; it does not select a transaction/locking
+  mechanism or change broader closure behavior.
+- **Holds after operations**: Donation submission/settlement ordering
+  at the threshold boundary, the deadline scheduler, and `force-close`.
+- **Verification**: Runtime Testing must demonstrate the D1
+  submit-vs-close orderings, accepted-pending settlement after close,
+  full exact-once funding, stable winning close reason, and threshold
+  overshoot, alongside applicable deadline/force-close behavior. The
+  donation/close verification is not satisfied by this spec reference
+  or by choosing a locking mechanism here.
+- **Cross-domain note**: Campaign owns lifecycle and `closed_reason`;
+  Donation owns accepted-submission and settlement contribution.
+  `docs/spec/5-donation/invariants.md#inv-donation-02` and
+  `#inv-donation-08` reference this invariant for the D1 boundary.
+  Historical wording that made later settlement conditional on the
+  Campaign still being `published` is superseded for an already
+  accepted Donation.
 
 ### INV-campaign-14: Public Campaign eligibility, projection, and media visibility
 
@@ -342,9 +345,11 @@ resubmission creates a new row.
 
 ## Reference for `donation` domain
 
-When `docs/spec/donation/invariants.md` is written, it must reference
-**INV-campaign-13** for the `max_amount`-reached closure trigger that
-fires from within the donation-success transaction.
+`docs/spec/5-donation/invariants.md#inv-donation-02` and
+`#inv-donation-08` reference **INV-campaign-13** for the narrow D1
+eligibility, threshold, and accepted-settlement boundary. Campaign
+owns lifecycle and the winning close reason; see the invariant above
+for the current behavior.
 
 ## References
 

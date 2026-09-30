@@ -1,10 +1,12 @@
 # Feature Spec — 06: Guest-Email Reveal
 
-> File: `docs/spec/donation/features/06-guest-email-reveal.md`
+> File: `docs/spec/5-donation/features/06-guest-email-reveal.md`
 > Domain: `donation`
-> Task: 06 (see `docs/spec/donation/tasks.md`)
-> Status: draft — new endpoint, decided 2026-08-20
-> Last updated: 2026-08-20
+> Task: 06 (see `docs/spec/5-donation/tasks.md`)
+> Status: deferred — historical evidence only; excluded from Slice 2
+> Last updated: 2026-09-30
+
+> **Slice 2 disposition: DEFER.** Admin/Kurator guest-email reveal is not in the approved Slice 2 scope. The behavior below is historical evidence, not active acceptance or authorization to reveal guest email. Reconcile afresh only if a later Product/MVP scope and Security/PII authority require it.
 
 ## Summary
 
@@ -86,8 +88,8 @@ Path: `donationId`. No body.
 
 ## References
 
-- `docs/spec/donation/invariants.md` — INV-donation-14, 15
-- `docs/spec/donation/threat-model.md` — "Guest-email reveal" section
-- `docs/spec/donation/tasks.md` — Task 06
+- `docs/spec/5-donation/invariants.md` — INV-donation-14, 15 (deferred)
+- `docs/spec/5-donation/threat-model.md` — future reconciliation only
+- `docs/spec/5-donation/tasks.md` — Task 06 (deferred)
 - `docs/spec/organization/features/05-legal-document-attachments.md`
   — structural precedent (assignment-scoped Kurator access)

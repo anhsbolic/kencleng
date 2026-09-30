@@ -1,10 +1,12 @@
 # Feature Spec — 04: Account Donation History
 
-> File: `docs/spec/donation/features/04-account-donation-history.md`
+> File: `docs/spec/5-donation/features/04-account-donation-history.md`
 > Domain: `donation`
-> Task: 04 (see `docs/spec/donation/tasks.md`)
-> Status: draft — authored against `api/openapi/donation.yaml` 2026-08-20
-> Last updated: 2026-08-20
+> Task: 04 (see `docs/spec/5-donation/tasks.md`)
+> Status: deferred — historical evidence only; excluded from Slice 2
+> Last updated: 2026-09-30
+
+> **Slice 2 disposition: DEFER.** Account donation history is not required for the approved guest trust loop, and Account is not a prerequisite. The behavior below is historical evidence, not active acceptance or authorization to create an Account history surface. Reconcile afresh only if a later Product/MVP scope requires it.
 
 ## Summary
 
@@ -63,7 +65,7 @@ None specific — plain read.
 
 ## References
 
-- `docs/spec/donation/invariants.md` — general domain context
-- `docs/spec/donation/tasks.md` — Task 04
+- `docs/spec/5-donation/invariants.md` — deferred domain context
+- `docs/spec/5-donation/tasks.md` — Task 04 (deferred)
 - `api/openapi/donation.yaml` — `MyDonation`,
   `MyDonationListResponse` schemas

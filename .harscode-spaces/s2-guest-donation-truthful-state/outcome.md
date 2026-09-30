@@ -6,7 +6,7 @@
 
 - Outcome ID: `S2-GUEST-DONATION-TRUTHFUL-STATE`
 - Product slice: `Slice 2 — Guest Donation + Truthful Donation State`
-- Status delivery saat ini: `IN_PROGRESS` — `TP-S2-002-007` tetap current-effective Approved Techplan sampai Human menyetujui amendmen material TP-011. TP-011 menyelesaikan findings RV-005 dengan mempropagasikan O7 decisions dan mencatat O1/O11 sebagai scoped gates; D1 tetap unchanged. Independent review `RV-S2-002-006` selesai clean, dan Planner menghasilkan report pada `TP-S2-002-012`. Next route: Human review report + TP-011 lalu approve atau request revision. Source spec/API belum direkonsiliasi, belum ada runtime proof, dan tidak ada milestone Slice 2 atau `CONTRACT_READY`.
+- Status delivery saat ini: `IN_PROGRESS` — Techplan `TP-S2-002-011` tetap current-effective Approved. Human menerima split TPD-001 pada 2026-09-30: Task 01 untuk Donation domain specs, lalu Task 02 untuk authored Donation OpenAPI. Task 01 Build/Patch selesai dan Review loop (RV-007/RV-008) menutup F-01; domain specs tetap `draft` pending owner/Human acceptance. Task 02 Build `BLD-S2-002-003` selesai dengan validasi OpenAPI lulus (126 warnings, no errors) tetapi tanpa authored/generated contract diff karena gated operation and credential shapes belum punya keputusan cukup. Code Review N/A karena tidak ada diff. WU-S2-002 menunggu keputusan Human/API owner terkait O1/O11 dan detail O2–O5 yang terdampak; O8 tetap kondisional untuk removal/replacement operasi historis. Belum ada runtime proof, milestone Slice 2, atau `CONTRACT_READY`.
 
 ## Approved outcome
 
