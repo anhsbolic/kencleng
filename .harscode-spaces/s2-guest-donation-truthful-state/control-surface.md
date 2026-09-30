@@ -18,8 +18,8 @@ Current delivery state:
 
 ### WU-S2-002 — Slice 2 Donation Domain & Contract Reconciliation
 
-- Status: `WAITING_HUMAN`
-- Scheduling state: `PARKED` after Build `BLD-S2-002-003` completed without an authored/generated API diff; scoped O1/O11 and applicable O2–O5 authority decisions remain
+- Status: `ACTIVE` — the Work Unit remains open; O1/O11 block only their dependent contract fields and `CONTRACT_READY`.
+- Scheduling state: `QUEUED` for a fresh bounded Task 02 Build to propagate settled O2/O4/O5 contract directions. Keep O1 amount representation and O11 retention/notice policy gated; do not wait for downstream runtime evidence to author OpenAPI. Task 01 owner/spec review remains independently runnable.
 - Horizon: `NOW`
 - Dependency: HARD on `WU-S2-001 = DONE`
 - Current-effective Techplan: `TP-S2-002-011/techplan.md` — disetujui Human pada 2026-09-30; field `Status` direkonsiliasi menjadi `Approved` oleh `TP-S2-002-013`.
@@ -42,8 +42,8 @@ Current delivery state:
 - Completed Run: `BLD-S2-002-002` — removed the unsupported shared-SQL-guard claim from the Campaign closure Summary, retained trigger context, and made the unselected mechanism boundary explicit. Focused reread and `git diff --check` passed; no tests ran. Spec remains `draft`.
 - Completed Run: `RV-S2-002-008` — targeted independent Review confirmed F-01 resolved; no new contradiction. Task 01 Review loop is complete; Donation specs remain `draft` pending applicable owner/Human review.
 - Completed Run: `BLD-S2-002-003` — Task 02 re-grounding completed; `cd api && npm run validate` passed with 126 warnings and no errors; no authored or generated API files changed because operation/credential details remain gated. Under current Code Review guidance, independent Review is N/A because there is no Build diff; no skipped-phase Run was created. Task 02 remains incomplete.
-- Next action: Human/API owner resolves the scoped decisions identified in `BLD-S2-002-003/report.md` before another source-changing Build: O1 shared-currency owner/scope; O11/O2–O3 verified-email cap versus terminal notice; and applicable O2–O5 simulator, credential/transport-parity, and abuse-control details. O8 consumer/distribution evidence is needed only before historical operation removal/replacement. Then Orchestrator prepares a fresh Build Run for Task 02. Do not claim `CONTRACT_READY`.
-- Human checkpoint: Please resolve or explicitly bound the listed contract decisions. Domain specs remain `draft` pending applicable owner/Human acceptance; D1/O7 decisions are not reopened; no residual risk is accepted.
+- Next action: Prepare a fresh bounded Task 02 Build on already-settled API directions while direct Human gates for O1 owner/scope and O11 Delivery/Security reconciliation remain open; review Task 01 spec drafts independently. Timing/recovery and exposure/abuse/timing-parity proof are downstream obligations. Reconcile TP-011's `CONTRACT_READY` wording before the milestone so it does not require evidence that only later implementation/Testing can produce. Do not claim `CONTRACT_READY`.
+- Human checkpoint: The Authority Map names Anhar Solehudin only for current Slice 2. Do not infer project-wide currency authority from that mapping. Do not reopen settled O2/O3/O4/O5 policy directions (backend-owned demo outcome; 24-hour verification/retry; fragment/HMAC/24-hour status link; generic 404 failure); technical controls and proof remain separate. No residual risk is accepted.
 
 ## NEXT / LATER
 
@@ -60,7 +60,7 @@ Setelah `CONTRACT_READY`, Orchestrator akan menurunkan backend/frontend delivery
 
 ## Blockers
 
-Scoped O1 `AUTHORITY_SYNC`: OIR-S2-002-005 records a direction for a shared cross-feature currency standard, but no named owner/scope exists in the Authority Map. This blocks final O1 wire/storage reconciliation only. Scoped O2/O3 `HUMAN_DECISION`: Donation delivery route B and mandatory terminal email need a coherent policy for a Donation that outlives the independent cap. Dependent O2/O3 contract finalization remains held. OIR-S2-002-006 resolved its owner ordering decision D1 and TP-010 carries it; spec/API reconciliation follows the approved plan route. O4/O5 control/contract evidence and O6/O9/O7 spec/API translation remain open. O8 conditional. O9 remains a `CONTRACT_READY` blocker. Baseline Participant Profile Registry/definitions remain available.
+Scoped O1 `AUTHORITY_SYNC`: OIR-S2-002-005 records a direction for a shared cross-feature currency standard, but no named owner/scope exists in the Authority Map. This blocks amount representation/storage fields and `CONTRACT_READY`, not independent Task 02 sections. Scoped O11 `HUMAN_DECISION`: the verified-email terminal-notice obligation conflicts with the independent pending cap if the address is deleted first; this blocks coherent email policy and `CONTRACT_READY`, not unrelated OpenAPI authoring. O2 public semantics and O4/O5 API directions can be propagated now; O2 timing/recovery and O3/O4/O5 implementation, exposure, parity, and abuse evidence are downstream delivery/Testing obligations. O4 request carrier and O5 generic response/cache details are contract-authoring work. The approved TP-011 readiness wording must be reconciled through its authorized planning route before `CONTRACT_READY` to keep these empirical obligations downstream. D1 remains resolved; O8 is conditional before historical operation removal/replacement. Baseline Participant Profile Registry/definitions remain available.
 
 ## Bootstrap boundary
 
