@@ -1,7 +1,8 @@
 # Feature Spec — 02: Temporary Guest Donation Status
 
 > File: `docs/spec/5-donation/features/02-donation-status-check.md`
-> Status: draft — Slice 2 reconciliation; API/Security and applicable Human review required before `agreed`
+> Status: agreed
+> Human acceptance: Anhar Solehudin reviewed and accepted this current Slice 2 reconciliation as API and Security/PII owner on 2026-10-01; no residual risk is accepted by this status change.
 > Risk tier: 1
 > Domain: Donation
 > Active product slice: Slice 2 — Guest Donation + Truthful Donation State

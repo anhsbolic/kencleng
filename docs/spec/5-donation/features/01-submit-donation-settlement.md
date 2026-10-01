@@ -1,7 +1,8 @@
 # Feature Spec — 01: Guest Donation Submission and Sandbox Result
 
 > File: `docs/spec/5-donation/features/01-submit-donation-settlement.md`
-> Status: draft — Slice 2 reconciliation; Donation/Security owner and applicable Human review required before `agreed`
+> Status: agreed
+> Human acceptance: Anhar Solehudin reviewed and accepted this current Slice 2 reconciliation as Donation and Security/PII owner on 2026-10-01; no residual risk is accepted by this status change.
 > Risk tier: 1
 > Domain: Donation
 > Active product slice: Slice 2 — Guest Donation + Truthful Donation State

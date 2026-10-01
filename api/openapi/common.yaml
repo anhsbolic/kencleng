@@ -49,9 +49,12 @@ components:
       in: header
       required: true
       description: >
-        Client-generated UUID, unique per submission attempt. Prevents a
-        double-click / retry from creating two Donation records for the
-        same intended submission — see kencleng-phase2-detail.md Fitur 1.
+        Client-generated UUID retained for retries of one intended donation.
+        Reusing the key with the same payload returns the original Donation;
+        reusing it with a different payload is rejected. A fresh key is used
+        only after the donor deliberately starts a new donation. This request
+        idempotency behavior is separate from settlement replay and exact-once
+        funding.
       schema:
         type: string
         format: uuid

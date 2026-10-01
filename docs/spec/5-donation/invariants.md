@@ -1,7 +1,8 @@
 # Domain Invariant — Donation
 
 > File: `docs/spec/5-donation/invariants.md`
-> Status: draft — Slice 2 reconciliation; requires Donation, Security/PII, and applicable Human review before `agreed`
+> Status: agreed
+> Human acceptance: Anhar Solehudin reviewed and accepted this current Slice 2 reconciliation as Donation and Security/PII owner on 2026-10-01; no residual risk is accepted by this status change.
 > Last updated: 2026-10-01
 > Product/MVP basis: `docs/product/mvp-scope.md` §§4–7; `docs/product/mvp-delivery-slices.md` §§5–6
 

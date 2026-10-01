@@ -1,7 +1,8 @@
 # Task List — Donation
 
 > File: `docs/spec/5-donation/tasks.md`
-> Status: draft — Slice 2 reconciliation; owner review required before `agreed`
+> Status: agreed
+> Human acceptance: Anhar Solehudin reviewed and accepted this current Slice 2 reconciliation as Donation delivery/domain owner on 2026-10-01; no residual risk is accepted by this status change.
 > Last updated: 2026-10-01
 > Active product slice: Slice 2 — Guest Donation + Truthful Donation State
 

@@ -2629,14 +2629,16 @@ export interface paths {
         };
         put?: never;
         /**
-         * Submit a donation (guest or registered)
-         * @description Public endpoint — works with or without an `Authorization` header. If authenticated, `guest_name`/`guest_email` in the body are ignored in favor of the session user's own identity. Requires `Campaign.status = published`; payment settlement is simulated asynchronously (2-5s delay, 5% failure rate) after this call returns with `status = pending`.
+         * Submit a guest donation for QRIS sandbox simulation
+         * @description Guest submission does not require an Account. A new submission is accepted only when it wins the atomic ordering against Campaign closure while the Campaign is eligible; otherwise it is rejected. An accepted donation is persisted as `pending`. The backend-owned sandbox simulator may later set `success` or `failed`; this request cannot select a terminal outcome. QRIS is the only accepted payment method and means sandbox simulation only, not external settlement. No simulator timing is promised. Pending donations are not automatically resubmitted. A deliberate new donation after failure uses a new idempotency key.
+         *     A retry with the same `Idempotency-Key` and same payload returns the original donation; reuse with a different payload is rejected. This request idempotency contract is separate from settlement replay and exact-once funding. A donation accepted while eligible remains settleable for its full amount after Campaign closure. Successful settlement and the full funding increment are one atomic, exactly-once outcome; later settlement does not reopen the Campaign or change its winning close reason. Funding may exceed the closure threshold.
+         *     If a guest opts in to status email, the address must be verified before any status/access message. At most one status-only, simulation-labeled notice is eligible at terminal `success` or `failed`, never initial `pending`. A verified address remains eligible until that notice is fulfilled. Delivery must make terminalization bounded and recoverable; its bound and mechanics remain owner-defined. Verification, retry, retention, and deletion controls remain open.
          */
         post: {
             parameters: {
                 query?: never;
                 header: {
-                    /** @description Client-generated UUID, unique per submission attempt. Prevents a double-click / retry from creating two Donation records for the same intended submission — see kencleng-phase2-detail.md Fitur 1. */
+                    /** @description Client-generated UUID retained for retries of one intended donation. Reusing the key with the same payload returns the original Donation; reusing it with a different payload is rejected. A fresh key is used only after the donor deliberately starts a new donation. This request idempotency behavior is separate from settlement replay and exact-once funding. */
                     "Idempotency-Key": components["parameters"]["IdempotencyKeyHeader"];
                 };
                 path: {
@@ -2650,7 +2652,7 @@ export interface paths {
                 };
             };
             responses: {
-                /** @description Donation accepted (`status = pending`). `status_token` is returned here and, if `guest_email` was provided, also emailed — this is the only response where it appears. */
+                /** @description Donation accepted as `pending`; includes a temporary guest status credential for frontend handoff. */
                 201: {
                     headers: {
                         [name: string]: unknown;
@@ -2659,7 +2661,7 @@ export interface paths {
                         "application/json": components["schemas"]["Donation"];
                     };
                 };
-                /** @description Campaign is not `published` (e.g. closed between page load and submit). */
+                /** @description Campaign is ineligible or the idempotency key was reused with a different payload. */
                 409: {
                     headers: {
                         [name: string]: unknown;
@@ -2676,7 +2678,6 @@ export interface paths {
                         "application/problem+json": components["schemas"]["Problem"];
                     };
                 };
-                /** @description `amount` below the Rp 5.000 minimum, or invalid `payment_method`. */
                 422: components["responses"]["ValidationError"];
             };
         };
@@ -2688,24 +2689,27 @@ export interface paths {
     };
     "/donations/{donationId}/status": {
         parameters: {
-            query: {
-                /** @description `status_token` returned at submission time. Never expires — read-only, non-destructive lookup. */
-                token: string;
+            query?: never;
+            header?: {
+                /** @description Guest status bearer credential. The frontend receives it from the submission response, places it in the status URL fragment, reads it during the status-page handoff, removes it from the visible URL, then sends it in this header. It is optional on the wire so a missing credential can receive the same `404` as other invalid lookups. */
+                "X-Donation-Status-Credential"?: string;
             };
-            header?: never;
             path: {
                 donationId: string;
             };
             cookie?: never;
         };
-        /** Check a donation's settlement status (token-based, no login required) */
+        /**
+         * Check temporary guest donation status
+         * @description The status credential is a difficult-to-guess bearer credential. Its verifier is stored as a one-way HMAC and it expires exactly 24 hours after issuance without extension. The response contains status only. The frontend obtains the credential from the URL fragment, hands it to this request in `X-Donation-Status-Credential`, and cleans the visible URL. Credential generation, key handling, comparison, expiration enforcement, browser/referrer/log/cache protections, and abuse controls require separate owner decisions and evidence.
+         */
         get: {
             parameters: {
-                query: {
-                    /** @description `status_token` returned at submission time. Never expires — read-only, non-destructive lookup. */
-                    token: string;
+                query?: never;
+                header?: {
+                    /** @description Guest status bearer credential. The frontend receives it from the submission response, places it in the status URL fragment, reads it during the status-page handoff, removes it from the visible URL, then sends it in this header. It is optional on the wire so a missing credential can receive the same `404` as other invalid lookups. */
+                    "X-Donation-Status-Credential"?: string;
                 };
-                header?: never;
                 path: {
                     donationId: string;
                 };
@@ -2719,12 +2723,28 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["Donation"];
+                        "application/json": components["schemas"]["DonationStatusResponse"];
                     };
                 };
-                /** @description Token missing or doesn't match this donation. */
-                401: components["responses"]["Unauthorized"];
-                404: components["responses"]["NotFound"];
+                /** @description Uniform result for an absent donation, or a missing, incorrect, or expired credential. These cases use the same status, Problem Details body, response headers, and cache behavior. Runtime parity remains to be demonstrated. */
+                404: {
+                    headers: {
+                        /** @description Prevents storage of credential lookup failures. */
+                        "Cache-Control"?: "private, no-store";
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        /**
+                         * @example {
+                         *       "type": "https://kencleng.dev/errors/donation-status-not-found",
+                         *       "title": "Donation Status Not Found",
+                         *       "status": 404,
+                         *       "detail": "Status donasi tidak tersedia."
+                         *     }
+                         */
+                        "application/problem+json": components["schemas"]["Problem"];
+                    };
+                };
             };
         };
         put?: never;
@@ -4325,8 +4345,10 @@ export interface components {
             id?: string;
             /** @description Server-computed: the donor's name (registered) or `guest_name`, substituted with a generic label if empty, or `null` entirely if `is_anonymous = true`. Exact generic-label copy is a FE concern per kencleng-phase2-detail.md. */
             display_name?: string | null;
-            /** @example 50000.00 */
-            amount?: string;
+            /** @example 50000 */
+            amount: string;
+            /** @example IDR */
+            currency_code: string;
             /** Format: date-time */
             created_at?: string;
         };
@@ -4334,22 +4356,35 @@ export interface components {
             data: components["schemas"]["DonationListItem"][];
             pagination: components["schemas"]["Pagination"];
         };
-        /** @enum {string} */
-        PaymentMethod: "transfer" | "debit" | "gopay" | "shopeepay" | "ovo" | "qris";
+        /**
+         * @description QRIS is the only accepted method for the Slice 2 sandbox simulation. GoPay, ShopeePay, and bank transfer may be displayed as unavailable UI choices but are not valid submission values. No real payment rail is active.
+         * @enum {string}
+         */
+        PaymentMethod: "qris";
         SubmitDonationRequest: {
             /**
-             * @description Decimal string, minimum 5000.
-             * @example 50000.00
+             * @description Major-unit decimal string paired with currency_code. Calculation and persistence preserve exact decimal values end-to-end without float/float64 conversion. For Slice 2 IDR input, this is a whole Rupiah amount of at least 5000 with one-Rupiah increments; 5001 is valid. No maximum, fractional rule for other currencies, or storage precision is set here.
+             * @example 50000
              */
             amount: string;
+            /**
+             * @description Explicit ISO currency code paired with amount; Slice 2 submissions use IDR.
+             * @enum {string}
+             */
+            currency_code: "IDR";
             payment_method: components["schemas"]["PaymentMethod"];
-            /** @description Ignored if the request is authenticated (registered donor's `User.name` is used instead). */
+            /** @description Optional guest name; not public by default. */
             guest_name?: string | null;
             /**
              * Format: email
-             * @description Ignored if authenticated. If omitted for a guest donation, this donation can never be claimed later and the donor receives no campaign-result notification — a deliberate trade-off, not a bug.
+             * @description Optional guest address used only for donation-status notices after ownership verification. It is not public and is not used for campaign-wide updates. O3 controls for verification, retention, retry, and deletion remain owner-defined.
              */
             guest_email?: string | null;
+            /**
+             * @description Explicit opt-in for status-only email. When true, guest_email is required. The approved disclosure is: “Verifikasi email dalam 24 jam sejak alamat dicatat. Jika tidak diverifikasi, alamat dihapus dan pemberitahuan tidak dikirim. Donasi tetap berjalan.” No notice or access link is sent before ownership verification or for initial pending. At most one terminal status-only notice is eligible at success/failed and is labeled “Hasil simulasi donasi: berhasil/gagal.” A verified address remains eligible until that notice is fulfilled under bounded, recoverable terminalization; its bound and implementation remain open.
+             * @default false
+             */
+            guest_email_status_opt_in: boolean;
             /** @default false */
             is_anonymous: boolean;
             /**
@@ -4360,24 +4395,33 @@ export interface components {
         };
         /** @enum {string} */
         DonationStatus: "pending" | "success" | "failed";
-        /** @description Full shape returned to the submitter right after submission and via the token-based status check. `guest_email` is intentionally never included here — even to the submitter's own status check — since the status endpoint is unauthenticated and token-guarded rather than identity-guarded. */
+        /** @description Submission result. The temporary credential is returned only here for frontend handoff to a fragment-carried status URL; it is never returned by the status lookup. Guest email is not included. */
         Donation: {
             /** Format: uuid */
-            id?: string;
+            id: string;
             /** Format: uuid */
-            campaign_id?: string;
+            campaign_id: string;
             /** Format: uuid */
             event_id?: string | null;
-            /** @example 50000.00 */
-            amount?: string;
-            payment_method?: components["schemas"]["PaymentMethod"];
+            /** @example 50000 */
+            amount: string;
+            /**
+             * @description Explicit currency code paired with amount.
+             * @example IDR
+             */
+            currency_code: string;
+            payment_method: components["schemas"]["PaymentMethod"];
             is_anonymous?: boolean;
-            status?: components["schemas"]["DonationStatus"];
+            status: components["schemas"]["DonationStatus"];
             guest_name?: string | null;
-            /** @description Only present in the immediate submission response — not returned again by the status-check endpoint (it's the credential used to reach that endpoint). */
-            status_token?: string;
+            /** @description Difficult-to-guess bearer credential returned only in this submission response. The frontend hands it off through the URL fragment and removes it from the visible URL. The verifier is one-way HMAC and the credential expires 24 hours after issuance. Concrete generation/strength evidence and implementation controls remain open; no numeric entropy/length is specified. */
+            status_token: string;
             /** Format: date-time */
-            created_at?: string;
+            created_at: string;
+        };
+        /** @description Deliberately status-only guest projection. */
+        DonationStatusResponse: {
+            status: components["schemas"]["DonationStatus"];
         };
         /** @description A registered user's own full donation history (including claimed guest donations). */
         MyDonation: {
@@ -4386,8 +4430,10 @@ export interface components {
             /** Format: uuid */
             campaign_id?: string;
             campaign_title?: string;
-            /** @example 50000.00 */
-            amount?: string;
+            /** @example 50000 */
+            amount: string;
+            /** @example IDR */
+            currency_code: string;
             payment_method?: components["schemas"]["PaymentMethod"];
             is_anonymous?: boolean;
             status?: components["schemas"]["DonationStatus"];
@@ -4413,8 +4459,10 @@ export interface components {
             guest_name?: string | null;
             /** Format: email */
             guest_email?: string;
-            /** @example 50000.00 */
-            amount?: string;
+            /** @example 50000 */
+            amount: string;
+            /** @example IDR */
+            currency_code: string;
             /** Format: date-time */
             created_at?: string;
         };
@@ -4701,7 +4749,7 @@ export interface components {
         AdminUsersLimitParam: number;
         /** @description Max items per page. Default 20, max 50. */
         LimitParam: number;
-        /** @description Client-generated UUID, unique per submission attempt. Prevents a double-click / retry from creating two Donation records for the same intended submission — see kencleng-phase2-detail.md Fitur 1. */
+        /** @description Client-generated UUID retained for retries of one intended donation. Reusing the key with the same payload returns the original Donation; reusing it with a different payload is rejected. A fresh key is used only after the donor deliberately starts a new donation. This request idempotency behavior is separate from settlement replay and exact-once funding. */
         IdempotencyKeyHeader: string;
     };
     requestBodies: never;

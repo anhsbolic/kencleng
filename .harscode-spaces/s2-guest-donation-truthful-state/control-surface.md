@@ -18,8 +18,8 @@ Current delivery state:
 
 ### WU-S2-002 — Slice 2 Donation Domain & Contract Reconciliation
 
-- Status: `ACTIVE / QUEUED` — TP-S2-002-017 verified the Human approval/report pair and changed only TP-015's Status to `Approved`; TP-015 is current-effective. TPD-S2-002-002 preserved the accepted split/dependency. BLD-S2-002-004 aligned five draft specs; RV-S2-002-011 found one blocking F-001; BLD-S2-002-005 restored the settled difficult-to-guess credential requirement in four passages. RV-S2-002-012 independently confirmed F-001 resolved with no new material contradiction; the Task 01 Review loop is complete. All five specs remain `draft`.
-- Scheduling state: QUEUED for fresh Task 02 authored Donation OpenAPI Build BLD-S2-002-006 (`gpt-6-luna` / `high`); its durable Invocation is ready for Implementer dispatch. Task 01's hard Build/Review dependency is satisfied. Human/domain-owner acceptance of the current drafts remains a separate gate required before `CONTRACT_READY`, but does not block this Task 02 Build. Reconcile only authority-supported contract details and preserve field-specific deferrals; O2–O5 empirical/security proof stays downstream.
+- Status: `DONE` — TP-S2-002-015 is current-effective Approved; TPD-S2-002-002 preserved the accepted split/dependency. Task 01's five specs are `agreed`. BLD-006/007 authored/corrected the Task 02 API contract; RV-013 F-1 was resolved and RV-014 independently confirmed source/generated correspondence. Anhar accepted the API contract on 2026-10-01. Orchestrator checked TP-015 R14 and earned `CONTRACT_READY`. No runtime/security proof or residual-risk acceptance is claimed.
+- Scheduling state: Not applicable; WU-S2-002 is terminal. Current frontier moves to contract-parallel backend/frontend delivery. Kencleng §8 prefers this route when the contract is stable and the frontend can progress against MSW/mocks; O2–O5 runtime/security obligations remain downstream.
 - Horizon: `NOW`
 - Dependency: HARD on `WU-S2-001 = DONE`
 - Current-effective Techplan: TP-S2-002-015 is current-effective Approved after TP-017 status reconciliation. TP-014 is the reviewed Draft / In Review predecessor with blocking findings; TP-015 was Human-approved after report TP-016 and RV-010 was clean.
@@ -40,8 +40,12 @@ Current delivery state:
 - Completed Run: `TPD-S2-002-002` — post-approval snapshot refresh reconciled both task files and the manifest to TP-015; Step 0 retained the Human-accepted split/topology/dependency. No source spec/API/code/test changes occurred.
 - Completed Run: `TPD-S2-002-002` — post-approval snapshots reconciled to TP-015; Step 0 retained the accepted topology/dependency/manifest. Task 01 carries current O1/O11 and applicable O4/O5 direction; Task 02 also carries bounded O8 plus authored API details/evidence boundaries. No source specs/API/code/tests changed.
 - Completed Run: `BLD-S2-002-004` — updated five active Donation draft specs to TP-015's settled O1/O11/D19/O4/O5 directions; retained unresolved parameters, implementation controls/evidence, risk gates, and `draft` status. Focused traceability and exact-path `git diff --check` passed; no tests/runtime/security checks ran.
+- Completed Run: `BLD-S2-002-006` — authored the Task 02 Donation contract in `donation.yaml`, clarified the shared idempotency component in `common.yaml`, and regenerated `openapi.yaml` plus frontend API types. `cd api && npm run validate` passed with 124 warnings and no errors; bundle, type generation, and exact-path diff check passed. No product/runtime tests or runtime/security evidence ran.
+- Completed Run: `RV-S2-002-013` — independent four-pass Review of the exact BLD-006 API diff. Request changes for blocking F-1: `amount` and `currency_code` are optional in three changed monetary projections; no other findings.
+- Completed Run: `BLD-S2-002-007` — narrow F-1 Build/Patch required the monetary fields in three response schemas and regenerated the bundle/types. API validation passed with 124 warnings and no errors; both generators and scoped diff check passed. No tests/runtime/security checks ran.
+- Completed Run: `RV-S2-002-014` — targeted independent confirmation found F-1 resolved in all three authored projections and generated counterparts; no new material issue.
 - Completed Run: `RV-S2-002-012` — targeted independent confirmation resolved F-001 in all four passages, found no new material contradiction, and closed the Task 01 Review loop. The five specs remain `draft`; no Human acceptance, residual-risk acceptance, or `CONTRACT_READY` was implied.
-- Prepared Run: `BLD-S2-002-006` — fresh Task 02 OpenAPI Build against Approved TP-015 and current TPD-002 Task 02 snapshot, with Task 01 Build/Review dependency satisfied. Configured `gpt-6-luna` / `high`; ready for Human-assisted dispatch. Task 01 spec acceptance remains a separate gate before `CONTRACT_READY`.
+- Run history: `BLD-S2-002-006` was prepared against Approved TP-015/current TPD-002, then dispatched and completed; see its report and launch record above. BLD-007 completed the narrow F-1 patch. RV-014 targeted confirmation remains queued; residual-risk acceptance and `CONTRACT_READY` remain open.
 - Completed Run: `RV-S2-002-011` — full independent four-pass Review of the five-file Task 01 diff requested changes for one blocking F-001: active status-credential acceptance omitted the settled difficult-to-guess requirement. Patch plan limits correction to four active spec passages; no source edit occurred in Review.
 - Completed Run: `BLD-S2-002-005` — restored the settled difficult-to-guess status-credential requirement in the four RV-011 passage scopes; concrete strength/generation evidence and O4 controls remain open. Focused traceability and exact-path `git diff --check` passed; no tests/runtime/security checks ran.
 - Completed Run: `BLD-S2-002-001` — Task 01 Donation domain specs reconciled with focused manual traceability/diff checks; no tests or runtime checks. Affected specs remain `draft`.
@@ -54,12 +58,26 @@ Current delivery state:
 - Completed Run: `TP-S2-002-015` — restored O4 fragment URL/frontend handoff/URL cleanup and one-way HMAC direction plus O5 uniform `404`, identical public body/header/cache behavior, and `Cache-Control: private, no-store`; no runtime proof or residual-risk acceptance is claimed.
 - Completed Run: `RV-S2-002-010` — independent Complex re-review of TP-015 completed with no blocking or non-blocking findings; RV-009 findings are resolved.
 - Completed Run: `TP-S2-002-016` — full Human-facing report generated from TP-015 after review convergence. The report is derived evidence and does not itself approve the plan.
-- Human approval: Anhar explicitly approved TP-015 after reading TP-016; TP-017 durably verified the exact approval pair and reconciled only Status. TPD-002 preserved the accepted split. BLD-004/005 aligned Task 01 draft specs; RV-011's blocking status-credential finding was fixed and RV-012 (`gpt-6-luna` / `high`) confirmed closure. Task 01 Build/Review is complete. Human/domain-owner acceptance of current drafts remains a parallel gate required before `CONTRACT_READY`; Task 02's hard dependency is met and Build BLD-006 is queued. No residual risk is accepted and no `CONTRACT_READY` is claimed.
-- Human checkpoint: Human/domain-owner review/acceptance of Task 01's current domain-spec drafts remains an independent parallel gate and is required before `CONTRACT_READY`. BLD-004 updated the current drafts; prior review does not imply acceptance of these versions. O1 direction is approved and recorded in `docs/project/kencleng-monetary-data-standard.md`; concrete amount parameters remain deferred. O8 is clear within the stated evidence scope. O11 route B is superseded; verified email remains eligible through terminal notice and Delivery must produce bounded/recoverable terminalization. No residual risk is accepted.
+- Human approval: Anhar explicitly approved TP-015 after reading TP-016; TP-017 durably verified the exact approval pair and reconciled only Status. TPD-002 preserved the accepted split. BLD-004/005 aligned Task 01 specs; RV-012 confirmed the F-001 correction. Anhar then reviewed and accepted all five current Task 01 documents, now `agreed`. Task 01 Build/Review and Human acceptance are complete. Task 02's hard dependency is met and Build BLD-006 is queued. This does not accept residual risk or earn `CONTRACT_READY`.
+- Human checkpoint: Anhar reviewed and accepted the five current Task 01 domain-spec documents on 2026-10-01; their headers now say `agreed`. This closes the Task 01 owner/Human acceptance gate. O1 direction is approved and recorded in `docs/project/kencleng-monetary-data-standard.md`; concrete amount parameters remain deferred. O8 is clear within the stated evidence scope. O11 route B is superseded; verified email remains eligible through terminal notice and Delivery must produce bounded/recoverable terminalization. No residual risk is accepted.
+
+### WU-S2-003 — Slice 2 Donation Backend Delivery
+
+- Status: `ACTIVE / QUEUED`; `EXP-S2-003-001` is prepared, not dispatched.
+- Dependency: HARD on WU-S2-002=`DONE` / `CONTRACT_READY`.
+- Next action: Human-assisted dispatch using `gpt-6-luna` / `high`; canonical Exploration Stage 1 must stop for confirmation.
+- Boundary: backend scope only; root AGENTS Tier-0 protected paths remain gated.
+
+### WU-S2-004 — Slice 2 Guest Donation Frontend Flow
+
+- Status: `ACTIVE / QUEUED`; `EXP-S2-004-001` is prepared, not dispatched.
+- Dependency: HARD on WU-S2-002=`DONE` / `CONTRACT_READY`.
+- Next action: Human-assisted dispatch using `gpt-6-luna` / `high`; canonical Exploration Stage 1 must stop for confirmation.
+- Boundary: frontend scope only; use contract-faithful MSW mocks; route active concerns through `frontend/AGENTS.md` and current UI/UX authority.
 
 ## NEXT / LATER
 
-Setelah `CONTRACT_READY`, Orchestrator akan menurunkan backend/frontend delivery topology dari contract dan dependency yang sudah direkonsiliasi.
+`CONTRACT_READY` earned after the explicit API-owner acceptance. Derived topology: WU-S2-003 owns backend Donation delivery; WU-S2-004 owns the guest Donation frontend flow against contract-faithful MSW mocks; both depend on WU-S2-002 and real integration follows side-specific verification. Their manifests and fresh canonical Exploration Invocations are prepared at `WU-S2-003/runs/EXP-S2-003-001/` and `WU-S2-004/runs/EXP-S2-004-001/`; each Exploration begins at Stage 1 and stops for Human confirmation.
 
 ## Human Attention
 
@@ -72,8 +90,8 @@ Setelah `CONTRACT_READY`, Orchestrator akan menurunkan backend/frontend delivery
 
 ## Blockers
 
-O8 is clear within the Human/API-owner evidence scope. O11 route B is superseded; verified email remains eligible through terminal notice and Delivery must produce bounded/recoverable terminalization, without selecting numeric bound, architecture, timeout meaning, or residual-risk acceptance. O1 representation direction is approved; concrete parameters remain deferred. TP-015 restores settled O4 fragment/HMAC and O5 uniform `404` directions while keeping runtime/security proof and residual-risk acceptance open. RV-010 completed cleanly, TP-016 generated the full report, Human approved TP-015, and TP-017 reconciled its Status to `Approved`. TPD-002 preserved the accepted split/dependency/manifest. BLD-004/005 updated the five Task 01 drafts; RV-011's F-001 was resolved by BLD-005 and confirmed by RV-012, closing the Task 01 Review loop. Fresh Task 02 Build BLD-006 (`gpt-6-luna` / `high`) is the current frontier; its hard dependency is met. Human/domain-owner acceptance remains separate and required before `CONTRACT_READY`. O2–O5 runtime/security evidence remains downstream. No CONTRACT_READY is earned.
+No active blocker remains on WU-S2-002. O8 is clear within the Human/API-owner evidence scope. O11 requires bounded/recoverable terminalization without selecting a numeric bound, architecture, timeout meaning, or residual-risk acceptance. O1 representation direction is approved; concrete parameters remain deferred. O2–O5 runtime/security evidence and residual-risk acceptance remain downstream and are not contract-time blockers under TP-015 R14. Delivery planning must preserve these obligations and follow scoped backend/frontend instructions before Build.
 
 ## Bootstrap boundary
 
-`WU-S2-001` / `EXP-S2-001-001` selesai berdasarkan durable Stage 2 dan Stage 3 handoff. `WU-S2-002` menjadi frontier rekonsiliasi. `CONTRACT_READY` belum tercapai dan implementasi Slice 2 belum dimulai. Slice 1 tetap `SLICE_FINALIZED` sesuai tracker.
+`WU-S2-001` / `EXP-S2-001-001` dan `WU-S2-002` selesai berdasarkan durable handoff; WU-S2-002 menghasilkan `CONTRACT_READY`. WU-S2-003 dan WU-S2-004 ACTIVE / QUEUED dengan Exploration Invocation siap dispatch; belum ada Participant Run atau Delivery Build yang dimulai. Slice 1 tetap `SLICE_FINALIZED` sesuai tracker.

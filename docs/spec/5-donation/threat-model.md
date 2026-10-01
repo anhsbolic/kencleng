@@ -1,7 +1,8 @@
 # Threat Model — Donation
 
 > File: `docs/spec/5-donation/threat-model.md`
-> Status: draft — Slice 2 reconciliation; Security/PII and applicable Human review required before `agreed`
+> Status: agreed
+> Human acceptance: Anhar Solehudin reviewed and accepted this current Slice 2 reconciliation as Security/PII owner on 2026-10-01; no residual risk is accepted by this status change.
 > Last updated: 2026-10-01
 > Active slice: Slice 2 — Guest Donation + Truthful Donation State
 

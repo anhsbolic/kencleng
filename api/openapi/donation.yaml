@@ -1,6 +1,6 @@
 paths:
   # ===========================================================================
-  # Donation domain (Fitur 1, 2, 4 of kencleng-phase2-detail.md)
+  # Slice 2 reconciliation covers guest submit/status; other historical paths remain untouched here.
   # ===========================================================================
 
   /campaigns/{campaignId}/donations:
@@ -32,14 +32,35 @@ paths:
 
     post:
       tags: [donation]
-      summary: Submit a donation (guest or registered)
+      summary: Submit a guest donation for QRIS sandbox simulation
       description: >
-        Public endpoint — works with or without an `Authorization` header.
-        If authenticated, `guest_name`/`guest_email` in the body are
-        ignored in favor of the session user's own identity. Requires
-        `Campaign.status = published`; payment settlement is simulated
-        asynchronously (2-5s delay, 5% failure rate) after this call
-        returns with `status = pending`.
+        Guest submission does not require an Account. A new submission is
+        accepted only when it wins the atomic ordering against Campaign
+        closure while the Campaign is eligible; otherwise it is rejected.
+        An accepted donation is persisted as `pending`. The backend-owned
+        sandbox simulator may later set `success` or `failed`; this request
+        cannot select a terminal outcome. QRIS is the only accepted payment
+        method and means sandbox simulation only, not external settlement.
+        No simulator timing is promised. Pending donations are not
+        automatically resubmitted. A deliberate new donation after failure
+        uses a new idempotency key.
+
+        A retry with the same `Idempotency-Key` and same payload returns the
+        original donation; reuse with a different payload is rejected. This
+        request idempotency contract is separate from settlement replay and
+        exact-once funding. A donation accepted while eligible remains
+        settleable for its full amount after Campaign closure. Successful
+        settlement and the full funding increment are one atomic, exactly-once
+        outcome; later settlement does not reopen the Campaign or change its
+        winning close reason. Funding may exceed the closure threshold.
+
+        If a guest opts in to status email, the address must be verified
+        before any status/access message. At most one status-only,
+        simulation-labeled notice is eligible at terminal `success` or
+        `failed`, never initial `pending`. A verified address remains eligible
+        until that notice is fulfilled. Delivery must make terminalization
+        bounded and recoverable; its bound and mechanics remain owner-defined.
+        Verification, retry, retention, and deletion controls remain open.
       security: []
       parameters:
         - $ref: "./common.yaml#/components/parameters/IdempotencyKeyHeader"
@@ -51,19 +72,15 @@ paths:
               $ref: "#/components/schemas/SubmitDonationRequest"
       responses:
         "201":
-          description: >
-            Donation accepted (`status = pending`). `status_token` is
-            returned here and, if `guest_email` was provided, also emailed
-            — this is the only response where it appears.
+          description: Donation accepted as `pending`; includes a temporary guest status credential for frontend handoff.
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Donation"
         "422":
-          description: "`amount` below the Rp 5.000 minimum, or invalid `payment_method`."
           $ref: "./common.yaml#/components/responses/ValidationError"
         "409":
-          description: Campaign is not `published` (e.g. closed between page load and submit).
+          description: Campaign is ineligible or the idempotency key was reused with a different payload.
           content:
             application/problem+json:
               schema:
@@ -82,15 +99,29 @@ paths:
         schema:
           type: string
           format: uuid
-      - name: token
-        in: query
-        required: true
-        description: "`status_token` returned at submission time. Never expires — read-only, non-destructive lookup."
+      - name: X-Donation-Status-Credential
+        in: header
+        required: false
+        description: >
+          Guest status bearer credential. The frontend receives it from the
+          submission response, places it in the status URL fragment, reads it
+          during the status-page handoff, removes it from the visible URL,
+          then sends it in this header. It is optional on the wire so a missing
+          credential can receive the same `404` as other invalid lookups.
         schema:
           type: string
     get:
       tags: [donation]
-      summary: Check a donation's settlement status (token-based, no login required)
+      summary: Check temporary guest donation status
+      description: >
+        The status credential is a difficult-to-guess bearer credential. Its
+        verifier is stored as a one-way HMAC and it expires exactly 24 hours
+        after issuance without extension. The response contains status only.
+        The frontend obtains the credential from the URL fragment, hands it
+        to this request in `X-Donation-Status-Credential`, and cleans the
+        visible URL. Credential generation, key handling, comparison,
+        expiration enforcement, browser/referrer/log/cache protections, and
+        abuse controls require separate owner decisions and evidence.
       security: []
       responses:
         "200":
@@ -98,12 +129,28 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Donation"
-        "401":
-          description: Token missing or doesn't match this donation.
-          $ref: "./common.yaml#/components/responses/Unauthorized"
+                $ref: "#/components/schemas/DonationStatusResponse"
         "404":
-          $ref: "./common.yaml#/components/responses/NotFound"
+          description: >
+            Uniform result for an absent donation, or a missing, incorrect,
+            or expired credential. These cases use the same status, Problem
+            Details body, response headers, and cache behavior. Runtime parity
+            remains to be demonstrated.
+          headers:
+            Cache-Control:
+              description: Prevents storage of credential lookup failures.
+              schema:
+                type: string
+                enum: ["private, no-store"]
+          content:
+            application/problem+json:
+              schema:
+                $ref: "./common.yaml#/components/schemas/Problem"
+              example:
+                type: "https://kencleng.dev/errors/donation-status-not-found"
+                title: "Donation Status Not Found"
+                status: 404
+                detail: "Status donasi tidak tersedia."
 
   /account/donations:
     get:
@@ -185,34 +232,73 @@ components:
     # ---------------------------------------------------------------------
     PaymentMethod:
       type: string
-      enum: [transfer, debit, gopay, shopeepay, ovo, qris]
+      description: >
+        QRIS is the only accepted method for the Slice 2 sandbox simulation.
+        GoPay, ShopeePay, and bank transfer may be displayed as unavailable
+        UI choices but are not valid submission values. No real payment rail
+        is active.
+      enum: [qris]
 
     DonationStatus:
       type: string
       enum: [pending, success, failed]
 
+    DonationStatusResponse:
+      type: object
+      description: Deliberately status-only guest projection.
+      required: [status]
+      properties:
+        status:
+          $ref: "#/components/schemas/DonationStatus"
+
     SubmitDonationRequest:
       type: object
-      required: [amount, payment_method]
+      required: [amount, currency_code, payment_method]
       properties:
         amount:
           type: string
-          description: Decimal string, minimum 5000.
-          example: "50000.00"
+          pattern: '^(?:[5-9][0-9]{3}|[1-9][0-9]{4,})$'
+          description: >
+            Major-unit decimal string paired with currency_code. Calculation
+            and persistence preserve exact decimal values end-to-end without
+            float/float64 conversion. For Slice 2 IDR input, this is a whole
+            Rupiah amount of at least 5000 with one-Rupiah increments; 5001
+            is valid. No maximum, fractional rule for other currencies, or
+            storage precision is set here.
+          example: "50000"
+        currency_code:
+          type: string
+          description: Explicit ISO currency code paired with amount; Slice 2 submissions use IDR.
+          enum: [IDR]
         payment_method:
           $ref: "#/components/schemas/PaymentMethod"
         guest_name:
           type: string
           nullable: true
-          description: Ignored if the request is authenticated (registered donor's `User.name` is used instead).
+          description: Optional guest name; not public by default.
         guest_email:
           type: string
           format: email
           nullable: true
           description: >
-            Ignored if authenticated. If omitted for a guest donation, this
-            donation can never be claimed later and the donor receives no
-            campaign-result notification — a deliberate trade-off, not a bug.
+            Optional guest address used only for donation-status notices after
+            ownership verification. It is not public and is not used for
+            campaign-wide updates. O3 controls for verification, retention,
+            retry, and deletion remain owner-defined.
+        guest_email_status_opt_in:
+          type: boolean
+          default: false
+          description: >
+            Explicit opt-in for status-only email. When true, guest_email is
+            required. The approved disclosure is: “Verifikasi email dalam 24
+            jam sejak alamat dicatat. Jika tidak diverifikasi, alamat dihapus
+            dan pemberitahuan tidak dikirim. Donasi tetap berjalan.” No notice
+            or access link is sent before ownership verification or for initial
+            pending. At most one terminal status-only notice is eligible at
+            success/failed and is labeled “Hasil simulasi donasi:
+            berhasil/gagal.” A verified address remains eligible until that
+            notice is fulfilled under bounded, recoverable terminalization;
+            its bound and implementation remain open.
         is_anonymous:
           type: boolean
           default: false
@@ -224,12 +310,11 @@ components:
 
     Donation:
       type: object
+      required: [id, campaign_id, amount, currency_code, payment_method, status, status_token, created_at]
       description: >
-        Full shape returned to the submitter right after submission and
-        via the token-based status check. `guest_email` is intentionally
-        never included here — even to the submitter's own status check —
-        since the status endpoint is unauthenticated and token-guarded
-        rather than identity-guarded.
+        Submission result. The temporary credential is returned only here
+        for frontend handoff to a fragment-carried status URL; it is never
+        returned by the status lookup. Guest email is not included.
       properties:
         id:
           type: string
@@ -243,7 +328,11 @@ components:
           nullable: true
         amount:
           type: string
-          example: "50000.00"
+          example: "50000"
+        currency_code:
+          type: string
+          description: Explicit currency code paired with amount.
+          example: IDR
         payment_method:
           $ref: "#/components/schemas/PaymentMethod"
         is_anonymous:
@@ -255,7 +344,13 @@ components:
           nullable: true
         status_token:
           type: string
-          description: Only present in the immediate submission response — not returned again by the status-check endpoint (it's the credential used to reach that endpoint).
+          description: >
+            Difficult-to-guess bearer credential returned only in this
+            submission response. The frontend hands it off through the URL
+            fragment and removes it from the visible URL. The verifier is
+            one-way HMAC and the credential expires 24 hours after issuance.
+            Concrete generation/strength evidence and implementation
+            controls remain open; no numeric entropy/length is specified.
         created_at:
           type: string
           format: date-time
@@ -263,6 +358,7 @@ components:
     DonationListItem:
       type: object
       description: Public donor-list projection — the only shape ever exposed to unauthenticated/public listing.
+      required: [amount, currency_code]
       properties:
         id:
           type: string
@@ -277,7 +373,10 @@ components:
             concern per kencleng-phase2-detail.md.
         amount:
           type: string
-          example: "50000.00"
+          example: "50000"
+        currency_code:
+          type: string
+          example: IDR
         created_at:
           type: string
           format: date-time
@@ -300,6 +399,7 @@ components:
         the "Klaim Donasi Lama" page — matched by `guest_email_hash`. This
         is the one place `guest_email` is returned in full, since it's
         being matched against the requesting user's own verified email.
+      required: [amount, currency_code]
       properties:
         id:
           type: string
@@ -317,7 +417,10 @@ components:
           format: email
         amount:
           type: string
-          example: "50000.00"
+          example: "50000"
+        currency_code:
+          type: string
+          example: IDR
         created_at:
           type: string
           format: date-time
@@ -336,6 +439,7 @@ components:
     MyDonation:
       type: object
       description: A registered user's own full donation history (including claimed guest donations).
+      required: [amount, currency_code]
       properties:
         id:
           type: string
@@ -347,7 +451,10 @@ components:
           type: string
         amount:
           type: string
-          example: "50000.00"
+          example: "50000"
+        currency_code:
+          type: string
+          example: IDR
         payment_method:
           $ref: "#/components/schemas/PaymentMethod"
         is_anonymous:
