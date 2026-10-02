@@ -87,19 +87,22 @@ Current delivery state:
 
 ### WU-S2-006 — Slice 2 Monetary Limits & Capacity Contract Reconciliation
 
-- Status: `ACTIVE / QUEUED`; TP006008 Human-approved and Status-only propagated by deterministic Orchestrator reconciliation. Product/spec prior acceptance preserved; new source gates remain.
+- Status: `ACTIVE / PARKED`; BLD006005 and RV006006 completed. RV006006 verdict is `Approve with minor comments`; waiting for owner compatibility/rollout decision and explicit acceptance of the seven reviewed source hashes.
 - Current planning target: TP006008 Approved, SHA-256 `93c09bf7629500cd8fb80fd59b6af464b169484419d722a269b782b78bbbf438`; its exact approval preimage was verified. RV006005 substantive review carries forward after verified mechanical correction. TP006004 is historical predecessor and does not approve TP006008.
-- Next action: Human-Assisted dispatch BLD-S2-006-005, fresh Implementer/KC-IMPLEMENTER, `gpt-6-luna` / `high`, for affected specs and authored split OpenAPI only. Independent source Review and owning acceptance follow Build; generated/counterpart work remains downstream.
+- Build evidence: `BLD-S2-006-005/report.md`, SHA-256 `b9f0670fcc6bbb41a49ac6f09c4fb44bdaead9f0ebb486851b3c4e89b947d806`; seven authored source files changed. Participant reports OpenAPI validation at 124 warnings/zero errors, no warning-coordinate/rule delta, and `git diff --check` passed; Orchestrator did not rerun these checks or tests.
+- Review evidence: `RV-S2-006-006/review-findings.md`, SHA-256 `df2edd50f7cdc796dadae817ff5a13fe7d8977e87d7ebdf4e18ebdaa3c43bb02`; four-pass verdict `Approve with minor comments`, no patch plan. RV-006-01 routes strict-client/known-consumer compatibility and rollout to named owners before source acceptance.
+- Compatibility evidence found by Orchestrator: the current frontend public Campaign consumer reads JSON without runtime schema validation but uses a generated type that lacks the new required member; backend exact-wire test currently asserts nine keys. These are known counterpart updates, not external-client compatibility proof.
+- Next action: Human owner records compatibility/rollout decision and explicitly accepts (or requests changes to) the exact seven reviewed Campaign/Donation spec/API source hashes. Counterpart work remains downstream.
 - Remaining: OI-3 applicability/Slice-3 source handoff; OI-4 source authoring/review/acceptance/counterparts/compatibility evidence; OI-5 delivery plan refresh/runtime. WU003/WU004 parked, WU002/WU005 accepted baselines preserved.
 - Boundary: approval plan terpisah dari concrete Product/spec/API acceptance, protected-write permission, DB application, runtime dan residual-risk acceptance; decomposition Skip recommendation.
 
 ## NEXT / LATER
 
-Current frontier adalah BLD-S2-006-005 setelah approval Status TP006008 direkonsiliasi langsung dari exact Human approval; WU006 ACTIVE/QUEUED. TP006009 sudah disiapkan tetapi tidak didispatch karena current Harscode guidance mengizinkan bounded deterministic Status reconciliation di luar Run path. Frontend TP-S2-004-001 completed Draft; source WU006 tetap HARD prerequisite bagi affected frontend/backend final planning dan Build. Source Review/owner acceptance/counterpart reconciliation harus konvergen dahulu. WU005 accepted contract baseline dipertahankan; production/runtime/protected/integration gates tetap berlaku.
+Current frontier: owner compatibility/rollout decision and source acceptance after completed Review RV-S2-006-006. WU006 ACTIVE/PARKED. Review verdict is `Approve with minor comments`; no source patch is requested, but RV-006-01 must be resolved by known-consumer/strict-client compatibility review before acceptance. TP006009 remains undispatched under current Harscode deterministic Status reconciliation. WU003/WU004 remain gated on accepted source convergence; WU005 baseline and production/runtime/protected/integration gates remain unchanged.
 
 ## Human Attention
 
-- Human action sekarang: jalankan BLD-S2-006-005 dari dispatch package di bawah. Tidak perlu mengulang whole-plan approval atau DEC-API-01/02.
+- Human action sekarang: review the compatibility evidence in the WU-S2-006 manifest; record the rollout/strict-client decision and explicitly accept or request changes for the seven exact reviewed source files. This is separate from the already completed Techplan approval and DEC-API-01/02.
 
 - Exploration Stage 3 mendapat Human authorization yang tercatat pada artifact handoff.
 - Re-review sebelumnya menutup atomic-coupling gap dan menemukan gap kebijakan retry/double-submit. Human kemudian menetapkan kebijakan O9 dalam OIR dan amendmen Product/MVP; Techplan `TP-S2-002-006` menerjemahkan arah tersebut sambil mempertahankan detail contract yang terbuka.
@@ -113,7 +116,7 @@ Current frontier adalah BLD-S2-006-005 setelah approval Status TP006008 direkons
 - `WU-S2-003`: whole final Techplan approval/Build held by O1-REP WU006 owning-source reconciliation/material policy details dan independent re-review. Retry ordering resolved in Draft only. Exact protected-write permissions, O3/O4/O5 controls/runtime/risk gates remain Active; accepted Campaign contract condition is now satisfied.
 - `WU-S2-004`: F-1 contract blocker resolved. Initial Draft selesai; OI-1 menahan whole-Techplan approval/affected Build sampai source WU006 reconciled/accepted. Optional email verification and backend runtime/security proof retain their named owners; no blanket whole-WU BLOCKED status.
 - `WU-S2-005`: terminal contract scope complete; producer/runtime follow-up handed off to WU003, not erased.
-- `WU-S2-006`: API owner choices settled; Human whole-plan approval TP006008 resolved and Status-only propagated with exact byte-equality verification. BLD006005 is queued for affected spec/authored API source reconciliation; independent Review, spec/API owner acceptance, counterpart compatibility, Slice-3 handoff, and delivery refresh/runtime remain. TP006009 was prepared but not dispatched. No concrete source acceptance, milestone, protected/DB permission, or residual-risk acceptance is inferred.
+- `WU-S2-006`: API owner choices settled; Human whole-plan approval TP006008 resolved and Status-only propagated with exact byte-equality verification. BLD006005 and RV006006 completed; Review approved with minor comment RV-006-01. WU006 is ACTIVE/PARKED for Human compatibility/rollout decision and explicit source acceptance. Counterpart compatibility, Slice-3 handoff, and delivery refresh/runtime remain. TP006009 was prepared but not dispatched. No source acceptance, milestone, protected/DB permission, or residual-risk acceptance is inferred.
 
 No active blocker remains on WU-S2-002. Contract readiness does not prove runtime/privacy/funding behavior. New monetary cap/capacity direction is recorded in Draft, pending source reconciliation; it does not silently supersede accepted wire semantics.
 

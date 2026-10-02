@@ -46,9 +46,10 @@ is selected by this endpoint.
    `max_donation_amount`, organizer-owned plain text `purpose`/`story`,
    narrow `steward`, public `lifecycle`, tagged `funding`, tagged `media`,
    and `donation_action` as defined below. `max_donation_amount` is the
-   effective per-Campaign whole-IDR cap, represented under the shared
-   major-unit decimal-string and explicit-currency convention; the donor can
-   see it before entering an amount.
+   effective per-Campaign whole-IDR cap, represented as a closed object
+   `{amount, currency_code}`. `amount` is a major-unit decimal string and
+   `currency_code` is explicitly `IDR`; both members are required. The donor
+   can see it before entering an amount.
 4. `purpose` and `story` are plain strings with `source: organizer`; API
    data neither carries HTML/Markdown nor claims platform verification.
 5. Funding amounts and computed percentage are decimal strings. A factual

@@ -37,6 +37,17 @@ paths:
         Guest submission does not require an Account. A new submission is
         accepted only when it wins the atomic ordering against Campaign
         closure while the Campaign is eligible; otherwise it is rejected.
+        The submitted amount must not exceed the Campaign's effective
+        max_donation_amount. Admission also requires the full amount to fit
+        within settled Funding plus accepted-pending reservations and the
+        Campaign's finite funding capacity. An otherwise eligible amount
+        that does not fit returns the shared generic 422 ValidationError on
+        amount, even if a smaller valid amount could fit. This capacity
+        predicate remains distinct from individual cap validation and the
+        response does not disclose remaining capacity or the close reason.
+        Closed/ineligible submissions continue to use 409, and retrying with
+        the same Idempotency-Key and payload returns the original donation;
+        reuse with a different payload remains a conflict.
         An accepted donation is persisted as `pending`. The backend-owned
         sandbox simulator may later set `success` or `failed`; this request
         cannot select a terminal outcome. QRIS is the only accepted payment

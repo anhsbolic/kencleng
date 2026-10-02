@@ -627,14 +627,14 @@ components:
 
     ClosedReason:
       type: string
-      enum: [max_amount_reached, deadline_reached, admin_force_closed]
+      enum: [max_amount_reached, funding_capacity_reached, deadline_reached, admin_force_closed]
 
     # Slice-1 public Campaign projection. These schemas are deliberately
     # standalone from the historical internal Campaign/Organization shapes.
     PublicCampaignDetail:
       type: object
       additionalProperties: false
-      required: [id, title, purpose, story, steward, lifecycle, funding, media, donation_action]
+      required: [id, title, max_donation_amount, purpose, story, steward, lifecycle, funding, media, donation_action]
       properties:
         id:
           type: string
@@ -642,6 +642,8 @@ components:
         title:
           type: string
           minLength: 1
+        max_donation_amount:
+          $ref: "#/components/schemas/MaxDonationAmount"
         purpose:
           $ref: "#/components/schemas/PublicCampaignOrganizerText"
         story:
@@ -873,8 +875,24 @@ components:
           type: string
           enum: [campaign_not_eligible]
 
+    MaxDonationAmount:
+      type: object
+      additionalProperties: false
+      required: [amount, currency_code]
+      description: Per-Campaign whole-IDR Donation cap; the explicit currency remains present in every response state.
+      properties:
+        amount:
+          type: string
+          pattern: '^(?:[5-9][0-9]{3}|[1-9][0-9]{4,8}|1000000000)$'
+          description: Major-unit decimal string containing whole Rupiah from 5000 through 1000000000 inclusive.
+          example: "1000000000"
+        currency_code:
+          type: string
+          enum: [IDR]
+
     Campaign:
       type: object
+      required: [max_donation_amount]
       properties:
         id:
           type: string
@@ -903,6 +921,8 @@ components:
           type: string
           nullable: true
           example: "10000000.00"
+        max_donation_amount:
+          $ref: "#/components/schemas/MaxDonationAmount"
         collected_amount:
           type: string
           example: "1250000.00"
@@ -978,6 +998,11 @@ components:
 
     CampaignCreateRequest:
       type: object
+      description: >
+        Omission of max_donation_amount defaults to IDR 1000000000. When
+        supplied, it must be a closed {amount, currency_code} object with
+        a whole-Rupiah amount from 5000 through 1000000000 and currency_code
+        IDR.
       required: [title, category, target_amount, deadline]
       properties:
         title:
@@ -997,13 +1022,20 @@ components:
         max_amount:
           type: string
           nullable: true
+        max_donation_amount:
+          $ref: "#/components/schemas/MaxDonationAmount"
         deadline:
           type: string
           format: date-time
 
     CampaignUpdateRequest:
       type: object
-      description: Only permitted while `status = draft`.
+      description: >
+        Only permitted while status = draft. When supplied,
+        max_donation_amount must be a closed {amount, currency_code} object
+        with a whole-Rupiah amount from 5000 through 1000000000 and
+        currency_code IDR. Omission preserves the stored cap; it is frozen
+        after publication.
       properties:
         title:
           type: string
@@ -1020,6 +1052,8 @@ components:
         max_amount:
           type: string
           nullable: true
+        max_donation_amount:
+          $ref: "#/components/schemas/MaxDonationAmount"
         deadline:
           type: string
           format: date-time

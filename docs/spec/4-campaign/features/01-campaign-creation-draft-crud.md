@@ -37,7 +37,7 @@ organization.
 | `beneficiary_description` | string | No | Free-text |
 | `target_amount` | decimal string | Yes | `> 0` |
 | `max_amount` | decimal string, nullable | No | `≥ target_amount` if set |
-| `max_donation_amount` | IDR whole-Rupiah monetary value using the shared major-unit decimal-string and explicit-currency convention | No | Per-Campaign cap; Rp5.000–Rp1.000.000.000 inclusive; omission defaults to Rp1.000.000.000 |
+| `max_donation_amount` | Closed object `{amount, currency_code}` | No | `amount` is a major-unit decimal string containing whole Rupiah from Rp5.000–Rp1.000.000.000 inclusive; `currency_code` is required and `IDR`; omission defaults to Rp1.000.000.000 |
 | `deadline` | datetime | Yes | Must be in the future |
 
 ### Edit — `CampaignUpdateRequest`
@@ -46,6 +46,9 @@ draft`. If `max_donation_amount` is omitted, retain the Campaign's current
 value; if supplied, it must be within the inclusive range and the Campaign
 must still be a draft. An unrelated PATCH from an older client must not reset
 the stored cap. The cap cannot be changed after publication.
+
+Campaign create/edit responses include the effective cap in the same closed
+`{amount, currency_code}` shape, including `currency_code: IDR`.
 
 ## Behavior
 

@@ -62,9 +62,11 @@ do not define the active public contract.
   existing value, including for older clients updating unrelated fields.
   The effective value is frozen when the Campaign is published. Every
   existing Campaign row must be backfilled to Rp1.000.000.000 before
-  cap-dependent behavior is enabled. This feature cap is distinct from the
-  fundraising `max_amount` threshold and does not set a project-wide money
-  range or precision policy.
+  cap-dependent behavior is enabled. API requests and responses represent
+  the cap as a closed `{amount, currency_code}` object with a major-unit
+  decimal-string `amount` and required `currency_code: IDR`. This feature
+  cap is distinct from the fundraising `max_amount` threshold and does not
+  set a project-wide money range or precision policy.
 - **Holds after operations**: `POST
   /organizations/{organizationId}/campaigns`, `PATCH
   /campaigns/{campaignId}` (while `draft`).
