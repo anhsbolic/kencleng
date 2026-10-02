@@ -98,6 +98,12 @@ Public Campaign data must follow Probe 01's safety direction: explicit public-sa
 
 A visitor can submit a guest donation to an eligible Campaign.
 
+Each Campaign has a per-donation limit from Rp5.000 through Rp1.000.000.000,
+with Rp1.000.000.000 as the default. An authorized Owner or Staff member may
+configure the limit while the Campaign is a draft; publication freezes that
+value. The public Campaign detail shows the active limit before the visitor
+enters an amount, and donation submission checks the current limit again.
+
 The donation capability must preserve:
 
 - truthful eligibility;
@@ -130,6 +136,15 @@ The temporary guest status URL described in Stage B is available for 24 hours on
 The Campaign can truthfully transition out of fundraising.
 
 `max_amount` is a closure threshold, not a hard cap on a donation amount or total funding. A donation submitted while the Campaign is eligible may be accepted in full even if that donation takes funding above the threshold. Donations already accepted while eligible and still pending when the Campaign closes remain eligible to settle in full; total funding may therefore exceed the threshold further. New donation submissions after the Campaign is closed are rejected.
+
+Campaign funding also has a finite representable capacity. Admission accounts
+for settled Funding and the full amounts of accepted Donations still pending,
+and accepts a new Donation only when its full amount fits within that
+capacity. When no additional valid Donation amount can fit, fundraising
+closes for a capacity-specific reason, distinct from reaching `max_amount`.
+If an accepted pending Donation later fails, it adds no Funding and the
+Campaign remains closed; closure does not reverse or replace the winning
+reason.
 
 After closure:
 

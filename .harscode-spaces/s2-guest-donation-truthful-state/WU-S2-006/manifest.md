@@ -1,0 +1,92 @@
+# WU-S2-006 — Slice 2 Monetary Limits & Capacity Contract Reconciliation
+
+## Definition
+
+- Type: `RECONCILIATION`
+- Parent Outcome: `S2-GUEST-DONATION-TRUTHFUL-STATE`
+- Derived from: backend `TP-S2-003-003` D16/O1-REP dan completion handoff; Product/MVP authority attribution 2026-10-01.
+- Coordination owner: Orchestration Operator
+- Communication language: Bahasa Indonesia
+
+### Outcome
+
+Menghasilkan baseline Product/MVP, Donation/Campaign spec dan shared API yang reconciled serta diterima owning authorities untuk batas individual Donation yang configurable per Campaign, kapasitas funding kumulatif, dan closure saat kapasitas tercapai. Baseline ini menutup source-reconciliation gap O1-REP agar backend dan frontend dapat menyelesaikan planning tanpa mengarang policy/interface.
+
+### Scope
+
+- Rekonsiliasi TP-S2-003-003 D16/O1-REP dan accepted EXP006 D-01–D-04 yang diperjelas Human pada 2026-10-01. Exact current receipt di parent events heading “Human clarified EXP006 D-01–D-04; source Techplan frontier prepared”; concrete source acceptance tetap explicit gate.
+- Derive affected Product/MVP, monetary representation bila applicable, Donation/Campaign spec/API/generated/fixture serta known consumer surfaces. Direction settled: cap whole-IDR Rp5.000–Rp1 miliar/default Rp1 miliar, Owner/Staff saat draft/freeze publikasi; public guest pre-disclosure/POST recheck; reservation settled plus accepted pending/close saat habis/no reopen setelah gagal. Exact wire/configuration compatibility/reason/source changes masih perlu owning-source resolution/review/acceptance.
+- Pertahankan full settlement accepted-pending, exact-once funding, idempotent retry dan winning-close-reason obligations; bedakan capacity ceiling dari existing threshold.
+
+### Boundaries
+
+- Shared authority/spec/contract reconciliation; backend/frontend production, migrations/DB application dan runtime proof tetap milik Delivery.
+- Jangan mengubah accepted Campaign availability-only action secara tersirat; perubahan public contract memerlukan owning API scope/review/acceptance.
+- D-04 membawa capacity close ke Slice 3: public identity tetap tersedia, donation action hilang, Funding tidak final selama accepted pending. Catat source/consumer handoff explicit; jangan expand full Slice-3 Delivery atau silently activate closed visibility pada current Slice-2 API. Jangan menetapkan universal monetary cap, menerima residual risk atau menulis protected implementation.
+- Orchestrator mengoordinasikan; Participant menyusun phase artifacts. Product/MVP/domain/API source changes hanya setelah decision dan gate owning authority yang applicable.
+
+### Completion condition
+
+Material policy/interface questions settled dengan named authority; owning Product/spec/API sources dan required counterparts reconciled, independently reviewed/verified sesuai risiko serta diterima owner. Exact consumer/Delivery readiness dan remaining runtime obligations dicatat. Tidak ada runtime milestone atau whole-backend/frontend plan approval yang implied.
+
+## Current State
+
+- Execution status: `ACTIVE`
+- Scheduling state: `PARKED`
+- Horizon: `NOW`
+- Current Run: TP-S2-006-009 prepared, dispatch diparkir atas Human checkpoint; fresh Planner / KC-PLANNER, gpt-6-luna / low; explicit Human-approved TP006008 Status-only propagation. No source Build dispatch before verified metadata delta.
+- Current milestone: None
+- Review outcome: RV006001 no blocking findings; TP006004 actual mechanical-only delta verified, substantive meaning unchanged. Existing independent Review tetap applicable; tidak perlu re-review untuk koreksi mekanis tersebut.
+- Human gates: D-01–D-04/D6/OI-1/OI-2 settled. Whole-Techplan TP-S2-006-004 approved oleh Anhar berdasarkan report TP006005; Status Approved propagated TP006006 dan exact Status-only delta verified. Concrete Product/MVP amendments independently reviewed Approve/no findings dan accepted Anhar; RV006003 C-01/Q-01 independently resolved by RV006004 Approve; exact six-source Campaign/Donation amendments accepted Anhar; API source acceptance tetap pending. OI-3 source applicability, OI-4 source acceptance/counterparts/compatibility, OI-5 delivery refresh/runtime tetap downstream. Decomposition Skip recommendation, no split.
+- Current evidence: current planning target TP006008 Human-approved, header Draft / In Review awaiting owning Status propagation SHA-256 c1a8806a1c754b849c0b8457e688d9a50aa0d024dc3d4fe2f3c4c5a7d35c3324; complete report 06d6259f4e50960dbae04951b0b786c15503ec6140f27b9f805149a8a5b6eb6c; handoff 55ab4744fd385d61ca1831420d71e98b026b223f2d324db7d5b7a0cb8b7c5333. Predecessor TP006004 Approved, SHA-256 b6c9d10efd1d1b0b06cb197a35c25728dea45fd60c49a9f03ca5c52e4389ae78; normalized Status-only predecessor equality PASS; complete report TP006005 SHA-256 c81e4e8d5dfe9ed5e47bce891f27c5dca11763cfacde2d66fd893dcd2cc48347; handoff TP006005 SHA-256 e123b578082dde6f6faa87d29197b319a380edc4ec2294414d6b53977c9ffa3a. Applicable Interface Contract lengkap. Handoff mengklarifikasi historical configured effort: TP006004 Invocation low, copied source header medium; runtime effort tidak independently exposed. Tidak ada perubahan semantik atau source acceptance.
+- Dependent frontend evidence: TP-S2-004-001 OI-1/R2/R12/handoff, Draft completed; whole-plan approval/amount-limit-dependent Build held sampai accepted source result.
+- Dependency ownership: parent Work Graph. Backend/frontend affected final approval/Build dan plan refresh/re-review mengikuti accepted source convergence; policy solutioning tidak menutup O1-REP/OI-1 atau membuktikan runtime.
+
+## Current-effective inputs
+
+- Root AGENTS dan current Product/MVP/monetary/spec/API owners melalui routing map.
+- Parent Outcome, Work Graph, Control Surface, events dan `.harscode-spaces/authority-map.md`.
+- Backend source handoff dan exact D16/O1-REP di TP-S2-003-003; successor masih Draft/unapproved.
+- Current accepted Donation baseline WU-S2-002 dan Campaign action baseline WU-S2-005; jangan memuat seluruh Run history untuk rekonstruksi.
+- Completed EXP006 corpus/handoff dan explicit current Human clarification pada parent events; canonical Harscode Techplan synthesis, template/rules/guardrails, run-contract dan orchestrated-run overlay.
+
+## Current source checkpoint
+
+- BLD006001 Product amendments: docs/product/mvp-scope.md SHA-256 ba2972bc8f91d092e477df170d987b1d124964d9cc36c025d2a8da3ed12709af; docs/product/mvp-delivery-slices.md SHA-256 4c69a030e7fedc9c62bf30f85c00e81f9806c45b2ed5471c1d5126762be8091f. Current hashes match Review.
+- RV006002 review-findings SHA-256 f3d4402f6514c0625c49fafee2f004ac5d552e57a1892434e01c1bd72f2d3f88; four-pass Approve, no findings/patch plan. No executable/runtime verification claimed.
+- Next gate: TP006009 owning Status-only propagation setelah explicit Human TP006008 approval → affected source reconciliation/gates → API authoring/Review/acceptance → counterparts; Product amendments accepted dengan exact event receipt. WU006 not complete.
+
+- Spec checkpoint BLD006002 report SHA-256 e0a7688cf36d1f4d0d9fefbcb2f211632814c536be3576ea614b0ea202c71d8b; source-delta.patch SHA-256 d0bc1537eb5336a66d23128bc63fd8259bd5607dd863ed2eae76871719439560. Six baseline/current hashes verified, exact patch reconstruction matched. Source acceptance pending.
+
+- RV006003 completed Request changes; review SHA-256 bf4f5aed6f9b8506221a537487dd1f7a2d2807b0e74ad6667800b8a1bd69d74e; patch-plan SHA-256 3cd6a4743b3866cc56f736cf7178b671e74b8cc9eac22d13a8e88b429eb23767. All six current source hashes remain reviewed snapshot. No owner decision needed for findings; approved Product/Techplan already own required behavior.
+
+- BLD006003 patch report SHA-256 c2ee2c37777d0d7ae55dc97c74457c8fab73ddb7e3e1f1b89210871a15c43e34; exact source-delta.patch SHA-256 f089b009eb5acc176279c3e5226ac91dd4005a512580892c32259980f8ae9c5c. Four snapshot/live deltas reconstructed MATCH; two other original spec sources unchanged. C-01/Q-01 independently closed by RV006004; concrete spec acceptance received.
+
+## Spec acceptance snapshot — 2026-10-02
+
+- `docs/spec/4-campaign/invariants.md` SHA-256 `0d3f250e4d51d98a63c865c6fe0810b1b4fdb5ab063b706c7ab32f7e7bd73342`.
+- `docs/spec/4-campaign/features/01-campaign-creation-draft-crud.md` SHA-256 `53431422b714adebd6ff9f07476c4c930746516f89f98d4c7ea122b7f35c8d05`.
+- `docs/spec/4-campaign/features/02-campaign-detail-listing.md` SHA-256 `2db5dd950553e97756417fd2f41e29356835c43a795c80c3be1d615fc3cd45a7`.
+- `docs/spec/4-campaign/features/09-closure.md` SHA-256 `dd0a3c6a897091e887a4e64127322d8e4d28036bd15f6cedc70777f7d329df4d`.
+- `docs/spec/5-donation/invariants.md` SHA-256 `68c7967fba44a3012ee67730bc5b6a2011961859b1b119dbe0709d96d0d953f8`.
+- `docs/spec/5-donation/features/01-submit-donation-settlement.md` SHA-256 `3b1f3918752724c4c6448aa001f287ee59461a5fb8f75b82a0495db072755dfe`.
+- RV006004 review SHA-256 f4f47f08b72380aa6ed95ca1c09054731897d93dd747bc7c86b2ef4a7a527bd5. Current all-six hashes matched original Review plus independent patch confirmation. Human explicit acceptance recorded in parent event “Human accepted six spec amendments; authored API Build prepared”.
+
+## Authored API decision gate — 2026-10-02
+
+- BLD006004 report SHA-256 15dafd0eaa302ae6a36bce703661b42c547725c84b856926db736da371f66d65. No authored API change. All six spec amendment receipts verified normalized-byte-equivalent to exact Human-accepted snapshot; existing substantive Review remains applicable, no new Review/Testing solely for marker edits.
+- DEC-API-01: Campaign still eligible but requested Donation does not fit remaining capacity. Spec explicitly defers transport; approved plan selects over-cap 422 only. Owner Anhar asked generic shared 422 ValidationError on amount vs generic 409, without capacity disclosure; closed/ineligible and idempotent retry rules preserved. Decision accepted Anhar; exact receipt in parent owner-settlement event.
+- DEC-API-02: max_donation_amount concrete wire encoding with explicit currency. Owner Anhar asked closed object {amount: decimal string, currency_code: IDR} vs scalar plus companion currency. Existing optional/create-default/PATCH-preserve/required-response decisions preserved. Decision accepted Anhar; exact receipt in parent owner-settlement event.
+- Known owner can answer now; no discovery Participant merely to ask. Material chosen shape must become owning Planner durable contract before API authoring, with applicable review/report/approval fidelity gates. No source acceptance inferred from choice.
+
+- DEC-API-01/02 RESOLVED: generic shared 422 ValidationError on amount for eligible capacity no-fit; closed object max_donation_amount {amount: decimal string, currency_code: IDR}, both members required when supplied, inherited outer optional/default/PATCH-preserve/required-response semantics retained. Owner choice is not whole successor approval or concrete source acceptance.
+
+- TP006007 complete with no new material owner decision reported; recommend independent Review, decomposition Skip. No report during material revision churn. Affected future spec/API bytes still require applicable owning acceptance; prior Product/six-spec acceptance remains specific to its recorded snapshot.
+
+- RV006005 completed independent Complex Review: no blocking findings, one non-blocking invalid secondary Test Focus evidence anchor. Review SHA-256 b093a49238d0c9737cbf73d4a80fe4fa51d196c4794c683177f8f290e1ca5783. Mechanical-only correction does not trigger re-review by itself; actual delta must support substantive Review carry-forward.
+
+- TP006008 full actual diff inspected: invalid secondary anchor removed, valid Area2 retained; necessary Run provenance/artifact paths and resolution note only. Material semantics unchanged; RV006005 substantive independent evidence applicable, no mechanical-only re-review. Report/source hash correspondence verified; approval applies plan, not digest.
+
+- Human whole TP006008 approval receipt: “techplan approve bro”, parent event 2026-10-02 — Human approved TP006008; Status propagation prepared. Exact plan/report hashes unchanged; no repeat approval vote. Future source-byte acceptance remains separate.
+
+- Human checkpoint 2026-10-02: berhenti sementara sebelum TP006009 dispatch. Execution ACTIVE retained (target unfinished), Scheduling PARKED; prepared Invocation preserved. Progress snapshot: docs/project/slice-2-progress-checkpoint-2026-10-02.md. Resume requires current-state/guidance re-grounding, not a repeated approval.

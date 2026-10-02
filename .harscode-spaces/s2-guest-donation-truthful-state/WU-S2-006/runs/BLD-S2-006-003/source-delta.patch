@@ -1,0 +1,110 @@
+--- a/docs/spec/4-campaign/invariants.md
++++ b/docs/spec/4-campaign/invariants.md
+@@ -232,9 +232,13 @@
+   Donations. The Campaign funding ceiling is IDR
+   `99,999,999,999,999,999`, derived from the current `NUMERIC(19,2)` Campaign
+   funding representation; no admitted Donation may make settled Funding
+-  plus accepted-pending reservations exceed it. When a winning admission
+-  exhausts the remaining capacity, the Campaign closes with the distinct
+-  `funding_capacity_reached` reason. If close wins before an otherwise new
++  plus accepted-pending reservations exceed it. After accounting for settled
++  Funding and accepted-pending reservations, the Campaign closes with the
++  distinct `funding_capacity_reached` reason when remaining capacity is less
++  than the minimum valid Donation of Rp5.000, including exact exhaustion.
++  Admission still rejects any full Donation amount that does not fit; this
++  does not change the separate, overshootable `max_amount` threshold. If
++  close wins before an otherwise new
+   submission is admitted, reject that submission. An already accepted
+   Donation remains settleable in full after any close. A later successful
+   settlement and full funding reflection commit atomically and exactly
+@@ -252,8 +256,11 @@
+   submit-vs-close orderings; reservation accounting across settled and
+   accepted-pending amounts, including concurrent admissions at the ceiling;
+   accepted-pending settlement after close; full exact-once funding;
+-  capacity-close reason stability after a pending failure; no reopen after
+-  reservation release; and `max_amount` threshold overshoot, alongside
++  capacity-close boundaries where residual capacity is Rp4.999 (close) versus
++  Rp5.000 (remain open), including exact exhaustion; rejection of a Donation
++  that does not fit while a smaller valid amount does; capacity-close reason
++  stability after a pending failure; no reopen after reservation release; and
++  `max_amount` threshold overshoot, alongside
+   applicable deadline/force-close behavior. The donation/close verification
+   is not satisfied by this spec reference or by choosing a locking
+   mechanism here.
+--- a/docs/spec/4-campaign/features/09-closure.md
++++ b/docs/spec/4-campaign/features/09-closure.md
+@@ -86,10 +86,15 @@
+    representability ceiling. This ceiling is separate from the
+    `max_amount` threshold and does not constrain that threshold's ability to
+    be overshot by an already accepted Donation.
+-2. When an admitted Donation exhausts remaining capacity, close the Campaign
+-   with the distinct reason `funding_capacity_reached`. An admission that
+-   loses the ordering to a close is rejected; previously accepted Donations
+-   still settle in full after close.
++2. After settled Funding and accepted-pending reservations are accounted for,
++   close the Campaign with the distinct reason `funding_capacity_reached`
++   when remaining capacity is less than the minimum valid Donation of
++   Rp5.000, including exact exhaustion. Admission still rejects a full
++   Donation amount that does not fit; a smaller valid amount may still fit
++   while the Campaign remains open. This capacity rule does not change the
++   separate, overshootable `max_amount` threshold. An admission that loses
++   the ordering to a close is rejected; previously accepted Donations still
++   settle in full after close.
+ 3. If an accepted-pending Donation fails, it contributes no Funding and its
+    reservation is released. Capacity release does not reopen a
+    capacity-closed Campaign or replace the winning close reason.
+@@ -143,11 +148,16 @@
+       funding may exceed threshold. Broader close-trigger race evidence
+       remains owned by the Campaign closure delivery slice.
+ - [ ] Settled Funding plus accepted-pending reservations never exceeds
+-      `99,999,999,999,999,999`, including concurrent admission; capacity
+-      exhaustion closes with `funding_capacity_reached`; failed pending
+-      settlement adds no Funding and does not reopen or change the reason.
++      `99,999,999,999,999,999`, including concurrent admission; residual
++      capacity Rp4.999 closes with `funding_capacity_reached`, while Rp5.000
++      remains open because the minimum valid Donation still fits; exact
++      exhaustion also closes. Reject an amount too large for the remaining
++      capacity without disclosing that capacity when a smaller valid amount
++      could fit. Failed pending settlement adds no Funding and does not reopen
++      or change the reason.
+ - [ ] `closed_by` populated only for `admin_force_closed`, `null` for
+-      the other two reasons.
++      all non-admin close reasons: `max_amount_reached`, `deadline_reached`,
++      and `funding_capacity_reached`.
+ 
+ ## References
+ 
+--- a/docs/spec/5-donation/invariants.md
++++ b/docs/spec/5-donation/invariants.md
+@@ -34,9 +34,9 @@
+ 
+ ### INV-donation-02: New submission eligibility, cap, and capacity admission are ordered against Campaign close
+ 
+-- **Statement**: A new Donation is accepted only if its submission wins the atomic ordering against Campaign close while eligible, its amount is at or below the Campaign's effective `max_donation_amount`, and settled Funding plus all accepted-pending reservations plus this amount does not exceed the Campaign funding ceiling of IDR `99,999,999,999,999,999`. The per-Campaign cap is whole IDR from Rp5.000 through Rp1.000.000.000 inclusive; omitted create values default to Rp1.000.000.000, PATCH omission preserves the stored value, and the value is frozen after publication. If close wins first, reject the new submission. When admission exhausts the remaining capacity, Campaign closes with `funding_capacity_reached`. An accepted Donation remains eligible to settle in full after Campaign close. Over-cap POST uses the shared generic `422 ValidationError` on `amount` and does not disclose remaining Campaign capacity. This is D1 plus the accepted capacity boundary; this invariant selects no transaction, locking, or isolation mechanism.
++- **Statement**: A new Donation is accepted only if its submission wins the atomic ordering against Campaign close while eligible, its amount is at or below the Campaign's effective `max_donation_amount`, and settled Funding plus all accepted-pending reservations plus this amount does not exceed the Campaign funding ceiling of IDR `99,999,999,999,999,999`. The per-Campaign cap is whole IDR from Rp5.000 through Rp1.000.000.000 inclusive; omitted create values default to Rp1.000.000.000, PATCH omission preserves the stored value, and the value is frozen after publication. If close wins first, reject the new submission. After settled Funding and accepted-pending reservations are accounted for, Campaign closes with `funding_capacity_reached` when remaining capacity is less than the minimum valid Donation of Rp5.000, including exact exhaustion. Admission rejects any full Donation amount that does not fit; this does not change the separate, overshootable `max_amount` threshold. An accepted Donation remains eligible to settle in full after Campaign close. Over-cap POST uses the shared generic `422 ValidationError` on `amount` and does not disclose remaining Campaign capacity. This is D1 plus the accepted capacity boundary; this invariant selects no transaction, locking, or isolation mechanism.
+ - **Holds after operations**: submission and the cross-domain Campaign close boundary.
+-- **Verification**: Source review confirms cap configuration and request semantics in Campaign sources. Runtime Testing demonstrates both orderings, cap enforcement, reservation accounting under concurrent admission, capacity close, and accepted-pending settlement after close; Campaign's winning close reason remains unchanged. Contract and runtime evidence confirms over-cap response uses the generic `amount` validation shape without capacity leakage.
++- **Verification**: Source review confirms cap configuration and request semantics in Campaign sources. Runtime Testing demonstrates both orderings, cap enforcement, reservation accounting under concurrent admission, residual-capacity boundaries (Rp4.999 closes; Rp5.000 remains open), exact exhaustion, rejection when an amount does not fit while a smaller valid amount does, and accepted-pending settlement after close; Campaign's winning close reason remains unchanged. Contract and runtime evidence confirms over-cap response uses the generic `amount` validation shape and does not disclose remaining capacity when a smaller valid amount could fit.
+ 
+ ### INV-donation-03: Guest identity and notification fields follow Slice 2 purpose
+ 
+--- a/docs/spec/5-donation/features/01-submit-donation-settlement.md
++++ b/docs/spec/5-donation/features/01-submit-donation-settlement.md
+@@ -27,7 +27,7 @@
+ - Given `pending`, then the copy is “Menunggu hasil simulasi,” with no estimate and no instruction to make a real payment. Pending never triggers automatic resubmission. Given `failed`, the donor may explicitly start another Donation using a new key.
+ - Given an ambiguous submission outcome, when the client retries with the same key and payload, then the original Donation is returned; same key with a different payload is rejected. Client prevents double-click and does not rotate key while ambiguous. New key means deliberate new intent. Retry record lifetime/serialization remains contract detail.
+ - Given a submission racing Campaign close, then eligibility is ordered atomically against close: close-first rejects the new submission; submission-first accepts it. This expresses D1 and does not prescribe a mechanism.
+-- Given a submission competing for Campaign funding capacity, then admission counts collected settled Funding plus the full amounts of accepted-pending Donations and never admits a combined amount above IDR `99,999,999,999,999,999`. The funding-capacity ceiling remains distinct from the overshootable `max_amount` threshold. Admission that exhausts capacity closes the Campaign with `funding_capacity_reached`, distinct from `max_amount_reached`.
++- Given a submission competing for Campaign funding capacity, then admission counts collected settled Funding plus the full amounts of accepted-pending Donations and never admits a combined amount above IDR `99,999,999,999,999,999`. After accounting for those amounts, remaining capacity below the minimum valid Donation of Rp5.000, including exact exhaustion, closes the Campaign with `funding_capacity_reached`, distinct from the overshootable `max_amount` threshold. An amount that does not fit is rejected, even if a smaller valid amount could fit; that rejection does not disclose remaining capacity.
+ - Given an accepted Donation still pending when Campaign closes, when the simulator later succeeds, then the full amount remains settleable and Donation success plus full funding reflection commit atomically and exactly once. Later settlement does not reopen Campaign or change its winning close reason; funding may exceed `max_amount`.
+ - Given an accepted-pending Donation fails after capacity close, then it contributes no Funding and releases its reservation, but the Campaign remains closed and its winning `funding_capacity_reached` reason remains stable.
+ - Given an unsuccessful or still-pending Donation, then it does not count as collected funding. Settlement replay cannot add funding twice. Request idempotency and settlement idempotency are separate guarantees.
+@@ -50,7 +50,7 @@
+ | Amount below minimum or not whole Rupiah | Reject according to final contract validation; exact status/code is not defined here. |
+ | Amount exceeds the current Campaign `max_donation_amount` | Shared generic `422 ValidationError` on `amount`; do not disclose capacity or closure state. |
+ | Campaign close wins before submission eligibility | Reject the new Donation; do not specify transport shape here. |
+-| Settled Funding plus accepted-pending reservations would exceed finite Campaign capacity | Do not admit the new Donation; the exact close/submission transport response for this boundary remains with the authored API reconciliation. |
++| A requested amount does not fit within settled Funding plus accepted-pending reservations and finite Campaign capacity | Do not admit it, even when a smaller valid amount could fit; do not disclose remaining capacity. The exact close/submission transport response remains with the authored API reconciliation. After accounting for reservations, close with `funding_capacity_reached` if less than Rp5.000 remains, including zero; residual Rp4.999 closes while Rp5.000 remains open. |
+ | Same idempotency key with changed payload | Reject; exact API problem shape belongs to contract reconciliation. |
+ | Simulator remains pending | Show “Menunggu hasil simulasi”; no timing promise, payment instruction, or automatic resubmission. |
+ | Simulator returns failed | Show simulation failure truthfully; allow a deliberate new Donation with a new key. |

@@ -2,7 +2,8 @@
 
 > File: `docs/spec/4-campaign/invariants.md`
 > Status: Slice-1 public-boundary reconciliation active; remaining historical invariants are deferred evidence
-> Last updated: 2026-09-30
+> Last updated: 2026-10-02
+> WU-S2-006 source amendment accepted by Anhar Solehudin on 2026-10-02 after independent Review; acceptance covers this source amendment only.
 
 ## Domain summary
 
@@ -54,13 +55,25 @@ do not define the active public contract.
 - **Statement**: `target_amount > 0`; `max_amount`, if set, `≥
   target_amount`; `deadline` in the future at creation time; `category`
   required (fixed enum: `bencana_alam`/`kesehatan`/`pendidikan`/
-  `sosial`/`lainnya`).
+  `sosial`/`lainnya`). For Slice 2, `max_donation_amount` is a per-Campaign
+  whole-IDR cap in the inclusive range Rp5.000–Rp1.000.000.000. Omission on
+  creation selects Rp1.000.000.000; an explicitly supplied value is valid
+  only while the Campaign is a draft. Omission on PATCH preserves the
+  existing value, including for older clients updating unrelated fields.
+  The effective value is frozen when the Campaign is published. Every
+  existing Campaign row must be backfilled to Rp1.000.000.000 before
+  cap-dependent behavior is enabled. This feature cap is distinct from the
+  fundraising `max_amount` threshold and does not set a project-wide money
+  range or precision policy.
 - **Holds after operations**: `POST
   /organizations/{organizationId}/campaigns`, `PATCH
   /campaigns/{campaignId}` (while `draft`).
 - **Verification**: Test — each rule individually (zero/negative
   `target_amount`, `max_amount < target_amount`, past `deadline`,
-  missing `category`) → `422`.
+  missing `category`) → `422`. Downstream contract/runtime evidence covers
+  the cap's inclusive boundaries, create default, PATCH omission
+  preservation with a non-default stored value, existing-row backfill,
+  and rejection of supplied cap changes after publication.
 
 ### INV-campaign-03: Draft campaigns are editable by any representative; submission is owner-only
 
@@ -207,28 +220,50 @@ do not define the active public contract.
 - **Verification**: Test — after auto-unpublish, wait/advance time,
   assert `status` remains `unpublished` with no automatic transition.
 
-### INV-campaign-13: Campaign close has one stable winning trigger; Donation ordering follows D1
+### INV-campaign-13: Campaign close has one stable winning trigger; Donation ordering follows D1 and capacity reservation
 
-- **Statement**: A `published` campaign closes (`status = 'closed'`)
-  through its applicable threshold, deadline, or Admin force-close
-  trigger. The first close transition wins and its `closed_reason`
-  remains stable. Donation submission eligibility is ordered
-  atomically against close: if close wins first, a new submission is
-  rejected; if an eligible submission wins, that Donation remains
-  settleable in full after close. A later successful settlement and
-  full funding reflection commit atomically and exactly once, but
-  cannot reopen the Campaign or replace the winning close reason.
-  Funding may therefore exceed `max_amount`. This is the narrow
-  Slice-2 D1 boundary; it does not select a transaction/locking
-  mechanism or change broader closure behavior.
+- **Statement**: A `published` Campaign closes (`status = 'closed'`)
+  through its applicable fundraising `max_amount` threshold, finite funding
+  capacity, deadline, or Admin force-close trigger. The first close
+  transition wins and its `closed_reason` remains stable. `max_amount` is a
+  distinct, overshootable fundraising threshold; it is not the finite
+  representability ceiling. Slice-2 capacity admission accounts for
+  collected settled Funding plus the full amounts of accepted-pending
+  Donations. The Campaign funding ceiling is IDR
+  `99,999,999,999,999,999`, derived from the current `NUMERIC(19,2)` Campaign
+  funding representation; no admitted Donation may make settled Funding
+  plus accepted-pending reservations exceed it. After accounting for settled
+  Funding and accepted-pending reservations, the Campaign closes with the
+  distinct `funding_capacity_reached` reason when remaining capacity is less
+  than the minimum valid Donation of Rp5.000, including exact exhaustion.
+  Admission still rejects any full Donation amount that does not fit; this
+  does not change the separate, overshootable `max_amount` threshold. If
+  close wins before an otherwise new
+  submission is admitted, reject that submission. An already accepted
+  Donation remains settleable in full after any close. A later successful
+  settlement and full funding reflection commit atomically and exactly
+  once, but cannot reopen the Campaign or replace the winning close reason;
+  funding can exceed `max_amount` while remaining within the capacity
+  ceiling. A failed accepted-pending Donation contributes no Funding and
+  releases its reservation, but does not reopen a capacity-closed Campaign
+  or replace its winning reason. This invariant selects no transaction,
+  locking, or isolation mechanism and does not change broader closure
+  behavior.
 - **Holds after operations**: Donation submission/settlement ordering
-  at the threshold boundary, the deadline scheduler, and `force-close`.
+  at the threshold and capacity boundaries, reservation admission/release,
+  the deadline scheduler, and `force-close`.
 - **Verification**: Runtime Testing must demonstrate the D1
-  submit-vs-close orderings, accepted-pending settlement after close,
-  full exact-once funding, stable winning close reason, and threshold
-  overshoot, alongside applicable deadline/force-close behavior. The
-  donation/close verification is not satisfied by this spec reference
-  or by choosing a locking mechanism here.
+  submit-vs-close orderings; reservation accounting across settled and
+  accepted-pending amounts, including concurrent admissions at the ceiling;
+  accepted-pending settlement after close; full exact-once funding;
+  capacity-close boundaries where residual capacity is Rp4.999 (close) versus
+  Rp5.000 (remain open), including exact exhaustion; rejection of a Donation
+  that does not fit while a smaller valid amount does; capacity-close reason
+  stability after a pending failure; no reopen after reservation release; and
+  `max_amount` threshold overshoot, alongside
+  applicable deadline/force-close behavior. The donation/close verification
+  is not satisfied by this spec reference or by choosing a locking
+  mechanism here.
 - **Cross-domain note**: Campaign owns lifecycle and `closed_reason`;
   Donation owns accepted-submission and settlement contribution.
   `docs/spec/5-donation/invariants.md#inv-donation-02` and
@@ -245,6 +280,9 @@ do not define the active public contract.
   Campaign is publicly eligible. Draft, pending, approved-but-not-published,
   scheduled, rejected, unpublished/retracted, and historical closed states
   are non-public until later Slice reconciliation explicitly changes this.
+  Slice 2 continues to return the indistinguishable `404` for closed
+  Campaigns; the Slice-3 public-result behavior below is a handoff, not active
+  Slice-2 visibility.
 - **Anti-enumeration**: absent, malformed/non-resolvable, and non-public
   Campaigns return the same `PublicCampaignNotFound` `404` Problem Details
   response. The media-content operation returns that same response for an
@@ -253,16 +291,30 @@ do not define the active public contract.
   public error shape.
 - **Projection**: the detail response is the standalone closed
   `PublicCampaignDetail` allowlist, never an internal `Campaign` or
-  authenticated `Organization` serialization. It contains exactly `id`,
-  `title`, `purpose`, `story`, `steward`, `lifecycle`, `funding`, `media`,
-  and `donation_action`, with closed nested exact projections. It excludes
-  raw status/reasons, contact/legal data, actor IDs, audit timestamps,
-  `donor_count`, and operational metadata. Organizer text is plain text
-  marked `source: organizer`; it is not verification evidence.
+  authenticated `Organization` serialization. In Slice 2 it contains
+  exactly `id`, `title`, required `max_donation_amount`, `purpose`, `story`,
+  `steward`, `lifecycle`, `funding`, `media`, and `donation_action`, with
+  closed nested exact projections. `max_donation_amount` is the effective
+  per-Campaign whole-IDR cap, disclosed before amount entry. The projection
+  excludes raw status/reasons, contact/legal data, actor IDs, audit
+  timestamps, `donor_count`, and operational metadata. Organizer text is
+  plain text marked `source: organizer`; it is not verification evidence.
 - **Funding/action truth**: funding uses tagged availability with IDR decimal
   strings, backend-authored uncapped progress/relationship, and distinct
-  zero/unavailable semantics. `donation_action` is required but unavailable
-  with no activation target in Slice 1.
+  zero/unavailable semantics. In Slice 2, required `donation_action` is
+  `{availability: available}` when the backend Donation submission-eligibility
+  predicate passes at the GET snapshot, or
+  `{availability: unavailable, reason: campaign_not_eligible}` only when the
+  detail remains public and that same predicate fails. The generic reason
+  exposes no internal lifecycle/closure detail. GET is an affordance snapshot;
+  Donation POST independently rechecks current eligibility and validates
+  against the current cap and remaining capacity. The GET cap does not
+  authorize or reserve a Donation. No navigation target is included.
+- **Slice-3 handoff**: when Slice 3 is reconciled, a public closed-Campaign
+  result retains Campaign identity, removes `donation_action`, and does not
+  present Funding as final while accepted Donations remain pending. This
+  does not activate closed details in Slice 2 or settle Slice-3 projection
+  fields.
 - **Media**: metadata follows the same parent eligibility predicate. Public
   bytes remain in private storage and are delivered only after parent and
   member recheck at the origin; a storage/object dependency failure for an
@@ -277,7 +329,8 @@ do not define the active public contract.
 - **Verification**: downstream implementation/tests must prove allowlist
   mapping, absent/non-public/auth parity (including timing), private-storage
   retraction, no-store behavior, storage failure distinction, exact decimal
-  progress, and safe plain-text rendering.
+  progress, safe plain-text rendering, and public cap disclosure with
+  independent POST enforcement.
 
 ### INV-campaign-15: `campaign_logs` is append-only
 

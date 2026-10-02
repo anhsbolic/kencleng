@@ -4,7 +4,8 @@
 > Domain: `campaign`
 > Task: 09 (see `docs/spec/4-campaign/tasks.md`)
 > Status: draft — authored against `api/openapi/campaign.yaml` 2026-08-20
-> Last updated: 2026-09-30
+> Last updated: 2026-10-02
+> WU-S2-006 source amendment accepted by Anhar Solehudin on 2026-10-02 after independent Review; acceptance covers this source amendment only.
 
 > **Slice 2 cross-reference (D1):** For Donation eligibility and
 > settlement ordering, use `docs/spec/4-campaign/invariants.md#inv-campaign-13`
@@ -19,9 +20,10 @@
 
 ## Summary
 
-A `published` Campaign may close through one of three triggers:
-`max_amount` reached, `deadline` reached, or Admin force-close
-(`POST /campaigns/{campaignId}/force-close`). For the Slice 2 D1
+A `published` Campaign may close through its applicable `max_amount`
+fundraising threshold, finite funding-capacity ceiling, deadline, or Admin
+force-close (`POST /campaigns/{campaignId}/force-close`). The first close
+transition wins and its reason remains stable. For the Slice 2 D1
 eligibility and settlement boundary, see
 `docs/spec/4-campaign/invariants.md#inv-campaign-13` and the Donation
 invariant cross-references above. The close-ordering mechanism remains
@@ -76,6 +78,40 @@ Force-close: `bearerAuth` + `role = 'admin'` only.
    `max_amount`. See D1 in INV-campaign-13 and the Donation invariant
    cross-reference above. No locking/isolation mechanism is selected.
 
+### Finite funding-capacity trigger (Slice 2)
+
+1. Admission accounts for settled Campaign Funding plus the full amount of
+   every accepted-pending Donation. The combined amount must remain at or
+   below IDR `99,999,999,999,999,999`, the current Campaign Funding
+   representability ceiling. This ceiling is separate from the
+   `max_amount` threshold and does not constrain that threshold's ability to
+   be overshot by an already accepted Donation.
+2. After settled Funding and accepted-pending reservations are accounted for,
+   close the Campaign with the distinct reason `funding_capacity_reached`
+   when remaining capacity is less than the minimum valid Donation of
+   Rp5.000, including exact exhaustion. Admission still rejects a full
+   Donation amount that does not fit; a smaller valid amount may still fit
+   while the Campaign remains open. This capacity rule does not change the
+   separate, overshootable `max_amount` threshold. An admission that loses
+   the ordering to a close is rejected; previously accepted Donations still
+   settle in full after close.
+3. If an accepted-pending Donation fails, it contributes no Funding and its
+   reservation is released. Capacity release does not reopen a
+   capacity-closed Campaign or replace the winning close reason.
+4. This feature states the ordering and outcome only. It selects no
+   transaction, locking, or isolation mechanism. Runtime proof of concurrent
+   reservation, settlement, and close ordering remains required.
+
+### Slice 3 public-result handoff (not active in Slice 2)
+
+The capacity-close reason does not change the current Slice-2 public
+eligibility rule: a closed Campaign remains non-public and returns the
+existing indistinguishable `404`. When Slice 3 is reconciled, its public
+closed-Campaign result must retain Campaign identity, remove the donation
+action, and avoid presenting Funding as final while accepted Donations
+remain pending. This handoff does not activate that projection or define its
+API fields here.
+
 ## Validation & error cases
 
 | Case | Response |
@@ -111,8 +147,17 @@ Force-close: `bearerAuth` + `role = 'admin'` only.
       later settlement does not change the winning close reason and
       funding may exceed threshold. Broader close-trigger race evidence
       remains owned by the Campaign closure delivery slice.
+- [ ] Settled Funding plus accepted-pending reservations never exceeds
+      `99,999,999,999,999,999`, including concurrent admission; residual
+      capacity Rp4.999 closes with `funding_capacity_reached`, while Rp5.000
+      remains open because the minimum valid Donation still fits; exact
+      exhaustion also closes. Reject an amount too large for the remaining
+      capacity without disclosing that capacity when a smaller valid amount
+      could fit. Failed pending settlement adds no Funding and does not reopen
+      or change the reason.
 - [ ] `closed_by` populated only for `admin_force_closed`, `null` for
-      the other two reasons.
+      all non-admin close reasons: `max_amount_reached`, `deadline_reached`,
+      and `funding_capacity_reached`.
 
 ## References
 

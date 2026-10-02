@@ -1852,7 +1852,7 @@ export interface paths {
         };
         /**
          * Get a public Campaign detail projection
-         * @description Public-only Slice-1 projection. An absent, malformed/non-resolvable, or non-public Campaign receives the same public not-found response; optional Authorization never changes visibility or response fields.
+         * @description Public-only projection. An absent, malformed/non-resolvable, or non-public Campaign receives the same public not-found response; optional Authorization never changes visibility or response fields. donation_action reports the backend Donation submission-eligibility predicate at this GET snapshot. An unavailable action is returned only while detail remains public and that predicate fails, with the generic campaign_not_eligible reason. Donation POST independently rechecks current eligibility; this field is not authorization.
          */
         get: operations["getPublicCampaignDetail"];
         put?: never;
@@ -4237,12 +4237,23 @@ export interface components {
             items: components["schemas"]["PublicCampaignMediaItem"][];
         };
         PublicCampaignMedia: components["schemas"]["PublicCampaignMediaAvailable"] | components["schemas"]["PublicCampaignMediaAbsent"] | components["schemas"]["PublicCampaignMediaUnavailable"];
-        PublicCampaignDonationAction: {
-            /** @enum {string} */
+        PublicCampaignDonationActionAvailable: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            availability: "available";
+        };
+        PublicCampaignDonationActionUnavailable: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
             availability: "unavailable";
             /** @enum {string} */
-            reason: "donation_flow_not_available";
+            reason: "campaign_not_eligible";
         };
+        PublicCampaignDonationAction: components["schemas"]["PublicCampaignDonationActionAvailable"] | components["schemas"]["PublicCampaignDonationActionUnavailable"];
         PublicCampaignDetail: {
             /** Format: uuid */
             id: string;

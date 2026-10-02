@@ -120,9 +120,14 @@ paths:
       operationId: getPublicCampaignDetail
       summary: Get a public Campaign detail projection
       description: >
-        Public-only Slice-1 projection. An absent, malformed/non-resolvable,
-        or non-public Campaign receives the same public not-found response;
+        Public-only projection. An absent, malformed/non-resolvable, or
+        non-public Campaign receives the same public not-found response;
         optional Authorization never changes visibility or response fields.
+        donation_action reports the backend Donation submission-eligibility
+        predicate at this GET snapshot. An unavailable action is returned only
+        while detail remains public and that predicate fails, with the generic
+        campaign_not_eligible reason. Donation POST independently rechecks
+        current eligibility; this field is not authorization.
       security: []
       responses:
         "200":
@@ -838,6 +843,25 @@ components:
           enum: [organizer]
 
     PublicCampaignDonationAction:
+      oneOf:
+        - $ref: "#/components/schemas/PublicCampaignDonationActionAvailable"
+        - $ref: "#/components/schemas/PublicCampaignDonationActionUnavailable"
+      discriminator:
+        propertyName: availability
+        mapping:
+          available: "#/components/schemas/PublicCampaignDonationActionAvailable"
+          unavailable: "#/components/schemas/PublicCampaignDonationActionUnavailable"
+
+    PublicCampaignDonationActionAvailable:
+      type: object
+      additionalProperties: false
+      required: [availability]
+      properties:
+        availability:
+          type: string
+          enum: [available]
+
+    PublicCampaignDonationActionUnavailable:
       type: object
       additionalProperties: false
       required: [availability, reason]
@@ -847,7 +871,7 @@ components:
           enum: [unavailable]
         reason:
           type: string
-          enum: [donation_flow_not_available]
+          enum: [campaign_not_eligible]
 
     Campaign:
       type: object

@@ -163,6 +163,8 @@ A public visitor can contribute without creating an account and can understand t
 The slice must provide:
 
 - donation eligibility for an active public Campaign;
+- a per-donation limit of Rp5.000–Rp1.000.000.000 per Campaign, defaulting to Rp1.000.000.000; Owner/Staff may configure it in draft and it is frozen after publication;
+- disclosure of the active per-donation limit on public Campaign detail before amount entry, with donation submission checking the current limit independently;
 - one coherent guest donation flow;
 - IDR amount input as whole Rupiah, minimum Rp5.000, increments of Rp1 (Rp5.001 is valid), with exact decimal representation for stored and calculated monetary values; tax rules and derived-value rounding are not defined by this slice;
 - familiar Indonesian payment-method choices displayed as QRIS, GoPay, ShopeePay, and bank transfer, with **QRIS as the only active sandbox simulation** and all other choices visibly unavailable and non-interactive;
@@ -192,6 +194,15 @@ At minimum:
 - Campaign eligibility is enforced by backend state, not frontend visibility alone.
 
 `max_amount` is a closure threshold, not a hard cap. A donation submitted while the Campaign is eligible may be accepted in full even if it takes funding above the threshold. Donations already accepted while eligible and still pending when the Campaign closes remain eligible to settle in full, so funding may exceed the threshold further. New submissions after closure are rejected. Slice 3 owns the broader closure/public-result experience; this Slice 2 rule defines donation acceptance and pending-settlement behavior at the threshold.
+
+The Campaign also has a finite funding capacity. Admission accounts for
+settled Funding and the full amounts of accepted Donations still pending, and
+accepts a new Donation only when its full amount fits within that capacity.
+When no additional valid Donation amount can fit, the Campaign closes with a
+capacity-specific reason, distinct from `max_amount` closure. If an accepted
+pending Donation later fails, it contributes no Funding and does not reopen
+the Campaign. This admission and eligibility rule applies in Slice 2; the
+public closed-Campaign result remains a Slice 3 capability.
 
 ### Existing implementation posture
 
@@ -230,10 +241,17 @@ When fundraising ends, the Campaign does not disappear. A visitor/donor can retu
 The slice must provide:
 
 - at least one truthful supported Campaign closure path;
+- the Slice 2 capacity-exhaustion closure path, with its distinct
+  capacity-specific reason and stable winning close reason;
 - the Human-approved `max_amount` threshold rule: it closes fundraising but is not a hard cap; donations that cross it and donations already accepted while eligible settle at their full amount, so final funding may exceed the threshold;
+- full settlement of accepted pending Donations after closure; if one fails,
+  it adds no Funding and does not reopen the Campaign or replace its close
+  reason;
 - no donation acceptance after closure;
 - the same public Campaign identity/URL after closure for Campaigns that were genuinely public;
 - final funding/result facts;
+- Funding is not presented as final while an accepted Donation remains
+  pending;
 - closed-state lifecycle meaning;
 - changed information hierarchy: result/accountability becomes primary, donation action disappears;
 - an honest pending state when later accountability does not yet exist.

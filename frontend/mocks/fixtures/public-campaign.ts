@@ -4,6 +4,7 @@ export type PublicCampaignDetail = components["schemas"]["PublicCampaignDetail"]
 
 export const campaignFixtureIds = {
   available: "4f9d83f0-3c71-4f04-93d9-90bfbf868bf3",
+  donationUnavailable: "5b8b7a41-2a40-4df5-9a62-2c1f8be70f11",
   absentMedia: "6a2e4d8c-8a9e-4c91-a913-4f365c4ad101",
   unavailableMedia: "7b3f5e9d-9baf-4d02-b024-5a476d5be202",
   fundingUnavailable: "8c4a6fad-acb0-4e13-c135-6b587e6cf303",
@@ -61,8 +62,7 @@ const baseCampaign = {
     ],
   },
   donation_action: {
-    availability: "unavailable",
-    reason: "donation_flow_not_available",
+    availability: "available",
   },
 } as const satisfies Omit<PublicCampaignDetail, "id">;
 
@@ -75,6 +75,9 @@ function createCampaign(
 
 export const publicCampaignFixtures: Record<string, PublicCampaignDetail> = {
   [campaignFixtureIds.available]: createCampaign(campaignFixtureIds.available),
+  [campaignFixtureIds.donationUnavailable]: createCampaign(campaignFixtureIds.donationUnavailable, {
+    donation_action: { availability: "unavailable", reason: "campaign_not_eligible" },
+  }),
   [campaignFixtureIds.absentMedia]: createCampaign(campaignFixtureIds.absentMedia, {
     media: { state: "absent", items: [] },
   }),

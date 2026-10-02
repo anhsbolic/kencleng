@@ -19,7 +19,7 @@ Current delivery state:
 ### WU-S2-002 — Slice 2 Donation Domain & Contract Reconciliation
 
 - Status: `DONE` — TP-S2-002-015 is current-effective Approved; TPD-S2-002-002 preserved the accepted split/dependency. Task 01's five specs are `agreed`. BLD-006/007 authored/corrected the Task 02 API contract; RV-013 F-1 was resolved and RV-014 independently confirmed source/generated correspondence. Anhar accepted the API contract on 2026-10-01. Orchestrator checked TP-015 R14 and earned `CONTRACT_READY`. No runtime/security proof or residual-risk acceptance is claimed.
-- Scheduling state: Not applicable; WU-S2-002 is terminal. Current frontier moves to contract-parallel backend/frontend delivery. Kencleng §8 prefers this route when the contract is stable and the frontend can progress against MSW/mocks; O2–O5 runtime/security obligations remain downstream.
+- Scheduling state: Not applicable; WU-S2-002 is terminal. Current frontier proceeds through backend Techplan and separate Campaign/API reconciliation; frontend planning waits for the accepted WU-S2-005 result. Kencleng §8 supports contract-faithful mock work; O2–O5 runtime/security obligations remain downstream.
 - Horizon: `NOW`
 - Dependency: HARD on `WU-S2-001 = DONE`
 - Current-effective Techplan: TP-S2-002-015 is current-effective Approved after TP-017 status reconciliation. TP-014 is the reviewed Draft / In Review predecessor with blocking findings; TP-015 was Human-approved after report TP-016 and RV-010 was clean.
@@ -63,23 +63,43 @@ Current delivery state:
 
 ### WU-S2-003 — Slice 2 Donation Backend Delivery
 
-- Status: `ACTIVE / QUEUED`; `EXP-S2-003-001` is prepared, not dispatched.
-- Dependency: HARD on WU-S2-002=`DONE` / `CONTRACT_READY`.
-- Next action: Human-assisted dispatch using `gpt-6-luna` / `high`; canonical Exploration Stage 1 must stop for confirmation.
-- Boundary: backend scope only; root AGENTS Tier-0 protected paths remain gated.
+- Status: `ACTIVE / PARKED`; completed successor Draft TP-S2-003-003 discovered from durable evidence; predecessor TP003002 retained. No whole-backend approval/Build.
+- Dependency: HARD on WU-S2-002 DONE/CONTRACT_READY; scoped WU005 Campaign producer contract condition now satisfied.
+- Scoped gate: monetary/closure D-01–D-04 solutioning settled; concrete Product/Campaign/Donation/API source reconciliation/acceptance dan independent re-review masih required. Draft retry fix belum independently closed. Exact Tier-0 files/O3/O4/O5 controls/evidence/risk gates tetap open.
+- Next action: WU006 approved source authoring/Review/acceptance; sesudah accepted source result, fresh backend Planner refresh/re-review/report/approval. Current TP003003 completed/unapproved; tidak ada repeat vote atau protected Build permission.
+- Boundary: backend production separate; accepted Campaign action does not prove producer/runtime behavior.
 
 ### WU-S2-004 — Slice 2 Guest Donation Frontend Flow
 
-- Status: `ACTIVE / QUEUED`; `EXP-S2-004-001` is prepared, not dispatched.
-- Dependency: HARD on WU-S2-002=`DONE` / `CONTRACT_READY`.
-- Next action: Human-assisted dispatch using `gpt-6-luna` / `high`; canonical Exploration Stage 1 must stop for confirmation.
-- Boundary: frontend scope only; use contract-faithful MSW mocks; route active concerns through `frontend/AGENTS.md` and current UI/UX authority.
+- Status: `WAITING / PARKED`; EXP-S2-004-001 Stage 2/3 complete; TP-S2-004-001 completed Draft / In Review dan self-check/handoff.
+- Dependencies: WU002 DONE/CONTRACT_READY and WU005 DONE/final authored owner acceptance satisfied in Work Graph; frontend F-1 closed at contract boundary.
+- Next action: WU006 approved source authoring/Review/acceptance; setelah accepted source delta, fresh frontend Planner refresh dan recommended independent Techplan Review sebelum report/Human approval. No new frontend Run sekarang; review deferred sampai source convergence, bukan waived/N/A.
+- Scoped future gate: OI-1 menahan whole-Techplan approval dan amount-limit-dependent Build; WU006 source dependency explicit. Jangan mengadopsi proposed cap/fields/reason tanpa accepted source. Optional email and O4/O5 runtime proof remain scoped downstream. Material rendered acceptance later.
+- Boundary: frontend-only production; contract-faithful MSW does not establish backend or integration correctness.
+
+### WU-S2-005 — Slice 2 Campaign Donation Entry Contract Reconciliation
+
+- Status: `DONE`; Approved TP005002, completed Build BLD005001, Code Review RV005002 Approve, independent TST005001 Pass with flagged follow-ups and Anhar final authored Campaign/API acceptance. BLD005002 feature Status propagated; normalized feature bytes and five counterparts independently verified unchanged.
+- Completion: current Slice-2 availability-only contract accepted and readiness handed off; WU004 and scoped producer contract dependencies satisfied. No runtime milestone or new milestone enum.
+- Phase applicability: new Review/Testing `NOT_APPLICABLE` for verified Status-only BLD005002 delta; existing independent substantive evidence remains current. No skipped-phase Run.
+- Contract: available without reason; unavailable solely campaign_not_eligible when detail remains public but authoritative submission predicate fails at GET; POST rechecks, non-public/closed 404 and dependency failure 503 unchanged. No fabricated unavailable scenario or implicit UI activation.
+- Remaining owner: Campaign producer/WU003 owns predicate source fidelity and runtime public/cache/auth/error/recheck/D1 proof. Independent baseline/current 124 warning coordinates/rules stable; reported Build count 122 remains non-blocking historical discrepancy.
+
+### WU-S2-006 — Slice 2 Monetary Limits & Capacity Contract Reconciliation
+
+- Status: `ACTIVE / PARKED`; Human checkpoint sebelum TP006009 dispatch; TP006008 Human-approved. Product/spec prior acceptance preserved; new source gates remain.
+- Current planning target: TP006008 Human-approved; Draft header pending TP006009 Status propagation. RV006005 substantive review carried forward after verified mechanical delta. TP006004 tetap Approved predecessor, earlier evidence does not approve successor.
+- Next action: dispatch TP006009 fresh Planner/KC-PLANNER, gpt-6-luna/low untuk explicit approval Status propagation; API unchanged. Whole-plan approval receipt recorded; report tetap derived digest.
+- Remaining: OI-3 applicability/Slice-3 source handoff; OI-4 source authoring/review/acceptance/counterparts/compatibility evidence; OI-5 delivery plan refresh/runtime. WU003/WU004 parked, WU002/WU005 accepted baselines preserved.
+- Boundary: approval plan terpisah dari concrete Product/spec/API acceptance, protected-write permission, DB application, runtime dan residual-risk acceptance; decomposition Skip recommendation.
 
 ## NEXT / LATER
 
-`CONTRACT_READY` earned after the explicit API-owner acceptance. Derived topology: WU-S2-003 owns backend Donation delivery; WU-S2-004 owns the guest Donation frontend flow against contract-faithful MSW mocks; both depend on WU-S2-002 and real integration follows side-specific verification. Their manifests and fresh canonical Exploration Invocations are prepared at `WU-S2-003/runs/EXP-S2-003-001/` and `WU-S2-004/runs/EXP-S2-004-001/`; each Exploration begins at Stage 1 and stops for Human confirmation.
+Current frontier adalah TP006009 Status-only propagation setelah explicit Human TP006008 approval; spec metadata current, API unchanged; WU006 ACTIVE/PARKED atas Human checkpoint. Frontend TP-S2-004-001 completed Draft; OI-1 menahan whole-Techplan approval/affected Build sampai accepted source result WU006. Fresh Planner refresh/recommended Review/report mengikuti convergence. WU005 contract completion dipertahankan. Sesudah WU006 convergence, fresh backend Planner refresh/re-review/report/approval; production/runtime/permission gates tetap berlaku.
 
 ## Human Attention
+
+- Human action sekarang: checkpoint; tidak ada dispatch. Saat resume, re-ground state lalu TP006009 jika masih pending; no repeat whole-plan/API choice vote.
 
 - Exploration Stage 3 mendapat Human authorization yang tercatat pada artifact handoff.
 - Re-review sebelumnya menutup atomic-coupling gap dan menemukan gap kebijakan retry/double-submit. Human kemudian menetapkan kebijakan O9 dalam OIR dan amendmen Product/MVP; Techplan `TP-S2-002-006` menerjemahkan arah tersebut sambil mempertahankan detail contract yang terbuka.
@@ -90,8 +110,17 @@ Current delivery state:
 
 ## Blockers
 
-No active blocker remains on WU-S2-002. O8 is clear within the Human/API-owner evidence scope. O11 requires bounded/recoverable terminalization without selecting a numeric bound, architecture, timeout meaning, or residual-risk acceptance. O1 representation direction is approved; concrete parameters remain deferred. O2–O5 runtime/security evidence and residual-risk acceptance remain downstream and are not contract-time blockers under TP-015 R14. Delivery planning must preserve these obligations and follow scoped backend/frontend instructions before Build.
+- `WU-S2-003`: whole final Techplan approval/Build held by O1-REP WU006 owning-source reconciliation/material policy details dan independent re-review. Retry ordering resolved in Draft only. Exact protected-write permissions, O3/O4/O5 controls/runtime/risk gates remain Active; accepted Campaign contract condition is now satisfied.
+- `WU-S2-004`: F-1 contract blocker resolved. Initial Draft selesai; OI-1 menahan whole-Techplan approval/affected Build sampai source WU006 reconciled/accepted. Optional email verification and backend runtime/security proof retain their named owners; no blanket whole-WU BLOCKED status.
+- `WU-S2-005`: terminal contract scope complete; producer/runtime follow-up handed off to WU003, not erased.
+- `WU-S2-006`: API owner choices settled; Human whole-plan approval TP006008 resolved; next TP006009 Status-only propagation before affected source continuation. Prior evidence:  decision-evidence recovery resolved oleh Human clarification + handoff receipt. Synthesis completed; OI-1/OI-2 resolved dengan accurate propagation di completed TP006003; RV006001 completed tanpa blocking findings; TP006004 mechanical correction verified; TP006005 complete report; Human approved TP006004; TP006006 Status-only verified; BLD006001 Product checkpoint selesai; RV006002 Approve/no findings; Product/MVP accepted, BLD006002 six-file spec checkpoint selesai; RV006004 Approve, C-01/Q-01 resolved; six-spec accepted, BLD006004 metadata verified; API transport/encoding settled, TP006007 completed successor Draft; RV006005 no blockers; TP006008 mechanical delta/full report verified, Human TP006008 approved; TP006009 Status propagation siap; OI-2 decision resolved. Concrete source acceptance/review/counterparts belum selesai.
+
+No active blocker remains on WU-S2-002. Contract readiness does not prove runtime/privacy/funding behavior. New monetary cap/capacity direction is recorded in Draft, pending source reconciliation; it does not silently supersede accepted wire semantics.
 
 ## Bootstrap boundary
 
-`WU-S2-001` / `EXP-S2-001-001` dan `WU-S2-002` selesai berdasarkan durable handoff; WU-S2-002 menghasilkan `CONTRACT_READY`. WU-S2-003 dan WU-S2-004 ACTIVE / QUEUED dengan Exploration Invocation siap dispatch; belum ada Participant Run atau Delivery Build yang dimulai. Slice 1 tetap `SLICE_FINALIZED` sesuai tracker.
+WU001 and WU002 complete; WU002 CONTRACT_READY. WU005 DONE after accepted/reviewed/verified contract and exact metadata propagation. WU004 completed Exploration dan Draft TP004001, WAITING/PARKED pada OI-1/WU006 source dependency. WU003 successor TP003003 Draft complete and unapproved; owning monetary/closure sources dirutekan ke WU006; EXP-S2-006-001 completed dan D-01–D-04 clarified; TP006001 completed Draft; TP006004 mechanically verified Draft; RV006001 no blockers; TP006005 complete report; Human approved TP006004; TP006006 Status-only verified; BLD006001 Product checkpoint selesai; RV006002 Approve/no findings; Product/MVP accepted, BLD006002 six-file spec checkpoint selesai; RV006004 Approve, C-01/Q-01 resolved; six-spec accepted, BLD006004 metadata verified; API transport/encoding settled, TP006007 completed successor Draft; RV006005 no blockers; TP006008 mechanical delta/full report verified, Human TP006008 approved; TP006009 Status propagation siap, owning-source gates pending; independent re-review pending; scoped Product/MVP owner sudah attributed. Accepted Campaign contract gate cleared; producer implementation/security/D1 proof and protected permissions still pending. Slice 1 remains SLICE_FINALIZED; Slice 2 IN_PROGRESS.
+
+## Progress snapshot
+
+[Report progress Slice 2 — 2026-10-02](../../docs/project/slice-2-progress-checkpoint-2026-10-02.md). Estimasi 30–40% selesai, 60–70% tersisa; bukan metrik repository resmi atau milestone.

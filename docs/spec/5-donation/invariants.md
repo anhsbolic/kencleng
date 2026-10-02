@@ -3,8 +3,9 @@
 > File: `docs/spec/5-donation/invariants.md`
 > Status: agreed
 > Human acceptance: Anhar Solehudin reviewed and accepted this current Slice 2 reconciliation as Donation and Security/PII owner on 2026-10-01; no residual risk is accepted by this status change.
-> Last updated: 2026-10-01
+> Last updated: 2026-10-02
 > Product/MVP basis: `docs/product/mvp-scope.md` §§4–7; `docs/product/mvp-delivery-slices.md` §§5–6
+> WU-S2-006 source amendment accepted by Anhar Solehudin on 2026-10-02 after independent Review; acceptance covers this source amendment only.
 
 ## Domain summary
 
@@ -31,11 +32,11 @@ For Slice 2, Donation owns guest submission, persisted sandbox status, safe stat
 - **Holds after operations**: guest donation submission and all Donation money calculations.
 - **Verification**: Contract/runtime evidence rejects less than Rp5.000 and non-whole-Rupiah input, accepts Rp5.001, and preserves exact monetary values without float conversion. O1 owner review resolves only the remaining currency/range/fraction/precision/storage parameters before those details are finalized.
 
-### INV-donation-02: New submission eligibility is ordered against Campaign close
+### INV-donation-02: New submission eligibility, cap, and capacity admission are ordered against Campaign close
 
-- **Statement**: A new Donation is accepted only if its submission wins the atomic ordering against Campaign close while eligible. If close wins first, reject the new submission. An accepted Donation remains eligible to settle in full after Campaign close. This is D1; this invariant selects no transaction, locking, or isolation mechanism.
+- **Statement**: A new Donation is accepted only if its submission wins the atomic ordering against Campaign close while eligible, its amount is at or below the Campaign's effective `max_donation_amount`, and settled Funding plus all accepted-pending reservations plus this amount does not exceed the Campaign funding ceiling of IDR `99,999,999,999,999,999`. The per-Campaign cap is whole IDR from Rp5.000 through Rp1.000.000.000 inclusive; omitted create values default to Rp1.000.000.000, PATCH omission preserves the stored value, and the value is frozen after publication. If close wins first, reject the new submission. After settled Funding and accepted-pending reservations are accounted for, Campaign closes with `funding_capacity_reached` when remaining capacity is less than the minimum valid Donation of Rp5.000, including exact exhaustion. Admission rejects any full Donation amount that does not fit; this does not change the separate, overshootable `max_amount` threshold. An accepted Donation remains eligible to settle in full after Campaign close. Over-cap POST uses the shared generic `422 ValidationError` on `amount` and does not disclose remaining Campaign capacity. This is D1 plus the accepted capacity boundary; this invariant selects no transaction, locking, or isolation mechanism.
 - **Holds after operations**: submission and the cross-domain Campaign close boundary.
-- **Verification**: Runtime Testing demonstrates both orderings and accepted-pending settlement after close; Campaign's winning close reason remains unchanged.
+- **Verification**: Source review confirms cap configuration and request semantics in Campaign sources. Runtime Testing demonstrates both orderings, cap enforcement, reservation accounting under concurrent admission, residual-capacity boundaries (Rp4.999 closes; Rp5.000 remains open), exact exhaustion, rejection when an amount does not fit while a smaller valid amount does, and accepted-pending settlement after close; Campaign's winning close reason remains unchanged. Contract and runtime evidence confirms over-cap response uses the generic `amount` validation shape and does not disclose remaining capacity when a smaller valid amount could fit.
 
 ### INV-donation-03: Guest identity and notification fields follow Slice 2 purpose
 
@@ -69,9 +70,9 @@ For Slice 2, Donation owns guest submission, persisted sandbox status, safe stat
 
 ### INV-donation-08: Successful settlement and full funding are one exact-once outcome
 
-- **Statement**: A successful Donation and its full funding reflection commit atomically and exactly once. Every committed/observable outcome includes both or neither. Pending/failed Donations do not count as collected funding. A previously accepted Donation may settle after Campaign close; later settlement cannot reopen Campaign, alter its winning close reason, or clamp the amount. Funding may rise past `max_amount`.
+- **Statement**: A successful Donation and its full funding reflection commit atomically and exactly once. Every committed/observable outcome includes both or neither. Pending/failed Donations do not count as collected Funding. Accepted-pending amounts reserve Campaign capacity so eventual full settlement remains representable; a successful settlement consumes its reservation without changing the total admitted obligation. A previously accepted Donation may settle after Campaign close; later settlement cannot reopen Campaign, alter its winning close reason, or clamp the amount. Funding may rise past the distinct `max_amount` threshold but must remain within the finite Campaign funding ceiling. A failed accepted-pending Donation adds no Funding and releases its reservation, but cannot reopen a capacity-closed Campaign or replace the winning close reason.
 - **Holds after operations**: successful settlement, replay, failure, concurrent settlement, and Campaign close interaction.
-- **Verification**: Runtime Testing covers atomicity, rollback/failure, replay, concurrent successful Donations, accepted-pending-after-close, stable close reason, and threshold overshoot. No transaction/locking mechanism is prescribed here.
+- **Verification**: Runtime Testing covers atomicity, rollback/failure, replay, concurrent successful Donations/admissions, accepted-pending-after-close, reservation release after failure without reopening, stable close reason, capacity ceiling, and threshold overshoot. No transaction/locking mechanism is prescribed here.
 
 ### INV-donation-09: Settlement is idempotent
 
