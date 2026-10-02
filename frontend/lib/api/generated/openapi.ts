@@ -2630,7 +2630,7 @@ export interface paths {
         put?: never;
         /**
          * Submit a guest donation for QRIS sandbox simulation
-         * @description Guest submission does not require an Account. A new submission is accepted only when it wins the atomic ordering against Campaign closure while the Campaign is eligible; otherwise it is rejected. An accepted donation is persisted as `pending`. The backend-owned sandbox simulator may later set `success` or `failed`; this request cannot select a terminal outcome. QRIS is the only accepted payment method and means sandbox simulation only, not external settlement. No simulator timing is promised. Pending donations are not automatically resubmitted. A deliberate new donation after failure uses a new idempotency key.
+         * @description Guest submission does not require an Account. A new submission is accepted only when it wins the atomic ordering against Campaign closure while the Campaign is eligible; otherwise it is rejected. The submitted amount must not exceed the Campaign's effective max_donation_amount. Admission also requires the full amount to fit within settled Funding plus accepted-pending reservations and the Campaign's finite funding capacity. An otherwise eligible amount that does not fit returns the shared generic 422 ValidationError on amount, even if a smaller valid amount could fit. This capacity predicate remains distinct from individual cap validation and the response does not disclose remaining capacity or the close reason. Closed/ineligible submissions continue to use 409, and retrying with the same Idempotency-Key and payload returns the original donation; reuse with a different payload remains a conflict. An accepted donation is persisted as `pending`. The backend-owned sandbox simulator may later set `success` or `failed`; this request cannot select a terminal outcome. QRIS is the only accepted payment method and means sandbox simulation only, not external settlement. No simulator timing is promised. Pending donations are not automatically resubmitted. A deliberate new donation after failure uses a new idempotency key.
          *     A retry with the same `Idempotency-Key` and same payload returns the original donation; reuse with a different payload is rejected. This request idempotency contract is separate from settlement replay and exact-once funding. A donation accepted while eligible remains settleable for its full amount after Campaign closure. Successful settlement and the full funding increment are one atomic, exactly-once outcome; later settlement does not reopen the Campaign or change its winning close reason. Funding may exceed the closure threshold.
          *     If a guest opts in to status email, the address must be verified before any status/access message. At most one status-only, simulation-labeled notice is eligible at terminal `success` or `failed`, never initial `pending`. A verified address remains eligible until that notice is fulfilled. Delivery must make terminalization bounded and recoverable; its bound and mechanics remain owner-defined. Verification, retry, retention, and deletion controls remain open.
          */
@@ -4069,12 +4069,22 @@ export interface components {
         };
         /** @enum {string} */
         CampaignCategory: "bencana_alam" | "kesehatan" | "pendidikan" | "sosial" | "lainnya";
+        /** @description Per-Campaign whole-IDR Donation cap; the explicit currency remains present in every response state. */
+        MaxDonationAmount: {
+            /**
+             * @description Major-unit decimal string containing whole Rupiah from 5000 through 1000000000 inclusive.
+             * @example 1000000000
+             */
+            amount: string;
+            /** @enum {string} */
+            currency_code: "IDR";
+        };
         /** @enum {string} */
         CampaignStatus: "draft" | "pending_curation" | "approved" | "rejected" | "scheduled" | "published" | "unpublished" | "closed";
         /** @enum {string} */
         UnpublishReason: "owner_manual" | "organization_re_verification";
         /** @enum {string} */
-        ClosedReason: "max_amount_reached" | "deadline_reached" | "admin_force_closed";
+        ClosedReason: "max_amount_reached" | "funding_capacity_reached" | "deadline_reached" | "admin_force_closed";
         Campaign: {
             /** Format: uuid */
             id?: string;
@@ -4092,6 +4102,7 @@ export interface components {
             target_amount?: string;
             /** @example 10000000.00 */
             max_amount?: string | null;
+            max_donation_amount: components["schemas"]["MaxDonationAmount"];
             /** @example 1250000.00 */
             collected_amount?: string;
             /** Format: date-time */
@@ -4131,6 +4142,7 @@ export interface components {
             data: components["schemas"]["CampaignListItem"][];
             pagination: components["schemas"]["Pagination"];
         };
+        /** @description Omission of max_donation_amount defaults to IDR 1000000000. When supplied, it must be a closed {amount, currency_code} object with a whole-Rupiah amount from 5000 through 1000000000 and currency_code IDR. */
         CampaignCreateRequest: {
             title: string;
             description?: string;
@@ -4140,6 +4152,7 @@ export interface components {
             /** @example 5000000.00 */
             target_amount: string;
             max_amount?: string | null;
+            max_donation_amount?: components["schemas"]["MaxDonationAmount"];
             /** Format: date-time */
             deadline: string;
         };
@@ -4258,6 +4271,7 @@ export interface components {
             /** Format: uuid */
             id: string;
             title: string;
+            max_donation_amount: components["schemas"]["MaxDonationAmount"];
             purpose: components["schemas"]["PublicCampaignOrganizerText"];
             story: components["schemas"]["PublicCampaignOrganizerText"];
             steward: components["schemas"]["PublicCampaignSteward"];
@@ -4266,7 +4280,7 @@ export interface components {
             media: components["schemas"]["PublicCampaignMedia"];
             donation_action: components["schemas"]["PublicCampaignDonationAction"];
         };
-        /** @description Only permitted while `status = draft`. */
+        /** @description Only permitted while status = draft. When supplied, max_donation_amount must be a closed {amount, currency_code} object with a whole-Rupiah amount from 5000 through 1000000000 and currency_code IDR. Omission preserves the stored cap; it is frozen after publication. */
         CampaignUpdateRequest: {
             title?: string;
             description?: string;
@@ -4275,6 +4289,7 @@ export interface components {
             beneficiary_description?: string;
             target_amount?: string;
             max_amount?: string | null;
+            max_donation_amount?: components["schemas"]["MaxDonationAmount"];
             /** Format: date-time */
             deadline?: string;
         };

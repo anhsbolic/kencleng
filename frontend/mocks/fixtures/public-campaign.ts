@@ -19,6 +19,10 @@ const mediaId = "26a0a959-86ca-4df7-8e8d-00d1f1e247f3";
 
 const baseCampaign = {
   title: "Dapur bersama untuk keluarga di Kampung Cempaka",
+  max_donation_amount: {
+    amount: "1000000000",
+    currency_code: "IDR",
+  },
   purpose: {
     content: "Dana ini ditujukan untuk menyiapkan bahan pangan dan peralatan dapur bersama.",
     source: "organizer",

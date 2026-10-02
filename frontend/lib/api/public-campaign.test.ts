@@ -8,6 +8,20 @@ import {
 } from "./public-campaign";
 
 describe("getPublicCampaignDetail", () => {
+  it("keeps the Campaign cap and currency in every public fixture state", () => {
+    for (const fixture of Object.values(publicCampaignFixtures)) {
+      expect(fixture.max_donation_amount).toEqual({
+        amount: "1000000000",
+        currency_code: "IDR",
+      });
+    }
+
+    expect(publicCampaignFixtures[campaignFixtureIds.fundingUnavailable].funding).toEqual({
+      availability: "unavailable",
+      reason: "not_available",
+    });
+  });
+
   it("uses the one encoded public endpoint and returns the generated fixture", async () => {
     let requestedPath = "";
     server.use(
