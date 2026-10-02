@@ -87,19 +87,19 @@ Current delivery state:
 
 ### WU-S2-006 — Slice 2 Monetary Limits & Capacity Contract Reconciliation
 
-- Status: `ACTIVE / PARKED`; Human checkpoint sebelum TP006009 dispatch; TP006008 Human-approved. Product/spec prior acceptance preserved; new source gates remain.
-- Current planning target: TP006008 Human-approved; Draft header pending TP006009 Status propagation. RV006005 substantive review carried forward after verified mechanical delta. TP006004 tetap Approved predecessor, earlier evidence does not approve successor.
-- Next action: dispatch TP006009 fresh Planner/KC-PLANNER, gpt-6-luna/low untuk explicit approval Status propagation; API unchanged. Whole-plan approval receipt recorded; report tetap derived digest.
+- Status: `ACTIVE / QUEUED`; TP006008 Human-approved and Status-only propagated by deterministic Orchestrator reconciliation. Product/spec prior acceptance preserved; new source gates remain.
+- Current planning target: TP006008 Approved, SHA-256 `93c09bf7629500cd8fb80fd59b6af464b169484419d722a269b782b78bbbf438`; its exact approval preimage was verified. RV006005 substantive review carries forward after verified mechanical correction. TP006004 is historical predecessor and does not approve TP006008.
+- Next action: Human-Assisted dispatch BLD-S2-006-005, fresh Implementer/KC-IMPLEMENTER, `gpt-6-luna` / `high`, for affected specs and authored split OpenAPI only. Independent source Review and owning acceptance follow Build; generated/counterpart work remains downstream.
 - Remaining: OI-3 applicability/Slice-3 source handoff; OI-4 source authoring/review/acceptance/counterparts/compatibility evidence; OI-5 delivery plan refresh/runtime. WU003/WU004 parked, WU002/WU005 accepted baselines preserved.
 - Boundary: approval plan terpisah dari concrete Product/spec/API acceptance, protected-write permission, DB application, runtime dan residual-risk acceptance; decomposition Skip recommendation.
 
 ## NEXT / LATER
 
-Current frontier adalah TP006009 Status-only propagation setelah explicit Human TP006008 approval; spec metadata current, API unchanged; WU006 ACTIVE/PARKED atas Human checkpoint. Frontend TP-S2-004-001 completed Draft; OI-1 menahan whole-Techplan approval/affected Build sampai accepted source result WU006. Fresh Planner refresh/recommended Review/report mengikuti convergence. WU005 contract completion dipertahankan. Sesudah WU006 convergence, fresh backend Planner refresh/re-review/report/approval; production/runtime/permission gates tetap berlaku.
+Current frontier adalah BLD-S2-006-005 setelah approval Status TP006008 direkonsiliasi langsung dari exact Human approval; WU006 ACTIVE/QUEUED. TP006009 sudah disiapkan tetapi tidak didispatch karena current Harscode guidance mengizinkan bounded deterministic Status reconciliation di luar Run path. Frontend TP-S2-004-001 completed Draft; source WU006 tetap HARD prerequisite bagi affected frontend/backend final planning dan Build. Source Review/owner acceptance/counterpart reconciliation harus konvergen dahulu. WU005 accepted contract baseline dipertahankan; production/runtime/protected/integration gates tetap berlaku.
 
 ## Human Attention
 
-- Human action sekarang: checkpoint; tidak ada dispatch. Saat resume, re-ground state lalu TP006009 jika masih pending; no repeat whole-plan/API choice vote.
+- Human action sekarang: jalankan BLD-S2-006-005 dari dispatch package di bawah. Tidak perlu mengulang whole-plan approval atau DEC-API-01/02.
 
 - Exploration Stage 3 mendapat Human authorization yang tercatat pada artifact handoff.
 - Re-review sebelumnya menutup atomic-coupling gap dan menemukan gap kebijakan retry/double-submit. Human kemudian menetapkan kebijakan O9 dalam OIR dan amendmen Product/MVP; Techplan `TP-S2-002-006` menerjemahkan arah tersebut sambil mempertahankan detail contract yang terbuka.
@@ -113,7 +113,7 @@ Current frontier adalah TP006009 Status-only propagation setelah explicit Human 
 - `WU-S2-003`: whole final Techplan approval/Build held by O1-REP WU006 owning-source reconciliation/material policy details dan independent re-review. Retry ordering resolved in Draft only. Exact protected-write permissions, O3/O4/O5 controls/runtime/risk gates remain Active; accepted Campaign contract condition is now satisfied.
 - `WU-S2-004`: F-1 contract blocker resolved. Initial Draft selesai; OI-1 menahan whole-Techplan approval/affected Build sampai source WU006 reconciled/accepted. Optional email verification and backend runtime/security proof retain their named owners; no blanket whole-WU BLOCKED status.
 - `WU-S2-005`: terminal contract scope complete; producer/runtime follow-up handed off to WU003, not erased.
-- `WU-S2-006`: API owner choices settled; Human whole-plan approval TP006008 resolved; next TP006009 Status-only propagation before affected source continuation. Prior evidence:  decision-evidence recovery resolved oleh Human clarification + handoff receipt. Synthesis completed; OI-1/OI-2 resolved dengan accurate propagation di completed TP006003; RV006001 completed tanpa blocking findings; TP006004 mechanical correction verified; TP006005 complete report; Human approved TP006004; TP006006 Status-only verified; BLD006001 Product checkpoint selesai; RV006002 Approve/no findings; Product/MVP accepted, BLD006002 six-file spec checkpoint selesai; RV006004 Approve, C-01/Q-01 resolved; six-spec accepted, BLD006004 metadata verified; API transport/encoding settled, TP006007 completed successor Draft; RV006005 no blockers; TP006008 mechanical delta/full report verified, Human TP006008 approved; TP006009 Status propagation siap; OI-2 decision resolved. Concrete source acceptance/review/counterparts belum selesai.
+- `WU-S2-006`: API owner choices settled; Human whole-plan approval TP006008 resolved and Status-only propagated with exact byte-equality verification. BLD006005 is queued for affected spec/authored API source reconciliation; independent Review, spec/API owner acceptance, counterpart compatibility, Slice-3 handoff, and delivery refresh/runtime remain. TP006009 was prepared but not dispatched. No concrete source acceptance, milestone, protected/DB permission, or residual-risk acceptance is inferred.
 
 No active blocker remains on WU-S2-002. Contract readiness does not prove runtime/privacy/funding behavior. New monetary cap/capacity direction is recorded in Draft, pending source reconciliation; it does not silently supersede accepted wire semantics.
 

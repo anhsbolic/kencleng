@@ -13,7 +13,7 @@
 > Updated           : 2026-10-02
 > Target revision   : `7fd8b473b239b20bda3990ab29c51440d321a796` plus current working tree; source anchors re-read
 > Workflow revision : Harscode `pilot/orchestrator-v0.1@95ecf37ba8ae449a5b3b278c27331aca87360bc8`
-> Status            : Draft / In Review
+> Status            : Approved
 > Approach          : Propagate settled DEC-API-01/02 into the approved source-reconciliation spine; source acceptance and whole-plan approval remain separate gates.
 > Refs              : WU-S2-006 manifest; EXP-S2-006-001 evidence + handoff; parent `events.md` receipts; approved predecessor TP-S2-006-004; TP-S2-003-003 D16/O1-REP; accepted WU-S2-005 and Donation baseline WU-S2-002.
 

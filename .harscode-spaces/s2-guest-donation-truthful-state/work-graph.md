@@ -11,7 +11,7 @@
 | WU-S2-003 | Slice 2 Donation Backend Delivery | DELIVERY | ACTIVE / PARKED — TP-S2-003-003 Draft complete; source O1-REP dirutekan ke WU006 | BACKEND_VERIFIED |
 | WU-S2-004 | Slice 2 Guest Donation Frontend Flow | DELIVERY | WAITING / PARKED — TP-S2-004-001 Draft selesai; OI-1 menunggu WU006 source result | FRONTEND_MOCK_VERIFIED |
 | WU-S2-005 | Slice 2 Campaign Donation Entry Contract Reconciliation | RECONCILIATION | DONE — final owner acceptance dan Review/Testing/metadata propagation selesai | Accepted Campaign action baseline |
-| WU-S2-006 | Slice 2 Monetary Limits & Capacity Contract Reconciliation | RECONCILIATION | ACTIVE / PARKED — Human checkpoint sebelum TP006009; TP006008 approved | Reconciled/owner-accepted monetary/closure sources |
+| WU-S2-006 | Slice 2 Monetary Limits & Capacity Contract Reconciliation | RECONCILIATION | ACTIVE / QUEUED — TP006008 approved and Status reconciled; BLD006005 prepared | Reconciled/owner-accepted monetary/closure sources |
 
 ## Dependency edges
 
@@ -31,9 +31,9 @@
 
 Backend completion signal `TP-S2-003-00` dicocokkan ke TP-S2-003-003 dari complete Draft/handoff/launch-record dan current manifest. D15 retry-after-close merupakan proposal resolution; belum independently closed. D16/O1-REP mencatat pilihan Human cap configurable per Campaign dengan arah Rp1 miliar, cumulative capacity dan close-at-cap; Pada predecessor snapshot detail tersebut masih open; kini D-01–D-04 solutioning clarified/accepted melalui EXP006/current Human receipt, sedangkan concrete interface dan owning-source acceptance tetap pending.
 
-Current source route tetap WU006. EXP006 dan TP006001/002/003 completed; current-effective Draft TP006003 sudah propagate owner D-01–D-04/D6/OI-2, termasuk create-default/PATCH-preserve. OI-1/OI-2 Resolved, no repeat owner decision. OI-3 source/applicability handoff, OI-4 source acceptance/counterparts/compatibility evidence, OI-5 delivery refresh/runtime tetap downstream.
+Current source route tetap WU006. EXP006 dan TP006001–008 completed; TP006008 adalah current-effective Approved Techplan dengan Status-only update yang exact-byte verified terhadap approval snapshot. TP006009 tetap undispatched karena approval metadata memenuhi current deterministic-reconciliation rule dan tidak memerlukan Participant Run. BLD-S2-006-005 adalah current queued Run untuk affected feature specs/authored split OpenAPI; source Review/owner acceptance/counterparts masih pending.
 
-RV006001 independent Complex Review selesai tanpa blocking findings. TP006004 completed Draft dengan actual mechanical-only citation/provenance delta verified; reviewed substantive meaning unchanged, no re-review triggered. TP006005 selesai menghasilkan full canonical report termasuk applicable Interface Contract dari unchanged TP006004. Current-effective plan TP006004 sudah Human-approved; header Approved setelah verified TP006006 Status propagation. Report TP006005 adalah derived digest. WU006 ACTIVE/QUEUED pada TP006009 Status-only propagation. Owning Planner propagation verified; lanjut lanjut owning-source authoring/review/acceptance/counterparts. OI-3–OI-5 tetap downstream; tidak ada production Build atau accepted decomposition split.
+RV006001 and RV006005 independent Techplan Reviews completed without blocking findings. TP006008's mechanical-only evidence-anchor correction was verified; its substantive meaning remains covered by RV006005. Human approved TP006008 against report TP006008. Orchestrator verified exact Status-only propagation; plan hash is `93c09bf7629500cd8fb80fd59b6af464b169484419d722a269b782b78bbbf438`. BLD006005 is queued for remaining source reconciliation. OI-3 Slice-3 applicability, OI-4 source acceptance/counterparts/compatibility, and OI-5 delivery refresh/runtime remain downstream; no source acceptance, delivery milestone, or decomposition split is inferred.
 
 Frontend TP-S2-004-001 completed Draft / In Review dan handoff. OI-1 menahan whole-Techplan approval dan affected Build; WU006 owns source reconciliation. Setelah accepted source delta, fresh Planner refresh dan recommended independent Review sebelum report/Human approval. WU005 tetap DONE, accepted availability-only action tidak diperluas secara tersirat. Completion synthesis berdasarkan Human signal dan durable techplan/handoff; tidak ada frontend approval atau delivery milestone yang diinfer.
 
@@ -49,4 +49,4 @@ Enam predecessor edges dipertahankan/dipulihkan, WU006 dan tiga scoped source-re
 
 ## Human checkpoint — 2026-10-02
 
-Human meminta checkpoint sebelum melanjutkan TP006009. Dispatch diparkir, prepared Invocation dan approval receipt dipertahankan; dependency topology tidak berubah. Progress snapshot: [Report Slice 2](../../docs/project/slice-2-progress-checkpoint-2026-10-02.md). Re-ground current state/guidance saat resume.
+Human meminta checkpoint sebelum melanjutkan TP006009. Pada resume, approval Status direkonsiliasi langsung sesuai current Harscode guidance dan TP006009 tetap undispatched. BLD006005 disiapkan sebagai next Human-Assisted Run; dependency topology tidak berubah. Progress snapshot historis: [Report Slice 2](../../docs/project/slice-2-progress-checkpoint-2026-10-02.md).
