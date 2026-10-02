@@ -1,6 +1,6 @@
 # Run Invocation — `TP-S2-006-009`
 
-Status: `READY_FOR_HUMAN_DISPATCH`
+Status: `NOT DISPATCHED — WITHDRAWN BEFORE LAUNCH` — approval Status was reconciled directly by the Orchestrator on 2026-10-02 under current Harscode deterministic-reconciliation guidance; see parent `events.md` entry “TP006008 approval Status reconciled; source Build prepared”. Do not launch this package.
 Prepared: 2026-10-02. Bahasa Indonesia untuk human-facing prose.
 
 ## Identity and assignment
@@ -52,7 +52,7 @@ No substantive plan/Open Item changes, new owner vote, independent re-review, de
 
 Do not edit report, other prior artifacts, Product/spec/API/generated/fixture/production/test files, registry or orchestration projections. No tests/validators/generators/services/migrations/browser/runtime checks.
 
-## Human-assisted dispatch
+## Human-assisted dispatch package — withdrawn; do not launch
 
 Cwd `/home/anhar-solehudin/kencleng-workspace/kencleng`; fresh Planner / KC-PLANNER, gpt-6-luna / low.
 

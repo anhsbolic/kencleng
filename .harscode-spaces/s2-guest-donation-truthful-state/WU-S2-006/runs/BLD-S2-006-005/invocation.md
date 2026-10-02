@@ -16,15 +16,17 @@ Prepared: 2026-10-02. Human-facing prose Bahasa Indonesia.
 - `PARTICIPANT_ID`: `P-S2-006-BLD-005-1`
 - `PARTICIPANT_PROFILE_ID`: `KC-IMPLEMENTER`; `.harscode-spaces/participant-profiles/profiles.md`, SHA-256 `e545651805b302727bcb89087484b767dc7046d470567f6679c8bb8362771d32`.
 - `SESSION_TRANSITION`: `FRESH` — new source-authoring Build after the Human-approved TP-S2-006-008 plan gate.
-- `TARGET_REVISION`: Kencleng HEAD `7fd8b473b239b20bda3990ab29c51440d321a796` plus current working tree; verify live source immediately before edits.
-- `WORKFLOW_REVISION`: Harscode `pilot/orchestrator-v0.1@95ecf37ba8ae449a5b3b278c27331aca87360bc8`; use current applicable guidance at dispatch.
+- `TARGET_REVISION`: Kencleng HEAD `472c37cb1cab8a3b84da7b00ab14235ca4eed6b0` plus current working tree, including orchestration-only resume reconciliation and this Invocation; no authored spec/API source delta is present at preparation. Re-ground live sources immediately before edits; this is a dispatch baseline, not a semantic pin on unrelated files.
+- `WORKFLOW_REVISION`: Harscode `pilot/orchestrator-v0.1@63ec4e0fd4f45a9820939ff8e568031236ce98f4`; current-effective and not semantically pinned. Re-ground applicable guidance at dispatch.
 - `SELECTED_MODEL`: `gpt-6-luna`
 - `REASONING_EFFORT`: `high`
 - `MODEL_APPROVAL`: Not required by Human-owned registry.
+- `MODEL_REGISTRY_SOURCE`: `.harscode-spaces/.local-config.yaml`, SHA-256 `ddffdeb4ce8edec181ca36bf32bedf19c513a76e359bc2642985eda6b32f400d`; `gpt-6-luna` declares `coding`/`repository-work`, supports `high`, cost tier `low`, `approval_required: false`.
 - `MODEL_ROUTING_RATIONALE`: Lowest-cost available coding model; high effort is justified by cross-domain monetary/error/object-schema correspondence across accepted specs and authored OpenAPI. No stronger-model escalation is supported by current evidence.
 - `COMMUNICATION_LANGUAGE`: Bahasa Indonesia
 - `COMMUNICATION_PROFILE_PATH`: `docs/project/communication-profile.md`
 - `PHASE_ROUTE`: Initial Build against the whole unsplit approved WU-S2-006 spine; authored sources only, stopping before independent Review and owning source acceptance.
+- `ARTIFACT_TARGET`: The affected members of `docs/spec/4-campaign/invariants.md`, `docs/spec/4-campaign/features/01-campaign-creation-draft-crud.md`, `docs/spec/4-campaign/features/02-campaign-detail-listing.md`, `docs/spec/4-campaign/features/09-closure.md`, `docs/spec/5-donation/invariants.md`, `docs/spec/5-donation/features/01-submit-donation-settlement.md`, `api/openapi/campaign.yaml`, and `api/openapi/donation.yaml`; `api/openapi/common.yaml` only if the approved shared `ValidationError` component actually needs an authored change. This is a bounded stable source set, not a requirement to touch every listed file.
 
 ## Current-effective inputs / PRIOR_ARTIFACTS
 
@@ -58,7 +60,7 @@ Keep source semantics bounded by the Approved Techplan and current authorities. 
 
 Run the focused `cd api && npm run validate` source validation required by the approved source plan and `api/README.md`. Record actual diagnostics and compare warning coordinates/rules to the known 124-warning baseline; touched source must have zero errors and no new warning coordinates. This is schema validation, not runtime or independent Testing evidence. Do not run tests or generators in this Run.
 
-Write the Build report with canonical provenance, changed sources, exact before/after hashes and Run-only deltas, validation actually run, limitations, and one structured `## Phase handoff`. Stop after authored-source Build. Newly changed spec/API bytes require independent Review and the relevant spec/API owner acceptance before counterparts or WU-S2-006 completion. No whole-plan re-approval unless the material meaning changes; any material plan/source-authority contradiction routes back to the Orchestrator.
+Write the Build report with canonical provenance, changed sources, exact before/after hashes and Run-only deltas, validation actually run, limitations, and exactly one structured `## Phase handoff` containing: `Outcome`, `Result refs`, `Findings`, `Decision requests`, `Blockers`, `Open / unverified`, `Recommended continuation`, and `Context refs`. Stop after authored-source Build. Newly changed spec/API bytes require independent Review and the relevant spec/API owner acceptance before counterpart work or WU-S2-006 completion. No whole-plan re-approval unless the material meaning changes; any material plan/source-authority contradiction routes back to the Orchestrator.
 
 ## Execution envelope
 
