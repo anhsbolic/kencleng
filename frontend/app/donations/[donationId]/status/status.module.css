@@ -1,0 +1,75 @@
+.page {
+  width: min(100% - 48px, 1080px);
+  min-height: 100dvh;
+  margin-inline: auto;
+  padding-block: clamp(48px, 9vw, 112px);
+}
+
+.state {
+  max-width: 720px;
+  border-top: 1px solid var(--ink);
+  padding-top: 28px;
+}
+
+.kicker {
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.kicker::before {
+  display: inline-block;
+  width: 24px;
+  height: 3px;
+  margin-right: 12px;
+  vertical-align: 3px;
+  background: var(--sun);
+  content: "";
+}
+
+.state h1 {
+  margin: 24px 0 18px;
+  font-family: var(--font-newsreader), serif;
+  font-size: clamp(36px, 6vw, 62px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+}
+
+.state > p:not(.kicker) {
+  color: var(--muted-ink);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.state button {
+  min-height: 48px;
+  margin-top: 18px;
+  border: 1px solid var(--ink);
+  border-radius: 9px;
+  background: var(--warm-surface);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 650;
+  padding: 10px 16px;
+}
+
+.state button:focus-visible {
+  outline: 3px solid var(--berry);
+  outline-offset: 4px;
+}
+
+.state button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+@media (max-width: 600px) {
+  .page {
+    width: min(100% - 40px, 560px);
+  }
+}

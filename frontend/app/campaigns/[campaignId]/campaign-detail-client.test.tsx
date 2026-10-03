@@ -6,7 +6,7 @@ import { server } from "@/mocks/server";
 import CampaignDetailClient from "./campaign-detail-client";
 
 describe("CampaignDetailClient", () => {
-  it("renders contract-provided campaign facts and a non-activating donation context", async () => {
+  it("renders the cap before the donation entry and keeps the entry tied to the contract action", async () => {
     render(<CampaignDetailClient campaignId={campaignFixtureIds.available} />);
 
     expect(await screen.findByRole("heading", { name: /Dapur bersama/i })).toBeVisible();
@@ -17,12 +17,26 @@ describe("CampaignDetailClient", () => {
       "src",
       expect.stringContaining(`/api/campaigns/${campaignFixtureIds.available}/media/`),
     );
-    expect(
-      screen.getByRole("heading", { name: /Dukungan belum dapat dilakukan/i }),
-    ).toBeVisible();
-    expect(screen.queryByRole("link", { name: /donasi|donate/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: /donasi|donate/i })).not.toBeInTheDocument();
+    expect(screen.getByText("Rp 1.000.000.000,00 IDR")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Lanjutkan donasi" })).toHaveAttribute(
+      "href",
+      `/campaigns/${campaignFixtureIds.available}/donate`,
+    );
     expect(screen.getByRole("main")).not.toHaveFocus();
+  });
+
+  it("keeps explicit IDR cap disclosure when Funding is unavailable", async () => {
+    render(<CampaignDetailClient campaignId={campaignFixtureIds.fundingUnavailable} />);
+
+    expect(await screen.findByText("Rp 1.000.000.000,00 IDR")).toBeVisible();
+    expect(screen.getByRole("link", { name: "Lanjutkan donasi" })).toBeVisible();
+  });
+
+  it("does not offer donation entry when the accepted action is unavailable", async () => {
+    render(<CampaignDetailClient campaignId={campaignFixtureIds.donationUnavailable} />);
+
+    expect(await screen.findByRole("heading", { name: /Dukungan belum dapat dilakukan/i })).toBeVisible();
+    expect(screen.queryByRole("link", { name: "Lanjutkan donasi" })).not.toBeInTheDocument();
   });
 
   it("shows one safe non-disclosing not-found state", async () => {

@@ -1,4 +1,5 @@
 import type { RefObject } from "react";
+import Link from "next/link";
 import type { PublicCampaignDetail } from "@/lib/api/public-campaign";
 import styles from "./campaign-detail.module.css";
 
@@ -18,7 +19,7 @@ const relationshipCopy = {
 } as const;
 
 function formatIdr(amount: string) {
-  const [whole, fraction] = amount.split(".");
+  const [whole, fraction = "00"] = amount.split(".");
   return `Rp ${whole.replace(/\B(?=(\d{3})+(?!\d))/g, ".")},${fraction}`;
 }
 
@@ -180,8 +181,29 @@ function CampaignSuccess({ campaign, mainRef }: Required<Pick<ViewProps, "campai
           <Funding campaign={campaign} />
           <aside aria-labelledby="action-title" className={styles.action}>
             <p className={styles.kicker}>Langkah berikutnya</p>
-            <h2 id="action-title">Dukungan belum dapat dilakukan dari halaman ini.</h2>
-            <p>Alur donasi untuk campaign ini belum tersedia. Informasi campaign tetap dapat dibaca di sini.</p>
+            <h2 id="action-title">
+              {campaign.donation_action.availability === "available"
+                ? "Dukung campaign ini"
+                : "Dukungan belum dapat dilakukan dari halaman ini."}
+            </h2>
+            <dl className={styles.capFacts}>
+              <div>
+                <dt>Batas maksimum per donasi</dt>
+                <dd>
+                  {formatIdr(campaign.max_donation_amount.amount)} {campaign.max_donation_amount.currency_code}
+                </dd>
+              </div>
+            </dl>
+            {campaign.donation_action.availability === "available" ? (
+              <>
+                <p>Batas ini adalah konteks jumlah tiap donasi. Kelayakan donasi tetap diperiksa saat dikirim.</p>
+                <Link className={styles.donateLink} href={`/campaigns/${encodeURIComponent(campaign.id)}/donate`}>
+                  Lanjutkan donasi
+                </Link>
+              </>
+            ) : (
+              <p>Alur donasi untuk campaign ini belum tersedia. Informasi campaign tetap dapat dibaca di sini.</p>
+            )}
           </aside>
         </div>
 

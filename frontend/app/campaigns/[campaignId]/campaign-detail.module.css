@@ -158,6 +158,47 @@
   padding: 24px;
 }
 
+.capFacts {
+  margin: 20px 0;
+  border-block: 1px solid var(--border);
+  padding-block: 14px;
+}
+
+.capFacts div {
+  display: grid;
+  gap: 6px;
+}
+
+.capFacts dt {
+  color: var(--muted-ink);
+  font-size: 14px;
+}
+
+.capFacts dd {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.donateLink {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  border: 1px solid var(--ink);
+  border-radius: 10px;
+  background: var(--sun);
+  padding: 10px 16px;
+  font-weight: 650;
+}
+
+.donateLink:hover {
+  background: var(--sun-strong, #e5b62e);
+}
+
 .story {
   max-width: 760px;
 }

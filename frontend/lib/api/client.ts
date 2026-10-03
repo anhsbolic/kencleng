@@ -5,12 +5,16 @@ export class ApiTransportError extends Error {
   }
 }
 
-export async function apiRequest(path: string): Promise<Response> {
+export async function apiRequest(
+  path: string,
+  init: RequestInit = {},
+): Promise<Response> {
   try {
+    const headers = new Headers(init.headers);
+    headers.set("Accept", "application/json");
     return await fetch(path, {
-      headers: {
-        Accept: "application/json",
-      },
+      ...init,
+      headers,
     });
   } catch {
     throw new ApiTransportError();
