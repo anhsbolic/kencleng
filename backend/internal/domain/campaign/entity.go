@@ -46,21 +46,29 @@ type DetailRecord struct {
 	FundraisingEndsAt time.Time
 	TargetAmount      *string
 	CollectedAmount   *string
+	MaxDonationAmount string
 	MediaState        string
 	Media             []MediaMetadata
 }
 
 // PublicDetail is the closed domain projection used by the HTTP wire mapper.
 type PublicDetail struct {
-	ID             uuid.UUID
-	Title          string
-	Purpose        OrganizerText
-	Story          OrganizerText
-	Steward        Steward
-	Lifecycle      Lifecycle
-	Funding        Funding
-	Media          Media
-	DonationAction DonationAction
+	ID                uuid.UUID
+	Title             string
+	Purpose           OrganizerText
+	Story             OrganizerText
+	Steward           Steward
+	Lifecycle         Lifecycle
+	Funding           Funding
+	MaxDonationAmount MaxDonationAmount
+	Media             Media
+	DonationAction    DonationAction
+}
+
+// MaxDonationAmount is the accepted per-Campaign donation cap in exact IDR.
+type MaxDonationAmount struct {
+	Amount       string
+	CurrencyCode string
 }
 
 // OrganizerText is organizer-authored plain text, not verification evidence.
@@ -141,6 +149,7 @@ type SeedRecord struct {
 	FundraisingEndsAt time.Time
 	TargetAmount      *string
 	CollectedAmount   *string
+	MaxDonationAmount *string
 	MediaState        string
 	Media             *SeedMedia
 }

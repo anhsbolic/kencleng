@@ -64,16 +64,21 @@ type publicCampaignDonationActionResponse struct {
 	Availability string `json:"availability"`
 	Reason       string `json:"reason"`
 }
+type publicCampaignMaxDonationAmountResponse struct {
+	Amount       string `json:"amount"`
+	CurrencyCode string `json:"currency_code"`
+}
 type publicCampaignDetailResponse struct {
-	ID             uuid.UUID                            `json:"id"`
-	Title          string                               `json:"title"`
-	Purpose        publicCampaignTextResponse           `json:"purpose"`
-	Story          publicCampaignTextResponse           `json:"story"`
-	Steward        publicCampaignStewardResponse        `json:"steward"`
-	Lifecycle      publicCampaignLifecycleResponse      `json:"lifecycle"`
-	Funding        publicCampaignFundingResponse        `json:"funding"`
-	Media          publicCampaignMediaResponse          `json:"media"`
-	DonationAction publicCampaignDonationActionResponse `json:"donation_action"`
+	ID                uuid.UUID                               `json:"id"`
+	Title             string                                  `json:"title"`
+	Purpose           publicCampaignTextResponse              `json:"purpose"`
+	Story             publicCampaignTextResponse              `json:"story"`
+	Steward           publicCampaignStewardResponse           `json:"steward"`
+	Lifecycle         publicCampaignLifecycleResponse         `json:"lifecycle"`
+	Funding           publicCampaignFundingResponse           `json:"funding"`
+	MaxDonationAmount publicCampaignMaxDonationAmountResponse `json:"max_donation_amount"`
+	Media             publicCampaignMediaResponse             `json:"media"`
+	DonationAction    publicCampaignDonationActionResponse    `json:"donation_action"`
 }
 
 // PublicCampaignDetailHandler handles the unauthenticated detail operation.
@@ -152,7 +157,8 @@ func toPublicCampaignDetailResponse(detail *campaign.PublicDetail) publicCampaig
 		Steward:   publicCampaignStewardResponse{ID: detail.Steward.ID, Name: detail.Steward.Name},
 		Lifecycle: publicCampaignLifecycleResponse{PublicState: detail.Lifecycle.PublicState, PublishedAt: detail.Lifecycle.PublishedAt, FundraisingEndsAt: detail.Lifecycle.FundraisingEndsAt},
 		Funding:   funding, Media: publicCampaignMediaResponse{State: detail.Media.State, Reason: detail.Media.Reason, Items: items},
-		DonationAction: publicCampaignDonationActionResponse{Availability: detail.DonationAction.Availability, Reason: detail.DonationAction.Reason},
+		MaxDonationAmount: publicCampaignMaxDonationAmountResponse{Amount: detail.MaxDonationAmount.Amount, CurrencyCode: detail.MaxDonationAmount.CurrencyCode},
+		DonationAction:    publicCampaignDonationActionResponse{Availability: detail.DonationAction.Availability, Reason: detail.DonationAction.Reason},
 	}
 }
 

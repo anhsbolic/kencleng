@@ -65,7 +65,7 @@ func publicDetail() *campaign.PublicDetail {
 	id := uuid.New()
 	mediaID := uuid.New()
 	percentage := "125.50"
-	return &campaign.PublicDetail{ID: id, Title: "Title", Purpose: campaign.OrganizerText{Content: "Purpose", Source: "organizer"}, Story: campaign.OrganizerText{Content: "Story", Source: "organizer"}, Steward: campaign.Steward{ID: uuid.New(), Name: "Steward"}, Lifecycle: campaign.Lifecycle{PublicState: "fundraising", PublishedAt: time.Now().UTC(), FundraisingEndsAt: time.Now().UTC().Add(time.Hour)}, Funding: campaign.Funding{Availability: "available", Currency: "IDR", TargetAmount: "100.00", CollectedAmount: "125.50", Progress: campaign.FundingProgress{State: "computed", Percentage: &percentage, Relationship: "above_target"}}, Media: campaign.Media{State: "available", Items: []campaign.PublicMediaItem{{ID: mediaID, ContentURL: "/api/campaigns/" + id.String() + "/media/" + mediaID.String() + "/content", ContentType: "image/jpeg", AltText: "Alt", Source: "organizer"}}}, DonationAction: campaign.DonationAction{Availability: "unavailable", Reason: "donation_flow_not_available"}}
+	return &campaign.PublicDetail{ID: id, Title: "Title", Purpose: campaign.OrganizerText{Content: "Purpose", Source: "organizer"}, Story: campaign.OrganizerText{Content: "Story", Source: "organizer"}, Steward: campaign.Steward{ID: uuid.New(), Name: "Steward"}, Lifecycle: campaign.Lifecycle{PublicState: "fundraising", PublishedAt: time.Now().UTC(), FundraisingEndsAt: time.Now().UTC().Add(time.Hour)}, Funding: campaign.Funding{Availability: "available", Currency: "IDR", TargetAmount: "100.00", CollectedAmount: "125.50", Progress: campaign.FundingProgress{State: "computed", Percentage: &percentage, Relationship: "above_target"}}, MaxDonationAmount: campaign.MaxDonationAmount{Amount: "1000000000", CurrencyCode: "IDR"}, Media: campaign.Media{State: "available", Items: []campaign.PublicMediaItem{{ID: mediaID, ContentURL: "/api/campaigns/" + id.String() + "/media/" + mediaID.String() + "/content", ContentType: "image/jpeg", AltText: "Alt", Source: "organizer"}}}, DonationAction: campaign.DonationAction{Availability: "unavailable", Reason: "donation_flow_not_available"}}
 }
 
 func TestPublicCampaignDetailHandler_ExactClosedWireShape(t *testing.T) {
@@ -84,13 +84,43 @@ func TestPublicCampaignDetailHandler_ExactClosedWireShape(t *testing.T) {
 	if err := json.Unmarshal(recorder.Body.Bytes(), &body); err != nil {
 		t.Fatal(err)
 	}
-	if len(body) != 9 {
-		t.Errorf("top-level keys = %d, want 9: %s", len(body), recorder.Body.String())
+	if len(body) != 10 {
+		t.Errorf("top-level keys = %d, want 10: %s", len(body), recorder.Body.String())
+	}
+	var cap map[string]json.RawMessage
+	if err := json.Unmarshal(body["max_donation_amount"], &cap); err != nil {
+		t.Fatal(err)
+	}
+	if len(cap) != 2 || string(cap["amount"]) != `"1000000000"` || string(cap["currency_code"]) != `"IDR"` {
+		t.Errorf("max_donation_amount = %s", body["max_donation_amount"])
 	}
 	for _, forbidden := range []string{"status", "object_key", "donor_count", "organization_id"} {
 		if _, exists := body[forbidden]; exists {
 			t.Errorf("forbidden key %q serialized", forbidden)
 		}
+	}
+}
+
+func TestPublicCampaignDetailHandler_IncludesCapWhenFundingUnavailable(t *testing.T) {
+	detail := publicDetail()
+	detail.Funding = campaign.Funding{Availability: "unavailable", Reason: "not_available"}
+	recorder := httptest.NewRecorder()
+	wirePublicCampaignHandler(fakePublicCampaignService{detail: detail}).ServeHTTP(recorder, httptest.NewRequest(http.MethodGet, "/campaigns/"+detail.ID.String(), nil))
+	if recorder.Code != http.StatusOK {
+		t.Fatalf("status = %d", recorder.Code)
+	}
+	var body struct {
+		Funding           map[string]json.RawMessage `json:"funding"`
+		MaxDonationAmount struct {
+			Amount       string `json:"amount"`
+			CurrencyCode string `json:"currency_code"`
+		} `json:"max_donation_amount"`
+	}
+	if err := json.Unmarshal(recorder.Body.Bytes(), &body); err != nil {
+		t.Fatal(err)
+	}
+	if body.Funding["availability"] == nil || body.MaxDonationAmount.Amount != "1000000000" || body.MaxDonationAmount.CurrencyCode != "IDR" {
+		t.Fatalf("unexpected cap/funding projection: %+v", body)
 	}
 }
 

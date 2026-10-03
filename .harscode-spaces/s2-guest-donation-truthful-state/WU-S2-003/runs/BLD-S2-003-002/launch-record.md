@@ -1,0 +1,28 @@
+# Launch Record — BLD-S2-003-002
+
+- Created/Updated: 2026-10-03.
+- Work Unit / Run: `WU-S2-003` / `BLD-S2-003-002`.
+- Phase / route: Fresh Build/Patch re-entry setelah BLD-S2-003-001 `STALLED`; target seluruh Approved TP-S2-003-006. Decomposition TPD-S2-003-001 Step 0 `NO`; tanpa task split atau D1-only task.
+- Purpose: Lanjutkan D1 dengan re-grounding live authority/code dan pertahankan seluruh scoped gates.
+- Role / Specialization: Implementer / Human-paired Tier-0 D1 transaction/locking continuation within approved Slice-2 Donation backend delivery.
+- Participant / Profile: `P-S2-003-BLD-002-1` / `KC-IMPLEMENTER`.
+- Session / transition: `FRESH`, current conversation; identifier Session runtime tidak diekspos. Tidak memakai prior Participant/Session sebagai execution state. Tidak ada immediate Session replacement.
+- Runtime harness: Invocation `codex-cli`; tidak mengelola harness provisioning/model switching dari Participant.
+- Selected model / effort: Invocation `gpt-6-sol` / `high`. Exact runtime model identifier dan actual reasoning effort tidak dikonfirmasi secara independen; tidak diklaim telah diverifikasi.
+- Model routing rationale: Invocation memilih strong reasoning untuk cross-domain D1 ordering dan atomic Funding pada dua Tier-0 transaction/locking files; tidak mengubah pilihan atau local registry.
+- Model approval evidence: Dalam sesi ini Anhar menjawab **“Setuju gpt-6-sol / high; saya hadir untuk Human-paired sekarang”** setelah pertanyaan eksplisit model approval/pair readiness. Gate model yang pending pada prepared Invocation terpenuhi melalui receipt ini; Invocation tidak diedit.
+- Trigger: Human kickoff meminta execute Invocation/canonical Build/Patch + overlay, seluruh Approved target, lanjut dari D1 dengan fresh Session.
+- Target revision: Observed Kencleng HEAD `19d53315ac2847a03405339c0e86df8a97850761` plus durable working-tree changes yang sudah ada.
+- Workflow revision: Observed Harscode HEAD `63ec4e0fd4f45a9820939ff8e568031236ce98f4`; current-effective canonical Build/Patch dan overlay dibaca.
+- Invocation identity: `invocation.md`, SHA-256 `275c9ec4a3be269ecaee6553c4c5ab76fbc56a4b4077e2c3b254a98d17c6198b`.
+- Sole execution spine: `../TP-S2-003-006/techplan.md`, Approved, SHA-256 `b71951c86b2f74f6c9f1a164bcf43447c58ee655874deaf09275e6ff3b2316f9`; status/provenance note manifest dipertahankan.
+- Prior evidence: BLD-S2-003-001 report SHA-256 `6800f6433b32339cc9829aa97b2987e19d6bc2882cda16dcec51dd9237a4b32a`; RV-S2-003-004 findings SHA-256 `4ecd9310a4d2c98acb157b5ddc4ab395796b5c076ad1c5ca27f145d198e20eef`; TST-S2-003-001 report SHA-256 `6397951f4b2b232bffd0f776c110d78691bc2ddef21f761e86af329b820d7294`. Semua cocok saat Run; prior verdict hanya cap projection/migration slice.
+- Execution envelope: Run Invocation. Exact Tier-0 authorization hanya `backend/internal/domain/campaign/donation_coordinator_db.go` dan `backend/internal/domain/donation/ledger.go` untuk approved D1, dengan aktif Human-paired development/co-review/resulting diff inspection. Open Item 7, migration application dan O3/O4/O5 owner controls/acceptance tetap gated.
+- Pairing evidence: Anhar menyatakan hadir; re-grounding findings/gate disampaikan. Usulan schema dan concrete D1 transaction sequence direkam di report untuk review. Tidak ada Tier-0 write/code co-review/resulting Tier-0 diff; paired implementation/review belum selesai dan tidak diklaim terjadi.
+- Artifact target: `none`; tidak mengubah stable authority atau orchestration projection.
+- Outcome: `STALLED` — berhenti pada prerequisite minimum Donation/D1 migration design review di TP §10; schema belum ada dan review receipt belum ditunjukkan current-effective inputs. Tidak mengganti gate ini dengan autonomous schema/adapter implementation.
+- Produced artifacts: `report.md`, `launch-record.md`. Stable artifacts/source/tests/migrations changed by this Run: none.
+- Checks: Live Git revisions/status/diff, matching relied-upon SHA-256 identities, existing-file fingerprint preservation dan authorized-path absence; post-write `git diff --check` passed. Tidak ada executable test/build, PostgreSQL/runtime/browser, race/concurrency, performance/load, security-class suite, migration/index application atau database action.
+- Findings / Decisions / Blockers: Scoped schema-review prerequisite, proposal dan full-target status di report. Model approval received; tidak ada new Product/API decision atau risk acceptance. Open Item 7 dan owner gates dipertahankan.
+- Terminal Phase Handoff carrier: `report.md`, tepat satu `## Phase handoff`; launch record menunjuk carrier tersebut.
+- Continuation: Advisory route schema design review lalu fresh Build/Patch Run dengan aktif Human pair. Tidak membuat/dispatch downstream Run, mengedit parent state, atau mengklaim `BACKEND_VERIFIED`, WU completion atau milestone.

@@ -29,7 +29,7 @@ func (r *RepositoryDB) FindPublicDetail(ctx context.Context, campaignID uuid.UUI
 		Select(
 			goqu.I("c.id"), goqu.I("c.title"), goqu.I("c.purpose"), goqu.I("c.story"),
 			goqu.I("o.id"), goqu.I("o.name"), goqu.I("c.published_at"), goqu.I("c.fundraising_ends_at"),
-			goqu.I("c.target_amount"), goqu.I("c.collected_amount"), goqu.I("c.media_state"),
+			goqu.I("c.target_amount"), goqu.I("c.collected_amount"), goqu.I("c.max_donation_amount"), goqu.I("c.media_state"),
 			goqu.I("m.id"), goqu.I("m.object_key"), goqu.I("m.content_type"), goqu.I("m.alt_text"), goqu.I("m.caption"), goqu.I("m.display_order"),
 		).
 		Where(goqu.Ex{"c.id": campaignID, "c.status": "published"}).
@@ -51,7 +51,7 @@ func (r *RepositoryDB) FindPublicDetail(ctx context.Context, campaignID uuid.UUI
 		var objectKey, contentType, altText, caption *string
 		var displayOrder *int
 		if err := rows.Scan(&row.ID, &row.Title, &row.Purpose, &row.Story, &row.StewardID, &row.StewardName,
-			&row.PublishedAt, &row.FundraisingEndsAt, &row.TargetAmount, &row.CollectedAmount, &row.MediaState,
+			&row.PublishedAt, &row.FundraisingEndsAt, &row.TargetAmount, &row.CollectedAmount, &row.MaxDonationAmount, &row.MediaState,
 			&mediaID, &objectKey, &contentType, &altText, &caption, &displayOrder); err != nil {
 			return nil, fmt.Errorf("campaign: scan public detail: %w", err)
 		}
@@ -148,10 +148,16 @@ func (r *RepositoryDB) SeedCampaign(ctx context.Context, record SeedRecord, repl
 	if _, err := tx.Exec(ctx, orgSQL, orgArgs...); err != nil {
 		return "", fmt.Errorf("campaign: seed organization: %w", err)
 	}
+	maxDonationAmount := record.MaxDonationAmount
+	if maxDonationAmount == nil {
+		defaultAmount := defaultMaxDonationAmount
+		maxDonationAmount = &defaultAmount
+	}
 	campaignSQL, campaignArgs, err := pgDialect.Insert("campaigns").Rows(goqu.Record{
 		"id": record.CampaignID, "organization_id": record.OrganizationID, "title": record.Title, "purpose": record.Purpose, "story": record.Story,
 		"status": "published", "published_at": record.PublishedAt, "fundraising_ends_at": record.FundraisingEndsAt,
 		"target_amount": record.TargetAmount, "collected_amount": record.CollectedAmount, "media_state": record.MediaState,
+		"max_donation_amount": maxDonationAmount,
 	}).Prepared(true).ToSQL()
 	if err != nil {
 		return "", fmt.Errorf("campaign: build seed campaign: %w", err)

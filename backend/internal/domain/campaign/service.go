@@ -10,6 +10,11 @@ import (
 	"github.com/shopspring/decimal"
 )
 
+const (
+	defaultMaxDonationAmount = "1000000000"
+	minimumMaxDonationAmount = "5000"
+)
+
 // Service owns public eligibility classification and semantic projection.
 type Service struct {
 	repository Repository
@@ -86,15 +91,27 @@ func toPublicDetail(record *DetailRecord) (*PublicDetail, error) {
 	if err != nil {
 		return nil, err
 	}
+	maxDonationAmount, err := mapMaxDonationAmount(record.MaxDonationAmount)
+	if err != nil {
+		return nil, err
+	}
 	return &PublicDetail{
 		ID: record.ID, Title: record.Title,
 		Purpose:   OrganizerText{Content: record.Purpose, Source: "organizer"},
 		Story:     OrganizerText{Content: record.Story, Source: "organizer"},
 		Steward:   Steward{ID: record.StewardID, Name: record.StewardName},
 		Lifecycle: Lifecycle{PublicState: "fundraising", PublishedAt: record.PublishedAt, FundraisingEndsAt: record.FundraisingEndsAt},
-		Funding:   funding, Media: media,
+		Funding:   funding, MaxDonationAmount: maxDonationAmount, Media: media,
 		DonationAction: DonationAction{Availability: "unavailable", Reason: "donation_flow_not_available"},
 	}, nil
+}
+
+func mapMaxDonationAmount(raw string) (MaxDonationAmount, error) {
+	amount, err := decimal.NewFromString(raw)
+	if err != nil || !amount.Equal(amount.Truncate(0)) || amount.LessThan(decimal.RequireFromString(minimumMaxDonationAmount)) || amount.GreaterThan(decimal.RequireFromString(defaultMaxDonationAmount)) {
+		return MaxDonationAmount{}, errors.New("invalid maximum donation amount")
+	}
+	return MaxDonationAmount{Amount: amount.StringFixed(0), CurrencyCode: "IDR"}, nil
 }
 
 func mapFunding(targetRaw, collectedRaw *string) (Funding, error) {

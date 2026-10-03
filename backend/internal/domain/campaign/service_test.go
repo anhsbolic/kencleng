@@ -36,7 +36,7 @@ func publicRecord() *DetailRecord {
 	amount := "100.00"
 	collected := "125.505"
 	caption := "Photo"
-	return &DetailRecord{ID: uuid.New(), Title: "Campaign", Purpose: "Purpose", Story: "Story", StewardID: uuid.New(), StewardName: "Steward", PublishedAt: time.Date(2026, 1, 2, 3, 4, 5, 0, time.UTC), FundraisingEndsAt: time.Date(2026, 2, 2, 3, 4, 5, 0, time.UTC), TargetAmount: &amount, CollectedAmount: &collected, MediaState: "available", Media: []MediaMetadata{{ID: uuid.New(), ObjectKey: "private-key", ContentType: "image/jpeg", AltText: "Alt", Caption: &caption}}}
+	return &DetailRecord{ID: uuid.New(), Title: "Campaign", Purpose: "Purpose", Story: "Story", StewardID: uuid.New(), StewardName: "Steward", PublishedAt: time.Date(2026, 1, 2, 3, 4, 5, 0, time.UTC), FundraisingEndsAt: time.Date(2026, 2, 2, 3, 4, 5, 0, time.UTC), TargetAmount: &amount, CollectedAmount: &collected, MaxDonationAmount: "1000000000", MediaState: "available", Media: []MediaMetadata{{ID: uuid.New(), ObjectKey: "private-key", ContentType: "image/jpeg", AltText: "Alt", Caption: &caption}}}
 }
 
 func TestGetPublicDetail_ClosedProjectionAndExactFunding(t *testing.T) {
@@ -56,6 +56,41 @@ func TestGetPublicDetail_ClosedProjectionAndExactFunding(t *testing.T) {
 	}
 	if strings.Contains(detail.Media.Items[0].ContentURL, record.Media[0].ObjectKey) {
 		t.Error("object key leaked into content URL")
+	}
+}
+
+func TestMapMaxDonationAmount(t *testing.T) {
+	tests := []struct {
+		name string
+		raw  string
+		want string
+		bad  bool
+	}{
+		{name: "default", raw: "1000000000", want: "1000000000"},
+		{name: "minimum", raw: "5000", want: "5000"},
+		{name: "whole rupiah", raw: "5001.0", want: "5001"},
+		{name: "fraction", raw: "5000.5", bad: true},
+		{name: "below minimum", raw: "4999", bad: true},
+		{name: "above maximum", raw: "1000000001", bad: true},
+		{name: "invalid", raw: "NaN", bad: true},
+		{name: "missing persisted value", raw: "", bad: true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := mapMaxDonationAmount(tt.raw)
+			if tt.bad {
+				if err == nil {
+					t.Fatalf("expected invalid amount error, got %+v", got)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			if got.Amount != tt.want || got.CurrencyCode != "IDR" {
+				t.Fatalf("got %+v, want amount %s IDR", got, tt.want)
+			}
+		})
 	}
 }
 
