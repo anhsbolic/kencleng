@@ -2,8 +2,9 @@
 
 > File: `docs/spec/4-campaign/invariants.md`
 > Status: Slice-1 public-boundary reconciliation active; remaining historical invariants are deferred evidence
-> Last updated: 2026-10-02
+> Last updated: 2026-10-04
 > WU-S2-006 source amendment accepted by Anhar Solehudin on 2026-10-02 after independent Review; acceptance covers this source amendment only.
+> Campaign/Donation funding-unavailable admission amendment accepted by Anhar Solehudin on 2026-10-04 as current Slice-2 Product/Donation authority; see INV-campaign-13.
 
 ## Domain summary
 
@@ -250,7 +251,10 @@ do not define the active public contract.
   releases its reservation, but does not reopen a capacity-closed Campaign
   or replace its winning reason. This invariant selects no transaction,
   locking, or isolation mechanism and does not change broader closure
-  behavior.
+  behavior. New Donation admission also requires authoritative settled
+  Funding to be available. If that Funding value is unavailable, fail closed:
+  admit no new Donation, do not interpret an absent value as zero, and resume
+  admission only after the authoritative Funding value is restored.
 - **Holds after operations**: Donation submission/settlement ordering
   at the threshold and capacity boundaries, reservation admission/release,
   the deadline scheduler, and `force-close`.

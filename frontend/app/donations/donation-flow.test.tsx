@@ -132,6 +132,28 @@ describe("guest donation frontend flow", () => {
     expect(screen.queryByText("Jumlah belum dapat diproses. Periksa jumlah dan batas per donasi yang ditampilkan.")).not.toBeInTheDocument();
   });
 
+  it("treats Funding-unavailable 503 as a known request failure without ambiguous retry", async () => {
+    let calls = 0;
+    server.use(http.post("/api/campaigns/:campaignId/donations", () => {
+      calls += 1;
+      return HttpResponse.json({
+        type: "about:blank",
+        title: "Service Unavailable",
+        status: 503,
+      }, { status: 503, headers: { "Content-Type": "application/problem+json" } });
+    }));
+
+    render(<DonationClient />);
+    await screen.findByRole("heading", { name: /Berikan dukungan untuk/i });
+    fireEvent.change(screen.getByLabelText("Jumlah donasi (IDR)"), { target: { value: "5001" } });
+    fireEvent.click(screen.getByRole("button", { name: "Kirim donasi simulasi" }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("Donasi belum dapat dikirim. Periksa kembali detail campaign sebelum mencoba lagi.");
+    expect(screen.queryByRole("button", { name: "Coba kirim ulang" })).not.toBeInTheDocument();
+    expect(screen.getByLabelText("Jumlah donasi (IDR)")).toBeEnabled();
+    expect(calls).toBe(1);
+  });
+
   it("keeps an ambiguous retry on the same idempotency key and payload", async () => {
     const seenKeys: Array<string | null> = [];
     const seenBodies: unknown[] = [];

@@ -79,6 +79,10 @@ export async function submitDonation(
     return { kind: "conflict" };
   }
 
+  if (response.status === 503) {
+    return { kind: "request-failure" };
+  }
+
   if (response.status >= 500) {
     return { kind: "ambiguous" };
   }
