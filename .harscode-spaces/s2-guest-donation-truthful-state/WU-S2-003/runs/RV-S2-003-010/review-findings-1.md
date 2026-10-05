@@ -1,0 +1,49 @@
+> Phase: Independent Complex Techplan Review
+> Author: P-S2-003-RV-010-1 (Reviewer)
+> Created: 2026-10-05
+> Model: Invocation configured `gpt-6-luna`; active runtime model not independently exposed
+> Reasoning: Invocation configured `high`; active runtime effort not independently exposed
+> Session: Fresh independent Reviewer context; identifier not exposed
+> Work Unit / Run: `WU-S2-003` / `RV-S2-003-010`
+> Target revision: Kencleng HEAD `6e78c4950992ccf21da6490ecf774c75e573b123` plus current working tree; candidate SHA-256 `e895a1da8b90e7f88c449651a9a46add59e1a1d610cce3cc7b739d0c12c30315`
+> Workflow revision: Current-effective; canonical Review prompt SHA-256 `e81b88ae275e459df7f5b8172dd091cafee929b5f25095d31730d00482c98464`; overlay SHA-256 `f806673aa5e7d1d82dae9f433ec54c3562e15ce778b709a141c57d3d22dfaf87`
+> Participant / Profile: `P-S2-003-RV-010-1` / `KC-REVIEWER`
+
+## Review findings — WU-S2-003
+
+**Gate:** Complex — 20 Rules & Validation entries; crosses payment, transaction/concurrency, PII, API contracts, and protected-write boundaries.
+
+**Review target:** `.harscode-spaces/s2-guest-donation-truthful-state/WU-S2-003/techplan.candidate.md`, exact SHA-256 `e895a1da8b90e7f88c449651a9a46add59e1a1d610cce3cc7b739d0c12c30315`; post-Approval successor, `Draft / In Review`.
+
+**Sections resolved:** Background §1; Scope §2; Requirements §3; Rules & Validation §4; Decision Log §5; Backward Compatibility §6; Edge Cases & Risks §7; Interface Contract §8; Architecture / Plan §9; Implementation Details §10; Files Changed / Files NOT Changed §11; Testing Checklist and Test Focus Pointer §12; Open Items §13. Names and numbering match the current Techplan template.
+
+### Blocking
+
+- None.
+
+### Non-blocking
+
+- **MECHANICAL / NON-BLOCKING — §13 Active item 5, lifecycle pointer:** TP13's substantive correction resolves RV9 F-01. Item 5 now says the prior Human approval applies only to the approved predecessor candidate hash `55eb0c94bb922d3311279c462122cb57f9f2181226f33092fff9d68bbd2c41b5`, whose approved preimage was `0d5a503a7a9ae892f369e1e14aae41f8c3b5a2549cc8c687fae463d0d25e2df7`. The exact reviewed target is separately marked `Draft / In Review` in its frontmatter, and the current WU-S2-003 manifest corroborates that status; no predecessor approval is attributed to it. However, item 5 still calls the RV9-reviewed hash `5fe433cece3f7794987943b625ab3a696a47a9c974097c8f1eb8d01fc31eb4d7` the “current post-Approval material successor,” although this Run's current candidate is `e895a1da…c30315`. The historical hash is explicit and the approval state is not ambiguous, so this does not block reliance on the lifecycle clarification; label `5fe…` as the RV9-reviewed predecessor revision and explicitly identify `e895…` as the current unapproved successor in a bounded cleanup. Evidence: candidate frontmatter/§13 Active item 5; TP13 handoff; WU-S2-003 manifest Current State. This pointer-only correction does not change executable or verification meaning and does not require re-review by itself.
+
+### Clean
+
+- **Complex gate and exact identity:** The plan has 20 Rules & Validation entries and crosses the named sensitive boundaries. Candidate SHA-256 matched the Invocation target before review. TP13 Invocation, handoff, and launch-record hashes and RV9 Invocation, findings, and launch-record hashes matched the pins in this Run's Invocation. TP13 changed only §13 Active item 5; the reviewed candidate remains `Draft / In Review`. RV9's verdict remains limited to `5fe…`, and this verdict is limited to `e895…`.
+- **Rule fidelity and checklist:** R1–R20 are grounded in current Product/MVP, Campaign/Donation authority, Human decisions, routing evidence, and the complete durable Exploration record. Every rule has at least one §12 Testing Checklist row, including separately indexed R16–R20. Verification ownership and rationale preserve Build, independent Testing, Human acceptance, source-owner decisions, Tier-0 pairing, and the separate migration-design Review. No material Exploration direction was silently dropped or changed by TP13.
+- **Decision fidelity:** Stage-3's bounded Campaign-owned D1 coordination, rejection of a Donation-only published-state check, O3/O4/O5 separation, exact-money caution, and simulator truth are reflected. Later D1, amount, cap, Organization-source routing, OI8, and replay-credential directions are attributed to their recorded authorities. No new credential generation, strength, key-purpose, comparison, expiry-enforcement, abuse, or residual-risk decision is smuggled into the candidate.
+- **Diagram:** No diagram is present; conditional syntax/semantics checks do not apply.
+- **Open Items lifecycle:** Active items remain scoped to their unresolved controls/authority/evidence; resolved items retain their consequences. Active item 9 remains a predecessor gate for relying on fresh retry-credential issuance and concurrent validity. Current Donation Feature 01 / INV-donation-10 and POST API prose still say an equivalent retry returns the original Donation without requiring a fresh `status_token`; status Feature 02 / INV-donation-05 describe issuance expiry but not multiple concurrently valid issuance records. WU-S2-007's exact accepted source/counterpart receipt is expressly for Funding-unavailable `503`, not this retry behavior. Therefore OI9 source/counterpart acceptance is **not accepted or inferred** by this Review. OI9 remains distinct from O3 idempotency-record retention, O4/O5 controls, Open Item 7, candidate approval, and migration-design review.
+- **Technical facts / guardrails:** Read-only checks against live/current anchors confirmed (1) `api/openapi/donation.yaml` requires `status_token` and says retry returns the original Donation, while it does not express fresh issuance on each retry; the status Feature 02 retains hard 24-hour expiry but not multiplicity; (2) Campaign `FindPublicDetail` selects `status='published'` for public reads, while migration `000011` describes a public projection with `NUMERIC(19,2)` Funding and no Donation/close-reason workflow, so the plan correctly does not treat that read or scale as the D1/money authority; (3) the current Campaign service still maps Donation action to `unavailable/donation_flow_not_available`, consistent with the scoped pending backend capability. No claim relies on Exploration prose alone.
+- **Test Focus Pointer:** The concurrency, D1/funding, status privacy/abuse, guest-email lifecycle, and PostgreSQL evidence rows cite exact Stage-2/Stage-3 anchors and remain relevant. The Organization eligibility-source row correctly identifies a post-Exploration synthesis/routing gap and points to E9/E10/Open Item 7 rather than inventing an Exploration anchor. Ordinary rule-level cases are not inflated into specialist testing.
+- **Current authority re-grounding:** Re-read root/backend `AGENTS.md`, current Product/MVP scope and sequencing, WU-S2-003 manifest plus parent Events/Work Graph/Control Surface/Outcome, tracker, monetary/backend architecture guidance, Campaign/Donation specs and threat model, authored Campaign/Donation API and common components. Current WU-S2-003 state names `e895…` as Draft/In Review and explicitly keeps OI9 source acceptance, fresh positive migration-design Review, O3/O4/O5, Open Item 7, D1 pairing and runtime/database evidence separate.
+- **Verification boundary:** Read-only review only. No tests, validators, generators, SQL, migration, database, runtime, browser, or security actions were run. No candidate, source, spec, API, generated output, test, migration, or orchestration-state artifact was edited.
+
+## Phase handoff
+
+- **Outcome:** `COMPLETED` — independent Complex Techplan Review of the captured exact successor `e895…c30315`; RV9 F-01's approval-attribution ambiguity is resolved, with one mechanical/non-blocking stale lifecycle pointer.
+- **Result refs:** This Run's `review-findings-1.md`; candidate `.harscode-spaces/s2-guest-donation-truthful-state/WU-S2-003/techplan.candidate.md`, SHA-256 `e895a1da8b90e7f88c449651a9a46add59e1a1d610cce3cc7b739d0c12c30315`; this Run's `launch-record.md`.
+- **Findings:** No material/blocking findings. One mechanical correction is recorded above for §13 Active item 5's stale “current” label on RV9 hash `5fe…`. The old approval is correctly limited to predecessor `55eb…c41b5` / preimage `0d5a…e2df7`; target `e895…c30315` remains `Draft / In Review` and is not approved by this Review.
+- **Decision requests:** None. This Review does not make Product/domain/API/Security decisions or accept source/counterpart revisions.
+- **Blockers:** None to this Review's completion. OI9 source/spec/API/generated/frontend acceptance remains unresolved and blocks reliance on the retry-credential contract. The candidate's own Human approval and fresh positive migration-design Review remain separate gates; other scoped Open Items remain as recorded.
+- **Open / unverified:** No OI9 replay-credential source/counterpart acceptance, candidate Human approval, migration-design verdict, migration application, protected implementation, O3/O4/O5 acceptance, runtime behavior, or whole-spine Testing is established here.
+- **Recommended continuation:** Preserve OI9 as an open source/counterpart gate; route the mechanical lifecycle-pointer cleanup through its owning Planner pass if desired, then proceed through applicable source acceptance and the Human gate for the exact candidate. Obtain the distinct fresh positive migration-design Review before schema Build. This handoff is advisory and does not authorize or dispatch downstream work.
+- **Context refs:** Exact candidate hash above; TP-S2-003-013 handoff/launch record; RV-S2-003-009 findings; WU-S2-003 manifest; WU-S2-007 exact handoff; current Donation Feature 01/02, invariants and API; EXP-S2-003-001 Stage-2/Stage-3 evidence.
