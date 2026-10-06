@@ -37,6 +37,7 @@ Existing historical material may be useful evidence when an active decision/work
 - Never introduce binary floating-point arithmetic for money.
 - Parameterize SQL; never interpolate user-controlled values into SQL.
 - Never log secrets, raw tokens, or unnecessary PII payloads.
+- Client-facing failures must not leak raw SQL, stack traces, filesystem paths, secrets, or other implementation internals.
 - Backend authorization, when introduced, is explicit; frontend role gates are UX, not security authority.
 - Simulation, fixtures, or operator assistance must not be presented as real settlement, independent verification, provenance, authorization, or real-world evidence.
 - If product meaning is materially missing, surface the decision gap instead of inventing it downstream.
@@ -52,6 +53,17 @@ An implementation agent must not change higher-level requirements merely to make
 Work on one coherent unit at a time. Backend and frontend production writes remain separate by default. Shared `docs/` or `api/` changes require explicit coordination with the concern they own.
 
 A small task unexpectedly touching many unrelated files is a risk signal; investigate before expanding scope.
+
+## High-risk write boundary
+
+Explicit Human authorization is required before an agent introduces or materially changes implementation that owns any of these concerns, unless the current authorized work already records that approval for the same surface:
+
+- balance, ledger, settlement, disbursement, or other money-movement transaction/locking logic;
+- encryption, HMAC, signing-key, or other cryptographic key-handling core logic;
+- authentication token/session/MFA core security logic;
+- privileged authorization rules whose failure could grant or exercise materially elevated access.
+
+This is a semantic safety boundary, not a commitment to historical file paths or architecture. Agents may inspect, critique, test, or propose changes without treating old implementations as current precedent.
 
 ## Security scrutiny
 
