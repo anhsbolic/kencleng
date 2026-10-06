@@ -263,8 +263,7 @@ Would we want the next ten similar surfaces to inherit this behavior?
 - `brand-product-ui-brief.md` — selected brand + Product UI direction
 - `patterns.md` — reusable interaction behavior
 - `asset-governance.md` — asset truthfulness, lifecycle, approval, reuse
-- `page-map.md` — persona/surface inventory
 - `visual-references/selected-direction/` — approved direction-level visual evidence
-- `docs/spec/` and OpenAPI — product/domain truth
+- `docs/product/product-intent.md` — product direction and business commitments
 
 Concrete production visual-system values are intentionally not defined here.

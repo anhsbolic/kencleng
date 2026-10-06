@@ -332,5 +332,4 @@ Production component boundaries are an engineering concern.
 - `product-design-principles.md` — stable design judgment
 - `brand-product-ui-brief.md` — selected brand/Product UI direction
 - `asset-governance.md` — visual asset governance
-- `page-map.md` — surface/persona inventory
-- domain specs/OpenAPI — product truth
+- `docs/product/product-intent.md` — product direction and business commitments

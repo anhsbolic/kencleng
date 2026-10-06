@@ -1,76 +1,18 @@
 # Kencleng Frontend
 
-> Status: clean-start baseline — ready for frontend development
-> Last updated: 2026-09-16
-> Reboot record: `../docs/project/frontend-reboot-plan.md`
+> Status: clean delivery baseline
 
-Kencleng's frontend is a Next.js App Router application. The previous product/UI implementation has been intentionally retired, and the active tree is now a clean engineering scaffold for the new frontend generation.
+This is a neutral Next.js engineering scaffold for Kencleng Pilot #3 delivery. No route, feature, release slice, or API capability is considered delivered at baseline.
 
-New implementation must derive from current product/API/design authorities rather than inheriting superseded UI or historical implementation structure. Git history remains archive/evidence, not current implementation precedent.
+Product meaning is owned by `../docs/product/product-intent.md`. Reusable product-design authority is routed through `../docs/ui-ux/README.md`. Frontend architecture is owned by `../docs/project/kencleng-frontend-tech-stack.md`.
 
-This README describes how to work inside `frontend/`. Generic lifecycle instructions belong to Harscode; project-specific rules live in `AGENTS.md` and the architecture/design authorities it routes to.
+Historical frontend implementation remains available in Git history as evidence, not active implementation precedent.
 
-## Current architecture authority
+## Available capabilities
 
-Read:
+The scaffold includes Next.js/React/TypeScript/Tailwind, TanStack Query, React Hook Form/Zod, optional Zustand, Vitest/RTL/MSW, Playwright, and OpenAPI type-generation capability. Presence does not mean every delivery item must use them.
 
-```text
-../docs/project/kencleng-frontend-tech-stack.md
-```
-
-for Kencleng-specific frontend architecture.
-
-Read:
-
-```text
-../docs/ui-ux/README.md
-```
-
-for the current UI/UX authority map. The approved design direction is **Sunlit Editorial / Evidence-Led Optimism**.
-
-Do not use removed legacy prototype/design generations from Git history as current implementation precedent.
-
-## Selected engineering capabilities
-
-The clean-start frontend baseline retains these project capabilities:
-
-- Next.js App Router + React + TypeScript;
-- Tailwind CSS v4, CSS-first;
-- OpenAPI-generated TypeScript types;
-- TanStack Query when client-owned server-state consumption is needed;
-- React Hook Form + Zod for form lifecycle/UX validation;
-- Zustand only for genuinely shared client-owned state;
-- Vitest + React Testing Library;
-- MSW capability;
-- Playwright as on-demand browser automation capability.
-
-A dependency being available does not require every feature to use it.
-
-## Clean-start directory posture
-
-The architecture describes ownership destinations, not mandatory folders.
-
-As new implementation emerges, code may live in:
-
-```text
-app/<route>/
-components/features/<domain>/
-components/shared/
-components/ui/
-lib/api/
-lib/hooks/
-lib/stores/
-mocks/
-tests/browser/
-```
-
-Do not create or preserve one of these layers merely to make the repository look complete.
-
-The narrowest truthful owner wins.
-
-## Running the scaffold
-
-Ordinary local commands are defined by `package.json`, including:
+## Local commands
 
 ```bash
 npm install
@@ -81,38 +23,4 @@ npm run test
 npm run verify
 ```
 
-Do not assume every command must run in every Harscode phase; current workflow/project verification guidance owns phase responsibility.
-
-## API types
-
-When the bundled OpenAPI contract changes and generated frontend types are needed, use the project-selected `openapi-typescript` generation capability rather than hand-editing generated schema types.
-
-The exact generated-file location should follow the active implementation. Do not preserve an old path solely for compatibility with retired frontend code.
-
-## Browser automation
-
-Playwright remains available as a separate real-browser capability.
-
-It is not a default ritual for every Build/Review/Testing phase. Use it when the behavior/risk justifies repeatable browser automation and record why it is worth running.
-
-Material UI still requires proportional human rendered acceptance.
-
-## Learning/process evidence
-
-`frontend/.local-agents/` is intentionally committed in Kencleng.
-
-Kencleng is a learning-by-doing project, so representative workflow evidence should remain readable by other people. Old work directories may be retired from the active tree during major resets, while Git history remains the archive. New Harscode runs should create fresh task evidence rather than treating historical artifacts as current authority.
-
-## Starting new frontend development
-
-The frontend reboot is complete and the clean-start gate has passed.
-
-New frontend work should:
-
-1. start from the current clean `main` baseline;
-2. use the authoritative task/spec under `../docs/spec/`;
-3. use current UI/UX and frontend architecture authorities;
-4. invoke the current canonical Harscode phase prompt rather than project-local lifecycle wrappers;
-5. create fresh committed process evidence under `.local-agents/works/`.
-
-The reboot plan remains durable history for why the clean baseline exists; it is not a per-task implementation playbook.
+Use verification proportional to the active work and record only checks that actually ran.

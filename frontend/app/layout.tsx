@@ -15,9 +15,8 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Kencleng — Harapan tumbuh dari hal yang jelas",
-  description:
-    "Kencleng adalah ruang penggalangan dana yang menempatkan cerita dan informasi berdampingan.",
+  title: "Kencleng",
+  description: "Kencleng clean delivery baseline",
 };
 
 export default function RootLayout({
