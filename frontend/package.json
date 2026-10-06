@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest run",
+    "test": "vitest run --passWithNoTests",
     "test:browser": "playwright test",
     "test:browser:headed": "playwright test --headed",
     "test:browser:ui": "playwright test --ui",
