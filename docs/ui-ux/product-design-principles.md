@@ -210,7 +210,8 @@ material design ambiguity
 
 missing product/domain truth
 → surface the authority gap
-→ resolve the owning spec/contract
+→ resolve it in the current product authority, or obtain the Human decision needed to establish that truth
+→ derive any downstream delivery specification/contract only after the product meaning is settled
 → implement only after the truth is established
 ```
 
