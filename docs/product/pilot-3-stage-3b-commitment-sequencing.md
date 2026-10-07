@@ -51,3 +51,65 @@ C1 remains **BLOCKED**.
 Next blocker:
 
 > How does the initial explicit authority relationship become legitimate, especially for the first representative / initial Owner, without relying on Organization review or unsupported self-assertion?
+
+
+### Blocker #2 — how initial authority becomes legitimate
+
+**Decision question**
+
+> How does the initial explicit authority relationship become legitimate, especially for the first representative / initial Owner, without relying on Organization review or unsupported self-assertion?
+
+**Working decision — Anhar-approved**
+
+Use an **evidence-backed bootstrap + derived authority** model.
+
+Initial / bootstrap representation:
+
+```text
+person claims Organization relationship
++ independently attributable basis
+  that does not rely only on the person's own assertion
+→ bounded representation-establishment judgment
+→ initial legitimate authority relationship
+```
+
+Derived representation:
+
+```text
+existing legitimate authority-bearing representative
+→ explicitly establishes another
+   person ↔ Organization authority relationship
+   within their own authority
+→ new legitimate representative relationship
+```
+
+Therefore legitimate representative authority may originate through two distinct paths:
+
+1. **Bootstrap authority** — requires non-self-referential provenance.
+2. **Derived authority** — derives from an already legitimate authority relationship whose scope permits that grant / delegation.
+
+Important boundaries:
+
+```text
+bootstrap authority
+≠ purely self-declared authority
+
+representation establishment
+≠ Organization review
+
+Platform Operator assistance
+≠ source of representative semantic authority
+
+independently attributable basis
+≠ automatically independent identity verification / KYC
+```
+
+This decision intentionally does **not** yet define the exact bootstrap evidence or operational procedure. Examples such as legal documents, Organization-controlled channels, external registries, manual review, or combinations remain open until materially required.
+
+### C1 re-gate after blocker #2
+
+C1 is closer to semantic readiness but remains **BLOCKED**.
+
+The next material question is:
+
+> What minimum role / authority distinction must be real and understandable so that Owner and Staff are meaningfully different business roles rather than labels, without prematurely defining a full permission matrix?
