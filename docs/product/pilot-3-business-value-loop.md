@@ -115,14 +115,14 @@ Considered decision
 │
 └─ contribute
    → donation fact exists
-   → person becomes a Donor in the context of that Campaign
+   → person becomes a Donatur in the context of that Campaign
 
-Donor has contributed
+Donatur has contributed
 →
-Donor can continue understanding what happened after contribution
+Donatur can continue understanding what happened after contribution
 ```
 
-A Donor is not defined by having a registered account. Current Product Authority allows a visitor to understand a public Campaign without signing in and may allow guest contribution when applicable product rules permit it.
+A Donatur is not defined by having a registered account. Current Product Authority allows a visitor to understand a public Campaign without signing in and may allow guest contribution when applicable product rules permit it.
 
 ### 3.3 Trust / Evidence thread
 
@@ -196,7 +196,7 @@ The Campaign may have a curation outcome/state, public-visibility state, and don
 
 The product must not expose visibility or donation capability in a way that contradicts the Campaign’s actual state.
 
-### L2-3 — Public Campaign → considered decision → Donor / no donation
+### L2-3 — Public Campaign → considered decision → Donatur / no donation
 
 Value before donation is not conversion itself.
 
@@ -213,7 +213,7 @@ understand → choose to contribute
 
 If contribution occurs, a donation fact may exist. That fact must not be silently upgraded into a funding consequence, execution claim, verification claim, or impact claim.
 
-### L2-4 — Donation fact → Donor relationship → continued accountability
+### L2-4 — Donation fact → Donatur relationship → continued accountability
 
 Donation is not the end of the product relationship.
 
@@ -222,7 +222,7 @@ Current Product Authority supports:
 ```text
 contribution
 → donation fact
-→ continuing donor interest in what happened afterward
+→ continuing donatur interest in what happened afterward
 → continuing post-donation accountability
 ```
 
@@ -266,7 +266,7 @@ Funding
 ≠ verified outcome
 ≠ impact
 
-Donor
+Donatur
 ≠ necessarily registered account
 
 Campaign / fundraising closure
@@ -301,7 +301,7 @@ The L1 → selective L2 before/after technique also proved useful for this check
 
 ### HYPOTHESIS
 
-A contribution creates an ongoing Donor ↔ Campaign relationship that is a useful anchor for understanding continuing accountability.
+A contribution creates an ongoing Donatur ↔ Campaign relationship that is a useful anchor for understanding continuing accountability.
 
 This is strongly consistent with Product Intent, but the exact relationship semantics remain to be tested in Actor Outcomes and later scenario/interaction work.
 
@@ -315,7 +315,7 @@ This is strongly consistent with Product Intent, but the exact relationship sema
 6. Who owes which post-donation / post-fundraising accountability responsibility to whom?
 7. What product-level responsibility does the platform operator own?
 8. When is accountability considered complete, pending, or unmet?
-9. Which post-campaign accountability information is public, donor-specific, or otherwise visibility-bounded?
+9. Which post-campaign accountability information is public, donatur-specific, or otherwise visibility-bounded?
 
 ### PARKED — NOT NEEDED YET
 
