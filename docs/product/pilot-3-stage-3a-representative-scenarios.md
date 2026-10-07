@@ -1,7 +1,7 @@
 # Kencleng Pilot #3 — Stage 3A Representative Scenarios
 
-> **Status:** WORKING ARTIFACT — Pilot #3 Stage 3A checkpoint  
-> **Human status:** Anhar-approved working state through R1–R4 scenario challenge  
+> **Status:** WORKING ARTIFACT — Pilot #3 Stage 3A complete  
+> **Human status:** Anhar-approved working state through final cross-scenario audit  
 > **Authority:** Not canonical Product Authority  
 > **Working baseline:** `pilot/3-clean-delivery-baseline`  
 > **Related method:** `docs/product/pilot-3-stage-3-working-model.md`  
@@ -519,3 +519,149 @@ The next required step is a final cross-scenario audit for:
 - wrong handoff / dependency assumptions;
 - branches that now deserve promotion;
 - whether the representative set is sufficient to feed Stage 3B without feature decomposition.
+
+
+## 9. Final cross-scenario audit
+
+### 9.1 R1 ↔ R2 handoff is not a mandatory linear dependency
+
+The earlier shorthand `R1 → R2` is too strong if read as "Organization review must complete before Campaign work begins."
+
+Current refinement:
+
+```text
+legitimate Organization representation
+→ relevant prerequisite for real Campaign work
+
+Organization-review completion
+→ relationship to Campaign preparation / curation remains OPEN
+```
+
+R1 and R2 may overlap in the product lifecycle. Organization review can constrain or inform downstream Campaign behavior without automatically becoming a universal prerequisite.
+
+### 9.2 R2 → R3 dependency is branch-specific
+
+Actual public visibility is required for the public-understanding branch.
+
+Donation eligibility is required only for contribution:
+
+```text
+public + not donation-eligible
+→ Visitor can still understand Campaign
+→ considered decision remains possible
+→ contribution unavailable
+```
+
+This prevents the public experience from being reduced to a donation funnel.
+
+### 9.3 R4 does not require Donatur existence as a prerequisite
+
+The prior R4 starting condition was too restrictive.
+
+Refined starting condition:
+
+> A Campaign has entered a fundraising context and later materially progresses, changes, or ends while Organization accountability continues. If legitimate Donatur relationships exist, Donatur are primary beneficiaries of continuing accountability.
+
+Therefore:
+
+```text
+Campaign accountability
+≠ only exists because Donatur exists
+
+legitimate donation relationship
+→ creates direct continuing accountability dependency for Donatur
+```
+
+### 9.4 R3 explicitly includes actual current funding state
+
+R3 public understanding includes the Campaign's actual current funding state and the meaning / provenance of that state.
+
+```text
+new donation fact
+→ may change funding state only when legitimately supported
+```
+
+This closes the gap between individual donation semantics and later Campaign accountability without creating another representative scenario.
+
+## 10. Branch-promotion audit
+
+No current branch warrants promotion into a new representative scenario.
+
+| Branch | Result |
+| --- | --- |
+| Organization materially changes after review | Remains R1 reconsideration branch |
+| Campaign rejected | Remains R2 curation branch |
+| Multiple review revisions | Remains R2 bounded-history branch |
+| Campaign changes after positive curation | Remains R2 superseding / re-review branch |
+| Public but donation-ineligible | Remains meaningful R2 → R3 branch |
+| Visitor chooses no donation | Remains first-class R3 outcome |
+| Pending / failed donation | Remains R3 donation-state branch |
+| Zero-donation Campaign reaches closure | Handled by refined R4 |
+| Reporting incomplete | Remains first-class R4 state |
+| Verification unavailable / not applicable | Remains R4 branch |
+| Platform correction | Remains X1 cross-cutting probe |
+
+## 11. Final semantic map
+
+The representative scenarios are not one mandatory linear pipeline.
+
+```text
+                 R1
+ Organization legitimacy + review
+          │
+          │ constrains / informs
+          ▼
+                 R2
+ Campaign proposition + curation
+ visibility + donation eligibility
+          │
+          ├──────── public visibility
+          │               ↓
+          │              R3
+          │     understanding + decision
+          │
+          └──────── donation eligibility
+                          ↓
+                 contribution branch
+                          ↓
+                   donation fact
+                          ↓
+                       Donatur
+                          │
+                          ▼
+                         R4
+                  continuing accountability
+
+R4 also follows Campaign fundraising lifecycle
+even when no Donatur exists.
+```
+
+## 12. Stage 3A final verdict
+
+**Stage 3A — Representative Scenario Discovery: COMPLETE for Pilot #3 progression.**
+
+Final representative set:
+
+```text
+R1 — Organization legitimacy + bounded Organization review
+R2 — Campaign proposition + curation + actual visibility / donation eligibility
+R3 — Public understanding + considered decision + donation / Donatur relationship
+R4 — Fundraising change + reporting + continuing accountability / verification
+X1 — Platform Operator cross-cutting exception probe
+```
+
+The set is considered sufficient to feed Stage 3B because it now exposes:
+
+- representative product questions;
+- starting and end conditions;
+- major semantic transitions;
+- material actor dependencies;
+- meaningful branches and failure states;
+- explicit OPEN PRODUCT DECISIONS;
+- cross-scenario handoff boundaries.
+
+Remaining OPEN PRODUCT DECISIONS should not all be resolved product-wide before sequencing. Stage 3B should identify which ones actually block a candidate delivery commitment.
+
+Next active work:
+
+> **Stage 3B — derive candidate commitments from R1–R4, test semantic readiness and minimum dependency closure, then establish a product dependency partial order and sequence the eligible frontier.**
