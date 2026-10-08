@@ -1,7 +1,7 @@
 # Kencleng Pilot #3 — Stage 4 C1 Interaction Exploration
 
 > **Status:** WORKING ARTIFACT — C1 Stage 4 active  
-> **Human status:** Anhar-approved entry into Stage 4; interaction behavior not yet confirmed  
+> **Human status:** Anhar-approved through S1 initiation / attribution behavior  
 > **Authority:** Not canonical Product Authority  
 > **Working baseline:** `pilot/3-clean-delivery-baseline`  
 > **Commitment source:** `docs/product/pilot-3-stage-3b-commitment-sequencing.md`  
@@ -65,12 +65,17 @@ SX — Material exception / recovery paths
 
 ### S1 — Initiate Organization establishment
 
-Initial exploration target:
+**WORKING DECISION — Anhar-approved**
 
-- the person intends to establish an Organization context in Kencleng;
-- Kencleng must be able to preserve attribution between the person and the establishment action if an Owner relationship will result;
-- exact sign-in / identity mechanism is not decided here;
-- exact Organization data fields are not decided here.
+> A person may begin Organization establishment without Kencleng yet asserting any real-world representative authority. Before establishment becomes successful and the initial Owner relationship is formed, Kencleng must be able to durably attribute that action and resulting Owner relationship to a person.
+
+Therefore:
+
+- the person may begin with intent to establish an Organization context in Kencleng without first proving real-world legal / representative authority;
+- before successful establishment, Kencleng must have sufficient person attribution for the resulting initial Owner relationship to be attributable;
+- exact authentication, account, sign-in timing, and identity mechanism remain OPEN EXPERIENCE / DESIGN / later engineering matters as appropriate;
+- exact Organization data fields remain outside this decision;
+- starting establishment does not itself create an Organization, Owner relationship, Organization-review outcome, or external-authority claim.
 
 ### S2 — Consequence before commitment
 
