@@ -2,7 +2,7 @@
 
 > **Status:** WORKING ARTIFACT — C1 Stage 5 complete  
 > **Human status:** Anhar-approved confirmed behavior set and invariants; Stage 5 audit complete  
-> **Authority:** Not canonical Product Authority  
+> **Authority:** Anhar-approved C1 commitment-specific product behavior authority — binding for C1 downstream design/engineering unless superseded by later approved owning authority; not whole-product canonical Product Authority  
 > **Working baseline:** `pilot/3-clean-delivery-baseline`  
 > **Stage 4 evidence:** `docs/product/pilot-3-stage-4-c1-interaction-exploration.md`  
 > **Control Tower:** `docs/product/pilot-3-control-tower.md`
