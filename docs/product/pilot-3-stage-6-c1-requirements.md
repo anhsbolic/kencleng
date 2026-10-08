@@ -1,7 +1,7 @@
 # Kencleng Pilot #3 — Stage 6 C1 Requirements
 
-> **Status:** WORKING ARTIFACT — C1 Stage 6 active  
-> **Human status:** Requirements derived from confirmed Stage 5 behavior; awaiting Anhar confirmation  
+> **Status:** WORKING ARTIFACT — C1 Stage 6 complete  
+> **Human status:** Anhar-approved requirements set; Stage 6 audit complete  
 > **Authority:** Not canonical Product Authority  
 > **Working baseline:** `pilot/3-clean-delivery-baseline`  
 > **Confirmed behavior source:** `docs/product/pilot-3-stage-5-c1-confirmed-behavior.md`  
@@ -62,7 +62,7 @@ This artifact does not choose technical architecture, API shape, database schema
 
 #### Engineering Requirements
 
-**ER2.1** The product flow must preserve a pre-effect interaction boundary where the material consequence can be presented before successful establishment takes effect.
+**ER2.1** Successful establishment must not take effect before the product has had the opportunity to present the material consequences required by XR2.1.
 
 **ER2.2** The establishment transition must not itself produce Organization-review, external-authority verification, or Campaign-curation meaning.
 
@@ -220,15 +220,17 @@ Engineering may **not** reinterpret the confirmed product meanings to simplify i
 - Campaign preparation / curation;
 - API / schema / architecture specifications.
 
-## 7. Stage 6 decision point
+## 7. Stage 6 audit
 
-Before C1 can move to Stage 7, audit this requirement set for:
+| Audit question | Result |
+| --- | --- |
+| Requirements trace back to confirmed Stage 5 behavior? | PASS |
+| Any new Product Truth invented by XR / ER? | NONE FOUND |
+| Unnecessary solution-lock? | NONE REQUIRED; UI, auth timing, persistence, transaction, API, and component choices remain open |
+| Missing observable requirement that blocks C1 handoff? | NONE FOUND |
+| Engineering requirement accidentally prescribes architecture? | NO |
+| Experience and engineering requirements disagree semantically? | NO |
 
-- traceability back to confirmed behavior;
-- accidental invention of Product Truth;
-- unnecessary solution-lock;
-- missing observable requirement;
-- engineering requirements that accidentally prescribe architecture;
-- experience and engineering requirements that disagree semantically.
+**Stage 6 verdict: COMPLETE for C1.**
 
-After Anhar confirmation, Stage 6 can be marked complete and C1 can enter durable handoff preparation.
+C1 is ready for Stage 7 durable engineering handoff preparation. Stage 7 should package, not reinterpret, the confirmed behavior and requirements.
