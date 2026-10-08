@@ -48,6 +48,33 @@ Product intent owns whole-product meaning. Product-design authority owns reusabl
 
 An implementation agent must follow the current scoped owning artifacts identified by the active handoff and must not change higher-level requirements merely to make code pass. If authority appears wrong or incomplete, report the contradiction/gap and route it to the owner of that concern.
 
+## C1 engineering product-authority write boundary
+
+For C1 engineering on `pilot/3-c1-engineering`, approved Pilot #3 product and pre-engineering artifacts are upstream read-only inputs for the Orchestrator and engineering workflow Runs.
+
+Engineering and orchestration MUST NOT directly modify:
+
+- `docs/product/product-intent.md`;
+- `docs/product/pilot-3-business-value-loop.md`;
+- `docs/product/pilot-3-actor-outcomes.md`;
+- `docs/product/pilot-3-stage-3-working-model.md`;
+- `docs/product/pilot-3-stage-3a-representative-scenarios.md`;
+- `docs/product/pilot-3-stage-3b-commitment-sequencing.md`;
+- `docs/product/pilot-3-stage-4-c1-interaction-exploration.md`;
+- `docs/product/pilot-3-stage-5-c1-confirmed-behavior.md`;
+- `docs/product/pilot-3-stage-6-c1-requirements.md`;
+- `docs/product/pilot-3-stage-7-c1-engineering-handoff.md`;
+- `docs/product/pilot-3-c1-route-retrospective.md`.
+
+If engineering evidence exposes a contradiction, missing Product decision, or required semantic change:
+
+1. preserve the observed evidence;
+2. surface the smallest applicable Finding / Decision / Blocker;
+3. route the issue back to the applicable Product / pre-engineering owner;
+4. do not repair the upstream artifact from engineering or orchestration authority.
+
+The only current exception is `docs/product/pilot-3-control-tower.md`. It may receive bounded deterministic projection updates from already-established owning engineering evidence. Such an update MUST NOT introduce Product meaning, requirements, readiness, dependency, or completion claims that are not established by their owning artifacts or evidence.
+
 ## Scope and write boundaries
 
 Work on one coherent unit at a time. Backend and frontend production writes remain separate by default. Shared `docs/` or `api/` changes require explicit coordination with the concern they own.
