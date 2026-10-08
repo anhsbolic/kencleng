@@ -98,11 +98,11 @@ flowchart LR
   classDef ghost fill:transparent,stroke:transparent,color:transparent;
 
   class V1,V2,V3,A1,A2,A3,A4,R1,R2,R3,R4 complete;
-  class C1 eligible;
+  class C1 active;
   class C2 blocked;
   class C3 waiting;
   class X1 probe;
-  class G4,G5,G6,G7 ghost;
+  class G5,G6,G7 ghost;
 
   style S1 fill:#f0fdf4,stroke:#86efac,stroke-width:1px
   style S2 fill:#f0fdf4,stroke:#86efac,stroke-width:1px
@@ -142,24 +142,21 @@ flowchart LR
 | **R3 — Public decision + donation** | Representative scenario | Stage 3A | ✓ COMPLETE | Scenario pressure-test complete |
 | **R4 — Continuing accountability** | Representative scenario | Stage 3A | ✓ COMPLETE | Scenario pressure-test complete |
 | **X1 — Operator intervention** | Cross-cutting probe | Stage 3A | ◌ PROBE | Use only when a core scenario materially requires exceptional operator intervention |
-| **C1 — Legitimate Organization representation** | Commitment from R1 | Stage 3B | ◆ ELIGIBLE | All eligibility gates pass; may enter Stage 4 |
+| **C1 — Legitimate Organization representation** | Commitment from R1 | Stage 4 | ▶ ACTIVE | Interaction exploration has started |
 | **C2 — Bounded Organization review** | Commitment from R1 | Stage 3B | ⛔ BLOCKED | Positive meaning / legitimate Organization-review outcomes remain unresolved |
 | **C3 — Real Campaign proposition** | Commitment from R2 | Stage 3B | ⏳ WAITING | Depends on C1 becoming real; resolve C3-specific semantics when C3 becomes material |
 
 ### Position rule
 
 ```text
-C1 ◆ ELIGIBLE
-still lives in Stage 3B
-        │
-        └─ READY rail → Stage 4
+C1 ▶ ACTIVE
+now lives in Stage 4
 
-when Stage 4 actually starts:
-C1 moves into Stage 4
-and its dashboard signal becomes ACTIVE.
+C2 ⛔ and C3 ⏳
+remain parked in Stage 3B
 ```
 
-An ELIGIBLE commitment does not wait for unrelated blocked commitments.
+C1 is now the only active delivery commitment. C2 / C3 stay parked unless interaction evidence reveals a material dependency required for C1 to remain truthful.
 
 If several independent commitments are simultaneously ELIGIBLE, compare only that eligible frontier. Do not force a full-product sequence.
 
@@ -173,6 +170,7 @@ If several independent commitments are simultaneously ELIGIBLE, compare only tha
 | Stage 3 method | [Pilot #3 — Stage 3 Working Model](./pilot-3-stage-3-working-model.md) |
 | Stage 3A | [Pilot #3 — Representative Scenarios](./pilot-3-stage-3a-representative-scenarios.md) |
 | Stage 3B | [Pilot #3 — Commitment Sequencing](./pilot-3-stage-3b-commitment-sequencing.md) |
+| Stage 4 — C1 | [Pilot #3 — C1 Interaction Exploration](./pilot-3-stage-4-c1-interaction-exploration.md) |
 
 ## Dashboard update discipline
 
