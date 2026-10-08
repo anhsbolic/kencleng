@@ -2,7 +2,7 @@
 
 > **Status:** WORKING ARTIFACT — C1 Stage 4 complete  
 > **Human status:** Anhar-approved through SX material exception behavior; Stage 4 exit audit complete  
-> **Authority:** Not canonical Product Authority  
+> **Authority:** Supporting C1 interaction evidence — Anhar-approved exploration evidence; not Product Authority and does not supersede Stage 5 confirmed behavior or Stage 6 requirements  
 > **Working baseline:** `pilot/3-clean-delivery-baseline`  
 > **Commitment source:** `docs/product/pilot-3-stage-3b-commitment-sequencing.md`  
 > **Control Tower:** `docs/product/pilot-3-control-tower.md`
