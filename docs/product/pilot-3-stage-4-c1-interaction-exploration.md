@@ -1,7 +1,7 @@
 # Kencleng Pilot #3 — Stage 4 C1 Interaction Exploration
 
 > **Status:** WORKING ARTIFACT — C1 Stage 4 active  
-> **Human status:** Anhar-approved through S1 initiation / attribution behavior  
+> **Human status:** Anhar-approved through S2 consequence-before-commitment behavior  
 > **Authority:** Not canonical Product Authority  
 > **Working baseline:** `pilot/3-clean-delivery-baseline`  
 > **Commitment source:** `docs/product/pilot-3-stage-3b-commitment-sequencing.md`  
@@ -79,15 +79,20 @@ Therefore:
 
 ### S2 — Consequence before commitment
 
-The interaction must make consequential meaning understandable before the establishment action becomes effective:
+**WORKING DECISION — Anhar-approved**
 
-- completing establishment creates a Kencleng Organization context;
-- the initiating person becomes its initial Kencleng Owner;
-- that Owner meaning is internal to Kencleng;
-- the resulting role does not itself establish independently verified external authority;
-- Organization-provided information does not become reviewed / independently verified merely because establishment succeeds.
+> Before Organization establishment becomes effective, Kencleng must clearly present the material consequence that an Organization context will be created and the initiating person will become its initial Kencleng Owner. The interaction must distinguish that internal Kencleng authority from independently verified real-world authority. Any Organization information / evidence involved remains Organization-provided unless separately reviewed.
 
-Exact wording, layout, disclosure pattern, and interaction treatment remain OPEN EXPERIENCE / DESIGN DECISIONS.
+Minimum consequence that must be made clear before the action becomes effective:
+
+- an Organization context will be established in Kencleng;
+- the initiating person will become the initial Kencleng Organization Owner;
+- Owner is an authority-bearing role within Kencleng, not proof of legal ownership, authorized external representation, or independently verified authority;
+- Organization information / evidence involved remains Organization-provided and is not automatically reviewed or independently verified.
+
+Kencleng is responsible for making these consequences clear; the product cannot guarantee that a person has perfectly understood them.
+
+Exact wording, layout, disclosure pattern, acknowledgement mechanism, and interaction treatment remain OPEN EXPERIENCE / DESIGN DECISIONS. A mandatory checkbox / consent control is not required by this product decision.
 
 ### S3 — Establishment + relationship formation
 
