@@ -308,7 +308,9 @@ The exit test was practical:
 
 > Can a fresh engineering reader begin without reconstructing the original product conversation?
 
-For C1 the answer was confirmed as YES.
+At Stage 7 closeout, the handoff was **prepared and Human-approved with the intended answer YES**.
+
+Independent cold-start engineering consumption had **not yet been run**, so the stronger empirical claim remained unvalidated. The first fresh engineering session is the actual test of whether the original product conversation is unnecessary.
 
 ## 9. Checkpoint discipline that worked
 
@@ -499,7 +501,7 @@ Preserve these quality safeguards:
 
 ## 14. Harscode promotion hypothesis
 
-This C1 run provides evidence for a reusable Harscode layer between project product/domain truth and engineering workflow.
+This C1 run demonstrates one complete **pre-engineering** commitment route and provides evidence for a reusable Harscode layer between project product/domain truth and engineering workflow.
 
 The generic shape appears to be:
 
@@ -517,9 +519,17 @@ product/domain truth
 → engineering exploration / planning / implementation
 ```
 
-However, one completed C1 route is evidence, not enough reason to freeze every Pilot #3 label or artifact shape as universal policy.
+However, one completed C1 pre-engineering route is evidence, not proof that the full end-to-end model or exact mechanism is universally validated.
 
-Future C2 / C3 routes should be treated as additional validation runs.
+Still pending in this validation run:
+
+- independent cold-start consumption of the handoff by a fresh engineering reader;
+- C1 implementation / delivery;
+- verification that the real product preserves confirmed C1 behavior.
+
+End-to-end Pilot #3 evidence therefore remains incomplete while C1 engineering has not yet proceeded.
+
+Future materially different commitments may provide additional validation later, but they are not required to close the current C1 pre-engineering record.
 
 ## 15. Durable evidence
 
