@@ -1,7 +1,7 @@
 # Kencleng Pilot #3 — Stage 5 C1 Confirmed Product Behavior
 
-> **Status:** WORKING ARTIFACT — C1 Stage 5 active  
-> **Human status:** Awaiting confirmation of behavior set derived from completed Stage 4  
+> **Status:** WORKING ARTIFACT — C1 Stage 5 complete  
+> **Human status:** Anhar-approved confirmed behavior set and invariants; Stage 5 audit complete  
 > **Authority:** Not canonical Product Authority  
 > **Working baseline:** `pilot/3-clean-delivery-baseline`  
 > **Stage 4 evidence:** `docs/product/pilot-3-stage-4-c1-interaction-exploration.md`  
@@ -13,9 +13,9 @@
 
 Stage 5 does not invent a new scenario. It promotes only sufficiently tested Stage 4 interaction evidence into confirmed product behavior / invariants.
 
-## 2. Candidate confirmed behavior set
+## 2. Confirmed behavior set
 
-The following are candidates derived from Stage 4 and still require explicit Stage 5 confirmation.
+The following behaviors are confirmed for C1 from the completed Stage 4 exploration.
 
 ### B1 — Establishment may begin without external-authority proof
 
@@ -78,24 +78,24 @@ C1 does not define an Organization-review status taxonomy.
 If person attribution is missing, or Organization + Owner formation is interrupted before both are valid:
 
 - establishment must not be represented as successful;
-- incomplete progress may be recoverable;
-- recoverable / incomplete state must remain distinguishable from successful establishment.
+- incomplete state must remain distinguishable from successful establishment;
+- recovery may be supported, but **recovery is not a required C1 capability**.
 
-### B7 — Known representation conflict cannot be silently ignored
+### B7 — Known unresolved representation conflict cannot be silently ignored
 
 C1 does not guarantee real-world Organization uniqueness.
 
-However, if an existing Kencleng Organization context is known or materially suspected to represent the same real-world Organization:
+However, if Kencleng has a **known unresolved representation conflict** for the Organization context being established:
 
-- Kencleng must not silently complete another establishment as though no conflict exists;
+- Kencleng must not silently complete another establishment as though representation were uncontested;
 - a new initial Owner must not be granted as though representation were uncontested;
 - the conflict may remain unresolved until a separate resolution capability exists.
 
-C1 does not decide matching, merge, transfer, dispute resolution, legal authority, or Organization-review semantics.
+C1 does not decide how conflicts are detected, how real-world Organizations are matched, or how merge, transfer, dispute resolution, legal authority, or Organization-review semantics work.
 
-## 3. Candidate invariants
+## 3. Confirmed invariants
 
-If the behavior set above is confirmed, the following should remain true across future design and engineering decisions:
+The following must remain true across future design and engineering decisions:
 
 1. **Kencleng Owner is internal product authority, not proof of external legal authority.**
 2. **Organization establishment and initial Owner formation are one successful product consequence.**
@@ -116,7 +116,7 @@ The following remain design choices as long as the confirmed behavior is preserv
 - whether consequence review is inline, modal, summary, or another pattern;
 - exact navigation / location of durable Organization + role meaning;
 - exact recovery surface;
-- exact handling presentation for known / suspected existing-Organization conflict.
+- exact handling presentation for a known unresolved representation conflict.
 
 ## 5. Still outside C1
 
@@ -128,14 +128,16 @@ The following remain design choices as long as the confirmed behavior is preserv
 - Campaign preparation / curation;
 - technical architecture / API / database / transaction design.
 
-## 6. Stage 5 decision point
+## 6. Stage 5 audit
 
-Stage 5 should challenge this behavior set for:
+| Audit question | Result |
+| --- | --- |
+| Hidden contradiction across B1–B7? | NONE FOUND |
+| Accidental expansion into Organization review / Campaign curation? | NO |
+| Missing invariant required for truthful C1 behavior? | NONE FOUND |
+| Design choices incorrectly promoted into product behavior? | B6 recovery and B7 conflict handling kept explicitly open |
+| Unresolved product decision blocking requirements derivation? | NO |
 
-- hidden contradictions;
-- accidental expansion into C2 / C3;
-- missing invariant needed for truthful C1 behavior;
-- behavior that is actually only a design choice;
-- behavior that still depends on an unresolved product decision.
+**Stage 5 verdict: COMPLETE for C1.**
 
-Only after this audit and Anhar confirmation should C1 move to Stage 6 requirements.
+The confirmed behavior set is now the shared source for deriving Stage 6 Experience Requirements and Engineering Requirements. Stage 6 must not reinterpret C1 independently on each side.
