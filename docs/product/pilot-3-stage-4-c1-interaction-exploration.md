@@ -1,7 +1,7 @@
 # Kencleng Pilot #3 — Stage 4 C1 Interaction Exploration
 
 > **Status:** WORKING ARTIFACT — C1 Stage 4 active  
-> **Human status:** Anhar-approved through S2 consequence-before-commitment behavior  
+> **Human status:** Anhar-approved through S3 establishment / initial Owner formation behavior  
 > **Authority:** Not canonical Product Authority  
 > **Working baseline:** `pilot/3-clean-delivery-baseline`  
 > **Commitment source:** `docs/product/pilot-3-stage-3b-commitment-sequencing.md`  
@@ -96,19 +96,37 @@ Exact wording, layout, disclosure pattern, acknowledgement mechanism, and intera
 
 ### S3 — Establishment + relationship formation
 
-Successful completion must result in at least:
+**WORKING DECISION — Anhar-approved**
+
+> A successful Organization establishment is one product consequence in which both the Kencleng Organization context and its attributable initial Kencleng Owner relationship become valid. Kencleng must not represent establishment as successful if either side of that relationship has not successfully formed. Incomplete progress may be recoverable, but must remain distinguishable from successful establishment.
+
+Product-semantic success therefore means:
 
 ```text
-Organization context exists
+Organization context is valid
 +
-initial Kencleng Owner relationship exists
+initial Kencleng Owner relationship is valid
 +
 the relationship is attributable to the establishing person
 +
 the role meaning remains internal to Kencleng
 ```
 
+Kencleng must not expose a product meaning equivalent to:
+
+```text
+"Organization successfully established"
+while
+"initial Owner relationship is not yet valid"
+```
+
+or the reverse.
+
+Incomplete input / progress may be preserved for recovery, but it must not be presented as a successfully established Organization or successfully formed Owner relationship.
+
 No Organization-review outcome, Campaign-curation outcome, or external-authority verification is implied by this transition.
+
+This is **product-semantic atomicity**, not a technical architecture decision. Exact transactional / persistence implementation remains an engineering concern.
 
 ### S4 — Resulting state comprehension
 
