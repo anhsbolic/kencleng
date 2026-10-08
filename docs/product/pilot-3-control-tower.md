@@ -43,8 +43,8 @@ flowchart LR
     R4(["R4 ✓"])
     X1(["◌ X1"])
 
-    C2(["C2 ⛔"])
-    C3(["C3 ⏳"])
+    C2(["C2 ○"])
+    C3(["C3 ○"])
   end
 
   subgraph S4["STAGE 4 · Interaction Exploration"]
@@ -83,10 +83,6 @@ flowchart LR
   A4 --> X1
 
   R1 --> C1
-  R1 --> C2
-  R2 --> C3
-
-  C1 -. "dependency" .-> C3
 
   classDef complete fill:#dcfce7,stroke:#15803d,color:#14532d,stroke-width:1.5px;
   classDef eligible fill:#dbeafe,stroke:#1d4ed8,color:#1e3a8a,stroke-width:2px;
@@ -94,6 +90,7 @@ flowchart LR
   classDef routeComplete fill:#dcfce7,stroke:#15803d,color:#14532d,stroke-width:3px;
   classDef blocked fill:#fee2e2,stroke:#b91c1c,color:#7f1d1d,stroke-width:2px;
   classDef waiting fill:#fef3c7,stroke:#b45309,color:#78350f,stroke-width:2px;
+  classDef parked fill:#f9fafb,stroke:#9ca3af,color:#4b5563,stroke-width:1.5px;
   classDef probe fill:#f3f4f6,stroke:#6b7280,color:#374151;
   classDef ghost fill:transparent,stroke:transparent,color:transparent;
 
@@ -102,8 +99,7 @@ flowchart LR
   class C1S5 complete;
   class C1S6 complete;
   class C1 routeComplete;
-  class C2 blocked;
-  class C3 waiting;
+  class C2,C3 parked;
   class X1 probe;
 
 
@@ -124,8 +120,9 @@ flowchart LR
 | ▶ ACTIVE | Currently being worked through |
 | 🏁 ROUTE COMPLETE | Commitment has completed the Stage 4–7 pre-engineering route |
 | ◆ ELIGIBLE | Commitment may enter Stage 4–7 now |
-| ⛔ BLOCKED | A material semantic / product blocker remains |
-| ⏳ WAITING | A material dependency must become real first |
+| ⛔ BLOCKED | A material semantic / product blocker remains, when established by an owning artifact |
+| ⏳ WAITING | A material dependency must become real first, when established by an owning artifact |
+| ○ PARKED | Tracked frontier placeholder; not currently re-gated / sequenced |
 | ◌ PROBE | Cross-cutting exceptional probe; node type, not progress status |
 
 ### Rail legend
@@ -137,6 +134,23 @@ flowchart LR
 ·······▶  feedback / reopen when materially new evidence appears
 ```
 
+## C1 end-to-end lifecycle
+
+These are lifecycle fields, **not additional pre-engineering stages**.
+
+| Lifecycle concern | Dashboard state | Owning artifact / evidence |
+| --- | --- | --- |
+| Overall C1 commitment | **IN PROGRESS / NOT COMPLETE** | [Stage 7 handoff](./pilot-3-stage-7-c1-engineering-handoff.md) defines the current handoff boundary |
+| Pre-engineering route | **🏁 COMPLETE** | Stage 7 handoff |
+| Engineering | **NOT STARTED** | Stage 7 handoff + no current C1 engineering task artifacts on this branch; future engineering artifacts own this state once work begins |
+| Independent cold-start handoff validation | **NOT YET RUN** | Stage 7 validation boundary; first fresh engineering session will provide evidence |
+| Verified real-product C1 behavior | **NOT YET VERIFIED** | Future implementation / testing / delivery evidence |
+| Overall C1 completion | **NOT COMPLETE** | Must not be inferred from pre-engineering route completion |
+
+`IN PROGRESS` is deliberately different from `▶ ACTIVE`: ACTIVE means work is currently being executed. At this handoff boundary, pre-engineering is complete and engineering has not started.
+
+Once engineering begins, engineering / verification rows may change only from their owning engineering artifacts or verification evidence. The Control Tower reflects those sources; it does not create engineering status.
+
 ## Current tracked state
 
 | Node | Type / source | Current station | Signal | Current meaning |
@@ -147,8 +161,8 @@ flowchart LR
 | **R4 — Continuing accountability** | Representative scenario | Stage 3A | ✓ COMPLETE | Scenario pressure-test complete |
 | **X1 — Operator intervention** | Cross-cutting probe | Stage 3A | ◌ PROBE | Use only when a core scenario materially requires exceptional operator intervention |
 | **C1 — Legitimate Organization representation** | Commitment from R1 | Stage 7 | 🏁 ROUTE COMPLETE | Durable engineering handoff approved; pre-engineering route complete |
-| **C2 — Bounded Organization review** | Commitment from R1 | Stage 3B | ⛔ BLOCKED | Positive meaning / legitimate Organization-review outcomes remain unresolved |
-| **C3 — Real Campaign proposition** | Commitment from R2 | Stage 3B | ⏳ WAITING | Depends on C1 becoming real; resolve C3-specific semantics when C3 becomes material |
+| **C2** | Future frontier placeholder | Stage 3B | ○ PARKED | Not re-gated or sequenced in the owning Stage 3B artifact |
+| **C3** | Future frontier placeholder | Stage 3B | ○ PARKED | Not re-gated or sequenced in the owning Stage 3B artifact |
 
 ### Position rule
 
@@ -156,15 +170,15 @@ flowchart LR
 C1 🏁 ROUTE COMPLETE
 completed Stage 7 pre-engineering handoff
 
-C2 ⛔ and C3 ⏳
-remain parked in Stage 3B
+C2 ○ and C3 ○
+remain parked / unresolved in Stage 3B
 ```
 
 C1 has completed the pre-engineering route. This does **not** mean C1 is implemented or delivered in the real product.
 
-C2 / C3 remain parked. In particular, C3's dependency on C1 is not satisfied merely because C1 reached Stage 7; it remains waiting until the required C1 product behavior is real in delivery or is otherwise included truthfully in a future commitment.
+C2 / C3 remain parked because the owning Stage 3B artifact has not re-gated or sequenced them after C1's revised model.
 
-When work resumes, recompute the eligible frontier rather than forcing a full-product sequence.
+The dashboard therefore makes **no current BLOCKED / WAITING / ELIGIBLE claim and no commitment-level dependency claim** for C2 / C3. When future frontier work resumes, Stage 3B must first establish those states; only then may the Control Tower reflect them.
 
 ## Owning artifacts
 
@@ -186,9 +200,10 @@ When work resumes, recompute the eligible frontier rather than forcing a full-pr
 Update the Control Tower **after** the owning artifact changes when a meaningful progress state changes, for example:
 
 - a stage/output becomes COMPLETE;
-- a commitment becomes ELIGIBLE, BLOCKED, or unblocked;
-- a material dependency becomes real / satisfied;
+- a commitment becomes ELIGIBLE, BLOCKED, WAITING, PARKED, or unblocked in its owning artifact;
+- a material dependency becomes real / satisfied in its owning artifact or delivery evidence;
 - a commitment actually enters Stage 4, 5, 6, or 7;
+- C1 engineering / verification state changes in owning engineering artifacts or verification evidence;
 - materially new evidence reopens an earlier working decision.
 
 Do **not** create Product Truth here.
