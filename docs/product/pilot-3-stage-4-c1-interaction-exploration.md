@@ -1,7 +1,7 @@
 # Kencleng Pilot #3 — Stage 4 C1 Interaction Exploration
 
 > **Status:** WORKING ARTIFACT — C1 Stage 4 active  
-> **Human status:** Anhar-approved through S3 establishment / initial Owner formation behavior  
+> **Human status:** Anhar-approved through S4 resulting-state comprehension behavior  
 > **Authority:** Not canonical Product Authority  
 > **Working baseline:** `pilot/3-clean-delivery-baseline`  
 > **Commitment source:** `docs/product/pilot-3-stage-3b-commitment-sequencing.md`  
@@ -130,13 +130,24 @@ This is **product-semantic atomicity**, not a technical architecture decision. E
 
 ### S4 — Resulting state comprehension
 
-After successful establishment, the person should be able to understand at least:
+**WORKING DECISION — Anhar-approved**
+
+> After successful establishment, Kencleng must expose a durable and inspectable resulting state that identifies the established Organization context and the person's current Kencleng Owner relationship. The product must preserve the distinction between that internal role and any Organization-review or independently verified external-authority meaning.
+
+At minimum, after successful establishment the person must be able to determine:
 
 - which Organization context now exists in Kencleng;
 - that they currently hold the initial Kencleng Owner role;
-- what that role means at the product-semantic level;
-- what establishment did **not** verify;
-- that later Organization review, Campaign work, and other authority capabilities are distinct future product behavior.
+- that the role is an authority-bearing role inside the Kencleng Organization context;
+- that establishment does not itself imply Organization review or independently verified external authority.
+
+This meaning must not exist only in a transient success message. The resulting Organization / Owner relationship must remain durably inspectable later.
+
+The internal-vs-external distinction does not need to be repeated as a warning on every surface, but subsequent surfaces must not create a misleading stronger meaning.
+
+C1 does **not** define an Organization-review status taxonomy such as `unverified`, `verification pending`, or `not reviewed`. Those semantics belong to the separate Organization-review commitment if and when established.
+
+Exact surface, wording, placement, role-details treatment, and navigation remain OPEN EXPERIENCE / DESIGN DECISIONS.
 
 ### SX — Material exception / recovery probes
 
