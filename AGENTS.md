@@ -27,7 +27,7 @@ generic lifecycle / engineering practice
 → current Harscode authority
 ```
 
-Release scope, delivery order, detailed delivery requirements, API operations, and implementation state are intentionally open at this baseline. Do not infer them from historical specs, contracts, code, migrations, handoffs, or Git history.
+Release scope, delivery order, detailed delivery requirements, API operations, and implementation state are intentionally open at this baseline **unless a current Human-approved scoped artifact explicitly establishes them for a bounded active commitment**. Do not infer them from historical specs, contracts, code, migrations, handoffs, or Git history.
 
 Existing historical material may be useful evidence when an active decision/work item calls for it. It is not automatic authority.
 
@@ -44,9 +44,9 @@ Existing historical material may be useful evidence when an active decision/work
 
 ## Authority separation
 
-Product intent owns what the product means. Product-design authority owns reusable experience/visual guidance. Engineering architecture owns technical constraints. Detailed contracts and implementation are derived only when active delivery work needs them.
+Product intent owns whole-product meaning. Product-design authority owns reusable experience/visual guidance. Engineering architecture owns technical constraints. Human-approved commitment-specific product behavior and requirements may be **binding within that bounded commitment** without becoming whole-product canonical Product Authority. Detailed contracts and implementation are derived only when active delivery work needs them.
 
-An implementation agent must not change higher-level requirements merely to make code pass. If authority appears wrong or incomplete, report the contradiction/gap and route it to the owner of that concern.
+An implementation agent must follow the current scoped owning artifacts identified by the active handoff and must not change higher-level requirements merely to make code pass. If authority appears wrong or incomplete, report the contradiction/gap and route it to the owner of that concern.
 
 ## Scope and write boundaries
 
