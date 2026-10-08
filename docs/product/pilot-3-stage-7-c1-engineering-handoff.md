@@ -1,7 +1,7 @@
 # Kencleng Pilot #3 — Stage 7 C1 Durable Engineering Handoff
 
-> **Status:** WORKING ARTIFACT — C1 Stage 7 active  
-> **Human status:** Handoff packet assembled from completed Stage 4–6; awaiting Anhar final handoff confirmation  
+> **Status:** WORKING ARTIFACT — C1 Stage 7 complete  
+> **Human status:** Anhar-approved durable engineering handoff; C1 pre-engineering route complete  
 > **Authority:** Not canonical Product Authority  
 > **Working baseline:** `pilot/3-clean-delivery-baseline`  
 > **Control Tower:** `docs/product/pilot-3-control-tower.md`
@@ -225,13 +225,13 @@ Before Stage 7 is marked complete, confirm that a fresh engineering reader can a
 | What remains open / out of scope? | YES |
 | What may engineering decide? | YES |
 | What upstream product distinctions must remain intact? | YES |
-| Is original conversation required to begin? | SHOULD BE NO |
+| Is original conversation required to begin? | NO |
 
-## 12. Stage 7 exit criterion
+## 12. Stage 7 exit verdict
 
-C1 is ready to leave pre-engineering when Anhar confirms that this durable packet is sufficient for engineering to begin without reconstructing the original product discussion.
+Anhar has confirmed that this durable packet is sufficient for engineering to begin without reconstructing the original product discussion.
 
-At that point:
+**Stage 7 verdict: COMPLETE for C1.**
 
 ```text
 C1
@@ -242,5 +242,7 @@ Stage 3B ELIGIBLE
 → Stage 7 Durable Handoff
 → PRE-ENGINEERING ROUTE COMPLETE
 ```
+
+Pre-engineering completion does **not** mean C1 has been implemented or delivered in the real product. Downstream commitments that require C1 to be real remain dependency-blocked until that delivery condition is actually satisfied.
 
 Any later implementation discovery that materially changes C1 product meaning must return upstream through the appropriate Product Authority / pre-engineering decision path rather than silently mutating this handoff.
