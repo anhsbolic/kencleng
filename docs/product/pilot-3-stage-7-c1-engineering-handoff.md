@@ -2,7 +2,7 @@
 
 > **Status:** WORKING ARTIFACT — C1 Stage 7 complete  
 > **Human status:** Anhar-approved durable engineering handoff; C1 pre-engineering route complete  
-> **Authority:** Not canonical Product Authority  
+> **Authority:** Anhar-approved C1 durable handoff / navigation package — it routes engineering to the binding Stage 5 behavior and Stage 6 requirements; it does not add or supersede Product Authority  
 > **Working baseline:** `pilot/3-clean-delivery-baseline`  
 > **Control Tower:** `docs/product/pilot-3-control-tower.md`
 
@@ -12,23 +12,47 @@ This is the durable pre-engineering handoff for:
 
 **C1 — Legitimate Organization representation**
 
-Engineering should be able to begin C1 work from the durable artifacts referenced here without needing the original product conversation.
+This package is prepared and Human-approved so that a fresh engineering reader **should be able** to begin C1 work from durable artifacts without reconstructing the original product conversation.
+
+That is currently a **handoff design claim**, not yet an independently observed cold-start result. The first fresh engineering session is the validation run for actual handoff consumption.
 
 This handoff packages existing confirmed behavior and requirements. It does not add new Product Truth or prescribe implementation architecture.
 
-## 2. Recommended read order
+## 2. Fresh engineering entrypoint / progressive read order
 
-1. [Product Intent](./product-intent.md) — upstream Product Authority.
-2. [Stage 5 — C1 Confirmed Product Behavior](./pilot-3-stage-5-c1-confirmed-behavior.md) — confirmed C1 behavior and invariants.
-3. [Stage 6 — C1 Requirements](./pilot-3-stage-6-c1-requirements.md) — Experience Requirements + Engineering Requirements derived from the same behavior.
-4. [Stage 4 — C1 Interaction Exploration](./pilot-3-stage-4-c1-interaction-exploration.md) — interaction evidence and pressure tests when additional context is needed.
-5. [Stage 3B — Commitment Sequencing](./pilot-3-stage-3b-commitment-sequencing.md) — why C1 became eligible and its dependency boundary.
+Use the smallest authoritative context first:
+
+1. Repository root `AGENTS.md` — project routing, authority boundaries, and hard rules.
+2. **This Stage 7 handoff** — approved C1 navigation / packaging entrypoint.
+3. [Product Intent](./product-intent.md) — current whole-product Product Authority / upstream seed.
+4. [Stage 5 — C1 Confirmed Product Behavior](./pilot-3-stage-5-c1-confirmed-behavior.md) — **binding C1 product behavior and invariants**.
+5. [Stage 6 — C1 Requirements](./pilot-3-stage-6-c1-requirements.md) — **binding C1 Experience + Engineering Requirements** derived from Stage 5.
+6. [Stage 4 — C1 Interaction Exploration](./pilot-3-stage-4-c1-interaction-exploration.md) — supporting interaction evidence; open only when additional behavioral context is materially needed.
+7. [Stage 3B — Commitment Sequencing](./pilot-3-stage-3b-commitment-sequencing.md) — eligibility / dependency context; open only when that context is materially needed.
+8. Enter engineering through current Harscode routing: `{HARSCODE_WORKSPACE_ROOT}/AGENTS.md` → `workflow/AGENTS.md` → `workflow/1-exploration-kickoff-prompt.md`.
+
+For Harscode Exploration, use this Stage 7 artifact as the C1 task / handoff entrypoint, while treating Stage 5 and Stage 6 as the scoped binding product-behavior / requirements authority.
 
 The [Pilot #3 Control Tower](./pilot-3-control-tower.md) is a progress dashboard only and is **not Product Authority**.
 
 ## 3. Product claim being handed off
 
 > A person can establish an Organization context in Kencleng and become its initial Kencleng Organization Owner, with clear internal authority meaning and provenance, without Kencleng implying that the person has independently verified real-world legal authority.
+
+## C1 lifecycle boundary at handoff
+
+| Lifecycle concern | Current state | Owning evidence / next owner |
+| --- | --- | --- |
+| Overall C1 commitment | **IN PROGRESS / NOT COMPLETE** | Stage 7 establishes the handoff boundary; later engineering artifacts own engineering progress |
+| C1 pre-engineering route | **COMPLETE** | This Stage 7 handoff |
+| C1 engineering | **NOT STARTED** | No C1 engineering task / implementation evidence exists yet; future engineering artifacts own this state once work begins |
+| Independent cold-start handoff validation | **NOT YET RUN** | First fresh engineering session |
+| Verified real-product C1 behavior | **NOT YET VERIFIED** | Future implementation / testing / delivery evidence |
+| Overall C1 completion | **NOT COMPLETE** | Cannot be inferred from pre-engineering completion |
+
+`IN PROGRESS` is used for the overall lifecycle because `ACTIVE` is reserved by the Control Tower for work currently being executed.
+
+Stage 7 completion means only that the pre-engineering route and handoff preparation are complete. It is not implementation, delivery, or real-product verification.
 
 ## 4. What must remain true
 
@@ -211,27 +235,31 @@ Key evidence from that exploration:
 - recovery is optional, but incomplete state cannot masquerade as success;
 - a known representation conflict cannot be silently treated as uncontested.
 
-## 11. Engineering handoff acceptance check
+## 11. Engineering handoff packaging check
 
-Before Stage 7 is marked complete, confirm that a fresh engineering reader can answer from durable artifacts:
+Stage 7 completion checks whether the durable packet is prepared and Human-approved. It does **not** claim that an independent fresh engineering reader has already consumed it.
 
-| Question | Handoff answer present? |
+| Question | Current result |
 | --- | --- |
-| What is C1 trying to make true for the actor? | YES |
-| What product behavior is confirmed? | YES |
-| What invariants must not be broken? | YES |
-| What Experience Requirements apply? | YES |
-| What Engineering Requirements apply? | YES |
-| What remains open / out of scope? | YES |
-| What may engineering decide? | YES |
-| What upstream product distinctions must remain intact? | YES |
-| Is original conversation required to begin? | NO |
+| What is C1 trying to make true for the actor? | PRESENT |
+| What product behavior is confirmed? | PRESENT |
+| What invariants must not be broken? | PRESENT |
+| What Experience Requirements apply? | PRESENT |
+| What Engineering Requirements apply? | PRESENT |
+| What remains open / out of scope? | PRESENT |
+| What may engineering decide? | PRESENT |
+| What upstream product distinctions must remain intact? | PRESENT |
+| Handoff prepared and Human-approved? | YES |
+| Independent cold-start engineering consumption performed? | **NOT YET RUN** |
+| Original product conversation expected to be required? | **NO by design; pending independent cold-start validation** |
 
 ## 12. Stage 7 exit verdict
 
-Anhar has confirmed that this durable packet is sufficient for engineering to begin without reconstructing the original product discussion.
+Anhar has confirmed this durable packet as the approved entrypoint for engineering. That Human approval completes the **pre-engineering packaging / handoff work**.
 
-**Stage 7 verdict: COMPLETE for C1.**
+It does not yet prove that a fresh engineering reader can consume the packet without the original discussion; that will be tested by the first independent fresh engineering session.
+
+**Stage 7 verdict: COMPLETE for C1 pre-engineering handoff preparation.**
 
 ```text
 C1
@@ -243,6 +271,22 @@ Stage 3B ELIGIBLE
 → PRE-ENGINEERING ROUTE COMPLETE
 ```
 
-Pre-engineering completion does **not** mean C1 has been implemented or delivered in the real product. Downstream commitments that require C1 to be real remain dependency-blocked until that delivery condition is actually satisfied.
+Pre-engineering completion does **not** mean C1 has been implemented or delivered in the real product.
+
+### Pilot #3 validation boundary after Stage 7
+
+Demonstrated so far:
+
+- one complete C1 **pre-engineering route**;
+- durable confirmed behavior → requirements → handoff preparation;
+- Human-approved engineering entrypoint and authority boundary.
+
+Not yet validated:
+
+- independent cold-start handoff consumption by a fresh engineering reader;
+- C1 implementation / delivery;
+- verification that the real delivered product preserves the confirmed C1 behavior.
+
+Therefore end-to-end Pilot #3 evidence remains **incomplete** until C1 engineering proceeds and produces independent implementation / verification evidence.
 
 Any later implementation discovery that materially changes C1 product meaning must return upstream through the appropriate Product Authority / pre-engineering decision path rather than silently mutating this handoff.
