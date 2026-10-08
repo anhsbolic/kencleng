@@ -1,7 +1,7 @@
 # Kencleng Pilot #3 — Stage 4 C1 Interaction Exploration
 
-> **Status:** WORKING ARTIFACT — C1 Stage 4 active  
-> **Human status:** Anhar-approved through S4 resulting-state comprehension behavior  
+> **Status:** WORKING ARTIFACT — C1 Stage 4 complete  
+> **Human status:** Anhar-approved through SX material exception behavior; Stage 4 exit audit complete  
 > **Authority:** Not canonical Product Authority  
 > **Working baseline:** `pilot/3-clean-delivery-baseline`  
 > **Commitment source:** `docs/product/pilot-3-stage-3b-commitment-sequencing.md`  
@@ -149,22 +149,43 @@ C1 does **not** define an Organization-review status taxonomy such as `unverifie
 
 Exact surface, wording, placement, role-details treatment, and navigation remain OPEN EXPERIENCE / DESIGN DECISIONS.
 
-### SX — Material exception / recovery probes
+### SX — Material exception / recovery
 
-Probe only exceptions that could invalidate C1's truthful behavior. Initial candidates:
+**WORKING DECISION — Anhar-approved**
 
-- Kencleng cannot durably attribute the establishment action to a person;
-- an Organization context representing the same real-world Organization may already exist in Kencleng;
-- establishment is interrupted before the Organization + Owner relationship becomes valid;
-- information available during establishment is incomplete or uncertain.
+Material exception handling for C1:
 
-These are probes, not settled behavior.
+1. **Attribution cannot be established**
+   - Organization establishment must not be represented as successful;
+   - the initial Owner relationship must not be represented as valid.
+
+2. **Establishment is interrupted before Organization + Owner become valid**
+   - incomplete progress may be recoverable;
+   - incomplete progress must remain distinguishable from successful establishment.
+
+3. **Organization-provided information is incomplete or uncertain**
+   - incomplete / uncertain information may remain a valid product state where the minimum establishment behavior can still be truthfully satisfied;
+   - C1 does not invent stronger claims or silently convert incomplete Organization-provided information into reviewed fact;
+   - exact required Organization fields remain outside C1.
+
+4. **An existing Kencleng Organization context is known or materially suspected to represent the same real-world Organization**
+
+   > Kencleng does not guarantee real-world Organization uniqueness at C1. However, when an existing Kencleng Organization context is known or materially suspected to represent the same Organization, Kencleng must not silently complete a second establishment as though no conflict exists.
+
+   Therefore:
+   - the conflict remains unresolved rather than silently ignored;
+   - a new initial Owner must not be granted as though representation were uncontested;
+   - exact matching / detection, claim-existing-Organization flow, dispute resolution, merge, transfer, or Platform Operator intervention are outside C1 unless later evidence makes them necessary.
+
+This conflict behavior is not Organization review and does not determine which person has legally valid external authority.
 
 ## 5. Open classifications at Stage 4 entry
 
 ### OPEN PRODUCT DECISION
 
-None added yet. Stage 4 should surface one only when the interaction cannot remain truthful without resolving it.
+No unresolved product decision currently blocks C1 from leaving Stage 4.
+
+The resolution mechanics for an existing-Organization conflict remain intentionally outside C1; C1 only establishes that a known / materially suspected conflict cannot be silently treated as uncontested establishment.
 
 ### OPEN EXPERIENCE / DESIGN DECISION
 
@@ -186,14 +207,21 @@ None required to begin interaction exploration.
 - Organization-review mechanics and outcomes;
 - Campaign preparation / curation behavior.
 
-## 6. Stage 4 exit direction
+## 6. Stage 4 exit audit
 
-C1 should not move to Stage 5 until interaction exploration is concrete enough to distinguish:
+Stage 4 is sufficiently concrete to feed Stage 5.
 
-- confirmed product behavior;
-- design freedom;
-- unresolved product decisions;
-- unresolved engineering constraints;
-- material failure / recovery behavior.
+| Exit question | Result |
+| --- | --- |
+| Can the C1 interaction be experienced end-to-end from initiation through resulting state? | PASS |
+| Are consequential meanings exposed before the action becomes effective? | PASS |
+| Is successful establishment behavior distinguishable from incomplete progress? | PASS |
+| Is the Organization + initial Owner relationship product-semantically coherent? | PASS |
+| Are internal Kencleng authority and external / reviewed authority kept distinct? | PASS |
+| Are material failure / recovery cases sufficiently bounded? | PASS |
+| Are design freedoms distinguishable from product semantics? | PASS |
+| Is an unresolved product decision still required before behavior can be confirmed? | NO |
 
-Stage 4 output is interaction evidence, not implementation design.
+**Stage 4 verdict: COMPLETE for C1.**
+
+Stage 4 has produced interaction evidence. Stage 5 should now decide which observed behaviors become confirmed product behavior / invariants for C1. No technical architecture or implementation choice has been made.
