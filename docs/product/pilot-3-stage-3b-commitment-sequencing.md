@@ -215,4 +215,18 @@ Re-gate:
 
 **C1: ELIGIBLE for the Stage 4–7 delivery loop.**
 
-This does not mean C1 must be selected next. Stage 3B must recompute the eligible frontier and evaluate C2 / C3 dependencies before sequencing.
+At the time of this re-gate, C1 became eligible to leave Stage 3B. It subsequently entered and completed the Stage 4–7 **pre-engineering** route.
+
+That later route completion does **not** mean C1 has been implemented or delivered.
+
+### Frontier reconciliation after C1 departure
+
+C2 / C3 have **not** been re-gated or sequenced in this owning Stage 3B artifact after the revised C1 model.
+
+Therefore, until future Stage 3B work explicitly evaluates them:
+
+- C2 / C3 remain **PARKED / UNRESOLVED frontier placeholders**;
+- do not assign them BLOCKED, WAITING, or ELIGIBLE status from the Control Tower alone;
+- do not infer a commitment-level dependency graph beyond what the owning scenario / Stage 3B artifacts explicitly establish.
+
+Future frontier work must re-evaluate the relevant commitment meaning and dependencies before assigning a sequencing status.
