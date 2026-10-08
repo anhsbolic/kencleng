@@ -283,3 +283,40 @@ It is considered fit to use during Stage 3A scenario discovery and subsequent co
 - provides a bounded entry point into Stage 4–7 iteration.
 
 This remains experimental. Revise it if actual Stage 3A usage or later delivery evidence reveals a material failure mode.
+
+
+## 13. Eligibility progression refinement
+
+Later Stage 3B use exposed one unnecessary gate in the original working diagram: an ELIGIBLE commitment does not require a separate product-readiness state called "selected" before it may enter Stage 4.
+
+Working refinement:
+
+> **ELIGIBLE means the commitment is already sufficiently meaningful, semantically ready, dependency-closed enough, truthful, and bounded to enter the Stage 4–7 loop.**
+
+Therefore:
+
+```text
+candidate commitment
+→ eligibility gates
+→ ELIGIBLE
+→ may proceed to Stage 4
+```
+
+Do not resolve unrelated blocked future commitments before allowing an eligible commitment to progress.
+
+If more than one independent commitment is simultaneously ELIGIBLE, compare only that **eligible frontier** to choose execution order or identify that no product-order dependency exists between them.
+
+Blocked / future commitments do not need to be resolved merely to produce a complete product-wide sequence.
+
+```text
+single eligible frontier item
+→ may proceed
+
+multiple eligible frontier items
+→ compare only those eligible items
+
+blocked future items
+→ remain at Stage 3B until they become material
+```
+
+This makes Stage 3B sequencing **progressive** rather than a one-time full-product roadmap. After delivery / learning, return to Stage 3B and recompute the frontier using materially new evidence.
