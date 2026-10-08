@@ -43,14 +43,13 @@ flowchart LR
     R4(["R4 ✓"])
     X1(["◌ X1"])
 
-    C1(["C1 ◆"])
     C2(["C2 ⛔"])
     C3(["C3 ⏳"])
   end
 
   subgraph S4["STAGE 4 · Interaction Exploration"]
     direction TB
-    G4[" "]
+    C1(["C1 ▶"])
   end
 
   subgraph S5["STAGE 5 · Confirmed Behavior"]
@@ -88,10 +87,10 @@ flowchart LR
   R2 --> C3
 
   C1 -. "dependency" .-> C3
-  C1 -. "READY" .-> G4
 
   classDef complete fill:#dcfce7,stroke:#15803d,color:#14532d,stroke-width:1.5px;
   classDef eligible fill:#dbeafe,stroke:#1d4ed8,color:#1e3a8a,stroke-width:2px;
+  classDef active fill:#e0f2fe,stroke:#0369a1,color:#0c4a6e,stroke-width:2.5px;
   classDef blocked fill:#fee2e2,stroke:#b91c1c,color:#7f1d1d,stroke-width:2px;
   classDef waiting fill:#fef3c7,stroke:#b45309,color:#78350f,stroke-width:2px;
   classDef probe fill:#f3f4f6,stroke:#6b7280,color:#374151;
@@ -106,8 +105,8 @@ flowchart LR
 
   style S1 fill:#f0fdf4,stroke:#86efac,stroke-width:1px
   style S2 fill:#f0fdf4,stroke:#86efac,stroke-width:1px
-  style S3 fill:#eff6ff,stroke:#2563eb,stroke-width:2px
-  style S4 fill:#ffffff,stroke:#d1d5db,stroke-width:1px
+  style S3 fill:#ffffff,stroke:#d1d5db,stroke-width:1px
+  style S4 fill:#eff6ff,stroke:#2563eb,stroke-width:2px
   style S5 fill:#ffffff,stroke:#d1d5db,stroke-width:1px
   style S6 fill:#ffffff,stroke:#d1d5db,stroke-width:1px
   style S7 fill:#ffffff,stroke:#d1d5db,stroke-width:1px
