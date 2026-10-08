@@ -1,7 +1,7 @@
 # Kencleng Pilot #3 — Stage 3B Commitment Sequencing
 
 > **Status:** WORKING ARTIFACT — Pilot #3 Stage 3B in progress
-> **Human status:** Anhar-approved through C1 blocker #1
+> **Human status:** Anhar-approved through revised C1 representation model
 > **Authority:** Not canonical Product Authority
 > **Working baseline:** `pilot/3-clean-delivery-baseline`
 > **Related method:** `docs/product/pilot-3-stage-3-working-model.md`
@@ -9,7 +9,7 @@
 
 ## C1 — Legitimate Organization representation
 
-### Blocker #1 — minimum truth for legitimate representation
+### Blocker #1 — minimum truth for legitimate representation — SUPERSEDED
 
 **Working decision — Anhar-approved**
 
@@ -53,7 +53,7 @@ Next blocker:
 > How does the initial explicit authority relationship become legitimate, especially for the first representative / initial Owner, without relying on Organization review or unsupported self-assertion?
 
 
-### Blocker #2 — how initial authority becomes legitimate
+### Blocker #2 — how initial authority becomes legitimate — SUPERSEDED
 
 **Decision question**
 
@@ -113,3 +113,106 @@ C1 is closer to semantic readiness but remains **BLOCKED**.
 The next material question is:
 
 > What minimum role / authority distinction must be real and understandable so that Owner and Staff are meaningfully different business roles rather than labels, without prematurely defining a full permission matrix?
+
+
+## Revised C1 representation model — superseding decision
+
+**Status:** WORKING DECISION — Anhar-approved.  
+This section supersedes the earlier blocker #1 and blocker #2 decisions where they conflict.
+
+### Decision
+
+The first person who establishes an Organization in Kencleng becomes the initial **Kencleng Organization Owner by product rule**.
+
+```text
+person establishes Organization in Kencleng
+→ initial Kencleng Organization Owner relationship exists
+```
+
+The meaning of Owner is internal to Kencleng:
+
+> **Owner is an authority-bearing Organization role within the Kencleng Organization context. It is not proof that the person is the legal owner, chair, authorized signatory, legally verified representative, or otherwise independently validated real-world authority of the Organization.**
+
+Therefore:
+
+```text
+Kencleng Owner
+≠ legal / administrative ownership of the real-world Organization
+≠ independently verified external authority
+≠ Organization review outcome
+```
+
+The first registrant does **not** need a separate evidence-review process merely to receive the initial Kencleng Owner role.
+
+### Owner / Staff minimum meaning
+
+The previously approved Owner / Staff distinction remains:
+
+```text
+Owner
+→ Organization-level authority-bearing role
+  within the Kencleng Organization context
+
+Staff
+→ bounded operational Organization role
+  acting within legitimately established authority
+```
+
+Owner is not a universal approver or superuser. Staff is not merely "Owner with fewer buttons."
+
+Detailed permission, invitation, delegation, revocation, ownership-transfer, and multi-Owner rules remain intentionally open.
+
+### Organization evidence and truth class
+
+Organization information or evidence submitted by Owner / Staff remains:
+
+> **Organization-provided information / evidence**
+
+until a separate bounded review establishes additional meaning.
+
+```text
+evidence uploaded by Organization Representative
+≠ evidence independently validated
+≠ Organization reviewed
+≠ Campaign curated
+```
+
+Responsibility for the truthfulness of Organization-provided assertions primarily attaches to the Organization, while Kencleng preserves provenance and does not silently upgrade those assertions into platform-known or reviewed fact.
+
+### Organization review remains distinct
+
+This simplification does **not** remove Organization review.
+
+```text
+Organization establishment / internal Kencleng ownership
+≠ Organization review
+≠ Campaign curation
+```
+
+Organization review remains a distinct bounded decision. Its exact positive meaning and its relationship to Campaign preparation, curation, visibility, and donation eligibility remain OPEN and should be resolved only when the affected commitment requires it.
+
+### Public / external interpretation invariant
+
+Kencleng must not present the internal Owner role as evidence that the person is a legally valid or independently verified real-world authority of the Organization.
+
+If the product later needs to make an external-authority claim, that claim requires separately established evidence / review semantics.
+
+## C1 re-gate after revised representation model
+
+**C1 product claim**
+
+> Organization can have a legitimate representation context with clear representative authority and provenance.
+
+Re-gate:
+
+| Gate | Result | Reason |
+| --- | --- | --- |
+| Meaningful | PASS | Organization can genuinely act through an accountable internal Kencleng authority context |
+| Semantically ready enough | PASS | Owner / Staff minimum meaning and initial Owner origin are now sufficiently clear |
+| Dependency-closed enough | PASS for product semantics | No Organization review is required merely to establish the internal Kencleng representation context |
+| Truthful | PASS | Internal Kencleng authority is explicitly not represented as verified real-world authority |
+| Bounded | PASS | Detailed permission / delegation mechanics remain outside this commitment |
+
+**C1: ELIGIBLE for the Stage 4–7 delivery loop.**
+
+This does not mean C1 must be selected next. Stage 3B must recompute the eligible frontier and evaluate C2 / C3 dependencies before sequencing.
