@@ -142,12 +142,12 @@ These are lifecycle fields, **not additional pre-engineering stages**.
 | --- | --- | --- |
 | Overall C1 commitment | **IN PROGRESS / NOT COMPLETE** | [Stage 7 handoff](./pilot-3-stage-7-c1-engineering-handoff.md) defines the current handoff boundary |
 | Pre-engineering route | **🏁 COMPLETE** | Stage 7 handoff |
-| Engineering | **IN PROGRESS — READY FOR HUMAN DISPATCH** | [WU-C1-ENG-001](../../.harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001.md): exact five-task split accepted by Anhar; Techplan approval and G1–G3 effective; first T1 shared-contract Build `RUN-C1-ENG-BUILD-T1-001` prepared, not dispatched; no task implementation/runtime evidence established |
+| Engineering | **IN PROGRESS — T1 PATCH READY FOR DISPATCH** | [WU-C1-ENG-001](../../.harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001.md): T1 Code Review `RUN-C1-ENG-CODEREVIEW-T1-001` completed with Request changes and four blocking contract findings; fresh bounded T1 Build/Patch `RUN-C1-ENG-BUILD-T1-PATCH-001` prepared on `gpt-6-luna` / medium, ready for Human dispatch; Techplan/split/G1–G3 effective; no patch execution, runtime/integration verification, or C1 completion established |
 | Independent cold-start handoff validation | **COMPLETE FOR THIS C1 TASK** | Stage 2 evidence shows a fresh reader reconstructed the task, authority route, scoped behavior, engineering decision space, and exclusions; this does not verify product behavior or generalize beyond this task |
 | Verified real-product C1 behavior | **NOT YET VERIFIED** | Future implementation / testing / delivery evidence |
 | Overall C1 completion | **NOT COMPLETE** | Must not be inferred from pre-engineering route completion |
 
-`IN PROGRESS` is deliberately different from `▶ ACTIVE`: ACTIVE means work is currently being executed. The split is accepted; the first T1 contract Build is ready for Human mechanical dispatch. Acceptance/preparation does not establish contract publication, downstream prerequisite evidence, implementation, or verified real-product behavior.
+`IN PROGRESS` is deliberately different from `▶ ACTIVE`: ACTIVE means work is currently being executed. T1 contract Build and independent Code Review have returned terminal evidence; the review requests changes and a bounded T1 patch is prepared for Human dispatch. Contract tooling evidence does not establish backend/frontend implementation, downstream dispatch, runtime verification, or verified real-product behavior.
 
 Once engineering begins, engineering / verification rows may change only from their owning engineering artifacts or verification evidence. The Control Tower reflects those sources; it does not create engineering status.
 

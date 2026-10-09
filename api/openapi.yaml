@@ -1,8 +1,644 @@
 openapi: 3.0.3
 info:
-  title: Kencleng API
-  version: 0.0.0-clean-baseline
-  description: >-
-    Clean delivery baseline. No product operations are defined until an
-    authorized delivery requirement establishes them.
-paths: {}
+  title: Kencleng C1 API
+  version: 1.0.0
+  description: Contract for local identity sessions and preparation and establishment of an internal Organization context. This contract describes obligations; it is not evidence that a provider, guard, person, or Organization was verified or authorized at runtime.
+servers:
+  - url: /api
+    description: Browser-facing prefix; the edge proxy strips this prefix
+security:
+  - sessionCookie: []
+tags:
+  - name: Authentication
+    description: Browser-bound sign-in and local session operations.
+  - name: Organization establishment
+    description: Preparation, disclosure receipt, and confirmation of an internal Organization context.
+  - name: Organizations
+    description: Private, Owner-scoped Organization reads.
+paths:
+  /auth/google/start:
+    get:
+      tags:
+        - Authentication
+      operationId: startGoogleAuthentication
+      summary: Start browser-bound Google sign-in
+      description: Uses fixed local destination and one-time state, nonce, and PKCE. It creates no Organization or Owner.
+      security: []
+      responses:
+        '302':
+          description: Redirect to Google authorization endpoint
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+            Cache-Control:
+              $ref: '#/components/headers/PrivateNoStore'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /auth/google/callback:
+    get:
+      tags:
+        - Authentication
+      operationId: completeGoogleAuthentication
+      summary: Complete browser-bound Google sign-in
+      description: Verifies the returned authorization response and initiating browser binding, maps the verified identity to a local person, and rotates the local session. Provider tokens and provider subject/email are not returned. Failure grants no session or Owner; redirects use a fixed local destination and never reflect arbitrary return URLs, referrers, codes, or provider errors.
+      security: []
+      parameters:
+        - name: code
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: state
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '302':
+          description: Fixed local application destination after callback processing
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri-reference
+            Cache-Control:
+              $ref: '#/components/headers/PrivateNoStore'
+            Set-Cookie:
+              schema:
+                type: string
+              description: Rotated opaque local session cookie after successful verification
+        '400':
+          description: Invalid callback; no session granted; fixed local error redirect
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri-reference
+            Cache-Control:
+              $ref: '#/components/headers/PrivateNoStore'
+  /me:
+    get:
+      tags:
+        - Authentication
+      operationId: getCurrentPerson
+      summary: Read current local session identity
+      responses:
+        '200':
+          description: Local person and CSRF token; contains no provider identity
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/PrivateNoStore'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Me'
+        '401':
+          $ref: '#/components/responses/AuthenticationRequired'
+  /auth/logout:
+    post:
+      tags:
+        - Authentication
+      operationId: logout
+      summary: Revoke the current local session
+      description: Requires same-origin request and CSRF token. Revokes the session and expires its cookie.
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
+      responses:
+        '204':
+          description: Session revoked and cookie expired
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/PrivateNoStore'
+            Set-Cookie:
+              schema:
+                type: string
+              description: Expired local session cookie
+        '401':
+          $ref: '#/components/responses/AuthenticationRequired'
+        '403':
+          $ref: '#/components/responses/RequestNotAllowed'
+  /organization-establishments:
+    post:
+      tags:
+        - Organization establishment
+      operationId: prepareOrganizationEstablishment
+      summary: Prepare an Organization establishment
+      description: Creates a same-person, time-limited preparation only. This does not create an Organization or grant Owner authority. The returned frozen name and all four consequence fields must be disclosed before confirmation. Reads, mutations, and errors are private and no-store.
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrepareOrganizationRequest'
+      responses:
+        '201':
+          description: Preparation receipt; no Organization or Owner exists yet
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/PrivateNoStore'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreparationReceipt'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/AuthenticationRequired'
+        '403':
+          $ref: '#/components/responses/RequestNotAllowed'
+        '422':
+          $ref: '#/components/responses/InvalidOrganizationInput'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /organization-establishments/{id}:
+    parameters:
+      - $ref: '#/components/parameters/PreparationId'
+    get:
+      tags:
+        - Organization establishment
+      operationId: getOrganizationEstablishment
+      summary: Read a same-person preparation or its established result
+      description: Only the initiating person's session may read it. Unknown and outside-person IDs have the same 404 shape. A committed result remains readable even when new establishments are unavailable or its preparation has expired.
+      responses:
+        '200':
+          description: Prepared, expired, or established state
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/PrivateNoStore'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreparationState'
+        '401':
+          $ref: '#/components/responses/AuthenticationRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /organization-establishments/{id}/confirm:
+    parameters:
+      - $ref: '#/components/parameters/PreparationId'
+    post:
+      tags:
+        - Organization establishment
+      operationId: confirmOrganizationEstablishment
+      summary: Confirm a disclosed preparation
+      description: Confirms only the frozen same-person preparation and consequence version. A committed result is replayed for the same person as historical result, not as a new grant subject to current hold or receipt expiry. An uncommitted stale or unknown consequence version requires a fresh preparation and disclosure. On transport loss or outcome_unknown, retain this preparation ID and read or replay this same command; do not blindly replace it. No caller-supplied identity, role, target, or override is accepted.
+      parameters:
+        - $ref: '#/components/parameters/CsrfToken'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmOrganizationRequest'
+      responses:
+        '200':
+          description: Established Organization, including same-result replay
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/PrivateNoStore'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstablishedState'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/AuthenticationRequired'
+        '403':
+          $ref: '#/components/responses/RequestNotAllowed'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/ConsequenceChanged'
+        '410':
+          $ref: '#/components/responses/PreparationExpired'
+        '503':
+          description: '`establishment_unavailable` means the guard is closed, missing, or unreadable and is not a dispute verdict for every candidate. `processing_unavailable` means a confirmed pre-commit database, lock, or service failure and permits a safe retry of this same command. `outcome_unknown` means commit acknowledgement or transport outcome is unknown; retain the preparation ID and read or replay this same command, without assuming rollback or blindly replacing it.'
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/PrivateNoStore'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+  /me/organizations:
+    get:
+      tags:
+        - Organizations
+      operationId: listMyOrganizations
+      summary: List Organizations where the current person is initial Owner
+      description: Uses a stable timestamp/UUID keyset and bounded page size. This authoritative private read remains available during a hold.
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Scoped Organization page
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/PrivateNoStore'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationPage'
+        '401':
+          $ref: '#/components/responses/AuthenticationRequired'
+  /organizations/{id}:
+    parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+    get:
+      tags:
+        - Organizations
+      operationId: getOrganization
+      summary: Read an Organization within current Owner scope
+      description: Enforces object-level Owner scope on the server. Unknown and outside-person IDs have the same 404 shape. The establishment effects are facts about establishment only and do not describe all current or future review outcomes.
+      responses:
+        '200':
+          description: Authoritative private Organization view
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/PrivateNoStore'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationView'
+        '401':
+          $ref: '#/components/responses/AuthenticationRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: kencleng_session
+      description: Opaque local session cookie; provider tokens are never used as bearer credentials.
+  headers:
+    PrivateNoStore:
+      description: Response is private and must not be stored
+      schema:
+        type: string
+        enum:
+          - private, no-store
+  parameters:
+    CsrfToken:
+      name: X-CSRF-Token
+      in: header
+      required: true
+      schema:
+        type: string
+    PreparationId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    OrganizationId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    InvalidRequest:
+      description: Invalid JSON/path/body or unknown authority-bearing field; no mutation
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/PrivateNoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InvalidOrganizationInput:
+      description: Name requires correction; no success
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/PrivateNoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    AuthenticationRequired:
+      description: Valid local session required; client must not infer success
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/PrivateNoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    RequestNotAllowed:
+      description: Origin or CSRF denied before processing
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/PrivateNoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Unknown or outside-person object; identical response shape
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/PrivateNoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    ConsequenceChanged:
+      description: Uncommitted consequence version is stale or unknown; prepare again and redisclose
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/PrivateNoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    PreparationExpired:
+      description: Uncommitted preparation expired; create a new preparation. Committed receipt remains readable.
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/PrivateNoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    TooManyRequests:
+      description: Bounded login or preparation abuse control
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/PrivateNoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  schemas:
+    Me:
+      type: object
+      additionalProperties: false
+      required:
+        - person_id
+        - csrf_token
+      properties:
+        person_id:
+          type: string
+          format: uuid
+        csrf_token:
+          type: string
+    PrepareOrganizationRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - display_name
+      properties:
+        display_name:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Trimmed to 1–200 Unicode scalar values; control characters are rejected and display is escaped. Duplicate names are allowed.
+    Consequences:
+      type: object
+      additionalProperties: false
+      required:
+        - creates_organization_context
+        - assigns_you_initial_owner
+        - owner_authority_scope
+        - organization_information_source
+      properties:
+        creates_organization_context:
+          type: boolean
+          enum:
+            - true
+        assigns_you_initial_owner:
+          type: boolean
+          enum:
+            - true
+        owner_authority_scope:
+          type: string
+          enum:
+            - kencleng_internal
+        organization_information_source:
+          type: string
+          enum:
+            - organization_provided
+    PreparationReceipt:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - display_name
+        - expires_at
+        - consequence_version
+        - consequences
+      properties:
+        id:
+          type: string
+          format: uuid
+        display_name:
+          type: string
+        expires_at:
+          type: string
+          format: date-time
+        consequence_version:
+          type: string
+          enum:
+            - c1-v1
+        consequences:
+          $ref: '#/components/schemas/Consequences'
+    ConfirmOrganizationRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - consequence_version
+      properties:
+        consequence_version:
+          type: string
+    PreparationState:
+      oneOf:
+        - $ref: '#/components/schemas/PreparedState'
+        - $ref: '#/components/schemas/ExpiredState'
+        - $ref: '#/components/schemas/EstablishedState'
+      discriminator:
+        propertyName: state
+        mapping:
+          prepared: '#/components/schemas/PreparedState'
+          expired: '#/components/schemas/ExpiredState'
+          established: '#/components/schemas/EstablishedState'
+    PreparedState:
+      type: object
+      additionalProperties: false
+      required:
+        - state
+        - id
+        - display_name
+        - expires_at
+        - consequence_version
+        - consequences
+      properties:
+        state:
+          type: string
+          enum:
+            - prepared
+        id:
+          type: string
+          format: uuid
+        display_name:
+          type: string
+        expires_at:
+          type: string
+          format: date-time
+        consequence_version:
+          type: string
+          enum:
+            - c1-v1
+        consequences:
+          $ref: '#/components/schemas/Consequences'
+    ExpiredState:
+      type: object
+      additionalProperties: false
+      required:
+        - state
+        - id
+      properties:
+        state:
+          type: string
+          enum:
+            - expired
+        id:
+          type: string
+          format: uuid
+    EstablishedState:
+      type: object
+      additionalProperties: false
+      required:
+        - state
+        - organization
+      properties:
+        state:
+          type: string
+          enum:
+            - established
+        organization:
+          $ref: '#/components/schemas/OrganizationView'
+    OrganizationPage:
+      type: object
+      additionalProperties: false
+      required:
+        - items
+        - next_cursor
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationView'
+        next_cursor:
+          type: string
+          nullable: true
+    OrganizationView:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - display_name
+        - established_at
+        - established_by_person_id
+        - initial_owner_person_id
+        - your_role
+        - owner_authority_scope
+        - information_source
+        - establishment_effects
+      properties:
+        id:
+          type: string
+          format: uuid
+        display_name:
+          type: string
+        established_at:
+          type: string
+          format: date-time
+        established_by_person_id:
+          type: string
+          format: uuid
+        initial_owner_person_id:
+          type: string
+          format: uuid
+        your_role:
+          type: string
+          enum:
+            - owner
+        owner_authority_scope:
+          type: string
+          enum:
+            - kencleng_internal
+        information_source:
+          type: string
+          enum:
+            - organization_provided
+        establishment_effects:
+          type: object
+          additionalProperties: false
+          required:
+            - organization_review_performed
+            - external_authority_verified
+            - campaign_curation_performed
+          properties:
+            organization_review_performed:
+              type: boolean
+              enum:
+                - false
+            external_authority_verified:
+              type: boolean
+              enum:
+                - false
+            campaign_curation_performed:
+              type: boolean
+              enum:
+                - false
+    ErrorEnvelope:
+      type: object
+      additionalProperties: false
+      required:
+        - error
+      properties:
+        error:
+          type: object
+          additionalProperties: false
+          required:
+            - code
+            - message
+            - request_id
+          properties:
+            code:
+              type: string
+              enum:
+                - invalid_request
+                - invalid_organization_input
+                - authentication_required
+                - request_not_allowed
+                - not_found
+                - consequence_changed
+                - preparation_expired
+                - establishment_unavailable
+                - processing_unavailable
+                - outcome_unknown
+                - too_many_requests
+            message:
+              type: string
+              description: Safe localized message. It does not expose implementation details or unnecessary personal data.
+            request_id:
+              type: string
