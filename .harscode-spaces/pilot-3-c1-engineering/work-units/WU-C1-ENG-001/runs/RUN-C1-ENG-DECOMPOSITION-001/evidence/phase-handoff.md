@@ -1,0 +1,17 @@
+# Terminal handoff — RUN-C1-ENG-DECOMPOSITION-001
+
+> Work Unit: `WU-C1-ENG-001`; Run: `RUN-C1-ENG-DECOMPOSITION-001`; Role: Planner; Specialization: none.
+> Participant: `PARTICIPANT-C1-ENG-DECOMPOSER-001`; Session binding: `SESSION-C1-ENG-DECOMPOSER-001`; date: 2026-10-09.
+> Dispatch configuration: `gpt-6-luna` / `medium` per invocation; independently exposed runtime model/effort: not available.
+> Target revision: `524ef600c7f71246af6b71671d89c3c040fd9d44`; workflow revision: `3d9cbafaf4c2921c4ada4e3e5be8f6c9cb238590`.
+
+## Phase handoff
+
+- **Outcome:** COMPLETED — canonical Step 0 evaluated YES and scoped decomposition artifacts generated for Human shape acceptance. No Build dispatch or implementation is performed or authorized by this handoff.
+- **Result refs:** Approved parent [techplan.md](../../../techplan/techplan.md) SHA-256 `bd732748b486f0327f6cba2cdf14cab32f1ece3c5be8ebb24f9659444947fa47` before and after; no parent change. [Manifest](../../../techplan/tasks/manifest.md) SHA-256 `2950408dc48c12d5a8bbed96a88095a20ed7e1e02fd4190293691a90b111b30d`. Task snapshots: [T1](../../../techplan/tasks/T1-shared-contract.md) `bbd5ab13c882ca3534ab3397ca908f70157ad41c9a81ee7cafd2827dd94946e3`; [T2](../../../techplan/tasks/T2-backend-identity-session.md) `075170761afb971cd09aba90b1e112c617f12d27d4b8bb4ffbd1a3599163378b`; [T3](../../../techplan/tasks/T3-backend-aggregate-guard.md) `f3199473a7f5a26f4bd384e7dfe677371198744c90d474db6e3f36642afcfded`; [T4](../../../techplan/tasks/T4-guard-operations-docs.md) `25e279ee0fffbcd6a1b909213d57a1d6112a57281e1016dd386fdc049f2167ca`; [T5](../../../techplan/tasks/T5-frontend-c1.md) `8a7234205c81f4874c04cc8cff25a7656f2a0072b88da17085989c8bdfe26e9d`.
+- **Findings:** Step 0 YES because shared contract, backend identity/session, atomic aggregate/guard, guard operations documentation, and frontend experience form useful context/review boundaries. Chosen axis: dependency/sequence with concern ownership. Manifest graph: T1→T2→T3→T4, T1→T3, T1→T5. T6 review/verification remains parent-owned canonical later-phase work, not a new implementation task. Parent semantics and production files were not changed.
+- **Decision requests:** Human inspection and acceptance of the five-task shape and explicit dependency conditions before dependent Build, per canonical decomposition prompt. No new G1–G3 permission request; existing authorization remains exactly bounded by WU events and parent Resolved 9–11.
+- **Blockers:** None for decomposition. Acceptance is a Human gate for subsequent Build routing, not a decomposition blocker.
+- **Open / unverified:** Parent §13 Active item 5 remains: provider/runtime/operator/dependency evidence. Task conditions describe required future durable evidence, not evidence already present. No task files were executed; no tests/build/runtime, provider, DB, operator, or rendered verification ran. Runtime model/effort was not independently exposed. Current live implementation anchors are for downstream Build to reopen.
+- **Recommended continuation:** Orchestrator presents manifest and task conditions for Human shape acceptance, then routes the approved next phase under a fresh Run/Participant/Session. Do not dispatch Build from this Planner handoff.
+- **Context refs:** [Manifest](../../../techplan/tasks/manifest.md); [parent Techplan](../../../techplan/techplan.md) §§8–13; [WU authorization events](../../../events.md); invocation for this Run.

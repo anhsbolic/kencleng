@@ -4,13 +4,13 @@
 
 - Project: Kencleng (`/home/anhar-solehudin/kencleng-workspace/kencleng`)
 - Current branch: `pilot/3-c1-engineering`
-- Baseline observed for post-shaping preparation: `3e123bcece561f1d0a181b68c85e2677dcfa37eb`
+- Baseline HEAD observed at the Human approval gate: `524ef600c7f71246af6b71671d89c3c040fd9d44`; exact Techplan/report identities are recorded in the Work Unit and terminal evidence, including uncommitted output.
 - Harscode workspace: `../harscode-workspace`
 - Protocol: Orchestrator Protocol v0.1
 
 ## Near-term objective
 
-Continue **C1 — Legitimate Organization representation** by synthesizing the execution-grade Techplan from completed Solution Shaping. The approved handoff claim remains that a person can establish an Organization context and become its initial Kencleng Organization Owner without Kencleng implying independent verification of real-world legal authority.
+Begin scoped T1 shared-contract Build for **C1 — Legitimate Organization representation**, under the approved execution contract, authorized G1–G3 surfaces, and Human-accepted five-task split/conditions. The approved handoff claim remains that a person can establish an Organization context and become its initial Kencleng Organization Owner without Kencleng implying independent verification of real-world legal authority.
 
 Owning inputs:
 
@@ -21,13 +21,13 @@ Owning inputs:
 - `AGENTS.md` and scoped backend/frontend `AGENTS.md` — engineering boundaries.
 - [Solution Contract](work-units/WU-C1-ENG-001/solution-shaping/solution-contract.md) — current bounded solution evidence and Planning Readiness; not Product authority or implementation permission.
 
-## Initial runnable frontier
+## Current runnable frontier
 
 - Work Unit: [`WU-C1-ENG-001.md`](work-units/WU-C1-ENG-001.md)
-- Completed evidence: Exploration and [first Draft Techplan synthesis handoff](work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-TECHPLAN-001/evidence/phase-handoff.md); completed Solution Shaping establishes **PLANNING READY — YES**.
-- Next Run candidate: [`RUN-C1-ENG-TECHPLAN-002`](work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-TECHPLAN-002/invocation.md)
-- Dispatch posture: Human-Assisted; Run `002` prepared, awaiting explicit approval of `gpt-6-sol` / `medium` for this Run, then mechanical Human dispatch. Not yet dispatched.
-- Build readiness: **NO**; execution-contract approval and protected implementation authorizations G1–G3 remain gates.
+- Completed evidence: Exploration, first Draft synthesis, Solution Shaping, post-shaping synthesis `002`, clean independent review, Planner convergence/report `003`, and [decomposition](work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-DECOMPOSITION-001/evidence/phase-handoff.md). Techplan approval and separate G1–G3 authorization are recorded. [WU current state](work-units/WU-C1-ENG-001.md) records content identities.
+- Current frontier: [`RUN-C1-ENG-BUILD-T1-001`](work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T1-001/invocation.md) — shared OpenAPI contract/bundle/types only. Anhar accepted the [five-task manifest](work-units/WU-C1-ENG-001/techplan/tasks/manifest.md) and conditions on 2026-10-09; no future prerequisite evidence is claimed from acceptance.
+- Dispatch posture: Human-Assisted; fresh T1 Implementer ready with `gpt-6-luna` / `medium`, no registry model approval required; not dispatched. No backend/frontend consumer implementation in this batch.
+- Protected authority gates: Techplan approved and G1–G3 explicitly authorized by Anhar on 2026-10-09; these permissions remain effective and are not reopened by shape acceptance. Provider/runtime/operator/dependency evidence remains unverified, task-scoped.
 - Runtime source: `.harscode-spaces/.local-config.yaml`.
 
 This is the minimum current routing record. No Work Graph or Control Surface is needed for this single Work Unit with no established cross-Work-Unit dependency.

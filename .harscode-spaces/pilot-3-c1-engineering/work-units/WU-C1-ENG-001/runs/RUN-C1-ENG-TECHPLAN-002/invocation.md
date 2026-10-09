@@ -64,8 +64,8 @@ Target and workflow revisions below are observed baseline/provenance, not a univ
 - **TARGET_REVISION:** `3e123bcece561f1d0a181b68c85e2677dcfa37eb` on `pilot/3-c1-engineering` at preparation, before these coordination edits.
 - **WORKFLOW_REVISION:** `3d9cbafaf4c2921c4ada4e3e5be8f6c9cb238590` observed at preparation; Harscode working tree clean.
 - **Runtime harness:** `codex-cli`; Human-Assisted mechanical dispatch, not native subagent substitution.
-- **Selected model / reasoning:** `gpt-6-sol` / `medium` — recommendation pending approval.
-- **MODEL_APPROVAL:** PENDING for Run `002`. Approval for Run `001` was expressly Run-only and is not inherited.
+- **Selected model / reasoning:** `gpt-6-sol` / `medium` — approved for this Run.
+- **MODEL_APPROVAL:** APPROVED by Anhar on 2026-10-09 for Run `002` only, in direct response to the Orchestrator's exact model/effort request: “approve bro”. This is model dispatch approval, not Techplan approval or G1–G3 implementation authorization. Approval for Run `001` is not inherited.
 - **Model routing rationale:** Synthesis needs architecture/cross-cutting analysis across settled auth, Owner scope, guard/transaction/interface, and verification boundaries. The Human registry's non-gated `gpt-6-luna` does not declare architecture/cross-cutting capabilities; `gpt-6-sol` does. `medium` is its lowest supported effort and the minimum sufficiently capable candidate, consistent with prior synthesis. Missing authority/context is not a reason for stronger-model escalation; route those gaps to their owners. If this candidate demonstrates capability insufficiency after complete inputs, ask the Orchestrator to assess escalation under the Human-owned registry.
 - **CONTINUATION_CHECKPOINT:** None; fresh Run reconstruction from durable inputs.
 - **Configured verification environment:** Podman / podman-compose per `.harscode-spaces/.local-config.yaml`; planning must not assume Docker CLI absence means runtime unavailable. This Run does not execute verification.
@@ -85,7 +85,7 @@ Write the terminal carrier at `RUN_PATH/evidence/phase-handoff.md`, with one `##
 
 ## Prepared state
 
-- **Dispatch readiness:** WAITING_MODEL_APPROVAL.
+- **Dispatch readiness:** READY_FOR_HUMAN_DISPATCH.
 - **Participant dispatched:** No.
 - **Run outcome:** Not started.
-- **Next action:** Obtain explicit Anhar approval for `gpt-6-sol` / `medium` for Run `002`; then present the mechanical fresh-session dispatch package. Do not claim RUN READY before this approval.
+- **Next action:** Human mechanically dispatches this Run in a fresh Planner Session using `gpt-6-sol` / `medium`; no further model approval is required for this Run.
