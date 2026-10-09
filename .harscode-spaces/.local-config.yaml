@@ -8,6 +8,12 @@ paths:
   project_root: .
   harscode_workspace_root: ../harscode-workspace
 
+  # Navigation-only pointer to the project directory containing current
+  # pre-engineering/product handoff artifacts. This path does not establish
+  # authority, active scope, read order, or permission to mutate those files.
+  # Resolve those semantics from the target repo's AGENTS.md and owning artifacts.
+  pre_engineering_artifacts_root: docs/product
+
 runtime:
   harness: codex-cli
 
