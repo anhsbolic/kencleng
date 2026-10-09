@@ -27,3 +27,9 @@ If work would introduce or materially change privileged authorization, money mov
 - **Updated:** 2026-10-09
 
 The Exploration Run is complete. The selected gated model has been approved for this Techplan Run; the Run remains queued until mechanical Human dispatch. This Work Unit state does not alter product or pre-engineering authority.
+
+## Experimental Solution Shaping evidence — 2026-10-09
+
+Current C1 planning readiness is owned by the [Solution Contract / Planning Readiness evidence](WU-C1-ENG-001/solution-shaping/solution-contract.md): **PLANNING READY — YES**, with no unresolved planning blocker. It records the concern audit, selected material solution, three direct Human design decisions, rejected alternatives, safe remaining freedom, and protected implementation gates. Build readiness is **NO**.
+
+This readiness evidence supersedes the earlier readiness wording above; the earlier dispatch snapshot is not updated or used to dispatch a Run in this session. The stored Draft Techplan and its phase handoff are prior discovery evidence. A subsequent synthesis must consume the Solution Contract through applicable fresh-run/review/approval routing. This session produced no Techplan revision, implementation, or runtime verification, and did not amend Product/pre-engineering authority.
