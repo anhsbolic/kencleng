@@ -20,16 +20,18 @@ If work would introduce or materially change privileged authorization, money mov
 - **Execution status:** WAITING_HUMAN
 - **Scheduling state:** QUEUED
 - **Horizon:** NOW
-- **Readiness:** Exploration complete; Techplan Run ready for mechanical Human dispatch
-- **Current Run:** `RUN-C1-ENG-TECHPLAN-001` (prepared, not dispatched)
-- **Human gate:** Mechanically dispatch the prepared Human-Assisted Techplan Run.
-- **Active blocker:** None established.
+- **Readiness:** PLANNING READY — YES; post-shaping Techplan synthesis prepared, pending Run-specific model approval. Build Ready — NO.
+- **Current Run:** `RUN-C1-ENG-TECHPLAN-002` (prepared, not dispatched)
+- **Human gate:** Approve `gpt-6-sol` / `medium` for Run `002`, then mechanically dispatch its fresh Planner Session.
+- **Active blocker:** No unresolved planning blocker. Build remains gated by execution-contract approval and protected implementation authorizations G1–G3 in the Solution Contract §12.
 - **Updated:** 2026-10-09
 
-The Exploration Run is complete. The selected gated model has been approved for this Techplan Run; the Run remains queued until mechanical Human dispatch. This Work Unit state does not alter product or pre-engineering authority.
+Exploration and the first Draft Techplan synthesis have terminal evidence. The stored Run `001` handoff establishes completed Draft synthesis despite its earlier Invocation retaining a pre-dispatch snapshot. That historical Invocation and handoff remain unchanged; dispatch timing is not reconstructed from them. Solution Shaping supplies the meaningful delta for fresh Run `002`. The model approval for Run `001` does not authorize Run `002`. This Work Unit state does not alter product or pre-engineering authority.
 
-## Experimental Solution Shaping evidence — 2026-10-09
+## Current-effective evidence and next route
 
 Current C1 planning readiness is owned by the [Solution Contract / Planning Readiness evidence](WU-C1-ENG-001/solution-shaping/solution-contract.md): **PLANNING READY — YES**, with no unresolved planning blocker. It records the concern audit, selected material solution, three direct Human design decisions, rejected alternatives, safe remaining freedom, and protected implementation gates. Build readiness is **NO**.
 
-This readiness evidence supersedes the earlier readiness wording above; the earlier dispatch snapshot is not updated or used to dispatch a Run in this session. The stored Draft Techplan and its phase handoff are prior discovery evidence. A subsequent synthesis must consume the Solution Contract through applicable fresh-run/review/approval routing. This session produced no Techplan revision, implementation, or runtime verification, and did not amend Product/pre-engineering authority.
+The [Draft Techplan](WU-C1-ENG-001/techplan/techplan.md) and [Run `001` terminal handoff](WU-C1-ENG-001/runs/RUN-C1-ENG-TECHPLAN-001/evidence/phase-handoff.md) remain prior discovery evidence, with the Solution Contract resolving their material solution questions within its stated scope. The mutable pre-Approval Techplan remains the artifact target; no candidate successor is needed because no Human Techplan approval exists.
+
+The [Run `002` Invocation](WU-C1-ENG-001/runs/RUN-C1-ENG-TECHPLAN-002/invocation.md) routes fresh synthesis from those inputs, followed by applicable independent planning review/resolution and the exact-revision Human approval gate. No Run `002` dispatch, Techplan revision, implementation, or runtime verification is established by this preparation. Protected G1–G3 decisions remain for the later implementation gate; they do not block planning.

@@ -142,12 +142,12 @@ These are lifecycle fields, **not additional pre-engineering stages**.
 | --- | --- | --- |
 | Overall C1 commitment | **IN PROGRESS / NOT COMPLETE** | [Stage 7 handoff](./pilot-3-stage-7-c1-engineering-handoff.md) defines the current handoff boundary |
 | Pre-engineering route | **🏁 COMPLETE** | Stage 7 handoff |
-| Engineering | **IN PROGRESS — READY FOR HUMAN DISPATCH** | Exploration Run `RUN-C1-ENG-EXPLORATION-001` complete; Techplan Run `RUN-C1-ENG-TECHPLAN-001` prepared and its gated model approved for this Run |
+| Engineering | **IN PROGRESS — WAITING HUMAN MODEL APPROVAL** | [WU-C1-ENG-001](../../.harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001.md): Exploration and first Draft synthesis have terminal evidence; Solution Shaping establishes Planning Ready — YES / Build Ready — NO; fresh Techplan Run `RUN-C1-ENG-TECHPLAN-002` prepared, not dispatched, awaiting its Run-specific model approval |
 | Independent cold-start handoff validation | **COMPLETE FOR THIS C1 TASK** | Stage 2 evidence shows a fresh reader reconstructed the task, authority route, scoped behavior, engineering decision space, and exclusions; this does not verify product behavior or generalize beyond this task |
 | Verified real-product C1 behavior | **NOT YET VERIFIED** | Future implementation / testing / delivery evidence |
 | Overall C1 completion | **NOT COMPLETE** | Must not be inferred from pre-engineering route completion |
 
-`IN PROGRESS` is deliberately different from `▶ ACTIVE`: ACTIVE means work is currently being executed. C1 Exploration is complete; the next Techplan Run is ready for Human dispatch.
+`IN PROGRESS` is deliberately different from `▶ ACTIVE`: ACTIVE means work is currently being executed. The next C1 Techplan Run is prepared but awaits model approval before mechanical Human dispatch. No implementation or verified real-product behavior is established by planning readiness.
 
 Once engineering begins, engineering / verification rows may change only from their owning engineering artifacts or verification evidence. The Control Tower reflects those sources; it does not create engineering status.
 
