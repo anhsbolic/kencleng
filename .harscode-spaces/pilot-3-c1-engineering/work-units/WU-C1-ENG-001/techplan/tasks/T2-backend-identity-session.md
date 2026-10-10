@@ -1,6 +1,6 @@
 # T2 — Backend identity and session
 
-> Phase: Post-Approval task-snapshot reconciliation; Author: `PARTICIPANT-C1-ENG-T2-TASK-REFRESH-002`; Created/Updated: 2026-10-10. Model / Reasoning: `gpt-6-luna` / `medium` (invocation-selected dispatch configuration; runtime identity not independently exposed). Session: `SESSION-C1-ENG-T2-TASK-REFRESH-002` (fresh Run binding). Target revision: `59f2b25940fa4baf243b4f1d2ca2ba04c9b17fd4`; workflow revision: `3d9cbafaf4c2921c4ada4e3e5be8f6c9cb238590`.
+> Phase: Post-Approval task-snapshot reconciliation; Author / Participant / Session / Model: **not established by durable execution evidence**. The bound `RUN-C1-ENG-DECOMPOSITION-T2-REFRESH-002` Invocation reserves Participant `PARTICIPANT-C1-ENG-T2-TASK-REFRESH-002` / Session `SESSION-C1-ENG-T2-TASK-REFRESH-002` with `gpt-6-luna` / `medium`, but explicitly records that the Participant was not dispatched. Created/Updated: 2026-10-10. Target/workflow revisions `59f2b25940fa4baf243b4f1d2ca2ba04c9b17fd4` / `3d9cbafaf4c2921c4ada4e3e5be8f6c9cb238590` are the prepared Invocation bindings, not proof of Participant execution.
 
 ## Purpose and outcome
 

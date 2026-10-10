@@ -100,4 +100,8 @@ Security gets proportional scrutiny. Do not copy historical authentication, encr
 
 Distinguish verified, assumed, deferred, and not tested. Never claim a check ran when it did not.
 
+For Go scanner preflight and recovery, follow [the scanner runbook](docs/project/go-scanner-runbook.md). Check writable cache and network access in the actual execution environment; a tooling failure or JSON exit 0 does not establish dependency clearance. Active Run stop conditions still apply.
+
+For Go dependency evidence, follow [the verification guide](docs/project/go-dependency-verification.md). Unless authority mandates an exact command, choose methods that satisfy the required outcomes: inspect available cache evidence first and fetch missing module/version evidence selectively. Do not assume `go mod download -json all` is mandatory. Distinguish environment recovery from substantive findings and incomplete acceptance; preserve explicit Run stop conditions and terminal reports.
+
 Git history and prior Harscode artifacts are evidence/history. Promote reusable truth into the current source that owns the concern rather than treating process artifacts as project-wide precedent.

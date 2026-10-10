@@ -1,0 +1,12 @@
+{
+	"ImportPath": "./...",
+	"Match": [
+		"./..."
+	],
+	"Incomplete": true,
+	"Error": {
+		"ImportStack": [],
+		"Pos": "",
+		"Err": "pattern ./...: open /home/anhar-solehudin/.cache/go-build/aa/aaf18d0bf224d01ffe80ecc9afdb1301ac6a97f20fa918bc8c93bd9bd7ce19fb-d: read-only file system"
+	}
+}

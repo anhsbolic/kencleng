@@ -1,0 +1,356 @@
+
+/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/conn.go SHA256=9099baec9334ba8ea7a2d0c987984845fa455ec4510077435edf4fb5aa164d85 lines 175-212
+175: 		if err != nil {
+176: 			return nil, pgconn.NewParseConfigError(connString, "cannot parse statement_cache_capacity", err)
+177: 		}
+178: 		statementCacheCapacity = int(n)
+179: 	}
+180: 
+181: 	descriptionCacheCapacity := 512
+182: 	if s, ok := config.RuntimeParams["description_cache_capacity"]; ok {
+183: 		delete(config.RuntimeParams, "description_cache_capacity")
+184: 		n, err := strconv.ParseInt(s, 10, 32)
+185: 		if err != nil {
+186: 			return nil, pgconn.NewParseConfigError(connString, "cannot parse description_cache_capacity", err)
+187: 		}
+188: 		descriptionCacheCapacity = int(n)
+189: 	}
+190: 
+191: 	defaultQueryExecMode := QueryExecModeCacheStatement
+192: 	if s, ok := config.RuntimeParams["default_query_exec_mode"]; ok {
+193: 		delete(config.RuntimeParams, "default_query_exec_mode")
+194: 		switch s {
+195: 		case "cache_statement":
+196: 			defaultQueryExecMode = QueryExecModeCacheStatement
+197: 		case "cache_describe":
+198: 			defaultQueryExecMode = QueryExecModeCacheDescribe
+199: 		case "describe_exec":
+200: 			defaultQueryExecMode = QueryExecModeDescribeExec
+201: 		case "exec":
+202: 			defaultQueryExecMode = QueryExecModeExec
+203: 		case "simple_protocol":
+204: 			defaultQueryExecMode = QueryExecModeSimpleProtocol
+205: 		default:
+206: 			return nil, pgconn.NewParseConfigError(
+207: 				connString, "invalid default_query_exec_mode", fmt.Errorf("unknown value %q", s),
+208: 			)
+209: 		}
+210: 	}
+211: 
+212: 	connConfig := &ConnConfig{
+
+/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/conn.go SHA256=9099baec9334ba8ea7a2d0c987984845fa455ec4510077435edf4fb5aa164d85 lines 745-785
+745: // An implementor of QueryRewriter may be passed as the first element of args. It can rewrite the sql and change or
+746: // replace args. For example, NamedArgs is QueryRewriter that implements named arguments.
+747: //
+748: // For extra control over how the query is executed, the types QueryExecMode, QueryResultFormats, and
+749: // QueryResultFormatsByOID may be used as the first args to control exactly how the query is executed. This is rarely
+750: // needed. See the documentation for those types for details.
+751: func (c *Conn) Query(ctx context.Context, sql string, args ...any) (Rows, error) {
+752: 	if c.queryTracer != nil {
+753: 		ctx = c.queryTracer.TraceQueryStart(ctx, c, TraceQueryStartData{SQL: sql, Args: args})
+754: 	}
+755: 
+756: 	if err := c.deallocateInvalidatedCachedStatements(ctx); err != nil {
+757: 		if c.queryTracer != nil {
+758: 			c.queryTracer.TraceQueryEnd(ctx, c, TraceQueryEndData{Err: err})
+759: 		}
+760: 		return &baseRows{err: err, closed: true}, err
+761: 	}
+762: 
+763: 	var resultFormats QueryResultFormats
+764: 	var resultFormatsByOID QueryResultFormatsByOID
+765: 	mode := c.config.DefaultQueryExecMode
+766: 	var queryRewriter QueryRewriter
+767: 
+768: optionLoop:
+769: 	for len(args) > 0 {
+770: 		switch arg := args[0].(type) {
+771: 		case QueryResultFormats:
+772: 			resultFormats = arg
+773: 			args = args[1:]
+774: 		case QueryResultFormatsByOID:
+775: 			resultFormatsByOID = arg
+776: 			args = args[1:]
+777: 		case QueryExecMode:
+778: 			mode = arg
+779: 			args = args[1:]
+780: 		case QueryRewriter:
+781: 			queryRewriter = arg
+782: 			args = args[1:]
+783: 		default:
+784: 			break optionLoop
+785: 		}
+
+/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/conn.go SHA256=9099baec9334ba8ea7a2d0c987984845fa455ec4510077435edf4fb5aa164d85 lines 815-845
+815: 				rows.fatal(err)
+816: 				return rows, err
+817: 			}
+818: 		}
+819: 
+820: 		if len(sd.ParamOIDs) != len(args) {
+821: 			rows.fatal(fmt.Errorf("expected %d arguments, got %d", len(sd.ParamOIDs), len(args)))
+822: 			return rows, rows.err
+823: 		}
+824: 
+825: 		rows.sql = sd.SQL
+826: 
+827: 		err = c.eqb.Build(c.typeMap, sd, args)
+828: 		if err != nil {
+829: 			rows.fatal(err)
+830: 			return rows, rows.err
+831: 		}
+832: 
+833: 		if resultFormatsByOID != nil {
+834: 			resultFormats = make([]int16, len(sd.Fields))
+835: 			for i := range resultFormats {
+836: 				resultFormats[i] = resultFormatsByOID[uint32(sd.Fields[i].DataTypeOID)]
+837: 			}
+838: 		}
+839: 
+840: 		if resultFormats == nil {
+841: 			resultFormats = c.eqb.ResultFormats
+842: 		}
+843: 
+844: 		if !explicitPreparedStatement && mode == QueryExecModeCacheDescribe {
+845: 			rows.resultReader = c.pgConn.ExecParams(ctx, sql, c.eqb.ParamValues, sd.ParamOIDs, c.eqb.ParamFormats, resultFormats)
+
+/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/pgxpool/pool.go SHA256=35dd58a31c669662127f3bdaa4dbb579a95e937219a80b56ecf90ceb0ed434cd lines 206-227
+206: }
+207: 
+208: // ConnString returns the connection string as parsed by pgxpool.ParseConfig into pgxpool.Config.
+209: func (c *Config) ConnString() string { return c.ConnConfig.ConnString() }
+210: 
+211: // New creates a new Pool. See [ParseConfig] for information on connString format.
+212: func New(ctx context.Context, connString string) (*Pool, error) {
+213: 	config, err := ParseConfig(connString)
+214: 	if err != nil {
+215: 		return nil, err
+216: 	}
+217: 
+218: 	return NewWithConfig(ctx, config)
+219: }
+220: 
+221: // NewWithConfig creates a new [Pool]. config must have been created by [ParseConfig].
+222: func NewWithConfig(ctx context.Context, config *Config) (*Pool, error) {
+223: 	// Default values are set in ParseConfig. Enforce initial creation by ParseConfig rather than setting defaults from
+224: 	// zero values.
+225: 	if !config.createdByParseConfig {
+226: 		panic("config must be created by ParseConfig")
+227: 	}
+
+/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/pgxpool/pool.go SHA256=35dd58a31c669662127f3bdaa4dbb579a95e937219a80b56ecf90ceb0ed434cd lines 760-819
+760: //
+761: // Arguments should be referenced positionally from the SQL string as $1, $2, etc.
+762: //
+763: // For extra control over how the query is executed, the types [pgx.QueryExecMode], [pgx.QueryResultFormats], and
+764: // [pgx.QueryResultFormatsByOID] may be used as the first args to control exactly how the query is executed. This is rarely
+765: // needed. See the documentation for those types for details.
+766: func (p *Pool) QueryRow(ctx context.Context, sql string, args ...any) pgx.Row {
+767: 	c, err := p.Acquire(ctx)
+768: 	if err != nil {
+769: 		return errRow{err: err}
+770: 	}
+771: 
+772: 	row := c.QueryRow(ctx, sql, args...)
+773: 	return c.getPoolRow(row)
+774: }
+775: 
+776: func (p *Pool) SendBatch(ctx context.Context, b *pgx.Batch) pgx.BatchResults {
+777: 	c, err := p.Acquire(ctx)
+778: 	if err != nil {
+779: 		return errBatchResults{err: err}
+780: 	}
+781: 
+782: 	br := c.SendBatch(ctx, b)
+783: 	return &poolBatchResults{br: br, c: c}
+784: }
+785: 
+786: // Begin acquires a connection from the [Pool] and starts a transaction. Unlike [database/sql], the context only affects the begin command. i.e. there is no
+787: // auto-rollback on context cancellation. Begin initiates a transaction block without explicitly setting a transaction mode for the block (see [Pool.BeginTx] with [pgx.TxOptions] if transaction mode is required).
+788: // [*Tx] is returned, which implements the [pgx.Tx] interface.
+789: // [Tx.Commit] or [Tx.Rollback] must be called on the returned transaction to finalize the transaction block.
+790: func (p *Pool) Begin(ctx context.Context) (pgx.Tx, error) {
+791: 	return p.BeginTx(ctx, pgx.TxOptions{})
+792: }
+793: 
+794: // BeginTx acquires a connection from the [Pool] and starts a transaction with [pgx.TxOptions] determining the transaction mode.
+795: // Unlike [database/sql], the context only affects the begin command. i.e. there is no auto-rollback on context cancellation.
+796: // [*Tx] is returned, which implements the [pgx.Tx] interface.
+797: // [Tx.Commit] or [Tx.Rollback] must be called on the returned transaction to finalize the transaction block.
+798: func (p *Pool) BeginTx(ctx context.Context, txOptions pgx.TxOptions) (pgx.Tx, error) {
+799: 	c, err := p.Acquire(ctx)
+800: 	if err != nil {
+801: 		return nil, err
+802: 	}
+803: 
+804: 	t, err := c.BeginTx(ctx, txOptions)
+805: 	if err != nil {
+806: 		c.Release()
+807: 		return nil, err
+808: 	}
+809: 
+810: 	return &Tx{t: t, c: c}, nil
+811: }
+812: 
+813: func (p *Pool) CopyFrom(ctx context.Context, tableName pgx.Identifier, columnNames []string, rowSrc pgx.CopyFromSource) (int64, error) {
+814: 	c, err := p.Acquire(ctx)
+815: 	if err != nil {
+816: 		return 0, err
+817: 	}
+818: 	defer c.Release()
+819: 
+
+/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/pgconn/auth_scram.go SHA256=09588d5c9a6fcd011f3cd524db459c422110715ab7ea1e311db7c2b4357c8dc1 lines 175-209
+175: 	iterations           int
+176: 
+177: 	saltedPassword []byte
+178: 	authMessage    []byte
+179: }
+180: 
+181: func newScramClient(serverAuthMechanisms []string, password string) (*scramClient, error) {
+182: 	sc := &scramClient{
+183: 		serverAuthMechanisms: serverAuthMechanisms,
+184: 		authMechanism:        scramSHA256Name,
+185: 	}
+186: 
+187: 	// Ensure the server supports SCRAM-SHA-256. SCRAM-SHA-256-PLUS is the
+188: 	// channel binding variant and is only advertised when the server supports
+189: 	// SSL. PostgreSQL always advertises the base SCRAM-SHA-256 mechanism
+190: 	// regardless of SSL.
+191: 	if !slices.Contains(sc.serverAuthMechanisms, scramSHA256Name) {
+192: 		return nil, errors.New("server does not support SCRAM-SHA-256")
+193: 	}
+194: 
+195: 	// precis.OpaqueString is equivalent to SASLprep for password.
+196: 	var err error
+197: 	sc.password, err = precis.OpaqueString.String(password)
+198: 	if err != nil {
+199: 		// PostgreSQL allows passwords invalid according to SCRAM / SASLprep.
+200: 		sc.password = password
+201: 	}
+202: 
+203: 	buf := make([]byte, clientNonceLen)
+204: 	_, err = rand.Read(buf)
+205: 	if err != nil {
+206: 		return nil, err
+207: 	}
+208: 	sc.clientNonce = make([]byte, base64.RawStdEncoding.EncodedLen(len(buf)))
+209: 	base64.RawStdEncoding.Encode(sc.clientNonce, buf)
+
+/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/pgconn/config.go SHA256=da7909eb1387c4f3c930acf7e066645aee800715142ce743d0c554ff5197458e lines 480-503
+480: 		}
+481: 	}
+482: 
+483: 	// Only error when max_protocol_version was explicitly set and conflicts
+484: 	// with min_protocol_version. When max_protocol_version is not explicitly
+485: 	// set, the auto-raise logic above already ensures a valid default.
+486: 	if minProto > maxProto && settings["max_protocol_version"] != "" {
+487: 		return nil, &ParseConfigError{ConnString: connString, msg: "min_protocol_version cannot be greater than max_protocol_version"}
+488: 	}
+489: 
+490: 	switch channelBinding := settings["channel_binding"]; channelBinding {
+491: 	case "", "prefer":
+492: 		config.ChannelBinding = "prefer"
+493: 	case "disable":
+494: 		config.ChannelBinding = "disable"
+495: 	case "require":
+496: 		config.ChannelBinding = "require"
+497: 	default:
+498: 		return nil, &ParseConfigError{ConnString: connString, msg: fmt.Sprintf("unknown channel_binding value: %v", channelBinding)}
+499: 	}
+500: 
+501: 	return config, nil
+502: }
+503: 
+
+/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/golang.org/x/text@v0.41.0/secure/precis/profiles.go SHA256=374bcc5e13e33f059ebf3dc94d545208aa9bf16f1786a96b177b6d534592e953 lines 12-72
+12: 	"golang.org/x/text/unicode/norm"
+13: )
+14: 
+15: var (
+16: 	// Implements the Nickname profile specified in RFC 8266.
+17: 	Nickname *Profile = nickname
+18: 
+19: 	// Implements the UsernameCaseMapped profile specified in RFC 8265.
+20: 	UsernameCaseMapped *Profile = usernameCaseMap
+21: 
+22: 	// Implements the UsernameCasePreserved profile specified in RFC 8265.
+23: 	UsernameCasePreserved *Profile = usernameNoCaseMap
+24: 
+25: 	// Implements the OpaqueString profile defined in RFC 8265 for passwords and
+26: 	// other secure labels.
+27: 	OpaqueString *Profile = opaquestring
+28: )
+29: 
+30: var (
+31: 	nickname = &Profile{
+32: 		options: getOpts(
+33: 			AdditionalMapping(func() transform.Transformer {
+34: 				return &nickAdditionalMapping{}
+35: 			}),
+36: 			IgnoreCase,
+37: 			Norm(norm.NFKC),
+38: 			DisallowEmpty,
+39: 			repeat,
+40: 		),
+41: 		class: freeform,
+42: 	}
+43: 	usernameCaseMap = &Profile{
+44: 		options: getOpts(
+45: 			FoldWidth,
+46: 			LowerCase(),
+47: 			Norm(norm.NFC),
+48: 			BidiRule,
+49: 		),
+50: 		class: identifier,
+51: 	}
+52: 	usernameNoCaseMap = &Profile{
+53: 		options: getOpts(
+54: 			FoldWidth,
+55: 			Norm(norm.NFC),
+56: 			BidiRule,
+57: 		),
+58: 		class: identifier,
+59: 	}
+60: 	opaquestring = &Profile{
+61: 		options: getOpts(
+62: 			AdditionalMapping(func() transform.Transformer {
+63: 				return mapSpaces
+64: 			}),
+65: 			Norm(norm.NFC),
+66: 			DisallowEmpty,
+67: 		),
+68: 		class: freeform,
+69: 	}
+70: )
+71: 
+72: // mapSpaces is a shared value of a runes.Map transformer.
+
+/home/anhar-solehudin/kencleng-workspace/kencleng/backend/internal/platform/db/db.go SHA256=56492320609c7bc0acbbf0761bd6669a9f79fa31986e92a2ea88138798a63660 lines 1-35
+1: package db
+2: 
+3: import (
+4: 	"context"
+5: 	"fmt"
+6: 
+7: 	"github.com/jackc/pgx/v5/pgxpool"
+8: )
+9: 
+10: // Open creates a pgx connection pool for the given database URL and verifies
+11: // connectivity with a ping before returning it, so a bad connection fails
+12: // fast at startup rather than surfacing later as a confusing query error.
+13: func Open(ctx context.Context, databaseURL string) (*pgxpool.Pool, error) {
+14: 	if databaseURL == "" {
+15: 		return nil, fmt.Errorf("database URL is empty")
+16: 	}
+17: 	pool, err := pgxpool.New(ctx, databaseURL)
+18: 	if err != nil {
+19: 		return nil, fmt.Errorf("create connection pool: %w", err)
+20: 	}
+21: 	if err := pool.Ping(ctx); err != nil {
+22: 		pool.Close()
+23: 		return nil, fmt.Errorf("ping database: %w", err)
+24: 	}
+25: 	return pool, nil
+26: }

@@ -1,0 +1,9 @@
+local
+/home/anhar-solehudin/.gvm/gos/go1.26.9
+/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global
+/tmp/c1-t2-005-19_zwpzx/go.mod
+/tmp/c1-t2-005-19_zwpzx/build-cache
+/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod
+https://proxy.golang.org,direct
+sum.golang.org
+

@@ -1,0 +1,817 @@
+--- /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.8.0/go.mod
++++ /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/go.mod
+@@ -1,6 +1,6 @@
+ module github.com/jackc/pgx/v5
+ 
+-go 1.24.0
++go 1.25.0
+ 
+ require (
+ 	github.com/jackc/pgpassfile v1.0.0
+--- /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.8.0/CHANGELOG.md
++++ /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/CHANGELOG.md
+@@ -1,3 +1,71 @@
++# 5.9.2 (April 18, 2026)
++
++Fix SQL Injection via placeholder confusion with dollar quoted string literals (GHSA-j88v-2chj-qfwx)
++
++SQL injection can occur when:
++
++1. The non-default simple protocol is used.
++2. A dollar quoted string literal is used in the SQL query.
++3. That query contains text that would be would be interpreted outside as a placeholder outside of a string literal.
++4. The value of that placeholder is controllable by the attacker.
++
++e.g.
++
++```go
++attackValue := `$tag$; drop table canary; --`
++_, err = tx.Exec(ctx, `select $tag$ $1 $tag$, $1`, pgx.QueryExecModeSimpleProtocol, attackValue)
++```
++
++This is unlikely to occur outside of a contrived scenario.
++
++# 5.9.1 (March 22, 2026)
++
++* Fix: batch result format corruption when using cached prepared statements (reported by Dirkjan Bussink)
++
++# 5.9.0 (March 21, 2026)
++
++This release includes a number of new features such as SCRAM-SHA-256-PLUS support, OAuth authentication support, and
++PostgreSQL protocol 3.2 support.
++
++It significantly reduces the amount of network traffic when using prepared statements (which are used automatically by
++default) by avoiding unnecessary Describe Portal messages. This also reduces local memory usage.
++
++It also includes multiple fixes for potential DoS due to panic or OOM if connected to a malicious server that sends
++deliberately malformed messages.
++
++* Require Go 1.25+
++* Add SCRAM-SHA-256-PLUS support (Adam Brightwell)
++* Add OAuth authentication support for PostgreSQL 18 (David Schneider)
++* Add PostgreSQL protocol 3.2 support (Dirkjan Bussink)
++* Add tsvector type support (Adam Brightwell)
++* Skip Describe Portal for cached prepared statements reducing network round trips
++* Make LoadTypes query easier to support on "postgres-like" servers (Jelte Fennema-Nio)
++* Default empty user to current OS user matching libpq behavior (ShivangSrivastava)
++* Optimize LRU statement cache with custom linked list and node pooling (Mathias Bogaert)
++* Optimize date scanning by replacing regex with manual parsing (Mathias Bogaert)
++* Optimize pgio append/set functions with direct byte shifts (Mathias Bogaert)
++* Make RowsAffected faster (Abhishek Chanda)
++* Fix: Pipeline.Close panic when server sends multiple FATAL errors (Varun Chawla)
++* Fix: ContextWatcher goroutine leak (Hank Donnay)
++* Fix: stdlib discard connections with open transactions in ResetSession (Jeremy Schneider)
++* Fix: pipelineBatchResults.Exec silently swallowing lastRows error
++* Fix: ColumnTypeLength using BPCharArrayOID instead of BPCharOID
++* Fix: TSVector text encoding returning nil for valid empty tsvector
++* Fix: wrong error messages for Int2 and Int4 underflow
++* Fix: Numeric nil Int pointer dereference with Valid: true
++* Fix: reversed strings.ContainsAny arguments in Numeric.ScanScientific
++* Fix: message length parsing on 32-bit platforms
++* Fix: FunctionCallResponse.Decode mishandling of signed result size
++* Fix: returning wrong error in configTLS when DecryptPEMBlock fails (Maxim Motyshen)
++* Fix: misleading ParseConfig error when default_query_exec_mode is invalid (Skarm)
++* Fix: missed Unwatch in Pipeline error paths
++* Clarify too many failed acquire attempts error message
++* Better error wrapping with context and SQL statement (Aneesh Makala)
++* Enable govet and ineffassign linters (Federico Guerinoni)
++* Guard against various malformed binary messages (arrays, hstore, multirange, protocol messages)
++* Fix various godoc comments (ferhat elmas)
++* Fix typos in comments (Oleksandr Redko)
++
+ # 5.8.0 (December 26, 2025)
+ 
+ * Require Go 1.24+
+--- /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.8.0/pgconn/auth_scram.go
++++ /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/pgconn/auth_scram.go
+@@ -1,7 +1,8 @@
+-// SCRAM-SHA-256 authentication
++// SCRAM-SHA-256 and SCRAM-SHA-256-PLUS authentication
+ //
+ // Resources:
+ //   https://tools.ietf.org/html/rfc5802
++//   https://tools.ietf.org/html/rfc5929
+ //   https://tools.ietf.org/html/rfc8265
+ //   https://www.postgresql.org/docs/current/sasl-authentication.html
+ //
+@@ -18,9 +19,13 @@
+ 	"crypto/pbkdf2"
+ 	"crypto/rand"
+ 	"crypto/sha256"
++	"crypto/sha512"
++	"crypto/tls"
++	"crypto/x509"
+ 	"encoding/base64"
+ 	"errors"
+ 	"fmt"
++	"hash"
+ 	"slices"
+ 	"strconv"
+ 
+@@ -28,7 +33,11 @@
+ 	"golang.org/x/text/secure/precis"
+ )
+ 
+-const clientNonceLen = 18
++const (
++	clientNonceLen      = 18
++	scramSHA256Name     = "SCRAM-SHA-256"
++	scramSHA256PlusName = "SCRAM-SHA-256-PLUS"
++)
+ 
+ // Perform SCRAM authentication.
+ func (c *PgConn) scramAuth(serverAuthMechanisms []string) error {
+@@ -37,9 +46,35 @@
+ 		return err
+ 	}
+ 
++	serverHasPlus := slices.Contains(sc.serverAuthMechanisms, scramSHA256PlusName)
++	if c.config.ChannelBinding == "require" && !serverHasPlus {
++		return errors.New("channel binding required but server does not support SCRAM-SHA-256-PLUS")
++	}
++
++	// If we have a TLS connection and channel binding is not disabled, attempt to
++	// extract the server certificate hash for tls-server-end-point channel binding.
++	if tlsConn, ok := c.conn.(*tls.Conn); ok && c.config.ChannelBinding != "disable" {
++		certHash, err := getTLSCertificateHash(tlsConn)
++		if err != nil && c.config.ChannelBinding == "require" {
++			return fmt.Errorf("channel binding required but failed to get server certificate hash: %w", err)
++		}
++
++		// Upgrade to SCRAM-SHA-256-PLUS if we have binding data and the server supports it.
++		if certHash != nil && serverHasPlus {
++			sc.authMechanism = scramSHA256PlusName
++		}
++
++		sc.channelBindingData = certHash
++		sc.hasTLS = true
++	}
++
++	if c.config.ChannelBinding == "require" && sc.channelBindingData == nil {
++		return errors.New("channel binding required but channel binding data is not available")
++	}
++
+ 	// Send client-first-message in a SASLInitialResponse
+ 	saslInitialResponse := &pgproto3.SASLInitialResponse{
+-		AuthMechanism: "SCRAM-SHA-256",
++		AuthMechanism: sc.authMechanism,
+ 		Data:          sc.clientFirstMessage(),
+ 	}
+ 	c.frontend.Send(saslInitialResponse)
+@@ -111,7 +146,28 @@
+ 	password             string
+ 	clientNonce          []byte
+ 
++	// authMechanism is the selected SASL mechanism for the client. Must be
++	// either SCRAM-SHA-256 (default) or SCRAM-SHA-256-PLUS.
++	//
++	// Upgraded to SCRAM-SHA-256-PLUS during authentication when channel binding
++	// is not disabled, channel binding data is available (TLS connection with
++	// an obtainable server certificate hash) and the server advertises
++	// SCRAM-SHA-256-PLUS.
++	authMechanism string
++
++	// hasTLS indicates whether the connection is using TLS. This is
++	// needed because the GS2 header must distinguish between a client that
++	// supports channel binding but the server does not ("y,,") versus one
++	// that does not support it at all ("n,,").
++	hasTLS bool
++
++	// channelBindingData is the hash of the server's TLS certificate, computed
++	// per the tls-server-end-point channel binding type (RFC 5929). Used as
++	// the binding input in SCRAM-SHA-256-PLUS. nil when not in use.
++	channelBindingData []byte
++
+ 	clientFirstMessageBare []byte
++	clientGS2Header        []byte
+ 
+ 	serverFirstMessage   []byte
+ 	clientAndServerNonce []byte
+@@ -125,11 +181,14 @@
+ func newScramClient(serverAuthMechanisms []string, password string) (*scramClient, error) {
+ 	sc := &scramClient{
+ 		serverAuthMechanisms: serverAuthMechanisms,
+-	}
+-
+-	// Ensure server supports SCRAM-SHA-256
+-	hasScramSHA256 := slices.Contains(sc.serverAuthMechanisms, "SCRAM-SHA-256")
+-	if !hasScramSHA256 {
++		authMechanism:        scramSHA256Name,
++	}
++
++	// Ensure the server supports SCRAM-SHA-256. SCRAM-SHA-256-PLUS is the
++	// channel binding variant and is only advertised when the server supports
++	// SSL. PostgreSQL always advertises the base SCRAM-SHA-256 mechanism
++	// regardless of SSL.
++	if !slices.Contains(sc.serverAuthMechanisms, scramSHA256Name) {
+ 		return nil, errors.New("server does not support SCRAM-SHA-256")
+ 	}
+ 
+@@ -153,8 +212,32 @@
+ }
+ 
+ func (sc *scramClient) clientFirstMessage() []byte {
++	// The client-first-message is the GS2 header concatenated with the bare
++	// message (username + client nonce). The GS2 header communicates the
++	// client's channel binding capability to the server:
++	//
++	//   "n,,"                      - client is not using TLS (channel binding not possible)
++	//   "y,,"                      - client is using TLS but channel binding is not
++	//                                in use (e.g., server did not advertise SCRAM-SHA-256-PLUS
++	//                                or the server certificate hash was not obtainable)
++	//   "p=tls-server-end-point,," - channel binding is active via SCRAM-SHA-256-PLUS
++	//
++	// See:
++	//   https://www.rfc-editor.org/rfc/rfc5802#section-6
++	//   https://www.rfc-editor.org/rfc/rfc5929#section-4
++	//   https://www.postgresql.org/docs/current/sasl-authentication.html#SASL-SCRAM-SHA-256
++
+ 	sc.clientFirstMessageBare = fmt.Appendf(nil, "n=,r=%s", sc.clientNonce)
+-	return fmt.Appendf(nil, "n,,%s", sc.clientFirstMessageBare)
++
++	if sc.authMechanism == scramSHA256PlusName {
++		sc.clientGS2Header = []byte("p=tls-server-end-point,,")
++	} else if sc.hasTLS {
++		sc.clientGS2Header = []byte("y,,")
++	} else {
++		sc.clientGS2Header = []byte("n,,")
++	}
++
++	return append(sc.clientGS2Header, sc.clientFirstMessageBare...)
+ }
+ 
+ func (sc *scramClient) recvServerFirstMessage(serverFirstMessage []byte) error {
+@@ -213,7 +296,19 @@
+ }
+ 
+ func (sc *scramClient) clientFinalMessage() string {
+-	clientFinalMessageWithoutProof := fmt.Appendf(nil, "c=biws,r=%s", sc.clientAndServerNonce)
++	// The c= attribute carries the base64-encoded channel binding input.
++	//
++	// Without channel binding this is just the GS2 header alone ("biws" for
++	// "n,," or "eSws" for "y,,").
++	//
++	// With channel binding, this is the GS2 header with the channel binding data
++	// (certificate hash) appended.
++	channelBindInput := sc.clientGS2Header
++	if sc.authMechanism == scramSHA256PlusName {
++		channelBindInput = slices.Concat(sc.clientGS2Header, sc.channelBindingData)
++	}
++	channelBindingEncoded := base64.StdEncoding.EncodeToString(channelBindInput)
++	clientFinalMessageWithoutProof := fmt.Appendf(nil, "c=%s,r=%s", channelBindingEncoded, sc.clientAndServerNonce)
+ 
+ 	var err error
+ 	sc.saltedPassword, err = pbkdf2.Key(sha256.New, sc.password, sc.salt, sc.iterations, 32)
+@@ -269,3 +364,36 @@
+ 	base64.StdEncoding.Encode(buf, serverSignature)
+ 	return buf
+ }
++
++// Get the server certificate hash for SCRAM channel binding type
++// tls-server-end-point.
++func getTLSCertificateHash(conn *tls.Conn) ([]byte, error) {
++	state := conn.ConnectionState()
++	if len(state.PeerCertificates) == 0 {
++		return nil, errors.New("no peer certificates for channel binding")
++	}
++
++	cert := state.PeerCertificates[0]
++
++	// Per RFC 5929 section 4.1: If the certificate's signatureAlgorithm uses
++	// MD5 or SHA-1, use SHA-256. Otherwise use the hash from the signature
++	// algorithm.
++	//
++	// See: https://www.rfc-editor.org/rfc/rfc5929.html#section-4.1
++	var h hash.Hash
++	switch cert.SignatureAlgorithm {
++	case x509.MD5WithRSA, x509.SHA1WithRSA, x509.ECDSAWithSHA1:
++		h = sha256.New()
++	case x509.SHA256WithRSA, x509.SHA256WithRSAPSS, x509.ECDSAWithSHA256:
++		h = sha256.New()
++	case x509.SHA384WithRSA, x509.SHA384WithRSAPSS, x509.ECDSAWithSHA384:
++		h = sha512.New384()
++	case x509.SHA512WithRSA, x509.SHA512WithRSAPSS, x509.ECDSAWithSHA512:
++		h = sha512.New()
++	default:
++		return nil, fmt.Errorf("tls-server-end-point channel binding is undefined for certificate signature algorithm %v", cert.SignatureAlgorithm)
++	}
++
++	h.Write(cert.Raw)
++	return h.Sum(nil), nil
++}
+--- /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.8.0/pgconn/config.go
++++ /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/pgconn/config.go
+@@ -82,6 +82,23 @@
+ 	// the connection on any FATAL errors. If you override this handler you should call the previously set handler or ensure
+ 	// that you close on FATAL errors by returning false.
+ 	OnPgError PgErrorHandler
++
++	// OAuthTokenProvider is a function that returns an OAuth token for authentication. If set, it will be used for
++	// OAUTHBEARER SASL authentication when the server requests it.
++	OAuthTokenProvider func(context.Context) (string, error)
++
++	// MinProtocolVersion is the minimum acceptable PostgreSQL protocol version.
++	// If the server does not support at least this version, the connection will fail.
++	// Valid values: "3.0", "3.2", "latest". Defaults to "3.0".
++	MinProtocolVersion string
++
++	// MaxProtocolVersion is the maximum PostgreSQL protocol version to request from the server.
++	// Valid values: "3.0", "3.2", "latest". Defaults to "3.0" for compatibility.
++	MaxProtocolVersion string
++
++	// ChannelBinding is the channel_binding parameter for SCRAM-SHA-256-PLUS authentication.
++	// Valid values: "disable", "prefer", "require". Defaults to "prefer".
++	ChannelBinding string
+ 
+ 	createdByParseConfig bool // Used to enforce created by ParseConfig rule.
+ }
+@@ -213,6 +230,8 @@
+ //	PGCONNECT_TIMEOUT
+ //	PGTARGETSESSIONATTRS
+ //	PGTZ
++//	PGMINPROTOCOLVERSION
++//	PGMAXPROTOCOLVERSION
+ //
+ // See http://www.postgresql.org/docs/current/static/libpq-envars.html for details on the meaning of environment variables.
+ //
+@@ -338,6 +357,9 @@
+ 		"target_session_attrs": {},
+ 		"service":              {},
+ 		"servicefile":          {},
++		"min_protocol_version": {},
++		"max_protocol_version": {},
++		"channel_binding":      {},
+ 	}
+ 
+ 	// Adding kerberos configuration
+@@ -428,6 +450,52 @@
+ 		// do nothing
+ 	default:
+ 		return nil, &ParseConfigError{ConnString: connString, msg: fmt.Sprintf("unknown target_session_attrs value: %v", tsa)}
++	}
++
++	minProto, err := parseProtocolVersion(settings["min_protocol_version"])
++	if err != nil {
++		return nil, &ParseConfigError{ConnString: connString, msg: fmt.Sprintf("invalid min_protocol_version: %q", settings["min_protocol_version"]), err: err}
++	}
++	maxProto, err := parseProtocolVersion(settings["max_protocol_version"])
++	if err != nil {
++		return nil, &ParseConfigError{ConnString: connString, msg: fmt.Sprintf("invalid max_protocol_version: %q", settings["max_protocol_version"]), err: err}
++	}
++
++	config.MinProtocolVersion = settings["min_protocol_version"]
++	config.MaxProtocolVersion = settings["max_protocol_version"]
++
++	if config.MinProtocolVersion == "" {
++		config.MinProtocolVersion = "3.0"
++	}
++
++	// When max_protocol_version is not explicitly set, default based on
++	// min_protocol_version. This matches libpq behavior: if min > 3.0,
++	// default max to latest; otherwise default to 3.0 for compatibility
++	// with older servers/poolers that don't support NegotiateProtocolVersion.
++	if config.MaxProtocolVersion == "" {
++		if minProto > pgproto3.ProtocolVersion30 {
++			config.MaxProtocolVersion = "latest"
++		} else {
++			config.MaxProtocolVersion = "3.0"
++		}
++	}
++
++	// Only error when max_protocol_version was explicitly set and conflicts
++	// with min_protocol_version. When max_protocol_version is not explicitly
++	// set, the auto-raise logic above already ensures a valid default.
++	if minProto > maxProto && settings["max_protocol_version"] != "" {
++		return nil, &ParseConfigError{ConnString: connString, msg: "min_protocol_version cannot be greater than max_protocol_version"}
++	}
++
++	switch channelBinding := settings["channel_binding"]; channelBinding {
++	case "", "prefer":
++		config.ChannelBinding = "prefer"
++	case "disable":
++		config.ChannelBinding = "disable"
++	case "require":
++		config.ChannelBinding = "require"
++	default:
++		return nil, &ParseConfigError{ConnString: connString, msg: fmt.Sprintf("unknown channel_binding value: %v", channelBinding)}
+ 	}
+ 
+ 	return config, nil
+@@ -467,6 +535,8 @@
+ 		"PGSERVICEFILE":        "servicefile",
+ 		"PGTZ":                 "timezone",
+ 		"PGOPTIONS":            "options",
++		"PGMINPROTOCOLVERSION": "min_protocol_version",
++		"PGMAXPROTOCOLVERSION": "max_protocol_version",
+ 	}
+ 
+ 	for envname, realname := range nameMap {
+@@ -491,7 +561,9 @@
+ 	}
+ 
+ 	if parsedURL.User != nil {
+-		settings["user"] = parsedURL.User.Username()
++		if u := parsedURL.User.Username(); u != "" {
++			settings["user"] = u
++		}
+ 		if password, present := parsedURL.User.Password(); present {
+ 			settings["password"] = password
+ 		}
+@@ -618,6 +690,9 @@
+ 			return nil, errors.New("invalid keyword/value")
+ 		}
+ 
++		if key == "user" && val == "" {
++			continue
++		}
+ 		settings[key] = val
+ 	}
+ 
+@@ -788,7 +863,7 @@
+ 			// Attempt decryption with pass phrase
+ 			// NOTE: only supports RSA (PKCS#1)
+ 			if sslpassword != "" {
+-				decryptedKey, decryptedError = x509.DecryptPEMBlock(block, []byte(sslpassword))
++				decryptedKey, decryptedError = x509.DecryptPEMBlock(block, []byte(sslpassword)) //nolint:ineffassign
+ 			}
+ 			// if sslpassword not provided or has decryption error when use it
+ 			// try to find sslpassword with callback function
+@@ -803,7 +878,7 @@
+ 			decryptedKey, decryptedError = x509.DecryptPEMBlock(block, []byte(sslpassword))
+ 			// Should we also provide warning for PKCS#1 needed?
+ 			if decryptedError != nil {
+-				return nil, fmt.Errorf("unable to decrypt key: %w", err)
++				return nil, fmt.Errorf("unable to decrypt key: %w", decryptedError)
+ 			}
+ 
+ 			pemBytes := pem.Block{
+@@ -955,3 +1030,14 @@
+ 
+ 	return nil
+ }
++
++func parseProtocolVersion(s string) (uint32, error) {
++	switch s {
++	case "", "3.0":
++		return pgproto3.ProtocolVersion30, nil
++	case "3.2", "latest":
++		return pgproto3.ProtocolVersion32, nil
++	default:
++		return 0, fmt.Errorf("invalid protocol version: %q", s)
++	}
++}
+--- /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.8.0/conn.go
++++ /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/conn.go
+@@ -17,8 +17,8 @@
+ 	"github.com/jackc/pgx/v5/pgtype"
+ )
+ 
+-// ConnConfig contains all the options used to establish a connection. It must be created by ParseConfig and
+-// then it can be modified. A manually initialized ConnConfig will cause ConnectConfig to panic.
++// ConnConfig contains all the options used to establish a connection. It must be created by [ParseConfig] and
++// then it can be modified. A manually initialized ConnConfig will cause [ConnectConfig] to panic.
+ type ConnConfig struct {
+ 	pgconn.Config
+ 
+@@ -37,8 +37,8 @@
+ 
+ 	// DefaultQueryExecMode controls the default mode for executing queries. By default pgx uses the extended protocol
+ 	// and automatically prepares and caches prepared statements. However, this may be incompatible with proxies such as
+-	// PGBouncer. In this case it may be preferable to use QueryExecModeExec or QueryExecModeSimpleProtocol. The same
+-	// functionality can be controlled on a per query basis by passing a QueryExecMode as the first query argument.
++	// PGBouncer. In this case it may be preferable to use [QueryExecModeExec] or [QueryExecModeSimpleProtocol]. The same
++	// functionality can be controlled on a per query basis by passing a [QueryExecMode] as the first query argument.
+ 	DefaultQueryExecMode QueryExecMode
+ 
+ 	createdByParseConfig bool // Used to enforce created by ParseConfig rule.
+@@ -131,7 +131,7 @@
+ )
+ 
+ // Connect establishes a connection with a PostgreSQL server with a connection string. See
+-// pgconn.Connect for details.
++// [pgconn.Connect] for details.
+ func Connect(ctx context.Context, connString string) (*Conn, error) {
+ 	connConfig, err := ParseConfig(connString)
+ 	if err != nil {
+@@ -141,7 +141,7 @@
+ }
+ 
+ // ConnectWithOptions behaves exactly like Connect with the addition of options. At the present options is only used to
+-// provide a GetSSLPassword function.
++// provide a [pgconn.GetSSLPasswordFunc] function.
+ func ConnectWithOptions(ctx context.Context, connString string, options ParseConfigOptions) (*Conn, error) {
+ 	connConfig, err := ParseConfigWithOptions(connString, options)
+ 	if err != nil {
+@@ -151,7 +151,7 @@
+ }
+ 
+ // ConnectConfig establishes a connection with a PostgreSQL server with a configuration struct.
+-// connConfig must have been created by ParseConfig.
++// connConfig must have been created by [ParseConfig].
+ func ConnectConfig(ctx context.Context, connConfig *ConnConfig) (*Conn, error) {
+ 	// In general this improves safety. In particular avoid the config.Config.OnNotification mutation from affecting other
+ 	// connections with the same config. See https://github.com/jackc/pgx/issues/618.
+@@ -160,8 +160,8 @@
+ 	return connect(ctx, connConfig)
+ }
+ 
+-// ParseConfigWithOptions behaves exactly as ParseConfig does with the addition of options. At the present options is
+-// only used to provide a GetSSLPassword function.
++// ParseConfigWithOptions behaves exactly as [ParseConfig] does with the addition of options. At the present options is
++// only used to provide a [pgconn.GetSSLPasswordFunc] function.
+ func ParseConfigWithOptions(connString string, options ParseConfigOptions) (*ConnConfig, error) {
+ 	config, err := pgconn.ParseConfigWithOptions(connString, options.ParseConfigOptions)
+ 	if err != nil {
+@@ -203,7 +203,9 @@
+ 		case "simple_protocol":
+ 			defaultQueryExecMode = QueryExecModeSimpleProtocol
+ 		default:
+-			return nil, pgconn.NewParseConfigError(connString, "invalid default_query_exec_mode", err)
++			return nil, pgconn.NewParseConfigError(
++				connString, "invalid default_query_exec_mode", fmt.Errorf("unknown value %q", s),
++			)
+ 		}
+ 	}
+ 
+@@ -306,8 +308,8 @@
+ }
+ 
+ // Prepare creates a prepared statement with name and sql. sql can contain placeholders for bound parameters. These
+-// placeholders are referenced positionally as $1, $2, etc. name can be used instead of sql with Query, QueryRow, and
+-// Exec to execute the statement. It can also be used with Batch.Queue.
++// placeholders are referenced positionally as $1, $2, etc. name can be used instead of sql with [Conn.Query],
++// [Conn.QueryRow], and [Conn.Exec] to execute the statement. It can also be used with [Batch.Queue].
+ //
+ // The underlying PostgreSQL identifier for the prepared statement will be name if name != sql or a digest of sql if
+ // name == sql.
+@@ -608,7 +610,7 @@
+ 		return pgconn.CommandTag{}, err
+ 	}
+ 
+-	result := c.pgConn.ExecPrepared(ctx, sd.Name, c.eqb.ParamValues, c.eqb.ParamFormats, c.eqb.ResultFormats).Read()
++	result := c.pgConn.ExecStatement(ctx, sd, c.eqb.ParamValues, c.eqb.ParamFormats, c.eqb.ResultFormats).Read()
+ 	c.eqb.reset() // Allow c.eqb internal memory to be GC'ed as soon as possible.
+ 	return result.CommandTag, result.Err
+ }
+@@ -842,7 +844,7 @@
+ 		if !explicitPreparedStatement && mode == QueryExecModeCacheDescribe {
+ 			rows.resultReader = c.pgConn.ExecParams(ctx, sql, c.eqb.ParamValues, sd.ParamOIDs, c.eqb.ParamFormats, resultFormats)
+ 		} else {
+-			rows.resultReader = c.pgConn.ExecPrepared(ctx, sd.Name, c.eqb.ParamValues, c.eqb.ParamFormats, resultFormats)
++			rows.resultReader = c.pgConn.ExecStatement(ctx, sd, c.eqb.ParamValues, c.eqb.ParamFormats, resultFormats)
+ 		}
+ 	} else if mode == QueryExecModeExec {
+ 		err := c.eqb.Build(c.typeMap, nil, args)
+@@ -931,7 +933,7 @@
+ }
+ 
+ // SendBatch sends all queued queries to the server at once. All queries are run in an implicit transaction unless
+-// explicit transaction control statements are executed. The returned BatchResults must be closed before the connection
++// explicit transaction control statements are executed. The returned [BatchResults] must be closed before the connection
+ // is used again.
+ //
+ // Depending on the QueryExecMode, all queries may be prepared before any are executed. This means that creating a table
+@@ -1192,7 +1194,7 @@
+ 			for _, sd := range distinctNewQueries {
+ 				results, err := pipeline.GetResults()
+ 				if err != nil {
+-					return err
++					return newErrPreprocessingBatch("prepare", sd.SQL, err)
+ 				}
+ 
+ 				resultSD, ok := results.(*pgconn.StatementDescription)
+@@ -1226,15 +1228,18 @@
+ 	for _, bi := range b.QueuedQueries {
+ 		err := c.eqb.Build(c.typeMap, bi.sd, bi.Arguments)
+ 		if err != nil {
+-			// we wrap the error so we the user can understand which query failed inside the batch
+-			err = fmt.Errorf("error building query %s: %w", bi.SQL, err)
++			err = newErrPreprocessingBatch("build", bi.SQL, err)
+ 			return &pipelineBatchResults{ctx: ctx, conn: c, err: err, closed: true}
+ 		}
+ 
+ 		if bi.sd.Name == "" {
+ 			pipeline.SendQueryParams(bi.sd.SQL, c.eqb.ParamValues, bi.sd.ParamOIDs, c.eqb.ParamFormats, c.eqb.ResultFormats)
+ 		} else {
+-			pipeline.SendQueryPrepared(bi.sd.Name, c.eqb.ParamValues, c.eqb.ParamFormats, c.eqb.ResultFormats)
++			// Copy ResultFormats because SendQueryStatement stores the slice for later use, and eqb.Build reuses the
++			// backing array on the next iteration.
++			resultFormats := make([]int16, len(c.eqb.ResultFormats))
++			copy(resultFormats, c.eqb.ResultFormats)
++			pipeline.SendQueryStatement(bi.sd, c.eqb.ParamValues, c.eqb.ParamFormats, resultFormats)
+ 		}
+ 	}
+ 
+@@ -1272,7 +1277,7 @@
+ 	return sanitize.SanitizeSQL(sql, valueArgs...)
+ }
+ 
+-// LoadType inspects the database for typeName and produces a pgtype.Type suitable for registration. typeName must be
++// LoadType inspects the database for typeName and produces a [pgtype.Type] suitable for registration. typeName must be
+ // the name of a type where the underlying type(s) is already understood by pgx. It is for derived types. In particular,
+ // typeName must be one of the following:
+ //   - An array type name of a type that is already registered. e.g. "_foo" when "foo" is registered.
+--- /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.8.0/internal/sanitize/sanitize.go
++++ /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/internal/sanitize/sanitize.go
+@@ -4,6 +4,7 @@
+ 	"bytes"
+ 	"encoding/hex"
+ 	"fmt"
++	"math"
+ 	"slices"
+ 	"strconv"
+ 	"strings"
+@@ -202,12 +203,13 @@
+ }
+ 
+ type sqlLexer struct {
+-	src     string
+-	start   int
+-	pos     int
+-	nested  int // multiline comment nesting level.
+-	stateFn stateFn
+-	parts   []Part
++	src       string
++	start     int
++	pos       int
++	nested    int    // multiline comment nesting level.
++	dollarTag string // active tag while inside a dollar-quoted string (may be empty for $$).
++	stateFn   stateFn
++	parts     []Part
+ }
+ 
+ type stateFn func(*sqlLexer) stateFn
+@@ -237,6 +239,15 @@
+ 				l.start = l.pos
+ 				return placeholderState
+ 			}
++			// PostgreSQL dollar-quoted string: $[tag]$...$[tag]$. The $ was
++			// just consumed; try to match the rest of the opening tag.
++			// Without this, placeholders embedded inside dollar-quoted
++			// literals would be incorrectly substituted.
++			if tagLen, ok := scanDollarQuoteTag(l.src[l.pos:]); ok {
++				l.dollarTag = l.src[l.pos : l.pos+tagLen]
++				l.pos += tagLen + 1 // advance past tag and closing '$'
++				return dollarQuoteState
++			}
+ 		case '-':
+ 			nextRune, width := utf8.DecodeRuneInString(l.src[l.pos:])
+ 			if nextRune == '-' {
+@@ -319,8 +330,16 @@
+ 		l.pos += width
+ 
+ 		if '0' <= r && r <= '9' {
+-			num *= 10
+-			num += int(r - '0')
++			// Clamp rather than silently wrap on pathological input like
++			// "$92233720368547758070" which would otherwise overflow int and
++			// could land on a valid args index. Any value above MaxInt32 far
++			// exceeds any plausible args length, so Sanitize will correctly
++			// return "insufficient arguments".
++			if num > (math.MaxInt32-9)/10 {
++				num = math.MaxInt32
++			} else {
++				num = num*10 + int(r-'0')
++			}
+ 		} else {
+ 			l.parts = append(l.parts, num)
+ 			l.pos -= width
+@@ -328,6 +347,68 @@
+ 			return rawState
+ 		}
+ 	}
++}
++
++// dollarQuoteState consumes the body of a PostgreSQL dollar-quoted string
++// ($[tag]$...$[tag]$). The opening tag (including its terminating '$') has
++// already been consumed.
++func dollarQuoteState(l *sqlLexer) stateFn {
++	closer := "$" + l.dollarTag + "$"
++	idx := strings.Index(l.src[l.pos:], closer)
++	if idx < 0 {
++		// Unterminated — mirror the behavior of other quoted-string states by
++		// consuming the remaining input into the current part and stopping.
++		if len(l.src)-l.start > 0 {
++			l.parts = append(l.parts, l.src[l.start:])
++			l.start = len(l.src)
++		}
++		l.pos = len(l.src)
++		return nil
++	}
++	l.pos += idx + len(closer)
++	l.dollarTag = ""
++	return rawState
++}
++
++// scanDollarQuoteTag checks whether src begins with an optional dollar-quoted
++// string tag followed by a closing '$'. src must point just past the opening
++// '$'. Returns the byte length of the tag (zero for an anonymous $$) and
++// whether a valid tag was found.
++//
++// Tag grammar matches the PostgreSQL lexer (scan.l):
++//
++//	dolq_start: [A-Za-z_\x80-\xff]
++//	dolq_cont:  [A-Za-z0-9_\x80-\xff]
++func scanDollarQuoteTag(src string) (int, bool) {
++	first := true
++	for i := 0; i < len(src); {
++		r, w := utf8.DecodeRuneInString(src[i:])
++		if r == '$' {
++			return i, true
++		}
++		if !isDollarTagRune(r, first) {
++			return 0, false
++		}
++		first = false
++		i += w
++	}
++	return 0, false
++}
++
++func isDollarTagRune(r rune, first bool) bool {
++	switch {
++	case r == '_':
++		return true
++	case 'a' <= r && r <= 'z':
++		return true
++	case 'A' <= r && r <= 'Z':
++		return true
++	case !first && '0' <= r && r <= '9':
++		return true
++	case r >= 0x80 && r != utf8.RuneError:
++		return true
++	}
++	return false
+ }
+ 
+ func escapeStringState(l *sqlLexer) stateFn {
+--- /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.8.0/pgproto3/bind.go
++++ /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/pgproto3/bind.go
+@@ -82,7 +82,7 @@
+ 				continue
+ 			}
+ 
+-			if len(src[rp:]) < msgSize {
++			if msgSize < 0 || len(src[rp:]) < msgSize {
+ 				return &invalidMessageFormatErr{messageType: "Bind"}
+ 			}
+ 
+--- /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.8.0/pgproto3/function_call.go
++++ /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/pgproto3/function_call.go
+@@ -23,6 +23,11 @@
+ func (dst *FunctionCall) Decode(src []byte) error {
+ 	*dst = FunctionCall{}
+ 	rp := 0
++
++	if len(src) < 8 {
++		return &invalidMessageFormatErr{messageType: "FunctionCall"}
++	}
++
+ 	// Specifies the object ID of the function to call.
+ 	dst.Function = binary.BigEndian.Uint32(src[rp:])
+ 	rp += 4
+@@ -32,6 +37,11 @@
+ 	// or it can equal the actual number of arguments.
+ 	nArgumentCodes := int(binary.BigEndian.Uint16(src[rp:]))
+ 	rp += 2
++
++	if len(src[rp:]) < nArgumentCodes*2+2 {
++		return &invalidMessageFormatErr{messageType: "FunctionCall"}
++	}
++
+ 	argumentCodes := make([]uint16, nArgumentCodes)
+ 	for i := range nArgumentCodes {
+ 		// The argument format codes. Each must presently be zero (text) or one (binary).
+@@ -49,13 +59,21 @@
+ 	rp += 2
+ 	arguments := make([][]byte, nArguments)
+ 	for i := range nArguments {
++		if len(src[rp:]) < 4 {
++			return &invalidMessageFormatErr{messageType: "FunctionCall"}
++		}
+ 		// The length of the argument value, in bytes (this count does not include itself). Can be zero.
+ 		// As a special case, -1 indicates a NULL argument value. No value bytes follow in the NULL case.
+-		argumentLength := int(binary.BigEndian.Uint32(src[rp:]))
++		argumentLength := int(int32(binary.BigEndian.Uint32(src[rp:])))
+ 		rp += 4
+ 		if argumentLength == -1 {
+ 			arguments[i] = nil
++		} else if argumentLength < 0 {
++			return &invalidMessageFormatErr{messageType: "FunctionCall"}
+ 		} else {
++			if len(src[rp:]) < argumentLength {
++				return &invalidMessageFormatErr{messageType: "FunctionCall"}
++			}
+ 			// The value of the argument, in the format indicated by the associated format code. n is the above length.
+ 			argumentValue := src[rp : rp+argumentLength]
+ 			rp += argumentLength
+@@ -64,6 +82,9 @@
+ 	}
+ 	dst.Arguments = arguments
+ 	// The format code for the function result. Must presently be zero (text) or one (binary).
++	if len(src[rp:]) < 2 {
++		return &invalidMessageFormatErr{messageType: "FunctionCall"}
++	}
+ 	resultFormatCode := binary.BigEndian.Uint16(src[rp:])
+ 	if resultFormatCode != 0 && resultFormatCode != 1 {
+ 		return &invalidMessageFormatErr{messageType: "FunctionCall"}

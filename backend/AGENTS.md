@@ -46,6 +46,8 @@ Do not create empty architecture layers merely to make the repository look compl
 
 Use unit, integration, race, contract, and security checks proportionally to the active work. Never claim a verification command ran unless it actually ran.
 
+Before `govulncheck`, use the [Go scanner runbook](../docs/project/go-scanner-runbook.md) to check the selected toolchain/scanner, writable build/module caches, and database access. For sandbox permission/network failures, use the harness escalation mechanism; do not change dependency pins or clear global caches as a tooling workaround. Inspect JSON findings as well as exit status, and preserve active Run stop/report boundaries.
+
 ## Write boundaries
 
 A backend-scoped implementation should not casually modify frontend production code. Shared docs/API changes require explicit coordination with the concern they own.

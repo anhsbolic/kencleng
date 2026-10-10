@@ -1,0 +1,12 @@
+{
+  "objects": 204,
+  "types": {
+    "config": 1,
+    "SBOM": 1,
+    "progress": 2,
+    "osv": 200
+  },
+  "findings": [],
+  "finding_ids": [],
+  "stderr_bytes": 0
+}
