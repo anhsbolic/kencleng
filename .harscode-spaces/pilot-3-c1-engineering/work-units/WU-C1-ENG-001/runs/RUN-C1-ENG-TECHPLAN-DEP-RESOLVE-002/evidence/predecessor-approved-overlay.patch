@@ -1,0 +1,137 @@
+diff --git a/.harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/techplan.md b/.harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/techplan.md
+index 93f30af..443c26b 100644
+--- a/.harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/techplan.md
++++ b/.harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/techplan.md
+@@ -2,27 +2,27 @@
+ 
+ > Phase             : Techplan
+ > Ticket            : none
+-> Author            : `PARTICIPANT-C1-ENG-PLANNER-002`
+-> Participant ID    : `PARTICIPANT-C1-ENG-PLANNER-002`
++> Author            : `PARTICIPANT-C1-ENG-DEPENDENCY-PLANNER-001`
++> Participant ID    : `PARTICIPANT-C1-ENG-DEPENDENCY-PLANNER-001`
+ > Role              : Planner
+ > Model             : `gpt-6-sol` — pilihan dispatch invocation, runtime model tidak terekspos independen
+ > Reasoning         : medium — konfigurasi dispatch invocation
+-> Session           : `SESSION-C1-ENG-PLANNER-002` — binding Run, bukan ID thread runtime
++> Session           : `SESSION-C1-ENG-DEPENDENCY-PLANNER-001` — binding Run, bukan ID thread runtime
+ > Created           : 2026-10-09
+-> Updated           : 2026-10-09
+-> Target revision   : `524ef600c7f71246af6b71671d89c3c040fd9d44`
++> Updated           : 2026-10-10
++> Target revision   : `59f2b25940fa4baf243b4f1d2ca2ba04c9b17fd4`
+ > Workflow revision : `3d9cbafaf4c2921c4ada4e3e5be8f6c9cb238590`
+-> Status            : Approved — Anhar, 2026-10-09; bounded G1–G3 implementation permissions authorized separately on 2026-10-09
++> Status            : Approved — Anhar approved exact candidate SHA-256 `2c64128e95a52773da024c2ec856bc5ba7a047539f2197a6d747513d378ae629` on 2026-10-10; G1–G3 implementation permissions remain bounded as approved 2026-10-09
+ > Approach          : Google OIDC + local session; preparation/confirmation; satu aggregate PostgreSQL, conservative guard, Owner-scoped inspection.
+-> Refs              : Stage 7 C1 handoff; Stage 5 confirmed behavior; Stage 6 requirements; Exploration `RUN-C1-ENG-EXPLORATION-001`; Solution Contract; WU-C1-ENG-001 / RUN-C1-ENG-TECHPLAN-002.
++> Refs              : Approved predecessor; Stage 7 C1 handoff; Stage 5 confirmed behavior; Stage 6 requirements; Exploration `RUN-C1-ENG-EXPLORATION-001`; Solution Contract; T2 Build `F-T2-001`/`B-T2-001`; `RUN-C1-ENG-TECHPLAN-DEP-001/evidence/dependency-reconciliation.md`.
+ 
+ ---
+ 
+ ## 1. Background
+ 
+-C1 membentuk Organization + initial Kencleng Owner yang durably attributable tanpa membuktikan legal/external authority. Live baseline masih health endpoint, PostgreSQL connectivity, neutral frontend dan OpenAPI kosong. Solution Contract menyelesaikan pilihan material H1–H3; revisi ini menurunkan rencana eksekusi dari Stage 5/6 dan kontrak tersebut, bukan mengubah Product Authority.
++C1 membentuk Organization + initial Kencleng Owner yang durably attributable tanpa membuktikan legal/external authority. Baseline backend masih health endpoint dan PostgreSQL connectivity; kontrak API T1 kini menjadi input aktif, sementara C1 backend belum diimplementasikan. Solution Contract menyelesaikan pilihan material H1–H3; kandidat ini mempertahankan rencana eksekusi Stage 5/6 dan kontrak tersebut tanpa mengubah Product Authority.
+ 
+-Input identity cocok: Solution SHA-256 `c136e673937c9ac1a583ecfa6a98ee630e1b0f6b42b78d373876243e55b01482`; Draft sebelumnya `188a55d8a6b951bdbc8d29063689606c082969ca8dca52861d0256d84b54c878`. Preparation baseline `3e123bcece561f1d0a181b68c85e2677dcfa37eb` → observed HEAD di atas hanya mengubah koordinasi Run, bukan solusi/Draft/production anchors. Workflow revision cocok dan tree bersih. Working-tree coordination edits yang sudah ada dipertahankan. Provenance/self-check: [Run evidence](../runs/RUN-C1-ENG-TECHPLAN-002/evidence/synthesis-check.md).
++Approved predecessor retains all C1 product/authority/interaction semantics, OIDC trust, five-task manifest, and G1–G3. T2 Build stopped at `F-T2-001`/`B-T2-001` before production writes after its Go 1.24.8 / go-jose v4.1.3 probe scan. This approved successor changes only the Go/auth dependency baseline, advisory disposition, and directly affected Build/verification gates. Bound identities and primary-source analysis: [Run evidence](../runs/RUN-C1-ENG-TECHPLAN-DEP-001/evidence/dependency-reconciliation.md). The exact candidate completed independent review and bounded resolution before Human approval; the predecessor remains preserved in Git history.
+ 
+ ## 2. Scope
+ 
+@@ -86,14 +86,15 @@ Input identity cocok: Solution SHA-256 `c136e673937c9ac1a583ecfa6a98ee630e1b0f6b
+ | D6 | Frozen same-person preparation UUID = idempotency identity, version c1-v1. | Chosen — §§7,9 | Separate disclosure opportunity/effect, resolve lost response without saved-draft product. |
+ | D6-alt | Single create without preparation/replay, blind new create after timeout. | Rejected | Uncertain commit/duplicate authority unsafe. |
+ | D7 | Organization-provided provenance + facts of establishment effects. | Chosen — §7 | No `verified`/`pending_review`/review taxonomy or broader current review-state claim. |
+-| D8 | Pinned OIDC/OAuth modules and application validation supplement library defaults. | Selected for approval — §10 | Metadata-compatible with Go baseline; compile/security scan pending. Never weaken trust for dependency convenience. |
++| D8 | Exact proposed baseline: Go 1.26.9; `coreos/go-oidc/v3` v3.16.0; `x/oauth2` v0.34.0; explicit `go-jose/v4` v4.1.4. Application validation still supplements library defaults. | Approved plan baseline — §10, `F-T2-001`; actual graph and runtime verification remain outstanding | Go 1.24.8 is outside current supported-major window and T2 probe reports affected standard library ranges; jose v4.1.4 fixes `GO-2026-4945`. Metadata/source rationale is documented; actual graph/build/scan remain Build gates. No weaker OIDC trust. |
++| D8-alt | Retain Go 1.24.8 and jose v4.1.3, or dismiss `GO-2026-4945` solely from all-symbol scanner reachability. | Rejected for approved plan | Old Go branch remains affected/unsupported; scanner trace alone neither establishes JWE exploitability nor gives a durable disposition. |
+ | D9 | Typed centralized same-origin client; local form, private query state; no refresh/BFF auth. | Selected for approval | React client guidance applies centralization/CSRF. Its bearer/refresh example N/A: specific solution has opaque cookie, no refresh. JWT signing-key/refresh guidance conditional N/A for local session, provider verification remains mandatory. |
+ | D10 | Separate future guard runbook, linked from spine. | Selected for approval | Own execution/rollback/monitoring lifecycle, rules §3. No child task files or independent operational authority created now. |
+ 
+ ## 6. Backward Compatibility
+ 
+ - Additive schema from baseline without C1 data; no historical migration import/destructive conversion. Preserve health route.
+-- OpenAPI currently `paths: {}`. §8 is proposed execution contract; coordinated source/bundle/types batch precedes consumers.
++- The coordinated C1 OpenAPI contract is active in `api/openapi/index.yaml`, with `api/openapi.yaml` and `api/openapi.d.ts` as its generated bundle and types. These artifacts express the §8 execution contract; this reference records contract availability, not runtime implementation or verification. T1's shared-contract prerequisite is complete and reviewed; downstream tasks consume the recorded revisions in the accepted manifest.
+ - Retain committed receipts and referenced persons; cleanup only expired uncommitted preparations/pending logins. Future consequence-version changes preserve historical replay and redisclose new intent.
+ - Auth-enabled runtime must use restricted DB credential, not Compose bootstrap/owner. Initial guard closed. Rollback closes new establishment and preserves durable success/receipts; never default `migrate-down -all` on populated environment.
+ 
+@@ -103,7 +104,7 @@ Input identity cocok: Solution SHA-256 `c136e673937c9ac1a583ecfa6a98ee630e1b0f6b
+ |---|---|---|---|---|
+ | RISK-1 | Partial persistence/concurrent confirmation/response loss. | Medium | High | R3/R6/R11; unique receipt, DB fault/race tests, authoritative replay. |
+ | RISK-2 | Initial Owner/IDOR privilege escalation. | Medium | High | Exact server scope/constraints; G2; bypass requests. |
+-| RISK-3 | New OIDC/session integration, fixation/leakage. | Medium | High | H1 settled; G1, R9/R10, protocol negatives + real login. Pending-login restart requires new login. |
++| RISK-3 | New OIDC/session integration, fixation/leakage; dependency advisory or toolchain mismatch. | Medium | High | H1 settled; G1, R9/R10, protocol negatives + real login. Approved D8 planned pins and §10 applicability review; Build must prove actual graph/source/integrity/scan before dependency commit. Pending-login restart requires new login. |
+ | RISK-4 | Display label interpreted as legal identity/uniqueness. | Medium | High | H3 settles technical field validity; duplicates allowed; no legal badge. |
+ | RISK-5 | Unrecorded conflict/guard-close race/runtime privileged credential. | Medium | High | H2/R12; operator receipt/all-holds evidence, real privilege tests. Baseline bootstrap user is not suitable application runtime. Human awareness outside recorded input not detected automatically. |
+ | RISK-6 | Truth upgrade in data/copy/inspection. | Medium | High | R4/R5, transition facts not current review taxonomy; rendered acceptance. |
+@@ -174,7 +175,7 @@ Future approved Build tasks only; this Run does not self-dispatch. Backend/front
+ 
+ | Task | Owned writes / dependencies | Completion evidence / gates |
+ |---|---|---|
+-| T1 Shared contract | API concern owner coordinates §8 with backend/frontend; source, validate/bundle, generated types; no consumer production writes in this batch. | Exact Techplan approved; contract captures auth/state/errors/scope; no G1–G3 implementation permission implied. |
++| T1 Shared contract | **Completed and reviewed.** API concern owner coordinated §8 with backend/frontend; source, bundle, and generated types are active. | Accepted manifest's T1→T2 prerequisite is satisfied by the reviewed source/bundle/types revisions and validation/bundle evidence. This status establishes contract readiness only; it does not imply runtime implementation or G1–G3 permission. |
+ | T2 Identity/session | Backend platform auth/config/person-session migrations/HTTP auth+CSRF/dependencies. Depends T1. | G1 before core writes; G2/G3 too if authority-bearing schema touched. Protocol negatives/person-upsert/session-lock checks authored. |
+ | T3 Aggregate/guard | Backend Organization service/repository/handlers, additive aggregate/preparation/guard/audit schema and restricted credentials/control. Depends T1/T2. | G2+G3 before protected writes; atomic confirm/scoped reads/privilege/DB fault-race tests authored. |
+ | T4 Guard operation docs | Scoped new docs/project/c1-establishment-guard-runbook.md + backend setup/config examples; coordinate T3. | Parameterized operating path/privileges/audit/all-holds reopen/rollback. G3 for executable control/provisioning; no legal resolution authority. |
+@@ -213,19 +214,24 @@ Decomposition: **Consider after approval** — contract/backend security-data/fr
+ | backend/cmd/server/main.go — run/loadEnvironment/healthz | Sole health route/config/composition | Compose auth + Organization routes, safe config validation, preserve health. |
+ | backend/internal/platform/db/db.go — Open | Connectivity-only pgxpool | Reuse pool with narrow repo/transaction dependencies and restricted runtime credential. |
+ | backend/internal/domain/, migrations/ — .gitkeep | No live C1 schema/domain | Add Organization domain/platform auth/additive constraints; physical names ordinary freedom. |
+-| backend/go.mod — go 1.24.8; pgx/v5 v5.8.0 | Current module/compiler substrate | Add exact auth pins below; derived go.sum in Build. |
++| backend/go.mod — currently go 1.24.8; pgx/v5 v5.8.0 | Current module/compiler substrate | Future T2 Build changes Go toolchain baseline to exact candidate 1.26.9 and adds exact auth pins below; generated go.sum and compatibility/security evidence are Build-owned. pgx baseline is outside this candidate reconciliation. |
+ | backend/Makefile — verify/security/migrate-up | Existing tooling | Use checks + proposed explicit isolated integration route; no destructive migrate-down default. |
+-| api/openapi/index.yaml — paths: {}; api/package.json — validate/bundle | Source contract + tooling | §8 source/bundle/types coordinated, no parallel handwritten model. |
++| `api/README.md`; `api/openapi/index.yaml` (active source), `api/openapi.yaml` (generated bundle), `api/openapi.d.ts` (generated types); `api/package.json` — validate/bundle | Active coordinated C1 contract and tooling | §8's source/bundle/types contract is available to downstream tasks. Exact T1 identities and review evidence follow. Build reopens live artifacts; their presence/review does not establish backend runtime behavior. No parallel handwritten model. |
+ | frontend/app/page.tsx/layout.tsx; components/README.md | Neutral home, fonts/layout; broad contracts empty | C1 routes/nav/route-local components; register shared primitives only if demonstrated. |
+ | frontend/package.json — verify/build/test:browser | Existing Vitest/RTL/MSW/Playwright/Next | Reuse locked tooling/typed client/local form+query; no additional UI dependency required. |
+ | Caddyfile — handle_path /api/*; docker-compose.yml — postgres/caddy; Makefile — up-podman | Same-origin prefix stripping/Postgres16/localhost8080 | Preserve topology; coordinate restricted provisioning T3/T4; MinIO unused. |
+ | .harscode-spaces/.local-config.yaml — runtime | Podman/podman-compose | Probe actual configured route; Docker CLI absence is not runtime unavailability. |
+ 
+-**Dependency selection — read-only primary evidence checked 2026-10-09:**
++Active T1 identities: source `api/openapi/index.yaml` SHA-256 `ddefffbe588459cb0cba9f68dfedaccba3da8a1313f1956511cf628df7199965`; generated bundle `api/openapi.yaml` SHA-256 `38bb6c531804b54e9d5ce56d623c397a590722c56dcb7a3c12e646bb8280fa09`; generated types `api/openapi.d.ts` SHA-256 `d21e8aa1eec92a95cc1fed87d976f726f59b48bd334aa8e463844d48e16cb80c`. The accepted [five-task manifest](tasks/manifest.md), SHA-256 `2950408dc48c12d5a8bbed96a88095a20ed7e1e02fd4190293691a90b111b30d`, records the unchanged downstream T1 dependency conditions. T1 patch Review is [RUN-C1-ENG-CODEREVIEW-T1-PATCH-001](../runs/RUN-C1-ENG-CODEREVIEW-T1-PATCH-001/evidence/review-findings-1.md), SHA-256 `f8a61a3bfd591a5310e291e84ec0aac393b615c731216238abbacee0342782ea`; its bound Build/Patch report records focused contract checks as Implementer-reported. These identities establish the reviewed contract artifacts and T1 prerequisite only, not backend implementation or runtime verification.
+ 
+-- Pin `github.com/coreos/go-oidc/v3 v3.16.0` + `golang.org/x/oauth2 v0.34.0`. [OIDC go.mod](https://raw.githubusercontent.com/coreos/go-oidc/v3.16.0/go.mod) and [OAuth2 go.mod](https://raw.githubusercontent.com/golang/oauth2/v0.34.0/go.mod) require Go1.24. OIDC requires OAuth2≥v0.28.0 and go-jose/v4 v4.1.3; preserve go-jose≥v4.1.3, whose [module](https://raw.githubusercontent.com/go-jose/go-jose/v4.1.3/go.mod) requires Go1.24. Metadata compatible with baseline Go1.24.8; not compile/security evidence or latest-version claim.
++**Approved-plan dependency/toolchain baseline — read-only primary evidence checked 2026-10-10; Build verification remains pending:**
++
++- Use exact Go **1.26.9** for the future T2 Build compiler/runtime baseline and a compatible `go.mod` Go directive; explicitly require `github.com/coreos/go-oidc/v3 v3.16.0`, `golang.org/x/oauth2 v0.34.0`, and `github.com/go-jose/go-jose/v4 v4.1.4`. [Go release history](https://go.dev/doc/devel/release) establishes 1.26.9 (2026-10-08) on a supported major branch; Go 1.24 is beyond the two-newer-major support policy. [OIDC](https://raw.githubusercontent.com/coreos/go-oidc/v3.16.0/go.mod), [OAuth2](https://raw.githubusercontent.com/golang/oauth2/v0.34.0/go.mod), and [jose v4.1.4](https://raw.githubusercontent.com/go-jose/go-jose/v4.1.4/go.mod) each declare Go 1.24 minimum. OIDC's lower transitive jose v4.1.3 / OAuth2 v0.28.0 requirements are overridden by these explicit pins. Metadata compatibility is not a compiled/security-clean graph claim.
++- T2 probe's Go 1.24.8 source scan reported 50 IDs: 49 standard-library findings across symbol/package/module levels and one jose finding. The complete per-ID scanner-version matrix, source URLs, directly reviewed primary pages, and reachability limits are in the Run evidence. [GO-2026-6603](https://pkg.go.dev/vuln/GO-2026-6603) and [GO-2026-6617](https://pkg.go.dev/vuln/GO-2026-6617) affect HTTP/2 server behavior and list Go 1.26.9 as fixed on that branch; [GO-2026-4340](https://pkg.go.dev/vuln/GO-2026-4340) demonstrates an older TLS fix alone cannot settle the October scan. Scanner source traces indicate potential reachability, not exploit reproduction; actual HTTP/2 edge exposure and final resolved graph remain unverified. Go 1.26.9 is the proposed patched baseline, subject to new Build scan and per-advisory review of findings that remain; unreviewed primary pages are not claimed verified by this candidate.
++- [GO-2026-4945](https://pkg.go.dev/vuln/GO-2026-4945) marks all jose/v4 symbols before v4.1.4, while the [upstream advisory](https://github.com/go-jose/go-jose/security/advisories/GHSA-78h2-9frx-2jm8) identifies a JWE key-wrap decryption panic. Intended T2 OIDC ID-token processing is JWS RS256 verification with no JWE decrypt; therefore a verifier-symbol hit does **not** establish that JWE attack path. This conditional path disposition does not clear unimplemented code or future JWE use. Explicit [v4.1.4 patch](https://github.com/go-jose/go-jose/releases/tag/v4.1.4) removes the reported affected module range without suppressing the finding or accepting residual vulnerable-version risk. If implementation introduces JWE/key-wrap parsing, reopen applicability.
++- Some Go advisories also name `golang.org/x/net` fixes, including [IDNA before v0.55.0](https://pkg.go.dev/vuln/GO-2026-5026) and [HTTP/2 before v0.60.0](https://pkg.go.dev/vuln/GO-2026-6603). It was absent from T2 probe's selected module graph; do not add an unused pin by guess. Reconcile an actual resolved x/net version and its package/symbol path if Build introduces it.
+ - [Tagged verifier source](https://raw.githubusercontent.com/coreos/go-oidc/v3.16.0/oidc/verify.go) leaves nonce/authorized-party checks to caller and allows a Google issuer alias. Configure exact client/RS256, all skip flags false; after verified token require exact issuer `https://accounts.google.com`, exact nonce and applicable azp. Use protocol-library S256 helpers; no handwritten JWT/signature implementation.
+-- Build inspects tagged library APIs/source and resolved graph; `go mod verify` + `govulncheck ./...` before dependency commit, actual toolchain compile/tests and resolved pins recorded. Vulnerable/incompatible selection requires bounded dependency reconciliation, never weaker trust/silent toolchain upgrade. Existing frontend/API lockfiles retained; no dependencies installed by Planner.
++- Build inspects tagged APIs/source and exact resolved graph under Go 1.26.9, records `go version`, `go list -m all`, `go mod verify`, source `govulncheck ./...`, compile/focused auth checks before dependency commit, and reports every remaining finding with advisory-specific affected range, package/symbol path, applicability and residual risk. Scanner clean is not inferred from this plan or prior probe. Vulnerable/incompatible selection requires bounded reconciliation, never suppressed findings, weaker trust, or a silent toolchain/version substitution. Existing frontend/API lockfiles retained; no dependencies installed by Planner.
+ 
+ Applicable current Harscode: Go authorization/IDOR, privilege separation, token lifecycle (conditional D9), dependency/supply chain/integration setup; REST CSRF/cookie; PostgreSQL locking; React server/client boundary, centralized client (D9), visual verification. Current source files read, not prior paraphrases. Build reopens live anchors. Naming/narrow interfaces/SQL organization/preparation TTL/timeouts/list size/thresholds/copy/layout remain ordinary freedom; login≤10m/session8h and material trust/atomicity/guard/scope fixed.
+ 
+@@ -235,7 +241,7 @@ Expected future implementation, not this Run's writes:
+ 
+ | File / area | Change type | Description |
+ |---|---|---|
+-| api/openapi/ + derived api/openapi.yaml/types | Shared coordinated | T1 §8 contract. |
++| `api/openapi/index.yaml` + derived `api/openapi.yaml`/`api/openapi.d.ts` | T1 completed; reviewed shared contract | Current active contract revisions are consumed by T2/T3/T5 per the unchanged accepted manifest; no further T1 API write is included in the future implementation batch. |
+ | backend/platform auth (proposed), domain Organization (proposed), HTTP composition | New backend | T2/T3; exact file names Build freedom. |
+ | backend/migrations, go.mod/go.sum, config examples/verification tests | Additive backend | Person/session/aggregate/preparation/guard/audit/restricted provisioning; G1–G3. |
+ | docs/project/c1-establishment-guard-runbook.md + scoped backend operating docs | Explicit coordinated docs | T4 execution/privileges/audit/holds/reopening/rollback. |
+@@ -269,7 +275,7 @@ Future ownership, **not executed evidence**. Build runs authored focused checks
+ | R10 | Cookie flags/dev-only exception/production HTTP rejection, rotation/fixation/8h expiry/logout; Origin/CSRF denial/no credentialed CORS/fixed redirect; callback log/no-store secrecy. | Testing | Auth/browser bypass compromises every Owner surface. |
+ | R13 | Unicode trim/empty/200/201/controls, duplicate names/escaped render, strict bodies, safe envelopes/no-store, bounded keyset ties; two-person cache isolation after logout/login. | Testing | Validity/injection/enumeration/private-cache leaks. |
+ | R2, R4, R5, R6, R13 | Playwright narrow/wide rendered sample: long name, keyboard/focus, loading/invalid/login/expired/hold/definite failure/unknown/empty/success. Inspect hierarchy/overflow/reachable actions vs Sunlit Editorial/patterns. | Testing | RTL/compile cannot prove visible consequences or responsive usability. |
+-| R14 | Dependency source/graph review, go mod verify/govulncheck before dependency commit; focused go/httptest; API validate/bundle/types; frontend verify/build/authored tests executable. | Build | Proportional edit-loop/toolchain/supply-chain evidence. |
++| R14 | Under proposed Go 1.26.9 + exact OIDC/OAuth2/jose pins, record actual compiler/runtime toolchain, resolved graph/source, `go mod verify`, source `govulncheck ./...` and per-finding applicability before dependency commit; focused go/httptest; API validate/bundle/types; frontend verify/build/authored tests executable. Reconcile any new affected dependency/path or incompatibility before commit. | Build | T2 probe reported affected ranges; module metadata and this candidate cannot prove actual compatibility, reachability, or a clean scanner result. |
+ | R8, R14 | Exact approval + separate G1–G3 permissions before protected writes, limitations recorded. | Human | Product/solution/model approval is not implementation authorization. |
+ 
+ **Future execution route:** backend `make verify` (lint/unit/race/contract/security), `go mod verify`; proposed bounded isolated `go test -tags=integration ./...` tests for actual PostgreSQL behavior (integration artifacts not present today). Use configured Podman/podman-compose (`make up-podman`) with disposable state/distinct runtime-operator-migration roles. Never production data/bootstrap-superuser-only proof. Deterministic cleanup/bounded timeout; after abort inspect leaked processes/resources. Race detector for process-local pending-login/shared state; real DB races separately required. No broad load suite for bounded pilot.
+@@ -292,9 +298,10 @@ Refined sensitive concerns not explicit in earlier Exploration: nonce/azp/issuer
+ 
+ ### Active — needs external input or verification
+ 
+-5. **Provider/runtime/operator/dependency evidence.** Fixed Google configuration/registered callback/consent/test user/real login, HTTPS, configured Podman/PostgreSQL isolated roles, named guard input/operator/initial open evidence; actual module integrity/vulnerability/compile. Owners Build/Testing/operator/Human per §§9,12. Not tested here; no credentials persisted. No unresolved material planning blocker identified.
++5. **Provider/runtime/operator/dependency evidence.** Fixed Google configuration/registered callback/consent/test user/real login, HTTPS, configured Podman/PostgreSQL isolated roles, named guard input/operator/initial open evidence; actual Go 1.26.9 and module compatibility, integrity, new source scan, and compile. The 50-ID T2 matrix is scanner-reported; primary pages were opened selectively, so Build must confirm any advisory still present in its actual graph and document affected/fixed ranges, use-path applicability, and residual risk. Owners Build/Testing/operator/Human per §§9,12. Not tested in this Planner Run; no credentials persisted. T2's `F-T2-001`/`B-T2-001` remains a Build blocker. Independent Review and exact Human approval are complete; only fresh Build-owned graph, compatibility, integrity, source scan, compile, and surviving-advisory checks can establish a usable baseline and permit dependency commit.
+ 
+ ### Resolved — retained as decision history
++12. ~~**Successor dependency/toolchain plan approval.**~~ **RESOLVED — Anhar, 2026-10-10:** “techplan approved ya bro” approves exact candidate SHA-256 `2c64128e95a52773da024c2ec856bc5ba7a047539f2197a6d747513d378ae629`, including the proposed Go 1.26.9 / OIDC v3.16.0 / OAuth2 v0.34.0 / go-jose/v4 v4.1.4 baseline and its Build gates. This does not commit dependencies, establish actual graph/scan cleanliness, close `B-T2-001`, dispatch Build, or change G1–G3.
+ 
+ 1. ~~**Valid Organization context (prior Active 1).**~~ **RESOLVED — H3 + Solution §§2,4:** display name/UUID/attributed Owner/provenance technical validity within Stage6/7 deliberate field freedom; not missing Product/legal validity.
+ 2. ~~**Trusted actor/auth boundary (prior Active 2).**~~ **RESOLVED — H1 + Solution §§5–6:** Google OIDC/local person/session direction; G1 separately pending permission.

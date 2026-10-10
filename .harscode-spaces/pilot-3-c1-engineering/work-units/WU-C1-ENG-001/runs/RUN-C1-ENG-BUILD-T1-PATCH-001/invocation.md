@@ -58,7 +58,9 @@ Run focused existing API validation, bundle generation, and type generation; ins
 - **HUMAN_REQUIRED:** Any new material requirement/authority/risk choice, scope beyond the patch plan, destructive action, deployment/publication, or protected implementation beyond the already authorized G1–G3 surfaces.
 - **Model / effort:** `gpt-6-luna` / `medium`; registry approval not required. Bounded implementation of explicit Review resolutions using existing tooling; no new architecture/security choice. If capability proves insufficient despite complete inputs, stop and route to Orchestrator rather than infer semantics.
 - **Harness / session:** `codex-cli` / fresh Implementer, Human-Assisted dispatch.
-- **Dispatch readiness:** READY_FOR_HUMAN_DISPATCH; no Participant execution is established.
+- **Dispatch / outcome:** Human launch and completed outcome returned by Anhar. `RUN_PATH/evidence/patch-report-1.md` records COMPLETED, the F1–F4 patch, focused tooling results, and remaining runtime verification limits.
+- **Result identity:** Patch report SHA-256 `92d8d1f8cfa86eb4b4d1c197bbaa493b09531d504b0a43846a62937c0016e3f7`; patched source/bundle/types SHA-256 values are indexed in that report and WU current state.
+- **Next route:** Fresh independent Code Review `RUN-C1-ENG-CODEREVIEW-T1-PATCH-001` is prepared; its separate model approval is pending. Do not resume or redispatch this completed Build/Patch Run.
 
 ## Terminal evidence
 

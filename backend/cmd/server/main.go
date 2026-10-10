@@ -15,6 +15,7 @@ import (
 
 	"github.com/joho/godotenv"
 
+	"github.com/anhsbolic/kencleng/backend/internal/platform/auth"
 	"github.com/anhsbolic/kencleng/backend/internal/platform/db"
 )
 
@@ -38,6 +39,26 @@ func run() error {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /healthz", healthz)
+	appEnv := os.Getenv("APP_ENV")
+	if appEnv == "" {
+		appEnv = "development"
+	}
+	browser := auth.BrowserConfig{Origin: os.Getenv("APP_ORIGIN"), Development: appEnv == "development"}
+	if err := browser.Validate(); err != nil {
+		return fmt.Errorf("configure authentication: %w", err)
+	}
+	providerCtx, cancelProvider := context.WithTimeout(ctx, 10*time.Second)
+	protocol, err := auth.NewGoogleProtocol(providerCtx, os.Getenv("GOOGLE_CLIENT_ID"),
+		os.Getenv("GOOGLE_CLIENT_SECRET"), browser.Origin+"/api/auth/google/callback")
+	cancelProvider()
+	if err != nil {
+		return fmt.Errorf("initialize Google sign-in: %w", err)
+	}
+	authHandler, err := auth.NewHandler(auth.Store{Pool: pool}, protocol, browser)
+	if err != nil {
+		return fmt.Errorf("configure authentication: %w", err)
+	}
+	authHandler.Register(mux)
 
 	srv := &http.Server{
 		Addr:              ":" + os.Getenv("APP_PORT"),
@@ -82,6 +103,12 @@ func loadEnvironment() error {
 	}
 	if os.Getenv("DATABASE_URL") == "" {
 		return fmt.Errorf("DATABASE_URL is required")
+	}
+	if appEnv != "development" && appEnv != "production" {
+		return fmt.Errorf("APP_ENV must be development or production")
+	}
+	if os.Getenv("APP_ORIGIN") == "" || os.Getenv("GOOGLE_CLIENT_ID") == "" || os.Getenv("GOOGLE_CLIENT_SECRET") == "" {
+		return fmt.Errorf("APP_ORIGIN and Google OIDC client configuration are required")
 	}
 	return nil
 }

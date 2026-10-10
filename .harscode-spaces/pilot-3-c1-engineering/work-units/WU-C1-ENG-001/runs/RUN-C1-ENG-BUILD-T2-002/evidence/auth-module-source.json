@@ -1,0 +1,48 @@
+{
+	"Path": "github.com/coreos/go-oidc/v3",
+	"Version": "v3.16.0",
+	"Info": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/github.com/coreos/go-oidc/v3/@v/v3.16.0.info",
+	"GoMod": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/github.com/coreos/go-oidc/v3/@v/v3.16.0.mod",
+	"Zip": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/github.com/coreos/go-oidc/v3/@v/v3.16.0.zip",
+	"Dir": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/coreos/go-oidc/v3@v3.16.0",
+	"Sum": "h1:qRQUCFstKpXwmEjDQTIbyY/5jF00+asXzSkmkoa/mow=",
+	"GoModSum": "h1:wqPbKFrVnE90vty060SB40FCJ8fTHTxSwyXJqZH+sI8=",
+	"Origin": {
+		"VCS": "git",
+		"URL": "https://github.com/coreos/go-oidc",
+		"Hash": "e9584733f8bb6c4683d1e98b4fb22eee121f7dff",
+		"Ref": "refs/tags/v3.16.0"
+	}
+}
+{
+	"Path": "golang.org/x/oauth2",
+	"Version": "v0.34.0",
+	"Info": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/golang.org/x/oauth2/@v/v0.34.0.info",
+	"GoMod": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/golang.org/x/oauth2/@v/v0.34.0.mod",
+	"Zip": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/golang.org/x/oauth2/@v/v0.34.0.zip",
+	"Dir": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/golang.org/x/oauth2@v0.34.0",
+	"Sum": "h1:hqK/t4AKgbqWkdkcAeI8XLmbK+4m4G5YeQRrmiotGlw=",
+	"GoModSum": "h1:lzm5WQJQwKZ3nwavOZ3IS5Aulzxi68dUSgRHujetwEA=",
+	"Origin": {
+		"VCS": "git",
+		"URL": "https://go.googlesource.com/oauth2",
+		"Hash": "acc38155b7f6f36aefcb58faff6f36d314dd915c",
+		"Ref": "refs/tags/v0.34.0"
+	}
+}
+{
+	"Path": "github.com/go-jose/go-jose/v4",
+	"Version": "v4.1.4",
+	"Info": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/github.com/go-jose/go-jose/v4/@v/v4.1.4.info",
+	"GoMod": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/github.com/go-jose/go-jose/v4/@v/v4.1.4.mod",
+	"Zip": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/github.com/go-jose/go-jose/v4/@v/v4.1.4.zip",
+	"Dir": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/go-jose/go-jose/v4@v4.1.4",
+	"Sum": "h1:moDMcTHmvE6Groj34emNPLs/qtYXRVcd6S7NHbHz3kA=",
+	"GoModSum": "h1:x4oUasVrzR7071A4TnHLGSPpNOm2a21K9Kf04k1rs08=",
+	"Origin": {
+		"VCS": "git",
+		"URL": "https://github.com/go-jose/go-jose",
+		"Hash": "0e59876635f3dbf46d7b5e97b52bb75a3f96e7d9",
+		"Ref": "refs/tags/v4.1.4"
+	}
+}

@@ -25,7 +25,7 @@ paths:
       tags: [Authentication]
       operationId: startGoogleAuthentication
       summary: Start browser-bound Google sign-in
-      description: Uses fixed local destination and one-time state, nonce, and PKCE. It creates no Organization or Owner.
+      description: Uses fixed local destination and one-time browser-bound state, nonce, and PKCE. This browser-bound protocol is distinct from ordinary mutation Origin and CSRF enforcement. It creates no Organization or Owner.
       security: []
       responses:
         '302':
@@ -42,25 +42,21 @@ paths:
       tags: [Authentication]
       operationId: completeGoogleAuthentication
       summary: Complete browser-bound Google sign-in
-      description: Verifies the returned authorization response and initiating browser binding, maps the verified identity to a local person, and rotates the local session. Provider tokens and provider subject/email are not returned. Failure grants no session or Owner; redirects use a fixed local destination and never reflect arbitrary return URLs, referrers, codes, or provider errors.
+      description: Accepts a success query branch with code and state, or a provider-error branch with error and state; code and error are mutually exclusive. State and initiating-browser binding are required for trusted processing. Missing or malformed state and provider errors are safely handled as failure. This browser-bound protocol uses state, nonce, and PKCE rather than ordinary mutation Origin and CSRF enforcement. On verified success it maps the identity to a local person and rotates the local session. Provider tokens and provider subject/email are not returned. Every failure grants no session or Owner and redirects to a fixed local destination. Redirects never reflect arbitrary return URLs, referrers, codes, state, or provider error values.
       security: []
       parameters:
-        - { name: code, in: query, required: true, schema: { type: string } }
-        - { name: state, in: query, required: true, schema: { type: string } }
+        - { name: code, in: query, required: false, schema: { type: string } }
+        - { name: error, in: query, required: false, schema: { type: string } }
+        - { name: state, in: query, required: false, schema: { type: string } }
       responses:
         '302':
-          description: Fixed local application destination after callback processing
+          description: 302 to a fixed local application destination for both success and failure. Set-Cookie is present only after successful verified login; failure issues no session.
           headers:
             Location: { schema: { type: string, format: uri-reference } }
             Cache-Control: { $ref: '#/components/headers/PrivateNoStore' }
             Set-Cookie:
               schema: { type: string }
-              description: Rotated opaque local session cookie after successful verification
-        '400':
-          description: Invalid callback; no session granted; fixed local error redirect
-          headers:
-            Location: { schema: { type: string, format: uri-reference } }
-            Cache-Control: { $ref: '#/components/headers/PrivateNoStore' }
+              description: On successful verified login only, issue and rotate the opaque local session in the same environment-specific cookie, with an absolute eight-hour expiry. Production uses __Host-kencleng_session with HttpOnly; Secure; SameSite=Lax; Path=/ and no Domain. Explicit development at http://localhost:8080 uses the distinct host-only kencleng_session cookie without Secure; production never accepts that development cookie.
   /me:
     get:
       tags: [Authentication]
@@ -80,9 +76,16 @@ paths:
       tags: [Authentication]
       operationId: logout
       summary: Revoke the current local session
-      description: Requires same-origin request and CSRF token. Revokes the session and expires its cookie.
+      description: Ordinary browser mutation. Requires the exact configured browser Origin, application/json, and an X-CSRF-Token bound to the current session; deny before processing if any check fails. No credentialed CORS is permitted. Origin is browser-controlled and must not be manually set by client JavaScript. Revokes the session and expires the same environment-specific cookie that was issued.
       parameters:
         - $ref: '#/components/parameters/CsrfToken'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
       responses:
         '204':
           description: Session revoked and cookie expired
@@ -90,15 +93,16 @@ paths:
             Cache-Control: { $ref: '#/components/headers/PrivateNoStore' }
             Set-Cookie:
               schema: { type: string }
-              description: Expired local session cookie
+              description: Expire the same environment-specific cookie on revocation; production expires __Host-kencleng_session with HttpOnly; Secure; SameSite=Lax; Path=/ and no Domain, while explicit development at http://localhost:8080 expires kencleng_session.
         '401': { $ref: '#/components/responses/AuthenticationRequired' }
         '403': { $ref: '#/components/responses/RequestNotAllowed' }
+        '400': { $ref: '#/components/responses/InvalidRequest' }
   /organization-establishments:
     post:
       tags: [Organization establishment]
       operationId: prepareOrganizationEstablishment
       summary: Prepare an Organization establishment
-      description: Creates a same-person, time-limited preparation only. This does not create an Organization or grant Owner authority. The returned frozen name and all four consequence fields must be disclosed before confirmation. Reads, mutations, and errors are private and no-store.
+      description: Ordinary browser mutation. Requires the exact configured browser Origin, application/json, and an X-CSRF-Token bound to the current session; deny before processing if any check fails. No credentialed CORS is permitted. Origin is browser-controlled and must not be manually set by client JavaScript. Creates a same-person, time-limited preparation only. This does not create an Organization or grant Owner authority. The returned frozen name and all four consequence fields must be disclosed before confirmation. Reads, mutations, and errors are private and no-store.
       parameters:
         - $ref: '#/components/parameters/CsrfToken'
       requestBody:
@@ -126,7 +130,7 @@ paths:
       tags: [Organization establishment]
       operationId: getOrganizationEstablishment
       summary: Read a same-person preparation or its established result
-      description: Only the initiating person's session may read it. Unknown and outside-person IDs have the same 404 shape. A committed result remains readable even when new establishments are unavailable or its preparation has expired.
+      description: Only the initiating person's session may read it. Malformed UUID path input returns 400 invalid_request; a valid unknown or outside-person ID returns the same 404 shape. A committed result remains readable even when new establishments are unavailable or its preparation has expired.
       responses:
         '200':
           description: Prepared, expired, or established state
@@ -136,6 +140,7 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/PreparationState' }
         '401': { $ref: '#/components/responses/AuthenticationRequired' }
+        '400': { $ref: '#/components/responses/InvalidRequest' }
         '404': { $ref: '#/components/responses/NotFound' }
   /organization-establishments/{id}/confirm:
     parameters:
@@ -144,7 +149,7 @@ paths:
       tags: [Organization establishment]
       operationId: confirmOrganizationEstablishment
       summary: Confirm a disclosed preparation
-      description: Confirms only the frozen same-person preparation and consequence version. A committed result is replayed for the same person as historical result, not as a new grant subject to current hold or receipt expiry. An uncommitted stale or unknown consequence version requires a fresh preparation and disclosure. On transport loss or outcome_unknown, retain this preparation ID and read or replay this same command; do not blindly replace it. No caller-supplied identity, role, target, or override is accepted.
+      description: Ordinary browser mutation. Requires the exact configured browser Origin, application/json, and an X-CSRF-Token bound to the current session; deny before processing if any check fails. No credentialed CORS is permitted. Origin is browser-controlled and must not be manually set by client JavaScript. Confirms only the frozen same-person preparation and consequence version. A committed result is replayed for the same person as historical result, not as a new grant subject to current hold or receipt expiry. An uncommitted stale or unknown consequence version requires a fresh preparation and disclosure. On transport loss or outcome_unknown, retain this preparation ID and read or replay this same command; do not blindly replace it. No caller-supplied identity, role, target, or override is accepted.
       parameters:
         - $ref: '#/components/parameters/CsrfToken'
       requestBody:
@@ -185,7 +190,7 @@ paths:
       tags: [Organizations]
       operationId: listMyOrganizations
       summary: List Organizations where the current person is initial Owner
-      description: Uses a stable timestamp/UUID keyset and bounded page size. This authoritative private read remains available during a hold.
+      description: Uses a stable timestamp/UUID keyset and bounded page size. Malformed cursor or limit (including a limit below 1 or above the configured maximum) returns 400 invalid_request. This authoritative private read remains available during a hold.
       parameters:
         - { name: cursor, in: query, required: false, schema: { type: string } }
         - { name: limit, in: query, required: false, schema: { type: integer, minimum: 1 } }
@@ -198,6 +203,7 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/OrganizationPage' }
         '401': { $ref: '#/components/responses/AuthenticationRequired' }
+        '400': { $ref: '#/components/responses/InvalidRequest' }
   /organizations/{id}:
     parameters:
       - $ref: '#/components/parameters/OrganizationId'
@@ -205,7 +211,7 @@ paths:
       tags: [Organizations]
       operationId: getOrganization
       summary: Read an Organization within current Owner scope
-      description: Enforces object-level Owner scope on the server. Unknown and outside-person IDs have the same 404 shape. The establishment effects are facts about establishment only and do not describe all current or future review outcomes.
+      description: Enforces object-level Owner scope on the server. Malformed UUID path input returns 400 invalid_request; a valid unknown or outside-person ID returns the same 404 shape. The establishment effects are facts about establishment only and do not describe all current or future review outcomes.
       responses:
         '200':
           description: Authoritative private Organization view
@@ -215,14 +221,15 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/OrganizationView' }
         '401': { $ref: '#/components/responses/AuthenticationRequired' }
+        '400': { $ref: '#/components/responses/InvalidRequest' }
         '404': { $ref: '#/components/responses/NotFound' }
 components:
   securitySchemes:
     sessionCookie:
       type: apiKey
       in: cookie
-      name: kencleng_session
-      description: Opaque local session cookie; provider tokens are never used as bearer credentials.
+      name: __Host-kencleng_session
+      description: Production opaque local session cookie. Host-only (no Domain), HttpOnly, Secure, SameSite=Lax, Path=/. The only insecure development exception is the distinct host-only kencleng_session cookie at explicit http://localhost:8080; production requires HTTPS and never accepts the development cookie. Provider tokens are never used as bearer credentials.
   headers:
     PrivateNoStore:
       description: Response is private and must not be stored

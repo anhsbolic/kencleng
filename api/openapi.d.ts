@@ -13,7 +13,7 @@ export interface paths {
         };
         /**
          * Start browser-bound Google sign-in
-         * @description Uses fixed local destination and one-time state, nonce, and PKCE. It creates no Organization or Owner.
+         * @description Uses fixed local destination and one-time browser-bound state, nonce, and PKCE. This browser-bound protocol is distinct from ordinary mutation Origin and CSRF enforcement. It creates no Organization or Owner.
          */
         get: operations["startGoogleAuthentication"];
         put?: never;
@@ -33,7 +33,7 @@ export interface paths {
         };
         /**
          * Complete browser-bound Google sign-in
-         * @description Verifies the returned authorization response and initiating browser binding, maps the verified identity to a local person, and rotates the local session. Provider tokens and provider subject/email are not returned. Failure grants no session or Owner; redirects use a fixed local destination and never reflect arbitrary return URLs, referrers, codes, or provider errors.
+         * @description Accepts a success query branch with code and state, or a provider-error branch with error and state; code and error are mutually exclusive. State and initiating-browser binding are required for trusted processing. Missing or malformed state and provider errors are safely handled as failure. This browser-bound protocol uses state, nonce, and PKCE rather than ordinary mutation Origin and CSRF enforcement. On verified success it maps the identity to a local person and rotates the local session. Provider tokens and provider subject/email are not returned. Every failure grants no session or Owner and redirects to a fixed local destination. Redirects never reflect arbitrary return URLs, referrers, codes, state, or provider error values.
          */
         get: operations["completeGoogleAuthentication"];
         put?: never;
@@ -72,7 +72,7 @@ export interface paths {
         put?: never;
         /**
          * Revoke the current local session
-         * @description Requires same-origin request and CSRF token. Revokes the session and expires its cookie.
+         * @description Ordinary browser mutation. Requires the exact configured browser Origin, application/json, and an X-CSRF-Token bound to the current session; deny before processing if any check fails. No credentialed CORS is permitted. Origin is browser-controlled and must not be manually set by client JavaScript. Revokes the session and expires the same environment-specific cookie that was issued.
          */
         post: operations["logout"];
         delete?: never;
@@ -92,7 +92,7 @@ export interface paths {
         put?: never;
         /**
          * Prepare an Organization establishment
-         * @description Creates a same-person, time-limited preparation only. This does not create an Organization or grant Owner authority. The returned frozen name and all four consequence fields must be disclosed before confirmation. Reads, mutations, and errors are private and no-store.
+         * @description Ordinary browser mutation. Requires the exact configured browser Origin, application/json, and an X-CSRF-Token bound to the current session; deny before processing if any check fails. No credentialed CORS is permitted. Origin is browser-controlled and must not be manually set by client JavaScript. Creates a same-person, time-limited preparation only. This does not create an Organization or grant Owner authority. The returned frozen name and all four consequence fields must be disclosed before confirmation. Reads, mutations, and errors are private and no-store.
          */
         post: operations["prepareOrganizationEstablishment"];
         delete?: never;
@@ -112,7 +112,7 @@ export interface paths {
         };
         /**
          * Read a same-person preparation or its established result
-         * @description Only the initiating person's session may read it. Unknown and outside-person IDs have the same 404 shape. A committed result remains readable even when new establishments are unavailable or its preparation has expired.
+         * @description Only the initiating person's session may read it. Malformed UUID path input returns 400 invalid_request; a valid unknown or outside-person ID returns the same 404 shape. A committed result remains readable even when new establishments are unavailable or its preparation has expired.
          */
         get: operations["getOrganizationEstablishment"];
         put?: never;
@@ -136,7 +136,7 @@ export interface paths {
         put?: never;
         /**
          * Confirm a disclosed preparation
-         * @description Confirms only the frozen same-person preparation and consequence version. A committed result is replayed for the same person as historical result, not as a new grant subject to current hold or receipt expiry. An uncommitted stale or unknown consequence version requires a fresh preparation and disclosure. On transport loss or outcome_unknown, retain this preparation ID and read or replay this same command; do not blindly replace it. No caller-supplied identity, role, target, or override is accepted.
+         * @description Ordinary browser mutation. Requires the exact configured browser Origin, application/json, and an X-CSRF-Token bound to the current session; deny before processing if any check fails. No credentialed CORS is permitted. Origin is browser-controlled and must not be manually set by client JavaScript. Confirms only the frozen same-person preparation and consequence version. A committed result is replayed for the same person as historical result, not as a new grant subject to current hold or receipt expiry. An uncommitted stale or unknown consequence version requires a fresh preparation and disclosure. On transport loss or outcome_unknown, retain this preparation ID and read or replay this same command; do not blindly replace it. No caller-supplied identity, role, target, or override is accepted.
          */
         post: operations["confirmOrganizationEstablishment"];
         delete?: never;
@@ -154,7 +154,7 @@ export interface paths {
         };
         /**
          * List Organizations where the current person is initial Owner
-         * @description Uses a stable timestamp/UUID keyset and bounded page size. This authoritative private read remains available during a hold.
+         * @description Uses a stable timestamp/UUID keyset and bounded page size. Malformed cursor or limit (including a limit below 1 or above the configured maximum) returns 400 invalid_request. This authoritative private read remains available during a hold.
          */
         get: operations["listMyOrganizations"];
         put?: never;
@@ -176,7 +176,7 @@ export interface paths {
         };
         /**
          * Read an Organization within current Owner scope
-         * @description Enforces object-level Owner scope on the server. Unknown and outside-person IDs have the same 404 shape. The establishment effects are facts about establishment only and do not describe all current or future review outcomes.
+         * @description Enforces object-level Owner scope on the server. Malformed UUID path input returns 400 invalid_request; a valid unknown or outside-person ID returns the same 404 shape. The establishment effects are facts about establishment only and do not describe all current or future review outcomes.
          */
         get: operations["getOrganization"];
         put?: never;
@@ -414,9 +414,10 @@ export interface operations {
     };
     completeGoogleAuthentication: {
         parameters: {
-            query: {
-                code: string;
-                state: string;
+            query?: {
+                code?: string;
+                error?: string;
+                state?: string;
             };
             header?: never;
             path?: never;
@@ -424,22 +425,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Fixed local application destination after callback processing */
+            /** @description 302 to a fixed local application destination for both success and failure. Set-Cookie is present only after successful verified login; failure issues no session. */
             302: {
                 headers: {
                     Location?: string;
                     "Cache-Control": components["headers"]["PrivateNoStore"];
-                    /** @description Rotated opaque local session cookie after successful verification */
+                    /** @description On successful verified login only, issue and rotate the opaque local session in the same environment-specific cookie, with an absolute eight-hour expiry. Production uses __Host-kencleng_session with HttpOnly; Secure; SameSite=Lax; Path=/ and no Domain. Explicit development at http://localhost:8080 uses the distinct host-only kencleng_session cookie without Secure; production never accepts that development cookie. */
                     "Set-Cookie"?: string;
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Invalid callback; no session granted; fixed local error redirect */
-            400: {
-                headers: {
-                    Location?: string;
-                    "Cache-Control": components["headers"]["PrivateNoStore"];
                     [name: string]: unknown;
                 };
                 content?: never;
@@ -477,18 +469,23 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
         responses: {
             /** @description Session revoked and cookie expired */
             204: {
                 headers: {
                     "Cache-Control": components["headers"]["PrivateNoStore"];
-                    /** @description Expired local session cookie */
+                    /** @description Expire the same environment-specific cookie on revocation; production expires __Host-kencleng_session with HttpOnly; Secure; SameSite=Lax; Path=/ and no Domain, while explicit development at http://localhost:8080 expires kencleng_session. */
                     "Set-Cookie"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
+            400: components["responses"]["InvalidRequest"];
             401: components["responses"]["AuthenticationRequired"];
             403: components["responses"]["RequestNotAllowed"];
         };
@@ -546,6 +543,7 @@ export interface operations {
                     "application/json": components["schemas"]["PreparationState"];
                 };
             };
+            400: components["responses"]["InvalidRequest"];
             401: components["responses"]["AuthenticationRequired"];
             404: components["responses"]["NotFound"];
         };
@@ -617,6 +615,7 @@ export interface operations {
                     "application/json": components["schemas"]["OrganizationPage"];
                 };
             };
+            400: components["responses"]["InvalidRequest"];
             401: components["responses"]["AuthenticationRequired"];
         };
     };
@@ -641,6 +640,7 @@ export interface operations {
                     "application/json": components["schemas"]["OrganizationView"];
                 };
             };
+            400: components["responses"]["InvalidRequest"];
             401: components["responses"]["AuthenticationRequired"];
             404: components["responses"]["NotFound"];
         };
