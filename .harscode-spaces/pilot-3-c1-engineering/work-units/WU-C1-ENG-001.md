@@ -18,18 +18,24 @@ If work would introduce or materially change privileged authorization, money mov
 ## Current state
 
 - **Execution status:** ACTIVE
-- **Scheduling state:** WAITING_PARTICIPANT_HANDOFF
+- **Scheduling state:** QUEUED — Loop Health Audit prepared; Human-Assisted dispatch pending.
 - **Horizon:** NOW
 - **Readiness:** Approved Techplan, accepted five-task split, and G1–G3 remain effective. Fresh T2/G1 Build verified Go 1.26.9, exact auth pins, graph, integrity, and focused compile, but found five open pgx/x/text advisories. Dependency acceptance is blocked; T2 code is partial, uncommitted, and lacks authored behavioral checks. T1→T2 contract prerequisite remains satisfied; T3 person/session prerequisite remains unavailable. T5 remains independent under the accepted manifest.
-- **Current Run:** None active. `RUN-C1-ENG-BUILD-T2-002` ended BLOCKED with F-T2-002 / B-T2-002. `RUN-C1-ENG-BUILD-T2-001` remains terminal BLOCKED and was not resumed or redispatched.
-- **Last completed Runs:** `RUN-C1-ENG-TECHPLAN-REPORT-REFRESH-002` has a matching terminal handoff/report. T2 refresh target was directly inspected, but its required terminal handoff is absent; see its `evidence/orchestrator-reconciliation.md`. Current Approved Techplan SHA-256 `6d2e41e177e4adaf74f53a06d81dd568def75019c8dc4e4792d938a869896d79`.
-- **Next dispatch:** None until the T2 snapshot-refresh Participant supplies its structured terminal Phase handoff. The report refresh is reconciled; the T2 target appears updated but its Run is not formally reconciled without that handoff.
+- **Current Run:** `RUN-C1-ENG-LOOPHEALTH-001` is prepared and READY_FOR_HUMAN_DISPATCH; Participant not dispatched and no audit verdict exists. The preceding `RUN-C1-ENG-BUILD-T2-002` ended BLOCKED with F-T2-002 / B-T2-002. `RUN-C1-ENG-BUILD-T2-001` remains terminal BLOCKED and was not resumed or redispatched.
+- **Last completed Runs:** `RUN-C1-ENG-TECHPLAN-REPORT-REFRESH-002` has a matching terminal handoff/report. T2 refresh target was directly inspected, but its Run has no terminal Participant handoff; see its `evidence/orchestrator-reconciliation.md`. Current Approved Techplan SHA-256 `6d2e41e177e4adaf74f53a06d81dd568def75019c8dc4e4792d938a869896d79`.
+- **Next dispatch:** Human-Assisted `RUN-C1-ENG-LOOPHEALTH-001` only. No ordinary Build or other intervention is routed until the audit verdict is reconciled.
 - **Active blocker:** `B-T2-002` blocks dependency acceptance/commit and T2 completion after the fresh actual source scan. `B-T2-001` is not closed: its usable-baseline gate is still unmet. T3 prerequisite remains unavailable; T5 remains independent. Provider/runtime/operator evidence is separately unverified.
-- **Updated:** 2026-10-10
+- **Updated:** 2026-10-11
 
 Exploration, first Draft synthesis, Solution Shaping, post-shaping synthesis `002`, independent Techplan review, Planner convergence/report `003`, decomposition, and T1 Build have durable completed evidence. Anhar approved the exact reported source, then separately answered “ya aku izinkan” to the explicitly bounded G1–G3 implementation request. The authorization applies only to those presented surfaces under the approved Techplan/Solution Contract. Those approvals alone establish no model/session/dispatch or runtime verification fact; T1 execution is established separately by the returned Build report. This Work Unit state does not alter product or pre-engineering authority.
 
-## Latest durable reconciliation (2026-10-10)
+## Latest durable reconciliation (2026-10-11)
+
+Anhar approved a bounded, read-only Loop Health Audit for `WU-C1-ENG-001 / T2 dependency acceptance / security-dependency gate` and separately approved `gpt-6-sol` / `medium` for this exact audit Run. The Orchestrator prepared fresh Reviewer Run `RUN-C1-ENG-LOOPHEALTH-001`, specialization `Orchestration / Loop Health`, with `ARTIFACT_TARGET: none`; Invocation is [here](WU-C1-ENG-001/runs/RUN-C1-ENG-LOOPHEALTH-001/invocation.md). It is READY_FOR_HUMAN_DISPATCH and has not been dispatched. No verdict or audit evidence exists.
+
+The audit is bound to the C1/T2 current state, material Events, terminal T2-001/T2-002 Build reports, current Approved Techplan/T2 snapshot/manifest, relevant dependency planning/review/promotion evidence, the post-approval refresh handoff and missing T2-refresh handoff record, and current Harscode orchestration/Loop Health guidance. Exact content identities and read boundary are in the Invocation. The Reviewer must independently evaluate triggers and return exactly one diagnostic verdict. Audit output is Run-owned only; no Work Unit, blocker, dependency, implementation, authority, or Control Tower mutation is authorized. Normal Build routing and all other interventions remain held until the Orchestrator reconciles the verdict.
+
+## Previous durable reconciliation (2026-10-10)
 
 Anhar requested fresh T2/G1 execution using the prepared invocation. Orchestrator dispatched collaboration Session `/root/implementer_t2_002` with `gpt-6-sol` / `medium` and `fork_turns=none`; this is actual collaboration provenance, not a separately exposed codex-cli process. The Run ended **BLOCKED**. [Build report](WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-002/evidence/build-report.md) SHA-256 `474e39ddd7358c4bf0f1c94a1cb217406cd81285046b06207a8cb4332e91bf93` contains exactly one Phase handoff, actual graph/source/integrity/scan evidence, changed-file identities, and per-ID disposition.
 
