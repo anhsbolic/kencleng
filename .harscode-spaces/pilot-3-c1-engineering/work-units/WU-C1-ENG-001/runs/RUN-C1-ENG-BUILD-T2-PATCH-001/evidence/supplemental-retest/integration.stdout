@@ -1,0 +1,63 @@
+=== RUN   TestGoogleProtocolNegatives
+=== RUN   TestGoogleProtocolNegatives/valid_signed_fixture
+=== RUN   TestGoogleProtocolNegatives/wrong_issuer
+=== RUN   TestGoogleProtocolNegatives/Google_issuer_alias
+=== RUN   TestGoogleProtocolNegatives/wrong_audience
+=== RUN   TestGoogleProtocolNegatives/multiple_audiences
+=== RUN   TestGoogleProtocolNegatives/wrong_azp
+=== RUN   TestGoogleProtocolNegatives/wrong_nonce
+=== RUN   TestGoogleProtocolNegatives/missing_nonce
+=== RUN   TestGoogleProtocolNegatives/expired
+=== RUN   TestGoogleProtocolNegatives/empty_subject
+=== RUN   TestGoogleProtocolNegatives/forged_signature
+=== RUN   TestGoogleProtocolNegatives/unapproved_algorithm
+=== RUN   TestGoogleProtocolNegatives/missing_verification_key
+=== RUN   TestGoogleProtocolNegatives/missing_ID_token
+=== RUN   TestGoogleProtocolNegatives/provider_failure
+--- PASS: TestGoogleProtocolNegatives (1.22s)
+    --- PASS: TestGoogleProtocolNegatives/valid_signed_fixture (0.01s)
+    --- PASS: TestGoogleProtocolNegatives/wrong_issuer (0.01s)
+    --- PASS: TestGoogleProtocolNegatives/Google_issuer_alias (0.01s)
+    --- PASS: TestGoogleProtocolNegatives/wrong_audience (0.01s)
+    --- PASS: TestGoogleProtocolNegatives/multiple_audiences (0.01s)
+    --- PASS: TestGoogleProtocolNegatives/wrong_azp (0.01s)
+    --- PASS: TestGoogleProtocolNegatives/wrong_nonce (0.01s)
+    --- PASS: TestGoogleProtocolNegatives/missing_nonce (0.01s)
+    --- PASS: TestGoogleProtocolNegatives/expired (0.01s)
+    --- PASS: TestGoogleProtocolNegatives/empty_subject (0.01s)
+    --- PASS: TestGoogleProtocolNegatives/forged_signature (0.01s)
+    --- PASS: TestGoogleProtocolNegatives/unapproved_algorithm (0.01s)
+    --- PASS: TestGoogleProtocolNegatives/missing_verification_key (0.01s)
+    --- PASS: TestGoogleProtocolNegatives/missing_ID_token (0.00s)
+    --- PASS: TestGoogleProtocolNegatives/provider_failure (0.00s)
+=== RUN   TestGoogleProtocolPKCEAndMissingExchangeInputs
+--- PASS: TestGoogleProtocolPKCEAndMissingExchangeInputs (0.00s)
+=== RUN   TestPersonUpsertPostgreSQL
+    store_integration_test.go:70: create disposable identity schema
+--- FAIL: TestPersonUpsertPostgreSQL (0.00s)
+=== RUN   TestPendingLoginBindingAndReplayPostgreSQL
+    store_integration_test.go:108: create disposable identity schema
+--- FAIL: TestPendingLoginBindingAndReplayPostgreSQL (0.00s)
+=== RUN   TestLockSessionExpiredDuringLockWait
+--- PASS: TestLockSessionExpiredDuringLockWait (0.00s)
+=== RUN   TestLockSessionRevalidation
+=== RUN   TestLockSessionRevalidation/valid
+=== RUN   TestLockSessionRevalidation/expiry_boundary
+=== RUN   TestLockSessionRevalidation/expired
+=== RUN   TestLockSessionRevalidation/revoked
+=== RUN   TestLockSessionRevalidation/missing
+=== RUN   TestLockSessionRevalidation/query_error
+--- PASS: TestLockSessionRevalidation (0.00s)
+    --- PASS: TestLockSessionRevalidation/valid (0.00s)
+    --- PASS: TestLockSessionRevalidation/expiry_boundary (0.00s)
+    --- PASS: TestLockSessionRevalidation/expired (0.00s)
+    --- PASS: TestLockSessionRevalidation/revoked (0.00s)
+    --- PASS: TestLockSessionRevalidation/missing (0.00s)
+    --- PASS: TestLockSessionRevalidation/query_error (0.00s)
+=== RUN   TestLockSessionIgnoresStaleCallerTime
+--- PASS: TestLockSessionIgnoresStaleCallerTime (0.00s)
+=== RUN   TestMalformedBrowserAuthorityRejectedBeforeStorage
+--- PASS: TestMalformedBrowserAuthorityRejectedBeforeStorage (0.00s)
+FAIL
+FAIL	github.com/anhsbolic/kencleng/backend/internal/platform/auth	1.259s
+FAIL

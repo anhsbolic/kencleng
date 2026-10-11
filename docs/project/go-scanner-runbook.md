@@ -4,6 +4,12 @@ Panduan menjalankan `govulncheck` dan menangani kegagalan tooling. Gunakan
 toolchain dan dependency yang ditetapkan oleh otoritas pekerjaan aktif. Dokumen
 ini tidak menetapkan pin baru, menerima risiko, atau mengubah gate suatu Run.
 
+Untuk akses module/checksum/upstream dan bounded recovery, gunakan
+[panduan jaringan Go](go-network-recovery.md). Source cache lengkap atau
+`GOPROXY=off` belum menjamin bukti checksum tersedia offline. Pemilik Invocation
+harus menetapkan apakah recovery yang berhasil mengizinkan kelanjutan gate dalam
+Run yang sama; izin escalation saja tidak mengubah stop condition.
+
 ## Pemeriksaan sebelum scan
 
 Jalankan dari `backend/`. Periksa executable yang benar-benar dipakai, terutama

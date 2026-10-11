@@ -117,7 +117,13 @@ func (s Store) UpsertPerson(ctx context.Context, issuer, subject string) (string
 
 // LockSession rechecks revocation and expiry after acquiring the row lock.
 // T3 must call it as its first lock in the confirmation transaction.
-func LockSession(ctx context.Context, tx pgx.Tx, token string, now time.Time) (Session, error) {
+// The caller timestamp is retained for compatibility; it cannot authorize a
+// session that expires while waiting for the lock.
+func LockSession(ctx context.Context, tx pgx.Tx, token string, _ time.Time) (Session, error) {
+	return lockSession(ctx, tx, token, time.Now)
+}
+
+func lockSession(ctx context.Context, tx pgx.Tx, token string, now func() time.Time) (Session, error) {
 	var session Session
 	if !validToken(token) {
 		return session, ErrUnauthenticated
@@ -132,7 +138,7 @@ func LockSession(ctx context.Context, tx pgx.Tx, token string, now time.Time) (S
 	if err != nil {
 		return Session{}, fmt.Errorf("lock session: %w", err)
 	}
-	if revokedAt != nil || !now.Before(session.ExpiresAt) {
+	if revokedAt != nil || !now().Before(session.ExpiresAt) {
 		return Session{}, ErrUnauthenticated
 	}
 	return session, nil

@@ -1,0 +1,86 @@
+[
+  {
+    "module": "cloud.google.com/go/compute/metadata",
+    "commit": "b952f41fc832fbe5ed74f47ae0e6d6f2e93448e0",
+    "upstream_ref": "refs/tags/compute/metadata/v0.3.0",
+    "matches_origin": true
+  },
+  {
+    "module": "github.com/coreos/go-oidc/v3",
+    "commit": "e9584733f8bb6c4683d1e98b4fb22eee121f7dff",
+    "upstream_ref": "refs/tags/v3.16.0",
+    "matches_origin": true
+  },
+  {
+    "module": "github.com/go-jose/go-jose/v4",
+    "commit": "0e59876635f3dbf46d7b5e97b52bb75a3f96e7d9",
+    "upstream_ref": "refs/tags/v4.1.4",
+    "matches_origin": true
+  },
+  {
+    "module": "github.com/jackc/pgx/v5",
+    "commit": "0aeabbcf11d859229c1f0b20e710d3596c76bf27",
+    "upstream_ref": "refs/tags/v5.9.2",
+    "matches_origin": true
+  },
+  {
+    "module": "github.com/jackc/puddle/v2",
+    "commit": "bd09d14bd4018b6d65a9d7770e2f3ddf8b00af1c",
+    "upstream_ref": "refs/tags/v2.2.2",
+    "matches_origin": true
+  },
+  {
+    "module": "github.com/joho/godotenv",
+    "commit": "3fc4292b58a67b78e1dbb6e47b4879a6cc602ec4",
+    "upstream_ref": "refs/tags/v1.5.1",
+    "matches_origin": true
+  },
+  {
+    "module": "github.com/stretchr/testify",
+    "commit": "2a57335dc9cd6833daa820bc94d9b40c26a7917d",
+    "upstream_ref": "refs/tags/v1.11.1",
+    "matches_origin": true
+  },
+  {
+    "module": "golang.org/x/mod",
+    "commit": "792ac169a90372d88fb14e712cb793061ba0c104",
+    "upstream_ref": "refs/tags/v0.38.0",
+    "matches_origin": true
+  },
+  {
+    "module": "golang.org/x/oauth2",
+    "commit": "acc38155b7f6f36aefcb58faff6f36d314dd915c",
+    "upstream_ref": "refs/tags/v0.34.0",
+    "matches_origin": true
+  },
+  {
+    "module": "golang.org/x/sync",
+    "commit": "1eb64d4bc0cde6da1bb8ebc7f178bb577508e5d0",
+    "upstream_ref": "refs/tags/v0.22.0",
+    "matches_origin": true
+  },
+  {
+    "module": "golang.org/x/text",
+    "commit": "acdba6655fd45cdb5ab73c9d6a8981333bd65a39",
+    "upstream_ref": "refs/tags/v0.41.0",
+    "matches_origin": true
+  },
+  {
+    "module": "golang.org/x/tools",
+    "commit": "05f9cb5d358503005bd6f82b17916d226ca7b210",
+    "upstream_ref": "refs/tags/v0.48.0",
+    "matches_origin": true
+  },
+  {
+    "module": "github.com/jackc/pgservicefile",
+    "commit": "5a60cdf6a76120dc3d5152b95f3b5fd8aa7cc9eb",
+    "committer_date": "2024-06-06T12:05:23Z",
+    "pseudo_version_timestamp_matches": true
+  },
+  {
+    "module": "gopkg.in/check.v1",
+    "commit": "10cb98267c6cb43ea9cd6793f29ff4089c306974",
+    "committer_date": "2020-11-30T13:44:42Z",
+    "pseudo_version_timestamp_matches": true
+  }
+]

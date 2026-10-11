@@ -1,0 +1,10 @@
+{
+  "module_inputs_match_isolated": true,
+  "resolved_graph_matches": true,
+  "edges_match": true,
+  "source_matches_preflight": true,
+  "cache_source_origin_checksums_identical": true,
+  "actual_cwd": "/home/anhar-solehudin/kencleng-workspace/kencleng/backend",
+  "go_mod_sha256": "06b8dabb343d09d03f1cfa708c9870e1f064151281c7db549cbd4f08bfadfa84",
+  "go_sum_sha256": "6923543aab63e09da2b894699afb70b2ff1072a2eb014e063c8542ffed7deaa0"
+}

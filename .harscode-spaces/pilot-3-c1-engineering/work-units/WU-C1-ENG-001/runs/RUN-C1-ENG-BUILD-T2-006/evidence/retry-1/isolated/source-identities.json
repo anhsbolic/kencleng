@@ -1,0 +1,26 @@
+[
+  {
+    "path": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/pgxpool/pool.go",
+    "sha256": "35dd58a31c669662127f3bdaa4dbb579a95e937219a80b56ecf90ceb0ed434cd"
+  },
+  {
+    "path": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/conn.go",
+    "sha256": "9099baec9334ba8ea7a2d0c987984845fa455ec4510077435edf4fb5aa164d85"
+  },
+  {
+    "path": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/pgconn/auth_scram.go",
+    "sha256": "09588d5c9a6fcd011f3cd524db459c422110715ab7ea1e311db7c2b4357c8dc1"
+  },
+  {
+    "path": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/pgconn/config.go",
+    "sha256": "da7909eb1387c4f3c930acf7e066645aee800715142ce743d0c554ff5197458e"
+  },
+  {
+    "path": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/golang.org/x/text@v0.41.0/secure/precis/profiles.go",
+    "sha256": "374bcc5e13e33f059ebf3dc94d545208aa9bf16f1786a96b177b6d534592e953"
+  },
+  {
+    "path": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/jackc/pgx/v5@v5.9.2/CHANGELOG.md",
+    "sha256": "bc0df60a22e811b1779b1c4e76e6c9446eb925c510be0354c211c2769666d0d1"
+  }
+]

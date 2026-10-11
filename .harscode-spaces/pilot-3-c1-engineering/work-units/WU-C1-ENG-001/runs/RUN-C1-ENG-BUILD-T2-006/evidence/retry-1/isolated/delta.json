@@ -1,0 +1,27 @@
+[
+  {
+    "module": "github.com/jackc/pgx/v5",
+    "baseline": "v5.8.0",
+    "selected": "v5.9.2"
+  },
+  {
+    "module": "golang.org/x/mod",
+    "baseline": "v0.27.0",
+    "selected": "v0.38.0"
+  },
+  {
+    "module": "golang.org/x/sync",
+    "baseline": "v0.17.0",
+    "selected": "v0.22.0"
+  },
+  {
+    "module": "golang.org/x/text",
+    "baseline": "v0.29.0",
+    "selected": "v0.41.0"
+  },
+  {
+    "module": "golang.org/x/tools",
+    "baseline": "v0.36.0",
+    "selected": "v0.48.0"
+  }
+]

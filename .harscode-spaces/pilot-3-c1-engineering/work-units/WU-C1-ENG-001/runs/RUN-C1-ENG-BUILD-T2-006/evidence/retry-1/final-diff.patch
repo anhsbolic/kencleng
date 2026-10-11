@@ -1,0 +1,83 @@
+diff --git a/backend/go.mod b/backend/go.mod
+index 5c0239b..690e803 100644
+--- a/backend/go.mod
++++ b/backend/go.mod
+@@ -4,16 +4,16 @@ go 1.26.9
+ 
+ require (
+ 	github.com/coreos/go-oidc/v3 v3.16.0
+-	github.com/jackc/pgx/v5 v5.8.0
++	github.com/go-jose/go-jose/v4 v4.1.4
++	github.com/jackc/pgx/v5 v5.9.2
+ 	github.com/joho/godotenv v1.5.1
+ 	golang.org/x/oauth2 v0.34.0
+ )
+ 
+ require (
+-	github.com/go-jose/go-jose/v4 v4.1.4 // indirect
+ 	github.com/jackc/pgpassfile v1.0.0 // indirect
+ 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
+ 	github.com/jackc/puddle/v2 v2.2.2 // indirect
+-	golang.org/x/sync v0.17.0 // indirect
+-	golang.org/x/text v0.29.0 // indirect
++	golang.org/x/sync v0.22.0 // indirect
++	golang.org/x/text v0.41.0 // indirect
+ )
+diff --git a/backend/go.sum b/backend/go.sum
+index 2890b0c..a37e5c7 100644
+--- a/backend/go.sum
++++ b/backend/go.sum
+@@ -9,8 +9,8 @@ github.com/jackc/pgpassfile v1.0.0 h1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsI
+ github.com/jackc/pgpassfile v1.0.0/go.mod h1:CEx0iS5ambNFdcRtxPj5JhEz+xB6uRky5eyVu/W2HEg=
+ github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 h1:iCEnooe7UlwOQYpKFhBabPMi4aNAfoODPEFNiAnClxo=
+ github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761/go.mod h1:5TJZWKEWniPve33vlWYSoGYefn3gLQRzjfDlhSJ9ZKM=
+-github.com/jackc/pgx/v5 v5.8.0 h1:TYPDoleBBme0xGSAX3/+NujXXtpZn9HBONkQC7IEZSo=
+-github.com/jackc/pgx/v5 v5.8.0/go.mod h1:QVeDInX2m9VyzvNeiCJVjCkNFqzsNb43204HshNSZKw=
++github.com/jackc/pgx/v5 v5.9.2 h1:3ZhOzMWnR4yJ+RW1XImIPsD1aNSz4T4fyP7zlQb56hw=
++github.com/jackc/pgx/v5 v5.9.2/go.mod h1:mal1tBGAFfLHvZzaYh77YS/eC6IX9OWbRV1QIIM0Jn4=
+ github.com/jackc/puddle/v2 v2.2.2 h1:PR8nw+E/1w0GLuRFSmiioY6UooMp6KJv0/61nB7icHo=
+ github.com/jackc/puddle/v2 v2.2.2/go.mod h1:vriiEXHvEE654aYKXXjOvZM39qJ0q+azkZFrfEOc3H4=
+ github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
+@@ -24,10 +24,10 @@ github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu
+ github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD981Nm4B6U=
+ golang.org/x/oauth2 v0.34.0 h1:hqK/t4AKgbqWkdkcAeI8XLmbK+4m4G5YeQRrmiotGlw=
+ golang.org/x/oauth2 v0.34.0/go.mod h1:lzm5WQJQwKZ3nwavOZ3IS5Aulzxi68dUSgRHujetwEA=
+-golang.org/x/sync v0.17.0 h1:l60nONMj9l5drqw6jlhIELNv9I0A4OFgRsG9k2oT9Ug=
+-golang.org/x/sync v0.17.0/go.mod h1:9KTHXmSnoGruLpwFjVSX0lNNA75CykiMECbovNTZqGI=
+-golang.org/x/text v0.29.0 h1:1neNs90w9YzJ9BocxfsQNHKuAT4pkghyXc4nhZ6sJvk=
+-golang.org/x/text v0.29.0/go.mod h1:7MhJOA9CD2qZyOKYazxdYMF85OwPdEr9jTtBpO7ydH4=
++golang.org/x/sync v0.22.0 h1:SZjpbeLmrCk4xhRSZFNZW5gFUeCeFgjekvI/+gfScek=
++golang.org/x/sync v0.22.0/go.mod h1:9xrNwdLfx4jkKbNva9FpL6vEN7evnE43NNNJQ2LF3+0=
++golang.org/x/text v0.41.0 h1:vz/seA0lnX87Othu2f/0L24RcgrXD9/YFTSuGjj3rH8=
++golang.org/x/text v0.41.0/go.mod h1:jvf1O8ajNzZqhSrQBPbutR/EB83Cc0CFrezNQIwbb5M=
+ gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+ gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
+ gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
+diff --git a/backend/internal/platform/auth/store.go b/backend/internal/platform/auth/store.go
+index 39570e8..463bf68 100644
+--- a/backend/internal/platform/auth/store.go
++++ b/backend/internal/platform/auth/store.go
+@@ -117,7 +117,13 @@ func (s Store) UpsertPerson(ctx context.Context, issuer, subject string) (string
+ 
+ // LockSession rechecks revocation and expiry after acquiring the row lock.
+ // T3 must call it as its first lock in the confirmation transaction.
+-func LockSession(ctx context.Context, tx pgx.Tx, token string, now time.Time) (Session, error) {
++// The caller timestamp is retained for compatibility; it cannot authorize a
++// session that expires while waiting for the lock.
++func LockSession(ctx context.Context, tx pgx.Tx, token string, _ time.Time) (Session, error) {
++	return lockSession(ctx, tx, token, time.Now)
++}
++
++func lockSession(ctx context.Context, tx pgx.Tx, token string, now func() time.Time) (Session, error) {
+ 	var session Session
+ 	if !validToken(token) {
+ 		return session, ErrUnauthenticated
+@@ -132,7 +138,7 @@ func LockSession(ctx context.Context, tx pgx.Tx, token string, now time.Time) (S
+ 	if err != nil {
+ 		return Session{}, fmt.Errorf("lock session: %w", err)
+ 	}
+-	if revokedAt != nil || !now.Before(session.ExpiresAt) {
++	if revokedAt != nil || !now().Before(session.ExpiresAt) {
+ 		return Session{}, ErrUnauthenticated
+ 	}
+ 	return session, nil

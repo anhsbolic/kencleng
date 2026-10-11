@@ -1,0 +1,17 @@
+{
+  "observed_utc": "2026-10-10T23:02:42.694746+00:00",
+  "source_drift": [],
+  "authority_drift": [],
+  "head": "059d145d5df64fcda427e5a625486a8e95ce1fd8",
+  "matching_process_names": [],
+  "process_inspection_limit": "comm-only snapshot; unrelated processes are not owned resources and were not killed",
+  "all_capture_subprocesses_returned_without_timeout": true,
+  "database_connections_attempted": false,
+  "containers_created": false,
+  "cache_retained_for_diagnostics": "/tmp/c1-test-t2-001-qnpzi3sl",
+  "recovery_harness": "podman-version-recovery and make-verify-recovery used require_escalated approvals",
+  "make_recovery_environment_overrides": {
+    "XDG_CACHE_HOME": "/tmp/c1-test-t2-001-qnpzi3sl/tool-cache",
+    "STATICCHECK_CACHE": "/tmp/c1-test-t2-001-qnpzi3sl/staticcheck"
+  }
+}

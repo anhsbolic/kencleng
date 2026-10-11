@@ -1,0 +1,6 @@
+=== RUN   TestLockSessionIgnoresStaleCallerTime
+    regression_test.go:34: public lock API accepted expiry after stale caller time: <nil>
+--- FAIL: TestLockSessionIgnoresStaleCallerTime (0.00s)
+FAIL
+FAIL	github.com/anhsbolic/kencleng/backend/internal/platform/auth	0.004s
+FAIL

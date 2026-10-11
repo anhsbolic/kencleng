@@ -1,0 +1,65 @@
+[
+  {
+    "module": "github.com/davecgh/go-spew",
+    "version": "v1.1.1",
+    "repo": "https://github.com/davecgh/go-spew",
+    "commit": "8991bc29aa16c548c550c7ff78260e27b9ab7c73",
+    "archive_sha256": "69fb08bf0b0d09d1d40ed1c010fc1c5f65ed3db3f8e6b2021eddcd8ec9c50394",
+    "compared_files": 24,
+    "mismatch": []
+  },
+  {
+    "module": "github.com/jackc/pgpassfile",
+    "version": "v1.0.0",
+    "repo": "https://github.com/jackc/pgpassfile",
+    "commit": "99d8e8e28945ffceaf75b0299fcb2bb656b8a683",
+    "archive_sha256": "7b7989494ab495940f0eeb96a54e1d7133af75fbdb869642c90612bd5abe2d19",
+    "compared_files": 7,
+    "mismatch": []
+  },
+  {
+    "module": "github.com/kr/pretty",
+    "version": "v0.3.0",
+    "repo": "https://github.com/kr/pretty",
+    "commit": "a883a8422cd235c67c6c4fdcb7bbb022143e10b1",
+    "archive_sha256": "741599195305348370018f2e29ec93316b833503022e840b76af7675d65bc442",
+    "compared_files": 13,
+    "mismatch": []
+  },
+  {
+    "module": "github.com/pmezard/go-difflib",
+    "version": "v1.0.0",
+    "repo": "https://github.com/pmezard/go-difflib",
+    "commit": "792786c7400a136282c1664665ae0a8db921c6c2",
+    "archive_sha256": "3c346b08c4f1bfeffdefc0cfacc30aa3f381191c0cd149f9ed3e214a538f52ae",
+    "compared_files": 5,
+    "mismatch": []
+  },
+  {
+    "module": "github.com/stretchr/objx",
+    "version": "v0.1.0",
+    "repo": "https://github.com/stretchr/objx",
+    "commit": "facf9a85c22f48d2f52f2380e4efce1768749a89",
+    "archive_sha256": "23e6fc51053be9644fe3d22de41ef1bad66ad1e90863b6846f0a465895c1e7d6",
+    "compared_files": 33,
+    "mismatch": []
+  },
+  {
+    "module": "gopkg.in/check.v1",
+    "version": "v1.0.0-20201130134442-10cb98267c6c",
+    "repo": "https://github.com/go-check/check",
+    "commit": "10cb98267c6cb43ea9cd6793f29ff4089c306974",
+    "archive_sha256": "a925c029af70ffc6e76769f255f1f0dc52127cae577b6aa67f1f1128deda4328",
+    "compared_files": 27,
+    "mismatch": []
+  },
+  {
+    "module": "gopkg.in/yaml.v3",
+    "version": "v3.0.1",
+    "repo": "https://github.com/go-yaml/yaml",
+    "commit": "f6f7691b1fdeb513f56608cd2c32c51f8194bf51",
+    "archive_sha256": "2d74d6b1b5120cab7e898df457ac9caba7b99165a8585c4ead8a57d103a85697",
+    "compared_files": 24,
+    "mismatch": []
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "path": "backend/cmd/server/main.go",
+    "sha256": "d217dfd21898ce89d3eee96683b7512fd7010ec0e55da04c6d211bb5686e2246"
+  },
+  {
+    "path": "backend/internal/platform/auth/http.go",
+    "sha256": "bd6a7706c4e5b9ad9af69a33a537b9af0e28fa74a852672692a96f3d034b5009"
+  },
+  {
+    "path": "backend/internal/platform/auth/oidc.go",
+    "sha256": "a9a89117ba682e3963f5a02ec526d566763e1f991994cd5526fb01c60016a812"
+  },
+  {
+    "path": "backend/internal/platform/auth/oidc_test.go",
+    "sha256": "2ffd30f781b3aeaa09f6beb0fddd00bea90abcab99b221e126867acfc8331ab4"
+  },
+  {
+    "path": "backend/internal/platform/auth/store.go",
+    "sha256": "eb70175ebe756698a3a83b627e0fd6606928d8ac4c355f9dd8a05dab705552b3"
+  },
+  {
+    "path": "backend/internal/platform/auth/store_integration_test.go",
+    "sha256": "1b38058a177e0df5f87cf6c732478369e8f798265f2ad91c0762a1ea1879b1e0"
+  },
+  {
+    "path": "backend/internal/platform/auth/store_test.go",
+    "sha256": "bac0d93f0aa6af1591b10dc9a1df81fba0bf77ea2bdb5a165c129e2611795d60"
+  },
+  {
+    "path": "backend/internal/platform/db/db.go",
+    "sha256": "56492320609c7bc0acbbf0761bd6669a9f79fa31986e92a2ea88138798a63660"
+  },
+  {
+    "path": "backend/internal/platform/db/doc.go",
+    "sha256": "8dbdc9d74ef1d1f42f04ea216a57448b1ca1ca5d7a2aa15f5ac79a9eec619180"
+  }
+]

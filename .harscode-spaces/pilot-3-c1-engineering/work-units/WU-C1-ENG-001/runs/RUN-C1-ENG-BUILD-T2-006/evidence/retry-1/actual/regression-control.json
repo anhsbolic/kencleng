@@ -1,0 +1,7 @@
+{
+  "original_exit": 1,
+  "original_failure_expected": true,
+  "patched_exit": 0,
+  "purpose": "same public-API regression fails on original source and passes on patched source",
+  "real_postgres_contention": false
+}

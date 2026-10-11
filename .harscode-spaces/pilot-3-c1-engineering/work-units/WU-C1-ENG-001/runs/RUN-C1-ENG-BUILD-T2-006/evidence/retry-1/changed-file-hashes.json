@@ -1,0 +1,26 @@
+[
+  {
+    "path": "backend/go.mod",
+    "sha256": "90b7c1c6e870e32828fa5932a6c4e9a28a65d0671a74bdb807ec29dbc5d27cae"
+  },
+  {
+    "path": "backend/go.sum",
+    "sha256": "6923543aab63e09da2b894699afb70b2ff1072a2eb014e063c8542ffed7deaa0"
+  },
+  {
+    "path": "backend/internal/platform/auth/store.go",
+    "sha256": "eb70175ebe756698a3a83b627e0fd6606928d8ac4c355f9dd8a05dab705552b3"
+  },
+  {
+    "path": "backend/internal/platform/auth/store_test.go",
+    "sha256": "bac0d93f0aa6af1591b10dc9a1df81fba0bf77ea2bdb5a165c129e2611795d60"
+  },
+  {
+    "path": "backend/internal/platform/auth/oidc_test.go",
+    "sha256": "2ffd30f781b3aeaa09f6beb0fddd00bea90abcab99b221e126867acfc8331ab4"
+  },
+  {
+    "path": "backend/internal/platform/auth/store_integration_test.go",
+    "sha256": "1b38058a177e0df5f87cf6c732478369e8f798265f2ad91c0762a1ea1879b1e0"
+  }
+]

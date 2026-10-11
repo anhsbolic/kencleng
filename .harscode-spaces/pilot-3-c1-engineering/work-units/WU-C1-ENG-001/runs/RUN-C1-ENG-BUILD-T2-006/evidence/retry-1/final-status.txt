@@ -1,0 +1,16 @@
+ M .harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001.md
+ M .harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/events.md
+ M AGENTS.md
+ M backend/AGENTS.md
+ M backend/go.mod
+ M backend/go.sum
+ M backend/internal/platform/auth/store.go
+ M docs/product/pilot-3-control-tower.md
+ M docs/project/go-dependency-verification.md
+ M docs/project/go-scanner-runbook.md
+?? .harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-006/
+?? .harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-LOOPHEALTH-002/
+?? backend/internal/platform/auth/oidc_test.go
+?? backend/internal/platform/auth/store_integration_test.go
+?? backend/internal/platform/auth/store_test.go
+?? docs/project/go-network-recovery.md

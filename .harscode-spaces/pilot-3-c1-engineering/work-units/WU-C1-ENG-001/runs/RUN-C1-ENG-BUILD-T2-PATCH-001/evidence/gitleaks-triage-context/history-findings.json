@@ -1,0 +1,38 @@
+[
+  {
+    "RuleID": "generic-api-key",
+    "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+    "File": "backend/internal/transport/http/account_security_test.go",
+    "StartLine": 169,
+    "EndLine": 169,
+    "Commit": "6f036c6384868644989134386fc378ed1c19efeb",
+    "file_exists_in_current_tree": false
+  },
+  {
+    "RuleID": "generic-api-key",
+    "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+    "File": "backend/internal/transport/http/account_security_test.go",
+    "StartLine": 245,
+    "EndLine": 245,
+    "Commit": "6f036c6384868644989134386fc378ed1c19efeb",
+    "file_exists_in_current_tree": false
+  },
+  {
+    "RuleID": "generic-api-key",
+    "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+    "File": "backend/internal/domain/account/google_oauth_test.go",
+    "StartLine": 487,
+    "EndLine": 487,
+    "Commit": "ef428be3742eddfc59b86fc205bb03624e669e82",
+    "file_exists_in_current_tree": false
+  },
+  {
+    "RuleID": "generic-api-key",
+    "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+    "File": "backend/internal/domain/account/service_test.go",
+    "StartLine": 471,
+    "EndLine": 471,
+    "Commit": "d68b40ce7d8d7f3b7334fdf45d5d4a1899e61c0f",
+    "file_exists_in_current_tree": false
+  }
+]

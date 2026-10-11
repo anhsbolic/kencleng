@@ -1,0 +1,77 @@
+{
+  "counts": {
+    "config": 1,
+    "SBOM": 1,
+    "progress": 2,
+    "osv": 200
+  },
+  "finding_count": 0,
+  "required_advisory_ids": 55,
+  "config": {
+    "protocol_version": "v1.0.0",
+    "scanner_name": "govulncheck",
+    "scanner_version": "v1.7.0",
+    "db": "https://vuln.go.dev",
+    "db_last_modified": "2026-10-08T22:31:09Z",
+    "go_version": "go1.26.9",
+    "scan_level": "symbol",
+    "scan_mode": "source"
+  },
+  "SBOM": {
+    "go_version": "go1.26.9",
+    "modules": [
+      {
+        "path": "github.com/anhsbolic/kencleng/backend"
+      },
+      {
+        "path": "github.com/coreos/go-oidc/v3",
+        "version": "v3.16.0"
+      },
+      {
+        "path": "github.com/go-jose/go-jose/v4",
+        "version": "v4.1.4"
+      },
+      {
+        "path": "github.com/jackc/pgpassfile",
+        "version": "v1.0.0"
+      },
+      {
+        "path": "github.com/jackc/pgservicefile",
+        "version": "v0.0.0-20240606120523-5a60cdf6a761"
+      },
+      {
+        "path": "github.com/jackc/pgx/v5",
+        "version": "v5.9.2"
+      },
+      {
+        "path": "github.com/jackc/puddle/v2",
+        "version": "v2.2.2"
+      },
+      {
+        "path": "github.com/joho/godotenv",
+        "version": "v1.5.1"
+      },
+      {
+        "path": "golang.org/x/oauth2",
+        "version": "v0.34.0"
+      },
+      {
+        "path": "golang.org/x/sync",
+        "version": "v0.22.0"
+      },
+      {
+        "path": "golang.org/x/text",
+        "version": "v0.41.0"
+      },
+      {
+        "path": "stdlib",
+        "version": "v1.26.9"
+      }
+    ],
+    "roots": [
+      "github.com/anhsbolic/kencleng/backend/internal/platform/auth",
+      "github.com/anhsbolic/kencleng/backend/internal/platform/db",
+      "github.com/anhsbolic/kencleng/backend/cmd/server"
+    ]
+  }
+}

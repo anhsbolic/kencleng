@@ -1,0 +1,18 @@
+{
+  "object_counts": {
+    "config": 1,
+    "SBOM": 1,
+    "progress": 2,
+    "osv": 200
+  },
+  "findings": [],
+  "progress": [
+    {
+      "message": "Fetching vulnerabilities from the database..."
+    },
+    {
+      "message": "Checking the code against the vulnerabilities..."
+    }
+  ],
+  "stderr_empty": true
+}

@@ -1,0 +1,156 @@
+{
+  "bound_hashes": [
+    {
+      "path": ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001.md",
+      "sha256": "6202438fdccd9c47c24d9c1949fa737deee8974c5c8bbcb1b2925d1a5afc5fe9",
+      "result": "match"
+    },
+    {
+      "path": ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/events.md",
+      "sha256": "b4888945c906b26408e1035257a6bf6fef670cffaa87256bad2b0510872d3ea8",
+      "result": "match"
+    },
+    {
+      "path": "techplan/techplan.md",
+      "sha256": "6d2e41e177e4adaf74f53a06d81dd568def75019c8dc4e4792d938a869896d79",
+      "result": "match"
+    },
+    {
+      "path": "techplan/tasks/T2-backend-identity-session.md",
+      "sha256": "dfe17b7a3dc0dc89127b040a67f547506a14a4ab591ed0a6343f1a8dd8bcce37",
+      "result": "match"
+    },
+    {
+      "path": "techplan/tasks/manifest.md",
+      "sha256": "2950408dc48c12d5a8bbed96a88095a20ed7e1e02fd4190293691a90b111b30d",
+      "result": "match"
+    },
+    {
+      "path": "techplan/report-techplan.md",
+      "sha256": "18562231cc39a6c1f85ce7c7c20cc8e161d00a203a2b612f2f60117e02b2e611",
+      "result": "match"
+    },
+    {
+      "path": "runs/RUN-C1-ENG-BUILD-T2-004/evidence/build-report.md",
+      "sha256": "eff0a3b9c2f0392bbbcaf0f2aa33cf0b93d872afe3eb8b8573f6cef2a81ed051",
+      "result": "match"
+    },
+    {
+      "path": "runs/RUN-C1-ENG-BUILD-T2-004/evidence/scanner-diagnosis/diagnosis.md",
+      "sha256": "07c0330674fb1b43f1d15596e77c2af4a60e3a3260158221ce4c5b590175b78b",
+      "result": "match"
+    },
+    {
+      "path": "runs/RUN-C1-ENG-BUILD-T2-005/evidence/build-report.md",
+      "sha256": "c0bb8330fd984afffe96f8eaecb88612511f42ed34b8483bfab53e8f96f4ff37",
+      "result": "match"
+    },
+    {
+      "path": "runs/RUN-C1-ENG-BUILD-T2-005/evidence/orchestrator-reconciliation.md",
+      "sha256": "21abe0f80365980275443127399ca3d1ab3e128c3dfa15c6b7806f5d38c4dcef",
+      "result": "match"
+    },
+    {
+      "path": "runs/RUN-C1-ENG-BUILD-T2-005/evidence/targeted-d8-trial/trial-report.md",
+      "sha256": "ff6d6cf3e53651699c5d7b3eb25cf53cf902947fad641901076d5d5b359cacd1",
+      "result": "match"
+    },
+    {
+      "path": "runs/RUN-C1-ENG-LOOPHEALTH-002/evidence/loop-health-audit.md",
+      "sha256": "51e1d9c004ce05af37a4bb0c9ce66fa49db55e6424ec0318097c99889ce9051e",
+      "result": "match"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "e18ca8bc35601dad839f23b8728b816f5ad1cb25cdd9775ab55c661623474b6e",
+      "result": "match"
+    },
+    {
+      "path": "backend/AGENTS.md",
+      "sha256": "297274385cbbe91ccb498b30edabe540acd8c8108a0a3c4ada4f7b336818d8b3",
+      "result": "match"
+    },
+    {
+      "path": "docs/project/go-scanner-runbook.md",
+      "sha256": "a463e157e8519adfd1ea63c487a4e7546b55ca80cf2186221a6db1f4aacc12ae",
+      "result": "match"
+    },
+    {
+      "path": "../harscode-workspace/workflow/3-build-prompt.md",
+      "sha256": "8e8a183a839c27d887212b1e51bbd96d2e796febed8d2685534d98fe1b3ad4e5",
+      "result": "match"
+    },
+    {
+      "path": "../harscode-workspace/workflow/3-build/guidelines.md",
+      "sha256": "1a85acfa5ebc80837737038198154039d0039bb2c4d6d4addcb62ce34dac9546",
+      "result": "match"
+    },
+    {
+      "path": "../harscode-workspace/workflow/3-build/checklist.md",
+      "sha256": "8cb373825edd6e64e2df0e523623bf3b3d6e14fc03580027959e939f9a5ff98a",
+      "result": "match"
+    },
+    {
+      "path": "../harscode-workspace/workflow/orchestrated-run-overlay.md",
+      "sha256": "f806673aa5e7d1d82dae9f433ec54c3562e15ce778b709a141c57d3d22dfaf87",
+      "result": "match"
+    },
+    {
+      "path": "../harscode-workspace/orchestration/run-contract.md",
+      "sha256": "4610c20ce2670913870718f9886e22c3c00bdf9da5290406a4a4450a818069aa",
+      "result": "match"
+    },
+    {
+      "path": "/home/anhar-solehudin/kencleng-workspace/harscode-workspace/orchestration/AGENTS.md",
+      "sha256": "98cdc285f7dcd81284ea6d8a1ea23f938a69b8938bb4bc863a3f59aa534113cc",
+      "result": "match"
+    },
+    {
+      "path": ".harscode-spaces/.local-config.yaml",
+      "sha256": "ffbd0521361eac90e82dbee98ba59f01f3e62641afd79bf8e71c4fc8a0e633ce",
+      "result": "match"
+    },
+    {
+      "path": "backend/go.mod",
+      "sha256": "2c089366f9b54e86da2993dadbeffe3cd7d3786a7b5f0535dd9163521e4db5d3",
+      "result": "match"
+    },
+    {
+      "path": "backend/go.sum",
+      "sha256": "979a350418d3d0e4906ea8af162cb69f8cfcfd38507eaa7d8657f6c7c5d7960f",
+      "result": "match"
+    },
+    {
+      "path": "backend/internal/platform/auth/store.go",
+      "sha256": "dfeed8714bc1881b9c94e8b9ac8f29ed2226f7396b1f2c789b0bc7dcfd0032b9",
+      "result": "match"
+    }
+  ],
+  "source": [
+    {
+      "path": "backend/cmd/server/main.go",
+      "sha256": "d217dfd21898ce89d3eee96683b7512fd7010ec0e55da04c6d211bb5686e2246"
+    },
+    {
+      "path": "backend/internal/platform/auth/http.go",
+      "sha256": "bd6a7706c4e5b9ad9af69a33a537b9af0e28fa74a852672692a96f3d034b5009"
+    },
+    {
+      "path": "backend/internal/platform/auth/oidc.go",
+      "sha256": "a9a89117ba682e3963f5a02ec526d566763e1f991994cd5526fb01c60016a812"
+    },
+    {
+      "path": "backend/internal/platform/auth/store.go",
+      "sha256": "dfeed8714bc1881b9c94e8b9ac8f29ed2226f7396b1f2c789b0bc7dcfd0032b9"
+    },
+    {
+      "path": "backend/internal/platform/db/db.go",
+      "sha256": "56492320609c7bc0acbbf0761bd6669a9f79fa31986e92a2ea88138798a63660"
+    },
+    {
+      "path": "backend/internal/platform/db/doc.go",
+      "sha256": "8dbdc9d74ef1d1f42f04ea216a57448b1ca1ca5d7a2aa15f5ac79a9eec619180"
+    }
+  ],
+  "probe": "/tmp/c1-t2-006-jeu2klrm/probe"
+}

@@ -1,0 +1,246 @@
+[
+  {
+    "path": "baseline.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "baseline.stdout",
+    "sha256": "d56e1225bd2aca1ab96c2d55800b07d2638acaa23d87f8baf06deda3dec03b32"
+  },
+  {
+    "path": "commands.jsonl",
+    "sha256": "8de5232b77a4e797265d6b60f55735ef1522f6368c081806c79a8d6030d730d6"
+  },
+  {
+    "path": "edges.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "edges.stdout",
+    "sha256": "2cffb3476ce5833925df914d6e4b5e9752bca90a95339d3d19dec5738c36816b"
+  },
+  {
+    "path": "final-boundary.txt",
+    "sha256": "9de81a93d65b4f772e89e1282cf68df4abb0bf1e381c126f300778c7b51ddbb5"
+  },
+  {
+    "path": "focused-compile.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "focused-compile.stdout",
+    "sha256": "2427125a879afe745fef08d21f9f236bcdde88d399310a46a4b539765e529221"
+  },
+  {
+    "path": "go-env.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "go-env.stdout",
+    "sha256": "e797579c47130abc0b1fccbd8074738b42163c9a9132d2f5c5595a84ce2bc5f3"
+  },
+  {
+    "path": "go-version.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "go-version.stdout",
+    "sha256": "34113d5d84bc5406ab3bfd0028c381611cad764f40baa15e43cffd89485c0aee"
+  },
+  {
+    "path": "graph.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "graph.stdout",
+    "sha256": "361bce35db1afb09913ff93da5d9f8f3c90d6b7db6693ee749291f90e933a8a0"
+  },
+  {
+    "path": "integrity.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "integrity.stdout",
+    "sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd"
+  },
+  {
+    "path": "inventory.json",
+    "sha256": "74a18244029999938b48aa9acc95a7007efab3fe512eaff5349e878aa0d8855b"
+  },
+  {
+    "path": "isolated.go.mod",
+    "sha256": "06b8dabb343d09d03f1cfa708c9870e1f064151281c7db549cbd4f08bfadfa84"
+  },
+  {
+    "path": "isolated.go.sum",
+    "sha256": "6923543aab63e09da2b894699afb70b2ff1072a2eb014e063c8542ffed7deaa0"
+  },
+  {
+    "path": "legacy-provenance.json",
+    "sha256": "3da02331d900d215fb67aeb4877976881fb6531f610e83c2cc2e6e5df3d42636"
+  },
+  {
+    "path": "legacy-source-match.json",
+    "sha256": "c0db2f1bf05d9cabe96b835ad7703e4048043a9d0d2d25f8eea87da09b288361"
+  },
+  {
+    "path": "legacy-source.py",
+    "sha256": "a1de15fed3f525ff8ebd7d9dc734ea96ee6da355172b1f47aa2b839ce9e4d88d"
+  },
+  {
+    "path": "origin-github.com_davecgh_go-spew.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "origin-github.com_davecgh_go-spew.stdout",
+    "sha256": "dae892032afbf676a01225c4c2301be2a01de1ccd08769e47e6bb585c230ba2c"
+  },
+  {
+    "path": "origin-github.com_jackc_pgpassfile.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "origin-github.com_jackc_pgpassfile.stdout",
+    "sha256": "e6036f613eb193ea410a26462dc9150bdf54b713b7ecedc66e580b46e0392c3e"
+  },
+  {
+    "path": "origin-github.com_kr_pretty.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "origin-github.com_kr_pretty.stdout",
+    "sha256": "4eb72bd4cf9153c81e051e45cc976e92ad9f6dbcc1c6901782c0d814aaceca6e"
+  },
+  {
+    "path": "origin-github.com_pmezard_go-difflib.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "origin-github.com_pmezard_go-difflib.stdout",
+    "sha256": "22a0c999f7c469198ba3931938935e5029744c06bb13ae548b1bb0f061159f38"
+  },
+  {
+    "path": "origin-github.com_stretchr_objx.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "origin-github.com_stretchr_objx.stdout",
+    "sha256": "5f4da4f25896240439ce2968422b56543d2fcde13979dbb5c9b6fdb314467c03"
+  },
+  {
+    "path": "origin-gopkg.in_check.v1.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "origin-gopkg.in_check.v1.stdout",
+    "sha256": "5c1e85b86683272f967b5cdb7047e6dde0d3b8cd21c41465d577f4cea51b44dc"
+  },
+  {
+    "path": "origin-gopkg.in_yaml.v3.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "origin-gopkg.in_yaml.v3.stdout",
+    "sha256": "985ced35581de52b7222c96daf69c353435d38e9cf65b1fc0814c5dc7e2462b9"
+  },
+  {
+    "path": "pins.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "pins.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "preflight.json",
+    "sha256": "a0073e440df99759461b55d6c23c888a2c00619e485d96567af429cf402c8226"
+  },
+  {
+    "path": "provenance.py",
+    "sha256": "de8f253889f57662df57f095a01c96a944a644ac4071f11b511372d8588a0dc8"
+  },
+  {
+    "path": "run.py",
+    "sha256": "abe5dbb028e55d650f5b794a4643166458dc3b6d2d7a243305115aa1d4723c38"
+  },
+  {
+    "path": "scanner-version.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "scanner-version.stdout",
+    "sha256": "f9928ccbf99217f1215eb0436a11e404c7e28d007e7f9b2e86c6bc99de020f4f"
+  },
+  {
+    "path": "tidy-escalated.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "tidy-escalated.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "tidy.stderr",
+    "sha256": "e3aef5f14ad6081d97db7c39beb1e46ad8b8bed47584c583df61754fac8ff003"
+  },
+  {
+    "path": "tidy.stdout",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "upstream-github.com_davecgh_go-spew.tar.gz",
+    "sha256": "69fb08bf0b0d09d1d40ed1c010fc1c5f65ed3db3f8e6b2021eddcd8ec9c50394"
+  },
+  {
+    "path": "upstream-github.com_davecgh_go-spew.tar.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "upstream-github.com_jackc_pgpassfile.tar.gz",
+    "sha256": "7b7989494ab495940f0eeb96a54e1d7133af75fbdb869642c90612bd5abe2d19"
+  },
+  {
+    "path": "upstream-github.com_jackc_pgpassfile.tar.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "upstream-github.com_kr_pretty.tar.gz",
+    "sha256": "741599195305348370018f2e29ec93316b833503022e840b76af7675d65bc442"
+  },
+  {
+    "path": "upstream-github.com_kr_pretty.tar.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "upstream-github.com_pmezard_go-difflib.tar.gz",
+    "sha256": "3c346b08c4f1bfeffdefc0cfacc30aa3f381191c0cd149f9ed3e214a538f52ae"
+  },
+  {
+    "path": "upstream-github.com_pmezard_go-difflib.tar.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "upstream-github.com_stretchr_objx.tar.gz",
+    "sha256": "23e6fc51053be9644fe3d22de41ef1bad66ad1e90863b6846f0a465895c1e7d6"
+  },
+  {
+    "path": "upstream-github.com_stretchr_objx.tar.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "upstream-gopkg.in_check.v1.tar.gz",
+    "sha256": "a925c029af70ffc6e76769f255f1f0dc52127cae577b6aa67f1f1128deda4328"
+  },
+  {
+    "path": "upstream-gopkg.in_check.v1.tar.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "upstream-gopkg.in_yaml.v3.tar.gz",
+    "sha256": "2d74d6b1b5120cab7e898df457ac9caba7b99165a8585c4ead8a57d103a85697"
+  },
+  {
+    "path": "upstream-gopkg.in_yaml.v3.tar.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

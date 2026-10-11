@@ -1,4 +1,12 @@
 services:
+  gitleaks:
+    image: ghcr.io/gitleaks/gitleaks:v8.30.1
+    profiles: [tools]
+    working_dir: /repo
+    volumes:
+      - .:/repo:ro
+    command: [detect, --source, /repo, --redact, --no-banner]
+
   postgres:
     image: postgres:16
     environment:

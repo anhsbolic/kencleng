@@ -1,0 +1,51 @@
+[
+  {
+    "module": "github.com/davecgh/go-spew",
+    "version": "v1.1.1",
+    "repo": "https://github.com/davecgh/go-spew",
+    "exit": 0,
+    "refs": "152484fe5c9ff65d013f0f372d748c03e8749e6d\trefs/tags/v1.1.1\n8991bc29aa16c548c550c7ff78260e27b9ab7c73\trefs/tags/v1.1.1^{}\n"
+  },
+  {
+    "module": "github.com/jackc/pgpassfile",
+    "version": "v1.0.0",
+    "repo": "https://github.com/jackc/pgpassfile",
+    "exit": 0,
+    "refs": "99d8e8e28945ffceaf75b0299fcb2bb656b8a683\trefs/tags/v1.0.0\n"
+  },
+  {
+    "module": "github.com/kr/pretty",
+    "version": "v0.3.0",
+    "repo": "https://github.com/kr/pretty",
+    "exit": 0,
+    "refs": "6259398fb07372ee10ef52d88375fdab383bcf9d\trefs/tags/v0.3.0\na883a8422cd235c67c6c4fdcb7bbb022143e10b1\trefs/tags/v0.3.0^{}\n"
+  },
+  {
+    "module": "github.com/pmezard/go-difflib",
+    "version": "v1.0.0",
+    "repo": "https://github.com/pmezard/go-difflib",
+    "exit": 0,
+    "refs": "c0b812dadcf4498dede02bb7f0c5c478be997e34\trefs/tags/v1.0.0\n792786c7400a136282c1664665ae0a8db921c6c2\trefs/tags/v1.0.0^{}\n"
+  },
+  {
+    "module": "github.com/stretchr/objx",
+    "version": "v0.1.0",
+    "repo": "https://github.com/stretchr/objx",
+    "exit": 0,
+    "refs": "facf9a85c22f48d2f52f2380e4efce1768749a89\trefs/tags/v0.1.0\n"
+  },
+  {
+    "module": "gopkg.in/check.v1",
+    "version": "v1.0.0-20201130134442-10cb98267c6c",
+    "repo": "https://github.com/go-check/check",
+    "exit": 0,
+    "refs": "163297374fe15df72fc217b2bdfabb5894c73059\trefs/heads/master\n10cb98267c6cb43ea9cd6793f29ff4089c306974\trefs/heads/v1\n"
+  },
+  {
+    "module": "gopkg.in/yaml.v3",
+    "version": "v3.0.1",
+    "repo": "https://github.com/go-yaml/yaml",
+    "exit": 0,
+    "refs": "f6f7691b1fdeb513f56608cd2c32c51f8194bf51\trefs/tags/v3.0.1\n"
+  }
+]

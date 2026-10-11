@@ -1,0 +1,4 @@
+=== RUN   TestLockSessionIgnoresStaleCallerTime
+--- PASS: TestLockSessionIgnoresStaleCallerTime (0.00s)
+PASS
+ok  	github.com/anhsbolic/kencleng/backend/internal/platform/auth	0.003s

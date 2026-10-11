@@ -1,0 +1,35 @@
+{
+  "sha": "5a60cdf6a76120dc3d5152b95f3b5fd8aa7cc9eb",
+  "node_id": "C_kwDODqTo8doAKDVhNjBjZGY2YTc2MTIwZGMzZDUxNTJiOTVmM2I1ZmQ4YWE3Y2M5ZWI",
+  "url": "https://api.github.com/repos/jackc/pgservicefile/git/commits/5a60cdf6a76120dc3d5152b95f3b5fd8aa7cc9eb",
+  "html_url": "https://github.com/jackc/pgservicefile/commit/5a60cdf6a76120dc3d5152b95f3b5fd8aa7cc9eb",
+  "author": {
+    "name": "Jack Christensen",
+    "email": "jack@jackchristensen.com",
+    "date": "2024-06-06T12:05:23Z"
+  },
+  "committer": {
+    "name": "Jack Christensen",
+    "email": "jack@jackchristensen.com",
+    "date": "2024-06-06T12:05:23Z"
+  },
+  "tree": {
+    "sha": "3ab653514409973c0117e2f9b00c358ccc1a63b3",
+    "url": "https://api.github.com/repos/jackc/pgservicefile/git/trees/3ab653514409973c0117e2f9b00c358ccc1a63b3"
+  },
+  "message": "Update CI actions",
+  "parents": [
+    {
+      "sha": "c581ba0f8782e98ad5a1c521f15401f93fd78aeb",
+      "url": "https://api.github.com/repos/jackc/pgservicefile/git/commits/c581ba0f8782e98ad5a1c521f15401f93fd78aeb",
+      "html_url": "https://github.com/jackc/pgservicefile/commit/c581ba0f8782e98ad5a1c521f15401f93fd78aeb"
+    }
+  ],
+  "verification": {
+    "verified": false,
+    "reason": "unsigned",
+    "signature": null,
+    "payload": null,
+    "verified_at": null
+  }
+}

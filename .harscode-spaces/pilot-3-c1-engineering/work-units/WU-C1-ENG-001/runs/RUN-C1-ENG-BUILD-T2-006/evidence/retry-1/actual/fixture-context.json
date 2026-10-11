@@ -1,0 +1,11 @@
+{
+  "container": "c1-t2-006-retry1-pg",
+  "image": "docker.io/library/postgres:16-alpine",
+  "host": "127.0.0.1",
+  "port": 46295,
+  "disposable": true,
+  "authentication": "fixture trust only",
+  "production_env_read": false,
+  "privilege_evidence": false,
+  "contention_evidence": false
+}

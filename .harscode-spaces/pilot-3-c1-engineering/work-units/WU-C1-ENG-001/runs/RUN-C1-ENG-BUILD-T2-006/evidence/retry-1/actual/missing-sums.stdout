@@ -1,0 +1,79 @@
+{
+	"Path": "cloud.google.com/go/compute/metadata",
+	"Version": "v0.3.0",
+	"Info": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/cloud.google.com/go/compute/metadata/@v/v0.3.0.info",
+	"GoMod": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/cloud.google.com/go/compute/metadata/@v/v0.3.0.mod",
+	"Zip": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/cloud.google.com/go/compute/metadata/@v/v0.3.0.zip",
+	"Dir": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cloud.google.com/go/compute/metadata@v0.3.0",
+	"Sum": "h1:Tz+eQXMEqDIKRsmY3cHTL6FVaynIjX2QxYC4trgAKZc=",
+	"GoModSum": "h1:zFmK7XCadkQkj6TtorcaGlCW1hT1fIilQDwofLpJ20k=",
+	"Origin": {
+		"VCS": "git",
+		"URL": "https://github.com/googleapis/google-cloud-go",
+		"Subdir": "compute/metadata",
+		"Hash": "b952f41fc832fbe5ed74f47ae0e6d6f2e93448e0",
+		"Ref": "refs/tags/compute/metadata/v0.3.0"
+	}
+}
+{
+	"Path": "github.com/kr/pretty",
+	"Version": "v0.3.0",
+	"Info": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/github.com/kr/pretty/@v/v0.3.0.info",
+	"GoMod": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/github.com/kr/pretty/@v/v0.3.0.mod",
+	"Zip": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/github.com/kr/pretty/@v/v0.3.0.zip",
+	"Dir": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/kr/pretty@v0.3.0",
+	"Sum": "h1:WgNl7dwNpEZ6jJ9k1snq4pZsg7DOEN8hP9Xw0Tsjwk0=",
+	"GoModSum": "h1:640gp4NfQd8pI5XOwp5fnNeVWj67G7CFk/SaSQn7NBk="
+}
+{
+	"Path": "github.com/stretchr/objx",
+	"Version": "v0.1.0",
+	"Info": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/github.com/stretchr/objx/@v/v0.1.0.info",
+	"GoMod": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/github.com/stretchr/objx/@v/v0.1.0.mod",
+	"Zip": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/github.com/stretchr/objx/@v/v0.1.0.zip",
+	"Dir": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/github.com/stretchr/objx@v0.1.0",
+	"Sum": "h1:4G4v2dO3VZwixGIRoQ5Lfboy6nUhCyYzaqnIAPPhYs4=",
+	"GoModSum": "h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME="
+}
+{
+	"Path": "golang.org/x/mod",
+	"Version": "v0.38.0",
+	"Info": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/golang.org/x/mod/@v/v0.38.0.info",
+	"GoMod": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/golang.org/x/mod/@v/v0.38.0.mod",
+	"Zip": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/golang.org/x/mod/@v/v0.38.0.zip",
+	"Dir": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/golang.org/x/mod@v0.38.0",
+	"Sum": "h1:MECBjubtXD7yj4HrhIUcywNaGeNVUdfVnxmPajOk4yk=",
+	"GoModSum": "h1:V6Xz0pq8TQ3dGqVQ1FVHuelZpAL0uNhSkk9ogYP3c40=",
+	"Origin": {
+		"VCS": "git",
+		"URL": "https://go.googlesource.com/mod",
+		"Hash": "792ac169a90372d88fb14e712cb793061ba0c104",
+		"Ref": "refs/tags/v0.38.0"
+	}
+}
+{
+	"Path": "golang.org/x/tools",
+	"Version": "v0.48.0",
+	"Info": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/golang.org/x/tools/@v/v0.48.0.info",
+	"GoMod": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/golang.org/x/tools/@v/v0.48.0.mod",
+	"Zip": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/golang.org/x/tools/@v/v0.48.0.zip",
+	"Dir": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/golang.org/x/tools@v0.48.0",
+	"Sum": "h1:3+hClM1aLL5mjMKm5ovokw9epgRXPuu2tILgismM6RE=",
+	"GoModSum": "h1:08xX0orndb/F7jJxGDicx061tyd5pcMto75YMAXr6lk=",
+	"Origin": {
+		"VCS": "git",
+		"URL": "https://go.googlesource.com/tools",
+		"Hash": "05f9cb5d358503005bd6f82b17916d226ca7b210",
+		"Ref": "refs/tags/v0.48.0"
+	}
+}
+{
+	"Path": "gopkg.in/check.v1",
+	"Version": "v1.0.0-20201130134442-10cb98267c6c",
+	"Info": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/gopkg.in/check.v1/@v/v1.0.0-20201130134442-10cb98267c6c.info",
+	"GoMod": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/gopkg.in/check.v1/@v/v1.0.0-20201130134442-10cb98267c6c.mod",
+	"Zip": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/cache/download/gopkg.in/check.v1/@v/v1.0.0-20201130134442-10cb98267c6c.zip",
+	"Dir": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod/gopkg.in/check.v1@v1.0.0-20201130134442-10cb98267c6c",
+	"Sum": "h1:Hei/4ADfdWqJk1ZMxUNpqntNwaWcugrBjAiHlqqRiVk=",
+	"GoModSum": "h1:JHkPIbrfpd72SG/EVd6muEfDQjcINNoR0C8j2r3qZ4Q="
+}

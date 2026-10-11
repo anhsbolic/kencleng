@@ -1,0 +1,1 @@
+github.com/jackc/pgx/v5@v5.9.2: verifying module: github.com/jackc/pgx/v5@v5.9.2: initializing sumdb.Client: checking tree#67994042: Get "https://sum.golang.org/tile/8/1/x001/037.p/129": dial tcp: lookup sum.golang.org on 127.0.0.53:53: dial udp 127.0.0.53:53: socket: operation not permitted

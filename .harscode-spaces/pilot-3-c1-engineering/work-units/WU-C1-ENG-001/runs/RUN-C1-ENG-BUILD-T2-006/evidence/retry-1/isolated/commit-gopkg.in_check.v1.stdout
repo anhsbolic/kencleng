@@ -1,0 +1,35 @@
+{
+  "sha": "10cb98267c6cb43ea9cd6793f29ff4089c306974",
+  "node_id": "MDY6Q29tbWl0MTgzMTYzMTI6MTBjYjk4MjY3YzZjYjQzZWE5Y2Q2NzkzZjI5ZmY0MDg5YzMwNjk3NA==",
+  "url": "https://api.github.com/repos/go-check/check/git/commits/10cb98267c6cb43ea9cd6793f29ff4089c306974",
+  "html_url": "https://github.com/go-check/check/commit/10cb98267c6cb43ea9cd6793f29ff4089c306974",
+  "author": {
+    "name": "James Henstridge",
+    "email": "james@jamesh.id.au",
+    "date": "2020-11-30T13:44:42Z"
+  },
+  "committer": {
+    "name": "GitHub",
+    "email": "noreply@github.com",
+    "date": "2020-11-30T13:44:42Z"
+  },
+  "tree": {
+    "sha": "b5ee34e90064a88d7614bf6f6714d32bfac33e66",
+    "url": "https://api.github.com/repos/go-check/check/git/trees/b5ee34e90064a88d7614bf6f6714d32bfac33e66"
+  },
+  "message": "ci: add a Github Actions workflow to test project (#125)\n\n* checkers: switch back to github.com/kr/pretty dependency\r\n\r\n* go.mod: add a go.mod file\r\n\r\n* ci: add a Github Actions workflow to test on Linux, MacOS and Windows\r\n\r\n* ci: add a job testing the GOPATH based workflow on a pre-modules Go\r\n\r\n* tests: fix a few problems preventing the tests from passing on Windows",
+  "parents": [
+    {
+      "sha": "22ab2dfb190cbb38b02b67920174fe020e164d0e",
+      "url": "https://api.github.com/repos/go-check/check/git/commits/22ab2dfb190cbb38b02b67920174fe020e164d0e",
+      "html_url": "https://github.com/go-check/check/commit/22ab2dfb190cbb38b02b67920174fe020e164d0e"
+    }
+  ],
+  "verification": {
+    "verified": true,
+    "reason": "valid",
+    "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsBcBAABCAAQBQJfxPdKCRBK7hj4Ov3rIwAAdHIIACpyYb+iEECG3O3VBfnyEgZB\njpnqR/vfCcGcL6rMQhvhVlbgMIVL9BffpU8tAzumzFHij5T0LiqKHr0rfyfijPIn\nVgjTpjzW4QdFYm7MQ+EAv7ENQmJnKGxyCQAqqoe8M8V8GEC7JWF0pkGNjP5QU6Oj\nMG3LJTHMTWbMD8XbRwAjOO7Ijmkh/zvCHGMreWN36tDO0mUPXN+YRpIPvltUhd03\nd7uMJc32N7N09o4/jGkTbJw9WWDBJqCKcjnwHJMCSY3vrYN8kE5aFcBZ7hGsQqQV\nCQRGlddYu9HHUaCJBBvzpdARH6E5QeOT7G8HC5sjeMurXGkuLECMlg2g07vvYl4=\n=zTLA\n-----END PGP SIGNATURE-----\n",
+    "payload": "tree b5ee34e90064a88d7614bf6f6714d32bfac33e66\nparent 22ab2dfb190cbb38b02b67920174fe020e164d0e\nauthor James Henstridge <james@jamesh.id.au> 1606743882 +0800\ncommitter GitHub <noreply@github.com> 1606743882 +0000\n\nci: add a Github Actions workflow to test project (#125)\n\n* checkers: switch back to github.com/kr/pretty dependency\r\n\r\n* go.mod: add a go.mod file\r\n\r\n* ci: add a Github Actions workflow to test on Linux, MacOS and Windows\r\n\r\n* ci: add a job testing the GOPATH based workflow on a pre-modules Go\r\n\r\n* tests: fix a few problems preventing the tests from passing on Windows",
+    "verified_at": "2024-01-16T19:59:59Z"
+  }
+}

@@ -1,0 +1,1481 @@
+[
+  {
+    "id": "GO-2025-4007",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.24.9"
+          },
+          {
+            "introduced": "1.25.0",
+            "fixed": "1.25.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2025-4155",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.24.11"
+          },
+          {
+            "introduced": "1.25.0",
+            "fixed": "1.25.5"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2025-4175",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.24.11"
+          },
+          {
+            "introduced": "1.25.0",
+            "fixed": "1.25.5"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4337",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.24.13"
+          },
+          {
+            "introduced": "1.25.0-0",
+            "fixed": "1.25.7"
+          },
+          {
+            "introduced": "1.26.0-rc.1",
+            "fixed": "1.26.0-rc.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4340",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.24.12"
+          },
+          {
+            "introduced": "1.25.0",
+            "fixed": "1.25.6"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4341",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.24.12"
+          },
+          {
+            "introduced": "1.25.0",
+            "fixed": "1.25.6"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4342",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.24.12"
+          },
+          {
+            "introduced": "1.25.0",
+            "fixed": "1.25.6"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4601",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.8"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.1"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4602",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.8"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.1"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4603",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.8"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.1"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4771",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "github.com/jackc/pgx/v5",
+        "selected": "v5.9.2",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "5.9.0"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4772",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "github.com/jackc/pgx/v5",
+        "selected": "v5.9.2",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "5.9.0"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4864",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.9"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4865",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.9"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4869",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.9"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4870",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.9"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4918",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "golang.org/x/net",
+        "selected": null,
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "0.53.0"
+          }
+        ],
+        "disposition": "module not selected"
+      },
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.10"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4945",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "github.com/go-jose/go-jose/v3",
+        "selected": null,
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "3.0.5"
+          }
+        ],
+        "disposition": "module not selected"
+      },
+      {
+        "module": "github.com/go-jose/go-jose/v4",
+        "selected": "v4.1.4",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "4.1.4"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4946",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.9"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4947",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.9"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4970",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.12"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.5"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.0-rc.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4971",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.10"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4976",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.10"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4977",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.10"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4980",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.10"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4981",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.10"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4982",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.10"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-4986",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.10"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-5004",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "github.com/jackc/pgx",
+        "selected": null,
+        "ranges": [
+          {
+            "introduced": "0"
+          }
+        ],
+        "disposition": "module not selected"
+      },
+      {
+        "module": "github.com/jackc/pgx/v4",
+        "selected": null,
+        "ranges": [
+          {
+            "introduced": "0"
+          }
+        ],
+        "disposition": "module not selected"
+      },
+      {
+        "module": "github.com/jackc/pgx/v5",
+        "selected": "v5.9.2",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "5.9.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-5026",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.13"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.6"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.0-rc.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      },
+      {
+        "module": "golang.org/x/net",
+        "selected": null,
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "0.55.0"
+          }
+        ],
+        "disposition": "module not selected"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-5037",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.11"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.4"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-5038",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.11"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.4"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-5039",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.11"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.4"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-5856",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.12"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.5"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.0-rc.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-5970",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "golang.org/x/text",
+        "selected": "v0.41.0",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "0.39.0"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-5972",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.13"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.6"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.0-rc.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6088",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.13"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.6"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.0-rc.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6089",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.13"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.6"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.0-rc.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6090",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.13"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.6"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.0-rc.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6091",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.13"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.6"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.0-rc.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6218",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.25.13"
+          },
+          {
+            "introduced": "1.26.0-0",
+            "fixed": "1.26.6"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.0-rc.3"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6599",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.26.9"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6600",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.26.9"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6603",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.26.9"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      },
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      },
+      {
+        "module": "golang.org/x/net",
+        "selected": null,
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "0.60.0"
+          }
+        ],
+        "disposition": "module not selected"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6604",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.26.9"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6605",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.26.9"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6607",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.26.9"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6608",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.26.9"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6609",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.26.9"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6610",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.26.9"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      },
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      },
+      {
+        "module": "golang.org/x/net",
+        "selected": null,
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "0.60.0"
+          }
+        ],
+        "disposition": "module not selected"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6611",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.26.9"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      },
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      },
+      {
+        "module": "golang.org/x/net",
+        "selected": null,
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "0.60.0"
+          }
+        ],
+        "disposition": "module not selected"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6612",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.26.9"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      },
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      },
+      {
+        "module": "golang.org/x/net",
+        "selected": null,
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "0.60.0"
+          }
+        ],
+        "disposition": "module not selected"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6613",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.26.9"
+          },
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6617",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "1.26.9"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      },
+      {
+        "module": "stdlib",
+        "selected": "v1.26.9",
+        "ranges": [
+          {
+            "introduced": "1.27.0-0",
+            "fixed": "1.27.2"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      },
+      {
+        "module": "golang.org/x/net",
+        "selected": null,
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "0.60.0"
+          }
+        ],
+        "disposition": "module not selected"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  },
+  {
+    "id": "GO-2026-6629",
+    "fresh_metadata": true,
+    "affected": [
+      {
+        "module": "golang.org/x/text",
+        "selected": "v0.41.0",
+        "ranges": [
+          {
+            "introduced": "0",
+            "fixed": "0.41.0"
+          }
+        ],
+        "disposition": "selected outside affected ranges"
+      }
+    ],
+    "finding_records": 0,
+    "traces": [],
+    "disposition": "fixed selection or absent module; no source finding; no waiver"
+  }
+]

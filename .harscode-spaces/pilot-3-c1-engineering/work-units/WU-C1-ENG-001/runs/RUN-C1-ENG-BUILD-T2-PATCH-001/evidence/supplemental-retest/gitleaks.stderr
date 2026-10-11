@@ -1,0 +1,8 @@
+10:28AM INF 36 commits scanned.
+10:28AM INF scanned ~2335372 bytes (2.34 MB) in 3.64s
+10:28AM WRN leaks found: 4
+make[1]: *** [Makefile:23: gitleaks-history] Error 1
+10:28AM INF scanned ~128883 bytes (128.88 KB) in 125ms
+10:28AM WRN leaks found: 1
+make[1]: *** [Makefile:25: gitleaks-worktree] Error 1
+make: *** [Makefile:21: gitleaks] Error 2

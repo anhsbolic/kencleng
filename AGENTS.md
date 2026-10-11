@@ -104,4 +104,6 @@ For Go scanner preflight and recovery, follow [the scanner runbook](docs/project
 
 For Go dependency evidence, follow [the verification guide](docs/project/go-dependency-verification.md). Unless authority mandates an exact command, choose methods that satisfy the required outcomes: inspect available cache evidence first and fetch missing module/version evidence selectively. Do not assume `go mod download -json all` is mandatory. Distinguish environment recovery from substantive findings and incomplete acceptance; preserve explicit Run stop conditions and terminal reports.
 
+For Go module/checksum/provenance/scanner network access, follow [the network recovery guide](docs/project/go-network-recovery.md). Cached source and `GOPROXY=off` do not guarantee offline checksum verification. Use harness escalation for restricted access; do not disable checksum verification as a workaround. Future Invocations must explicitly define bounded environment recovery and whether a successful retry permits gate continuation in the same Run. Preserve existing explicit stop conditions; recovery alone never establishes acceptance or reopens a terminal Run.
+
 Git history and prior Harscode artifacts are evidence/history. Promote reusable truth into the current source that owns the concern rather than treating process artifacts as project-wide precedent.

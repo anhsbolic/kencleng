@@ -1,0 +1,16 @@
+[gosec] 2026/10/11 17:29:06 Including rules: default
+[gosec] 2026/10/11 17:29:06 Excluding rules: default
+[gosec] 2026/10/11 17:29:06 Including analyzers: default
+[gosec] 2026/10/11 17:29:06 Excluding analyzers: default
+[gosec] 2026/10/11 17:29:06 Import directory: /home/anhar-solehudin/kencleng-workspace/kencleng/backend/cmd/server
+[gosec] 2026/10/11 17:29:06 Import directory: /home/anhar-solehudin/kencleng-workspace/kencleng/backend/internal/platform/db
+[gosec] 2026/10/11 17:29:06 Import directory: /home/anhar-solehudin/kencleng-workspace/kencleng/backend/internal/platform/auth
+[gosec] 2026/10/11 17:29:07 Checking package: db
+[gosec] 2026/10/11 17:29:07 Checking file: /home/anhar-solehudin/kencleng-workspace/kencleng/backend/internal/platform/db/db.go
+[gosec] 2026/10/11 17:29:07 Checking file: /home/anhar-solehudin/kencleng-workspace/kencleng/backend/internal/platform/db/doc.go
+[gosec] 2026/10/11 17:29:07 Checking package: main
+[gosec] 2026/10/11 17:29:07 Checking file: /home/anhar-solehudin/kencleng-workspace/kencleng/backend/cmd/server/main.go
+[gosec] 2026/10/11 17:29:07 Checking package: auth
+[gosec] 2026/10/11 17:29:07 Checking file: /home/anhar-solehudin/kencleng-workspace/kencleng/backend/internal/platform/auth/http.go
+[gosec] 2026/10/11 17:29:07 Checking file: /home/anhar-solehudin/kencleng-workspace/kencleng/backend/internal/platform/auth/oidc.go
+[gosec] 2026/10/11 17:29:07 Checking file: /home/anhar-solehudin/kencleng-workspace/kencleng/backend/internal/platform/auth/store.go

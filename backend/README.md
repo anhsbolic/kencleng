@@ -8,6 +8,19 @@ Product meaning is owned by `../docs/product/product-intent.md`. Backend archite
 
 ## Local commands
 
+Run these commands from `backend/`. Create the local configuration with
+`cp .env.example .env`, then fill `DATABASE_URL`, `GOOGLE_CLIENT_ID`, and
+`GOOGLE_CLIENT_SECRET`. Use a restricted application DB role. The development
+browser origin is `http://localhost:8080`; register the exact Google callback
+`http://localhost:8080/api/auth/google/callback`. Production requires an HTTPS
+origin. The server reads `.env` from its working directory; keep the file here
+and do not commit it.
+
+`C1_AUTH_TEST_DATABASE_URL` is separate disposable integration-test configuration.
+Tests do not load `.env` automatically, so export that variable explicitly when
+running integration tests. A configured URL alone does not establish restricted
+runtime/SCRAM or real-provider verification.
+
 ```bash
 go run ./cmd/server
 go test ./...

@@ -1,0 +1,34 @@
+{
+  "bound_identities_matched": 33,
+  "head": "059d145d5df64fcda427e5a625486a8e95ce1fd8",
+  "branch": "pilot/3-c1-engineering",
+  "workflow_head": "91a97af8ba64f98b0a692a83fbff866a210c45c0",
+  "inherited_config_nonempty": {
+    "APP_ENV": false,
+    "APP_ORIGIN": false,
+    "GOOGLE_CLIENT_ID": false,
+    "GOOGLE_CLIENT_SECRET": false,
+    "DATABASE_URL": false,
+    "C1_AUTH_TEST_DATABASE_URL": false
+  },
+  "app_env_files": {
+    ".env": false,
+    "backend/.env": false
+  },
+  "tools": {
+    "go": "/home/anhar-solehudin/.gvm/gos/go1.26.9/bin/go",
+    "staticcheck": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/bin/staticcheck",
+    "gosec": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/bin/gosec",
+    "gitleaks": null,
+    "govulncheck": "/home/anhar-solehudin/.gvm/pkgsets/go1.26.9/global/bin/govulncheck",
+    "podman": "/usr/bin/podman",
+    "podman-compose": "/usr/bin/podman-compose",
+    "psql": "/usr/bin/psql"
+  },
+  "real_provider": "NOT RUN/BLOCKED \u2014 absent configured client, origin, callback/consent/test-user evidence",
+  "real_database": "NOT RUN/BLOCKED \u2014 absent authorized disposable DSN and restricted-runtime identity evidence",
+  "https": "NOT RUN \u2014 no configured origin",
+  "db_connection_attempted": false,
+  "containers_created": false,
+  "credential_values_recorded": false
+}

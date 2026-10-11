@@ -1,0 +1,1 @@
+govulncheck: fetching vulnerabilities: Get "https://vuln.go.dev/index/modules.json.gz": dial tcp: lookup vuln.go.dev on 127.0.0.53:53: dial udp 127.0.0.53:53: socket: operation not permitted

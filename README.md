@@ -25,11 +25,16 @@ Availability of a technology or service does not mean an active delivery item mu
 ## Local development
 
 ```bash
-cp .env.example .env
+cp backend/.env.example backend/.env
 make up-podman
-cd backend && go run ./cmd/server
-cd frontend && npm install && npm run dev
+(cd backend && go run ./cmd/server)
+(cd frontend && npm install && npm run dev)
 ```
+
+Fill `backend/.env` before starting the backend; see `backend/README.md` for
+configuration details. Backend configuration lives in `backend/`, not at the
+repository root. The frontend currently needs no application env file; add
+frontend-local configuration when a frontend feature actually requires it.
 
 Use `make verify` for a broad repository verification sweep when appropriate. Never claim checks that were not actually run.
 

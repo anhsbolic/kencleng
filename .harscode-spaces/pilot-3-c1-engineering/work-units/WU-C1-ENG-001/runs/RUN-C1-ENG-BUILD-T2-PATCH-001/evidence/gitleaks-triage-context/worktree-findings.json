@@ -1,0 +1,10 @@
+[
+  {
+    "RuleID": "generic-api-key",
+    "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+    "File": "/repo/backend/.env",
+    "StartLine": 12,
+    "EndLine": 12,
+    "Commit": ""
+  }
+]

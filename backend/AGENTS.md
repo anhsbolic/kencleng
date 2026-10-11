@@ -48,6 +48,8 @@ Use unit, integration, race, contract, and security checks proportionally to the
 
 Before `govulncheck`, use the [Go scanner runbook](../docs/project/go-scanner-runbook.md) to check the selected toolchain/scanner, writable build/module caches, and database access. For sandbox permission/network failures, use the harness escalation mechanism; do not change dependency pins or clear global caches as a tooling workaround. Inspect JSON findings as well as exit status, and preserve active Run stop/report boundaries.
 
+For module/checksum/provenance or scanner network restrictions, follow [the Go network recovery guide](../docs/project/go-network-recovery.md). Keep checksum verification enabled, use scoped harness escalation, and continue after recovery only when the active execution envelope permits it. Invocation owners must define bounded recovery before dispatch; cached source alone does not establish offline readiness or complete provenance.
+
 ## Write boundaries
 
 A backend-scoped implementation should not casually modify frontend production code. Shared docs/API changes require explicit coordination with the concern they own.

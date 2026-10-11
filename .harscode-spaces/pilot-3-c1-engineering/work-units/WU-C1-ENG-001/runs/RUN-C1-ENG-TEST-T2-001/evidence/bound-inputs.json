@@ -1,0 +1,167 @@
+[
+  {
+    "path": "AGENTS.md",
+    "sha256": "d6bb74b1ffa8cbd1a115006191a40574b5f16508d22477d38e09744681367462",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "backend/AGENTS.md",
+    "sha256": "817d01ab80598637644c64be9bfd7ec18a9dc5e3f0d22485d505f0760f72769f",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "backend/Makefile",
+    "sha256": "9ef7028c55e544e829684b4588dee3b89a9651d68d8f6395d5c3b3bb6803cbe2",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "backend/README.md",
+    "sha256": "430592e4aaed7d4717c2cd95f60c1e5bc0487d6d7721259406ee5a59b8e2ee3b",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "backend/go.mod",
+    "sha256": "90b7c1c6e870e32828fa5932a6c4e9a28a65d0671a74bdb807ec29dbc5d27cae",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "backend/go.sum",
+    "sha256": "6923543aab63e09da2b894699afb70b2ff1072a2eb014e063c8542ffed7deaa0",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": ".harscode-spaces/.local-config.yaml",
+    "sha256": "ffbd0521361eac90e82dbee98ba59f01f3e62641afd79bf8e71c4fc8a0e633ce",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001.md",
+    "sha256": "25043954f61152658d99162f164896c9d5feda84be98a153118e0b2564a42fb5",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/events.md",
+    "sha256": "2962e5d61f8b2c8cd454ad00fc41a89abb5a3738187eddd66e8923cfeb71e428",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "docs/product/pilot-3-control-tower.md",
+    "sha256": "4952fa2f5ce9d80fd0f115c0831e6f6c394b49865753f1de8b26e7320bc9a487",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/techplan.md",
+    "sha256": "6d2e41e177e4adaf74f53a06d81dd568def75019c8dc4e4792d938a869896d79",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/tasks/T2-backend-identity-session.md",
+    "sha256": "dfe17b7a3dc0dc89127b040a67f547506a14a4ab591ed0a6343f1a8dd8bcce37",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/tasks/manifest.md",
+    "sha256": "2950408dc48c12d5a8bbed96a88095a20ed7e1e02fd4190293691a90b111b30d",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-006/evidence/retry-1/build-report.md",
+    "sha256": "4a63608a42dd89c9978c62161b0f6924700115fd0ed06eeed9af42aa04d6b326",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-CODEREVIEW-T2-002/evidence/review-findings-1.md",
+    "sha256": "3487d5c180d9d60d4c3ad580d20db13e1646b9042361b67fadc7f470fe41a517",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-EXPLORATION-001/evidence/stage-3-solutioning.md",
+    "sha256": "e995d13b72438cd9a68a66ef34927ccb9d9000020a0b406de9024cc38383b34b",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "backend/internal/platform/auth/store.go",
+    "sha256": "eb70175ebe756698a3a83b627e0fd6606928d8ac4c355f9dd8a05dab705552b3",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "backend/internal/platform/auth/store_test.go",
+    "sha256": "bac0d93f0aa6af1591b10dc9a1df81fba0bf77ea2bdb5a165c129e2611795d60",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "backend/internal/platform/auth/oidc_test.go",
+    "sha256": "2ffd30f781b3aeaa09f6beb0fddd00bea90abcab99b221e126867acfc8331ab4",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "backend/internal/platform/auth/store_integration_test.go",
+    "sha256": "1b38058a177e0df5f87cf6c732478369e8f798265f2ad91c0762a1ea1879b1e0",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "../harscode-workspace/workflow/5-testing-prompt.md",
+    "sha256": "b2885ef6208a25f7541aca0f3a6f034a666aff484733abc852f835d10a03ef8e",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "../harscode-workspace/workflow/5-testing/guidelines.md",
+    "sha256": "6c71cc0aa074dd0107379720254ee56860ed270d97f2f606e4d956d7aaddad02",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "../harscode-workspace/workflow/5-testing/checklist.md",
+    "sha256": "42126b98abf68817347ba0b5d49ffe5c06892d0741779e179ec0e789d01f4bd6",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "../harscode-workspace/workflow/orchestrated-run-overlay.md",
+    "sha256": "f806673aa5e7d1d82dae9f433ec54c3562e15ce778b709a141c57d3d22dfaf87",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "../harscode-workspace/best-practices/AGENTS.md",
+    "sha256": "9dc2b38e5175f4da7e21cbd7c78e4e8aaea07d2325510f24cd9527625980fc6e",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "../harscode-workspace/best-practices/index.md",
+    "sha256": "876a14da409b3a486a790daee542fbafd02ecae82283b892dd189023cfbaaa34",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "../harscode-workspace/best-practices/go/index.md",
+    "sha256": "0b51468a6cf4bdc1037422376ef2aeb6884898e0d4a38c9a79b594f4f10bebf6",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "../harscode-workspace/best-practices/go/testing-concurrency.md",
+    "sha256": "a9fdf0b4a9f7b3a3fb88f8201943ff14d48d2bb9e6e51c7c6dcd8514325a2b9c",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "../harscode-workspace/best-practices/go/integration-testing-setup.md",
+    "sha256": "80538445df7b4364f6cd7e86373cd37bc3c0e1a416584d80ac057311e2ce37ed",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "../harscode-workspace/best-practices/go/jwt-and-token-lifecycle.md",
+    "sha256": "b2892c8091fe0fe91089783fbcab5af24df2d6e0ed268eb2ccdc964833ae1bfd",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "../harscode-workspace/best-practices/go/authorization-and-idor.md",
+    "sha256": "2bfa10d7cf7671f922ec78c3a61a380ddd22e65313f3a023f0b7a37ccd483203",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "../harscode-workspace/best-practices/go/dependency-and-supply-chain.md",
+    "sha256": "809b8c6706d063629dc81cc997fcd0b74688a1c1a666d683a6d0053b8d3f0162",
+    "matches_invocation_identity": true
+  },
+  {
+    "path": "../harscode-workspace/best-practices/postgresql/transactions-and-locking.md",
+    "sha256": "1b25bc67850f4e502cee9f5f73c0d4096242885de7d419a0a10fce9a3234ec1f",
+    "matches_invocation_identity": true
+  }
+]

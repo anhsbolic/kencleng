@@ -1,0 +1,6 @@
+=== RUN   TestPersonUpsertPostgreSQL
+--- PASS: TestPersonUpsertPostgreSQL (0.11s)
+=== RUN   TestPendingLoginBindingAndReplayPostgreSQL
+--- PASS: TestPendingLoginBindingAndReplayPostgreSQL (0.10s)
+PASS
+ok  	github.com/anhsbolic/kencleng/backend/internal/platform/auth	0.216s

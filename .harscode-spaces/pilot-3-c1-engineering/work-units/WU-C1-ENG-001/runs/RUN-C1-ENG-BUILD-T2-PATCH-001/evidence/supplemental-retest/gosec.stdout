@@ -1,0 +1,31 @@
+Results:
+
+
+[/home/anhar-solehudin/kencleng-workspace/kencleng/backend/internal/platform/auth/http.go:277] - G124 (CWE-614): http.Cookie missing or has insecure Secure, HttpOnly, or SameSite attribute (Confidence: HIGH, Severity: MEDIUM)
+    276: 	}
+  > 277: 	c := h.Browser.cookie(h.Browser.sessionCookieName(), "", "/", 0)
+    278: 	c.MaxAge = -1
+
+Autofix: 
+
+[/home/anhar-solehudin/kencleng-workspace/kencleng/backend/internal/platform/auth/http.go:158] - G124 (CWE-614): http.Cookie missing or has insecure Secure, HttpOnly, or SameSite attribute (Confidence: HIGH, Severity: MEDIUM)
+    157: func (h *Handler) clearLoginCookie(w http.ResponseWriter) {
+  > 158: 	c := h.Browser.cookie(loginCookieName, "", callbackPath, 0)
+    159: 	c.MaxAge = -1
+
+Autofix: 
+
+[/home/anhar-solehudin/kencleng-workspace/kencleng/backend/internal/platform/auth/http.go:49] - G124 (CWE-614): http.Cookie missing or has insecure Secure, HttpOnly, or SameSite attribute (Confidence: HIGH, Severity: MEDIUM)
+    48: func (c BrowserConfig) cookie(name, value, path string, ttl time.Duration) *http.Cookie {
+  > 49: 	return &http.Cookie{Name: name, Value: value, Path: path, MaxAge: int(ttl.Seconds()),
+    50: 		Expires: time.Now().Add(ttl), Secure: !c.Development, HttpOnly: true, SameSite: http.SameSiteLaxMode}
+
+Autofix: 
+
+Summary:
+  Gosec  : dev
+  Files  : 6
+  Lines  : 750
+  Nosec  : 0
+  Issues : 3
+

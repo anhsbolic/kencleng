@@ -1,0 +1,18 @@
+{
+  "backend/AGENTS.md": "817d01ab80598637644c64be9bfd7ec18a9dc5e3f0d22485d505f0760f72769f",
+  "backend/Makefile": "4be80b5b2db16dfd0ddcc56f2338c1f1928171444c16c491601c95165dd3e51e",
+  "backend/README.md": "b2d37cf20d578f7dcd56f95b05dc6578cba758d348b9f2ece40670df9fa5ffd0",
+  "backend/cmd/server/main.go": "d217dfd21898ce89d3eee96683b7512fd7010ec0e55da04c6d211bb5686e2246",
+  "backend/go.mod": "90b7c1c6e870e32828fa5932a6c4e9a28a65d0671a74bdb807ec29dbc5d27cae",
+  "backend/go.sum": "6923543aab63e09da2b894699afb70b2ff1072a2eb014e063c8542ffed7deaa0",
+  "backend/internal/platform/auth/http.go": "bd6a7706c4e5b9ad9af69a33a537b9af0e28fa74a852672692a96f3d034b5009",
+  "backend/internal/platform/auth/oidc.go": "a9a89117ba682e3963f5a02ec526d566763e1f991994cd5526fb01c60016a812",
+  "backend/internal/platform/auth/oidc_test.go": "2ffd30f781b3aeaa09f6beb0fddd00bea90abcab99b221e126867acfc8331ab4",
+  "backend/internal/platform/auth/store.go": "eb70175ebe756698a3a83b627e0fd6606928d8ac4c355f9dd8a05dab705552b3",
+  "backend/internal/platform/auth/store_integration_test.go": "1b38058a177e0df5f87cf6c732478369e8f798265f2ad91c0762a1ea1879b1e0",
+  "backend/internal/platform/auth/store_test.go": "bac0d93f0aa6af1591b10dc9a1df81fba0bf77ea2bdb5a165c129e2611795d60",
+  "backend/internal/platform/db/db.go": "56492320609c7bc0acbbf0761bd6669a9f79fa31986e92a2ea88138798a63660",
+  "backend/internal/platform/db/doc.go": "8dbdc9d74ef1d1f42f04ea216a57448b1ca1ca5d7a2aa15f5ac79a9eec619180",
+  "backend/migrations/000001_identity_session.down.sql": "3d291600e2992afea7d336f17287e7d98a3e0eb4351933b3d402a39be64eb804",
+  "backend/migrations/000001_identity_session.up.sql": "cbb5b1794a3c5b98d44a7bc13661ee7c1977cd511115da6cda0ea5af7a48817e"
+}

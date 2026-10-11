@@ -1,0 +1,3 @@
+staticcheck ./...
+internal/platform/auth/oidc.go:38:15: error strings should not be capitalized (ST1005)
+internal/platform/auth/oidc.go:42:15: error strings should not be capitalized (ST1005)

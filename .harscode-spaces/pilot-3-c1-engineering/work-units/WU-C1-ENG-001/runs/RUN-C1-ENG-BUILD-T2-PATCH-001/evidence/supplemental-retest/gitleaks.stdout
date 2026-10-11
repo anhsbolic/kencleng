@@ -1,0 +1,5 @@
+make -k gitleaks-history gitleaks-worktree
+make[1]: Entering directory '/home/anhar-solehudin/kencleng-workspace/kencleng/backend'
+podman-compose -f ../docker-compose.yml --profile tools run --rm --no-deps -T gitleaks git /repo --log-opts="--all --full-history -- backend/" --redact --no-banner --no-color --timeout 180
+podman-compose -f ../docker-compose.yml --profile tools run --rm --no-deps -T gitleaks dir /repo/backend --redact --no-banner --no-color --timeout 180
+make[1]: Leaving directory '/home/anhar-solehudin/kencleng-workspace/kencleng/backend'

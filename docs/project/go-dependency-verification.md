@@ -3,7 +3,9 @@
 Panduan memilih metode pembuktian dependency tanpa menjadikan satu command
 sebagai tujuan pekerjaan. Pin, persyaratan acceptance, batas write, dan stop
 condition tetap berasal dari otoritas pekerjaan aktif. Untuk executable, cache,
-network, scanner, dan recovery, gunakan [scanner runbook](go-scanner-runbook.md).
+dan scanner, gunakan [scanner runbook](go-scanner-runbook.md). Untuk network,
+checksum dan batas recovery/kelanjutan Run, gunakan
+[panduan jaringan Go](go-network-recovery.md).
 
 ## Tujuan verifikasi
 
