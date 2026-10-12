@@ -1,0 +1,129 @@
+{
+  "run_id": "RUN-C1-ENG-TEST-T2-BACKEND-GATE-001",
+  "bindings_manifest_sha256": "bfd50e749f4c65e18aa2b2a69223478b728bf206e7c7870603d1969f4e7bc0b8",
+  "preflight_bindings_matches": 24,
+  "postflight_bindings": {
+    ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/techplan.md": true,
+    ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/tasks/T2-backend-identity-session.md": true,
+    "backend/Makefile": true,
+    "backend/README.md": true,
+    "backend/go.mod": true,
+    "backend/go.sum": true,
+    "docker-compose.yml": true,
+    "backend/cmd/server/main.go": true,
+    "backend/internal/platform/auth/cookie_test.go": true,
+    "backend/internal/platform/auth/http.go": true,
+    "backend/internal/platform/auth/oidc.go": true,
+    "backend/internal/platform/auth/oidc_test.go": true,
+    "backend/internal/platform/auth/store.go": true,
+    "backend/internal/platform/auth/store_integration_test.go": true,
+    "backend/internal/platform/auth/store_test.go": true,
+    "backend/internal/platform/db/db.go": true,
+    "backend/internal/platform/db/doc.go": true,
+    "backend/scripts/scanner_gate.py": true,
+    "backend/scripts/test_scanner_gate.py": true,
+    ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/coordination/2026-10-12-scanner-candidate-decision.md": true,
+    ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-SCANNER-001/evidence/patch-report-1.md": true,
+    ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-SCANNER-PATCH-002/evidence/patch-report-1.md": true,
+    ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-CODEREVIEW-T2-SCANNER-CONFIRM-001/evidence/review-findings-1.md": true,
+    ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-EXPLORATION-001/evidence/stage-3-solutioning.md": true
+  },
+  "tool_metadata": {
+    "gosec": {
+      "path": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/bin/gosec",
+      "GoVersion": "go1.26.7",
+      "Main": {
+        "Path": "github.com/securego/gosec/v2",
+        "Version": "v2.28.0",
+        "Sum": "h1:ZsSdiDb0AtTpLFVol5z91gbMei9ZiLEPG/pZjZujp7c="
+      }
+    },
+    "staticcheck": {
+      "path": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/bin/staticcheck",
+      "GoVersion": "go1.26.7",
+      "Main": {
+        "Path": "honnef.co/go/tools",
+        "Version": "v0.8.0",
+        "Sum": "h1:UacpzPr7D6i5BAjTkA7sNVcx4kIbhAZcQ4zYtKiXx68="
+      }
+    },
+    "govulncheck": {
+      "path": "/home/anhar-solehudin/.gvm/pkgsets/go1.26.9/global/bin/govulncheck",
+      "GoVersion": "go1.26.9",
+      "Main": {
+        "Path": "golang.org/x/vuln",
+        "Version": "v1.7.0",
+        "Sum": "h1:4MQBuhmXbz2uepNJrf3v+aaZLGDqw1JluwYboegA1qg="
+      }
+    }
+  },
+  "commands": [
+    {
+      "command": [
+        "make",
+        "verify"
+      ],
+      "cwd": "/home/anhar-solehudin/kencleng-workspace/kencleng/backend",
+      "exit": 0,
+      "elapsed_seconds": 51.159,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.26.9",
+        "GOFLAGS": "-mod=readonly",
+        "GOCACHE": "/tmp/c1-backend-gate-0f3wn0lo/build-cache",
+        "GOMODCACHE": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod",
+        "STATICCHECK_CACHE": "/tmp/c1-backend-gate-0f3wn0lo/staticcheck-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "COMPOSE": "podman-compose --env-file /dev/null",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org,direct"
+      }
+    },
+    {
+      "command": [
+        "go",
+        "mod",
+        "verify"
+      ],
+      "cwd": "/home/anhar-solehudin/kencleng-workspace/kencleng/backend",
+      "exit": 0,
+      "elapsed_seconds": 0.285,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.26.9",
+        "GOFLAGS": "-mod=readonly",
+        "GOCACHE": "/tmp/c1-backend-gate-0f3wn0lo/build-cache",
+        "GOMODCACHE": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod",
+        "STATICCHECK_CACHE": "/tmp/c1-backend-gate-0f3wn0lo/staticcheck-cache",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "COMPOSE": "podman-compose --env-file /dev/null",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org,direct"
+      }
+    }
+  ],
+  "preflight": {
+    "podman_sandbox": {
+      "exit": 1,
+      "safe_error": "Failed to obtain podman configuration: set sticky bit on: chmod /run/user/1000/libpod: read-only file system"
+    },
+    "podman_same_command_escalated_retry": {
+      "exit": 0,
+      "version": "5.7.0"
+    },
+    "vulnerability_database": {
+      "url": "https://vuln.go.dev/index/db.json",
+      "exit": 0,
+      "modified": "2026-10-08T22:31:09Z"
+    },
+    "actual_environment_caches_write_probe": "PASS",
+    "production_source_guard": "MATCH",
+    "native_policy_entries": "ABSENT",
+    "configured_gitleaks_image": "ghcr.io/gitleaks/gitleaks:v8.30.1",
+    "compose_route": "podman-compose --env-file /dev/null -f ../docker-compose.yml --profile tools run --rm --no-deps -T gitleaks"
+  },
+  "capture_sha256": {
+    "verify.stdout": "1375504287e6d2bd1f58ebefa837d7054f2951d6824899a75fd20378a1fe62f7",
+    "verify.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "integrity.stdout": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd",
+    "integrity.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

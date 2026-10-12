@@ -1,0 +1,22 @@
+{
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-LOGOUT-PATCH-001/scope.md": "99551dca7d83cfdff3e103cbfec7d7322bccc86e4597b92d553d0423ccd9dad3",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-AUTH-HARNESS-001/evidence/build-report.md": "3bbb10516378156635a1705fd3e360789ced6c59e91455b3499a22931971a8e4",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-AUTH-HARNESS-001/evidence/harness-execution.txt": "95c090b8a795a8726f3eaa1ebc4ed1eac9967e1016e71ad7af5587b1fb298ee7",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-AUTH-HARNESS-001/scope.md": "bab8e336693e4e5bb325b3694548294f301bbe42a7b333af0f41f16032588bbe",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/techplan.md": "6d2e41e177e4adaf74f53a06d81dd568def75019c8dc4e4792d938a869896d79",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/tasks/T2-backend-identity-session.md": "dfe17b7a3dc0dc89127b040a67f547506a14a4ab591ed0a6343f1a8dd8bcce37",
+  "api/openapi/index.yaml": "ddefffbe588459cb0cba9f68dfedaccba3da8a1313f1956511cf628df7199965",
+  "api/openapi.yaml": "38bb6c531804b54e9d5ce56d623c397a590722c56dcb7a3c12e646bb8280fa09",
+  "backend/internal/platform/auth/http.go": "bd6a7706c4e5b9ad9af69a33a537b9af0e28fa74a852672692a96f3d034b5009",
+  "backend/internal/platform/auth/store.go": "eb70175ebe756698a3a83b627e0fd6606928d8ac4c355f9dd8a05dab705552b3",
+  "backend/internal/platform/auth/harness_test.go": "bdbfe0b59267125de9572ff534eb6839650b7ace1a3ecacd5965d22219c28552",
+  "backend/scripts/auth_harness.py": "01a2e72822f990528a9d3831430c42aa4685a9581b95ac1b5374bd5116d7a6f6",
+  "backend/scripts/scanner_gate.py": "6c0f06e3ce2f48fa47218f68d4d0ee0405b5d6094b62400815401542d7c615dc",
+  "backend/README.md": "38b5623e84b9b2fef704978b8f3100fd68e51d2b35f14fe939e02893ba85d99f",
+  "backend/Makefile": "d0ddf3678f8f3a8a071159e6ffeb11e9eaf761193de8ec19e1b63f04f4aca76f",
+  "backend/go.mod": "90b7c1c6e870e32828fa5932a6c4e9a28a65d0671a74bdb807ec29dbc5d27cae",
+  "backend/go.sum": "6923543aab63e09da2b894699afb70b2ff1072a2eb014e063c8542ffed7deaa0",
+  "docker-compose.yml": "45266eb62981e56a8b390a8e300970d1501f1697f0ec086875005ab9d00f42a1",
+  "backend/migrations/000001_identity_session.up.sql": "cbb5b1794a3c5b98d44a7bc13661ee7c1977cd511115da6cda0ea5af7a48817e",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/coordination/2026-10-12-scanner-candidate-decision.md": "2dc3f91fafaab6077a0425aed359a0a43b540c46d0a7c57a9076824713c5fbe8"
+}

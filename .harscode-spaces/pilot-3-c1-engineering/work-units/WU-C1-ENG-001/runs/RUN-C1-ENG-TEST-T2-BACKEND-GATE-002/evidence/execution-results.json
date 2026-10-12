@@ -1,0 +1,129 @@
+{
+  "run_id": "RUN-C1-ENG-TEST-T2-BACKEND-GATE-002",
+  "cwd": "/home/anhar-solehudin/kencleng-workspace/kencleng/backend",
+  "environment": {
+    "PATH": "/home/anhar-solehudin/.codex/packages/app-server-daemon/releases/0.162.1-x86_64-unknown-linux-musl/codex-path:/home/anhar-solehudin/.local/bin:/home/anhar-solehudin/.opencode/bin:/home/anhar-solehudin/.gvm/pkgsets/go1.26.9/global/bin:/home/anhar-solehudin/.gvm/gos/go1.26.9/bin:/home/anhar-solehudin/.gvm/pkgsets/go1.26.9/global/overlay/bin:/home/anhar-solehudin/.gvm/bin:/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/bin:/home/anhar-solehudin/.gvm/gos/go1.24.8/bin:/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/overlay/bin:/home/anhar-solehudin/.codex/tmp/arg0/codex-arg0BuiMa7:/home/anhar-solehudin/.codex/packages/app-server-daemon/releases/0.162.1-x86_64-unknown-linux-musl/codex-path:/home/anhar-solehudin/.codex/tmp/arg0/codex-arg0mat5s1:/home/anhar-solehudin/.codex/packages/app-server-daemon/releases/0.162.0-x86_64-unknown-linux-musl/codex-path:/home/anhar-solehudin/.codex/tmp/arg0/codex-arg0bAsj8C:/home/anhar-solehudin/.codex/packages/app-server-daemon/releases/0.161.0-x86_64-unknown-linux-musl/codex-path:/home/anhar-solehudin/.codex/tmp/arg0/codex-arg0yKoxiG:/home/anhar-solehudin/.codex/packages/app-server-daemon/releases/0.160.1-x86_64-unknown-linux-musl/codex-path:/home/anhar-solehudin/.codex/tmp/arg0/codex-arg0UqjLXE:/home/anhar-solehudin/.codex/packages/app-server-daemon/releases/0.160.0-x86_64-unknown-linux-musl/codex-path:/home/anhar-solehudin/.codex/tmp/arg0/codex-arg0ClTmhx:/home/anhar-solehudin/.codex/packages/app-server-daemon/releases/0.159.3-x86_64-unknown-linux-musl/codex-path:/home/anhar-solehudin/.codex/tmp/arg0/codex-arg017V24O:/home/anhar-solehudin/.codex/packages/app-server-daemon/releases/0.159.2-x86_64-unknown-linux-musl/codex-path:/home/anhar-solehudin/.codex/tmp/arg0/codex-arg09dIa2i:/home/anhar-solehudin/.codex/packages/app-server-daemon/releases/0.159.0-x86_64-unknown-linux-musl/codex-path:/home/anhar-solehudin/.codex/tmp/arg0/codex-arg0qdKIkH:/home/anhar-solehudin/.codex/packages/app-server-daemon/releases/0.158.0-x86_64-unknown-linux-musl/codex-path:/home/anhar-solehudin/.codex/tmp/arg0/codex-arg02z2BNa:/home/anhar-solehudin/.codex/packages/standalone/releases/0.157.1-x86_64-unknown-linux-musl/codex-path:/home/anhar-solehudin/.local/bin:/home/anhar-solehudin/.opencode/bin:/home/anhar-solehudin/.nvm/versions/node/v24.16.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+    "HOME": "/home/anhar-solehudin",
+    "USER": "anhar-solehudin",
+    "LOGNAME": "anhar-solehudin",
+    "SHELL": "/usr/bin/zsh",
+    "XDG_RUNTIME_DIR": "/run/user/1000",
+    "LANG": "en_US.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "GOTOOLCHAIN": "go1.26.9",
+    "GOFLAGS": "-mod=readonly",
+    "GOENV": "off",
+    "GOCACHE": "/tmp/c1-backend-gate-002-hd2vh1s_/build-cache",
+    "STATICCHECK_CACHE": "/tmp/c1-backend-gate-002-hd2vh1s_/staticcheck-cache",
+    "GOMODCACHE": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/pkg/mod",
+    "GOPATH": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global",
+    "GOSUMDB": "sum.golang.org",
+    "GOPROXY": "https://proxy.golang.org,direct",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "COMPOSE": "podman-compose --env-file /dev/null"
+  },
+  "tools": {
+    "staticcheck": {
+      "executable": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/bin/staticcheck",
+      "GoVersion": "go1.26.7",
+      "Main": {
+        "Path": "honnef.co/go/tools",
+        "Version": "v0.8.0",
+        "Sum": "h1:UacpzPr7D6i5BAjTkA7sNVcx4kIbhAZcQ4zYtKiXx68="
+      }
+    },
+    "gosec": {
+      "executable": "/home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/bin/gosec",
+      "GoVersion": "go1.26.7",
+      "Main": {
+        "Path": "github.com/securego/gosec/v2",
+        "Version": "v2.28.0",
+        "Sum": "h1:ZsSdiDb0AtTpLFVol5z91gbMei9ZiLEPG/pZjZujp7c="
+      }
+    },
+    "govulncheck": {
+      "executable": "/home/anhar-solehudin/.gvm/pkgsets/go1.26.9/global/bin/govulncheck",
+      "GoVersion": "go1.26.9",
+      "Main": {
+        "Path": "golang.org/x/vuln",
+        "Version": "v1.7.0",
+        "Sum": "h1:4MQBuhmXbz2uepNJrf3v+aaZLGDqw1JluwYboegA1qg="
+      }
+    }
+  },
+  "go_version": "go version go1.26.9 linux/amd64",
+  "commands": [
+    {
+      "command": [
+        "make",
+        "verify"
+      ],
+      "started_utc": "2026-10-12T16:29:27.566064+00:00",
+      "exit_code": 0,
+      "duration_seconds": 51.104,
+      "harness_execution": "escalated",
+      "module_cache_write_probe": "PASS",
+      "captures": {
+        "verify.stdout": {
+          "sha256": "12f3de05ce6f018b95a0e8e0bf3fce1646cf8c0820617cd1adc0bce286ba1433",
+          "bytes": 2458
+        },
+        "verify.stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "command": [
+        "go",
+        "mod",
+        "verify"
+      ],
+      "started_utc": "2026-10-12T16:34:56.571316+00:00",
+      "exit_code": 0,
+      "duration_seconds": 0.416,
+      "harness_execution": "sandbox",
+      "module_cache_write_probe": "not repeated; integrity reads existing cache",
+      "captures": {
+        "integrity.stdout": {
+          "sha256": "b4537ed75f533f993f371954de47e42a793b8e5b0587577de7e27fb3e50696bd",
+          "bytes": 21
+        },
+        "integrity.stderr": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    }
+  ],
+  "preflight": {
+    "bindings_matched": 43,
+    "podman_initial_exit": 1,
+    "podman_recovery_exit": 0,
+    "podman_version": "5.7.0",
+    "compose_initial_exit": 1,
+    "compose_recovery_exit": 0,
+    "compose_version": "1.5.0",
+    "vulnerability_db_reachable": true,
+    "vulnerability_db_modified": "2026-10-08T22:31:09Z",
+    "native_gitleaks_entries": "absent"
+  },
+  "postflight": {
+    "total": 43,
+    "matched": 43,
+    "mismatches": [],
+    "manifest_sha256": "dd75870fca2944beae5abb2a1f73f9cf93bcb3626115f6441df59b56cf149eb3",
+    "scope_sha256": "cb80c79ee76e0f0fef45138ba2e1dd18f7679dc9b15b65780ba4ea98253d76ff",
+    "target_head": "dae55ac44beb0e967b94c2f791d8a0b8d8e72372",
+    "branch": "pilot/3-c1-engineering",
+    "workflow_head": "651ce57f044bff23fba99082322cee6c066d25a6"
+  },
+  "gitleaks_worktree_inventory": [
+    "backend/internal/platform/auth/harness_test.go",
+    "backend/scripts/auth_harness.py",
+    "backend/scripts/regress_scanner_native_ignore.py",
+    "backend/scripts/scanner_gate.py",
+    "backend/scripts/test_scanner_gate.py"
+  ]
+}

@@ -257,7 +257,7 @@ func (h *Handler) logout(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	decoder := json.NewDecoder(http.MaxBytesReader(w, r.Body, 16))
 	var payload map[string]json.RawMessage
-	if err := decoder.Decode(&payload); err != nil || len(payload) != 0 {
+	if err := decoder.Decode(&payload); err != nil || payload == nil || len(payload) != 0 {
 		respondError(w, 400, "invalid_request", "Invalid request.")
 		return
 	}

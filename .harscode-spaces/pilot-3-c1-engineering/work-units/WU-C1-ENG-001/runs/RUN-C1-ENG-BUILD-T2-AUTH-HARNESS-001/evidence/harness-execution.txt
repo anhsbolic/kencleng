@@ -1,0 +1,79 @@
+fixture c1-auth-harness-880b836435e1 image 88a36c64c1003dad93f56daa12d1f8916ec66d1fa3e5fb1fb0ae7cb77efd56d1
+toolchain go version go1.26.9 linux/amd64
+=== RUN   TestHarnessRuntimePrivileges
+    harness_test.go:138: runtime=c1_runtime; TCP SCRAM success + 28P01 negative; no memberships; exact nine non-grantable table privileges; DDL/role/owner/delete denials verified
+    harness_test.go:139: server PostgreSQL 16.14 (Debian 16.14-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+--- PASS: TestHarnessRuntimePrivileges (0.03s)
+=== RUN   TestHarnessHTTPMeMutationLogout
+=== RUN   TestHarnessHTTPMeMutationLogout/anonymous
+=== RUN   TestHarnessHTTPMeMutationLogout/malformed
+=== RUN   TestHarnessHTTPMeMutationLogout/expired
+=== RUN   TestHarnessHTTPMeMutationLogout/revoked
+=== RUN   TestHarnessHTTPMeMutationLogout/missing-origin
+=== RUN   TestHarnessHTTPMeMutationLogout/wrong-origin
+=== RUN   TestHarnessHTTPMeMutationLogout/comma-origin
+=== RUN   TestHarnessHTTPMeMutationLogout/prefix-origin
+=== RUN   TestHarnessHTTPMeMutationLogout/wrong-type
+=== RUN   TestHarnessHTTPMeMutationLogout/malformed-type
+=== RUN   TestHarnessHTTPMeMutationLogout/anonymous#01
+=== RUN   TestHarnessHTTPMeMutationLogout/missing-csrf
+=== RUN   TestHarnessHTTPMeMutationLogout/other-session-csrf
+--- PASS: TestHarnessHTTPMeMutationLogout (0.04s)
+    --- PASS: TestHarnessHTTPMeMutationLogout/anonymous (0.00s)
+    --- PASS: TestHarnessHTTPMeMutationLogout/malformed (0.00s)
+    --- PASS: TestHarnessHTTPMeMutationLogout/expired (0.00s)
+    --- PASS: TestHarnessHTTPMeMutationLogout/revoked (0.00s)
+    --- PASS: TestHarnessHTTPMeMutationLogout/missing-origin (0.00s)
+    --- PASS: TestHarnessHTTPMeMutationLogout/wrong-origin (0.00s)
+    --- PASS: TestHarnessHTTPMeMutationLogout/comma-origin (0.00s)
+    --- PASS: TestHarnessHTTPMeMutationLogout/prefix-origin (0.00s)
+    --- PASS: TestHarnessHTTPMeMutationLogout/wrong-type (0.00s)
+    --- PASS: TestHarnessHTTPMeMutationLogout/malformed-type (0.00s)
+    --- PASS: TestHarnessHTTPMeMutationLogout/anonymous#01 (0.00s)
+    --- PASS: TestHarnessHTTPMeMutationLogout/missing-csrf (0.00s)
+    --- PASS: TestHarnessHTTPMeMutationLogout/other-session-csrf (0.00s)
+=== RUN   TestHarnessHTTPSimulatedCallback
+=== RUN   TestHarnessHTTPSimulatedCallback/success
+=== RUN   TestHarnessHTTPSimulatedCallback/browser-mismatch
+=== RUN   TestHarnessHTTPSimulatedCallback/provider-error
+=== RUN   TestHarnessHTTPSimulatedCallback/protocol-failure
+=== RUN   TestHarnessHTTPSimulatedCallback/duplicate-state
+=== RUN   TestHarnessHTTPSimulatedCallback/duplicate-code
+=== RUN   TestHarnessHTTPSimulatedCallback/malformed-state
+=== RUN   TestHarnessHTTPSimulatedCallback/missing-code
+--- PASS: TestHarnessHTTPSimulatedCallback (0.08s)
+    --- PASS: TestHarnessHTTPSimulatedCallback/success (0.02s)
+    --- PASS: TestHarnessHTTPSimulatedCallback/browser-mismatch (0.01s)
+    --- PASS: TestHarnessHTTPSimulatedCallback/provider-error (0.01s)
+    --- PASS: TestHarnessHTTPSimulatedCallback/protocol-failure (0.01s)
+    --- PASS: TestHarnessHTTPSimulatedCallback/duplicate-state (0.01s)
+    --- PASS: TestHarnessHTTPSimulatedCallback/duplicate-code (0.01s)
+    --- PASS: TestHarnessHTTPSimulatedCallback/malformed-state (0.01s)
+    --- PASS: TestHarnessHTTPSimulatedCallback/missing-code (0.01s)
+=== RUN   TestHarnessConcurrentPerson
+    harness_test.go:485: eight runtime upserts; actual first-login blocker edge witnessed; one stable person; issuer/case distinct
+--- PASS: TestHarnessConcurrentPerson (0.06s)
+=== RUN   TestHarnessSessionLockContention
+=== RUN   TestHarnessSessionLockContention/expiry
+    harness_test.go:590: expiry: runtime operations, PostgreSQL blocking edge observed, bounded release, asserted authority outcome
+=== RUN   TestHarnessSessionLockContention/revocation
+    harness_test.go:590: revocation: runtime operations, PostgreSQL blocking edge observed, bounded release, asserted authority outcome
+=== RUN   TestHarnessSessionLockContention/cancellation
+    harness_test.go:590: cancellation: runtime operations, PostgreSQL blocking edge observed, bounded release, asserted authority outcome
+=== RUN   TestHarnessSessionLockContention/logout
+    harness_test.go:590: logout: runtime operations, PostgreSQL blocking edge observed, bounded release, asserted authority outcome
+=== RUN   TestHarnessSessionLockContention/rotation
+    harness_test.go:590: rotation: runtime operations, PostgreSQL blocking edge observed, bounded release, asserted authority outcome
+--- PASS: TestHarnessSessionLockContention (1.23s)
+    --- PASS: TestHarnessSessionLockContention/expiry (1.06s)
+    --- PASS: TestHarnessSessionLockContention/revocation (0.05s)
+    --- PASS: TestHarnessSessionLockContention/cancellation (0.05s)
+    --- PASS: TestHarnessSessionLockContention/logout (0.04s)
+    --- PASS: TestHarnessSessionLockContention/rotation (0.04s)
+=== RUN   TestHarnessLogoutRejectsNull
+    harness_test.go:601: HTTP status: got 204 want 400
+--- FAIL: TestHarnessLogoutRejectsNull (0.03s)
+FAIL
+FAIL	github.com/anhsbolic/kencleng/backend/internal/platform/auth	1.456s
+FAIL
+cleanup verified: owned container and anonymous data volumes removed

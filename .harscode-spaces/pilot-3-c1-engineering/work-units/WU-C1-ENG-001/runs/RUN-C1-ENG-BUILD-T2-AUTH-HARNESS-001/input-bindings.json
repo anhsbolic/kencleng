@@ -1,0 +1,22 @@
+{
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-AUTH-HARNESS-001/scope.md": "bab8e336693e4e5bb325b3694548294f301bbe42a7b333af0f41f16032588bbe",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/techplan.md": "6d2e41e177e4adaf74f53a06d81dd568def75019c8dc4e4792d938a869896d79",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/tasks/T2-backend-identity-session.md": "dfe17b7a3dc0dc89127b040a67f547506a14a4ab591ed0a6343f1a8dd8bcce37",
+  "api/openapi/index.yaml": "ddefffbe588459cb0cba9f68dfedaccba3da8a1313f1956511cf628df7199965",
+  "api/openapi.yaml": "38bb6c531804b54e9d5ce56d623c397a590722c56dcb7a3c12e646bb8280fa09",
+  "backend/internal/platform/auth/http.go": "bd6a7706c4e5b9ad9af69a33a537b9af0e28fa74a852672692a96f3d034b5009",
+  "backend/internal/platform/auth/store.go": "eb70175ebe756698a3a83b627e0fd6606928d8ac4c355f9dd8a05dab705552b3",
+  "backend/internal/platform/auth/oidc.go": "78424fa09c46554101d9e8a1c8d177bdcd1421d7415262aa4fc704b8357a0ac2",
+  "backend/internal/platform/auth/oidc_test.go": "2ffd30f781b3aeaa09f6beb0fddd00bea90abcab99b221e126867acfc8331ab4",
+  "backend/internal/platform/auth/cookie_test.go": "51ee6d770c3935b4bb1cacac30bcb4c80252f5c63f95a5847e42e34c06dcb681",
+  "backend/internal/platform/auth/store_test.go": "bac0d93f0aa6af1591b10dc9a1df81fba0bf77ea2bdb5a165c129e2611795d60",
+  "backend/internal/platform/auth/store_integration_test.go": "1b38058a177e0df5f87cf6c732478369e8f798265f2ad91c0762a1ea1879b1e0",
+  "backend/internal/platform/db/db.go": "56492320609c7bc0acbbf0761bd6669a9f79fa31986e92a2ea88138798a63660",
+  "backend/migrations/000001_identity_session.up.sql": "cbb5b1794a3c5b98d44a7bc13661ee7c1977cd511115da6cda0ea5af7a48817e",
+  "backend/Makefile": "d0ddf3678f8f3a8a071159e6ffeb11e9eaf761193de8ec19e1b63f04f4aca76f",
+  "backend/README.md": "5bcea466e7eaf011d3395d2393a177f3c75e61f2c03a3198e081dd4df31d9f99",
+  "backend/go.mod": "90b7c1c6e870e32828fa5932a6c4e9a28a65d0671a74bdb807ec29dbc5d27cae",
+  "backend/go.sum": "6923543aab63e09da2b894699afb70b2ff1072a2eb014e063c8542ffed7deaa0",
+  "docker-compose.yml": "45266eb62981e56a8b390a8e300970d1501f1697f0ec086875005ab9d00f42a1",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-TEST-T2-BACKEND-GATE-001/evidence/testing-report-1.md": "8c779e3edae44a0d71d702181cd78b41bf88794e1a6fd6604ad575b32e8af838"
+}

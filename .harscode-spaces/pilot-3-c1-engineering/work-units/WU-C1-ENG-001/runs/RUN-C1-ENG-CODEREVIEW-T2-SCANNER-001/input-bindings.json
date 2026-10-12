@@ -1,0 +1,14 @@
+{
+  "backend/Makefile": "d0ddf3678f8f3a8a071159e6ffeb11e9eaf761193de8ec19e1b63f04f4aca76f",
+  "backend/README.md": "5cbf1d89b28f93c82d619d0d12fecd2b5a01d67e1ac89e862e90cd2557c60a17",
+  "backend/scripts/scanner_gate.py": "1c231ed1dd8461f2b16eeef327508646a3f65d8ca55fafa9ad82854ae8ef8d30",
+  "backend/scripts/test_scanner_gate.py": "4097a9b3cd5fa0e9c5cc8187ad2c57cbc4c3dff9c3351dcb1469177999ac14fe",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-SCANNER-001/evidence/patch-report-1.md": "ae286517eaff3332f2e5d3c71ef884f12716143225d11f56fb261811eb42317d",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-SCANNER-001/scope.md": "4c82f64ec174bf67a076cd267787bde50068559080fb8c72120182de462c94f5",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/coordination/2026-10-12-scanner-candidate-decision.md": "2dc3f91fafaab6077a0425aed359a0a43b540c46d0a7c57a9076824713c5fbe8",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/techplan.md": "6d2e41e177e4adaf74f53a06d81dd568def75019c8dc4e4792d938a869896d79",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/tasks/T2-backend-identity-session.md": "dfe17b7a3dc0dc89127b040a67f547506a14a4ab591ed0a6343f1a8dd8bcce37",
+  "backend/internal/platform/auth/http.go": "bd6a7706c4e5b9ad9af69a33a537b9af0e28fa74a852672692a96f3d034b5009",
+  "backend/cmd/server/main.go": "d217dfd21898ce89d3eee96683b7512fd7010ec0e55da04c6d211bb5686e2246",
+  "docker-compose.yml": "45266eb62981e56a8b390a8e300970d1501f1697f0ec086875005ab9d00f42a1"
+}

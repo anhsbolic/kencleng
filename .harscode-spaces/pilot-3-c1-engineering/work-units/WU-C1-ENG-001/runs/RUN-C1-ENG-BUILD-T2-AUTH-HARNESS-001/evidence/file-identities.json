@@ -1,0 +1,43 @@
+{
+  "checked_at": "2026-10-12T15:07:10.943030+00:00",
+  "input_bindings_sha256": "3d41697b6b4ffa90355c11a98572e790f7477841574e4585c9f1b648f83370d1",
+  "preflight": "20/20 matched",
+  "authorized_delta": [
+    {
+      "path": "backend/internal/platform/auth/harness_test.go",
+      "before_sha256": "ABSENT",
+      "after_sha256": "bdbfe0b59267125de9572ff534eb6839650b7ace1a3ecacd5965d22219c28552"
+    },
+    {
+      "path": "backend/scripts/auth_harness.py",
+      "before_sha256": "ABSENT",
+      "after_sha256": "01a2e72822f990528a9d3831430c42aa4685a9581b95ac1b5374bd5116d7a6f6"
+    },
+    {
+      "path": "backend/README.md",
+      "before_sha256": "5bcea466e7eaf011d3395d2393a177f3c75e61f2c03a3198e081dd4df31d9f99",
+      "after_sha256": "38b5623e84b9b2fef704978b8f3100fd68e51d2b35f14fe939e02893ba85d99f"
+    }
+  ],
+  "other_bound_inputs_unchanged": [
+    ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-AUTH-HARNESS-001/scope.md",
+    ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/techplan.md",
+    ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/tasks/T2-backend-identity-session.md",
+    "api/openapi/index.yaml",
+    "api/openapi.yaml",
+    "backend/internal/platform/auth/http.go",
+    "backend/internal/platform/auth/store.go",
+    "backend/internal/platform/auth/oidc.go",
+    "backend/internal/platform/auth/oidc_test.go",
+    "backend/internal/platform/auth/cookie_test.go",
+    "backend/internal/platform/auth/store_test.go",
+    "backend/internal/platform/auth/store_integration_test.go",
+    "backend/internal/platform/db/db.go",
+    "backend/migrations/000001_identity_session.up.sql",
+    "backend/Makefile",
+    "backend/go.mod",
+    "backend/go.sum",
+    "docker-compose.yml",
+    ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-TEST-T2-BACKEND-GATE-001/evidence/testing-report-1.md"
+  ]
+}

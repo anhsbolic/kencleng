@@ -1,0 +1,14 @@
+{
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-CODEREVIEW-T2-LOGOUT-PATCH-001/scope.md": "2d2e7c8153dcd3f7561e2a4856213f4aba2fdc893774d98130d1657a222228ad",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-LOGOUT-PATCH-001/evidence/patch-report-1.md": "68db135f66a8755c900734bad86fd6dc4e94db9d3bcf0b82cc50a40d40594bc2",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-AUTH-HARNESS-001/evidence/build-report.md": "3bbb10516378156635a1705fd3e360789ced6c59e91455b3499a22931971a8e4",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-LOGOUT-PATCH-001/scope.md": "99551dca7d83cfdff3e103cbfec7d7322bccc86e4597b92d553d0423ccd9dad3",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/techplan.md": "6d2e41e177e4adaf74f53a06d81dd568def75019c8dc4e4792d938a869896d79",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/tasks/T2-backend-identity-session.md": "dfe17b7a3dc0dc89127b040a67f547506a14a4ab591ed0a6343f1a8dd8bcce37",
+  "api/openapi/index.yaml": "ddefffbe588459cb0cba9f68dfedaccba3da8a1313f1956511cf628df7199965",
+  "backend/internal/platform/auth/http.go": "83b575b0e43d17d85303ae7dfeb0273fa2516bb18952a9660da7b80a2d039d63",
+  "backend/internal/platform/auth/harness_test.go": "c9997611413446641da20b73da2e251459a9ccbb33fbb7c88429f18206d0f45a",
+  "backend/scripts/auth_harness.py": "04e8173381bb978e9ab52898969418b893672729f82b741645267aaef1e41e53",
+  "backend/scripts/scanner_gate.py": "ea1aa24035c3532e93b0faa3419883e08306e4bb624d6debae845121d4746cd7",
+  "backend/README.md": "38d6dbb59f19f7f936ac43932c8d3a2028e9b07585e34e5baf9844b94b41574e"
+}

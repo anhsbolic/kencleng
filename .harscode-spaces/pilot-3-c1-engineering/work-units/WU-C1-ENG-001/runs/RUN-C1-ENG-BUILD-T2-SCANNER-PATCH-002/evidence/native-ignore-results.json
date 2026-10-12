@@ -1,0 +1,125 @@
+{
+  "source": "safe selected fields from observed successful command output; not raw reports",
+  "command": "PYTHONDONTWRITEBYTECODE=1 python3 backend/scripts/regress_scanner_native_ignore.py",
+  "exit_code": 0,
+  "tool": "Gitleaks v8.30.1",
+  "image": "ghcr.io/gitleaks/gitleaks:v8.30.1",
+  "network": "none",
+  "mount": "read-only disposable fixture",
+  "synthetic_only": true,
+  "cleanup": "TemporaryDirectory",
+  "modes": [
+    {
+      "mode": "history",
+      "before_ignore": {
+        "raw_exit": 10,
+        "findings": 5
+      },
+      "unknown_no_ignore_effective": "FAIL",
+      "after_removal_effective": "FAIL",
+      "unknown_scan_attempts": 1,
+      "normal_allowed_effective": "PASS",
+      "normal_scan_attempts": 1,
+      "native_entries": {
+        "root": {
+          "effective": "REJECTED_CONFIGURATION",
+          "scanner_scans": 0,
+          "artifact_preserved": true,
+          "direct_raw_exit": 10,
+          "direct_findings": 4
+        },
+        "backend": {
+          "effective": "REJECTED_CONFIGURATION",
+          "scanner_scans": 0,
+          "artifact_preserved": true,
+          "direct_raw_exit": 10,
+          "direct_findings": 5
+        }
+      }
+    },
+    {
+      "mode": "unstaged",
+      "before_ignore": {
+        "raw_exit": 10,
+        "findings": 1
+      },
+      "unknown_no_ignore_effective": "FAIL",
+      "after_removal_effective": "FAIL",
+      "unknown_scan_attempts": 2,
+      "normal_allowed_effective": "PASS",
+      "normal_scan_attempts": 2,
+      "native_entries": {
+        "root": {
+          "effective": "REJECTED_CONFIGURATION",
+          "scanner_scans": 0,
+          "artifact_preserved": true,
+          "direct_raw_exit": 10,
+          "direct_findings": 1
+        },
+        "backend": {
+          "effective": "REJECTED_CONFIGURATION",
+          "scanner_scans": 0,
+          "artifact_preserved": true,
+          "direct_raw_exit": 0,
+          "direct_findings": 0
+        }
+      }
+    },
+    {
+      "mode": "staged",
+      "before_ignore": {
+        "raw_exit": 10,
+        "findings": 1
+      },
+      "unknown_no_ignore_effective": "FAIL",
+      "after_removal_effective": "FAIL",
+      "unknown_scan_attempts": 2,
+      "normal_allowed_effective": "PASS",
+      "normal_scan_attempts": 2,
+      "native_entries": {
+        "root": {
+          "effective": "REJECTED_CONFIGURATION",
+          "scanner_scans": 0,
+          "artifact_preserved": true,
+          "direct_raw_exit": 10,
+          "direct_findings": 1
+        },
+        "backend": {
+          "effective": "REJECTED_CONFIGURATION",
+          "scanner_scans": 0,
+          "artifact_preserved": true,
+          "direct_raw_exit": 0,
+          "direct_findings": 0
+        }
+      }
+    },
+    {
+      "mode": "untracked",
+      "before_ignore": {
+        "raw_exit": 10,
+        "findings": 1
+      },
+      "unknown_no_ignore_effective": "FAIL",
+      "after_removal_effective": "FAIL",
+      "unknown_scan_attempts": 3,
+      "normal_allowed_effective": "PASS",
+      "normal_scan_attempts": 2,
+      "native_entries": {
+        "root": {
+          "effective": "REJECTED_CONFIGURATION",
+          "scanner_scans": 0,
+          "artifact_preserved": true,
+          "direct_raw_exit": 10,
+          "direct_findings": 1
+        },
+        "backend": {
+          "effective": "REJECTED_CONFIGURATION",
+          "scanner_scans": 0,
+          "artifact_preserved": true,
+          "direct_raw_exit": 10,
+          "direct_findings": 1
+        }
+      }
+    }
+  ]
+}

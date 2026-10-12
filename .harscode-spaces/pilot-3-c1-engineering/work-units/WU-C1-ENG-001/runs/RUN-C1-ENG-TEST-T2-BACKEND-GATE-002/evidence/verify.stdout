@@ -1,0 +1,36 @@
+staticcheck ./...
+make gosec
+make[1]: Entering directory '/home/anhar-solehudin/kencleng-workspace/kencleng/backend'
+python3 scripts/scanner_gate.py gosec -- /home/anhar-solehudin/.gvm/pkgsets/go1.24.8/global/bin/gosec
+gosec: raw_exit=1 raw_findings=3 accepted=3 effective=PASS
+make[1]: Leaving directory '/home/anhar-solehudin/kencleng-workspace/kencleng/backend'
+go test ./...
+?   	github.com/anhsbolic/kencleng/backend/cmd/server	[no test files]
+ok  	github.com/anhsbolic/kencleng/backend/internal/platform/auth	0.187s
+?   	github.com/anhsbolic/kencleng/backend/internal/platform/db	[no test files]
+go test -race ./...
+?   	github.com/anhsbolic/kencleng/backend/cmd/server	[no test files]
+ok  	github.com/anhsbolic/kencleng/backend/internal/platform/auth	1.321s
+?   	github.com/anhsbolic/kencleng/backend/internal/platform/db	[no test files]
+go test -tags=contract ./...
+?   	github.com/anhsbolic/kencleng/backend/cmd/server	[no test files]
+ok  	github.com/anhsbolic/kencleng/backend/internal/platform/auth	0.164s
+?   	github.com/anhsbolic/kencleng/backend/internal/platform/db	[no test files]
+make gitleaks
+make[1]: Entering directory '/home/anhar-solehudin/kencleng-workspace/kencleng/backend'
+make -k gitleaks-history gitleaks-worktree
+make[2]: Entering directory '/home/anhar-solehudin/kencleng-workspace/kencleng/backend'
+python3 scripts/scanner_gate.py gitleaks-history -- podman-compose --env-file /dev/null -f ../docker-compose.yml --profile tools run --rm --no-deps -T gitleaks
+gitleaks-history: raw_exit=10 raw_findings=4 accepted=4 effective=PASS
+python3 scripts/scanner_gate.py gitleaks-worktree -- podman-compose --env-file /dev/null -f ../docker-compose.yml --profile tools run --rm --no-deps -T gitleaks
+gitleaks-worktree[0]: raw_exit=0 raw_findings=0 accepted=0 effective=PASS
+gitleaks-worktree[1]: raw_exit=0 raw_findings=0 accepted=0 effective=PASS
+gitleaks-worktree[2]: raw_exit=0 raw_findings=0 accepted=0 effective=PASS
+gitleaks-worktree[3]: raw_exit=0 raw_findings=0 accepted=0 effective=PASS
+gitleaks-worktree[4]: raw_exit=0 raw_findings=0 accepted=0 effective=PASS
+gitleaks-worktree[5]: raw_exit=0 raw_findings=0 accepted=0 effective=PASS
+gitleaks-worktree[6]: raw_exit=0 raw_findings=0 accepted=0 effective=PASS
+make[2]: Leaving directory '/home/anhar-solehudin/kencleng-workspace/kencleng/backend'
+make[1]: Leaving directory '/home/anhar-solehudin/kencleng-workspace/kencleng/backend'
+govulncheck ./...
+No vulnerabilities found.

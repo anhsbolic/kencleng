@@ -1,0 +1,17 @@
+{
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-CODEREVIEW-T2-SCANNER-001/evidence/review-findings-1.md": "de2d507b12b5d59eef9a110c390dcd67c9b71912ce9d6408e290aa033b7ec9c0",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-CODEREVIEW-T2-SCANNER-001/evidence/patch-plan-1.md": "b8d3d46f47417447bb53bd3eb125905ed0dfaf353e3ae712f340c86a1219ff1c",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-CODEREVIEW-T2-SCANNER-001/evidence/native-ignore-probe.py": "8ef6e4c78b28b3d91c1d728b2582f0363b33aab702194d84d5df3f523512bc97",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-SCANNER-PATCH-001/scope.md": "087e8658dc75e6da18fa6e79e7e0b3964d9bc44f324104d07a5dc58918c29b03",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/coordination/2026-10-12-scanner-candidate-decision.md": "2dc3f91fafaab6077a0425aed359a0a43b540c46d0a7c57a9076824713c5fbe8",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/techplan.md": "6d2e41e177e4adaf74f53a06d81dd568def75019c8dc4e4792d938a869896d79",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/tasks/T2-backend-identity-session.md": "dfe17b7a3dc0dc89127b040a67f547506a14a4ab591ed0a6343f1a8dd8bcce37",
+  "backend/scripts/scanner_gate.py": "6c0f06e3ce2f48fa47218f68d4d0ee0405b5d6094b62400815401542d7c615dc",
+  "backend/scripts/test_scanner_gate.py": "e579057af9184a97d2fa61856d2934f01582c3290553098b4ab5abcb04e2bcf9",
+  "backend/Makefile": "d0ddf3678f8f3a8a071159e6ffeb11e9eaf761193de8ec19e1b63f04f4aca76f",
+  "backend/README.md": "5bcea466e7eaf011d3395d2393a177f3c75e61f2c03a3198e081dd4df31d9f99",
+  "docker-compose.yml": "45266eb62981e56a8b390a8e300970d1501f1697f0ec086875005ab9d00f42a1",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-SCANNER-PATCH-001/evidence/patch-report-1.md": "3e7fba062e048fe3408a4e57a5e75001f8f237dfd47aa92f2b11323d68e7f054",
+  "backend/scripts/regress_scanner_native_ignore.py": "bb6530feabd915f15ed2d74aecd12404fbd956587961c01b53b0279a09a66e1a",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-SCANNER-PATCH-002/scope.md": "dbc154e15a8349ba447f85142fd6f378f04f1b7bd676ea7db1e59d4dce219686"
+}

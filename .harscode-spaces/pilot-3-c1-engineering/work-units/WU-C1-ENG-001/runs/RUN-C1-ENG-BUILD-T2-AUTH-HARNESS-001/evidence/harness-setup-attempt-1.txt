@@ -1,0 +1,3 @@
+fixture c1-auth-harness-c75a347fd081 image 88a36c64c1003dad93f56daa12d1f8916ec66d1fa3e5fb1fb0ae7cb77efd56d1
+cleanup verified: owned container and anonymous data volumes removed
+podman exec operation failed (exit 2)

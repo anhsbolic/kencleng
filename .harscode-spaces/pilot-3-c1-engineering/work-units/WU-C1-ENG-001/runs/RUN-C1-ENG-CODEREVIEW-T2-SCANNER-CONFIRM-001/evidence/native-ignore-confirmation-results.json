@@ -1,0 +1,37 @@
+{
+  "command": "PYTHONDONTWRITEBYTECODE=1 python3 .harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-CODEREVIEW-T2-SCANNER-CONFIRM-001/evidence/native-ignore-confirmation.py",
+  "cwd": "repository root",
+  "initial_attempt": {
+    "exit_code": 2,
+    "safe_stdout": {"stage": "tool-preflight", "raw_exit": 1, "category": "podman runtime filesystem restriction", "scans_executed": false},
+    "stderr": "empty"
+  },
+  "same_command_harness_approved_retry": {
+    "exit_code": 0,
+    "stderr": "empty",
+    "safe_stdout": {
+      "after_removal": {"cli_exit": 1, "effective": "FAIL", "payload_output": false, "process_calls": 4, "safe_category": null, "scanner_scans": 2},
+      "artifact_bytes_preserved": true,
+      "before_ignore": {"findings": 1, "gate": {"cli_exit": 1, "effective": "FAIL", "payload_output": false, "process_calls": 4, "safe_category": null, "scanner_scans": 2}, "raw_exit": 10},
+      "cleanup": "TemporaryDirectory",
+      "fixed_gate": {"cli_exit": 1, "effective": "REJECTED_CONFIGURATION", "payload_output": false, "process_calls": 0, "safe_category": "unreviewed native Gitleaks policy entry; scans not executed", "scanner_scans": 0},
+      "image": "ghcr.io/gitleaks/gitleaks:v8.30.1",
+      "mount": "read-only disposable fixture",
+      "network": "none",
+      "original_probe_sha256": "8ef6e4c78b28b3d91c1d728b2582f0363b33aab702194d84d5df3f523512bc97",
+      "raw_native_suppression": {"findings": 0, "raw_exit": 0},
+      "result": "PASS",
+      "source_and_index_unchanged": true,
+      "synthetic_only": true,
+      "tool": "Gitleaks v8.30.1"
+    }
+  },
+  "behavioral_checks": {
+    "cwd": "backend/scripts",
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest test_scanner_gate.DispositionTests.test_native_entries_rejected_before_any_scan test_scanner_gate.DispositionTests.test_native_file_state_errors_fail_closed_and_output_is_safe test_scanner_gate.DispositionTests.test_absent_native_entries_allow_normal_history_and_worktree_routes",
+    "exit_code": 0,
+    "tests_run": 3,
+    "duration_seconds": 0.012,
+    "result": "OK"
+  }
+}

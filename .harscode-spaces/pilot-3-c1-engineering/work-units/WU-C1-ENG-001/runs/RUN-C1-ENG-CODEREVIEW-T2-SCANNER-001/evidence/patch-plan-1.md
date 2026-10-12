@@ -1,0 +1,16 @@
+# Patch plan — F-SCANNER-001
+
+Phase: Code Review / patch plan for Build. Author: Codex / Reviewer, backend-tooling/security. Created/Updated: 2026-10-12.
+WORK_UNIT_ID: WU-C1-ENG-001. RUN_ID: RUN-C1-ENG-CODEREVIEW-T2-SCANNER-001.
+Participant/Session assignment: PARTICIPANT-C1-ENG-T2-SCANNER-REVIEWER-001 / SESSION-C1-ENG-T2-SCANNER-REVIEWER-001.
+Selected model/reasoning gpt-6-sol / medium; actual runtime identity/effort not independently exposed.
+Target HEAD dae55ac44beb0e967b94c2f791d8a0b8d8e72372; workflow 651ce57f044bff23fba99082322cee6c066d25a6.
+
+Owning finding: [review-findings-1.md](review-findings-1.md), F-SCANNER-001. No implementation changes performed by Reviewer. This plan is advisory to fresh Build, not a new authorization for source/auth/policy writes beyond the existing scanner-treatment bounds.
+
+1. Close Gitleaks native target `.gitleaksignore` loading for history and tracked-change modes. `--gitleaks-ignore-path /dev/null` alone is insufficient in v8.30.1. Smallest candidate fix: fail closed on root/backend native ignore entries before scans; account for symlink/dangling entries and relevant file-state errors. Alternatively prove another bounded mechanism prevents auto-discovery without removing coverage or accepting hidden findings. Do not delete user artifacts, rewrite Git history, weaken rules, or add approved candidates.
+2. Add tests with independent oracles for the omitted tool behavior, retaining existing seven tests. In disposable synthetic Git fixtures, demonstrate staged and unstaged findings cannot become effective PASS when target ignore files name them. Include history with an additional unapproved finding and native ignore aimed only at that extra finding; four approved candidates must not mask the omission. Check both root/backend routes, safe failure category, and no report/secret/stderr leakage. Test failing/rejected native artifact states and normal scans when no native allowance exists. Mock tests alone cannot prove upstream discovery semantics.
+3. Update README native-ignore enforcement wording to actual verified mechanism. Keep effective vs raw result, configured exit 10 vs partial-error exit 1, source/fingerprint drift guards, all/full-history/backend, tracked staged/unstaged and nonignored-untracked scope unchanged. If early native-policy rejection prevents scans, report that as configuration failure without claiming all scans executed.
+4. Run focused tests and selected actual Gitleaks regression only for this fix; preserve version/route/safe raw/effective outcomes. Re-ground source hashes/assignment inputs on fresh Run. Do not run broad/final backend, provider, DB or real Google verification for confidence. Return patch/evidence for Orchestrator applicability reconciliation; no automatic dependency/blocker/readiness promotion.
+
+Acceptance for this patch: the independent defect probe can no longer produce effective PASS with the staged synthetic finding hidden by target ignore; all relevant native discovery routes are blocked or demonstrably disabled. Normal exact approved history treatment and worktree unknown-finding rejection still hold. Any required broader native allowance/security change returns to Human owner before implementation.
