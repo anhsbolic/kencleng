@@ -16,6 +16,14 @@ browser origin is `http://localhost:8080`; register the exact Google callback
 origin. The server reads `.env` from its working directory; keep the file here
 and do not commit it.
 
+Backend secret verification distinguishes repository exposure from legitimate
+ignored local configuration. `make verify` scans backend Git history, staged
+and unstaged tracked changes, and untracked files that Git does not ignore.
+Ignored local `.env` / `.env.local` files are therefore outside the repository
+leak gate unless they are force-tracked; a force-tracked secret remains visible
+to the staged scan. Do not weaken Gitleaks rules or commit local credentials to
+make the gate pass.
+
 `C1_AUTH_TEST_DATABASE_URL` is separate disposable integration-test configuration.
 Tests do not load `.env` automatically, so export that variable explicitly when
 running integration tests. A configured URL alone does not establish restricted
