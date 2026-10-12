@@ -25,10 +25,10 @@ gitleaks-history:
 gitleaks-worktree:
 	$(GITLEAKS_SHELL) -lc 'set -euo pipefail; \
 		common=(--redact --no-banner --no-color --timeout 180); \
-		gitleaks git --pre-commit "${common[@]}" /repo/backend; \
-		gitleaks git --staged "${common[@]}" /repo/backend; \
+		gitleaks git --pre-commit "$${common[@]}" /repo/backend; \
+		gitleaks git --staged "$${common[@]}" /repo/backend; \
 		while IFS= read -r -d "" file; do \
-			gitleaks dir "${common[@]}" "/repo/$file"; \
+			gitleaks dir "$${common[@]}" "/repo/$$file"; \
 		done < <(git -C /repo ls-files -z --others --exclude-standard -- backend/)'
 migrate-up:
 	migrate -path migrations -database "$$DATABASE_URL" up
