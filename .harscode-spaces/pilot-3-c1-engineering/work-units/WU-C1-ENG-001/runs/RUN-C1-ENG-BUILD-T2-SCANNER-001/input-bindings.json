@@ -1,0 +1,13 @@
+{
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/coordination/2026-10-12-scanner-candidate-decision.md": "2dc3f91fafaab6077a0425aed359a0a43b540c46d0a7c57a9076824713c5fbe8",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-SCANNER-001/scope.md": "01742302e7878e0fbd2c5070df7218491accc3e11cfe77ddfd25fe357d68a5f7",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/techplan.md": "6d2e41e177e4adaf74f53a06d81dd568def75019c8dc4e4792d938a869896d79",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/tasks/T2-backend-identity-session.md": "dfe17b7a3dc0dc89127b040a67f547506a14a4ab591ed0a6343f1a8dd8bcce37",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-CODEREVIEW-T2-PATCH-001/evidence/review-findings-1.md": "7ea1a91074bdb5e064c167ca26003f3e99b5d79ce201c40bda2aa32bb1e1fe74",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-CODEREVIEW-T2-PATCH-001/evidence/history-diagnostic-sanitized.json": "6d541485fef6c5f3f4d037b610fe689e75901b97b20ee225f08e23f46297d112",
+  "backend/internal/platform/auth/http.go": "bd6a7706c4e5b9ad9af69a33a537b9af0e28fa74a852672692a96f3d034b5009",
+  "backend/cmd/server/main.go": "d217dfd21898ce89d3eee96683b7512fd7010ec0e55da04c6d211bb5686e2246",
+  "backend/Makefile": "7a36b24c3cdc0e018d43c47a4934b9c818a5fd8842c72b2e72de7214b258232f",
+  "backend/README.md": "bf7839d364d9b8cb0f2db9331acb83f8fd4bc4ffe02040cacd23f44814185e0d",
+  "docker-compose.yml": "45266eb62981e56a8b390a8e300970d1501f1697f0ec086875005ab9d00f42a1"
+}

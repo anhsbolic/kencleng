@@ -1,0 +1,73 @@
+{
+  "start_utc": "2026-10-12T04:22:00.594397+00:00",
+  "command": [
+    "podman",
+    "run",
+    "--rm",
+    "--network=none",
+    "--volume",
+    "/home/anhar-solehudin/kencleng-workspace/kencleng/.git:/repo/.git:ro",
+    "--volume",
+    "/tmp/c1-review-gitleaks-4myhxx4j:/diagnostic:rw",
+    "--workdir",
+    "/repo",
+    "ghcr.io/gitleaks/gitleaks:v8.30.1",
+    "git",
+    "/repo",
+    "--log-opts=--all --full-history -- backend/",
+    "--redact",
+    "--no-banner",
+    "--no-color",
+    "--timeout",
+    "180",
+    "--report-format",
+    "json",
+    "--report-path",
+    "/diagnostic/history.json"
+  ],
+  "exit": 1,
+  "findings": [
+    {
+      "RuleID": "generic-api-key",
+      "File": "backend/internal/transport/http/account_security_test.go",
+      "Commit": "6f036c6384868644989134386fc378ed1c19efeb",
+      "StartLine": 169,
+      "EndLine": 169,
+      "Fingerprint": "6f036c6384868644989134386fc378ed1c19efeb:backend/internal/transport/http/account_security_test.go:generic-api-key:169"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "File": "backend/internal/transport/http/account_security_test.go",
+      "Commit": "6f036c6384868644989134386fc378ed1c19efeb",
+      "StartLine": 245,
+      "EndLine": 245,
+      "Fingerprint": "6f036c6384868644989134386fc378ed1c19efeb:backend/internal/transport/http/account_security_test.go:generic-api-key:245"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "File": "backend/internal/domain/account/google_oauth_test.go",
+      "Commit": "ef428be3742eddfc59b86fc205bb03624e669e82",
+      "StartLine": 487,
+      "EndLine": 487,
+      "Fingerprint": "ef428be3742eddfc59b86fc205bb03624e669e82:backend/internal/domain/account/google_oauth_test.go:generic-api-key:487"
+    },
+    {
+      "RuleID": "generic-api-key",
+      "File": "backend/internal/domain/account/service_test.go",
+      "Commit": "d68b40ce7d8d7f3b7334fdf45d5d4a1899e61c0f",
+      "StartLine": 471,
+      "EndLine": 471,
+      "Fingerprint": "d68b40ce7d8d7f3b7334fdf45d5d4a1899e61c0f:backend/internal/domain/account/service_test.go:generic-api-key:471"
+    }
+  ],
+  "safe_scanner_summary": [
+    "4:22AM INF 40 commits scanned.",
+    "4:22AM INF scanned ~2357347 bytes (2.36 MB) in 1.08s",
+    "4:22AM WRN leaks found: 4"
+  ],
+  "stdout_bytes": 0,
+  "stderr_bytes": 110,
+  "report_present": true,
+  "scope": "all/full-history/backend, Git database only; no worktree/env mount",
+  "purpose": "targeted attribution diagnostic, not final gate"
+}

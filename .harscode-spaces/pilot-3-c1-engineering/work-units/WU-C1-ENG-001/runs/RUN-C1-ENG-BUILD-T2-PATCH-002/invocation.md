@@ -13,7 +13,7 @@
 - SESSION_TRANSITION: FRESH, independent from all prior executor conversations; CONTINUATION_CHECKPOINT: none.
 - ARTIFACT_TARGET: oidc.go two error literals and narrowly affected backend auth tests, within patch-scope.md. Results belong under RUN_PATH.
 - SELECTED_MODEL / REASONING_EFFORT: gpt-6-sol / medium.
-- MODEL_APPROVAL: PENDING exact Human approval for PATCH-002. Prior Run model approvals do not transfer. Status WAITING_HUMAN; prepared only, no dispatch/execution claimed.
+- MODEL_APPROVAL: APPROVED by Anhar on 2026-10-12 (“approve bro”) for exact RUN-C1-ENG-BUILD-T2-PATCH-002 / gpt-6-sol / medium. Prior Run approvals do not transfer. Status READY_FOR_HUMAN_DISPATCH; prepared only, Participant not launched. Approval does not establish runtime identity or execution.
 - MODEL_ROUTING_RATIONALE: mechanical lint change plus bounded security applicability reasoning across conditional cookie flags, deletion-cookie behavior and historical repository findings needs strong cross-cutting reasoning; medium is lowest supported Sol effort sufficient for this scope. Model choice cannot solve missing policy/authority/prerequisites.
 - TARGET_REVISION / branch: 069a84b5d69b089707a76a653437f6de8d9c09d5 / pilot/3-c1-engineering.
 - WORKFLOW_REVISION / branch: f6856df25a13b004e5fb242eb71f3ecd80728f70 / pilot/orchestrator-v0.1-c1.

@@ -1,0 +1,23 @@
+# PATCH-002 terminal reconciliation — 2026-10-12
+
+Author: Orchestrator / Codex. Target observed HEAD 9aabf9c580685271982976dfa9e1cb2b18df0288; workflow HEAD f6856df25a13b004e5fb242eb71f3ecd80728f70. No tests/scanners/DB/provider/browser actions run by Orchestrator; safe read-only evidence/source inspection only.
+
+## Verified and reported evidence
+
+Human-supplied report SHA-256 `eb860e3bda70699ea91655dc6f7321dfa998ecf45a6062682c86d29bd112ef06` matches durable report; exactly one Phase handoff, Outcome COMPLETED within bounded Build envelope. Manifest identity matches Invocation (`10930892facc89fd76429f910e6f64dc0fa2b8a7c53a2fd815d0fbff8d444db7`). Pre-mutation 18/18 match is Participant-reported; Orchestrator verifies current 17 unchanged inputs plus the one intended oidc.go delta. Git diff shows exactly two initial-capitalization changes; current hash `78424fa09c46554101d9e8a1c8d177bdcd1421d7415262aa4fc704b8357a0ac2`. New cookie_test.go hash `51ee6d770c3935b4bb1cacac30bcb4c80252f5c63f95a5847e42e34c06dcb681` matches report. No http.go, module, policy/gate or contract change. Existing 38 historical preservation identities match; PATCH-001 and terminal carrier unchanged.
+
+Staticcheck 2026.2/Go1.26.9 and focused cookie test PASS are Implementer-reported commands/outcomes, not Orchestrator reruns; no raw execution captures accompany this report. This is consistent with current evidence-sufficiency rules for routine successes, but does not establish independently executed final security clearance. Test source inspected: 12 origin cases, serialized issuance flags and actual clearLoginCookie headers; logout handler/DB/provider/browser not executed. Runtime model/effort/thread identity remains unverified.
+
+D-PATCH002-01: G124 behavior assessments and three history fixture assessments exist; accepted scanner/gate treatment is pending with security/Human policy owner. No allowlist/nosec/suppression or risk acceptance follows from this reconciliation. Captured Gosec version is dev and not rerun. Exported/mutable BrowserConfig limitation and logout source-only assessment remain explicit.
+
+D-PATCH002-02: Google historical candidate metadata line 487 does not map to the reported candidate in blob/diff. Safe original detail logs contain counts only; original full redacted reports were removed per diagnostic summary. Concrete attribution is not established. Need targeted diagnostic capture/mapping; do not guess offset or clear it as fixture. Three other fixture assessments remain bounded source-derived claims requiring independent inspection before owner gate decision.
+
+Ignored/untracked .env remains outside current Git-visible repository gate, not a new accepted allowance. Old directory-scan result remains history. Final make verify, repository Gitleaks, race, meaningful contract assertions and real restricted-runtime/provider/browser/HTTPS evidence remain outstanding. Human-performed real Google remains Testing-owned/Human-attested when scoped prerequisites and criteria are established. B-T2-002/B-T2-003 remain open; no T2/T3 readiness/acceptance, dependency commit or dispatch.
+
+## Route and applicability
+
+PATCH-002 is terminal COMPLETED; never resume it for remaining decisions. Narrow two-literal patch alone does not require an automatic new full review cycle. Here independent Review is justified by a concrete disputed scanner attribution and proposed security dispositions that could affect gate policy, plus new cookie oracle limits. Prepare four-pass Code Review of exact two-file diff with bounded security diagnostic questions D-PATCH002-01/02; no final Testing or policy implementation. Reviewer returns safe candidate mapping, independent disposition rationale and decision-ready minimal options/proposal, never accepts risk or changes policy. Human gate follows only when options are concrete. Current owner question cannot safely be reduced to “accept all false positives” with fourth candidate unmapped.
+
+Loop trigger check for current bounded patch/security concern: PATCH-002 completed with new implementation and evidence; PATCH-001 never executed. H1/H2/H3 not met; no two full planning/phase/owner bounces or low-delta terminated patch cycles, historical binding recovery caution alone does not meet two-WARNING threshold. No new Loop Health audit recommended or diagnostic verdict invented.
+
+Fresh RUN-C1-ENG-CODEREVIEW-T2-PATCH-001, Reviewer/backend-security Profile, new Participant/Session; gpt-6-sol / medium exact model approval pending. No launch. Meaningful delta is actual patched two-file target plus unresolved security attribution. Final Testing preparation remains prerequisite-scoped after disposition/owner decisions; not dispatched now.

@@ -35,11 +35,11 @@ type GoogleProtocol struct {
 
 func NewGoogleProtocol(ctx context.Context, clientID, clientSecret, redirectURL string) (*GoogleProtocol, error) {
 	if clientID == "" || clientSecret == "" || redirectURL == "" {
-		return nil, errors.New("Google client configuration is incomplete")
+		return nil, errors.New("google client configuration is incomplete")
 	}
 	callback, err := url.Parse(redirectURL)
 	if err != nil || callback.Host == "" || callback.Scheme == "" {
-		return nil, errors.New("Google redirect URL is invalid")
+		return nil, errors.New("google redirect URL is invalid")
 	}
 	provider, err := oidc.NewProvider(ctx, googleIssuer)
 	if err != nil {

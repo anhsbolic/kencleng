@@ -6,6 +6,10 @@
 
 Use this guide when preparing real C1 auth/runtime verification. Keep simulated/provider-fixture evidence, real PostgreSQL evidence, real Google/browser evidence, and production-HTTPS evidence explicitly distinct.
 
+## Current C1 scheduling decision
+
+[Human-approved real Google login hold](c1-google-login-verification-hold.md) defers real Google login until frontend integration is complete. The real Google login scenario is then performed manually by the Human, not by an agent. The scenario/readiness guidance below applies when preparing that deferred verification; it does not authorize execution during the hold. Backend checks outside that hold may proceed within their own authorized scope. No requirement is waived and no acceptance follows from the hold.
+
 ## Environment boundaries
 
 ### Application runtime

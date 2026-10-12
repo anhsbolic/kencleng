@@ -1,0 +1,15 @@
+{
+  "commit": "ef428be3742eddfc59b86fc205bb03624e669e82",
+  "path": "backend/internal/domain/account/google_oauth_test.go",
+  "rule": "generic-api-key",
+  "fingerprint": "ef428be3742eddfc59b86fc205bb03624e669e82:backend/internal/domain/account/google_oauth_test.go:generic-api-key:487",
+  "blob_sha256": "d5f11425602daa52b90bb831eba581d5be8aef382224507274b3c727715d5e3e",
+  "hunk": "@@ -0,0 +1,697 @@",
+  "added_fragment_equals_blob": true,
+  "match_start_blob_line": 487,
+  "match_end_blob_line": 487,
+  "capture_group_blob_line": 487,
+  "comment_only": true,
+  "rationale": "Generic rule matches explanatory comment describing ES256 JWT access-token verification, not a quoted credential or executable credential assignment. Adjacent test calls IssueTokens on a locally constructed fake service and parses generated JWT with test-generated public key. No line offset applied.",
+  "method": "One Gitleaks v8.30.1 history diagnostic reproduces exact fingerprint; independent non-scanner regex/source coordinate probe against versioned default generic-api-key rule and exact added diff."
+}
