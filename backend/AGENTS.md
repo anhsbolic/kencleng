@@ -50,6 +50,8 @@ Before `govulncheck`, use the [Go scanner runbook](../docs/project/go-scanner-ru
 
 For module/checksum/provenance or scanner network restrictions, follow [the Go network recovery guide](../docs/project/go-network-recovery.md). Keep checksum verification enabled, use scoped harness escalation, and continue after recovery only when the active execution envelope permits it. Invocation owners must define bounded recovery before dispatch; cached source alone does not establish offline readiness or complete provenance.
 
+For C1 authentication/session real-runtime verification, follow [the C1 auth verification environment guide](../docs/project/c1-auth-verification-environment.md). Keep application runtime DB, disposable integration DB, real Google/provider interaction, and production-HTTPS evidence distinct. Real Google account interaction is Human-performed; do not request or persist credentials/tokens, and do not relabel Human-attested observations as agent-independent verification.
+
 ## Write boundaries
 
 A backend-scoped implementation should not casually modify frontend production code. Shared docs/API changes require explicit coordination with the concern they own.

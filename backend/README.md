@@ -29,6 +29,10 @@ Tests do not load `.env` automatically, so export that variable explicitly when
 running integration tests. A configured URL alone does not establish restricted
 runtime/SCRAM or real-provider verification.
 
+For real C1 authentication/session verification, including the restricted runtime DB,
+Google callback/test-user prerequisites, and Human-performed browser flow, follow
+[`docs/project/c1-auth-verification-environment.md`](../docs/project/c1-auth-verification-environment.md).
+
 ```bash
 go run ./cmd/server
 go test ./...
