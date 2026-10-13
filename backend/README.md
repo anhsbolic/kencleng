@@ -62,20 +62,35 @@ applies the current identity migration through the fixture provisioner and gives
 the separate TCP/SCRAM runtime only the nine required table privileges. It uses
 an ephemeral loopback port, generated private child-environment credentials,
 anonymous disposable storage, and ownership-checked container/volume cleanup.
-It never loads `.env` or uses the application `DATABASE_URL`.
+It never loads `.env` or inherits the application `DATABASE_URL`. The runner
+passes the restricted fixture URL as `DATABASE_URL` only to the Go test child;
+the harness builds its runtime pool through the production `db.Open` function.
+Provisioning and lock-witness queries retain their separate fixture-only
+identity. This establishes the configured pool path in the disposable harness,
+not a deployed application's configuration or independent T2 acceptance.
 
 ```bash
-python3 scripts/auth_harness.py
+python3 scripts/auth_harness.py --run-id RUN-C1-ENG-BUILD-T2-RUNTIME-HARNESS-001 --suite t2
 ```
 
-Run only under an active approved disposable-fixture invocation. The runner and
-test marker are currently bound to
-`RUN-C1-ENG-BUILD-T2-LOGOUT-PATCH-001`; a later occurrence must rebind resource
-provenance before executing these reusable assertions. The runner selects the
-HTTP mutation/logout and null-logout tests with `-failfast`, a 90-second test
-timeout, and preserved assertions. Callback Protocol is simulated;
-HTTP checks use httptest. Neither proves real Google login, browser/HTTPS
-enforcement, deployed runtime credentials, or independent T2 acceptance.
+Run only under an active approved disposable-fixture invocation. Supply that
+occurrence's exact Run ID; the example is owned by the named Build Run and must
+not be reused by a later Run. IDs must match
+`RUN-C1-ENG-<UPPERCASE-SEGMENTS>-<NNN>` and contain at most 128 characters.
+Both required arguments are validated before resource creation. The exact ID
+binds fixture labels, the Go test environment, and ownership checks before/after
+provisioning and before cleanup; cleanup also checks the unique container ID.
+The `t2` suite selects all six existing top-level `TestHarness...` cases:
+runtime privileges, HTTP mutation/logout, simulated callback, concurrent person
+upsert, session lock contention, and null logout. The allowlisted `logout` suite
+selects only HTTP mutation/logout and null logout; arbitrary regex input is not
+accepted. Both use `-failfast`, a 90-second Go test timeout, a 120-second child
+timeout, and preserved assertions. A failure may prevent later cases from running.
+PostgreSQL/TCP/SCRAM and database blocking edges are actual fixture behavior;
+HTTP checks use httptest and callback Protocol is simulated. Build execution
+establishes harness executability only. It does not prove real Google login,
+browser/HTTPS enforcement, deployed runtime credentials, or independent T2
+acceptance. Stop and report if isolation or owned cleanup cannot be established.
 
 For real C1 authentication/session verification, including the restricted runtime DB,
 Google callback/test-user prerequisites, and Human-performed browser flow, follow

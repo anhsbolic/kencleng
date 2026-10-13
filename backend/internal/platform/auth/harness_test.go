@@ -11,10 +11,12 @@ import (
 	"net/http/httptest"
 	"net/url"
 	"os"
+	"regexp"
 	"strings"
 	"testing"
 	"time"
 
+	"github.com/anhsbolic/kencleng/backend/internal/platform/db"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -30,7 +32,8 @@ type harnessFixture struct {
 
 func harness(t *testing.T) harnessFixture {
 	t.Helper()
-	if os.Getenv("C1_HARNESS_OWNED_RUN") != "RUN-C1-ENG-BUILD-T2-LOGOUT-PATCH-001" {
+	run := os.Getenv("C1_HARNESS_OWNED_RUN")
+	if len(run) > 128 || !regexp.MustCompile(`^RUN-C1-ENG-[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{3}$`).MatchString(run) {
 		t.Fatal("use scripts/auth_harness.py: owned fixture binding required")
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
@@ -51,7 +54,19 @@ func harness(t *testing.T) harnessFixture {
 		}
 		return pool
 	}
-	runtime, provisioner := connect("C1_HARNESS_RUNTIME_DSN"), connect("C1_HARNESS_PROVISIONER_DSN")
+	runtimeURL := os.Getenv("DATABASE_URL")
+	runtimeConfig, err := pgxpool.ParseConfig(runtimeURL)
+	if err != nil || runtimeConfig == nil || runtimeConfig.ConnConfig.Host != "127.0.0.1" ||
+		runtimeConfig.ConnConfig.User != "c1_runtime" || runtimeConfig.ConnConfig.Database != "c1_fixture" ||
+		runtimeConfig.ConnConfig.RuntimeParams["search_path"] != "c1_identity" {
+		t.Fatal("invalid owned fixture runtime URL")
+	}
+	runtime, err := db.Open(ctx, runtimeURL)
+	if err != nil {
+		t.Fatal("configured fixture runtime pool failed")
+	}
+	t.Cleanup(runtime.Close)
+	provisioner := connect("C1_HARNESS_PROVISIONER_DSN")
 	return harnessFixture{ctx, runtime, provisioner, Store{runtime}}
 }
 

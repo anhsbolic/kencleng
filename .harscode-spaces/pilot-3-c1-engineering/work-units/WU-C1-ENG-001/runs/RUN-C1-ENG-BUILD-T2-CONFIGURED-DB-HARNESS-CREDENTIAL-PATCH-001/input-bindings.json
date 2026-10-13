@@ -1,0 +1,21 @@
+{
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-CONFIGURED-DB-HARNESS-CREDENTIAL-PATCH-001/scope.md": "f8070d50a57cddc2f0d580a4d67971f3b4171358c2178ea691b2ef7a3b316960",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/techplan.md": "6d2e41e177e4adaf74f53a06d81dd568def75019c8dc4e4792d938a869896d79",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/tasks/T2-backend-identity-session.md": "dfe17b7a3dc0dc89127b040a67f547506a14a4ab591ed0a6343f1a8dd8bcce37",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/techplan/tasks/manifest.md": "2950408dc48c12d5a8bbed96a88095a20ed7e1e02fd4190293691a90b111b30d",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-CODEREVIEW-T2-CONFIGURED-DB-HARNESS-PATCH-001/evidence/review-findings-1.md": "e00f134680386cb6566fcc32307b401ccc4529a357d68bcd5a7932900e938f46",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-CODEREVIEW-T2-CONFIGURED-DB-HARNESS-PATCH-001/evidence/patch-plan-1.md": "c1fcc7d1c62437e2d86634da5dc7f8b4647ac3e3c13a59dc31bf5833345fc841",
+  ".harscode-spaces/pilot-3-c1-engineering/work-units/WU-C1-ENG-001/runs/RUN-C1-ENG-BUILD-T2-CONFIGURED-DB-HARNESS-PATCH-001/evidence/patch-report-1.md": "33aa73d184433acdf296703cb79089518436d5187169bb5528374c462e7d8de3",
+  "AGENTS.md": "d6bb74b1ffa8cbd1a115006191a40574b5f16508d22477d38e09744681367462",
+  "backend/AGENTS.md": "c20569195138eb70998e0e184b9a41cd4b6cbdfe4c72abdee616a03d3a8a03a2",
+  ".harscode-spaces/.local-config.yaml": "ffbd0521361eac90e82dbee98ba59f01f3e62641afd79bf8e71c4fc8a0e633ce",
+  "backend/scripts/auth_harness.py": "fa5ebc1442b18cce82d5b5b1270855baa661ad4fbadb82456ffbf3b488d8948a",
+  "backend/scripts/test_auth_harness.py": "4854fd949a3f09ddac611ab6d485b89858f9dd462bf7ebfe5aba8dd889ccfb3f",
+  "docs/project/c1-auth-verification-environment.md": "1b27d65ae0381e667611a2d458419b71cee8da34e17af5790b51ddb413603627",
+  "../harscode-workspace/workflow/3-build-prompt.md": "8e8a183a839c27d887212b1e51bbd96d2e796febed8d2685534d98fe1b3ad4e5",
+  "../harscode-workspace/workflow/3-build/guidelines.md": "1a85acfa5ebc80837737038198154039d0039bb2c4d6d4addcb62ce34dac9546",
+  "../harscode-workspace/workflow/3-build/checklist.md": "8cb373825edd6e64e2df0e523623bf3b3d6e14fc03580027959e939f9a5ff98a",
+  "../harscode-workspace/workflow/orchestrated-run-overlay.md": "588d8e1ea49dcf0706268190a91ae787d081a4f160f91087adeab759785b4ef7",
+  "../harscode-workspace/orchestration/run-contract.md": "4fef2bd0ab4e072256457731fd725dced3f80ef83e63af2106aad119ec53beeb",
+  "../harscode-workspace/orchestration/local-runtime-config.md": "15ded49440987c5d11f12a5c4e887da323569b36f9d3769879875df6972ae7e2"
+}

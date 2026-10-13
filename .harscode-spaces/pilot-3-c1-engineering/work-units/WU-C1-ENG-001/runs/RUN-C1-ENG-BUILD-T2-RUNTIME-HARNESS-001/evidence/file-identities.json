@@ -1,0 +1,20 @@
+{
+  "run_id": "RUN-C1-ENG-BUILD-T2-RUNTIME-HARNESS-001",
+  "preflight_bindings": "34/34 MATCH",
+  "postflight_unchanged_bindings": "31/31 MATCH",
+  "test_assertions": "byte-identical after reversing import and Run marker delta",
+  "files": {
+    "backend/scripts/auth_harness.py": {
+      "before": "04e8173381bb978e9ab52898969418b893672729f82b741645267aaef1e41e53",
+      "after": "bb17613e834c4416f3310d5359bc8007e4f8cace33c01f320dc4bbc053c084c2"
+    },
+    "backend/internal/platform/auth/harness_test.go": {
+      "before": "c9997611413446641da20b73da2e251459a9ccbb33fbb7c88429f18206d0f45a",
+      "after": "eedb6e8007158a0900301702a1896b48abb6e494211ced91f72fa30e0037f274"
+    },
+    "backend/README.md": {
+      "before": "38d6dbb59f19f7f936ac43932c8d3a2028e9b07585e34e5baf9844b94b41574e",
+      "after": "91f9d1c084e90f2b862bb15b67dc782458b61052d820fabc79b8d2a88b5c8046"
+    }
+  }
+}

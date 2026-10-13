@@ -5,10 +5,10 @@
 - **Work Unit / Run:** `WU-C1-ENG-001` / `RUN-C1-ENG-BUILD-T2-RUNTIME-HARNESS-001`.
 - **Phase / Role:** Build / Implementer — backend T2 auth runtime test harness.
 - **Participant / Session:** `PARTICIPANT-C1-ENG-T2-RUNTIME-HARNESS-IMPLEMENTER-001` / `SESSION-C1-ENG-T2-RUNTIME-HARNESS-IMPLEMENTER-001` (fresh; independent from all prior Build, Review and Testing contexts).
-- **Dispatch:** Human-Assisted; `PENDING_EXACT_MODEL_AND_FIXTURE_APPROVAL`. Prepared, not dispatched.
+- **Dispatch:** Human-Assisted; terminal `COMPLETED` after Human dispatch and one terminal Build handoff on 2026-10-13. This Run is closed; do not reuse or reopen it.
 - **Selected model / effort:** `gpt-6-sol` / `medium`.
-- **MODEL_APPROVAL:** PENDING for this exact Run. The Human-owned registry requires approval; prior model approvals do not transfer.
-- **FIXTURE_AUTHORIZATION:** PENDING for this exact Run's one isolated disposable PostgreSQL container and ephemeral provisioner/restricted runtime identities as bounded in `scope.md`. The prior AUTH-HARNESS-001 approval is precedent only; it is not transferred to this Run.
+- **MODEL_APPROVAL:** `APPROVED_BY_HUMAN` for this exact Run, `gpt-6-sol` / `medium`. On 2026-10-13 Asia/Jakarta, Anhar replied “approve bro” to the explicit exact-Run model and fixture request. This approval does not transfer to another Run.
+- **FIXTURE_AUTHORIZATION:** `APPROVED_BY_HUMAN` for this exact Run's one isolated disposable PostgreSQL container and ephemeral provisioner/restricted runtime identities, bounded exactly by `scope.md`. The authorization is limited to that Run; prior AUTH-HARNESS-001 approval was not transferred.
 - **Routing rationale:** This test-only Build changes the boundary that controls fixture ownership labels, role separation, cleanup and real PostgreSQL concurrency evidence for authentication/session behavior. The gated Sol model's declared security/cross-cutting reasoning fits those concerns; `medium` is its lowest supported sufficient effort.
 - **Target revision / branch:** `dae55ac44beb0e967b94c2f791d8a0b8d8e72372` / `pilot/3-c1-engineering`; current exact target source is separately bound.
 - **Workflow revision:** `651ce57f044bff23fba99082322cee6c066d25a6`.
@@ -44,6 +44,6 @@ No broad `make verify`, DB shared/persistent access, `.env` read, real Google/pr
 
 - **PREAUTHORIZED after both approvals:** exact three-file test-infrastructure writes, isolated disposable fixture/provisioner/runtime setup, focused all-six-case harness Build suite, scoped result evidence.
 - **ORCHESTRATOR_DECISION:** reconcile actual delta and decide independent Review/Testing applicability and current-tree gate re-entry.
-- **HUMAN_REQUIRED:** exact model and fixture approval, mechanical dispatch, any privilege/resource expansion, shared/persistent DB or secret access, production auth semantic/source change.
+- **HUMAN_REQUIRED:** mechanical dispatch, any privilege/resource expansion, shared/persistent DB or secret access, production auth semantic/source change.
 
-No Participant, Session, fixture, test, or code change has been launched in this prepared Run.
+Terminal reconciliation: Human dispatch is evidenced by the terminal report. The report SHA-256 is `c43a030248673bd094aef4352758f4d0007bb14bf255c6202dc1708be194f34`; it contains exactly one `## Phase handoff`. The Build occurrence is closed and its report/evidence must remain unchanged.
