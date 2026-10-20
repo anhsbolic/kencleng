@@ -436,3 +436,84 @@ Kencleng does not need a clean-room rewrite. It needs an **authority reframe**.
 The previous domain-first/spec-first generation remains valuable as a rich bank of product reasoning, security analysis, technical hypotheses, contracts, tests, and implementation evidence.
 
 The new development model should place a clean product/business authority above that material, derive experience and delivery slices progressively, and harden frontend/backend contracts when those slices become real.
+
+## 10. Product Foundation Revisit — Final Closeout (2026-10-20)
+
+> Status: CLOSED / SUCCESS
+> Decision: SUCCESS — SOURCE-LEVEL PRODUCT FOUNDATION ASSESSMENT
+> Human decision owner: Anhar
+> Standing: Research/project assessment record only; not Product,
+> MVP, delivery, contract, or implementation authority.
+
+### Scope and evidence
+
+The revisit evaluated the existing Kencleng Product Foundation
+through three read-only steps:
+
+1. Product Foundation Assessment — product purpose, actors,
+   boundaries, concepts, durable truths, and authority sufficiency.
+2. Targeted Guest Donor Experience Stress Test — campaign
+   understanding, guest donation, status, closure, and return visit;
+   accountability pending or organizer-reported follow-up;
+   material negative paths and provenance boundaries.
+3. D1 Authority Reconciliation — accepted donation, Campaign
+   closure, post-close settlement, and conditional funding-finality.
+
+Verified repository checkpoints:
+- Kencleng main: e32916b597412094976e3e6263095e861ec18391
+- Slice 2 validation: 8b9a0503d0c92f60434d704a3796b7329b0adebe
+- C1 Space-only pilot: 91fad854301265357ba69e76182eb5c82ae71049
+- C1 engineering pilot: a05cadd7d07875c5db6d9ce35b9d0f7de9c76e0e
+
+Primary canonical inputs: docs/product/README.md,
+product-overview.md, mvp-scope.md, mvp-delivery-slices.md,
+and applicable docs/ui-ux/ authority.
+Harscode Foundation Product guidance was research input only.
+
+Pinned experimental decision evidence (Kencleng validation commit
+8b9a0503d0c92f60434d704a3796b7329b0adebe):
+- D1, Anhar decision 2026-09-29:
+  [OIR-S2-002-006 Campaign/Donation Ordering Brief](https://github.com/anhsbolic/kencleng/blob/8b9a0503d0c92f60434d704a3796b7329b0adebe/.harscode-spaces/s2-guest-donation-truthful-state/WU-S2-002/runs/OIR-S2-002-006/campaign-donation-ordering-brief.md#L14-L27).
+- D-04, Anhar decision receipt 2026-10-01:
+  [Slice 2 events, D-01–D-04](https://github.com/anhsbolic/kencleng/blob/8b9a0503d0c92f60434d704a3796b7329b0adebe/.harscode-spaces/s2-guest-donation-truthful-state/events.md#L917-L926).
+- D-04 Product/MVP source acceptance 2026-10-02:
+  [Slice 2 events, Human acceptance](https://github.com/anhsbolic/kencleng/blob/8b9a0503d0c92f60434d704a3796b7329b0adebe/.harscode-spaces/s2-guest-donation-truthful-state/events.md#L1025-L1035).
+  Accepted source SHA-256: mvp-scope.md
+  ba2972bc8f91d092e477df170d987b1d124964d9cc36c025d2a8da3ed12709af;
+  mvp-delivery-slices.md
+  4c69a030e7fedc9c62bf30f85c00e81f9806c45b2ed5471c1d5126762be8091f.
+These are pinned experimental decision/provenance references,
+not proof of promotion into Kencleng main.
+
+### Findings and disposition
+
+- KEEP existing whole-product Product Authority and precedence.
+- KEEP approved MVP Scope and Delivery Sequencing.
+- KEEP truthful pending accountability as valid MVP behavior.
+- KEEP the separation of platform facts, organizer claims,
+  seeded/simulated data, pending information, and verified outcomes.
+- D1 and D-04: Human-settled in experimental Slice 2 lineage.
+- DEFER canonical synchronization of D1/D-04 to Kencleng main.
+- DEFER minor non-blocking authority-routing cleanup.
+- EVIDENCE GAP: independent actor-value validation.
+
+### Decision and remaining obligations
+
+No Product Authority redesign, MVP scope expansion, C1
+reconstruction, or new Product decision is approved.
+
+Future Product/MVP work owns any authorized D1/D-04 canonical
+sync. Campaign/Donation/API owners retain downstream contract
+reconciliation. Engineering and Testing retain runtime, concurrency,
+security, and integration evidence obligations.
+
+This assessment did not perform user research, production/runtime
+testing, or implementation verification. Source-level semantic
+sufficiency must not be represented as user-value validation,
+contract readiness, or runtime correctness.
+
+Historical C1 pilots and Harscode Foundation research remain
+separate experimental episodes, not Kencleng main authority.
+
+Final outcome: PRODUCT FOUNDATION REVISIT CLOSED / SUCCESS.
+Canonical-source synchronization remains explicitly deferred.
