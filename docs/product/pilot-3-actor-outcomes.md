@@ -662,3 +662,140 @@ The next active stage is:
 Stage 3 should use scenarios as pressure tests to resolve only those OPEN product semantics that become necessary for a coherent end-to-end behavior.
 
 The discussion should not return to Stage 2 merely to make the actor model exhaustive. Reopen a Stage 2 decision only if materially new scenario evidence reveals a contradiction, missing actor, or responsibility ownership problem.
+
+## 12. 2026-10-21 Experience-first Stage 2 reconstruction checkpoint
+
+> **Standing:** **Anhar-approved working reconstruction v0.2**, Kencleng Pilot #3 only. Experimentally sufficient to explore Stage 3; **not** new canonical Product Authority, MVP scope, C1 amendment, engineering assignment or operational runtime evidence.
+> **Approval:** Anhar approved the Stage 2 reconstruction and repository persistence on 2026-10-21.
+> **Source hierarchy:** [Pilot Product Intent](product-intent.md), [Stage 1 approved value story](pilot-3-business-value-loop.md#9-2026-10-21-experience-first-stage-1-reconstruction-checkpoint), and applicable [Product Design Principles](../ui-ux/product-design-principles.md) in their own design scope. Historical Stage 2 (sections 1–11) is preserved as historical pilot research/working decisions; this reconstruction does **not** automatically supersede C1-specific approvals.
+> **Experiment:** [Harscode Interconnected Journey Blueprint Research v0](https://github.com/anhsbolic/harscode-workspace/blob/74e6fcd45ad52ea3a66960712131b7fa209b836d/product/interconnected-journey-blueprint-research.md) is an optional visualization technique, not a required methodology.
+> **Branch boundary:** This is `pilot/station5-c1-space-only`, **not** Kencleng operational `main`; current Kencleng `main` authority and delivery scope are unchanged.
+
+### 12.1 One value anchor; actor situation is not motivation
+
+Stage 1 value remains the anchor: evidence-aware, non-coercive Campaign understanding can lead to a considered decision, and a legitimate contribution creates a relationship whose **continuing understanding** matters after fundraising. The Organization provides attributable information and substantive accountability. Reviewer judgments are bounded. The product preserves actual state, chronology, provenance and uncertainty.
+
+**FROM** means the actor's relevant current situation, not a universal feature entrypoint or asserted psychological motive. **TO** means intended legitimate value, not guaranteed emotion, verified user demand or delivered software. Alternate motivations—wishing to help, checking a claim, being cautious—are **representative hypotheses**, not field research. The same actor may enter from multiple situations.
+
+### 12.2 Actor-specific FROM → TO and responsibility boundaries
+
+| Actor / responsibility | FROM — representative initial situation | TO — meaningful outcome | Responsibility / standing |
+| --- | --- | --- | --- |
+| **Public Visitor** | Encounters an actually public Campaign but lacks sufficient context for a considered decision | Can understand relevant steward, purpose, actual state, claims/provenance, uncertainty and monetary consequences; chooses to contribute **or not** without coercion | No duty merely from viewing; information-seeking without intent to donate is valid. Deferring a decision is a plausible **experience hypothesis**, not a required persisted event. |
+| **Organization Representative** (Owner/Staff umbrella) | May be new to Kencleng, may have an established Organization preparing Campaign information, or may owe continuing reporting | Can legitimately represent Organization context, communicate Campaign information and fulfill accountability within actual authority | Organization is the substantive source of its own assertions/reports. They do **not** become platform-known facts, Reviewer judgment or independent verification. |
+| **Organization Owner** | A consequential Organization action requires established Organization-level authority | Can carry out a specifically authorized Organization-level action | Not a universal approver; what is Owner-only or required during initial establishment is still OPEN. |
+| **Organization Staff** | An Organization task needs legitimate bounded execution | Can carry out authorized operational work for the Organization | Not just an Owner with fewer buttons; a fresh Owner approval for every Staff act is **not** established. Exact permission semantics OPEN. |
+| **Reviewer** | A specific Organization, Campaign or fund-use matter requires independent scoped judgment; evidence/history, mandate and COI are relevant | Produces an attributable, bounded, understandable judgment **when legitimate**, or honestly cannot yet do so | Organization review **≠** Campaign curation **≠** fund-usage verification; reviewer COI prohibited for relevant work; neither review nor curation automatically grants publication, donation eligibility or universal trust. |
+| **Donatur** | A **legitimate donation fact** already exists for a Campaign, but later facts or reports may remain unknown | Can keep understanding what really happened, what Organization reported, what was judged/verified when applicable, and what remains pending | Donatur is a role in the Campaign relationship, not necessarily an account holder; merely being Donatur does not establish a new ongoing obligation for the person. |
+| **Platform Operator** | Specific positive operational intervention context has **not** been established | No detailed positive outcome selected at this stage; only bounded, legitimate intervention if later authorized | Operator privilege cannot manufacture Organization assertions, Reviewer judgments, donation/funding facts, independent verification, settlement or impact. |
+| **Kencleng/System** (non-human obligation) | Distinct assertions, judgments and events need truthful representation | Preserves meaningful actual states, provenance, chronology, monetary consequences and uncertainty | Neither an omniscient actor nor implementation architecture. |
+
+**Crucial role distinction:** Public Visitor is **not** synonymous with unregistered person; a person can be a Donatur for Campaign A and a Public Visitor for Campaign B. A contribution attempt alone does **not** make a Donatur; only a legitimate donation fact creates the relevant relationship, and that fact does not automatically create a funding consequence.
+
+**Organization entry distinction:** A single forced `registration → initial Owner → Campaign` journey is **not** inferred from the above. Material Organization authority must be valid, but its establishment mechanism and the prerequisites of Campaign actions are separate scoped questions.
+
+### 12.3 Follow the value backward: Public Visitor ↔ Organization
+
+Visitor's needed experience: intelligible Campaign purpose, identifiable responsible Organization, relevant actual Campaign state, sources of claims, uncertainty, and consequences of a possible contribution.
+
+The Organization side supplies attributable context and information through representatives acting within actual authority; Kencleng preserves what is Organization-sourced versus platform-known and what is actually public or donation-eligible.
+
+**Tested interpretation:** A visitor depends on particular *information and legitimate actual states*, **not automatically completion of the entire Organization actor journey**. Organization review is a distinct bounded judgment and is not presumed a universal precondition for *understanding*. Conversely, this does not establish it as optional for every publication/eligibility rule. No search, recommendation or discovery feature is selected here.
+
+### 12.4 Reviewer: scoped and conditional, not one universal gate
+
+- **Organization review:** scoped judgment about Organization context; positive consequence and its effect on other processes OPEN.
+- **Campaign curation:** scoped judgment about Campaign proposition; **not automatically** publication or donation eligibility.
+- **Fund-usage verification:** scoped judgment about relevant use/report evidence; **not** universal real-world impact proof.
+
+Reviewer must understand applicable mandate, evidence/provenance, relevant prior judgments/feedback/changes, material uncertainty and conflict-of-interest context. Insufficient authority or evidence cannot be presented as successful review. An applicable judgment may trigger Organization feedback/re-entry, inform Visitor understanding, or contribute to Donatur understanding **subject to scope and visibility**. None of these relationships is automatically mandatory for every Campaign.
+
+### 12.5 Follow the value forward: Donatur ↔ Organization accountability
+
+A legitimate donation relationship changes the person's contextual role and creates an ongoing interest in what happened afterward. Organization is the **primary substantive source** of its own accountability; Owner/Staff act within their bounds, Reviewer adds relevant independent judgment when applicable, and Kencleng preserves chronology, source and actual uncertainty.
+
+**Separate semantics:** donation fact **≠** automatic funding/settlement **≠** execution **≠** reported outcome **≠** bounded verification **≠** proven real-world impact. This is a list of non-equivalences, **not** a required event sequence. Fundraising closure **≠** accountability closure.
+
+Missing, pending, changed, delayed or unverified reporting is not automatically success, failure, "overdue", or breach. Minimum Organization reporting duties, deadlines, completion criteria, audience (public vs donor-specific), mandatory verification and guest access remain **OPEN**. The approved [Evidence Journal UX pattern](../ui-ux/patterns.md#8-evidence-journal) guides expression without establishing a Product feature/engineering commitment at this stage.
+
+### 12.6 Cross-actor interconnections — candidate edges for Stage 3 validation
+
+| Specific needed state/outcome → dependent outcome | Preliminary type | Confidence and boundary |
+| --- | --- | --- |
+| Attributable Organization/Campaign information → Visitor understanding | **Information/semantic prerequisite** | Product-intent-aligned; exact minimum disclosure OPEN; Organization claims are not independent proof. |
+| Actual public Campaign state → truthful public access and status understanding | **State prerequisite** | Authority-supported; review/curation does not automatically create visibility. |
+| Legitimate representative authority → Organization-provided action | **Authority prerequisite** | Supported role boundary; exact Owner/Staff authorization OPEN. |
+| Scoped Reviewer judgment → Visitor interpretation or Organization follow-up | **Conditional / feedback** | Only if relevant and accessible; **not** a universal prerequisite for visitor understanding. |
+| Legitimate donation fact → contextual Donatur role | **Semantic prerequisite** | Supported; guest/registered account distinction separate; attempt is insufficient. |
+| Organization report / real developments → Donatur continuing understanding | **Downstream, conditionally available information** | Accountability continues; exact obligation, cadence, visibility OPEN. |
+| Scoped fund-usage judgment → Donatur verified-status understanding | **Conditional** | Judgment remains bounded; verification **not** impact. |
+| Campaign fundraising closure → continued post-campaign accountability | **Downstream continuity** | Closure does not settle accountability. |
+| Platform Operator intervention → normal business value | **Not established as required** | No new operator workflow inferred. |
+
+The edge types are **working research classifications**, not confirmed deployment order or a guarantee every upstream capability exists. Distinguish **needed semantic state** from **entire upstream journey**, and distinguish cross-actor prerequisites from mere adjacency.
+
+### 12.7 Small connected Blueprint view (replaceable visualization)
+
+Solid links express local meaningful progression; dashed labeled links express working cross-actor relationships. Diagram is **illustrative**, not a UI flow, mandatory whole-product path or Business Rule contract.
+
+```mermaid
+flowchart TB
+    subgraph Org["Organization Representative"]
+      O1["Legitimate authority and context"]
+      O2["Attributable Campaign information"]
+      O3["Continued reporting when applicable"]
+      O1 --> O2 --> O3
+    end
+    subgraph Reviewer["Scoped Reviewer"]
+      R["Organization review / Campaign curation / Fund-use verification are distinct"]
+    end
+    subgraph System["Kencleng truthful state/provenance"]
+      K1["Actual public Campaign state and information sources"]
+      K2["Donation fact, reports, judgments and uncertainty"]
+    end
+    subgraph Visitor["Public Visitor"]
+      V1["FROM: Not enough Campaign context"]
+      V2["Understands relevant available information"]
+      V3{"Considered choice"}
+      V4["No donation / defer"]
+      V5["Attempt contribution"]
+      V1 --> V2 --> V3
+      V3 --> V4
+      V3 --> V5
+    end
+    subgraph Donatur["Donatur"]
+      D1["Legitimate donation relationship"]
+      D2["Continuing understanding"]
+      D1 --> D2
+    end
+    O2 -. "Information and provenance" .-> K1
+    K1 -. "Prerequisite: truthful public context" .-> V2
+    R -. "Conditional: relevant scoped judgment" .-> V2
+    V5 -. "Conditional: only if legitimate donation fact exists" .-> D1
+    O3 -. "Downstream: available Organization accountability" .-> K2
+    R -. "Conditional: applicable fund-use judgment" .-> K2
+    K2 -. "Actual state, report source and uncertainty" .-> D2
+```
+
+The example does not establish Organization review before Campaign preparation, curation causing public visibility, public visibility causing donation eligibility, or all reports requiring review. The Platform Operator is excluded from normal flow rather than fictionalized as a dependency.
+
+### 12.8 Stage 2 acceptance, remaining uncertainty and next experiment
+
+| Exit criterion | Human-approved reconstruction assessment |
+| --- | --- |
+| Stage 1 From → To value remains the story anchor | **PASS** |
+| Visitor situations, decision agency and legitimate non-donation stay visible | **PASS** |
+| Representative/Owner/Staff outcomes and bounded responsibility are distinguishable | **PASS** |
+| Three Reviewer scopes, independence, provenance and relevant history are respected | **PASS** |
+| Donatur continuing understanding and Organization accountability ownership are coherent | **PASS** |
+| Main cross-actor dependency candidates are typed without inventing universal gates | **PASS for Stage 2; actual dependency validity remains a Stage 3 test** |
+| Platform Operator positive responsibilities not fabricated | **PASS — explicitly open** |
+| Detailed rules, permissions, complete scenario coverage or commitment boundaries selected | **NOT REQUIRED AT STAGE 2** |
+
+**Stage 2 working verdict: ACCEPTED by Anhar on 2026-10-21, sufficient to proceed to Stage 3 representative interconnected journey pressure tests.** Historical conclusions in sections 1–11 remain historical pilot evidence. Reopen substantive accepted meaning only on material new evidence.
+
+**Stage 3 focus:** Validate real prerequisite/conditional/downstream links, legitimate state transitions, authority handoffs, exception/negative/unknown paths, and meaningful, bounded candidate commitments. Historical Stage 3A/3B and C1 are comparison evidence, not automatically validated or superseded.
+
+**Harscode checkpoint #2 (provisional research observation):** Differentiating actor `FROM → TO` from motivations, and typing interconnections, **appeared** to help prevent misleading visual dependency chains (e.g., treating Reviewer as a universal gate, full Organization establishment as every public-understanding prerequisite, or reporting as a fixed workflow). Most underlying semantic safeguards already existed historically. **No demonstrated improvement yet** in commitment selection, independent consumer comprehension or Rancang suitability. **No reusable Harscode methodology change is justified yet**; experimental Blueprint remains optional and replaceable.
+
+**Unverified:** Real user research, product runtime behavior, consumer cold-read, solution handoff effectiveness or independent execution evidence.
