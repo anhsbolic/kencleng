@@ -363,3 +363,58 @@ Stage 2 should use this checkpoint to determine for each materially relevant act
 - open semantics that still must not be assumed.
 
 This working artifact should be revised only if later stages produce materially new evidence that invalidates or meaningfully changes the Stage 1 model.
+
+## 9. 2026-10-21 Experience-first Stage 1 reconstruction checkpoint
+
+> **Standing:** Anhar-accepted **working reconstruction v0.2** for the Harscode foundation-refactor / Kencleng pilot experiment, not new canonical Kencleng Product Authority.
+> **Owner and approval:** Anhar accepted the Stage 1 Business Value Story on 2026-10-21; this checkpoint records the approved *working interpretation*, not an approved MVP, feature sequence, C1 revision, or engineering assignment.
+> **Source and precedence:** [Pilot Product Intent](product-intent.md) is the upstream Human-approved seed; [Product Design Principles](../ui-ux/product-design-principles.md) and [Brand/Product UI Brief](../ui-ux/brand-product-ui-brief.md) govern their own experience/design concerns. This section supplements the previous Stage 1 pilot observations above without retroactively rewriting historical approvals. The active Kencleng `main` authority is **not** changed by this pilot-only experiment.
+
+### 9.1 Core framing — one connected story
+
+**Question:** How do human value, responsibility, trust, and consequential business states move *from an initial unmet need to a meaningful, truthful outcome* through Kencleng?
+
+**FROM — initial human and business situation.** A person may want to understand or support a social cause without yet having sufficient, intelligible and provenance-aware information to make a considered decision. An Organization may seek participation in Kencleng to communicate a fundraising effort and its subsequent accountability. These motives are **plausible representative situations**, not independently verified user-research findings.
+
+**VALUE TRANSFORMATION.** Kencleng connects Organization participation, Campaign information, considered public choice, legitimate donation relationships and continuing accountability. The platform preserves the differences among Organization-provided assertions, platform-known facts, bounded independent judgments, actual states, money consequences, reports and unknown/pending information. It makes evidence-aware confidence and realistic optimism possible without manufacturing trust, false certainty, urgency or emotional pressure.
+
+**TO — intended meaningful outcome.** A Public Visitor can decide whether to donate based on intelligible context and evidence; **not donating is a legitimate outcome**. If a legitimate donation fact occurs, the person becomes a Donatur in that Campaign context and can continue understanding what happened afterward. Organization representatives can provide and account for information within bounded legitimate authority. Reviewer judgment adds only its actual scoped meaning. This expresses intended product value, not already-verified usage or delivery.
+
+### 9.2 Business-value continuity (not delivery sequence)
+
+1. **Organization / Campaign:** participation and attributable responsibility context → Organization-provided Campaign proposition → appropriately distinct curation, public visibility and donation-eligibility states → material fundraising changes and closure → continuing reporting/accountability. Organization review is a separate bounded judgment, **not automatically a prerequisite** of Campaign preparation or publication.
+2. **Person:** initial interest, question or possible intention to help → encounters and understands Campaign context → considered decision (donate **or not**) → if contribution is attempted, actual eligibility and result matter → **only a legitimate donation fact** creates the relevant Donatur role → continuing understanding of subsequent developments.
+3. **Trust / Evidence:** provenance, relevant chronology, known/unknown states and consequential meaning accompany the relationship throughout. Donation fact **does not automatically imply funding**; funding **does not imply execution**; reported outcome **does not imply independently verified impact**; fundraising closure **does not close accountability**.
+
+These are **intersecting business-value threads**, not a mandatory linear funnel or Engineering plan. They name the value and main handoffs without selecting independent product commitments.
+
+### 9.3 Main actor/value handoffs
+
+| Actor / responsibility | Business-level From → To | Dependency or boundary |
+| --- | --- | --- |
+| Organization representatives (Owner/Staff authority distinguished) | Organization participation and factual stewardship not yet established → can provide, maintain and account for Organization-sourced context within legitimate authority | Their assertions are not Reviewer judgments or platform-known facts. Exact role permissions remain open. |
+| Reviewer (when applicable) | Relevant material requires bounded judgment → scoped, provenance-aware judgment becomes available | Independence and conflict-of-interest boundary; review is not universal verification or automatic downstream eligibility. |
+| Public Visitor | Interested or seeking understanding, insufficient context → informed and non-coercive choice | Depends on truthful accessible Campaign information, not a guaranteed favorable judgment or donation. |
+| Donatur | Legitimate donation relationship exists → can continue understanding progress, reports and relevant unknowns | Organization accountability and truthful state/evidence remain material after contribution/closure. |
+| Platform Operator | Positive intervention role not yet established → any intervention remains within bounded operational authority | Privilege cannot manufacture business evidence, Organization assertions, independent review or money/impact truth. |
+| Kencleng Product/System (not a human persona) | Disconnected assertions and events → inspectable, truthful product states and boundaries | Maintains state/provenance semantics; implementation mechanism intentionally open. |
+
+### 9.4 Product Intent and approved Product Design alignment
+
+Approved design principles enrich **the quality of the experience** without independently creating business rules: **Evidence-Led Optimism**, **Confidence Before Conversion**, **Facts First, Story With Them**, **Dignity Over Pity**, **Trust Comes From Structure**, **Unknown Is a Valid State**, and **Progress Is Evidence, Not Gamification**.
+
+The Brand/Product UI sequence *evidence → confidence → optimism → action* expresses an **intended experience posture**, not a mandatory conversion funnel or a claim that evidence guarantees confidence, trust or donation. Experience and visual principles remain owned by their approved design sources; this Stage 1 checkpoint does not mandate a particular UI, Evidence Journal feature, or delivery commitment.
+
+### 9.5 Scope and carried-forward uncertainties
+
+Stage 1 **does not** determine detailed actor journeys, initial Owner mechanics, C1 eligibility/scope, permission tables, review procedures, curation/publication/donation prerequisites, funding transitions, accountability completion criteria, full dependency ordering, feature inventory, UI, API, architecture or release sequence. The open semantic questions in section 6 above remain open for appropriate Human-owned decisions **when a later bounded journey makes them material**.
+
+In particular, this reconstruction **does not** supersede historical approved C1-specific behavior, nor does it claim that the historical Stage 3B outcome is necessarily wrong. Later stages will test whether cross-actor dependencies were correctly carried into commitment selection.
+
+### 9.6 Stage 1 exit and experiment handoff
+
+**Stage 1 verdict: PASS — sufficient for the next Product decision (Anhar-accepted working reconstruction).** The entire Product value can be narrated from human need to meaningful result; actor responsibility transfers, crucial trust boundaries and known open questions are visible without implementing or prescribing detailed journeys.
+
+**Next experiment:** derive actor-specific initial situations, motivations, desired outcomes, responsibilities and connected dependencies from **this same value story** in Stage 2, then test experience continuity through Stage 3A/3B. An Interconnected Journey Blueprint is the experimental visualization approach, **not** a presently mandatory Harscode methodology or a finished Stage 1 deliverable.
+
+**Harscode checkpoint #1:** Product Foundation guidance was sufficient to produce this story and preserve the Product/Design authority distinction. **No change to reusable Harscode Product guidance justified at Stage 1**. Reassess only on material Stage 2–3 evidence. No real Kencleng behavior, Engineering Space execution, fresh-reader validation or runtime effectiveness has been verified by this documentation exercise.
