@@ -665,3 +665,68 @@ Remaining OPEN PRODUCT DECISIONS should not all be resolved product-wide before 
 Next active work:
 
 > **Stage 3B — derive candidate commitments from R1–R4, test semantic readiness and minimum dependency closure, then establish a product dependency partial order and sequence the eligible frontier.**
+
+## 13. 2026-10-21 Experience-first Stage 3A reconstruction checkpoint
+
+> **Standing:** **Anhar-approved Stage 3A working reconstruction**, after proportionate final audit on 2026-10-21; sufficient to enter **fresh Stage 3B candidate evaluation**, but **not** newly canonical Kencleng Product Authority, an MVP/delivery decision, or runtime proof.
+> **Authority:** [Pilot Product Intent](product-intent.md) is the upstream Human-approved seed. [Accepted Stage 1 Business Value Story](pilot-3-business-value-loop.md#9-2026-10-21-experience-first-stage-1-reconstruction-checkpoint) and [accepted Stage 2 actor outcomes](pilot-3-actor-outcomes.md#12-2026-10-21-experience-first-stage-2-reconstruction-checkpoint) are scoped pilot working baselines. Historical Stage 3A **sections 1–12** and [historical Stage 3B/C1 decisions](pilot-3-stage-3b-commitment-sequencing.md) remain intact and retain their original standing.
+> **Experiment:** [Interconnected Journey Blueprint Research v0](https://github.com/anhsbolic/harscode-workspace/blob/74e6fcd45ad52ea3a66960712131b7fa209b836d/product/interconnected-journey-blueprint-research.md), optional research format only. This reconstruction belongs to Kencleng branch `pilot/station5-c1-space-only` and changes neither Kencleng nor Harscode operational `main`.
+
+### 13.1 Scope and representative scenario verdict
+
+The **one value anchor** remains: Organization can contribute attributable Campaign information and continuing accountability; Public Visitor can make a considered, non-coercive choice from truthful available information; legitimate Donatur relationships support continuing understanding, including known unknowns. This is intended product value, **not** observed user research or delivered software.
+
+The historical representative set remains adequate; no new R5, persona inventory or mandatory stage workflow is justified:
+
+| Probe | Human/business outcome pressure-tested | Reconstruction standing |
+| --- | --- | --- |
+| **R1 — Organization representation and review** | Legitimate, bounded internal action; independent Organization-review judgment stays separate | Covered; scoped C1 history preserved |
+| **R2 — Campaign proposition and state** | Attributable proposition, bounded Campaign curation, actual **distinct** public visibility and donation eligibility | Covered; relationships among outcomes partly OPEN |
+| **R3 — Visitor choice and legitimate donation** | Understand, choose not to donate, or attempt donation; only a legitimate donation fact makes the Donatur relationship | Covered; eligibility, funding and pending/failure meaning still need commitment-scoped decisions |
+| **R4 — Campaign change and continuing accountability** | Organization accountability and truthful continuing information across fundraising change/closure, with Donatur as primary beneficiary **when one exists** | Covered, including **zero-donation Campaign**; reporting/verification completion specifics OPEN |
+| **X1 — Platform Operator boundary** | Exceptional privileged intervention cannot claim Organization, Reviewer, donation/funding, settlement, verification or impact authority by privilege alone | Retain as **cross-cutting exception probe**, not a new product journey |
+
+**Final light-audit result:** R1–R4 + X1 cover the material actors, positive and negative paths, authority/truth classes and handoffs sufficiently for Stage 3B exploration. No additional representative scenario was justified by the examined sources. **PASS = semantic reconstruction sufficiency only**, not commitment eligibility or field/runtime validation.
+
+### 13.2 Cross-scenario pressure tests and typed edges
+
+| Link / specific state-to-outcome relationship | Edge standing and pressure-test result |
+| --- | --- |
+| **R1 ↔ R2:** legitimate internal Organization authority → permitted Campaign-proposition action | **Authority prerequisite** for actions within its scope; completing Organization review is **not established as a universal prerequisite** to all Campaign preparation. Internal Kencleng Owner authority is not verified real-world/legal Organization authority. |
+| **R1 ↔ R2:** bounded Organization review → Campaign curation/publication/eligibility | **OPEN / potentially conditional** relationship; do not create an automatic gate or assume positive review proves external legitimacy. |
+| **R2 ↔ R3:** actual public Campaign state → accessible Campaign understanding | **State prerequisite** for the public context. A public but donation-ineligible Campaign can still provide Visitor understanding and a legitimate no-donation outcome. |
+| **R2 ↔ R3:** actual donation eligibility → possible legitimate contribution | **Conditional prerequisite** for the contribution branch; positive curation **≠** public visibility **≠** donation eligibility. Eligibility may materially change and the effect on pending contribution requires a scoped rule. |
+| **R3 → Donatur:** donation attempt → legitimate donation fact → contextual Donatur role | An attempt is **not sufficient**; the **legitimate fact** is the semantic prerequisite. Guest/registered account standing is separate. Donation fact alone does **not** entail funding/settlement. |
+| **R2 ↔ R4:** actual Campaign/fundraising lifecycle change → continuing Organization accountability | **Downstream continuity independent of Donatur existence**; closure **≠** accountability completion. Exact substantive obligations and end criteria remain OPEN. |
+| **R3 ↔ R4:** Donatur relationship → continuing direct Donatur interest in truthful developments | **Downstream relationship**, not a prerequisite for R4 to exist. Organization is primary substantive accountability source; reports and verification are not assumed universally available. |
+| **Reviewer → R1/R2/R4:** scoped judgment / feedback / verification | **Conditional / feedback** when authorized, relevant and accessible. Reviewer cannot manufacture universal trust or impact; relevant conflict of interest bars judgment. |
+| **X1 → R1–R4:** exceptional privileged correction | **Not a normal business-value prerequisite.** Intervention requires its own established operational mandate and factual basis; it may not fabricate or replace business/Reviewer truth. |
+
+**Semantic dependency is not total delivery sequence.** The needed state for a public experience is not necessarily the entire upstream Organization journey. Actual Campaign visibility can support understanding **without** current donation eligibility. Organization accountability exists across relevant Campaign lifecycle even where there are zero Donatur. The value story therefore branches; it must not be compressed into a mandatory `R1 → R2 → R3 → R4` pipeline.
+
+### 13.3 Negative/uncertain paths and exception coverage
+
+- **R1:** Organization-review pending, relevant COI, material change and potential reconsideration; unauthorized Staff action does not gain Owner authority.
+- **R2:** curation rejection / requested revision / superseding judgment, bounded history, public-but-ineligible, actual visibility change; no presumption that every edit mandates re-review.
+- **R3:** considered no donation, eligibility loss during contribution, unresolved/failed attempt, or donation fact without legitimate funding implication; **intent/attempt/result** remain distinct.
+- **R4:** zero-donation Campaign closure, no/incomplete/unverified report, limited audience visibility, changing information, and no assumed reporting breach without a valid duty/timing rule.
+- **X1:** privileged operator cannot correct bad provenance or monetary presentation by pretending to be Organization, Reviewer, settlement provider, independent verifier or impact source.
+
+These are **pressure-test branches**, not implementation cases declared delivered, a requirement to record a visitor's refusal, or invented product state-machine statuses.
+
+### 13.4 Final-audit safeguards and authority boundaries
+
+1. **R4 starts from Campaign fundraising/lifecycle context, not necessarily from a Donatur.** The first R4 scenario draft in historical section 7 assumed a donation relationship; historical section 9.3 **already corrected this**. This checkpoint adopts the corrected interpretation: Donatur is a beneficiary when a legitimate relationship exists, not the prerequisite for Organization accountability.
+2. **Simulation is never actual money truth.** Kencleng is a learning sandbox: simulated payment or operational mechanisms must be explicitly identified as such and must **not** be presented as real external settlement, independent verification or real-world impact. Seeded/fixture behavior may support exploration, **not** claims that upstream capability has been delivered.
+3. **Historical C1 is neither automatically chosen nor cancelled.** The [Human-approved scoped C1 representation model](pilot-3-stage-3b-commitment-sequencing.md#revised-c1-representation-model--superseding-decision) states that the first person establishing an Organization receives the initial **internal Kencleng Owner** role by product rule, without implying independent real-world authority. Historical C1 pre-engineering progression is not runtime delivery. Its **current meaningfulness, commitment boundary, relevance and sequencing priority** are open to fresh evaluation at Stage 3B; historical C2/C3 frontier placeholders are not automatically ELIGIBLE/BLOCKED.
+4. **Project semantics and authority remain owned by Kencleng.** This pilot-only reconstruction is not a Kencleng `main` modification, new global product rule or Harscode standard. No UI/API, reporting cadence, Reviewer policy, Operator powers, scope or engineering assignments selected.
+
+### 13.5 Stage 3A exit and Harscode experiment assessment
+
+**Human decision:** Stage 3A final audit accepted and persistence approved by Anhar on 2026-10-21. Result: **PASS for Stage 3B exploration** of meaningful product outcome candidates and dependency-closed-enough boundaries. This is not Stage 3B commitment approval.
+
+**Research observation:** Typed interconnections and actor-oriented fragments made it easier to communicate conditional vs true prerequisites, non-linear Campaign/accountability relationships, and authority distinctions. **However, much of the semantic substance was already present in historical Stage 3A and C1 sources.** The experiment has not yet demonstrated improved commitment selection, efficiency, independent cold-start consumption or Rancang handoff. **No reusable Harscode Product guidance change is justified yet.**
+
+**Next Stage 3B task:** Generate fresh, meaningful outcome candidates from this connected value story, assess meaningfulness, semantic sufficiency, truthful real-product prerequisites, dependency closure and boundedness, then compare with *historical* C1/C2/C3 without assuming either that C1 remains first or that it must be discarded. Keep unresolved Product decisions explicit and resolve only those necessary for a chosen bounded commitment.
+
+**Still unverified:** Actual Kencleng runtime behavior; independent consumer interpretation; real user evidence; downstream Design/Rancang effectiveness; any Engineering Space delivery. Reopen this Stage 3A reconstruction only on materially new evidence, not for exhaustive scenario enumeration.
