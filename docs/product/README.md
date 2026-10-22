@@ -19,7 +19,7 @@
 
 **Tahap pertama selesai (22 Oktober 2026):** [Product Intent Bahasa Indonesia](product-intent.md) telah disetujui sebagai sumber utama Product pada branch riset ini. [Draf sebelumnya](product-intent-id-draft.md) disimpan untuk riwayat penyuntingan, bukan sumber kedua. Dokumen pilot lama tetap menjadi arsip sejarah.
 
-**Tahap berikutnya:** penyuntingan [pengantar peta perjalanan Product](interconnected-journeys/README.md), tanpa mengubah persetujuan Level 2 v0.3 atau aturan O1.
+**Tahap kedua — draf untuk ditinjau:** [Pengantar peta perjalanan Product — Bahasa Indonesia](interconnected-journeys/README-id-draft.md) disiapkan berdasarkan [pengantar yang berlaku](interconnected-journeys/README.md). Belum menggantikan dokumen yang telah disetujui. Level 2 v0.3 dan aturan O1 tidak berubah.
 
 ## Current entrypoints
 
