@@ -1,7 +1,7 @@
 # Level 2 — Interconnected Meaningful Transition Network v0.2
 
 > **Standing:** ANHAR-APPROVED WORKING RESEARCH MAP / official checkpoint of the Kencleng pilot Product research episode (2026-10-21); **not** operational `main` or a binding delivery roadmap.
-> **Read first:** [Checkpoint and authority](README.md), [Product Intent](../product-intent.md), [Stage 3A accepted reconstruction](../pilot-3-stage-3a-representative-scenarios.md#13-2026-10-21-experience-first-stage-3a-reconstruction-checkpoint).
+> **Current reading order (2026-10-22):** [Product Intent](../product-intent.md) → [Current Product research entry](../README.md) → [Selection and handoff decisions](selection-and-handoff-research.md). Prior scenario/commitment artifacts are history, not current requirements authority.
 > **Method boundary:** Meaningful transitions are a *network of consequences and experiences*, **not** one-to-one tasks, implementation phases, required screens, or a commitment registry.
 
 ## 1. Scope, resolution, and notation
@@ -17,13 +17,13 @@
 - **OPEN:** Product rule/relationship is intentionally unresolved and needs its owner if material to a selected path.
 - **No automatic implication (`≠`):** Distinct truth classes or states must not be collapsed.
 
-Identifier prefixes **O/P/V/A** are local diagram references only. In particular **P1** is not a historical C1 commitment or an engineering assignment.
+Identifier prefixes **O/P/V/A** are local diagram references only; **O1 is a research node, not a former commitment, binding Product rule set or engineering assignment**.
 
 ## 2. R1 — Organization representation and review (5 nodes)
 
 | ID | Concrete transition / meaningful result | Guard or dependency boundary |
 | --- | --- | --- |
-| **O1** | Person establishes valid Kencleng Organization context **with** attributable initial *internal Kencleng Owner* relationship; consequence is understandable and durable. | Historical C1 scope approved. This is one establishment route, **not** a universal requirement to establish a new Organization before every later action. Initial Owner is not independently verified real-world legal authority; incomplete or known unresolved conflict is not uncontested success. |
+| **O1** | A person seeks to establish an attributable Kencleng Organization context and legitimate initial **internal authority** relationship, with truthful, meaningful and durable consequence. | **RESEARCH NODE; fresh Product decisions OPEN:** who can establish, who receives initial Owner authority, when establishment and relationship become valid, and what incomplete/contested success means. Product Intent distinguishes Owner and Staff but does **not** decide automatic initial-Owner grant or a specific coupled-success rule. O1 is not a universal prerequisite for every other Organization action. |
 | **O2** | Organization-provided information/evidence becomes attributable to responsible Organization and acting representative as applicable. | Information remains *Organization-provided*, not automatically Organization review, external proof, Campaign curation or platform fact. May be supplied during/after establishment within valid authority; no universal O1-first ordering of data-entry steps. |
 | **O3** | An Organization matter is available for bounded review **when applicable**, with legitimate scope, attributable relevant evidence, prior context and Reviewer mandate. | Applicability, minimum material and legal consequences OPEN. COI prohibits related Reviewer judgment. |
 | **O4** | Reviewer produces a legitimate scoped Organization judgment, **or** inability to judge remains explicit and truthful. | No global trusted label. Positive/negative/pending meanings and effects on Campaign are OPEN. |
@@ -73,7 +73,7 @@ Solid arrows here represent a **necessary information/state condition or a coher
 
 ```mermaid
 flowchart TB
-    O1["O1 Organization + initial Owner valid"]
+    O1["O1 Organization + authority (rules OPEN)"]
     O2["O2 Attributable Org information"]
     O3["O3 Org review matter"]
     O4["O4 Bounded Org judgment"]
@@ -182,7 +182,7 @@ Each OPEN link is a **visible unfinished road rule**, not a hidden invented brid
 
 | Pressure test | Coverage and unchanged truth |
 | --- | --- |
-| Initial establishment lacks attribution; partial Owner formation | O1 must not represent success until Organization + initial Owner consequence is valid; C1 scope binds |
+| Initial establishment lacks attribution; partial authority relation | O1 cannot claim legitimate authority result without a fresh, approved scope-specific success rule. Partial/contested conditions remain **OPEN Product decisions** rather than inherited historic requirements |
 | Known unresolved representation conflict | O1 cannot silently claim uncontested establishment; conflict resolution mechanics are not invented |
 | Staff action outside authority | O2/P1/P4/A2/A3 must not inherit Owner authority |
 | Reviewer COI, insufficient mandate/evidence | O3/O4, P2/P3, A5 must not fabricate legitimate scoped judgment |
@@ -204,7 +204,7 @@ Each OPEN link is a **visible unfinished road rule**, not a hidden invented brid
 
 ## 9. Known OPEN Product decisions that remain surfaced
 
-1. **R1:** positive/negative Organization review meaning, minimum review material, relevant Owner/Staff authority, downstream Campaign effects, reconsideration triggers.
+1. **R1:** fresh O1 grant, attribution, success/partial/conflict semantics; positive/negative Organization review meaning, minimum review material, relevant Owner/Staff authority, downstream Campaign effects, reconsideration triggers.
 2. **R2:** bounded Campaign-curation outcomes, resubmission/re-review/supersession rules, actual publication conditions, eligibility conditions, independent state changes and affected public/contribution consequences.
 3. **R3:** sufficient consequential disclosure, meaning of eligible attempt and legitimate donation fact, pending/failed result, guest/registered distinctions, real funding/settlement triggers and mid-attempt state change.
 4. **R4:** closure effect, Organization's minimum duty/timing, audience boundaries, report/verification applicability, completion meaning and changed evidence.
@@ -214,10 +214,10 @@ These are **not** all mandatory preconditions to exploring one bounded starting 
 
 ## 10. Completion, limits, and pause
 
-**Anhar approved this Level 2 v0.2 research checkpoint on 2026-10-21.** It is a durable product-research map with **26 nodes** (O1–O5, P1–P8, V1–V7, A1–A6), representative negative paths and typed cross-journey seams. It supersedes the **chat-level 19-node sketch** for this research episode, not previously approved Product Intent or C1-specific behavior.
+**Anhar approved this Level 2 v0.2 research checkpoint on 2026-10-21.** It is a durable product-research map with **26 nodes** (O1–O5, P1–P8, V1–V7, A1–A6), representative negative paths and typed cross-journey seams. It supersedes the **chat-level 19-node sketch** for this research episode, not previously approved Product Intent or historical decision records.
 
 A prior informal graph check counted 39 proposed links and one weakly connected component; **that count was a same-session illustration**, not a binding or independently validated causal proof. This document owns the meaningful semantic edges above; do not use connectivity counts as evidence that all Product rules, consumer readiness or delivery prerequisites have been proven.
 
-**Checkpoint result:** sufficient to stop and discuss **how to select a healthy starting point** from the mapped network. No starting node, delivery sequence, Commitment replacement method, product-wide detailed requirements, Engineering readiness reconciliation, Rancang invocation or implementation is approved. Historical C1/C2/C3 records remain historical/scoped; fresh Commitment-based Stage 3B is paused, **not retroactively invalidated**.
+**2026-10-21 checkpoint result:** sufficient to begin starting-point discussion. **2026-10-22 update:** O1 is a **single recommended research starting direction**, not delivery-approved or PRD-ready. Old pilot packages are **not** binding sources of O1 requirements. O1 needs fresh elaboration from current Product Intent and Level 2 context; material O1 decisions remain OPEN. See [current selection and handoff research](selection-and-handoff-research.md).
 
-**Next boundary:** Human discussion of starting-point selection criteria/approach. Do **not** automatically select O1/P1/V1 merely because of visual position. Preserve optionality and reopen this map only on material new evidence.
+**Current next boundary:** Resolve O1's minimum consequential Product decisions and produce a standalone Product Contract without historic commitment inheritance. Do not auto-select more nodes, invoke Rancang, or infer implementation readiness. See [current working decisions](selection-and-handoff-research.md).
