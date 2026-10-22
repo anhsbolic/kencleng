@@ -1,43 +1,72 @@
-# Kencleng — Product Intent
+# Kencleng — Tujuan dan Prinsip Produk
 
-> **Status:** Human-approved upstream product seed
-> **Purpose:** Establish durable product direction before release scope, delivery slices, and engineering work are selected.
+> **Status:** PRODUCT INTENT DISETUJUI — Anhar, 22 Oktober 2026. Dokumen ini menjadi sumber utama tujuan dan prinsip Product **pada branch riset `pilot/station5-c1-space-only`**; **bukan** perubahan Kencleng operational `main`.
+> **Riwayat persetujuan:** Penulisan ulang Bahasa Indonesia yang disetujui Anhar setelah audit makna terhadap sumber Inggris sebelumnya, blob `433aa2376040a442d2aa14f56a01e3499dcab231`; draf akhir blob `5f0497a3d26eea0fe689af133529ea8fe1a648ff`. Versi Inggris tetap terlacak melalui Git history.
+> **Cakupan:** Menjelaskan tujuan produk dan batas prinsip. Tidak menetapkan urutan development, aturan rinci O1, cakupan rilis, atau izin pelaksanaan Engineering.
+> **Istilah:** Ikuti [acuan istilah Product Kencleng](istilah.md).
 
-## Product intent
+## 1. Tujuan Kencleng
 
-Kencleng is an evidence-led donation and crowdfunding product for Indonesian non-profit organizations. It helps people understand a fundraising effort well enough to make a considered decision, then continue understanding what happened after they contributed.
+Kencleng adalah layanan donasi dan penggalangan dana berbasis informasi dan bukti untuk organisasi nirlaba di Indonesia. Kencleng membantu orang memahami penggalangan dana sebelum memutuskan berdonasi, lalu mengikuti apa yang terjadi setelah mereka menyumbang.
 
-Its guiding idea is **Evidence-Led Optimism**: hope should grow from understandable facts, visible provenance, honest progress, and candid uncertainty—not emotional pressure or unearned trust claims.
+Prinsip utamanya disebut **Evidence-Led Optimism**: harapan dibangun dari fakta yang dapat dipahami, asal informasi yang jelas, perkembangan yang disampaikan dengan jujur, dan keterbukaan tentang hal yang belum pasti. Bukan dari tekanan emosi atau klaim yang membuat sesuatu terkesan dapat dipercaya tanpa dasar.
 
-Kencleng is a learning sandbox. Simulated payment or operational mechanisms must be identified as such and must never be presented as real external settlement, independent verification, or real-world impact.
+Kencleng juga digunakan sebagai tempat belajar dan mencoba. Pembayaran atau proses operasional yang disimulasikan **harus disebut sebagai simulasi**. Simulasi tidak boleh ditampilkan sebagai penyelesaian transaksi uang yang benar-benar terjadi di luar sistem, hasil pemeriksaan independen, atau dampak nyata.
 
-## People and responsibilities
+## 2. Pengguna dan tanggung jawab
 
-The product serves public visitors and donors, Organization representatives, reviewers, and platform operators. A visitor may understand a public Campaign without signing in and may contribute as a guest when the applicable product rules permit it.
+Kencleng melayani Pengunjung, Donatur, perwakilan organisasi, peninjau, dan pengelola platform.
 
-Organizations and Campaigns are distinct. A Campaign belongs to an Organization. Organization Owners and Staff have meaningfully different authority. Organization review, Campaign curation, and later fund-usage verification are separate decisions; a reviewer must not review relevant work where they have a conflict of interest. The exact permissions and operational mechanisms are resolved when a capability enters scope.
+- Pengunjung dapat memahami Campaign yang terbuka untuk umum tanpa harus masuk ke akun.
+- Pengunjung dapat berdonasi sebagai tamu **jika aturan donasi yang berlaku mengizinkannya**.
+- Pengunjung yang sudah berdonasi disebut Donatur. Kapan donasi diakui tetap mengikuti aturan donasi yang berlaku.
+- Organisasi dan Campaign adalah dua hal berbeda. Setiap Campaign berada di bawah satu organisasi.
+- Peran `Owner` dan `Staff` pada organisasi memiliki kewenangan yang berbeda.
+- Peninjauan organisasi, kurasi Campaign, dan verifikasi penggunaan dana merupakan keputusan yang **terpisah**.
+- Peninjau tidak boleh melakukan penilaian jika memiliki conflict of interest terhadap pekerjaan atau pihak yang dinilai.
 
-## Connected product journey
+Rincian kewenangan dan cara kerjanya ditetapkan ketika kemampuan produk terkait dipilih untuk dikerjakan.
 
-The whole-product model connects Organization establishment and review; Campaign preparation, curation, and publication; public understanding; donation and funding state; Campaign closure; and post-campaign reporting and accountability.
+## 3. Perjalanan produk
 
-This describes **product meaning and dependencies, not an implementation order**. No stage is considered delivered merely because a later stage can be demonstrated with prepared data.
+Perjalanan Kencleng menghubungkan kegiatan berikut:
 
-## Trust commitments
+1. Pendaftaran dan peninjauan organisasi.
+2. Penyiapan, kurasi, dan penayangan Campaign.
+3. Pengunjung memahami Campaign dan memutuskan apakah akan berdonasi.
+4. Pencatatan donasi, keadaan dana, dan perkembangan Campaign hingga penutupan.
+5. Pelaporan dan pertanggungjawaban setelah penggalangan dana.
 
-- Distinguish platform-known facts, organizer-provided information, review outcomes, system states, reports, and unknown or pending information.
-- Do not treat funding progress as proof of execution or impact.
-- Make consequential actions, money meanings, eligibility, and state changes understandable before users act.
-- Preserve dignity, privacy, and agency; avoid guilt, fabricated urgency, and symbolic “trust theatre.”
-- Show incomplete or unavailable information honestly rather than manufacturing certainty.
-- Keep public visibility and donation eligibility tied to the Campaign’s actual product state.
+Urutan ini menunjukkan hubungan antarbagian produk, **bukan urutan wajib dalam development aplikasi**. Suatu bagian belum boleh dianggap sudah tersedia dan berjalan di produk hanya karena bagian berikutnya bisa diperagakan dengan data yang sudah disiapkan.
 
-## Design foundation
+## 4. Aturan untuk menjaga integritas
 
-The approved product-design principles, **Sunlit Editorial** brand/Product UI direction, visual guidelines, reusable interaction patterns, and asset-governance standards remain in force for their respective concerns. They guide expression and interaction; they do not create business rules or determine release priority.
+- Bedakan fakta yang diketahui Kencleng, informasi dari organisasi atau penyelenggara Campaign, hasil peninjauan, keadaan sistem, laporan, dan informasi yang belum pasti atau masih menunggu kepastian.
+- Perkembangan pendanaan bukan bukti bahwa kegiatan sudah dijalankan atau menghasilkan dampak.
+- Sebelum pengguna melakukan tindakan penting, jelaskan akibatnya, makna dan keadaan uang, apakah tindakan tersebut diperbolehkan, serta perubahan keadaan yang akan terjadi.
+- Hormati martabat, privasi, dan kebebasan pengguna dalam mengambil keputusan. Jangan memakai rasa bersalah, keadaan mendesak yang dibuat-buat, atau kesan dapat dipercaya tanpa bukti.
+- Jika informasi belum lengkap atau belum tersedia, tampilkan apa adanya. Jangan menyatakan sesuatu sudah pasti jika belum ada dasar.
+- Penayangan Campaign kepada publik dan kelayakannya menerima donasi harus mengikuti **keadaan Campaign yang benar-benar berlaku**.
 
-Slice-specific UX and business-process detail are derived only after the relevant product outcome and decision owners are clear.
+## 5. Dasar desain
 
-## Deliberately open
+Prinsip desain produk, arah tampilan **Sunlit Editorial**, panduan visual, pola interaksi, dan aturan pengelolaan aset yang sudah disetujui tetap berlaku sesuai lingkupnya.
 
-This seed does **not** choose an MVP/release goal, delivery slices, their order, acceptance criteria, operational shortcuts, detailed review procedures, notification channels, API contracts, architecture, or implementation plan. Those decisions require explicit reasoning and appropriate Human authority before the affected work begins.
+Panduan desain mengatur cara informasi dan interaksi ditampilkan, **bukan** menetapkan aturan bisnis atau prioritas rilis.
+
+Rincian pengalaman pengguna dan proses bisnis ditentukan setelah hasil Product yang ingin dicapai dan pemilik keputusannya jelas.
+
+## 6. Hal yang belum diputuskan
+
+Dokumen ini **belum menetapkan**:
+
+- tujuan MVP atau rilis;
+- cakupan pekerjaan yang dipilih dan urutannya;
+- kriteria penerimaan hasil untuk tiap pekerjaan;
+- jalan pintas operasional;
+- tata cara peninjauan yang terperinci;
+- saluran pemberitahuan;
+- kontrak antarsistem atau API;
+- rancangan teknis dan rencana pelaksanaan.
+
+Setiap keputusan tersebut memerlukan pertimbangan yang jelas dan persetujuan pihak yang berwenang sebelum pekerjaan terkait dimulai.
