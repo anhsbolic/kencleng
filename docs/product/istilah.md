@@ -29,4 +29,4 @@
 
 ## Penerapan bertahap
 
-**Tahap pertama dan kedua selesai (22 Oktober 2026):** [Product Intent](product-intent.md) dan [pengantar Peta Journey](interconnected-journeys/README.md) sudah disetujui dalam Bahasa Indonesia pada branch riset. Draf lama hanya riwayat penyuntingan. Penyederhanaan Level 2 masih bertahap; [Level 2 v0.3](interconnected-journeys/level-2-network.md) tetap berlaku sampai dokumen lengkap penggantinya disetujui.
+**Tahap pertama, kedua, dan ketiga selesai (22 Oktober 2026):** [Product Intent](product-intent.md), [pengantar Peta Journey](interconnected-journeys/README.md), dan [Level 2 v0.3](interconnected-journeys/level-2-network.md) telah disetujui dalam Bahasa Indonesia pada branch riset. Draf lama hanya menjadi riwayat penyuntingan. Persetujuan penulisan ulang **tidak** menambah aturan bisnis Product atau mengubah kewenangan di Kencleng `main`.
