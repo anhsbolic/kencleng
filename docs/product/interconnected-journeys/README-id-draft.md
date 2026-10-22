@@ -1,10 +1,8 @@
-# Kencleng — Peta Journey Product
+# Kencleng — Peta Journey Product (Riwayat Draf)
 
-> **Status:** DRAF PENYEDERHANAAN BAHASA. Belum menggantikan [dokumen pengantar yang berlaku](README.md).
-> **Sumber yang dibandingkan:** pengantar lama `README.md`, blob `73c8e509429ea456b09d4d85a75de0d44bd88dfd`, sebelum penyesuaian kode. [Pengantar yang berlaku](README.md) dan [Level 2](level-2-network.md) kini memakai kode Journey baru. Draf ini mengikuti [Product Intent](../product-intent.md) dan [daftar istilah](../istilah.md).
-> **Batas persetujuan:** Peta Journey Level 2 v0.3 sudah disetujui Anhar sebagai **hasil riset** pada 22 Oktober 2026. Penyuntingan pengantar ini **belum disetujui sebagai penggantinya**. Tidak mengubah aturan Product, memilih urutan development, atau mengizinkan pengerjaan.
-> **Pemilik keputusan Product:** Anhar. Tidak berlaku sebagai sumber utama Kencleng `main`.
-> **Penamaan kode (disetujui 22 Oktober 2026):** `J-ORG`, `J-CAM`, `J-VIS`, `J-ACC`, dan `EX-OPS` menggantikan kode kelompok sebelumnya; aturan Product serta 26 kode bagian Level 2 tidak berubah.
+> **Status:** RIWAYAT PENYUNTINGAN, **BUKAN SUMBER UTAMA**. Versi Bahasa Indonesia sudah disetujui Anhar dan dipromosikan ke [pengantar Journey resmi](README.md) pada 22 Oktober 2026 di branch riset ini.
+> **Sumber audit:** Pengantar Inggris asli blob `73c8e509429ea456b09d4d85a75de0d44bd88dfd`, penyesuaian kode blob `a4a70735663acabefea6e69ed7468487285a3b4e`, dan [Level 2 v0.3](level-2-network.md).
+> **Batas:** Draf ini dipertahankan sebagai riwayat proses. Semua rujukan baru harus menggunakan [README resmi](README.md); persetujuan tidak mencakup O1 atau Engineering.
 
 ## 1. Mengapa peta ini dibuat
 
@@ -93,6 +91,6 @@ Pemeriksaan kesiapan Engineering masih ditunda. Kemampuan Balad untuk memilih ba
 
 - **21 Oktober 2026:** Anhar menyetujui peta dua tingkat dan Level 2 v0.2 sebagai hasil riset, bukan sebagai rencana development.
 - **22 Oktober 2026:** Anhar menyetujui perbaikan Level 2 v0.3, terutama pemisahan dari aturan historis yang tidak otomatis berlaku pada O1.
-- **22 Oktober 2026:** Draf Bahasa Indonesia untuk pengantar ini dibuat dan diperbaiki setelah audit kesesuaian makna. Tetap memerlukan persetujuan tersendiri sebelum menggantikan `README.md`.
+- **22 Oktober 2026:** Draf Bahasa Indonesia selesai diaudit dan kemudian disetujui Anhar untuk dipromosikan ke `README.md`.
 
 Penyuntingan bahasa tidak boleh mengubah persetujuan atau membuka keputusan yang sengaja ditunda.
