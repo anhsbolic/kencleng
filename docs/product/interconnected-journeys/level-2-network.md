@@ -1,6 +1,6 @@
-# Level 2 — Interconnected Meaningful Transition Network v0.2
+# Level 2 — Interconnected Meaningful Transition Network v0.3 (Research Authority Correction)
 
-> **Standing:** ANHAR-APPROVED WORKING RESEARCH MAP / official checkpoint of the Kencleng pilot Product research episode (2026-10-21); **not** operational `main` or a binding delivery roadmap.
+> **Standing:** Original v0.2 **Anhar-approved research checkpoint** dated 2026-10-21. **Current v0.3 working authority-correction revision** dated 2026-10-22, prepared under Anhar's request to remove inherited historical commitment rules; this revised exact text is **not yet separately Human-accepted as current Product semantics**, and is not operational `main` or delivery authority.
 > **Current reading order (2026-10-22):** [Product Intent](../product-intent.md) → [Current Product research entry](../README.md) → [Selection and handoff decisions](selection-and-handoff-research.md). Prior scenario/commitment artifacts are history, not current requirements authority.
 > **Method boundary:** Meaningful transitions are a *network of consequences and experiences*, **not** one-to-one tasks, implementation phases, required screens, or a commitment registry.
 
@@ -214,7 +214,7 @@ These are **not** all mandatory preconditions to exploring one bounded starting 
 
 ## 10. Completion, limits, and pause
 
-**Anhar approved this Level 2 v0.2 research checkpoint on 2026-10-21.** It is a durable product-research map with **26 nodes** (O1–O5, P1–P8, V1–V7, A1–A6), representative negative paths and typed cross-journey seams. It supersedes the **chat-level 19-node sketch** for this research episode, not previously approved Product Intent or historical decision records.
+**Anhar approved the previous Level 2 v0.2 research checkpoint on 2026-10-21.** This **v0.3 working correction** separates O1 from inherited historical requirements and explicitly reopens its unsupported Product rules; the corrected exact revision has not yet received separate Human approval. The map retains **26 nodes** (O1–O5, P1–P8, V1–V7, A1–A6), representative negative paths and typed cross-journey seams. It supersedes the **chat-level 19-node sketch** for this research episode, not previously approved Product Intent or historical decision records.
 
 A prior informal graph check counted 39 proposed links and one weakly connected component; **that count was a same-session illustration**, not a binding or independently validated causal proof. This document owns the meaningful semantic edges above; do not use connectivity counts as evidence that all Product rules, consumer readiness or delivery prerequisites have been proven.
 
