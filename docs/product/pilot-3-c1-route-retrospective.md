@@ -1,5 +1,7 @@
 # Kencleng Pilot #3 — C1 Route Retrospective
 
+> **CURRENT EXPERIMENT ROUTING NOTICE (2026-10-22; pilot branch only):** This file preserves its dated Pilot #3 reasoning, scoped approvals and historical evidence **without rewriting history**. It is **not current input authority** for selecting O1 or generating O1 Product Contract/PRD. Do not carry forward historical commitment identifiers, business rules, acceptance or stage sequence into the current Interconnected Journeys research by inheritance. Use [current Product routing](README.md), [Level 2](interconnected-journeys/level-2-network.md), and [current selection/handoff decisions](interconnected-journeys/selection-and-handoff-research.md). Historical approvals retain only their original scope; operational `main` is unchanged.
+
 > **Type:** Historical / learning record — COLD context  
 > **Authority:** NOT Product Authority; NOT a source of current product semantics  
 > **Pilot:** Kencleng Pilot #3  
