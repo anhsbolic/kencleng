@@ -8,7 +8,7 @@
 
 > **Disetujui Anhar: 22 Oktober 2026.** Berlaku untuk penyusunan dan penyuntingan **dokumen Product Kencleng yang aktif**, dari tujuan produk hingga dokumen kebutuhan untuk tim berikutnya. **Tidak mengubah Harscode**, aturan Product, atau keputusan yang telah disetujui.
 
-1. **Utamakan Bahasa Indonesia yang umum.** Ikuti [pilihan istilah Product Kencleng](istilah.md), termasuk istilah Inggris yang sengaja disepakati (misalnya `Campaign`, `Donatur`, `development`, dan `conflict of interest`). Untuk istilah lain, gunakan bahasa Inggris hanya bila nama resminya harus dipertahankan atau padanan Indonesianya kurang jelas. Jelaskan istilah teknis ketika pertama dipakai.
+1. **Utamakan Bahasa Indonesia yang umum.** Ikuti [pilihan istilah Product Kencleng](istilah.md), termasuk istilah Inggris yang sengaja disepakati (misalnya `Campaign`, `Donatur`, `Journey`, `development`, dan `conflict of interest`). Untuk istilah lain, gunakan bahasa Inggris hanya bila nama resminya harus dipertahankan atau padanan Indonesianya kurang jelas. Jelaskan istilah teknis ketika pertama dipakai.
 2. **Tulis langsung dan ringkas.** Satu gagasan utama per kalimat. Hindari pengulangan, pengantar panjang, dan istilah yang tidak diperlukan.
 3. **Susun agar mudah dicari.** Pisahkan tujuan, pengguna, aturan, syarat keberhasilan, kondisi gagal, batas pekerjaan, dan hal yang belum diputuskan sesuai kebutuhan dokumen. Jangan memaksakan format panjang.
 4. **Jelaskan batas kata yang bisa ditafsirkan berbeda.** Jika memakai kata seperti *sah, cukup, relevan, jelas,* atau *berhasil* untuk suatu keputusan penting, sebutkan kondisi yang dapat diperiksa dan akibat jika tidak terpenuhi. Jangan menciptakan angka atau skor tanpa dasar pengukuran.
@@ -19,7 +19,7 @@
 
 **Tahap pertama selesai (22 Oktober 2026):** [Product Intent Bahasa Indonesia](product-intent.md) telah disetujui sebagai sumber utama Product pada branch riset ini. [Draf sebelumnya](product-intent-id-draft.md) disimpan untuk riwayat penyuntingan, bukan sumber kedua. Dokumen pilot lama tetap menjadi arsip sejarah.
 
-**Tahap kedua — draf untuk ditinjau:** [Pengantar peta perjalanan Product — Bahasa Indonesia](interconnected-journeys/README-id-draft.md) disiapkan berdasarkan [pengantar yang berlaku](interconnected-journeys/README.md). Belum menggantikan dokumen yang telah disetujui. Level 2 v0.3 dan aturan O1 tidak berubah.
+**Tahap kedua — draf telah dikoreksi dan menunggu persetujuan:** [Pengantar Peta Journey Product — Bahasa Indonesia](interconnected-journeys/README-id-draft.md) diperiksa terhadap [pengantar yang berlaku](interconnected-journeys/README.md) dan Level 2 v0.3. Koreksi audit serta penggunaan istilah **Journey** telah diterapkan. Draf **belum** menggantikan pengantar yang disetujui. Tidak ada perubahan aturan O1.
 
 ## Current entrypoints
 
