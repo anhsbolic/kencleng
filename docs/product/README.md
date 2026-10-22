@@ -17,11 +17,13 @@
 
 **Acuan istilah:** [Pilihan Istilah Product Kencleng](istilah.md) adalah satu tempat untuk padanan kata yang sudah disepakati; jangan menebak atau mengganti istilah secara massal.
 
-**Tahap penyuntingan pertama:** [Draf Bahasa Indonesia — Tujuan dan Prinsip Produk](product-intent-id-draft.md). Sumber yang **masih berlaku** adalah [Product Intent](product-intent.md), sampai hasil penulisan ulang disetujui sebagai penggantinya. Dokumen pilot lama tetap menjadi arsip sejarah, bukan objek penulisan ulang aktif.
+**Tahap pertama selesai (22 Oktober 2026):** [Product Intent Bahasa Indonesia](product-intent.md) telah disetujui sebagai sumber utama Product pada branch riset ini. [Draf sebelumnya](product-intent-id-draft.md) disimpan untuk riwayat penyuntingan, bukan sumber kedua. Dokumen pilot lama tetap menjadi arsip sejarah.
+
+**Tahap berikutnya:** penyuntingan [pengantar peta perjalanan Product](interconnected-journeys/README.md), tanpa mengubah persetujuan Level 2 v0.3 atau aturan O1.
 
 ## Current entrypoints
 
-1. [Product Intent](product-intent.md) — approved upstream Product seed and truth boundaries.
+1. [Product Intent](product-intent.md) — tujuan dan prinsip produk yang disetujui pada branch riset ini; ditulis dalam Bahasa Indonesia.
 2. [Interconnected Journeys research checkpoint](interconnected-journeys/README.md) — Level 1–2 value/transition network and **current working decisions**.
 3. [Level 2 map](interconnected-journeys/level-2-network.md) — meaning, typed prerequisites, uncertainty; **not** detailed PRD requirements.
 4. [Current selection and handoff research](interconnected-journeys/selection-and-handoff-research.md) — starting-point trial, source-independence rules, O1 OPEN decisions, consumer boundary and limits.
