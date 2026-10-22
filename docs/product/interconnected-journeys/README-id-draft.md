@@ -1,9 +1,10 @@
 # Kencleng — Peta Journey Product
 
 > **Status:** DRAF PENYEDERHANAAN BAHASA. Belum menggantikan [dokumen pengantar yang berlaku](README.md).
-> **Sumber yang dibandingkan:** `README.md` pada branch `pilot/station5-c1-space-only`, blob `73c8e509429ea456b09d4d85a75de0d44bd88dfd`. Draf ini juga mengikuti [Product Intent](../product-intent.md) yang sudah disetujui dan [daftar istilah](../istilah.md).
+> **Sumber yang dibandingkan:** pengantar lama `README.md`, blob `73c8e509429ea456b09d4d85a75de0d44bd88dfd`, sebelum penyesuaian kode. [Pengantar yang berlaku](README.md) dan [Level 2](level-2-network.md) kini memakai kode Journey baru. Draf ini mengikuti [Product Intent](../product-intent.md) dan [daftar istilah](../istilah.md).
 > **Batas persetujuan:** Peta Journey Level 2 v0.3 sudah disetujui Anhar sebagai **hasil riset** pada 22 Oktober 2026. Penyuntingan pengantar ini **belum disetujui sebagai penggantinya**. Tidak mengubah aturan Product, memilih urutan development, atau mengizinkan pengerjaan.
 > **Pemilik keputusan Product:** Anhar. Tidak berlaku sebagai sumber utama Kencleng `main`.
+> **Penamaan kode (disetujui 22 Oktober 2026):** `J-ORG`, `J-CAM`, `J-VIS`, `J-ACC`, dan `EX-OPS` menggantikan kode kelompok sebelumnya; aturan Product serta 26 kode bagian Level 2 tidak berubah.
 
 ## 1. Mengapa peta ini dibuat
 
@@ -17,17 +18,19 @@ Peta dibaca dalam **dua tingkat rincian**, bukan dua tahap yang harus dikerjakan
 
 | Kode | Journey | Hasil yang ingin dipahami |
 | --- | --- | --- |
-| **R1** | Organisasi | Pembentukan konteks organisasi atau penggunaan konteks yang sudah ada, kewenangan `Owner` dan `Staff`, informasi organisasi, serta peninjauan organisasi bila berlaku. Pendaftaran organisasi baru tidak wajib untuk setiap tindakan berikutnya. |
-| **R2** | Campaign | Penyiapan usulan Campaign oleh perwakilan yang berwenang, kurasi bila berlaku, perbaikan informasi, penayangan, dan kelayakan menerima donasi. Penyiapan usulan tidak otomatis mewajibkan proses pengajuan atau kurasi formal. |
-| **R3** | Pengunjung dan Donatur | Memahami Campaign dan memilih berdonasi, menunda, atau tidak berdonasi. Jika ada percobaan donasi, hasilnya harus jujur: belum pasti, gagal, atau diakui sebagai donasi jika memang ada bukti yang memenuhi aturan. Status Donatur dan keadaan dana tetap dibedakan. |
-| **R4** | Keadaan Campaign dan pertanggungjawaban | Perubahan keadaan Campaign, pelaporan, dan pertanggungjawaban **selama Campaign berlangsung maupun setelah ditutup**, termasuk ketika belum ada Donatur. Peninjauan laporan dilakukan jika memang berlaku. |
-| **X1** | Pengelola platform | Tindakan khusus yang memerlukan kewenangan tersendiri; tidak menggantikan keputusan organisasi, peninjau, atau bukti transaksi. |
+| **J-ORG** | Organisasi | Pembentukan konteks organisasi atau penggunaan konteks yang sudah ada, kewenangan `Owner` dan `Staff`, informasi organisasi, serta peninjauan organisasi bila berlaku. Pendaftaran organisasi baru tidak wajib untuk setiap tindakan berikutnya. |
+| **J-CAM** | Campaign | Penyiapan usulan Campaign oleh perwakilan yang berwenang, kurasi bila berlaku, perbaikan informasi, penayangan, dan kelayakan menerima donasi. Penyiapan usulan tidak otomatis mewajibkan proses pengajuan atau kurasi formal. |
+| **J-VIS** | Pengunjung dan Donatur | Memahami Campaign dan memilih berdonasi, menunda, atau tidak berdonasi. Jika ada percobaan donasi, hasilnya harus jujur: belum pasti, gagal, atau diakui sebagai donasi jika memang ada bukti yang memenuhi aturan. Status Donatur dan keadaan dana tetap dibedakan. |
+| **J-ACC** | Keadaan Campaign dan pertanggungjawaban | Perubahan keadaan Campaign, pelaporan, dan pertanggungjawaban **selama Campaign berlangsung maupun setelah ditutup**, termasuk ketika belum ada Donatur. Peninjauan laporan dilakukan jika memang berlaku. |
+| **EX-OPS** | Pengelola platform | Tindakan khusus yang memerlukan kewenangan tersendiri; tidak menggantikan keputusan organisasi, peninjau, atau bukti transaksi. |
 
 Gambaran ini menjelaskan hubungan penting antarpengguna dan antar-Journey, **bukan daftar pekerjaan yang telah disetujui**.
 
+**Padanan kode lama:** `R1 → J-ORG`, `R2 → J-CAM`, `R3 → J-VIS`, `R4 → J-ACC`, dan `X1 → EX-OPS`. Kode `EX-OPS` adalah pengecualian lintas-Journey, bukan Journey kelima. Ini hanya perubahan nama kelompok.
+
 ## 3. Tingkat 2 — Perubahan yang bermakna
 
-[Peta Level 2 v0.3](level-2-network.md) memuat **26 bagian Journey**: R1 lima, R2 delapan, R3 tujuh, dan R4 enam. Tiap bagian menjelaskan perubahan yang bermakna bagi pengguna atau keadaan Product.
+[Peta Level 2 v0.3](level-2-network.md) memuat **26 bagian Journey**: J-ORG lima, J-CAM delapan, J-VIS tujuh, dan J-ACC enam. Tiap bagian menjelaskan perubahan yang bermakna bagi pengguna atau keadaan Product.
 
 Dalam membaca hubungan antarbagian, bedakan:
 
