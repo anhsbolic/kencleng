@@ -27,4 +27,4 @@
 
 ## Penerapan bertahap
 
-**Tahap pertama:** [Draf Product Intent Bahasa Indonesia](product-intent-id-draft.md) menggunakan pilihan istilah di atas. [Product Intent yang sudah disetujui](product-intent.md) masih menjadi sumber utama sampai penulisan ulang diterima secara terpisah.
+**Tahap pertama selesai (22 Oktober 2026):** [Product Intent Bahasa Indonesia](product-intent.md) sudah disetujui sebagai sumber utama pada branch riset. [Draf sebelumnya](product-intent-id-draft.md) bukan sumber kedua. Terapkan pilihan istilah ini secara bertahap pada dokumen Product Kencleng lainnya, tanpa mengubah aturan yang sudah disetujui.
