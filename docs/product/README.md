@@ -10,12 +10,13 @@
 2. [Interconnected Journeys research checkpoint](interconnected-journeys/README.md) — Level 1–2 value/transition network and **current working decisions**.
 3. [Level 2 map](interconnected-journeys/level-2-network.md) — meaning, typed prerequisites, uncertainty; **not** detailed PRD requirements.
 4. [Current selection and handoff research](interconnected-journeys/selection-and-handoff-research.md) — starting-point trial, source-independence rules, O1 OPEN decisions, consumer boundary and limits.
+5. [O1 fresh Product Contract draft](interconnected-journeys/o1-product-contract-draft.md) — independently proposed product behavior and acceptance; not approved binding I1.
 
 Historical `pilot-3-*` artifacts (including pre-engineering commitment decisions and dashboards) are preserved for **historical evidence/lineage only** in this research continuation. They must **not** be used to fill current Product requirements, grant authority, infer implementation readiness, choose the next work, or substitute for fresh Product elaboration. Prior approvals retain their original historical scope; no retroactive cancellation or deletion is asserted.
 
 ## Active working boundary
 
-- Level 2 is a **navigation and discovery aid**, not a binding PRD.
+- Level 2 v0.3 is an **Anhar-approved research navigation map** (2026-10-22), not a binding PRD or approval of O1's consequential success/authority rules.
 - The O1 path is a **single recommended trial direction**, not a delivered capability or approved Engineering assignment.
 - Product must derive and approve O1 behavior/acceptance **fresh from current Product Intent and connected journey meaning**. Do not import prior commitment-specific behavior lists or success conditions silently. Where the seed is insufficient, ask Anhar for a scoped Product decision.
 - The previously drafted O1 PRD in conversation relied on historical commitment requirements; **REJECT that specimen as conformance evidence or downstream I1**. No approved O1 PRD has been produced for this route.
