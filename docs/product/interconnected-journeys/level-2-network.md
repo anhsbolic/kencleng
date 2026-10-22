@@ -1,236 +1,286 @@
-# Level 2 — Interconnected Meaningful Transition Network v0.3 (Research Authority Correction)
+# Kencleng — Peta Journey Level 2 v0.3 (Bahasa Indonesia)
 
-> **Standing:** Original v0.2 approved research checkpoint (2026-10-21). **Anhar approved Level 2 v0.3 research correction on 2026-10-22**, against the exact prior content blob `87edca25b40017429d66aff4e22ad1f4aa7e013f` on the research branch. This editorial approval-record update makes no new Product rule; approval covers the research map and its explicit OPEN boundaries, **not** an O1 PRD, delivery decision, or operational `main` authority.
-> **Current reading order (2026-10-22):** [Product Intent](../product-intent.md) → [Current Product research entry](../README.md) → [Selection and handoff decisions](selection-and-handoff-research.md). Prior scenario/commitment artifacts are history, not current requirements authority.
-> **Method boundary:** Meaningful transitions are a *network of consequences and experiences*, **not** one-to-one tasks, implementation phases, required screens, or a commitment registry.
-> **Penamaan Level 1 (disetujui Anhar, 22 Oktober 2026):** `R1 → J-ORG`, `R2 → J-CAM`, `R3 → J-VIS`, `R4 → J-ACC`, dan `X1 → EX-OPS`. Ini **perubahan kode editorial saja**: isi, hubungan, jumlah 26 node dan keputusan OPEN Level 2 v0.3 tetap sama. Kode node `O1–O5`, `P1–P8`, `V1–V7`, `A1–A6` tidak diubah. Catatan historis tetap memakai kode awal.
+> **Status:** DISETUJUI ANHAR — PETA RISET LEVEL 2 YANG BERLAKU, 22 Oktober 2026, **hanya pada branch `pilot/station5-c1-space-only`**. Penulisan ulang Bahasa Indonesia menggantikan pengantar Level 2 Inggris pada lokasi dokumen ini, **tanpa mengubah makna dan batas persetujuan riset v0.3**.
+> **Riwayat dan sumber yang diaudit:** Level 2 Inggris terakhir, blob `4970ba936d107e50d8260c9e246816ba13d41a28`; draf Bahasa Indonesia yang disetujui Anhar, blob `2ae3ed81651fe3f56595128617edb5244cb9d86c`; sumber koreksi v0.3 awal yang disetujui sebelumnya, blob `87edca25b40017429d66aff4e22ad1f4aa7e013f`. Seluruh versi Inggris tetap dapat ditelusuri melalui riwayat Git.
+> **Authority dan lingkup:** [Product Intent](../product-intent.md) tetap sumber utama prinsip Product. Dokumen ini merupakan **peta riset Journey**, bukan PRD, kontrak O1 yang disetujui, rencana rilis, atau izin development. [Keputusan pemilihan titik awal dan handoff Product](selection-and-handoff-research.md) memuat kelanjutan riset yang berlaku; O1 tetap satu arah percobaan dan aturan rincinya masih membutuhkan keputusan Product.
+> **Batas lingkungan:** Kencleng `main`, Harscode, Rancang, Product Specification Space, dan Engineering **tidak** berubah atau otomatis diaktifkan karena promosi editorial ini.
 
-## 1. Scope, resolution, and notation
+## 1. Cara membaca peta
 
-**Level 1:** J-ORG Organization, J-CAM Campaign, J-VIS Public Visitor/Donation, J-ACC Accountability; EX-OPS privileged Operator exception overlay. The earlier Stage 3A source uses the historical R1–R4/X1 labels, which are mapped below.
+Peta Level 2 menunjukkan **perubahan yang bermakna** bagi pengguna atau keadaan Product: siapa yang bertindak, apa yang benar-benar berubah, syaratnya, dan apa yang masih belum pasti. Ini bukan daftar layar, API, fitur CRUD, urutan development, atau bukti pekerjaan sudah selesai.
 
-**Level 2:** Identify specific *meaningful* transitions and what each validly changes for an actor or product state. Keep actor authority, provenance, timing, negative/unknown outcomes, and cross-journey relationships legible enough for later starting-point reasoning. **Do not infer mechanics or choose a delivery sequence from node position.**
+### Kode kelompok Journey
 
-- **Prerequisite / necessary context:** The target outcome cannot be claimed truthfully without the specified actual state/authority/information; a necessary input is **not sufficient** to cause success.
-- **Conditional:** Applies only if an approved/specific condition holds; absence of a universal rule is **not proof** that the condition is optional in every case.
-- **Downstream/continuity:** Creates later responsibility/interest, not necessarily the next engineering task.
-- **Feedback/re-entry:** Meaningful revision, changed evidence or rejudgment. Not every edit requires this.
-- **OPEN:** Product rule/relationship is intentionally unresolved and needs its owner if material to a selected path.
-- **No automatic implication (`≠`):** Distinct truth classes or states must not be collapsed.
-
-### Level 1 group code map
-
-| Current code | Historical code | Scope |
+| Kode | Kelompok | Kode historis |
 | --- | --- | --- |
-| `J-ORG` | `R1` | Organization authority, information and review |
-| `J-CAM` | `R2` | Campaign proposition, curation, visibility and donation eligibility |
-| `J-VIS` | `R3` | Visitor decisions, donation and money truth |
-| `J-ACC` | `R4` | Campaign lifecycle and continuing accountability |
-| `EX-OPS` | `X1` | Exceptional platform-operator intervention across Journeys |
+| `J-ORG` | Organisasi dan peninjauan | `R1` |
+| `J-CAM` | Campaign | `R2` |
+| `J-VIS` | Pengunjung dan Donatur | `R3` |
+| `J-ACC` | Pertanggungjawaban | `R4` |
+| `EX-OPS` | Pengecualian pengelola platform | `X1` |
 
-The codes identify **Level 1 groups**, not delivery order or new business rules. `EX-OPS` is an exception overlay, **not a fifth normal Journey**. Prior approval citations using `R1–R4/X1` refer to the same groups.
+`EX-OPS` berlaku lintas-Journey dan **bukan Journey kelima**.
 
-Identifier prefixes **O/P/V/A** are local diagram references only; **O1 is a research node, not a former commitment, binding Product rule set or engineering assignment**.
+### Arti hubungan
 
-## 2. J-ORG — Organization representation and review (5 nodes)
+- **Syarat yang diperlukan:** Tanpa kondisi, informasi, atau kewenangan tertentu, hasil tidak boleh dinyatakan benar. Memenuhi satu syarat **belum tentu cukup** untuk berhasil.
+- **Bersyarat:** Hubungan hanya berlaku jika kondisi terkait terpenuhi. Belum ada aturan umum **tidak berarti** sebuah kondisi boleh diabaikan untuk semua kasus.
+- **Kelanjutan:** Suatu hasil memunculkan tanggung jawab atau kebutuhan berikutnya; tidak otomatis menentukan pekerjaan development selanjutnya.
+- **Perubahan / peninjauan ulang:** Informasi baru dapat membuat keputusan atau informasi diperbaiki atau dinilai ulang. **Tidak setiap perubahan** mewajibkan peninjauan ulang.
+- **BELUM DIPUTUSKAN:** Aturan Product belum diselesaikan. Jika diperlukan untuk hasil tertentu, keputusan harus dibuat oleh pemiliknya; jangan menebak.
+- **Tidak otomatis berarti:** Dua keadaan berbeda harus tetap dibedakan, misalnya Campaign terlihat publik tidak otomatis boleh menerima donasi.
 
-| ID | Concrete transition / meaningful result | Guard or dependency boundary |
+Kode `O1–O5`, `P1–P8`, `V1–V7`, dan `A1–A6` hanya penanda bagian peta, bukan urutan pelaksanaan atau persetujuan aturan Product. Peta ini memuat seluruh **26 node**: lima `J-ORG`, delapan `J-CAM`, tujuh `J-VIS`, dan enam `J-ACC`. Hubungan silang, dua diagram, pengecualian `EX-OPS`, pemeriksaan batas makna, serta pertanyaan Product OPEN dijelaskan di bagian berikutnya.
+
+## 2. J-ORG — Organisasi dan peninjauan
+
+| Kode | Perubahan atau hasil yang bermakna | Batasan dan keputusan yang masih terbuka |
 | --- | --- | --- |
-| **O1** | A person seeks to establish an attributable Kencleng Organization context and legitimate initial **internal authority** relationship, with truthful, meaningful and durable consequence. | **RESEARCH NODE; fresh Product decisions OPEN:** who can establish, who receives initial Owner authority, when establishment and relationship become valid, and what incomplete/contested success means. Product Intent distinguishes Owner and Staff but does **not** decide automatic initial-Owner grant or a specific coupled-success rule. O1 is not a universal prerequisite for every other Organization action. |
-| **O2** | Organization-provided information/evidence becomes attributable to responsible Organization and acting representative as applicable. | Information remains *Organization-provided*, not automatically Organization review, external proof, Campaign curation or platform fact. May be supplied during/after establishment within valid authority; no universal O1-first ordering of data-entry steps. |
-| **O3** | An Organization matter is available for bounded review **when applicable**, with legitimate scope, attributable relevant evidence, prior context and Reviewer mandate. | Applicability, minimum material and legal consequences OPEN. COI prohibits related Reviewer judgment. |
-| **O4** | Reviewer produces a legitimate scoped Organization judgment, **or** inability to judge remains explicit and truthful. | No global trusted label. Positive/negative/pending meanings and effects on Campaign are OPEN. |
-| **O5** | Material changes, feedback or unresolved matters may lead to Organization review reconsideration when applicable. | Re-entry and supersession rules OPEN; not every change forces review. |
+| **O1** | Seseorang hendak membentuk konteks organisasi yang jelas di Kencleng dan hubungan kewenangan **internal** yang dapat diketahui siapa pelakunya. Hasilnya harus jujur, bermakna, dan tetap tersimpan sebagai keadaan yang nyata. | **BELUM DIPUTUSKAN:** siapa yang boleh membentuk organisasi, siapa menerima peran `Owner` pertama, kapan pembentukan dan kewenangan dinyatakan sah, serta arti hasil yang belum lengkap atau dipersengketakan. Product Intent **belum menetapkan pemberian `Owner` otomatis atau keberhasilan gabungan tertentu**. O1 bukan syarat universal bagi tindakan organisasi lain. |
+| **O2** | Informasi atau bukti yang diberikan organisasi mempunyai sumber organisasi yang jelas dan diketahui perwakilan yang bertindak jika relevan. | Informasi tetap **berasal dari organisasi**; bukan otomatis fakta platform, hasil peninjauan organisasi, bukti hukum eksternal, atau hasil kurasi Campaign. Informasi bisa diberikan saat atau setelah pembentukan jika kewenangan yang berlaku memungkinkan. Tidak semua pengisian informasi harus melewati O1 lebih dulu. |
+| **O3** | Jika peninjauan organisasi berlaku untuk suatu persoalan, ruang lingkup peninjauan, bukti yang relevan dan asalnya, riwayat terkait, serta kewenangan peninjau harus tersedia. | Kapan peninjauan berlaku, bahan minimum, dan akibat hukumnya **BELUM DIPUTUSKAN**. Peninjau dengan `conflict of interest` terhadap perkara terkait tidak boleh menilai. |
+| **O4** | Peninjau menyampaikan hasil penilaian sesuai ruang lingkup yang boleh dinilai. Jika belum bisa menilai secara sah, keterbatasan tersebut tetap dinyatakan dengan jujur. | Hasil penilaian **tidak otomatis** memberi label umum bahwa organisasi telah dapat dipercaya. Arti hasil positif, negatif, belum selesai, dan dampak pada Campaign **BELUM DIPUTUSKAN**. |
+| **O5** | Perubahan penting, masukan, atau masalah yang belum selesai dapat memicu peninjauan ulang organisasi jika berlaku. | Pemicu peninjauan ulang dan kapan keputusan sebelumnya digantikan **BELUM DIPUTUSKAN**. Tidak setiap perubahan memerlukan peninjauan ulang. |
 
-## 3. J-CAM — Campaign proposition, curation and actual state (8 nodes)
+### Batas J-ORG yang harus tetap dijaga
 
-| ID | Concrete transition / meaningful result | Guard or dependency boundary |
+- `Owner` dan `Staff` memiliki kewenangan berbeda. Kewenangan `Owner` tidak otomatis dimiliki `Staff`.
+- Peninjauan organisasi **tidak sama dengan** kurasi Campaign; informasi dari organisasi juga bukan hasil pemeriksaan independen.
+- Hubungan antara O1/O2 dan tindakan Campaign mempunyai syarat kewenangan atau informasi masing-masing; O1 tidak otomatis menjadi prasyarat seluruh Journey Campaign.
+- Persetujuan atas peta **bukan persetujuan** aturan lengkap O1 atau hasil peninjauan organisasi.
+- Hubungan antarnode dan keputusan yang belum dibuat pada J-ORG harus dibaca bersama **diagram (bagian 6), hubungan penting (bagian 7), dan pertanyaan OPEN (bagian 9)** pada peta ini.
+
+## 3. J-CAM — Campaign, kurasi, dan keadaan sebenarnya
+
+| Kode | Perubahan atau hasil yang bermakna | Batasan dan keputusan yang masih terbuka |
 | --- | --- | --- |
-| **P1** | Authorized Organization representative provides an attributable Campaign proposition, with Organization source and relevant claims distinguishable. | Requires **legitimate authority for this action**, not automatic completion of every R1 activity or Organization review. Campaign belongs to Organization; exact Owner/Staff permissions OPEN. |
-| **P2** | Campaign proposition enters a legitimate, bounded Campaign-curation matter **if applicable**. | Reviewer mandate, evidence, relevant history and COI boundary; Organization review is separate. |
-| **P3** | Scoped curation judgment, feedback, or inability to judge becomes discernible. | Positive judgment **≠** publication **≠** donation eligibility; rejection/insufficient/requested changes are distinguishable, but exact rules OPEN. |
-| **P4** | Organization responds/revises/resubmits material and relevant history links changed material with previous judgment or feedback. | Whether re-review is required, terminal rejection, supersession and allowed re-entry remain OPEN. Not every edit requires resubmission. |
-| **P5** | Campaign has actual, truthful **public visibility state**; authorized audience can encounter public information when actually public. | Campaign proposition is **necessary information, not publication permission**. Publication criteria, curation relationship and material revocation OPEN. |
-| **P6** | Campaign has actual, truthful **donation eligibility state**, distinguishable from visibility and curation. | Eligibility criteria, relationship to publication/curation and eligibility change rules OPEN. Do not infer public `⇒` eligible. |
-| **P7** | Campaign has actual fundraising/lifecycle context, including meaningful changes and potential closure. | Not the same as P5/P6; activation, phase and closure consequences OPEN. Necessary context for substantive continuing accountability. |
-| **P8** | Material public visibility or donation eligibility changes are represented as **actual changes**, including consequence for affected journeys. | Independent-change rules OPEN. Changes may affect public access or in-flight contribution and need scoped policy; avoid assuming prior eligibility persists. |
+| **P1** | Perwakilan organisasi yang berwenang memberikan usulan Campaign. Asal organisasi dan pihak yang memberikan informasi harus dapat diketahui; klaim dalam usulan tidak otomatis menjadi fakta yang dibuktikan Kencleng. | Orang yang bertindak harus benar-benar memiliki **kewenangan untuk menyampaikan usulan Campaign ini**. Tidak wajib seluruh kegiatan `J-ORG` selesai atau peninjauan organisasi telah dilakukan. Campaign berada di bawah organisasi; hak `Owner` dan `Staff` untuk tindakan spesifik ini **BELUM DIPUTUSKAN**. |
+| **P2** | Jika kurasi Campaign memang berlaku, usulan masuk ke peninjauan yang mempunyai cakupan dan dasar yang jelas. | Diperlukan kewenangan peninjau, bukti terkait, riwayat yang relevan, serta larangan `conflict of interest`. Kurasi Campaign berbeda dari peninjauan organisasi. **Kurasi bukan syarat universal** untuk setiap Campaign. |
+| **P3** | Hasil kurasi dalam cakupan yang berlaku, masukan perbaikan, atau keadaan ketika peninjau belum dapat memberi penilaian harus dapat dibedakan. | Hasil kurasi positif **tidak otomatis** membuat Campaign tampil publik atau boleh menerima donasi. Penolakan, informasi yang belum cukup, dan permintaan perubahan harus dapat dibedakan. Arti dan akibat tepat dari masing-masing hasil **BELUM DIPUTUSKAN**. |
+| **P4** | Organisasi menanggapi masukan, memperbaiki, atau mengirim ulang informasi bila berlaku. Riwayat yang relevan harus menghubungkan perubahan dengan masukan atau hasil penilaian sebelumnya. | Kapan harus dinilai ulang, apakah penolakan bersifat akhir, kapan hasil lama digantikan, dan kapan usulan boleh diajukan kembali **BELUM DIPUTUSKAN**. **Tidak setiap perubahan** wajib dikirim ulang atau dikurasi kembali. |
+| **P5** | Campaign mempunyai **keadaan penayangan publik yang sebenarnya**. Pengguna yang berhak melihatnya dapat menemukan informasi Campaign hanya ketika Campaign benar-benar sedang ditayangkan untuk mereka. | Usulan Campaign adalah **informasi yang diperlukan**, bukan izin penayangan. Syarat penayangan, kaitannya dengan kurasi, dan pencabutan penayangan akibat perubahan penting **BELUM DIPUTUSKAN**. |
+| **P6** | Campaign mempunyai **keadaan kelayakan menerima donasi yang sebenarnya**, terpisah dari penayangan publik maupun hasil kurasi. | Syarat kelayakan, hubungannya dengan penayangan dan kurasi, serta aturan perubahan kelayakan **BELUM DIPUTUSKAN**. Campaign yang terlihat publik **belum tentu** boleh menerima donasi. |
+| **P7** | Campaign memiliki keadaan penggalangan dana dan tahap keberlangsungannya yang benar, termasuk perubahan penting dan kemungkinan penutupan. | Keadaan ini **berbeda** dari status penayangan (P5) dan izin menerima donasi (P6). Syarat aktivasi, makna setiap tahap, serta akibat penutupan **BELUM DIPUTUSKAN**. Keadaan Campaign menjadi konteks yang diperlukan untuk pertanggungjawaban yang berlanjut. |
+| **P8** | Perubahan penting pada penayangan publik atau kelayakan menerima donasi harus ditunjukkan sebagai **perubahan keadaan yang benar-benar terjadi**, beserta akibat yang relevan bagi Journey lain. | Aturan perubahan kedua status secara terpisah **BELUM DIPUTUSKAN**. Perubahan dapat memengaruhi akses Pengunjung atau percobaan donasi yang sedang berlangsung; akibat pastinya membutuhkan aturan Product sesuai kasus. **Jangan menganggap izin sebelumnya tetap berlaku setelah keadaan berubah.** |
 
-## 4. J-VIS — Visitor, considered decision, donation and money truth (7 nodes)
+### Batas J-CAM yang harus tetap dijaga
 
-| ID | Concrete transition / meaningful result | Guard or dependency boundary |
+- Kewenangan perwakilan organisasi untuk bertindak harus nyata. Tidak seluruh tahapan `J-ORG` wajib selesai dan peninjauan organisasi tidak otomatis menjadi syarat setiap tindakan Campaign.
+- **Usulan Campaign ≠ hasil kurasi ≠ penayangan publik ≠ izin menerima donasi.** Setiap hasil harus mengikuti keadaan dan aturan yang memang berlaku.
+- Kurasi hanya dilakukan **jika berlaku**. Hasil kurasi positif tidak otomatis mengizinkan penayangan maupun donasi.
+- Penolakan, permintaan revisi, informasi yang belum cukup, perubahan keadaan, dan peninjauan ulang bukan satu keadaan yang sama. Aturan kapan masing-masing berlaku masih terbuka.
+- Jika status Campaign berubah ketika seseorang sedang mempertimbangkan atau mencoba berdonasi, **jangan menganggap kelayakan sebelumnya tetap berlaku**. Akibat tepat pada percobaan donasi masih membutuhkan keputusan Product.
+- Hubungan `J-CAM` dengan `J-VIS`, `J-ACC`, serta diagram dan batas lainnya dibaca bersama **bagian 6–9** pada peta ini.
+
+## 4. J-VIS — Pengunjung, keputusan berdonasi, dan keadaan uang
+
+| Kode | Perubahan atau hasil yang bermakna | Batasan dan keputusan yang masih terbuka |
 | --- | --- | --- |
-| **V1** | Visitor can access **actually public** Campaign context with relevant responsible Organization, purpose, source, actual state, funding meaning and known unknowns. | Requires P5 and relevant attributable information. An applicable bounded judgment may inform understanding, but not universally required. Public Visitor need not be unregistered. |
-| **V2** | Visitor can reach a **considered, non-coercive choice** from intelligible, relevant information; Kencleng does not claim to guarantee internal understanding. | “Sufficient” is not exhaustive disclosure; required consequential information before donation remains scoped/open. |
-| **V3** | Visitor chooses **no donation**, or defers consideration, without being represented as product failure. | Does not automatically require persisting a refusal/defer event. |
-| **V4** | Visitor can begin legitimate contribution attempt when they choose and **actual applicable eligibility** permits. | P6 is a branch-specific prerequisite; if Campaign state changes mid-attempt, exact acceptance/rejection semantics OPEN. Choice/intention ≠ attempt. |
-| **V5** | Contribution result is truthful as unresolved/pending, failed, or supported by a **legitimate donation fact** if one actually exists. | An attempt is not proof of donation; pending/failed cannot be upgraded to success, Donatur or funded state. |
-| **V6** | A legitimate Campaign-specific donation fact establishes contextual **Donatur relationship**. | Guest/registered account difference is separate, capability details OPEN. Registration or attempt alone does not create Donatur status. |
-| **V7** | Actual money consequences — **donation fact, funding and settlement as distinct realities** — can be truthfully understood to the extent actual signals support them. | No automatic transition from donation fact to funding or settlement, nor to execution/impact. Payment simulation is labeled simulation; source and trigger rules OPEN. |
+| **V1** | Pengunjung dapat mengakses informasi Campaign yang **benar-benar terbuka untuk publik**, termasuk organisasi yang bertanggung jawab, tujuan, asal informasi, keadaan Campaign, arti informasi pendanaan, dan hal yang belum diketahui. | Memerlukan status penayangan sebenarnya (P5) dan informasi terkait yang dapat diketahui asalnya. Hasil peninjauan dengan cakupan tertentu dapat membantu Pengunjung memahami informasi **bila berlaku**, tetapi bukan syarat universal. Pengunjung yang melihat Campaign publik **tidak harus belum memiliki akun**. |
+| **V2** | Informasi yang relevan dan bisa dipahami membantu Pengunjung membuat pilihan secara sadar, tanpa tekanan untuk berdonasi. | Kencleng **tidak dapat menjamin apa yang benar-benar dipahami di dalam pikiran Pengunjung**. Informasi yang dianggap cukup bukan berarti semua informasi harus ditampilkan. Informasi penting yang wajib dijelaskan sebelum donasi masih memerlukan aturan Product sesuai cakupannya (**BELUM DIPUTUSKAN**). |
+| **V3** | Pengunjung boleh **tidak berdonasi** atau **menunda keputusan**, dan keduanya tetap merupakan hasil pilihan yang wajar, bukan kegagalan Product. | Tidak otomatis perlu menyimpan catatan bahwa Pengunjung menolak atau menunda donasi. Jangan menambahkan kewajiban pencatatan atau mendorong donasi dengan tekanan. |
+| **V4** | Jika Pengunjung memilih mencoba berdonasi, ia dapat memulai **percobaan donasi** hanya saat syarat kelayakan Campaign yang benar-benar berlaku mengizinkan tindakan itu. | Izin menerima donasi (P6) adalah syarat **khusus untuk percobaan donasi**, bukan syarat untuk sekadar memahami Campaign atau memilih tidak berdonasi. Jika status Campaign berubah selama percobaan, aturan penerimaan atau penolakannya **BELUM DIPUTUSKAN**. Keinginan berdonasi **bukan** bukti bahwa percobaan telah dimulai. |
+| **V5** | Hasil percobaan donasi harus dinyatakan sesuai bukti yang ada: **belum selesai atau masih menunggu kepastian**, **gagal**, atau **memiliki fakta donasi yang diakui** jika fakta tersebut memang ada. | Percobaan tidak membuktikan bahwa donasi telah terjadi. Status belum pasti atau gagal **tidak boleh** ditampilkan sebagai donasi berhasil, hubungan Donatur, atau keadaan pendanaan yang sudah terwujud. Syarat tepat pengakuan donasi masih membutuhkan keputusan Product. |
+| **V6** | Fakta donasi yang benar-benar diakui dan terkait dengan Campaign membentuk **hubungan Donatur dengan Campaign tersebut**. | Perbedaan Donatur yang memakai akun dan yang berdonasi sebagai tamu adalah persoalan tersendiri; rincian hak atau pengalaman keduanya **BELUM DIPUTUSKAN**. Memiliki akun atau sekadar mencoba berdonasi **tidak otomatis** menjadikan seseorang Donatur. |
+| **V7** | Pengunjung dan Donatur dapat memahami keadaan uang yang **benar-benar didukung bukti**. Fakta donasi, pendanaan Campaign, dan penyelesaian transaksi uang (**settlement**) harus dibedakan. | Fakta donasi **tidak otomatis** membuktikan pendanaan atau settlement, apalagi pelaksanaan kegiatan dan dampak nyata. Pembayaran simulasi **harus disebut sebagai simulasi**, bukan sebagai uang yang benar-benar diselesaikan di luar sistem. Sumber bukti, pemicu, dan aturan tepat setiap keadaan **BELUM DIPUTUSKAN**. |
 
-## 5. J-ACC — Fundraising and continuing accountability (6 nodes)
+### Batas J-VIS yang harus tetap dijaga
 
-| ID | Concrete transition / meaningful result | Guard or dependency boundary |
+- **Memahami Campaign ≠ memilih berdonasi ≠ memulai percobaan donasi.** Pengunjung boleh memutuskan tidak berdonasi atau menunda tanpa diperlakukan sebagai kegagalan.
+- **Percobaan donasi ≠ fakta donasi yang diakui ≠ hubungan Donatur.** Keadaan belum pasti atau gagal tidak boleh dinaikkan menjadi keberhasilan.
+- **Fakta donasi ≠ pendanaan Campaign ≠ settlement ≠ pelaksanaan kegiatan atau dampak nyata.** Setiap klaim hanya boleh mengikuti keadaan dan informasi yang benar-benar tersedia.
+- Penayangan publik (P5) berbeda dari kelayakan menerima donasi (P6). Pengunjung tidak perlu memenuhi kelayakan donasi hanya untuk memahami Campaign atau memilih tidak berdonasi.
+- Jika kelayakan Campaign berubah di tengah percobaan, jangan menganggap izin lama otomatis masih berlaku. **Aturan hasil percobaan tetap BELUM DIPUTUSKAN**, bukan ditentukan oleh peta riset ini.
+- Hubungan antara Donatur, pendanaan, dan pertanggungjawaban serta diagram lintas-Journey dijelaskan di **bagian 6–9** pada peta ini.
+
+## 5. J-ACC — Keadaan Campaign dan pertanggungjawaban berkelanjutan
+
+| Kode | Perubahan atau hasil yang bermakna | Batasan dan keputusan yang masih terbuka |
 | --- | --- | --- |
-| **A1** | Material fundraising state change or closure alters Campaign context while continuing responsibility remains meaningful. | Closure **≠** completion of accountability; exact closure trigger and consequences OPEN. |
-| **A2** | Relevant Organization accountability information/report is available, **or its pending/unavailable status remains truthful**. | Accountability exists through relevant Campaign lifecycle **even with zero Donatur and before closure**. Duty, trigger, timing, audience and what constitutes missing report remain OPEN. |
-| **A3** | Organization-reported progress/outcome becomes attributable reported information. | Organization report **≠** bounded independent verification **≠** proven real-world impact. Source and authorized Owner/Staff role remain distinct. |
-| **A4** | New, corrected, disputed or changed information preserves material **chronology, provenance and uncertainty**. | No mandatory raw audit log or one final immutable report inferred. Supersession/reopening rules OPEN. |
-| **A5** | Reviewer creates legitimate **bounded fund-use verification judgment**, if applicable, or lack of legitimate judgment remains clear. | Mandate, independence/COI, evidence, when mandatory, and judgment meaning OPEN. Not universal impact truth. |
-| **A6** | Relevant authorized audience (public and/or Donatur as applicable) can continue understanding known reports, facts, scoped judgments and uncertainty. | Donatur benefits **when a legitimate relationship exists**; no donor is required to make A2/A6 meaningful. Access/guest visibility and completion criteria OPEN. |
+| **A1** | Perubahan penting pada keadaan penggalangan dana atau penutupan Campaign mengubah konteks Campaign. Tanggung jawab untuk menjelaskan perkembangan dan hasil tetap bermakna. | **Campaign ditutup ≠ pertanggungjawaban selesai.** Pemicu penutupan dan akibat tepatnya bagi Campaign serta pihak terkait **BELUM DIPUTUSKAN**. |
+| **A2** | Informasi atau laporan pertanggungjawaban organisasi yang relevan tersedia. Jika belum tersedia atau masih menunggu, keadaan itu tetap dijelaskan **sesuai kenyataannya**, bukan dinyatakan sudah lengkap. | Pertanggungjawaban dapat bermakna **sebelum Campaign ditutup dan meskipun belum ada Donatur**. Kewajiban minimum organisasi, pemicu dan waktu pelaporan, siapa yang berhak melihatnya, serta kondisi kapan laporan dianggap belum dipenuhi **BELUM DIPUTUSKAN**. Status belum tersedia tidak otomatis berarti pelanggaran. |
+| **A3** | Perkembangan kegiatan atau hasil yang dilaporkan organisasi dapat diketahui sebagai **informasi yang berasal dari organisasi**, beserta pihak yang bertanggung jawab atas informasi tersebut. | **Laporan organisasi ≠ verifikasi independen ≠ dampak nyata yang terbukti.** Asal laporan dan kewenangan `Owner` atau `Staff` yang bertindak tetap dibedakan. Laporan tidak otomatis berubah menjadi fakta yang telah diverifikasi pihak lain. |
+| **A4** | Jika informasi baru muncul, dikoreksi, diperselisihkan, atau berubah, urutan kejadian, asal informasi, dan ketidakpastian yang penting tetap bisa dipahami. | Ini **tidak otomatis mewajibkan penyimpanan seluruh catatan teknis mentah (audit log)** atau satu laporan akhir yang tak boleh berubah. Kapan keputusan/laporan lama digantikan dan kapan persoalan dibuka kembali **BELUM DIPUTUSKAN**. |
+| **A5** | Jika verifikasi penggunaan dana oleh peninjau memang berlaku, peninjau dapat memberi **hasil verifikasi terbatas sesuai cakupan dan kewenangannya**. Jika penilaian yang sah belum bisa diberikan, keadaan itu harus tetap jelas. | Kewenangan, independensi peninjau, `conflict of interest`, bukti yang diperlukan, kapan verifikasi wajib dilakukan, dan arti hasilnya **BELUM DIPUTUSKAN**. Verifikasi terbatas **tidak otomatis membuktikan seluruh dampak nyata**. |
+| **A6** | Pihak yang memang berhak mengakses informasi, yaitu publik dan/atau Donatur **sesuai aturan yang berlaku**, dapat terus memahami laporan, fakta yang diketahui, hasil peninjauan sesuai cakupannya, serta ketidakpastian yang masih ada. | Hubungan Donatur yang benar-benar ada dapat memberi kebutuhan informasi tambahan, tetapi **Donatur bukan syarat agar pertanggungjawaban organisasi bermakna**. Siapa yang berhak melihat informasi, akses tamu, dan kondisi kapan pertanggungjawaban dianggap selesai **BELUM DIPUTUSKAN**. Tidak semua laporan otomatis bersifat publik. |
 
-## 6. Interconnected map — read together, not as deployment order
+### Batas J-ACC yang harus tetap dijaga
 
-Solid arrows here represent a **necessary information/state condition or a coherent local progression**; they do **not** assert that the source condition is sufficient. Dashed arrows signify **conditional, feedback, or OPEN** connections. Use the edge register below to distinguish which.
+- **Penutupan Campaign ≠ selesai pertanggungjawaban.** Kewajiban dan keterbukaan informasi dapat tetap relevan sebelum maupun setelah penutupan, termasuk ketika jumlah Donatur masih nol.
+- **Laporan organisasi ≠ verifikasi independen ≠ dampak nyata yang terbukti.** Asal klaim, kewenangan penulis, dan hasil peninjauan harus tetap dapat dibedakan.
+- **Laporan belum tersedia ≠ otomatis terjadi pelanggaran.** Jangan menciptakan tenggat, pelanggaran, atau status selesai yang belum diputuskan Product.
+- Informasi yang berubah harus mempertahankan **urutan kejadian, asal informasi, dan ketidakpastian yang penting**, tanpa menentukan bentuk audit log atau aturan penggantian laporan secara teknis.
+- Verifikasi penggunaan dana hanya dilakukan **jika berlaku** dan dengan kewenangan serta independensi peninjau yang sesuai. Hasilnya terbatas pada apa yang benar-benar diperiksa.
+- Akses publik, Donatur, dan tamu **tidak otomatis sama**. Hubungan Donatur bukan prasyarat adanya pertanggungjawaban organisasi.
+- Hubungan `J-ACC` dengan keadaan Campaign (P7), status Donatur (V6), dan bagian lainnya juga harus dibaca bersama **bagian 6–9** pada peta ini.
 
-### 6.1 Organization ↔ Campaign
+## 6. Hubungan antar-Journey — baca sebagai jaringan, bukan urutan development
+
+Dua diagram ini membantu melihat hubungan antarbagian. **Panah utuh** menunjukkan keadaan atau informasi yang diperlukan, atau kelanjutan yang masuk akal di satu bagian Journey. Panah utuh **tidak** berarti keadaan di sisi asal sudah cukup untuk membuktikan keberhasilan di sisi tujuan. **Panah putus-putus** menunjukkan hubungan bersyarat, peninjauan ulang, atau aturan yang masih **BELUM DIPUTUSKAN**. Jenis hubungan yang lebih tepat dijelaskan pada daftar hubungan di bagian 7.
+
+Diagram **tidak** membuktikan urutan implementasi wajib, hubungan sebab-akibat yang sudah diuji, atau bahwa semua syarat untuk menjalankan aplikasi sudah tersedia.
+
+### 6.1 J-ORG ↔ J-CAM
 
 ```mermaid
 flowchart TB
-    O1["O1 Organization + authority (rules OPEN)"]
-    O2["O2 Attributable Org information"]
-    O3["O3 Org review matter"]
-    O4["O4 Bounded Org judgment"]
-    O5["O5 Change / reconsideration"]
-    P1["P1 Attributable Campaign proposition"]
-    P2["P2 Campaign curation context"]
-    P3["P3 Bounded curation judgment"]
-    P4["P4 Revision / review history"]
-    P5["P5 Actual public visibility"]
-    P6["P6 Actual donation eligibility"]
-    P7["P7 Fundraising lifecycle"]
-    P8["P8 Visibility / eligibility change"]
+    O1["O1 Organisasi + kewenangan (aturan BELUM DIPUTUSKAN)"]
+    O2["O2 Informasi organisasi jelas sumbernya"]
+    O3["O3 Persoalan peninjauan organisasi"]
+    O4["O4 Hasil peninjauan sesuai cakupan"]
+    O5["O5 Perubahan / peninjauan ulang"]
+    P1["P1 Usulan Campaign jelas sumbernya"]
+    P2["P2 Konteks kurasi Campaign"]
+    P3["P3 Hasil kurasi sesuai cakupan"]
+    P4["P4 Perbaikan / riwayat peninjauan"]
+    P5["P5 Penayangan publik sebenarnya"]
+    P6["P6 Kelayakan donasi sebenarnya"]
+    P7["P7 Keadaan penggalangan dana"]
+    P8["P8 Perubahan penayangan / kelayakan"]
 
-    O1 -->|"Valid initial authority path"| O2
-    O1 -->|"Acting authority when relevant"| P1
-    O2 -->|"Provenance and source"| P1
-    O2 -. "If Organization review applicable" .-> O3
+    O1 -->|"Jalur kewenangan awal yang sah"| O2
+    O1 -->|"Kewenangan bertindak bila relevan"| P1
+    O2 -->|"Asal informasi dan sumbernya"| P1
+    O2 -. "Jika peninjauan organisasi berlaku" .-> O3
     O3 --> O4
-    O4 -. "Relevant feedback/change" .-> O5
-    O5 -. "If reconsideration needed" .-> O3
-    O4 -. "Possible downstream effects OPEN" .-> P2
-    P1 -. "If curation applicable" .-> P2
+    O4 -. "Masukan / perubahan terkait" .-> O5
+    O5 -. "Jika perlu dinilai ulang" .-> O3
+    O4 -. "Kemungkinan akibat lanjutan BELUM DIPUTUSKAN" .-> P2
+    P1 -. "Jika kurasi berlaku" .-> P2
     P2 --> P3
-    P3 -. "If response required" .-> P4
-    P4 -. "If resubmission applicable" .-> P2
-    P1 -->|"Information necessary, not sufficient"| P5
-    P1 -->|"Campaign context, not sufficient"| P6
-    P1 -->|"Campaign context, not activation"| P7
-    P3 -. "Publication rule OPEN" .-> P5
-    P3 -. "Eligibility rule OPEN" .-> P6
-    P5 -. "Material change" .-> P8
-    P6 -. "Material change" .-> P8
+    P3 -. "Jika tanggapan diperlukan" .-> P4
+    P4 -. "Jika pengajuan kembali berlaku" .-> P2
+    P1 -->|"Informasi perlu, belum tentu cukup"| P5
+    P1 -->|"Konteks Campaign, belum tentu cukup"| P6
+    P1 -->|"Konteks Campaign, bukan aktivasi"| P7
+    P3 -. "Aturan penayangan BELUM DIPUTUSKAN" .-> P5
+    P3 -. "Aturan kelayakan BELUM DIPUTUSKAN" .-> P6
+    P5 -. "Perubahan penting" .-> P8
+    P6 -. "Perubahan penting" .-> P8
 ```
 
-### 6.2 Campaign ↔ Visitor/Donation ↔ Accountability
+### 6.2 J-CAM ↔ J-VIS ↔ J-ACC
 
 ```mermaid
 flowchart TB
-    P5["P5 Actual public state"]
-    P6["P6 Actual eligibility"]
-    P7["P7 Fundraising context"]
-    P8["P8 Actual state changes"]
-    V1["V1 Truthful public understanding"]
-    V2{"V2 Considered choice"}
-    V3["V3 No donation / defer"]
-    V4["V4 Eligible contribution attempt"]
-    V5["V5 Pending / failed / fact"]
-    V6["V6 Donatur relationship"]
-    V7["V7 Funding and settlement truths"]
-    A1["A1 Phase change / closure"]
-    A2["A2 Accountability info or honest absence"]
-    A3["A3 Org-reported progress"]
-    A4["A4 Chronology / changes"]
-    A5["A5 Scoped verification"]
-    A6["A6 Continuing understanding"]
+    P5["P5 Keadaan publik sebenarnya"]
+    P6["P6 Kelayakan sebenarnya"]
+    P7["P7 Konteks penggalangan dana"]
+    P8["P8 Perubahan keadaan sebenarnya"]
+    V1["V1 Informasi publik yang jujur"]
+    V2{"V2 Pilihan yang dipertimbangkan"}
+    V3["V3 Tidak berdonasi / menunda"]
+    V4["V4 Percobaan donasi yang diizinkan"]
+    V5["V5 Belum pasti / gagal / fakta"]
+    V6["V6 Hubungan Donatur"]
+    V7["V7 Fakta pendanaan dan settlement"]
+    A1["A1 Perubahan tahap / penutupan"]
+    A2["A2 Informasi pertanggungjawaban atau ketidaktersediaan yang jujur"]
+    A3["A3 Perkembangan laporan organisasi"]
+    A4["A4 Urutan kejadian / perubahan"]
+    A5["A5 Verifikasi sesuai cakupan"]
+    A6["A6 Pemahaman berkelanjutan"]
 
-    P5 -->|"Actual public state"| V1
-    V7 -. "Funding status when relevant" .-> V1
+    P5 -->|"Keadaan publik sebenarnya"| V1
+    V7 -. "Status pendanaan bila relevan" .-> V1
     V1 --> V2
     V2 --> V3
-    V2 -. "Choose contribution" .-> V4
-    P6 -->|"Eligibility when applicable"| V4
-    P8 -. "Change may affect live choice" .-> V1
-    P8 -. "Mid-attempt consequence OPEN" .-> V4
-    P8 -. "Outcome rule OPEN" .-> V5
+    V2 -. "Memilih mencoba berdonasi" .-> V4
+    P6 -->|"Kelayakan yang berlaku"| V4
+    P8 -. "Perubahan dapat memengaruhi pilihan berjalan" .-> V1
+    P8 -. "Akibat saat percobaan berlangsung BELUM DIPUTUSKAN" .-> V4
+    P8 -. "Aturan hasil BELUM DIPUTUSKAN" .-> V5
     V4 --> V5
-    V5 -. "Only legitimate donation fact" .-> V6
-    V6 -. "No automatic funding or settlement" .-> V7
-    P7 -->|"Campaign lifecycle change"| A1
-    P7 -->|"Independent of donor and closure"| A2
-    A1 -->|"Changing actual context"| A4
-    A2 -. "When report exists" .-> A3
-    A2 -->|"Pending/unavailable still truthful"| A6
+    V5 -. "Hanya jika fakta donasi sah" .-> V6
+    V6 -. "Tidak otomatis menjadi pendanaan atau settlement" .-> V7
+    P7 -->|"Perubahan keadaan Campaign"| A1
+    P7 -->|"Tidak bergantung pada Donatur atau penutupan"| A2
+    A1 -->|"Perubahan konteks sebenarnya"| A4
+    A2 -. "Jika laporan tersedia" .-> A3
+    A2 -->|"Belum tersedia / belum pasti tetap jujur"| A6
     A3 --> A4
-    A3 -. "If verification applicable" .-> A5
+    A3 -. "Jika verifikasi berlaku" .-> A5
     A4 --> A6
-    A5 -. "Judgment within scope" .-> A6
-    V6 -. "Donatur-specific continuing interest" .-> A6
+    A5 -. "Hasil penilaian sesuai cakupan" .-> A6
+    V6 -. "Kebutuhan lanjutan khusus Donatur" .-> A6
 ```
 
-## 7. Critical typed-edge register (selection-relevant seams)
+### 6.3 EX-OPS — Pengecualian tindakan pengelola platform
 
-| Seam | Type / standing | What must **not** be inferred |
+`EX-OPS` bukan Journey kelima, prasyarat yang harus dilewati seluruh node, ataupun kewenangan untuk membuat fakta Product yang tidak didukung bukti. Intervensi khusus pengelola platform melintasi Journey lain **hanya dalam batas kewenangan yang sah dan keputusan Product yang berlaku**.
+
+Kewenangan operasional pengelola platform **tidak otomatis** menjadi kewenangan organisasi, peninjau, verifikator penggunaan dana, atau pihak yang dapat menyatakan donasi, settlement, maupun dampak nyata. Batas kewenangan positif dan tindakan koreksi yang boleh dilakukan pengelola platform **BELUM DIPUTUSKAN**.
+
+## 7. Hubungan penting antarnode
+
+| Hubungan | Jenis hubungan | Kesimpulan yang **tidak boleh** ditarik |
 | --- | --- | --- |
-| Valid representative authority → P1 | **Authority prerequisite / supported** | O1 must be rerun for already-valid Organizations; all J-ORG must be complete |
-| O2 source information → P1/V1 | **Information prerequisite / supported** | Supplied Organization facts are independently verified |
-| O4 → P2/P5/P6 | **OPEN / conditional** | All Campaign work requires completed Organization review |
-| P1 → P2 → P3 ⇄ P4 | **Conditional review / feedback** | All campaigns universally go through curation or each edit forces re-review |
-| P1 → P5 | **Necessary information, not sufficient** | Proposition automatically causes publication |
-| P3/P4 → P5/P6 | **OPEN / conditional** | Positive curation automatically publishes/authorizes donation |
-| P5 → V1 | **Actual-state prerequisite / supported** | Public visibility means donation eligibility |
-| P6 → V4 | **Branch-specific prerequisite / supported** | Visitor understanding or choosing no donation needs eligibility |
-| P8 → V1/V4/V5 | **Conditional / consequence OPEN** | In-flight contribution obeys stale prior eligibility |
-| V1 → V2 → V3 | **Legitimate human outcome / supported** | Non-donation is product failure or persisted refusal |
-| V4 → V5 → V6 | **Only legitimate fact creates Donatur / supported** | Intent, attempt, pending or failure create Donatur |
-| V6 ⇢ V7 | **No automatic money implication / supported** | Donatur/donation fact proves funding or settlement |
-| P7 → A1/A2 | **Lifecycle and accountability / supported** | Closure or donors must exist before accountability |
-| A2/A3/A4 → A6 | **Information continuity / supported; audience OPEN** | Every report is public or every absent report is a breach |
-| A3 → A5 → A6 | **Conditional verification / supported distinction; applicability OPEN** | Reporting = verified impact; every report requires verification |
-| V6 → A6 | **Downstream Donatur interest / supported** | Donatur is prerequisite to Organization accountability |
-| EX-OPS privileged intervention → normal nodes | **Exceptional overlay, not normal prerequisite** | Operator privilege can create Organization/Reviewer/money/impact truth |
+| Kewenangan perwakilan yang sah → P1 | **Syarat kewenangan / didukung peta** | Organisasi yang sudah memiliki kewenangan sah wajib mengulangi O1, atau seluruh J-ORG harus diselesaikan. |
+| O2 → P1/V1 | **Syarat informasi / didukung peta** | Informasi dari organisasi otomatis telah diverifikasi independen. |
+| O4 → P2/P5/P6 | **Bersyarat / BELUM DIPUTUSKAN** | Seluruh pekerjaan Campaign mensyaratkan hasil peninjauan organisasi yang selesai. |
+| P1 → P2 → P3 ⇄ P4 | **Kurasi bersyarat / masukan dan perbaikan** | Semua Campaign selalu melalui kurasi atau setiap perubahan wajib ditinjau ulang. |
+| P1 → P5 | **Informasi yang diperlukan, belum cukup** | Usulan Campaign otomatis mengizinkan penayangan publik. |
+| P3/P4 → P5/P6 | **Bersyarat / BELUM DIPUTUSKAN** | Hasil kurasi positif otomatis mengizinkan penayangan atau donasi. |
+| P5 → V1 | **Syarat keadaan nyata / didukung peta** | Campaign yang publik otomatis layak menerima donasi. |
+| P6 → V4 | **Syarat khusus pada percobaan donasi / didukung peta** | Kelayakan donasi diwajibkan juga untuk melihat Campaign atau memilih tidak berdonasi. |
+| P8 → V1/V4/V5 | **Bersyarat / akibat BELUM DIPUTUSKAN** | Percobaan donasi yang sedang berjalan tetap mengikuti kelayakan lama setelah keadaan berubah. |
+| V1 → V2 → V3 | **Pilihan Pengunjung yang sah / didukung peta** | Tidak berdonasi adalah kegagalan Product atau wajib dicatat sebagai penolakan. |
+| V4 → V5 → V6 | **Hanya fakta donasi sah membentuk Donatur / didukung peta** | Niat, percobaan, keadaan menunggu, atau gagal langsung membentuk hubungan Donatur. |
+| V6 ⇢ V7 | **Tidak ada akibat uang yang otomatis / didukung peta** | Hubungan Donatur atau fakta donasi membuktikan pendanaan atau settlement. |
+| P7 → A1/A2 | **Keadaan Campaign dan pertanggungjawaban / didukung peta** | Campaign harus ditutup atau memiliki Donatur dahulu sebelum pertanggungjawaban berlaku. |
+| A2/A3/A4 → A6 | **Informasi berkelanjutan / didukung peta; hak akses BELUM DIPUTUSKAN** | Semua laporan otomatis publik, atau setiap laporan yang belum tersedia adalah pelanggaran. |
+| A3 → A5 → A6 | **Verifikasi bersyarat / perbedaan makna didukung; penerapan BELUM DIPUTUSKAN** | Laporan otomatis membuktikan dampak terverifikasi atau semua laporan wajib diverifikasi. |
+| V6 → A6 | **Kebutuhan lanjutan Donatur / didukung peta** | Pertanggungjawaban organisasi hanya bermakna jika sudah ada Donatur. |
+| EX-OPS → node lain | **Pengecualian lintas-Journey, bukan syarat normal** | Pengelola platform boleh membuat fakta organisasi, hasil peninjauan, settlement, atau dampak tanpa kewenangan/bukti yang sah. |
 
-Each OPEN link is a **visible unfinished road rule**, not a hidden invented bridge. The graph is not a validated total order; diagram arrows do not constitute independently verified implementation dependencies.
+Hubungan berstatus **BELUM DIPUTUSKAN** adalah masalah Product yang sengaja terlihat, **bukan** aturan tersembunyi yang boleh diisi berdasarkan asumsi. Panah pada diagram tidak membuktikan ketergantungan teknis yang sudah diuji dan bukan urutan wajib development.
 
-## 8. Material negative, failure and uncertain-path audit
+## 8. Pemeriksaan Batas Makna Journey
 
-| Pressure test | Coverage and unchanged truth |
+Bagian ini memeriksa apakah peta tetap menggambarkan keadaan Product secara benar ketika terjadi penolakan, perubahan, kegagalan, keputusan alternatif, atau ketidakpastian. Skenario-skenario ini digunakan untuk menguji **batas makna peta**, bukan menguji software, menganggap setiap kondisi sebagai kegagalan, atau menetapkan aturan Product baru.
+
+| Skenario yang diperiksa | Makna yang harus tetap dijaga |
 | --- | --- |
-| Initial establishment lacks attribution; partial authority relation | O1 cannot claim legitimate authority result without a fresh, approved scope-specific success rule. Partial/contested conditions remain **OPEN Product decisions** rather than inherited historic requirements |
-| Known unresolved representation conflict | O1 cannot silently claim uncontested establishment; conflict resolution mechanics are not invented |
-| Staff action outside authority | O2/P1/P4/A2/A3 must not inherit Owner authority |
-| Reviewer COI, insufficient mandate/evidence | O3/O4, P2/P3, A5 must not fabricate legitimate scoped judgment |
-| Organization review pending, negative or reconsidered | O4/O5 remain bounded; Campaign consequences OPEN |
-| Curation rejection/request changes/material changes | P3/P4 preserve relevant history; re-entry rules OPEN, not automatic |
-| Public but donation-ineligible | P5 and V1–V3 meaningful; contribution V4 unavailable |
-| Visibility/eligibility changes during consideration/attempt | P8 makes branch visible; exact V4/V5 effects OPEN |
-| Visitor declines or defers | V3 is valid endpoint; no coercion or fake obligation |
-| Pending/failed contribution | V5 cannot become V6 or falsely imply V7 |
-| Donation fact without funding/settlement signal | V6 and V7 remain different; no simulated money claim upgrades |
-| Funding state visible to visitor | V1 represents only actual supported current status/provenance/uncertainty |
-| Closure or reporting with zero Donatur | P7/A1/A2/A6 remain valid independent of V6 |
-| Incomplete/unavailable reporting | A2/A6 preserve actual information; no invented deadline/breach/completion |
-| Reporting without independent verification | A3 ≠ A5; A6 does not claim proven impact |
-| Change to older report/judgment | A4 preserves relevant chronology; supersession rules OPEN |
-| Privileged Operator correction | EX-OPS cannot impersonate Organization, Reviewer, payment/settlement or independent verifier |
+| Pembentukan organisasi tanpa asal informasi jelas atau kewenangan internal yang belum utuh | O1 tidak boleh dinyatakan berhasil secara sah tanpa aturan keberhasilan yang disetujui khusus untuk hasil itu. Keadaan sebagian atau diperselisihkan tetap **BELUM DIPUTUSKAN**, bukan diwarisi dari aturan pilot lama. |
+| Perselisihan perwakilan organisasi yang belum terselesaikan | O1 tidak boleh diam-diam dianggap membentuk organisasi tanpa sengketa; mekanisme penyelesaiannya belum ditetapkan. |
+| `Staff` bertindak di luar kewenangan | O2/P1/P4/A2/A3 tidak otomatis memiliki kewenangan `Owner`. |
+| Peninjau mempunyai `conflict of interest`, tidak cukup kewenangan atau bukti | O3/O4, P2/P3, dan A5 tidak boleh menghasilkan penilaian sah yang sebenarnya tidak didukung. |
+| Peninjauan organisasi belum selesai, negatif, atau perlu dinilai ulang | O4/O5 tetap sesuai batas keputusannya; akibat terhadap Campaign **BELUM DIPUTUSKAN**. |
+| Kurasi ditolak, diminta perbaikan, atau ada perubahan penting | P3/P4 menjaga riwayat terkait; aturan peninjauan ulang masih **BELUM DIPUTUSKAN**, bukan otomatis. |
+| Campaign publik tetapi tidak boleh menerima donasi | P5 dan V1–V3 tetap bermakna; percobaan donasi V4 tidak dapat dilakukan dalam kondisi ini. |
+| Status penayangan/kelayakan berubah saat Pengunjung mempertimbangkan atau mencoba donasi | P8 harus menunjukkan perubahan nyata; akibat tepat terhadap V4/V5 **BELUM DIPUTUSKAN**. |
+| Pengunjung memutuskan tidak berdonasi atau menunda | V3 merupakan hasil pilihan yang sah; tidak boleh ada tekanan atau kewajiban pencatatan yang dibuat-buat. |
+| Percobaan donasi masih menunggu atau gagal | V5 tidak boleh dinaikkan menjadi V6 atau memberi kesan V7 sudah terpenuhi. |
+| Fakta donasi ada tanpa bukti pendanaan/settlement | V6 dan V7 berbeda; simulasi tidak boleh dianggap bukti uang nyata. |
+| Informasi pendanaan terlihat oleh Pengunjung | V1 hanya boleh menampilkan keadaan, asal informasi, dan ketidakpastian yang benar-benar didukung. |
+| Campaign ditutup atau dilaporkan saat belum ada Donatur | P7/A1/A2/A6 tetap bermakna sekalipun V6 tidak terjadi. |
+| Laporan belum lengkap atau belum tersedia | A2/A6 harus jujur; jangan menciptakan tenggat, pelanggaran, atau status selesai yang belum diputuskan. |
+| Laporan tanpa verifikasi independen | A3 berbeda dari A5; A6 tidak boleh menyebut dampak sudah terbukti. |
+| Laporan atau penilaian sebelumnya berubah | A4 menjaga urutan kejadian yang penting; kapan hasil lama diganti masih **BELUM DIPUTUSKAN**. |
+| Koreksi khusus pengelola platform | EX-OPS tidak boleh berpura-pura bertindak sebagai organisasi, peninjau, penyelesai transaksi, atau verifikator independen. |
 
-**Coverage verdict:** All known representative material branches have a visible node, link, or explicit OPEN boundary. This is *semantic map completeness*, not exhaustive production test coverage.
+**Hasil pemeriksaan peta yang sudah disetujui:** kondisi penting pada skenario perwakilan mempunyai node, hubungan, atau batas **BELUM DIPUTUSKAN** yang terlihat. Ini adalah **kelengkapan makna peta untuk riset**, bukan kelengkapan seluruh kasus produksi atau bukti pengujian sistem nyata.
 
-## 9. Known OPEN Product decisions that remain surfaced
+## 9. Pertanyaan Product yang Masih Terbuka (OPEN)
 
-1. **J-ORG:** fresh O1 grant, attribution, success/partial/conflict semantics; positive/negative Organization review meaning, minimum review material, relevant Owner/Staff authority, downstream Campaign effects, reconsideration triggers.
-2. **J-CAM:** bounded Campaign-curation outcomes, resubmission/re-review/supersession rules, actual publication conditions, eligibility conditions, independent state changes and affected public/contribution consequences.
-3. **J-VIS:** sufficient consequential disclosure, meaning of eligible attempt and legitimate donation fact, pending/failed result, guest/registered distinctions, real funding/settlement triggers and mid-attempt state change.
-4. **J-ACC:** closure effect, Organization's minimum duty/timing, audience boundaries, report/verification applicability, completion meaning and changed evidence.
-5. **EX-OPS:** operator's positive mandate and allowed exceptional correction without crossing truth/authority boundaries.
+Daftar ini mencatat pertanyaan yang **belum memiliki keputusan Product yang disetujui**. Tujuannya agar jawaban tidak ditebak atau diwarisi otomatis dari aturan historis. **OPEN bukan tanda harus segera diputuskan, prioritas development, atau daftar pekerjaan wajib.** Suatu pertanyaan baru perlu diselesaikan ketika jawabannya benar-benar menentukan hasil Product yang sedang dipilih; jika tanpa jawaban itu hasil tidak bisa disetujui secara benar, pertanyaan tersebut menjadi *blocking* untuk lingkup pekerjaan itu saja.
 
-These are **not** all mandatory preconditions to exploring one bounded starting path. Resolve only decisions that materially govern the chosen work later.
+1. **J-ORG:** siapa mendapat kewenangan `Owner` awal dan bagaimana kewenangan itu diakui; asal informasi; arti hasil O1 yang berhasil, sebagian, atau disengketakan; arti hasil peninjauan organisasi yang positif/negatif; bahan minimum dan kewenangan `Owner`/`Staff`; akibat ke Campaign; serta kondisi peninjauan ulang.
+2. **J-CAM:** arti dan akibat hasil kurasi; kapan perlu perbaikan, pengajuan ulang, peninjauan ulang, atau penggantian hasil sebelumnya; syarat penayangan publik dan kelayakan donasi; perubahan masing-masing keadaan dan akibatnya terhadap Pengunjung atau percobaan donasi.
+3. **J-VIS:** informasi penting apa yang harus dijelaskan sebelum tindakan; arti percobaan yang boleh dilakukan dan fakta donasi yang diakui; status menunggu/gagal; perbedaan hubungan tamu dan pemilik akun; sumber/pemicu pendanaan atau settlement nyata; serta akibat perubahan status Campaign saat percobaan sedang berlangsung.
+4. **J-ACC:** akibat penutupan Campaign; kewajiban minimum organisasi dan waktu pelaporan; siapa yang boleh mengakses laporan; kapan verifikasi berlaku, bagaimana hasilnya bermakna; kapan pertanggungjawaban dinilai selesai; serta penanganan bukti yang berubah.
+5. **EX-OPS:** kewenangan positif pengelola platform dan jenis koreksi khusus yang diperbolehkan tanpa melanggar asal informasi, kewenangan pihak lain, atau kebenaran keadaan Product.
 
-## 10. Completion, limits, and pause
+**Tidak semua pertanyaan OPEN perlu dijawab sekarang.** Selesaikan hanya yang material bagi hasil Product terpilih. Pertanyaan lain boleh tetap terbuka tanpa dianggap terlambat, selama tidak diam-diam diubah menjadi aturan atau klaim keberhasilan.
 
-**Anhar approved v0.2 research checkpoint on 2026-10-21 and the v0.3 authority-correction research map on 2026-10-22.** The approved v0.3 source revision is pinned above. Its O1 rules that remain OPEN are **not** approved behavioral requirements. The map retains **26 nodes** (O1–O5, P1–P8, V1–V7, A1–A6), representative negative paths and typed cross-journey seams. It supersedes the **chat-level 19-node sketch** for this research episode, not previously approved Product Intent or historical decision records.
+## 10. Hasil riset, batas persetujuan, dan kelanjutan
 
-A prior informal graph check counted 39 proposed links and one weakly connected component; **that count was a same-session illustration**, not a binding or independently validated causal proof. This document owns the meaningful semantic edges above; do not use connectivity counts as evidence that all Product rules, consumer readiness or delivery prerequisites have been proven.
+- **21 Oktober 2026:** Anhar menyetujui checkpoint riset dua tingkat dan peta Level 2 v0.2.
+- **22 Oktober 2026:** Anhar menyetujui koreksi kewenangan pada peta Level 2 v0.3. Kode kelompok Journey sekarang `J-ORG`, `J-CAM`, `J-VIS`, `J-ACC`, `EX-OPS`, dengan padanan historis seperti bagian 1. Kode **26 node** tetap: O1–O5, P1–P8, V1–V7, A1–A6.
+- Peta ini menggantikan **sketsa chat 19 node** untuk episode riset ini, **bukan** Product Intent yang sudah disetujui atau catatan keputusan historis yang tetap memiliki lingkupnya sendiri.
+- Pemeriksaan diagram sebelumnya sempat menghasilkan ilustrasi **39 hubungan usulan** dan satu komponen yang saling terhubung secara tidak berarah. Itu hanya ilustrasi dalam sesi riset, **bukan bukti kausal yang divalidasi independen**, bukan bukti semua syarat development, dan bukan kepastian aturan Product sudah lengkap.
+- **Hasil checkpoint 21 Oktober:** peta cukup untuk membahas pemilihan titik awal. **Pembaruan 22 Oktober:** O1 merupakan **satu arah awal yang direkomendasikan untuk percobaan riset**, bukan prioritas delivery, kontrak Product yang disetujui, atau tugas Engineering.
+- Persyaratan O1 harus dirumuskan ulang dari Product Intent dan hubungan Journey yang berlaku. **Jangan mewarisi paket persyaratan/komitmen pilot lama** sebagai aturan Product yang mengikat untuk eksperimen baru ini.
+- **Batas langkah berikutnya:** selesaikan keputusan Product yang benar-benar dibutuhkan oleh O1, lalu susun kontrak Product mandiri. Jangan otomatis memilih node lain, memanggil Rancang, atau menganggap kesiapan Engineering telah terbukti. Lihat [keputusan riset tentang pemilihan titik awal dan penyerahan hasil Product](selection-and-handoff-research.md).
 
-**2026-10-21 checkpoint result:** sufficient to begin starting-point discussion. **2026-10-22 update:** O1 is a **single recommended research starting direction**, not delivery-approved or PRD-ready. Old pilot packages are **not** binding sources of O1 requirements. O1 needs fresh elaboration from current Product Intent and Level 2 context; material O1 decisions remain OPEN. See [current selection and handoff research](selection-and-handoff-research.md).
-
-**Current next boundary:** Resolve O1's minimum consequential Product decisions and produce a standalone Product Contract without historic commitment inheritance. Do not auto-select more nodes, invoke Rancang, or infer implementation readiness. See [current working decisions](selection-and-handoff-research.md).
+**Batas persetujuan promosi Bahasa Indonesia:** Persetujuan hanya atas perubahan editorial dan kesetaraan makna peta riset. Ini bukan persetujuan baru atas aturan O1, implementasi, atau perpindahan dari research branch ke Kencleng `main`.
