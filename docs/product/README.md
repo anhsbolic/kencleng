@@ -19,12 +19,14 @@
 
 **Tahap pertama selesai (22 Oktober 2026):** [Product Intent Bahasa Indonesia](product-intent.md) telah disetujui sebagai sumber utama Product pada branch riset ini. [Draf sebelumnya](product-intent-id-draft.md) disimpan untuk riwayat penyuntingan, bukan sumber kedua. Dokumen pilot lama tetap menjadi arsip sejarah.
 
-**Tahap kedua — draf telah dikoreksi dan menunggu persetujuan:** [Pengantar Peta Journey Product — Bahasa Indonesia](interconnected-journeys/README-id-draft.md) diperiksa terhadap [pengantar yang berlaku](interconnected-journeys/README.md) dan Level 2 v0.3. Koreksi audit serta penggunaan istilah **Journey** telah diterapkan. Draf **belum** menggantikan pengantar yang disetujui. Tidak ada perubahan aturan O1.
+**Tahap kedua selesai (22 Oktober 2026):** [Pengantar Peta Journey Product — Bahasa Indonesia](interconnected-journeys/README.md) telah disetujui dan dipromosikan sebagai sumber pengantar riset. [Draf sebelumnya](interconnected-journeys/README-id-draft.md) hanya riwayat penyuntingan, bukan sumber kedua. Persetujuan Level 2 v0.3 dan aturan O1 tidak berubah.
+
+**Tahap berikutnya:** penulisan ulang bertahap [Level 2 v0.3](interconnected-journeys/level-2-network.md). Dokumen asli tetap berlaku sampai hasil lengkapnya diaudit dan disetujui.
 
 ## Current entrypoints
 
 1. [Product Intent](product-intent.md) — tujuan dan prinsip produk yang disetujui pada branch riset ini; ditulis dalam Bahasa Indonesia.
-2. [Interconnected Journeys research checkpoint](interconnected-journeys/README.md) — Level 1–2 value/transition network and **current working decisions**.
+2. [Peta Journey Product](interconnected-journeys/README.md) — pengantar Journey yang disetujui dalam Bahasa Indonesia; hasil riset, bukan izin delivery.
 3. [Level 2 map](interconnected-journeys/level-2-network.md) — meaning, typed prerequisites, uncertainty; **not** detailed PRD requirements.
 4. [Current selection and handoff research](interconnected-journeys/selection-and-handoff-research.md) — starting-point trial, source-independence rules, O1 OPEN decisions, consumer boundary and limits.
 5. [O1 fresh Product Contract draft](interconnected-journeys/o1-product-contract-draft.md) — independently proposed product behavior and acceptance; not approved binding I1.
