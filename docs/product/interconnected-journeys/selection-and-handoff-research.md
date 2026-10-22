@@ -2,12 +2,12 @@
 
 > **Status:** CURRENT WORKING RESEARCH DECISIONS / NOT AN APPROVED O1 PRD. This file records the explicit audit/correction requested by Anhar; no automatic approval of changed Product semantics.
 > **Date:** 2026-10-22. **Owner:** Anhar. **Branch:** `pilot/station5-c1-space-only`; not Kencleng operational `main`.
-> **Authority:** [Product Intent](../product-intent.md) is the upstream approved seed; [Level 2 v0.2](level-2-network.md) was the approved research checkpoint and current [v0.3](level-2-network.md) is a **working correction awaiting exact-content Human review**. Historical `pilot-3-*` decision/requirement sets **must not supply current O1 requirements by inheritance**.
+> **Authority:** [Product Intent](../product-intent.md) is the upstream approved seed; [Level 2 v0.3](level-2-network.md) research correction was **approved by Anhar on 2026-10-22** (original accepted blob `87edca25b40017429d66aff4e22ad1f4aa7e013f`). Historical `pilot-3-*` decision/requirement sets **must not supply current O1 requirements by inheritance**.
 > **Status of Human decision:** Anhar accepted Product Output Contract v0.1 as *working research contract*, and requested active removal of historical commitment influence from this new route; historical record deletion was described as a *future plan*, **not** authorized in this audit.
 
 ## A. Starting point reasoning and standing
 
-**Current single recommended trial start:** O1 — attributable Organization establishment with a meaningful internal Organization-authority context, derived from the Level 2 research journey (v0.3 correction pending approval).
+**Current single recommended trial start:** O1 — attributable Organization establishment with a meaningful internal Organization-authority context, derived from the now-approved Level 2 v0.3 research journey; no delivery decision.
 
 **Why O1 is a candidate:** coherent actor/product consequence; a plausible upstream authority context for attributable Organization information and Campaign proposition; relevant to the Product Intent's Organization roles; more bounded than solving whole Campaign publication, donation or accountability.
 
@@ -67,4 +67,4 @@ A fresh O1 Product elaboration must start from the current Product Intent + Leve
 - **Historical artifact removal:** not performed. Must assess references/lineage before any destructive action.
 - **Kencleng and Harscode operational `main`:** unchanged.
 
-**Next focus:** Resolve O1's fresh minimum Product meaning without importing historical commitment semantics, then prepare a proper self-contained O1 Product Contract specimen for review. Product is responsible for its authority and correctness; Rancang owns solution design only after valid input and invocation.
+**Current next Product concern:** [Fresh O1 Product Contract draft v0.1](o1-product-contract-draft.md) proposes one cohesive O1 formation policy and provisional acceptance criteria **derived only from Product Intent and Level 2 v0.3**, not historical packages. The material initial Owner grant, success/incomplete and known-dispute rules are **PROPOSED / awaiting Anhar's scoped Product approval**. No effective I1 exists yet; Rancang owns solution design only after valid approved Product input, separate technical inputs and invocation.
