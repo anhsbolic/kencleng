@@ -20,7 +20,7 @@ Kencleng melayani pengunjung, penyumbang, perwakilan organisasi, peninjau, dan p
 - Pengunjung dapat membaca informasi kampanye penggalangan dana yang terbuka untuk umum tanpa masuk ke akun.
 - Pengunjung dapat berdonasi sebagai tamu, tanpa masuk ke akun, **jika aturan donasi yang berlaku mengizinkannya**.
 - Organisasi dan kampanye adalah dua hal berbeda. Setiap kampanye harus terkait dengan satu organisasi.
-- Pemilik organisasi (`Owner`) dan staf (`Staff`) memiliki kewenangan yang berbeda.
+- Peran `Owner` dan `Staff` pada organisasi memiliki kewenangan yang berbeda. Nama peran tetap dipertahankan agar tidak disalahartikan sebagai kepemilikan organisasi secara hukum.
 - Peninjauan organisasi, kurasi kampanye, dan verifikasi penggunaan dana merupakan keputusan yang **terpisah**.
 - Peninjau tidak boleh menilai pekerjaan terkait dirinya sendiri apabila ada benturan kepentingan.
 
@@ -41,7 +41,7 @@ Urutan ini menunjukkan hubungan antarbagian produk, **bukan urutan wajib pembang
 ## 4. Aturan untuk menjaga kepercayaan
 
 - Bedakan fakta yang diketahui Kencleng, informasi dari pengelola kampanye, hasil peninjauan, keadaan sistem, laporan, dan hal yang belum diketahui atau masih menunggu kepastian.
-- Dana yang terkumpul bukan bukti bahwa kegiatan sudah dijalankan atau menghasilkan dampak.
+- Perkembangan pendanaan bukan bukti bahwa kegiatan sudah dijalankan atau menghasilkan dampak.
 - Sebelum pengguna melakukan tindakan penting, jelaskan akibatnya, arti jumlah dan keadaan uang, syarat yang berlaku, serta perubahan keadaan yang akan terjadi.
 - Hormati martabat, privasi, dan kebebasan pengguna dalam mengambil keputusan. Jangan memakai rasa bersalah, keadaan mendesak yang dibuat-buat, atau kesan dapat dipercaya tanpa bukti.
 - Jika informasi belum lengkap atau belum tersedia, tampilkan apa adanya. Jangan menyatakan sesuatu sudah pasti jika belum ada dasar.
