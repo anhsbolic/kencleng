@@ -235,9 +235,11 @@ Kewenangan operasional pengelola platform **tidak otomatis** menjadi kewenangan 
 
 Hubungan berstatus **BELUM DIPUTUSKAN** adalah masalah Product yang sengaja terlihat, **bukan** aturan tersembunyi yang boleh diisi berdasarkan asumsi. Panah pada diagram tidak membuktikan ketergantungan teknis yang sudah diuji dan bukan urutan wajib development.
 
-## 8. Pemeriksaan keadaan negatif, gagal, dan belum pasti
+## 8. Pemeriksaan Batas Makna Journey
 
-| Kondisi yang diuji | Makna yang harus tetap dijaga |
+Bagian ini memeriksa apakah peta tetap menggambarkan keadaan Product secara benar ketika terjadi penolakan, perubahan, kegagalan, keputusan alternatif, atau ketidakpastian. Skenario-skenario ini digunakan untuk menguji **batas makna peta**, bukan menguji software, menganggap setiap kondisi sebagai kegagalan, atau menetapkan aturan Product baru.
+
+| Skenario yang diperiksa | Makna yang harus tetap dijaga |
 | --- | --- |
 | Pembentukan organisasi tanpa asal informasi jelas atau kewenangan internal yang belum utuh | O1 tidak boleh dinyatakan berhasil secara sah tanpa aturan keberhasilan yang disetujui khusus untuk hasil itu. Keadaan sebagian atau diperselisihkan tetap **BELUM DIPUTUSKAN**, bukan diwarisi dari aturan pilot lama. |
 | Perselisihan perwakilan organisasi yang belum terselesaikan | O1 tidak boleh diam-diam dianggap membentuk organisasi tanpa sengketa; mekanisme penyelesaiannya belum ditetapkan. |
@@ -259,7 +261,9 @@ Hubungan berstatus **BELUM DIPUTUSKAN** adalah masalah Product yang sengaja terl
 
 **Hasil pemeriksaan peta yang sudah disetujui:** kondisi penting pada skenario perwakilan mempunyai node, hubungan, atau batas **BELUM DIPUTUSKAN** yang terlihat. Ini adalah **kelengkapan makna peta untuk riset**, bukan kelengkapan seluruh kasus produksi atau bukti pengujian sistem nyata.
 
-## 9. Keputusan Product yang tetap BELUM DIPUTUSKAN
+## 9. Pertanyaan Product yang Masih Terbuka (OPEN)
+
+Daftar ini mencatat pertanyaan yang **belum memiliki keputusan Product yang disetujui**. Tujuannya agar jawaban tidak ditebak atau diwarisi otomatis dari aturan historis. **OPEN bukan tanda harus segera diputuskan, prioritas development, atau daftar pekerjaan wajib.** Suatu pertanyaan baru perlu diselesaikan ketika jawabannya benar-benar menentukan hasil Product yang sedang dipilih; jika tanpa jawaban itu hasil tidak bisa disetujui secara benar, pertanyaan tersebut menjadi *blocking* untuk lingkup pekerjaan itu saja.
 
 1. **J-ORG:** siapa mendapat kewenangan `Owner` awal dan bagaimana kewenangan itu diakui; asal informasi; arti hasil O1 yang berhasil, sebagian, atau disengketakan; arti hasil peninjauan organisasi yang positif/negatif; bahan minimum dan kewenangan `Owner`/`Staff`; akibat ke Campaign; serta kondisi peninjauan ulang.
 2. **J-CAM:** arti dan akibat hasil kurasi; kapan perlu perbaikan, pengajuan ulang, peninjauan ulang, atau penggantian hasil sebelumnya; syarat penayangan publik dan kelayakan donasi; perubahan masing-masing keadaan dan akibatnya terhadap Pengunjung atau percobaan donasi.
@@ -267,7 +271,7 @@ Hubungan berstatus **BELUM DIPUTUSKAN** adalah masalah Product yang sengaja terl
 4. **J-ACC:** akibat penutupan Campaign; kewajiban minimum organisasi dan waktu pelaporan; siapa yang boleh mengakses laporan; kapan verifikasi berlaku, bagaimana hasilnya bermakna; kapan pertanggungjawaban dinilai selesai; serta penanganan bukti yang berubah.
 5. **EX-OPS:** kewenangan positif pengelola platform dan jenis koreksi khusus yang diperbolehkan tanpa melanggar asal informasi, kewenangan pihak lain, atau kebenaran keadaan Product.
 
-**Tidak semua keputusan OPEN di atas wajib diselesaikan sekaligus untuk membahas satu hasil Product yang terbatas.** Putuskan hanya hal yang benar-benar menentukan pekerjaan yang sedang dipilih.
+**Tidak semua pertanyaan OPEN perlu dijawab sekarang.** Selesaikan hanya yang material bagi hasil Product terpilih. Pertanyaan lain boleh tetap terbuka tanpa dianggap terlambat, selama tidak diam-diam diubah menjadi aturan atau klaim keberhasilan.
 
 ## 10. Hasil riset, batas persetujuan, dan kelanjutan
 
