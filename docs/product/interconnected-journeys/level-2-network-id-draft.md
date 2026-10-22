@@ -1,6 +1,6 @@
 # Kencleng — Journey Level 2 (Draf Bahasa Indonesia)
 
-> **Status:** DRAF PARSIAL — mencakup cara membaca peta, `J-ORG` (O1–O5), `J-CAM` (P1–P8), dan `J-VIS` (V1–V7). **Belum menjadi sumber utama atau versi Level 2 lengkap.**
+> **Status:** DRAF PARSIAL — mencakup cara membaca peta dan seluruh **26 node** `J-ORG` (O1–O5), `J-CAM` (P1–P8), `J-VIS` (V1–V7), dan `J-ACC` (A1–A6). **Belum menjadi versi Level 2 lengkap atau sumber utama:** bagian hubungan silang, `EX-OPS`, pemeriksaan negative paths, dan keputusan OPEN lintas-Journey belum ditulis ulang.
 > **Sumber resmi:** [Level 2 v0.3](level-2-network.md), blob `4970ba936d107e50d8260c9e246816ba13d41a28`, disetujui Anhar pada 22 Oktober 2026. [Product Intent](../product-intent.md) dan [pengantar Journey](README.md) tetap berlaku menurut lingkupnya.
 > **Batas:** Penyederhanaan bahasa saja. Tidak membuat aturan O1 baru, mengganti 26 kode node, mengubah hubungan antar-Journey, atau memberi izin development. Bagian yang belum ditulis ulang **wajib dibaca dari dokumen resmi**.
 > **Lokasi:** Branch riset `pilot/station5-c1-space-only`; tidak mengubah Kencleng `main` atau Harscode.
@@ -30,7 +30,7 @@ Peta Level 2 menunjukkan **perubahan yang bermakna** bagi pengguna atau keadaan 
 - **BELUM DIPUTUSKAN:** Aturan Product belum diselesaikan. Jika diperlukan untuk hasil tertentu, keputusan harus dibuat oleh pemiliknya; jangan menebak.
 - **Tidak otomatis berarti:** Dua keadaan berbeda harus tetap dibedakan, misalnya Campaign terlihat publik tidak otomatis boleh menerima donasi.
 
-Kode `O1–O5`, `P1–P8`, `V1–V7`, dan `A1–A6` hanya penanda bagian peta, bukan urutan pelaksanaan atau persetujuan aturan Product. Peta lengkap memiliki **26 node**. Draf ini baru memuat rincian **20 node**: lima node `J-ORG`, delapan node `J-CAM`, dan tujuh node `J-VIS`.
+Kode `O1–O5`, `P1–P8`, `V1–V7`, dan `A1–A6` hanya penanda bagian peta, bukan urutan pelaksanaan atau persetujuan aturan Product. Peta lengkap memiliki **26 node**. Draf ini sudah memuat rincian **26 node**: lima `J-ORG`, delapan `J-CAM`, tujuh `J-VIS`, dan enam `J-ACC`. Namun, ini belum mencakup seluruh hubungan dan batas peta.
 
 ## 2. J-ORG — Organisasi dan peninjauan
 
@@ -93,8 +93,29 @@ Kode `O1–O5`, `P1–P8`, `V1–V7`, dan `A1–A6` hanya penanda bagian peta, b
 - Jika kelayakan Campaign berubah di tengah percobaan, jangan menganggap izin lama otomatis masih berlaku. **Aturan hasil percobaan tetap BELUM DIPUTUSKAN**, bukan ditentukan oleh draf ini.
 - Hubungan berikutnya antara Donatur, pendanaan, dan pertanggungjawaban serta diagram lintas-Journey tetap mengacu pada [Level 2 v0.3 resmi](level-2-network.md) selama draf ini belum lengkap dan disetujui.
 
-## 5. Bagian yang belum disusun
+## 5. J-ACC — Keadaan Campaign dan pertanggungjawaban berkelanjutan
 
-Draf ini belum mencakup `J-ACC` (A1–A6), `EX-OPS`, diagram dan hubungan silang, daftar kondisi gagal/belum pasti, maupun daftar keputusan terbuka untuk seluruh Journey. Semua masih berlaku sesuai [Level 2 v0.3](level-2-network.md).
+| Kode | Perubahan atau hasil yang bermakna | Batasan dan keputusan yang masih terbuka |
+| --- | --- | --- |
+| **A1** | Perubahan penting pada keadaan penggalangan dana atau penutupan Campaign mengubah konteks Campaign. Tanggung jawab untuk menjelaskan perkembangan dan hasil tetap bermakna. | **Campaign ditutup ≠ pertanggungjawaban selesai.** Pemicu penutupan dan akibat tepatnya bagi Campaign serta pihak terkait **BELUM DIPUTUSKAN**. |
+| **A2** | Informasi atau laporan pertanggungjawaban organisasi yang relevan tersedia. Jika belum tersedia atau masih menunggu, keadaan itu tetap dijelaskan **sesuai kenyataannya**, bukan dinyatakan sudah lengkap. | Pertanggungjawaban dapat bermakna **sebelum Campaign ditutup dan meskipun belum ada Donatur**. Kewajiban minimum organisasi, pemicu dan waktu pelaporan, siapa yang berhak melihatnya, serta kondisi kapan laporan dianggap belum dipenuhi **BELUM DIPUTUSKAN**. Status belum tersedia tidak otomatis berarti pelanggaran. |
+| **A3** | Perkembangan kegiatan atau hasil yang dilaporkan organisasi dapat diketahui sebagai **informasi yang berasal dari organisasi**, beserta pihak yang bertanggung jawab atas informasi tersebut. | **Laporan organisasi ≠ verifikasi independen ≠ dampak nyata yang terbukti.** Asal laporan dan kewenangan `Owner` atau `Staff` yang bertindak tetap dibedakan. Laporan tidak otomatis berubah menjadi fakta yang telah diverifikasi pihak lain. |
+| **A4** | Jika informasi baru muncul, dikoreksi, diperselisihkan, atau berubah, urutan kejadian, asal informasi, dan ketidakpastian yang penting tetap bisa dipahami. | Ini **tidak otomatis mewajibkan penyimpanan seluruh catatan teknis mentah (audit log)** atau satu laporan akhir yang tak boleh berubah. Kapan keputusan/laporan lama digantikan dan kapan persoalan dibuka kembali **BELUM DIPUTUSKAN**. |
+| **A5** | Jika verifikasi penggunaan dana oleh peninjau memang berlaku, peninjau dapat memberi **hasil verifikasi terbatas sesuai cakupan dan kewenangannya**. Jika penilaian yang sah belum bisa diberikan, keadaan itu harus tetap jelas. | Kewenangan, independensi peninjau, `conflict of interest`, bukti yang diperlukan, kapan verifikasi wajib dilakukan, dan arti hasilnya **BELUM DIPUTUSKAN**. Verifikasi terbatas **tidak otomatis membuktikan seluruh dampak nyata**. |
+| **A6** | Pihak yang memang berhak mengakses informasi, yaitu publik dan/atau Donatur **sesuai aturan yang berlaku**, dapat terus memahami laporan, fakta yang diketahui, hasil peninjauan sesuai cakupannya, serta ketidakpastian yang masih ada. | Hubungan Donatur yang benar-benar ada dapat memberi kebutuhan informasi tambahan, tetapi **Donatur bukan syarat agar pertanggungjawaban organisasi bermakna**. Siapa yang berhak melihat informasi, akses tamu, dan kondisi kapan pertanggungjawaban dianggap selesai **BELUM DIPUTUSKAN**. Tidak semua laporan otomatis bersifat publik. |
+
+### Batas J-ACC yang harus tetap dijaga
+
+- **Penutupan Campaign ≠ selesai pertanggungjawaban.** Kewajiban dan keterbukaan informasi dapat tetap relevan sebelum maupun setelah penutupan, termasuk ketika jumlah Donatur masih nol.
+- **Laporan organisasi ≠ verifikasi independen ≠ dampak nyata yang terbukti.** Asal klaim, kewenangan penulis, dan hasil peninjauan harus tetap dapat dibedakan.
+- **Laporan belum tersedia ≠ otomatis terjadi pelanggaran.** Jangan menciptakan tenggat, pelanggaran, atau status selesai yang belum diputuskan Product.
+- Informasi yang berubah harus mempertahankan **urutan kejadian, asal informasi, dan ketidakpastian yang penting**, tanpa menentukan bentuk audit log atau aturan penggantian laporan secara teknis.
+- Verifikasi penggunaan dana hanya dilakukan **jika berlaku** dan dengan kewenangan serta independensi peninjau yang sesuai. Hasilnya terbatas pada apa yang benar-benar diperiksa.
+- Akses publik, Donatur, dan tamu **tidak otomatis sama**. Hubungan Donatur bukan prasyarat adanya pertanggungjawaban organisasi.
+- Hubungan `J-ACC` dengan keadaan Campaign (P7), status Donatur (V6), dan bagian lainnya masih mengacu pada [Level 2 v0.3 resmi](level-2-network.md) sampai draf lengkap beserta hubungan silangnya diaudit dan disetujui.
+
+## 6. Bagian yang belum disusun
+
+Draf ini sudah mencakup **26 node** dari empat Journey, tetapi **belum** menuliskan ulang batas pengecualian `EX-OPS`, dua diagram lintas-Journey, daftar hubungan yang wajib dibaca dengan tepat, pemeriksaan kondisi negatif/gagal/belum pasti, maupun daftar keputusan Product yang masih OPEN untuk seluruh Journey. Semuanya tetap berlaku sesuai [Level 2 v0.3](level-2-network.md).
 
 **Jangan gunakan draf parsial ini sebagai pengganti peta Level 2 atau sebagai masukan resmi Rancang.**
