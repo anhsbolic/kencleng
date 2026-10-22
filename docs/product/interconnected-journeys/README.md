@@ -4,6 +4,7 @@
 > **Repository / branch:** `anhsbolic/kencleng` / `pilot/station5-c1-space-only`. **Not Kencleng operational `main`.**
 > **Decision owner:** Anhar. Approval covers the two-resolution research map, revised Level 2 v0.2, completeness/connection audit, its explicitly OPEN edges and the pause before starting-point selection.
 > **Owning concern:** Kencleng-specific Product research / semantic journey reconstruction. This directory is **not** a new whole-product Product Intent authority, release plan, implementation specification, or universal Harscode policy.
+> **Current research routing update (2026-10-22):** [Starting-point and Product handoff working decisions](selection-and-handoff-research.md) **supersede next-step expectations** in the 2026-10-21 checkpoint below. O1 is a **single recommended research direction**, not an inherited historical requirements package, approved PRD or delivery assignment.
 > **Current checkpoint:** [Level 2 — interconnected meaningful transitions](level-2-network.md).
 
 ## Why this exists
@@ -23,8 +24,8 @@ Nodes express changes with real meaning to a human actor or legitimate product s
 - [Accepted Stage 1 business-value reconstruction](../pilot-3-business-value-loop.md#9-2026-10-21-experience-first-stage-1-reconstruction-checkpoint) — scoped working value anchor.
 - [Accepted Stage 2 actor-outcomes reconstruction](../pilot-3-actor-outcomes.md#12-2026-10-21-experience-first-stage-2-reconstruction-checkpoint) — scoped working actor/authority/value model.
 - [Accepted Stage 3A representative-scenario reconstruction](../pilot-3-stage-3a-representative-scenarios.md#13-2026-10-21-experience-first-stage-3a-reconstruction-checkpoint) — input landscape and material cross-scenario edges, not a delivery sequence.
-- [Historical approved C1-scoped product behavior](../pilot-3-stage-5-c1-confirmed-behavior.md) and [requirements](../pilot-3-stage-6-c1-requirements.md) — remain binding **within their original C1 scope**, not automatically whole-product authority or current delivery priority.
-- [Historical Stage 3B](../pilot-3-stage-3b-commitment-sequencing.md) — retained research/decision history; the current direct journey-to-engineering investigation does not cancel past C1 approval.
+- [Current independent selection and handoff research](selection-and-handoff-research.md) — effective research continuation, without historic commitment-specific rules for O1 and with earlier PRD specimen invalidated.
+- Prior `pilot-3-*` artifacts are **historical evidence/lineage**, not active selection or requirements authority for this continuation; their approvals retain only original historical scope.
 - [Harscode optional Blueprint research](https://github.com/anhsbolic/harscode-workspace/blob/refactor/harscode-foundation/product/interconnected-journey-blueprint-research.md) — method hypothesis and research observation only; **Kencleng owns Kencleng semantics**.
 
 These links preserve source ownership instead of reapproving all historical behaviors by copying them.
@@ -40,12 +41,12 @@ These links preserve source ownership instead of reapproving all historical beha
 
 No initial starting node, execution order, roadmap/MVP/release scope, engineering decomposition, technical/horizontal capability choice, authentication implementation, local-environment readiness, Rancang invocation or approval, new Product permission matrix, or universal review/publication rule is established here.
 
-**Commitment-based Stage 3B is paused for this fresh research route** to test whether detailed interconnected journeys can provide better inputs without a mandatory “Commitment” abstraction. This does **not** erase historical C1/C2/C3 standing or silently amend existing Harscode Product guidance.
+**The current research route does not use historical commitment labels, gates, or packages to select work or construct O1 requirements.** The former sequencing approach is not active; older decisions remain recorded evidence, without automatic carry-over or retroactive cancellation.
 
 ## Checkpoint boundary and continuation
 
 **Checkpoint status: accepted by Anhar, 2026-10-21, as a durable Product research result on this pilot branch.**
 
-Next activity is **discussion/review of how to choose a healthy starting point from the Level 2 network**. **Do not automatically proceed** to starting-point selection, Engineering readiness reconciliation, Rancang, or implementation. Engineering readiness and horizontal capability reconciliation were explicitly put on hold while Product reasoning is completed.
+**Earlier next-step expectation (superseded):** Discuss how to select a healthy starting point. That trial has since occurred; see [current research decisions](selection-and-handoff-research.md). Do not auto-start Engineering, Rancang or implementation. Engineering readiness reconciliation remains on hold.
 
 Any future adoption into Kencleng operational `main`, release authority, Harscode reusable method, or Space execution requires its own scoped evidence and Human decision.
