@@ -4,6 +4,19 @@
 > **Scope:** `pilot/station5-c1-space-only` research branch. This document does not alter Kencleng operational `main`, approve delivery, or form/invoke any Space.
 > **Owning Human:** Anhar.
 
+## Standar penulisan dokumen Product Kencleng v0.1
+
+> **Disetujui Anhar: 22 Oktober 2026.** Berlaku untuk penyusunan dan penyuntingan **dokumen Product Kencleng yang aktif**, dari tujuan produk hingga dokumen kebutuhan untuk tim berikutnya. **Tidak mengubah Harscode**, aturan Product, atau keputusan yang telah disetujui.
+
+1. **Utamakan Bahasa Indonesia yang umum.** Pakai istilah Inggris hanya untuk nama resmi atau istilah teknis yang tidak punya padanan yang cukup jelas. Jelaskan istilah teknis ketika pertama dipakai.
+2. **Tulis langsung dan ringkas.** Satu gagasan utama per kalimat. Hindari pengulangan, pengantar panjang, dan istilah yang tidak diperlukan.
+3. **Susun agar mudah dicari.** Pisahkan tujuan, pengguna, aturan, syarat keberhasilan, kondisi gagal, batas pekerjaan, dan hal yang belum diputuskan sesuai kebutuhan dokumen. Jangan memaksakan format panjang.
+4. **Jelaskan batas kata yang bisa ditafsirkan berbeda.** Jika memakai kata seperti *sah, cukup, relevan, jelas,* atau *berhasil* untuk suatu keputusan penting, sebutkan kondisi yang dapat diperiksa dan akibat jika tidak terpenuhi. Jangan menciptakan angka atau skor tanpa dasar pengukuran.
+5. **Bedakan fakta, usulan, dan keputusan.** Jangan menaikkan kesimpulan riset atau pernyataan yang belum disetujui menjadi aturan yang mengikat.
+6. **Jaga makna ketika menyunting.** Terjemahan tidak boleh menambah/mengurangi aturan, mengganti kewenangan, mengubah cakupan, atau menentukan cara teknis. Revisi dokumen yang sudah disetujui perlu dibandingkan dengan sumbernya dan ditinjau sebelum menggantikan sumber yang berlaku.
+
+**Tahap penyuntingan pertama:** [Draf Bahasa Indonesia — Tujuan dan Prinsip Produk](product-intent-id-draft.md). Sumber yang **masih berlaku** adalah [Product Intent](product-intent.md), sampai hasil penulisan ulang disetujui sebagai penggantinya. Dokumen pilot lama tetap menjadi arsip sejarah, bukan objek penulisan ulang aktif.
+
 ## Current entrypoints
 
 1. [Product Intent](product-intent.md) — approved upstream Product seed and truth boundaries.
