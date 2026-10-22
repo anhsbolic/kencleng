@@ -21,7 +21,7 @@
 
 **Tahap kedua selesai (22 Oktober 2026):** [Pengantar Peta Journey Product — Bahasa Indonesia](interconnected-journeys/README.md) telah disetujui dan dipromosikan sebagai sumber pengantar riset. [Draf sebelumnya](interconnected-journeys/README-id-draft.md) hanya riwayat penyuntingan, bukan sumber kedua. Persetujuan Level 2 v0.3 dan aturan O1 tidak berubah.
 
-**Tahap ketiga — berjalan, belum disetujui:** [Draf Bahasa Indonesia Level 2 (J-ORG, J-CAM, J-VIS)](interconnected-journeys/level-2-network-id-draft.md) sekarang mencakup **20 dari 26 node** dan cara membaca peta. Draf masih **parsial dan non-authoritative**. [Level 2 v0.3](interconnected-journeys/level-2-network.md) tetap berlaku untuk seluruh node, hubungan, dan batasnya sampai penggantinya lengkap, diaudit, dan disetujui.
+**Tahap ketiga — seluruh node selesai ditulis ulang, dokumen belum lengkap:** [Draf Bahasa Indonesia Level 2 (J-ORG, J-CAM, J-VIS, J-ACC)](interconnected-journeys/level-2-network-id-draft.md) kini mencakup **26 dari 26 node**. Namun `EX-OPS`, diagram, hubungan silang, pemeriksaan jalur gagal/belum pasti, dan keputusan OPEN lintas-Journey **belum ditulis ulang**. Draf **belum disetujui dan tidak authoritative**. [Level 2 v0.3](interconnected-journeys/level-2-network.md) tetap berlaku sampai penggantinya lengkap, diaudit, dan disetujui.
 
 ## Current entrypoints
 
