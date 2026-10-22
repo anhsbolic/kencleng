@@ -93,5 +93,6 @@ Pemeriksaan kesiapan Engineering masih ditunda. Kemampuan Balad untuk memilih ba
 - **21 Oktober 2026:** Anhar menyetujui peta dua tingkat dan Level 2 v0.2 sebagai hasil riset, bukan sebagai rencana development.
 - **22 Oktober 2026:** Anhar menyetujui perbaikan Level 2 v0.3, terutama pemisahan dari aturan historis yang tidak otomatis berlaku pada O1.
 - **22 Oktober 2026:** Anhar menyetujui pengantar Journey Bahasa Indonesia yang sudah diperbaiki dan diaudit. Draf tersebut dipromosikan ke `README.md` ini; riwayat bahasa Inggris tetap terlacak melalui Git.
+- **22 Oktober 2026:** Anhar juga menyetujui dan mempromosikan [Level 2 v0.3 Bahasa Indonesia](level-2-network.md) setelah audit kesetaraan makna. Peta Level 2 Inggris sebelumnya tetap terlacak melalui Git; kode, hubungan, dan keputusan OPEN tidak diubah.
 
 Penyuntingan bahasa tidak boleh mengubah persetujuan atau membuka keputusan yang sengaja ditunda.
