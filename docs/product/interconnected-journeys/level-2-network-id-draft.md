@@ -1,6 +1,6 @@
 # Kencleng — Journey Level 2 (Draf Bahasa Indonesia)
 
-> **Status:** DRAF PARSIAL — mencakup cara membaca peta, `J-ORG` (O1–O5), dan `J-CAM` (P1–P8). **Belum menjadi sumber utama atau versi Level 2 lengkap.**
+> **Status:** DRAF PARSIAL — mencakup cara membaca peta, `J-ORG` (O1–O5), `J-CAM` (P1–P8), dan `J-VIS` (V1–V7). **Belum menjadi sumber utama atau versi Level 2 lengkap.**
 > **Sumber resmi:** [Level 2 v0.3](level-2-network.md), blob `4970ba936d107e50d8260c9e246816ba13d41a28`, disetujui Anhar pada 22 Oktober 2026. [Product Intent](../product-intent.md) dan [pengantar Journey](README.md) tetap berlaku menurut lingkupnya.
 > **Batas:** Penyederhanaan bahasa saja. Tidak membuat aturan O1 baru, mengganti 26 kode node, mengubah hubungan antar-Journey, atau memberi izin development. Bagian yang belum ditulis ulang **wajib dibaca dari dokumen resmi**.
 > **Lokasi:** Branch riset `pilot/station5-c1-space-only`; tidak mengubah Kencleng `main` atau Harscode.
@@ -30,7 +30,7 @@ Peta Level 2 menunjukkan **perubahan yang bermakna** bagi pengguna atau keadaan 
 - **BELUM DIPUTUSKAN:** Aturan Product belum diselesaikan. Jika diperlukan untuk hasil tertentu, keputusan harus dibuat oleh pemiliknya; jangan menebak.
 - **Tidak otomatis berarti:** Dua keadaan berbeda harus tetap dibedakan, misalnya Campaign terlihat publik tidak otomatis boleh menerima donasi.
 
-Kode `O1–O5`, `P1–P8`, `V1–V7`, dan `A1–A6` hanya penanda bagian peta, bukan urutan pelaksanaan atau persetujuan aturan Product. Peta lengkap memiliki **26 node**. Draf ini baru memuat rincian **13 node**: lima node `J-ORG` dan delapan node `J-CAM`.
+Kode `O1–O5`, `P1–P8`, `V1–V7`, dan `A1–A6` hanya penanda bagian peta, bukan urutan pelaksanaan atau persetujuan aturan Product. Peta lengkap memiliki **26 node**. Draf ini baru memuat rincian **20 node**: lima node `J-ORG`, delapan node `J-CAM`, dan tujuh node `J-VIS`.
 
 ## 2. J-ORG — Organisasi dan peninjauan
 
@@ -72,8 +72,29 @@ Kode `O1–O5`, `P1–P8`, `V1–V7`, dan `A1–A6` hanya penanda bagian peta, b
 - Jika status Campaign berubah ketika seseorang sedang mempertimbangkan atau mencoba berdonasi, **jangan menganggap kelayakan sebelumnya tetap berlaku**. Akibat tepat pada percobaan donasi masih membutuhkan keputusan Product.
 - Hubungan `J-CAM` dengan `J-VIS`, `J-ACC`, serta diagram dan seluruh hubungan antarnode tetap dibaca dari [Level 2 v0.3 resmi](level-2-network.md) sampai draf lengkap ini diaudit dan disetujui.
 
-## 4. Bagian yang belum disusun
+## 4. J-VIS — Pengunjung, keputusan berdonasi, dan keadaan uang
 
-Draf ini belum mencakup `J-VIS` (V1–V7), `J-ACC` (A1–A6), `EX-OPS`, diagram dan hubungan silang, daftar kondisi gagal/belum pasti, maupun daftar keputusan terbuka untuk seluruh Journey. Semua masih berlaku sesuai [Level 2 v0.3](level-2-network.md).
+| Kode | Perubahan atau hasil yang bermakna | Batasan dan keputusan yang masih terbuka |
+| --- | --- | --- |
+| **V1** | Pengunjung dapat mengakses informasi Campaign yang **benar-benar terbuka untuk publik**, termasuk organisasi yang bertanggung jawab, tujuan, asal informasi, keadaan Campaign, arti informasi pendanaan, dan hal yang belum diketahui. | Memerlukan status penayangan sebenarnya (P5) dan informasi terkait yang dapat diketahui asalnya. Hasil peninjauan dengan cakupan tertentu dapat membantu Pengunjung memahami informasi **bila berlaku**, tetapi bukan syarat universal. Pengunjung yang melihat Campaign publik **tidak harus belum memiliki akun**. |
+| **V2** | Informasi yang relevan dan bisa dipahami membantu Pengunjung membuat pilihan secara sadar, tanpa tekanan untuk berdonasi. | Kencleng **tidak dapat menjamin apa yang benar-benar dipahami di dalam pikiran Pengunjung**. Informasi yang dianggap cukup bukan berarti semua informasi harus ditampilkan. Informasi penting yang wajib dijelaskan sebelum donasi masih memerlukan aturan Product sesuai cakupannya (**BELUM DIPUTUSKAN**). |
+| **V3** | Pengunjung boleh **tidak berdonasi** atau **menunda keputusan**, dan keduanya tetap merupakan hasil pilihan yang wajar, bukan kegagalan Product. | Tidak otomatis perlu menyimpan catatan bahwa Pengunjung menolak atau menunda donasi. Jangan menambahkan kewajiban pencatatan atau mendorong donasi dengan tekanan. |
+| **V4** | Jika Pengunjung memilih mencoba berdonasi, ia dapat memulai **percobaan donasi** hanya saat syarat kelayakan Campaign yang benar-benar berlaku mengizinkan tindakan itu. | Izin menerima donasi (P6) adalah syarat **khusus untuk percobaan donasi**, bukan syarat untuk sekadar memahami Campaign atau memilih tidak berdonasi. Jika status Campaign berubah selama percobaan, aturan penerimaan atau penolakannya **BELUM DIPUTUSKAN**. Keinginan berdonasi **bukan** bukti bahwa percobaan telah dimulai. |
+| **V5** | Hasil percobaan donasi harus dinyatakan sesuai bukti yang ada: **belum selesai atau masih menunggu kepastian**, **gagal**, atau **memiliki fakta donasi yang diakui** jika fakta tersebut memang ada. | Percobaan tidak membuktikan bahwa donasi telah terjadi. Status belum pasti atau gagal **tidak boleh** ditampilkan sebagai donasi berhasil, hubungan Donatur, atau keadaan pendanaan yang sudah terwujud. Syarat tepat pengakuan donasi masih membutuhkan keputusan Product. |
+| **V6** | Fakta donasi yang benar-benar diakui dan terkait dengan Campaign membentuk **hubungan Donatur dengan Campaign tersebut**. | Perbedaan Donatur yang memakai akun dan yang berdonasi sebagai tamu adalah persoalan tersendiri; rincian hak atau pengalaman keduanya **BELUM DIPUTUSKAN**. Memiliki akun atau sekadar mencoba berdonasi **tidak otomatis** menjadikan seseorang Donatur. |
+| **V7** | Pengunjung dan Donatur dapat memahami keadaan uang yang **benar-benar didukung bukti**. Fakta donasi, pendanaan Campaign, dan penyelesaian transaksi uang (**settlement**) harus dibedakan. | Fakta donasi **tidak otomatis** membuktikan pendanaan atau settlement, apalagi pelaksanaan kegiatan dan dampak nyata. Pembayaran simulasi **harus disebut sebagai simulasi**, bukan sebagai uang yang benar-benar diselesaikan di luar sistem. Sumber bukti, pemicu, dan aturan tepat setiap keadaan **BELUM DIPUTUSKAN**. |
+
+### Batas J-VIS yang harus tetap dijaga
+
+- **Memahami Campaign ≠ memilih berdonasi ≠ memulai percobaan donasi.** Pengunjung boleh memutuskan tidak berdonasi atau menunda tanpa diperlakukan sebagai kegagalan.
+- **Percobaan donasi ≠ fakta donasi yang diakui ≠ hubungan Donatur.** Keadaan belum pasti atau gagal tidak boleh dinaikkan menjadi keberhasilan.
+- **Fakta donasi ≠ pendanaan Campaign ≠ settlement ≠ pelaksanaan kegiatan atau dampak nyata.** Setiap klaim hanya boleh mengikuti keadaan dan informasi yang benar-benar tersedia.
+- Penayangan publik (P5) berbeda dari kelayakan menerima donasi (P6). Pengunjung tidak perlu memenuhi kelayakan donasi hanya untuk memahami Campaign atau memilih tidak berdonasi.
+- Jika kelayakan Campaign berubah di tengah percobaan, jangan menganggap izin lama otomatis masih berlaku. **Aturan hasil percobaan tetap BELUM DIPUTUSKAN**, bukan ditentukan oleh draf ini.
+- Hubungan berikutnya antara Donatur, pendanaan, dan pertanggungjawaban serta diagram lintas-Journey tetap mengacu pada [Level 2 v0.3 resmi](level-2-network.md) selama draf ini belum lengkap dan disetujui.
+
+## 5. Bagian yang belum disusun
+
+Draf ini belum mencakup `J-ACC` (A1–A6), `EX-OPS`, diagram dan hubungan silang, daftar kondisi gagal/belum pasti, maupun daftar keputusan terbuka untuk seluruh Journey. Semua masih berlaku sesuai [Level 2 v0.3](level-2-network.md).
 
 **Jangan gunakan draf parsial ini sebagai pengganti peta Level 2 atau sebagai masukan resmi Rancang.**
