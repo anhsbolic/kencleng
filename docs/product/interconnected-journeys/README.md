@@ -1,54 +1,97 @@
-# Interconnected Journeys — Kencleng Product Research Checkpoint
+# Kencleng — Peta Journey Product
 
-> **Standing:** HUMAN-APPROVED / OFFICIAL CHECKPOINT **FOR THIS PRODUCT RESEARCH EPISODE** — 2026-10-21.
-> **Repository / branch:** `anhsbolic/kencleng` / `pilot/station5-c1-space-only`. **Not Kencleng operational `main`.**
-> **Decision owner:** Anhar. Approval covers the two-resolution research map, revised Level 2 v0.2, completeness/connection audit, its explicitly OPEN edges and the pause before starting-point selection.
-> **Owning concern:** Kencleng-specific Product research / semantic journey reconstruction. This directory is **not** a new whole-product Product Intent authority, release plan, implementation specification, or universal Harscode policy.
-> **Current research routing update (2026-10-22):** [Starting-point and Product handoff working decisions](selection-and-handoff-research.md) **supersede next-step expectations** in the 2026-10-21 checkpoint below. O1 is a **single recommended research direction**, not an inherited historical requirements package, approved PRD or delivery assignment.
-> **Current Level 2:** [v0.3 approved research map](level-2-network.md) (Anhar approval 2026-10-22, pinned source blob `87edca25b40017429d66aff4e22ad1f4aa7e013f`). Approval covers research meaning and OPEN boundaries—not specific O1 Product behavior/PRD.
-> **Level 1 identifiers (Anhar-approved editorial update, 2026-10-22):** `J-ORG` (former `R1`), `J-CAM` (former `R2`), `J-VIS` (former `R3`), `J-ACC` (former `R4`), `EX-OPS` (former `X1`). Only labels changed; Level 2 node identifiers and approved semantics remain unchanged.
+> **Status:** PENGANTAR JOURNEY DISETUJUI — Anhar, 22 Oktober 2026. Berlaku sebagai pengantar peta Journey **pada branch riset `pilot/station5-c1-space-only`**, bukan pada Kencleng `main`.
+> **Riwayat:** Versi Inggris sebelum penyesuaian kode: blob `73c8e509429ea456b09d4d85a75de0d44bd88dfd`; pengantar Inggris berkode baru: blob `a4a70735663acabefea6e69ed7468487285a3b4e`; draf Bahasa Indonesia yang disetujui: blob `f56a091e60755995e3a986a364489f509e5e2c87`. Riwayat tersedia melalui Git.
+> **Batas:** Persetujuan ini mencakup pengantar dan penulisan ulang yang telah diaudit, bukan aturan rinci O1, rencana development, Rancang, atau izin menjalankan Engineering. [Level 2 v0.3](level-2-network.md) tetap sumber rincian peta yang sudah disetujui; [Product Intent](../product-intent.md) tetap sumber prinsip produk.
+> **Istilah:** Gunakan [daftar istilah Product Kencleng](../istilah.md).
 
-## Why this exists
+## 1. Mengapa peta ini dibuat
 
-The four representative scenarios (historically R1–R4, now grouped as J-ORG/J-CAM/J-VIS/J-ACC) are a useful helicopter view, but labels such as “legitimate Organization context” are too broad to select an initial bounded piece of real work. This checkpoint captures the **connected road network** beneath those scenarios so a later discussion can assess where to begin without silently losing actor value, authority, prerequisites, negative paths or changes over time.
+Journey Product Kencleng saling terhubung: organisasi menyediakan informasi, Campaign dapat dikurasi bila berlaku dan ditayangkan ketika memenuhi aturan, Pengunjung mempertimbangkan donasi, dan organisasi mempertanggungjawabkan kegiatannya.
 
-The research map has **two resolutions**, not two mandatory procedural phases:
+Peta ini membantu melihat hubungan tersebut, termasuk syarat, masalah, dan hal yang belum diputuskan. Tujuannya bukan menetapkan urutan development atau memecah Product menjadi daftar fitur.
 
-1. **Level 1 — Journey Landscape:** J-ORG Organization representation/review, J-CAM Campaign proposition/curation/publication/eligibility, J-VIS Public Visitor consideration/contribution/Donatur, J-ACC Campaign lifecycle/continuing accountability; EX-OPS Platform Operator is an exceptional cross-cutting boundary.
-2. **Level 2 — Interconnected Meaningful Transitions:** 26 provisional product/experience consequence nodes across J-ORG/J-CAM/J-VIS/J-ACC; typed cross-journey dependencies, conditional feedback/re-entry, negative and uncertain outcomes, and visible Product decisions that remain OPEN.
+Peta dibaca dalam **dua tingkat rincian**, bukan dua tahap yang harus dikerjakan berurutan.
 
-Nodes express changes with real meaning to a human actor or legitimate product state. They are **not** screens, CRUD tasks, API calls, required implementation modules, universal workflow states, or automatically selectable delivery units.
+## 2. Tingkat 1 — Gambaran Journey
 
-## Current authority and source anchors
+| Kode | Journey | Hasil yang ingin dipahami |
+| --- | --- | --- |
+| **J-ORG** | Organisasi | Pembentukan konteks organisasi atau penggunaan konteks yang sudah ada, kewenangan `Owner` dan `Staff`, informasi organisasi, serta peninjauan organisasi bila berlaku. Pendaftaran organisasi baru tidak wajib untuk setiap tindakan berikutnya. |
+| **J-CAM** | Campaign | Penyiapan usulan Campaign oleh perwakilan yang berwenang, kurasi bila berlaku, perbaikan informasi, penayangan, dan kelayakan menerima donasi. Penyiapan usulan tidak otomatis mewajibkan proses pengajuan atau kurasi formal. |
+| **J-VIS** | Pengunjung dan Donatur | Memahami Campaign dan memilih berdonasi, menunda, atau tidak berdonasi. Jika ada percobaan donasi, hasilnya harus jujur: belum pasti, gagal, atau diakui sebagai donasi jika memang ada bukti yang memenuhi aturan. Status Donatur dan keadaan dana tetap dibedakan. |
+| **J-ACC** | Keadaan Campaign dan pertanggungjawaban | Perubahan keadaan Campaign, pelaporan, dan pertanggungjawaban **selama Campaign berlangsung maupun setelah ditutup**, termasuk ketika belum ada Donatur. Peninjauan laporan dilakukan jika memang berlaku. |
+| **EX-OPS** | Pengelola platform | Tindakan khusus yang memerlukan kewenangan tersendiri; tidak menggantikan keputusan organisasi, peninjau, atau bukti transaksi. |
 
-- [Product Intent](../product-intent.md) — existing **Human-approved upstream seed**; takes precedence for product meaning.
-- [Accepted Stage 1 business-value reconstruction](../pilot-3-business-value-loop.md#9-2026-10-21-experience-first-stage-1-reconstruction-checkpoint) — scoped working value anchor.
-- [Accepted Stage 2 actor-outcomes reconstruction](../pilot-3-actor-outcomes.md#12-2026-10-21-experience-first-stage-2-reconstruction-checkpoint) — scoped working actor/authority/value model.
-- [Accepted Stage 3A representative-scenario reconstruction](../pilot-3-stage-3a-representative-scenarios.md#13-2026-10-21-experience-first-stage-3a-reconstruction-checkpoint) — input landscape and material cross-scenario edges, not a delivery sequence.
-- [Current independent selection and handoff research](selection-and-handoff-research.md) — effective research continuation, without historic commitment-specific rule inheritance.
-- [O1 fresh Product Contract draft v0.1](o1-product-contract-draft.md) — **proposed** consequential O1 behavior/acceptance requiring fresh Human Product decision; **NOT** approved Rancang I1.
-- Prior `pilot-3-*` artifacts are **historical evidence/lineage**, not active selection or requirements authority for this continuation; their approvals retain only original historical scope.
-- [Harscode optional Blueprint research](https://github.com/anhsbolic/harscode-workspace/blob/refactor/harscode-foundation/product/interconnected-journey-blueprint-research.md) — method hypothesis and research observation only; **Kencleng owns Kencleng semantics**.
+Gambaran ini menjelaskan hubungan penting antarpengguna dan antar-Journey, **bukan daftar pekerjaan yang telah disetujui**.
 
-These links preserve source ownership instead of reapproving all historical behaviors by copying them.
+**Padanan kode lama:** `R1 → J-ORG`, `R2 → J-CAM`, `R3 → J-VIS`, `R4 → J-ACC`, dan `X1 → EX-OPS`. Kode `EX-OPS` adalah pengecualian lintas-Journey, bukan Journey kelima. Ini hanya perubahan nama kelompok.
 
-## What was accepted
+## 3. Tingkat 2 — Perubahan yang bermakna
 
-- The **two-resolution map** and the need for Level 2 to be more concrete than scenario/theme-level “legitimate Organization context.”
-- A **26-node research decomposition** (J-ORG five, J-CAM eight, J-VIS seven, J-ACC six; originally labeled R1–R4) approved as v0.2. The [current approved v0.3 correction](level-2-network.md) preserves node topology, removes inherited authority assumptions for O1, and retains OPEN Product decisions.
-- Review, curation, visibility, eligibility, donation fact, funding/settlement, accountability and independent verification remain **distinct**, including conditional branches, feedback loops, no-donation, zero-Donatur accountability, pending and unavailable states.
-- The map is **semantically sufficient to checkpoint and discuss the next decision**. It is **not** proof of complete Product business-rule resolution, real code delivery, independent cold-start consumption, or improved work sequencing.
+[Peta Level 2 v0.3](level-2-network.md) memuat **26 bagian Journey**: J-ORG lima, J-CAM delapan, J-VIS tujuh, dan J-ACC enam. Tiap bagian menjelaskan perubahan yang bermakna bagi pengguna atau keadaan Product.
 
-## Deliberately not decided
+Dalam membaca hubungan antarbagian, bedakan:
 
-No initial starting node, execution order, roadmap/MVP/release scope, engineering decomposition, technical/horizontal capability choice, authentication implementation, local-environment readiness, Rancang invocation or approval, new Product permission matrix, or universal review/publication rule is established here.
+- **Syarat yang harus ada:** Tanpa keadaan atau informasi tertentu, suatu hasil belum dapat dinyatakan benar. Adanya syarat tersebut saja belum tentu cukup untuk menyatakan berhasil.
+- **Hubungan bersyarat:** Hanya berlaku ketika kondisi yang ditetapkan terpenuhi.
+- **Kelanjutan:** Satu tindakan dapat menimbulkan kebutuhan atau tanggung jawab berikutnya, tetapi belum tentu menjadi pekerjaan development berikutnya.
+- **Perubahan dan peninjauan kembali:** Informasi baru dapat memicu perbaikan atau penilaian ulang bila diperlukan.
+- **Belum diputuskan:** Aturan yang masih membutuhkan keputusan Product. Jangan menebak hasilnya.
 
-**The current research route does not use historical commitment labels, gates, or packages to select work or construct O1 requirements.** The former sequencing approach is not active; older decisions remain recorded evidence, without automatic carry-over or retroactive cancellation.
+Kode seperti `O1`, `P1`, `V1`, dan `A1` hanya penanda pada peta. **Bukan** nomor pekerjaan, urutan development, atau bukti bahwa sebuah kemampuan sudah tersedia.
 
-## Checkpoint boundary and continuation
+## 4. Makna yang tidak boleh dicampur
 
-**Checkpoint standing:** Level 2 v0.2 accepted 2026-10-21; Level 2 v0.3 exact research correction approved by Anhar 2026-10-22. **Only the map and explicit OPEN issues are approved;** the [O1 Product Contract draft](o1-product-contract-draft.md) remains a proposed Product decision, not an approved I1.
+Beberapa hal berikut harus tetap dibedakan:
 
-**Earlier next-step expectation (superseded):** Discuss how to select a healthy starting point. That trial has since occurred; see [current research decisions](selection-and-handoff-research.md). Do not auto-start Engineering, Rancang or implementation. Engineering readiness reconciliation remains on hold.
+- Peninjauan organisasi **bukan** kurasi Campaign.
+- Campaign yang ditayangkan kepada publik **belum tentu** boleh menerima donasi.
+- **Percobaan donasi bukan bukti donasi berhasil.** Donasi yang diakui harus mempunyai dasar sesuai aturan Product; percobaan yang tertunda atau gagal tidak menciptakan status Donatur.
+- Donasi yang diakui, keadaan pendanaan Campaign, dan penyelesaian transaksi uang adalah **tiga hal berbeda**. Yang satu tidak otomatis membuktikan dua hal lainnya. Simulasi juga tidak boleh diakui sebagai penyelesaian transaksi nyata.
+- Dana terkumpul **bukan** bukti penggunaan dana atau dampak nyata.
+- Laporan organisasi **bukan** hasil pemeriksaan independen.
+- Pertanggungjawaban tetap bermakna walaupun belum ada Donatur.
+- Informasi yang belum pasti harus tetap ditampilkan sebagai belum pasti.
 
-Any future adoption into Kencleng operational `main`, release authority, Harscode reusable method, or Space execution requires its own scoped evidence and Human decision.
+Peta juga mencatat penolakan, kegagalan, keputusan untuk tidak berdonasi, keadaan yang belum pasti, perubahan keputusan, serta hubungan antarpihak. Rinciannya ada di Level 2.
+
+## 5. Hasil dan batas pemeriksaan peta
+
+**Hasil yang telah diterima Anhar:** Peta dua tingkat dan rincian 26 bagian sudah dinilai **cukup untuk membahas pemilihan titik awal**. Pemeriksaan terhadap hubungan antarbagiannya menunjukkan syarat, hubungan bersyarat, peninjauan kembali, penolakan, dan ketidakpastian penting sudah terlihat atau ditandai sebagai **belum diputuskan**.
+
+**Yang belum dibuktikan:** Kelengkapan seluruh aturan bisnis Product, kesiapan sistem dan Engineering, kemampuan pembaca baru memahami dan menggunakan peta tanpa bantuan, serta apakah cara memilih pekerjaan berdasarkan peta ini benar-benar lebih baik. Jumlah hubungan pada diagram bukan bukti bahwa seluruh ketergantungan dapat dijalankan.
+
+Keputusan Product yang belum dibuat harus tetap terlihat sebagai **belum diputuskan**, bukan diisi dengan dugaan.
+
+## 6. Sumber dan keputusan yang berlaku
+
+- [Product Intent](../product-intent.md) adalah sumber tujuan dan prinsip Product yang sudah disetujui **pada branch riset ini**.
+- [Level 2 v0.3](level-2-network.md) adalah peta riset yang disetujui. **Persetujuan peta bukan persetujuan aturan rinci setiap bagian.**
+- [Keputusan riset tentang titik awal dan hasil Product](selection-and-handoff-research.md) mencatat alasan memilih arah percobaan **O1**, sekaligus batas keputusan yang masih terbuka.
+- [Draf kebutuhan Product O1](o1-product-contract-draft.md) berisi **usulan**, belum menjadi aturan O1 yang disetujui atau masukan resmi bagi Rancang.
+- [Rekonstruksi nilai bisnis](../pilot-3-business-value-loop.md), [hasil riset pengguna dan perannya](../pilot-3-actor-outcomes.md), dan [contoh skenario riset](../pilot-3-stage-3a-representative-scenarios.md) adalah **riwayat bahan pembanding** yang mendasari pekerjaan riset sebelumnya. Persetujuan atau aturan lama tidak otomatis menjadi keputusan Product saat ini.
+
+Dokumen `pilot-3-*` mempertahankan catatan keputusan dan proses lama. Catatan itu **tidak otomatis menjadi dasar aturan atau prioritas** untuk pekerjaan Product saat ini.
+
+## 7. Hal yang belum diputuskan
+
+Persetujuan atas peta ini **tidak** menetapkan:
+
+- urutan development, cakupan rilis, atau daftar pekerjaan yang harus dimulai;
+- seluruh aturan bisnis untuk organisasi, Campaign, donasi, dan pertanggungjawaban;
+- rancangan teknis, kesiapan sistem yang berjalan, atau bukti keberhasilan development;
+- pembentukan atau pelaksanaan Rancang;
+- izin mengubah produk di branch operasional.
+
+**Arah riset saat ini:** O1, yaitu pendaftaran organisasi dan kewenangan internal pertamanya, merupakan satu calon titik awal untuk pendalaman kebutuhan Product. Aturan tentang siapa yang boleh mendaftar, kapan dianggap berhasil, dan penanganan masalah **masih membutuhkan keputusan Product**.
+
+Pemeriksaan kesiapan Engineering masih ditunda. Kemampuan Balad untuk memilih bagian berikutnya dan pembentukan Product Specification Space juga tetap ditunda. Tidak ada pekerjaan baru yang otomatis berjalan karena dokumen ini.
+
+## 8. Riwayat persetujuan
+
+- **21 Oktober 2026:** Anhar menyetujui peta dua tingkat dan Level 2 v0.2 sebagai hasil riset, bukan sebagai rencana development.
+- **22 Oktober 2026:** Anhar menyetujui perbaikan Level 2 v0.3, terutama pemisahan dari aturan historis yang tidak otomatis berlaku pada O1.
+- **22 Oktober 2026:** Anhar menyetujui pengantar Journey Bahasa Indonesia yang sudah diperbaiki dan diaudit. Draf tersebut dipromosikan ke `README.md` ini; riwayat bahasa Inggris tetap terlacak melalui Git.
+
+Penyuntingan bahasa tidak boleh mengubah persetujuan atau membuka keputusan yang sengaja ditunda.
