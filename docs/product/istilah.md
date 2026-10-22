@@ -29,4 +29,4 @@
 
 ## Penerapan bertahap
 
-**Tahap pertama selesai (22 Oktober 2026):** [Product Intent Bahasa Indonesia](product-intent.md) sudah disetujui sebagai sumber utama pada branch riset. [Draf sebelumnya](product-intent-id-draft.md) bukan sumber kedua. Terapkan pilihan istilah ini secara bertahap pada dokumen Product Kencleng lainnya, tanpa mengubah aturan yang sudah disetujui.
+**Tahap pertama dan kedua selesai (22 Oktober 2026):** [Product Intent](product-intent.md) dan [pengantar Peta Journey](interconnected-journeys/README.md) sudah disetujui dalam Bahasa Indonesia pada branch riset. Draf lama hanya riwayat penyuntingan. Penyederhanaan Level 2 masih bertahap; [Level 2 v0.3](interconnected-journeys/level-2-network.md) tetap berlaku sampai dokumen lengkap penggantinya disetujui.
