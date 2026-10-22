@@ -37,7 +37,7 @@ Perjalanan Kencleng menghubungkan kegiatan berikut:
 4. Pencatatan donasi, keadaan dana, dan perkembangan Campaign hingga penutupan.
 5. Pelaporan dan pertanggungjawaban setelah penggalangan dana.
 
-Urutan ini menunjukkan hubungan antarbagian produk, **bukan urutan wajib dalam development aplikasi**. Suatu bagian belum dianggap sudah diwujudkan dalam produk hanya karena bagian berikutnya bisa diperagakan dengan data yang sudah disiapkan.
+Urutan ini menunjukkan hubungan antarbagian produk, **bukan urutan wajib dalam development aplikasi**. Suatu bagian belum boleh dianggap sudah tersedia dan berjalan di produk hanya karena bagian berikutnya bisa diperagakan dengan data yang sudah disiapkan.
 
 ## 4. Aturan untuk menjaga integritas
 
