@@ -21,7 +21,7 @@
 
 **Tahap kedua selesai (22 Oktober 2026):** [Pengantar Peta Journey Product — Bahasa Indonesia](interconnected-journeys/README.md) telah disetujui dan dipromosikan sebagai sumber pengantar riset. [Draf sebelumnya](interconnected-journeys/README-id-draft.md) hanya riwayat penyuntingan, bukan sumber kedua. Persetujuan Level 2 v0.3 dan aturan O1 tidak berubah.
 
-**Tahap ketiga — draf lengkap telah diaudit, menunggu persetujuan Anhar:** [Draf Bahasa Indonesia Level 2](interconnected-journeys/level-2-network-id-draft.md) memuat **26 node**, dua diagram, `EX-OPS`, **17 hubungan penting**, **17 kondisi negatif/belum pasti**, dan lima kelompok keputusan OPEN. Audit kesesuaian struktur dan batas makna terhadap [Level 2 v0.3 yang berlaku](interconnected-journeys/level-2-network.md) telah dilakukan. **Draf tetap belum disetujui dan bukan sumber utama** sampai Anhar memberi persetujuan promosi terpisah.
+**Tahap ketiga — draf lengkap telah diaudit, menunggu persetujuan Anhar:** [Draf Bahasa Indonesia Level 2](interconnected-journeys/level-2-network-id-draft.md) memuat **26 node**, dua diagram, `EX-OPS`, **17 hubungan penting**, **17 skenario pemeriksaan batas makna Journey**, dan lima kelompok pertanyaan Product **OPEN**. Status OPEN berarti pertanyaan belum diputuskan, **bukan keputusan mendesak secara otomatis**. Audit kesesuaian struktur dan batas makna terhadap [Level 2 v0.3 yang berlaku](interconnected-journeys/level-2-network.md) telah dilakukan. **Draf tetap belum disetujui dan bukan sumber utama** sampai Anhar memberi persetujuan promosi terpisah.
 
 ## Current entrypoints
 
