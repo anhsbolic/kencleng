@@ -7,18 +7,18 @@
 
 ## 1. Tujuan Kencleng
 
-Kencleng adalah layanan donasi dan penggalangan dana untuk organisasi nirlaba di Indonesia. Kencleng membantu orang memahami penggalangan dana sebelum memutuskan berdonasi, lalu mengikuti apa yang terjadi setelah mereka menyumbang.
+Kencleng adalah layanan donasi dan penggalangan dana berbasis informasi dan bukti untuk organisasi nirlaba di Indonesia. Kencleng membantu orang memahami penggalangan dana sebelum memutuskan berdonasi, lalu mengikuti apa yang terjadi setelah mereka menyumbang.
 
 Prinsip utamanya disebut **Evidence-Led Optimism**: harapan dibangun dari fakta yang dapat dipahami, asal informasi yang jelas, perkembangan yang disampaikan dengan jujur, dan keterbukaan tentang hal yang belum pasti. Bukan dari tekanan emosi atau klaim kepercayaan tanpa dasar.
 
-Kencleng juga digunakan sebagai tempat belajar dan mencoba. Pembayaran atau proses operasional yang disimulasikan **harus disebut sebagai simulasi**. Simulasi tidak boleh ditampilkan sebagai pembayaran yang benar-benar selesai, hasil pemeriksaan independen, atau dampak nyata.
+Kencleng juga digunakan sebagai tempat belajar dan mencoba. Pembayaran atau proses operasional yang disimulasikan **harus disebut sebagai simulasi**. Simulasi tidak boleh ditampilkan sebagai penyelesaian transaksi uang yang benar-benar terjadi di luar sistem, hasil pemeriksaan independen, atau dampak nyata.
 
 ## 2. Pengguna dan tanggung jawab
 
 Kencleng melayani pengunjung, penyumbang, perwakilan organisasi, peninjau, dan pengelola platform.
 
 - Pengunjung dapat membaca informasi kampanye penggalangan dana yang terbuka untuk umum tanpa masuk ke akun.
-- Pengunjung boleh berdonasi tanpa membuat akun **jika aturan donasi yang berlaku mengizinkannya**.
+- Pengunjung dapat berdonasi sebagai tamu, tanpa masuk ke akun, **jika aturan donasi yang berlaku mengizinkannya**.
 - Organisasi dan kampanye adalah dua hal berbeda. Setiap kampanye harus terkait dengan satu organisasi.
 - Pemilik organisasi (`Owner`) dan staf (`Staff`) memiliki kewenangan yang berbeda.
 - Peninjauan organisasi, kurasi kampanye, dan verifikasi penggunaan dana merupakan keputusan yang **terpisah**.
@@ -45,7 +45,7 @@ Urutan ini menunjukkan hubungan antarbagian produk, **bukan urutan wajib pembang
 - Sebelum pengguna melakukan tindakan penting, jelaskan akibatnya, arti jumlah dan keadaan uang, syarat yang berlaku, serta perubahan keadaan yang akan terjadi.
 - Hormati martabat, privasi, dan kebebasan pengguna dalam mengambil keputusan. Jangan memakai rasa bersalah, keadaan mendesak yang dibuat-buat, atau kesan dapat dipercaya tanpa bukti.
 - Jika informasi belum lengkap atau belum tersedia, tampilkan apa adanya. Jangan menyatakan sesuatu sudah pasti jika belum ada dasar.
-- Kampanye hanya boleh terlihat oleh publik dan menerima donasi sesuai **keadaan kampanye yang benar-benar berlaku**. Terlihat oleh publik tidak dengan sendirinya berarti boleh menerima donasi.
+- Kampanye hanya boleh terlihat oleh publik dan menerima donasi sesuai **keadaan kampanye yang benar-benar berlaku**.
 
 ## 5. Dasar desain
 
