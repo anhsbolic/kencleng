@@ -1,8 +1,8 @@
 # Kencleng — Tujuan dan Prinsip Produk
 
-> **Status:** DRAF PENULISAN ULANG BAHASA / BELUM MENJADI SUMBER UTAMA.
+> **Status saat ini:** RIWAYAT DRAF — versi Bahasa Indonesia telah disetujui dan dipromosikan ke [Product Intent](product-intent.md) pada 22 Oktober 2026. **Dokumen ini bukan sumber utama dan jangan digunakan sebagai input aturan Product.**
 > **Cakupan:** Penyuntingan bahasa dari `docs/product/product-intent.md`, sumber asli blob `433aa2376040a442d2aa14f56a01e3499dcab231`, pada branch riset `pilot/station5-c1-space-only`.
-> **Keputusan:** Anhar menyetujui standar bahasa Product Kencleng pada 22 Oktober 2026, **bukan** otomatis menyetujui isi revisi ini sebagai pengganti dokumen utama. Sampai pemeriksaan makna dan persetujuan atas hasil penyuntingan selesai, `product-intent.md` tetap menjadi sumber yang berlaku.
+> **Riwayat:** Anhar menyetujui hasil penulisan ulang pada 22 Oktober 2026 setelah audit makna. Versi yang berlaku adalah [Product Intent](product-intent.md); draf ini hanya untuk merekonstruksi proses penyuntingan.
 > **Batas:** Mengubah cara penulisan saja. Tidak menambah aturan, kewenangan, cakupan rilis, atau keputusan Product. Gunakan [acuan istilah Product Kencleng](istilah.md).
 
 ## 1. Tujuan Kencleng
