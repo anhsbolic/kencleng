@@ -1,9 +1,8 @@
-# Kencleng — Journey Level 2 (Draf Bahasa Indonesia)
+# Kencleng — Journey Level 2 (Riwayat Draf Bahasa Indonesia)
 
-> **Status:** DRAF BAHASA INDONESIA LENGKAP — **BELUM DISETUJUI DAN BELUM MENJADI SUMBER UTAMA**. Memuat 26 node, hubungan silang, diagram, EX-OPS, pemeriksaan kondisi gagal, dan keputusan Product OPEN. Masih perlu audit akhir kesetaraan makna sebelum promosi.
-> **Sumber resmi:** [Level 2 v0.3](level-2-network.md), blob `4970ba936d107e50d8260c9e246816ba13d41a28`, disetujui Anhar pada 22 Oktober 2026. [Product Intent](../product-intent.md) dan [pengantar Journey](README.md) tetap berlaku menurut lingkupnya.
-> **Batas:** Penyederhanaan bahasa saja. Tidak membuat aturan O1 baru, mengganti 26 kode node, mengubah hubungan antar-Journey, atau memberi izin development. Bagian yang belum ditulis ulang **wajib dibaca dari dokumen resmi**.
-> **Lokasi:** Branch riset `pilot/station5-c1-space-only`; tidak mengubah Kencleng `main` atau Harscode.
+> **Status:** ARSIP PROSES PENYUNTINGAN — **BUKAN SUMBER UTAMA**. Anhar sudah menyetujui draf ini dan versi Bahasa Indonesia dipromosikan ke [Peta Journey Level 2 resmi](level-2-network.md) pada 22 Oktober 2026 di research branch.
+> **Riwayat:** Draf tepat sebelum promosi: blob `2ae3ed81651fe3f56595128617edb5244cb9d86c`; sumber Inggris resmi sebelumnya: blob `4970ba936d107e50d8260c9e246816ba13d41a28`. Isi di bawah adalah **snapshot tahap draf**, bukan status authority terkini.
+> **Batas:** Lihat [Level 2 resmi](level-2-network.md) untuk makna riset yang berlaku. Tidak ada persetujuan O1 PRD, Rancang, Engineering, atau Kencleng `main` dari perubahan ini.
 
 ## 1. Cara membaca peta
 
