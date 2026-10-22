@@ -69,4 +69,4 @@ Dokumen ini **belum menetapkan**:
 - kontrak antarsistem atau API;
 - rancangan teknis dan rencana pelaksanaan.
 
-Hal-hal tersebut perlu dibahas berdasarkan pekerjaan yang dipilih dan disetujui oleh pemilik keputusan yang berwenang.
+Setiap keputusan tersebut memerlukan pertimbangan yang jelas dan persetujuan pihak yang berwenang sebelum pekerjaan terkait dimulai.
