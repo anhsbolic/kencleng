@@ -21,13 +21,13 @@
 
 **Tahap kedua selesai (22 Oktober 2026):** [Pengantar Peta Journey Product — Bahasa Indonesia](interconnected-journeys/README.md) telah disetujui dan dipromosikan sebagai sumber pengantar riset. [Draf sebelumnya](interconnected-journeys/README-id-draft.md) hanya riwayat penyuntingan, bukan sumber kedua. Persetujuan Level 2 v0.3 dan aturan O1 tidak berubah.
 
-**Tahap ketiga — draf lengkap telah diaudit, menunggu persetujuan Anhar:** [Draf Bahasa Indonesia Level 2](interconnected-journeys/level-2-network-id-draft.md) memuat **26 node**, dua diagram, `EX-OPS`, **17 hubungan penting**, **17 skenario pemeriksaan batas makna Journey**, dan lima kelompok pertanyaan Product **OPEN**. Status OPEN berarti pertanyaan belum diputuskan, **bukan keputusan mendesak secara otomatis**. Audit kesesuaian struktur dan batas makna terhadap [Level 2 v0.3 yang berlaku](interconnected-journeys/level-2-network.md) telah dilakukan. **Draf tetap belum disetujui dan bukan sumber utama** sampai Anhar memberi persetujuan promosi terpisah.
+**Tahap ketiga selesai (22 Oktober 2026):** Anhar menyetujui dan mempromosikan [Peta Journey Level 2 v0.3 Bahasa Indonesia](interconnected-journeys/level-2-network.md) sebagai sumber riset Level 2 yang berlaku di branch ini. Peta tetap mencakup **26 node**, dua diagram, `EX-OPS`, **17 hubungan penting**, **17 pemeriksaan batas makna**, dan lima kelompok pertanyaan Product **OPEN**. OPEN **bukan** tuntutan untuk segera mengambil keputusan. [Draf Bahasa Indonesia sebelumnya](interconnected-journeys/level-2-network-id-draft.md) hanya riwayat penyuntingan. Persetujuan ini **bukan** persetujuan kontrak O1, delivery atau kesiapan Engineering.
 
 ## Current entrypoints
 
 1. [Product Intent](product-intent.md) — tujuan dan prinsip produk yang disetujui pada branch riset ini; ditulis dalam Bahasa Indonesia.
 2. [Peta Journey Product](interconnected-journeys/README.md) — pengantar Journey yang disetujui dalam Bahasa Indonesia; hasil riset, bukan izin delivery.
-3. [Level 2 map](interconnected-journeys/level-2-network.md) — meaning, typed prerequisites, uncertainty; **not** detailed PRD requirements.
+3. [Peta Journey Level 2 v0.3](interconnected-journeys/level-2-network.md) — peta riset Bahasa Indonesia yang disetujui; memuat hubungan bermakna, syarat, dan pertanyaan OPEN, **bukan** persyaratan PRD terperinci.
 4. [Current selection and handoff research](interconnected-journeys/selection-and-handoff-research.md) — starting-point trial, source-independence rules, O1 OPEN decisions, consumer boundary and limits.
 5. [O1 fresh Product Contract draft](interconnected-journeys/o1-product-contract-draft.md) — independently proposed product behavior and acceptance; not approved binding I1.
 
