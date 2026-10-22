@@ -1,5 +1,7 @@
 # Kencleng Pilot #3 — Stage 3A Representative Scenarios
 
+> **CURRENT EXPERIMENT ROUTING NOTICE (2026-10-22; pilot branch only):** This file preserves its dated Pilot #3 reasoning, scoped approvals and historical evidence **without rewriting history**. It is **not current input authority** for selecting O1 or generating O1 Product Contract/PRD. Do not carry forward historical commitment identifiers, business rules, acceptance or stage sequence into the current Interconnected Journeys research by inheritance. Use [current Product routing](README.md), [Level 2](interconnected-journeys/level-2-network.md), and [current selection/handoff decisions](interconnected-journeys/selection-and-handoff-research.md). Historical approvals retain only their original scope; operational `main` is unchanged.
+
 > **Status:** WORKING ARTIFACT — Pilot #3 Stage 3A complete  
 > **Human status:** Anhar-approved working state through final cross-scenario audit  
 > **Authority:** Not canonical Product Authority  
