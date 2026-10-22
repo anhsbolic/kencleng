@@ -3,10 +3,11 @@
 > **Standing:** Original v0.2 approved research checkpoint (2026-10-21). **Anhar approved Level 2 v0.3 research correction on 2026-10-22**, against the exact prior content blob `87edca25b40017429d66aff4e22ad1f4aa7e013f` on the research branch. This editorial approval-record update makes no new Product rule; approval covers the research map and its explicit OPEN boundaries, **not** an O1 PRD, delivery decision, or operational `main` authority.
 > **Current reading order (2026-10-22):** [Product Intent](../product-intent.md) → [Current Product research entry](../README.md) → [Selection and handoff decisions](selection-and-handoff-research.md). Prior scenario/commitment artifacts are history, not current requirements authority.
 > **Method boundary:** Meaningful transitions are a *network of consequences and experiences*, **not** one-to-one tasks, implementation phases, required screens, or a commitment registry.
+> **Penamaan Level 1 (disetujui Anhar, 22 Oktober 2026):** `R1 → J-ORG`, `R2 → J-CAM`, `R3 → J-VIS`, `R4 → J-ACC`, dan `X1 → EX-OPS`. Ini **perubahan kode editorial saja**: isi, hubungan, jumlah 26 node dan keputusan OPEN Level 2 v0.3 tetap sama. Kode node `O1–O5`, `P1–P8`, `V1–V7`, `A1–A6` tidak diubah. Catatan historis tetap memakai kode awal.
 
 ## 1. Scope, resolution, and notation
 
-**Level 1:** R1 Organization, R2 Campaign, R3 Public Visitor/Donation, R4 Accountability; X1 privileged Operator exception overlay. The Level 1 landscape is reconstructed in the accepted Stage 3A source.
+**Level 1:** J-ORG Organization, J-CAM Campaign, J-VIS Public Visitor/Donation, J-ACC Accountability; EX-OPS privileged Operator exception overlay. The earlier Stage 3A source uses the historical R1–R4/X1 labels, which are mapped below.
 
 **Level 2:** Identify specific *meaningful* transitions and what each validly changes for an actor or product state. Keep actor authority, provenance, timing, negative/unknown outcomes, and cross-journey relationships legible enough for later starting-point reasoning. **Do not infer mechanics or choose a delivery sequence from node position.**
 
@@ -17,9 +18,21 @@
 - **OPEN:** Product rule/relationship is intentionally unresolved and needs its owner if material to a selected path.
 - **No automatic implication (`≠`):** Distinct truth classes or states must not be collapsed.
 
+### Level 1 group code map
+
+| Current code | Historical code | Scope |
+| --- | --- | --- |
+| `J-ORG` | `R1` | Organization authority, information and review |
+| `J-CAM` | `R2` | Campaign proposition, curation, visibility and donation eligibility |
+| `J-VIS` | `R3` | Visitor decisions, donation and money truth |
+| `J-ACC` | `R4` | Campaign lifecycle and continuing accountability |
+| `EX-OPS` | `X1` | Exceptional platform-operator intervention across Journeys |
+
+The codes identify **Level 1 groups**, not delivery order or new business rules. `EX-OPS` is an exception overlay, **not a fifth normal Journey**. Prior approval citations using `R1–R4/X1` refer to the same groups.
+
 Identifier prefixes **O/P/V/A** are local diagram references only; **O1 is a research node, not a former commitment, binding Product rule set or engineering assignment**.
 
-## 2. R1 — Organization representation and review (5 nodes)
+## 2. J-ORG — Organization representation and review (5 nodes)
 
 | ID | Concrete transition / meaningful result | Guard or dependency boundary |
 | --- | --- | --- |
@@ -29,7 +42,7 @@ Identifier prefixes **O/P/V/A** are local diagram references only; **O1 is a res
 | **O4** | Reviewer produces a legitimate scoped Organization judgment, **or** inability to judge remains explicit and truthful. | No global trusted label. Positive/negative/pending meanings and effects on Campaign are OPEN. |
 | **O5** | Material changes, feedback or unresolved matters may lead to Organization review reconsideration when applicable. | Re-entry and supersession rules OPEN; not every change forces review. |
 
-## 3. R2 — Campaign proposition, curation and actual state (8 nodes)
+## 3. J-CAM — Campaign proposition, curation and actual state (8 nodes)
 
 | ID | Concrete transition / meaningful result | Guard or dependency boundary |
 | --- | --- | --- |
@@ -42,7 +55,7 @@ Identifier prefixes **O/P/V/A** are local diagram references only; **O1 is a res
 | **P7** | Campaign has actual fundraising/lifecycle context, including meaningful changes and potential closure. | Not the same as P5/P6; activation, phase and closure consequences OPEN. Necessary context for substantive continuing accountability. |
 | **P8** | Material public visibility or donation eligibility changes are represented as **actual changes**, including consequence for affected journeys. | Independent-change rules OPEN. Changes may affect public access or in-flight contribution and need scoped policy; avoid assuming prior eligibility persists. |
 
-## 4. R3 — Visitor, considered decision, donation and money truth (7 nodes)
+## 4. J-VIS — Visitor, considered decision, donation and money truth (7 nodes)
 
 | ID | Concrete transition / meaningful result | Guard or dependency boundary |
 | --- | --- | --- |
@@ -54,7 +67,7 @@ Identifier prefixes **O/P/V/A** are local diagram references only; **O1 is a res
 | **V6** | A legitimate Campaign-specific donation fact establishes contextual **Donatur relationship**. | Guest/registered account difference is separate, capability details OPEN. Registration or attempt alone does not create Donatur status. |
 | **V7** | Actual money consequences — **donation fact, funding and settlement as distinct realities** — can be truthfully understood to the extent actual signals support them. | No automatic transition from donation fact to funding or settlement, nor to execution/impact. Payment simulation is labeled simulation; source and trigger rules OPEN. |
 
-## 5. R4 — Fundraising and continuing accountability (6 nodes)
+## 5. J-ACC — Fundraising and continuing accountability (6 nodes)
 
 | ID | Concrete transition / meaningful result | Guard or dependency boundary |
 | --- | --- | --- |
@@ -158,7 +171,7 @@ flowchart TB
 
 | Seam | Type / standing | What must **not** be inferred |
 | --- | --- | --- |
-| Valid representative authority → P1 | **Authority prerequisite / supported** | O1 must be rerun for already-valid Organizations; all R1 must be complete |
+| Valid representative authority → P1 | **Authority prerequisite / supported** | O1 must be rerun for already-valid Organizations; all J-ORG must be complete |
 | O2 source information → P1/V1 | **Information prerequisite / supported** | Supplied Organization facts are independently verified |
 | O4 → P2/P5/P6 | **OPEN / conditional** | All Campaign work requires completed Organization review |
 | P1 → P2 → P3 ⇄ P4 | **Conditional review / feedback** | All campaigns universally go through curation or each edit forces re-review |
@@ -174,7 +187,7 @@ flowchart TB
 | A2/A3/A4 → A6 | **Information continuity / supported; audience OPEN** | Every report is public or every absent report is a breach |
 | A3 → A5 → A6 | **Conditional verification / supported distinction; applicability OPEN** | Reporting = verified impact; every report requires verification |
 | V6 → A6 | **Downstream Donatur interest / supported** | Donatur is prerequisite to Organization accountability |
-| X1 privileged intervention → normal nodes | **Exceptional overlay, not normal prerequisite** | Operator privilege can create Organization/Reviewer/money/impact truth |
+| EX-OPS privileged intervention → normal nodes | **Exceptional overlay, not normal prerequisite** | Operator privilege can create Organization/Reviewer/money/impact truth |
 
 Each OPEN link is a **visible unfinished road rule**, not a hidden invented bridge. The graph is not a validated total order; diagram arrows do not constitute independently verified implementation dependencies.
 
@@ -198,17 +211,17 @@ Each OPEN link is a **visible unfinished road rule**, not a hidden invented brid
 | Incomplete/unavailable reporting | A2/A6 preserve actual information; no invented deadline/breach/completion |
 | Reporting without independent verification | A3 ≠ A5; A6 does not claim proven impact |
 | Change to older report/judgment | A4 preserves relevant chronology; supersession rules OPEN |
-| Privileged Operator correction | X1 cannot impersonate Organization, Reviewer, payment/settlement or independent verifier |
+| Privileged Operator correction | EX-OPS cannot impersonate Organization, Reviewer, payment/settlement or independent verifier |
 
 **Coverage verdict:** All known representative material branches have a visible node, link, or explicit OPEN boundary. This is *semantic map completeness*, not exhaustive production test coverage.
 
 ## 9. Known OPEN Product decisions that remain surfaced
 
-1. **R1:** fresh O1 grant, attribution, success/partial/conflict semantics; positive/negative Organization review meaning, minimum review material, relevant Owner/Staff authority, downstream Campaign effects, reconsideration triggers.
-2. **R2:** bounded Campaign-curation outcomes, resubmission/re-review/supersession rules, actual publication conditions, eligibility conditions, independent state changes and affected public/contribution consequences.
-3. **R3:** sufficient consequential disclosure, meaning of eligible attempt and legitimate donation fact, pending/failed result, guest/registered distinctions, real funding/settlement triggers and mid-attempt state change.
-4. **R4:** closure effect, Organization's minimum duty/timing, audience boundaries, report/verification applicability, completion meaning and changed evidence.
-5. **X1:** operator's positive mandate and allowed exceptional correction without crossing truth/authority boundaries.
+1. **J-ORG:** fresh O1 grant, attribution, success/partial/conflict semantics; positive/negative Organization review meaning, minimum review material, relevant Owner/Staff authority, downstream Campaign effects, reconsideration triggers.
+2. **J-CAM:** bounded Campaign-curation outcomes, resubmission/re-review/supersession rules, actual publication conditions, eligibility conditions, independent state changes and affected public/contribution consequences.
+3. **J-VIS:** sufficient consequential disclosure, meaning of eligible attempt and legitimate donation fact, pending/failed result, guest/registered distinctions, real funding/settlement triggers and mid-attempt state change.
+4. **J-ACC:** closure effect, Organization's minimum duty/timing, audience boundaries, report/verification applicability, completion meaning and changed evidence.
+5. **EX-OPS:** operator's positive mandate and allowed exceptional correction without crossing truth/authority boundaries.
 
 These are **not** all mandatory preconditions to exploring one bounded starting path. Resolve only decisions that materially govern the chosen work later.
 
