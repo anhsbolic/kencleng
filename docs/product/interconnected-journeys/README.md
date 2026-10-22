@@ -5,7 +5,7 @@
 > **Decision owner:** Anhar. Approval covers the two-resolution research map, revised Level 2 v0.2, completeness/connection audit, its explicitly OPEN edges and the pause before starting-point selection.
 > **Owning concern:** Kencleng-specific Product research / semantic journey reconstruction. This directory is **not** a new whole-product Product Intent authority, release plan, implementation specification, or universal Harscode policy.
 > **Current research routing update (2026-10-22):** [Starting-point and Product handoff working decisions](selection-and-handoff-research.md) **supersede next-step expectations** in the 2026-10-21 checkpoint below. O1 is a **single recommended research direction**, not an inherited historical requirements package, approved PRD or delivery assignment.
-> **Current checkpoint:** [Level 2 — interconnected meaningful transitions](level-2-network.md).
+> **Current Level 2:** [v0.3 working authority-correction revision](level-2-network.md) (2026-10-22). Earlier v0.2 was approved 2026-10-21; this corrected exact revision has **not yet received separate Human acceptance**.
 
 ## Why this exists
 
@@ -33,7 +33,7 @@ These links preserve source ownership instead of reapproving all historical beha
 ## What was accepted
 
 - The **two-resolution map** and the need for Level 2 to be more concrete than scenario/theme-level “legitimate Organization context.”
-- A **26-node working decomposition** (R1 five, R2 eight, R3 seven, R4 six) and the audited typed relationships in [level-2-network.md](level-2-network.md).
+- A **26-node research decomposition** (R1 five, R2 eight, R3 seven, R4 six) originally approved as v0.2. The [current v0.3 working correction](level-2-network.md) preserves node topology but removes inherited authority assumptions for O1; its exact revised semantics require Human review.
 - Review, curation, visibility, eligibility, donation fact, funding/settlement, accountability and independent verification remain **distinct**, including conditional branches, feedback loops, no-donation, zero-Donatur accountability, pending and unavailable states.
 - The map is **semantically sufficient to checkpoint and discuss the next decision**. It is **not** proof of complete Product business-rule resolution, real code delivery, independent cold-start consumption, or improved work sequencing.
 
@@ -45,7 +45,7 @@ No initial starting node, execution order, roadmap/MVP/release scope, engineerin
 
 ## Checkpoint boundary and continuation
 
-**Checkpoint status: accepted by Anhar, 2026-10-21, as a durable Product research result on this pilot branch.**
+**Historical checkpoint standing:** Level 2 v0.2 accepted by Anhar, 2026-10-21, as durable Product research evidence on this pilot branch. **2026-10-22 working correction:** v0.3 is a separately identifiable revision awaiting exact-content Human review; old acceptance does not automatically transfer.
 
 **Earlier next-step expectation (superseded):** Discuss how to select a healthy starting point. That trial has since occurred; see [current research decisions](selection-and-handoff-research.md). Do not auto-start Engineering, Rancang or implementation. Engineering readiness reconciliation remains on hold.
 
