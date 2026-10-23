@@ -1,7 +1,7 @@
 # Kencleng — Penerapan Product Contract Template (Uji Coba)
 
 > **Status:** CATATAN UJI COBA / BUKAN TEMPLATE UTAMA DAN BELUM APPROVED SEBAGAI KONTRAK O1. Kepemilikan **draf template reusable** dipindahkan ke concern Product Harscode. Dokumen ini hanya mencatat penerapan dan evaluasinya untuk Kencleng.
-> **Template sumber (proposal Harscode):** [Product Contract Template v0.1 — Bahasa Indonesia](https://github.com/anhsbolic/harscode-workspace/blob/e24b8869e290033e05a52c92dcb8bf3cdc49d172/product/product-contract-template-id-draft.md) dan [versi English](https://github.com/anhsbolic/harscode-workspace/blob/refactor/harscode-foundation/product/product-contract-template-draft.md). Statusnya **research proposal**, belum operational `main` dan belum mewajibkan format universal.
+> **Template sumber (proposal Harscode):** [Product Contract Template v0.1 — Bahasa Indonesia](https://github.com/anhsbolic/harscode-workspace/blob/00ed2881a608c47d3c0afde423252798f6ffe8f7/product/product-contract-template-id-draft.md) dan [versi English](https://github.com/anhsbolic/harscode-workspace/blob/refactor/harscode-foundation/product/product-contract-template-draft.md). Statusnya **research proposal**, belum operational `main` dan belum mewajibkan format universal.
 > **Riwayat:** Draf template lokal Kencleng sebelumnya tersimpan di Git sebagai blob `28b2e56cb58f3068bfcef1b34df59e99dfe56f1e`. Jangan menganggapnya salinan kedua yang harus disinkronkan manual.
 > **Scope:** Hanya `anhsbolic/kencleng` branch riset `pilot/station5-c1-space-only`. Kencleng Product Authority tetap milik [Product Intent](product-intent.md), [Peta Journey Level 2](interconnected-journeys/level-2-network.md), dan keputusan Anhar pada scope terkait.
 
