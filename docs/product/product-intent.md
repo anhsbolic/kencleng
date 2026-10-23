@@ -1,6 +1,6 @@
 # Kencleng — Tujuan dan Prinsip Produk
 
-> **Status:** PRODUCT INTENT DISETUJUI — Anhar, 22 Oktober 2026. Dokumen ini menjadi sumber utama tujuan dan prinsip Product **pada branch riset `pilot/station5-c1-space-only`**; **bukan** perubahan Kencleng operational `main`.
+> **Authority:** Product Intent **APPROVED** oleh Anhar, 22 Oktober 2026. Phase `PROD-FND`; output type `PROD-INTENT`. Sumber utama nilai, tujuan, aktor, tanggung jawab dan prinsip Product dalam branch `pilot/station5-c1-space-only`; **bukan** perubahan operational `main`.
 > **Riwayat persetujuan:** Penulisan ulang Bahasa Indonesia yang disetujui Anhar setelah audit makna terhadap sumber Inggris sebelumnya, blob `433aa2376040a442d2aa14f56a01e3499dcab231`; draf akhir blob `5f0497a3d26eea0fe689af133529ea8fe1a648ff`. Versi Inggris tetap terlacak melalui Git history.
 > **Cakupan:** Menjelaskan tujuan produk dan batas prinsip. Tidak menetapkan urutan development, aturan rinci O1, cakupan rilis, atau izin pelaksanaan Engineering.
 > **Istilah:** Ikuti [acuan istilah Product Kencleng](istilah.md).
