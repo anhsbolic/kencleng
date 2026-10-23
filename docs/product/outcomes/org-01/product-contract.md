@@ -15,7 +15,7 @@
 | Artefak saat ini | `docs/product/outcomes/org-01/product-contract.md` pada branch riset `pilot/station5-c1-space-only`; catatan approval memuat canonical blob. Draf sebelumnya disimpan sebagai historical approved-content snapshot. |
 | Approval | **APPROVED — Anhar, 23 Oktober 2026**, atas exact candidate blob `448a8082bcb9ac1c7e41a686f2e3fdd2e3988ac4`. Canonical version hanya memperbarui administrative standing; semua PD/SC/REQ/AC binding-content fields diaudit tidak berubah. Lihat [approval record](approval.md). |
 | Sumber utama | [Product Intent yang disetujui](../../product-intent.md), blob `18fafc31121b49277a6c1b45a7ff6ef57edf0825`; [Peta Journey Level 2 v0.3](../../interconnected-journeys/level-2-network.md), blob `5783fdb303e34ecef7988d6ec3c7fb8b15326a95` (node ORG-01 dan hubungan terkait) |
-| Pendukung keputusan riset | [Selection and Product Output research](../../interconnected-journeys/selection-and-handoff-research.md), blob `6323010a854aa4eb585500e462fdf5d42960add8`, **working research**, bukan aturan ORG-01 yang disetujui |
+| Pendukung keputusan riset | [Selection and Product Output research](../../outcome-selection.md), blob `6323010a854aa4eb585500e462fdf5d42960add8`, **working research**, bukan aturan ORG-01 yang disetujui |
 | Yang tidak menjadi sumber ketentuan ORG-01 | Paket perilaku/requirements pilot historis dan draft PRD lama yang pernah dirakit dari komitmen tersebut |
 | Consumer yang dituju | Input Product semantics `I1` Rancang untuk ORG-01 **setelah** penugasan dan consumer-fit verification terpisah; `I2/I3/I4` tidak tersedia melalui approval ini dan tidak ada izin invocation. |
 
@@ -162,7 +162,7 @@ Acceptance ini adalah konsekuensi Product yang bisa diperiksa bila nanti diimple
 **Konteks penting yang tidak tertampung sebagai perilaku ORG-01:** Dalam eksperimen sebelum jalur Journey saat ini, pernah ada PRD specimen yang dirakit dari paket requirement komitmen historis (label lama `C1`). Hasil penghitungan coverage spesimen tersebut **hanya membuktikan kesetiaan penyalinan paket historis**, bukan kesesuaian Product Contract ORG-01 baru.
 
 - **Mengapa dicatat di bagian tambahan:** Ini **risiko pembacaan provenance** yang khas untuk consumer ORG-01, bukan requirement atau Success Criteria ORG-01 baru.
-- **Sumber dan standing:** [Selection and Product Output research](../../interconnected-journeys/selection-and-handoff-research.md), working research yang menerima keputusan pemisahan historical requirements dari input Product baru.
+- **Sumber dan standing:** [Selection and Product Output research](../../outcome-selection.md), working research yang menerima keputusan pemisahan historical requirements dari input Product baru.
 - **Konsekuensi bila diabaikan:** Consumer mungkin menyamakan contoh atau persyaratan `C1` dengan keputusan ORG-01 yang baru, kemudian menganggap Product authority/acceptance telah terpenuhi padahal belum.
 - **Pemilik tindakan:** Product owner Kencleng menjaga keputusan ORG-01 hanya dari authority yang berlaku; Rancang, jika kelak diinvokasi, harus membaca `I1` approved asli dan tidak mengisi celah semantik dari arsip.
 
