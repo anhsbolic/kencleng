@@ -7,15 +7,15 @@
 
 ## Penerapan untuk Kencleng O1
 
-- **Calon artefak uji:** [O1 Product Contract v0.2 — draf Bahasa Indonesia](interconnected-journeys/o1-product-contract-draft.md) menggunakan template Indonesia Harscode. Masih `PROPOSED`, belum menjadi input Rancang `I1` yang binding. Jangan memperlakukan contoh/aturan yang diusulkan sebagai approved.
+- **Artefak hasil pilot:** [Product Contract O1 v0.3 — APPROVED](interconnected-journeys/o1-product-contract.md), dengan [rekaman Human approval exact-revision](interconnected-journeys/o1-product-contract-approval-2026-10-23.md) setelah ditulis memakai template Indonesia Harscode. Status **approved** ini berlaku untuk **Product O1 Kencleng**, bukan untuk template reusable Harscode atau readiness/invocation Rancang.
 - **Struktur reusable:** metadata authority; tujuh section standar; satu section **Informasi Material Tambahan** yang kondisional. `Success Criteria` eksplisit di bagian Outcome; `Acceptance Criteria` harus memiliki tautan ke `Success Criteria` yang relevan.
 - **Pilihan istilah:** Gunakan [acuan istilah Product Kencleng](istilah.md) dan Bahasa Indonesia untuk dokumen Product proyek ini. Bentuk bahasa lokal **bukan perubahan semantik template Harscode**.
 - **Batas consumer:** Product Contract hanya menangani `I1`. `I2` milik Design/Engineering constraints, `I3` kode/lingkungan, dan `I4` assignment/otorisasi langsung dari Anhar; template tidak memenuhi ketiganya dan tidak mengaktifkan Rancang.
-- **Hal yang harus dibuktikan:** Apakah Product Contract O1 v0.2 dalam Bahasa Indonesia membantu pembaca baru memahami outcome, kewenangan, Success Criteria, perilaku, negative paths, Acceptance Criteria, blockers, dan kebebasan solusi **tanpa chat history** atau mengarang keputusan Product. Periksa juga kecocokan semantik dua versi template.
+- **Hal yang masih harus dibuktikan tentang template:** Apakah artefak O1 yang approved benar-benar cukup bagi consumer baru untuk memahami outcome, kewenangan, Success Criteria, negative paths, acceptance, dan batas solusi **tanpa chat history** atau upstream Product source re-check. Periksa juga konsistensi dua versi bahasa template sebagai research evidence tersendiri.
 - **Standing evaluasi:** Belum ada bukti uji fresh-reader/consumer Rancang yang terpisah. Jangan mencatat `PASS` atau menyebut template Harscode sudah terbukti universal hanya karena strukturnya lengkap.
 
 ## Batas keputusan
 
 Persetujuan Anhar sebelumnya untuk **memasukkan Success Criteria ke struktur template** telah diterapkan pada draf Harscode. Persetujuan itu **tidak otomatis** menyetujui seluruh template sebagai kebijakan Harscode operasional, tidak menyetujui PD-O1-01..05, dan tidak menyetujui artifact revision sebagai Rancang `I1`.
 
-**Langkah uji berikutnya:** Review dan putuskan hanya keputusan Product O1 yang benar-benar material dalam [draf O1 v0.2](interconnected-journeys/o1-product-contract-draft.md), lalu uji kecukupan output sebagai calon `I1` melalui pembaca/consumer terpisah pada exact revision. Hasil evaluasi dapat menjadi evidence untuk keputusan standar Harscode selanjutnya.
+**Langkah uji berikutnya:** Uji kecukupan [approved Product Contract O1](interconnected-journeys/o1-product-contract.md) melalui fresh-reader/consumer independen pada exact revision jika dibutuhkan untuk validasi template. Hasil evaluasi merupakan evidence untuk Harscode; **approval Product O1 tidak otomatis membuktikan template Harscode universal**.
