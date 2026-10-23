@@ -22,7 +22,7 @@
 
 - Terapkan istilah dari tabel secara konsisten pada **dokumen baru** dan **dokumen aktif yang sedang disunting**. Jangan melakukan penggantian massal tanpa memeriksa konteks.
 - Istilah Inggris di tabel adalah **pilihan editorial yang disengaja**, bukan pengecualian tanpa alasan. Istilah Inggris lain hanya digunakan bila nama resminya perlu dipertahankan atau padanan Indonesia justru tidak jelas.
-- Pertahankan nama khusus produk, kode identitas seperti `O1`, serta pengenal teknis yang memang harus sama dengan sistem.
+- Pertahankan nama khusus produk, kode identitas seperti `ORG-01`, serta pengenal teknis yang memang harus sama dengan sistem.
 - Untuk dokumen baru, gunakan **Journey** saat menyebut kerangka User Journey atau Product Journey. Jangan otomatis mengganti kata *perjalanan* yang bermakna umum.
 - Bila istilah dapat mengubah aturan bisnis (contohnya kapan seseorang menjadi Donatur atau apa syarat `Owner` dianggap sah), **jangan tentukan jawabannya dari daftar istilah ini**. Catat keputusan tersebut di dokumen Product yang memiliki kewenangan.
 - Tambahkan istilah baru hanya saat ada ketidakseragaman nyata yang perlu diselesaikan. Tidak perlu memperbesar daftar ini menjadi kamus umum.
