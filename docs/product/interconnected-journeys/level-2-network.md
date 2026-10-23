@@ -2,7 +2,7 @@
 
 > **Status:** DISETUJUI ANHAR — PETA RISET LEVEL 2 YANG BERLAKU, 22 Oktober 2026, **hanya pada branch `pilot/station5-c1-space-only`**. Penulisan ulang Bahasa Indonesia menggantikan pengantar Level 2 Inggris pada lokasi dokumen ini, **tanpa mengubah makna dan batas persetujuan riset v0.3**.
 > **Riwayat dan sumber yang diaudit:** Level 2 Inggris terakhir, blob `4970ba936d107e50d8260c9e246816ba13d41a28`; draf Bahasa Indonesia yang disetujui Anhar, blob `2ae3ed81651fe3f56595128617edb5244cb9d86c`; sumber koreksi v0.3 awal yang disetujui sebelumnya, blob `87edca25b40017429d66aff4e22ad1f4aa7e013f`. Seluruh versi Inggris tetap dapat ditelusuri melalui riwayat Git.
-> **Authority dan lingkup:** [Product Intent](../product-intent.md) tetap sumber utama prinsip Product. Dokumen ini merupakan **peta riset Journey**, bukan PRD, kontrak J-ORG-01 yang disetujui, rencana rilis, atau izin development. [Keputusan pemilihan titik awal dan handoff Product](selection-and-handoff-research.md) memuat kelanjutan riset yang berlaku; J-ORG-01 tetap satu arah percobaan dan aturan rincinya masih membutuhkan keputusan Product.
+> **Authority dan lingkup:** [Product Intent](../product-intent.md) memiliki authority nilai dan prinsip. Journey map ini bukan Product Contract atau Engineering roadmap. Untuk node `J-ORG-01`, gunakan [approved Contract ORG-01](../outcomes/org-01/product-contract.md). Node lain tidak otomatis approved.
 > **Batas lingkungan:** Kencleng `main`, Harscode, Rancang, Product Specification Space, dan Engineering **tidak** berubah atau otomatis diaktifkan karena promosi editorial ini.
 
 ## 1. Cara membaca peta
