@@ -25,7 +25,7 @@
 
 ## Usulan template handoff Product (belum disetujui)
 
-[Catatan uji coba Kencleng](product-contract-template-draft.md) merujuk pada [Product Contract Template v0.1 — proposal reusable Harscode](https://github.com/anhsbolic/harscode-workspace/blob/9029554c3cb9860f05e2b4f96415859091c0c5d7/product/product-contract-template-draft.md). Template generik mencakup **Success Criteria** dan **Acceptance Criteria** yang saling terlacak, serta section kondisional **Informasi Material Tambahan**. Kencleng adalah tempat eksperimen penerapannya, **bukan pemilik template generik**. Template Harscode ini masih **research proposal**, belum disetujui sebagai operational policy; O1 Product Contract tetap DRAFT dan belum memenuhi `I1` binding. `I2/I3/I4` tetap dimiliki concern masing-masing; belum ada izin invocation Rancang.
+[Catatan uji coba Kencleng](product-contract-template-draft.md) merujuk pada **dua template proposal reusable Harscode**: [Bahasa Indonesia](https://github.com/anhsbolic/harscode-workspace/blob/e24b8869e290033e05a52c92dcb8bf3cdc49d172/product/product-contract-template-id-draft.md) dan [English](https://github.com/anhsbolic/harscode-workspace/blob/refactor/harscode-foundation/product/product-contract-template-draft.md). Keduanya memiliki **Success Criteria**, **Acceptance Criteria** yang terlacak, serta section kondisional **Informasi Material Tambahan**. [Draft Product O1 v0.2 — Bahasa Indonesia](interconnected-journeys/o1-product-contract-draft.md) sudah disusun mengikuti template Indonesia. Kencleng adalah **tempat eksperimen**, bukan pemilik template generik. Template Harscode masih **research proposal**; Product O1 masih **PROPOSED / bukan I1 binding**, dan `I2/I3/I4` tetap dimiliki concern masing-masing. Tidak ada izin invocation Rancang.
 
 ## Current entrypoints
 
@@ -33,7 +33,7 @@
 2. [Peta Journey Product](interconnected-journeys/README.md) — pengantar Journey yang disetujui dalam Bahasa Indonesia; hasil riset, bukan izin delivery.
 3. [Peta Journey Level 2 v0.3](interconnected-journeys/level-2-network.md) — peta riset Bahasa Indonesia yang disetujui; memuat hubungan bermakna, syarat, dan pertanyaan OPEN, **bukan** persyaratan PRD terperinci.
 4. [Current selection and handoff research](interconnected-journeys/selection-and-handoff-research.md) — starting-point trial, source-independence rules, O1 OPEN decisions, consumer boundary and limits.
-5. [O1 fresh Product Contract draft](interconnected-journeys/o1-product-contract-draft.md) — independently proposed product behavior and acceptance; not approved binding I1.
+5. [Product O1 v0.2 — draf Bahasa Indonesia](interconnected-journeys/o1-product-contract-draft.md) — mengikuti template I1 Indonesia Harscode; SC/requirements/AC tetap PROPOSED, belum menjadi I1 binding.
 
 Historical `pilot-3-*` artifacts (including pre-engineering commitment decisions and dashboards) are preserved for **historical evidence/lineage only** in this research continuation. They must **not** be used to fill current Product requirements, grant authority, infer implementation readiness, choose the next work, or substitute for fresh Product elaboration. Prior approvals retain their original historical scope; no retroactive cancellation or deletion is asserted.
 
