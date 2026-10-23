@@ -69,7 +69,7 @@ Keputusan Product yang belum dibuat harus tetap terlihat sebagai **belum diputus
 - [Product Intent](../product-intent.md) adalah sumber tujuan dan prinsip Product yang sudah disetujui **pada branch riset ini**.
 - [Level 2 v0.3](level-2-network.md) adalah peta riset yang disetujui. **Persetujuan peta bukan persetujuan aturan rinci setiap bagian.**
 - [Keputusan riset tentang titik awal dan hasil Product](../outcome-selection.md) mencatat alasan memilih arah percobaan **J-ORG-01**, sekaligus batas keputusan yang masih terbuka.
-- [Draf kebutuhan Product J-ORG-01](o1-product-contract-draft.md) berisi **usulan**, belum menjadi aturan J-ORG-01 yang disetujui atau masukan resmi bagi Rancang.
+- [Draf kebutuhan Product J-ORG-01](../outcomes/org-01/product-contract.md) berisi **usulan**, belum menjadi aturan J-ORG-01 yang disetujui atau masukan resmi bagi Rancang.
 - [Rekonstruksi nilai bisnis](../history.md), [hasil riset pengguna dan perannya](../history.md), dan [contoh skenario riset](../history.md) adalah **riwayat bahan pembanding** yang mendasari pekerjaan riset sebelumnya. Persetujuan atau aturan lama tidak otomatis menjadi keputusan Product saat ini.
 
 Dokumen `pilot-3-*` mempertahankan catatan keputusan dan proses lama. Catatan itu **tidak otomatis menjadi dasar aturan atau prioritas** untuk pekerjaan Product saat ini.
