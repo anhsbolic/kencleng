@@ -148,7 +148,7 @@ Acceptance ini adalah konsekuensi Product yang bisa diperiksa bila nanti diimple
 | Pertanyaan kesiapan | Keadaan yang benar-benar diketahui |
 | --- | --- |
 | **Exact Product authority dan approval** | Product Intent dan Level 2 v0.3 approved; `PD-O1-01..05` **DECIDED — scoped, Anhar 23 Oktober 2026**. Seluruh `SC`, requirements, dan `AC` telah direvisi agar selaras tetapi belum disetujui sebagai Product Contract pada exact revision. |
-| **Konsistensi outcome → SC → rules → AC** | Jejak antar-ID dirumuskan dalam draf ini dari proposal v0.1 untuk review. Ini **pemeriksaan penulisan berbasis dokumen**, belum independent fresh-reader validation. |
+| **Konsistensi outcome → SC → rules → AC** | SC, requirements dan AC diselaraskan dengan keputusan scoped O1 terbaru, termasuk pembatasan Potential Conflicts pada O1. **Pemeriksaan silang dokumen internal telah dilakukan**; ini belum menjadi persetujuan Product Contract ataupun bukti independent fresh-reader validation. |
 | **Human Decision Gate** | **POLICY DECISIONS CLOSED — lihat Section 6.** Final consistency review dan approval exact revision Product Contract **PENDING**. **NOT READY FOR ENGINEERING HANDOFF.** |
 | **Syarat Product dan ketersediaan teknis** | Atribusi dan persistensi diperlukan untuk keberhasilan internal O1. Keadaan kode/lingkungan dan autentikasi **UNVERIFIED**. Sinyal konflik dan proses Reviewer bukan dependency universal O1. |
 | **Rancang `I1` generic fit** | Struktur memuat outcome, aturan, acceptance, source revisions, exclusions dan delegated freedom. **Candidate only; belum diuji oleh consumer Rancang independen.** |
