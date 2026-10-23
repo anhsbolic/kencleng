@@ -25,7 +25,7 @@
 
 ## Usulan template handoff Product (belum disetujui)
 
-[Draf Product Contract Template v0.1](product-contract-template-draft.md) adalah **usulan Kencleng** untuk menyusun artefak Product yang dapat memenuhi kelas input **I1 Rancang**, dengan section **Informasi Material Tambahan** yang bersifat kondisional. Template ini **belum disetujui sebagai standar**, tidak mengubah kontrak Rancang `I1–I4`, tidak mengesahkan O1 Product Contract, dan tidak mengizinkan invocation Space. `I2/I3/I4` tetap berasal dari pemilik dan proses otorisasi masing-masing.
+[Catatan uji coba Kencleng](product-contract-template-draft.md) merujuk pada [Product Contract Template v0.1 — proposal reusable Harscode](https://github.com/anhsbolic/harscode-workspace/blob/004b61f9d8d0cb58cd439cbe66bd6c3157d43f73/product/product-contract-template-draft.md). Template generik mencakup **Success Criteria** dan **Acceptance Criteria** yang saling terlacak, serta section kondisional **Informasi Material Tambahan**. Kencleng adalah tempat eksperimen penerapannya, **bukan pemilik template generik**. Template Harscode ini masih **research proposal**, belum disetujui sebagai operational policy; O1 Product Contract tetap DRAFT dan belum memenuhi `I1` binding. `I2/I3/I4` tetap dimiliki concern masing-masing; belum ada izin invocation Rancang.
 
 ## Current entrypoints
 
