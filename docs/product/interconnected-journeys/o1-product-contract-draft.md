@@ -1,98 +1,161 @@
-# O1 — Organization Establishment with Legitimate Initial Internal Authority
+# Kencleng — Product Contract O1: Pembentukan Organisasi dan Kewenangan `Owner` Internal Pertama (Draf v0.2)
 
-> **Status:** PRODUCT ELABORATION + PRODUCT CONTRACT **DRAFT v0.1** / **NOT APPROVED AS EFFECTIVE I1**.
-> **Owning Product decision:** Anhar; pending fresh scoped decision. **Date:** 2026-10-22. **Repository/branch:** `anhsbolic/kencleng` / `pilot/station5-c1-space-only` (research only, not operational `main`).
-> **Research basis (Product-side only):** [current approved Product Intent](../product-intent.md), [approved Level 2 v0.3](level-2-network.md) (O1 + relevant typed edges), and [approved working Product Output Contract v0.1 / selection record](selection-and-handoff-research.md). **No historical commitment-specific Product behavior/requirements were used to derive this draft.**
-> **Critical distinction:** The statements labeled **PROPOSED** below are new O1-scoped Product decisions for Anhar; they are **not** binding simply because this file exists. No historical Product decision is inherited. The eventual self-contained, exact-revision approved Product Contract would be the sole effective Product-semantic input for Rancang I1; this draft is **not** that input.
-> **Consumer boundary:** No Rancang invocation or delivery authorization. Rancang's black-box definition update is separate and unapproved; technical I2/I3/Human I4 inputs remain necessary.
+> **Status:** DRAF PRODUCT CONTRACT / PROPOSED — **BELUM DISETUJUI SEBAGAI INPUT `I1` RANCANG**. Penulisan ulang Bahasa Indonesia menggunakan [template I1 Harscode — Bahasa Indonesia](https://github.com/anhsbolic/harscode-workspace/blob/e24b8869e290033e05a52c92dcb8bf3cdc49d172/product/product-contract-template-id-draft.md) (template itu juga masih proposal riset).
+> **Lingkup:** Hanya Product O1 pada `anhsbolic/kencleng`, branch `pilot/station5-c1-space-only`. Bukan perubahan Kencleng `main`, bukan prioritas Engineering, dan bukan perintah menjalankan Rancang.
+> **Riwayat yang diadaptasi:** Draf Product O1 v0.1 Inggris, blob `00497ab3ab0a6183ff54e90089cf54131e560b08`. Semua `PD-O1-01..05`, `O1-R01..08`, dan `O1-AC01..09` tetap proposal menurut makna aslinya; Success Criteria dan trace antarbagian ditambahkan sebagai **struktur usulan untuk review**, bukan persetujuan aturan baru.
+> **Batas keputusan:** Persetujuan Anhar untuk **menulis draf mengikuti template** tidak berarti approval atas kebijakan pemberian `Owner` pertama, keberhasilan gabungan, atau perlakuan sengketa; keputusan itu tetap milik Anhar.
 
-## 1. One meaningful Product outcome
+## Identitas artefak dan authority
 
-**Selected research outcome:** O1 — a person can establish an attributable Organization context in Kencleng, resulting in a legitimate initial **internal Organization authority** relationship whose significance is truthful, durable, and inspectable.
-
-**Why this is useful (Product research rationale, not a new requirement):** Kencleng's Campaigns belong to Organizations; someone acting on behalf of an Organization needs intelligible, attributable internal authority. This creates a meaningful Organization-side consequence without requiring an entire Organization review, Campaign flow, or public/donation journey.
-
-**What Product Intent already supports:**
-- Organizations, their representatives, Owners and Staff have distinct roles/meaning; Campaigns and Organizations are separate.
-- Organization-supplied assertions, platform-known facts and independent review/verification must not be confused.
-- Consequential actions and meaningful states require understandable, provenance-aware, truthful communication.
-- The Product Intent leaves exact permissions, approval/review mechanics, and implementation decisions open.
-
-**What Level 2 v0.3 provides:** O1 is a *research transition* about Organization establishment and legitimate internal authority; exact grant, coupled success, failure and disputed-claim rules were intentionally left OPEN. O1 is not universal first work for existing valid Organization contexts.
-
-## 2. Current Product decisions needing approval
-
-The following is **one coherent recommended O1 formation policy proposal** for Human review, not five independently approved facts.
-
-| ID | Decision proposed for this O1 scope | Source status / why a new decision is needed |
-| --- | --- | --- |
-| **PD-O1-01** | A person may initiate establishing a new Kencleng Organization context. **At the effective successful establishment**, the acting, legitimately attributable person is granted that Organization's **initial internal Kencleng Owner** relationship. This grant describes *Kencleng-internal* authority only and does not claim independently verified external representation. | **PROPOSED.** Product Intent distinguishes Owner/Staff but does not decide the initial grant. No pre-established external legal verification is asserted as a mandatory success condition for this limited internal relationship. |
-| **PD-O1-02** | A successful establishment is **one coherent consequential result**: valid Organization context **and** valid initial attributable Owner relationship. The product must not treat only one as full establishment success. Person attribution is required **by the time the consequence becomes effective**, not necessarily at entry. | **PROPOSED.** Precise coupled-success and attribution timing are not fixed by Product Intent/Level 2; exact authentication/transaction design is delegated. |
-| **PD-O1-03** | Before the consequence becomes effective, the actor must be able to understand which Organization context is being formed, that they will be its initial internal Owner and the limits of that meaning. After success, the current Organization/Owner relationship and its internal meaning must be **durably inspectable**, not merely a transient success message. | **PROPOSED scoped elaboration** of the Product Intent's clarity/provenance/truth safeguards. No UI flow, acknowledgement control or screen count is selected. |
-| **PD-O1-04** | Incomplete/unattributable/failed establishment cannot be represented as successful. When an **actually known, relevant unresolved representation dispute** exists, the product cannot silently assert uncontested successful initial authority; the affected claim must remain unresolved or be denied, with truthful user-visible meaning. This does **not** mandate universal duplicate detection, external adjudication, conflict-resolution UX, or a new technical dispute service. | **PROPOSED.** Product Intent requires honest authority/truth but does not settle O1 dispute handling. Condition depends on a real known signal; availability is unverified. |
-| **PD-O1-05** | Organization-supplied information remains attributable **Organization-provided** information. Establishment by itself does not perform or imply Organization review, external legal verification, Campaign curation, public visibility, or donation eligibility. | **Product Intent-supported distinction applied to O1**, with the exact O1 consequence proposed above. |
-
-**Recommendation:** Approve or revise this **one bounded formation policy** as a cohesive Product decision. Do **not** authorize Engineering work by approving it. If Anhar rejects part of it, rewrite the affected contract and acceptance before any Rancang handoff.
-
-## 3. Draft person-facing experience (illustrative, not UI flow)
-
-**Entry:** A person wants to establish an Organization presence in Kencleng. They can understand that establishing an internal Organization context is different from external legal/representative verification. They may begin without the product claiming verified external authority.
-
-**Before effect:** The person must be able to understand the internal Organization context that would be formed and the resulting initial Owner authority and its limits. Sufficient person attribution must exist *before the successful consequential effect*; the sign-in/identity interaction mechanism is not fixed.
-
-**Success:** Kencleng truthfully reports a valid Organization context together with the initial attributable internal Owner relationship, and makes the resulting relation understandable and available for later inspection. No Organization review/trust label is automatically implied.
-
-**Failure or uncertainty:** If attribution or coherent formation does not occur, success is not claimed. If the system knows an unresolved relevant representation dispute, no unqualified uncontested authority is claimed. An error or unresolved outcome is not turned into verified/legal authority or an ordinary success.
-
-## 4. Proposed binding requirements once Product accepts PD-O1-01..05
-
-The requirements in this section are **DRAFT/PROPOSED**, and **must not** be consumed as approved Product Authority until a separate exact-revision Human approval.
-
-| ID | Draft Product requirement |
+| Informasi | Isi dan status |
 | --- | --- |
-| **O1-R01** | Initiation is possible for a person without an assertion of externally verified legal authority; any mandatory actor eligibility conditions beyond this require an explicit scoped Product decision. |
-| **O1-R02** | At success, the initiating person is legitimately attributable to the resulting Organization and initial internal Owner relationship, as proposed in PD-O1-01. |
-| **O1-R03** | The material consequence and internal limits of initial Owner authority are intelligible before establishment takes effect. |
-| **O1-R04** | The product only claims successful establishment when actual valid Organization context and legitimate, attributable initial Owner relationship both hold. |
-| **O1-R05** | The resulting Organization and current initial Owner relationship remain durably inspectable with their actual internal authority meaning. |
-| **O1-R06** | Establishment does not upgrade Organization-provided assertions into review, external proof, Campaign curation, or other independent truth classes. |
-| **O1-R07** | Absent attribution, partial, failed or interrupted establishment is distinguished from genuine success; recovery mechanisms remain a Design/Engineering choice unless a subsequent Product decision makes recovery consequential. |
-| **O1-R08** | An actually known relevant unresolved representation dispute prevents false uncontested authority/success; no universal detection/adjudication capability is inferred. |
+| Proyek dan outcome | Kencleng — `O1`: pembentukan konteks organisasi dan kewenangan `Owner` internal pertama |
+| Product owner | Anhar |
+| Status Product Contract | **DRAFT / PROPOSED**; belum berlaku sebagai `I1` yang binding |
+| Artefak saat ini | `docs/product/interconnected-journeys/o1-product-contract-draft.md` pada `pilot/station5-c1-space-only`; rujuk blob/commit yang nyata saat review |
+| Approval | **BELUM ADA** untuk `PD-O1-01..05`, Success Criteria, requirements, dan acceptance dalam cakupan O1 |
+| Sumber utama | [Product Intent yang disetujui](../product-intent.md), blob `18fafc31121b49277a6c1b45a7ff6ef57edf0825`; [Peta Journey Level 2 v0.3](level-2-network.md), blob `5783fdb303e34ecef7988d6ec3c7fb8b15326a95` (node O1 dan hubungan terkait) |
+| Pendukung keputusan riset | [Selection and Product Output research](selection-and-handoff-research.md), blob `6323010a854aa4eb585500e462fdf5d42960add8`, **working research**, bukan aturan O1 yang disetujui |
+| Yang tidak menjadi sumber ketentuan O1 | Paket perilaku/requirements pilot historis dan draft PRD lama yang pernah dirakit dari komitmen tersebut |
+| Consumer yang dituju | Calon `I1` Rancang, **setelah** persetujuan Product exact revision; `I2/I3/I4` dan invocation tetap terpisah |
 
-**Success invariant proposed:** `O1 successful establishment` means `valid Organization context + valid attributable initial internal Owner relationship`, with truthful communication and later inspectability. It **does not** mean legal/external verification or completed Organization review.
+**Urutan authority:** Product Intent dan Level 2 yang disetujui menentukan batas riset. Semua penjabaran O1 yang dinyatakan `PROPOSED` di bawah **memerlukan keputusan baru** dari Product owner. Riwayat bahasa Inggris bisa dilacak melalui Git dan bukan sumber Product kedua.
 
-**Negative-path invariants proposed:** no unattributable authority grant, no successful claim for partially formed consequence, no uncontested authority claimed across an actually known unresolved relevant dispute, no implied reviewed/verified status.
+## 1. Outcome Product dan Success Criteria
 
-## 5. Draft observable acceptance
+**Pernyataan outcome O1 (arah riset yang dipilih, bukan acceptance yang sudah disetujui):** Seseorang dapat membentuk konteks organisasi baru yang dapat diatribusikan di Kencleng, sehingga organisasi tersebut mempunyai hubungan kewenangan **internal** dengan `Owner` pertama yang sah menurut aturan Product O1 yang nantinya disetujui; keberhasilannya jujur, bertahan sebagai keadaan yang nyata, dan dapat diperiksa kembali.
 
-| ID | Testable Product consequence / negative case | Standing |
+Outcome ini membantu menyiapkan konteks kewenangan organisasi yang bermakna bagi tindakan berikutnya, **tanpa** mewajibkan peninjauan organisasi, persiapan Campaign, donasi, atau hasil Journey lain. Organisasi yang sudah memiliki konteks sah tidak perlu otomatis mengulangi O1.
+
+### Success Criteria yang diusulkan
+
+Keempat SC berikut adalah **kandidat kondisi keberhasilan semantik**, bukan bukti runtime maupun syarat yang sudah disetujui. Untuk menyebut O1 berhasil sebagaimana diusulkan, kondisi materialnya harus berlaku **bersama**.
+
+| ID | Kapan outcome dapat dinyatakan berhasil menurut proposal | Batas makna yang tidak ikut dibuktikan | Dasar/status |
+| --- | --- | --- | --- |
+| **SC-O1-01** | Konteks organisasi **dan** hubungan `Owner` internal pertama **sama-sama sah dan benar-benar berlaku** sebagai satu hasil; tindakan dan hubungan `Owner` dapat diatribusikan kepada orang yang bertindak pada saat akibatnya efektif. | Tidak membuktikan kewenangan legal eksternal, tidak mengharuskan identitas sudah lengkap saat awal interaksi. | `PD-O1-01/02` **PROPOSED**, selaras dengan batas O1 Level 2 |
+| **SC-O1-02** | Sebelum akibat berlaku, aktor bisa memahami organisasi yang dibentuk, arti dan batas `Owner` internal; setelahnya hubungan aktual tetap dapat diperiksa, bukan hanya melalui pesan sukses sesaat. | Tidak menetapkan layar, waktu sign-in, bentuk persetujuan UI, atau teknologi penyimpanan. | `PD-O1-03` **PROPOSED**; prinsip keterbukaan Product Intent |
+| **SC-O1-03** | Klaim keberhasilan sesuai fakta: keadaan yang tidak lengkap, gagal, tidak dapat diatribusikan, atau relevan namun masih disengketakan dan diketahui **tidak diperlakukan sebagai keberhasilan tanpa masalah**. | Tidak mengharuskan deteksi sengketa universal atau menentukan satu mekanisme penanganan sengketa. | `PD-O1-04` **PROPOSED** |
+| **SC-O1-04** | Keberhasilan O1 **tidak menaikkan klaim organisasi** menjadi hasil peninjauan/verifikasi eksternal, kurasi Campaign, penayangan publik, atau kelayakan donasi. | Tidak menjamin kualitas organisasi atau kesiapan Campaign. | Batas umum Product Intent diterapkan pada O1 lewat `PD-O1-05` (konsekuensi O1 tetap **PROPOSED**) |
+
+**Definisi keberhasilan gabungan yang diusulkan:** `O1 berhasil = organisasi sah + hubungan Owner internal pertama yang sah dan teratribusi + makna/hasil yang jujur serta dapat dipahami dan diperiksa`. Perlindungan dari klaim sukses palsu tetap mengikat definisi keberhasilan proposal ini. Definisi tersebut **belum diputuskan Anhar**.
+
+## 2. Pengalaman Aktor dan Makna Konsekuensinya
+
+Ini gambaran pengalaman bermakna, **bukan urutan layar** atau desain autentikasi.
+
+| Momen | Apa yang dialami atau dipahami aktor | Konsekuensi Product menurut usulan |
 | --- | --- | --- |
-| **O1-AC01** | A person can initiate without the product presenting external representative authority as already proved. | PROPOSED |
-| **O1-AC02** | Establishment cannot reach successful effect without real attribution of both action and initial Owner relation to the initiating person. | PROPOSED |
-| **O1-AC03** | Before effect, the actor can understand what Organization is established and what the internal Owner relationship means and does not prove. | PROPOSED |
-| **O1-AC04** | Valid Organization + initial attributable Owner can be experienced and inspected as **one** successful result; a partially formed pair cannot be ordinary success. | PROPOSED |
-| **O1-AC05** | After success, a later inspection exposes the current Organization/Owner relation and relevant limits without relying on the success notification. | PROPOSED |
-| **O1-AC06** | An Organization-provided claim remains source-attributed and is not upgraded to independent review, external verification or Campaign curation solely by establishment. | PROPOSED |
-| **O1-AC07** | Unattributed, failed, incomplete and uncertain outcomes cannot look like ordinary successful establishment; optional retry/recovery cannot promote partial state into success. | PROPOSED |
-| **O1-AC08** | If a relevant unresolved representation conflict is already known, the product does not issue ordinary uncontested initial Owner authority or pretend that claim is resolved. | PROPOSED |
-| **O1-AC09** | No O1 completion produces Campaign preparation, public visibility, donation eligibility or Organization review as a side effect. | PROPOSED |
+| **Kondisi awal** | Seseorang ingin membentuk kehadiran organisasi di Kencleng dan memahami bahwa konteks internal berbeda dari pembuktian hak mewakili organisasi nyata. | Orang boleh memulai tanpa produk mengklaim kewenangan legal eksternalnya telah diverifikasi (`PD-O1-01` dan `O1-R01`, **PROPOSED**). |
+| **Sebelum hasil efektif** | Aktor memahami organisasi yang hendak dibentuk, bahwa dirinya akan menjadi `Owner` internal pertama, serta batas makna peran tersebut. | Atribusi orang yang cukup harus tersedia **sebelum akibat berhasil menjadi efektif**, bukan harus sejak awal mengisi informasi (`PD-O1-02/03`). |
+| **Tindakan** | Aktor melakukan pembentukan organisasi menurut kewenangan dan syarat Product yang berlaku. | Tindakan **tidak** otomatis menjadi bukti mewakili organisasi secara hukum atau hasil peninjauan. |
+| **Berhasil** | Aktor mendapat informasi keberhasilan yang tidak berlebihan; organisasi dan hubungan `Owner` internal benar-benar ada, kemudian tetap dapat diperiksa. | Satu keberhasilan gabungan yang bermakna; bukan pesan sukses untuk salah satu keadaan saja. |
+| **Gagal / tidak lengkap / belum pasti** | Aktor tidak menerima kesan keliru bahwa pembentukan sukses. | Atribusi tidak cukup, sebagian proses gagal/terputus, atau hasil tidak diketahui **tidak boleh** diperlakukan sebagai keberhasilan biasa. |
+| **Sengketa representasi yang benar-benar diketahui** | Bila ada sengketa relevan yang belum selesai dan sinyalnya nyata tersedia, aktor tidak mendapat kesan bahwa kewenangan awal bebas sengketa. | Klaim yang terdampak harus tetap belum terselesaikan atau ditolak secara jujur; **bentuk pembatasan hubungan `Owner` yang efektif belum diputuskan lebih jauh**. |
 
-These are product-observable criteria, **not** API tests, database transaction prescriptions, executable proofs, or evidence that current code works.
+## 3. Perilaku Product, Kewenangan, dan Invariants
 
-## 6. Boundaries and delegated decisions
+### 3.1 Satu paket keputusan Product yang masih diusulkan
 
-**In-scope Product meaning:** attributable creation of a Kencleng Organization context, initial internal Owner authority, consequential disclosure, coherent result, inspectable truth and material negative outcomes.
+Lima butir ini merupakan **satu kebijakan pembentukan O1 yang saling terkait**, bukan lima fakta yang sudah disetujui terpisah.
 
-**Explicitly excluded:** full Owner/Staff permission matrix, staff invitations/transfers/delegation, independent legal-authority verification, full Organization review and its statuses, Campaign creation/review/publication/eligibility, funding/donation/accountability, universal duplicate detection or representation-dispute adjudication, and a mandated recovery subsystem.
+| ID | Usulan keputusan O1 | Standing |
+| --- | --- | --- |
+| **PD-O1-01** | Seseorang dapat memulai pembentukan konteks organisasi baru. **Jika pembentukan berhasil secara efektif**, orang yang bertindak dan dapat diatribusikan secara sah memperoleh hubungan `Owner` **internal Kencleng** yang pertama. Ini bukan hasil verifikasi perwakilan eksternal. Verifikasi hukum eksternal yang telah selesai **tidak diusulkan sebagai syarat universal** untuk kewenangan internal terbatas ini. | **PROPOSED** — Product Intent tidak menetapkan model pemberian `Owner` pertama. |
+| **PD-O1-02** | Hasil berhasil merupakan **satu akibat gabungan**: konteks organisasi sah **dan** hubungan `Owner` awal sah/teratribusi. Atribusi aktor wajib tersedia saat akibat menjadi efektif, tidak harus saat awal interaksi. Satu komponen saja tidak boleh dinyatakan berhasil penuh. | **PROPOSED** — aturan keberhasilan gabungan dan waktu atribusi masih keputusan Product. |
+| **PD-O1-03** | Aktor dapat memahami akibat dan batas `Owner` sebelum efektif. Setelah berhasil, organisasi serta hubungan `Owner` aktual dapat diperiksa kembali secara durable, bukan hanya dari notifikasi sementara. | **PROPOSED** — penjabaran scoped dari prinsip kejelasan/kebenaran Product Intent. |
+| **PD-O1-04** | Pembentukan yang tidak lengkap, gagal, atau tak dapat diatribusikan **tidak boleh dinyatakan berhasil**. Jika sengketa representasi relevan yang belum selesai **benar-benar diketahui**, Kencleng tidak boleh menyatakan adanya keberhasilan kewenangan awal yang bebas sengketa; klaim terkait tetap unresolved atau ditolak dengan makna yang jujur. | **PROPOSED** — tidak mewajibkan deteksi duplikasi/sengketa universal, adjudikasi eksternal, UX penyelesaian sengketa, atau layanan teknis baru. |
+| **PD-O1-05** | Informasi yang diberikan organisasi tetap **informasi dari organisasi**. Pembentukan organisasi saja tidak melakukan atau menyiratkan peninjauan organisasi, verifikasi legal eksternal, kurasi Campaign, penayangan publik, atau izin menerima donasi. | Pembedaan jenis informasi **didukung Product Intent**; aplikasi konsekuensinya pada O1 tetap bagian paket **PROPOSED**. |
 
-**Delegated Design/Engineering freedom (after valid assignment):** exact form/fields consistent with meaningful identification; sign-in timing, identity UX and authentication technical implementation; disclosure method; interaction layout/copy; persistence/data model; transactional consistency mechanism; API/interface/component boundaries; failure/unknown-state presentation; representation of an actually known dispute signal; verification techniques. These freedoms cannot relax approved semantic outcomes, authorize broader roles, or override project security constraints.
+**Koreksi penting yang masih OPEN:** Usulan terpisah untuk **melarang seluruh hubungan `Owner` menjadi efektif selama sengketa representasi yang diketahui belum selesai** pernah muncul sebagai rekomendasi diskusi, tetapi **belum disetujui Anhar dan tidak dimasukkan sebagai aturan baru** dalam draf ini. `PD-O1-04` mempertahankan batas proposal asal; konsekuensi tepatnya perlu keputusan Product sebelum menjadi I1 binding.
 
-**Required technical/Design/environment evidence is external to Product-semantic I1:** available identity authority and person attribution, data persistence, authorized code/architecture/security constraints, known-conflict signals if relevant, legitimate repository/ref/environment and consumer expectations. No capability is asserted to be delivered. Rancang I2/I3 and Human-direct I4 remain independent requirements.
+### 3.2 Requirements dan invariants yang diusulkan
 
-## 7. Contract-readiness result and Human decision
+| ID | Perilaku Product yang diusulkan | Syarat/kewenangan | Invariant / yang tidak otomatis dijamin | Dasar |
+| --- | --- | --- | --- | --- |
+| **O1-R01** | Seseorang dapat memulai pembentukan tanpa produk menyatakan representasi legal eksternal telah dibuktikan. | Kelayakan aktor spesifik di luar batas ini memerlukan keputusan Product sendiri. | Memulai tidak otomatis berarti berwenang secara hukum atau berhasil menjadi `Owner`. | `PD-O1-01`, **PROPOSED** |
+| **O1-R02** | Saat berhasil, orang yang bertindak benar-benar teratribusi ke organisasi dan hubungan `Owner` internal pertama. | Atribusi yang cukup tersedia **pada saat akibat efektif**. | Hubungan `Owner` tidak boleh tak bertuan/tidak teratribusi. | `PD-O1-01/02`, **PROPOSED** |
+| **O1-R03** | Akibat pembentukan dan batas kewenangan `Owner` internal dapat dipahami sebelum berlaku. | Sebelum tindakan menghasilkan perubahan material. | Tidak berarti sudah diverifikasi sebagai perwakilan legal. | `PD-O1-03`, **PROPOSED** |
+| **O1-R04** | Keberhasilan hanya diklaim jika organisasi **dan** `Owner` internal pertama sama-sama sah/efektif. | Kedua fakta Product benar-benar terjadi. | Satu keadaan yang baru sebagian tidak boleh diklaim sebagai sukses penuh. | `PD-O1-02`, **PROPOSED** |
+| **O1-R05** | Organisasi dan hubungan `Owner` saat ini dapat diperiksa kembali beserta makna internalnya. | Setelah keberhasilan nyata. | Pesan sukses sementara tidak menggantikan keadaan durable. | `PD-O1-03`, **PROPOSED** |
+| **O1-R06** | Klaim dari organisasi tidak otomatis meningkat menjadi hasil peninjauan, bukti eksternal, kurasi, atau kategori fakta independen. | Setiap kali klaim organisasi disajikan/ditafsirkan. | Pembentukan O1 bukan peninjauan organisasi atau legitimasi legal eksternal. | `PD-O1-05`, prinsip Product Intent + aplikasi O1 **PROPOSED** |
+| **O1-R07** | Kegagalan, keadaan parsial, hasil tidak teratribusi, atau interupsi dibedakan dari keberhasilan asli. | Ketika keadaan negatif atau belum pasti terjadi. | Retry/pemulihan bukan kewajiban sistem Product baru kecuali diputuskan kemudian; tidak boleh membuat sukses palsu. | `PD-O1-04`, **PROPOSED** |
+| **O1-R08** | Sengketa representasi relevan yang benar-benar diketahui dan belum selesai tidak menghasilkan klaim kewenangan awal **bebas sengketa** yang salah. | Hanya jika ada **sinyal relevan yang benar-benar diketahui**; asal/tersedianya sinyal belum diverifikasi. | Tidak mengharuskan deteksi atau penyelesaian sengketa universal. | `PD-O1-04`, **PROPOSED** |
 
-**Product Output Contract v0.1 logical structure:** Actor/outcome, proposed rules, positive and negative paths, invariants, acceptance, dependencies, exclusions, solution freedom and boundary are **PRESENT AS DRAFT**.
+**Invariants yang diusulkan:** Tidak ada `Owner` internal awal yang tidak dapat diatribusikan; tidak ada keberhasilan penuh dari pembentukan yang parsial; tidak ada klaim kewenangan bebas sengketa ketika konflik relevan yang belum selesai benar-benar diketahui; tidak ada label telah ditinjau/terverifikasi hanya karena O1.
 
-**Cannot claim APPROVED I1:** PD-O1-01..05 require fresh Product owner approval; actual technical readiness and external signals have not been verified. This draft is **not Rancang-consumable binding Product authority**. Anhar may approve a revised exact PRD only after Product reconciliation/quality check.
+## 4. Acceptance Criteria dan Pemeriksaan Batas Makna
 
-**Next Product action:** Review the one proposed O1 formation policy; resolve or revise material decisions; then issue and approve the exact standalone Product Contract. Do not pull in historical pilot requirements to make the document appear more complete.
+Semua AC berikut **PROPOSED / BELUM DIUJI DI RUNTIME**. ID tetap mengikuti draf Inggris agar riwayat bisa ditelusuri. Tautan `SC` menunjukkan kondisi keberhasilan yang diperiksa, **bukan** bahwa SC tersebut sudah di-approve.
+
+| ID | Requirement / SC terkait | Skenario dan hasil Product yang dapat diperiksa | Klaim salah yang harus dicegah |
+| --- | --- | --- | --- |
+| **O1-AC01** | `R01 / SC-O1-04` | Seseorang dapat memulai tanpa dianggap sudah memiliki kewenangan mewakili organisasi secara eksternal yang terbukti. | Kesan legal authority sudah diperiksa. |
+| **O1-AC02** | `R02 / SC-O1-01` | Keberhasilan tidak mungkin menjadi efektif jika tindakan atau hubungan `Owner` pertama tidak dapat diatribusikan secara nyata kepada aktor. | Pemberian `Owner` tanpa atribusi. |
+| **O1-AC03** | `R03 / SC-O1-02` | Sebelum efek berlaku, aktor bisa memahami organisasi yang dibentuk, `Owner` internal dan hal yang tidak dibuktikan peran itu. | `Owner` internal dianggap legal representation eksternal. |
+| **O1-AC04** | `R04 / SC-O1-01` | Organisasi sah bersama hubungan `Owner` awal teratribusi dapat dialami/diperiksa sebagai **satu keberhasilan**; pasangan parsial tidak boleh menjadi sukses biasa. | Keberhasilan hanya karena salah satu keadaan ada. |
+| **O1-AC05** | `R05 / SC-O1-02` | Setelah berhasil, pemeriksaan terpisah dari pesan sukses menampilkan hubungan organisasi/`Owner` terkini dan batas maknanya. | Menganggap notifikasi sementara bukti keadaan durable. |
+| **O1-AC06** | `R06 / SC-O1-04` | Klaim informasi organisasi tetap dapat diketahui asalnya, tidak otomatis menjadi hasil peninjauan, verifikasi eksternal, atau kurasi Campaign. | Klaim organisasi diangkat menjadi fakta independen. |
+| **O1-AC07** | `R07 / SC-O1-03` | Hasil tidak teratribusi, gagal, sebagian, atau belum pasti tidak tampak sebagai sukses biasa; opsi pemulihan tidak boleh mengubah keadaan parsial menjadi sukses palsu. | Menyamakan kegagalan/uncertain dengan berhasil. |
+| **O1-AC08** | `R08 / SC-O1-03` | Saat sengketa representasi relevan yang belum selesai **sudah benar-benar diketahui**, sistem tidak menyatakan kewenangan awal biasa yang bebas sengketa ataupun berpura-pura sengketa telah tuntas. | Klaim `Owner` uncontested yang tidak didukung sinyal. |
+| **O1-AC09** | `R06 / SC-O1-04` | O1 selesai tidak otomatis menghasilkan persiapan Campaign, penayangan publik, izin menerima donasi, atau peninjauan organisasi. | Klaim side effect lintas-Journey yang tidak termasuk O1. |
+
+Acceptance ini adalah konsekuensi Product yang bisa diperiksa bila nanti diimplementasikan, **bukan** resep database transaction, daftar tes API, atau bukti pengujian yang sudah dijalankan.
+
+## 5. Dependencies, Cakupan, dan Kebebasan Solusi
+
+| Hal | Keadaan untuk O1 |
+| --- | --- |
+| **Prasyarat Product** | Identitas/atribusi orang yang sah saat hasil efektif dan kemampuan menyatakan organisasi serta hubungan `Owner` internal yang nyata. **Ketersediaannya dalam implementasi sekarang belum diverifikasi.** |
+| **Sinyal penting lintas concern** | Akses pada sinyal sengketa representasi yang **benar-benar diketahui**, bila ada; sumber dan keterjangkauannya belum diverifikasi. Juga butuh aturan identity/security proyek yang berlaku; bukan diciptakan oleh Product Contract. |
+| **Dalam cakupan** | Pembentukan konteks organisasi teratribusi, hubungan `Owner` internal pertama, pemahaman sebelum akibat, keberhasilan gabungan, pemeriksaan kembali, dan hasil negatif/unknown yang material. |
+| **Di luar cakupan** | Matriks permission lengkap `Owner`/`Staff`; undangan/perpindahan/delegasi staf; pembuktian representasi legal eksternal; peninjauan organisasi menyeluruh; Campaign; publikasi; kelayakan donasi; dana dan pertanggungjawaban; deteksi duplikasi universal; adjudikasi sengketa; subsystem pemulihan wajib. |
+| **Kebebasan Design** | Formulir dan isinya sesuai pengenalan organisasi yang bermakna, penyampaian konsekuensi, alur identitas/sign-in, interaksi, copy, tampilan gagal/belum pasti serta representasi sengketa yang benar-benar diketahui. |
+| **Kebebasan Engineering** | Mekanisme autentikasi, penyimpanan/data model, konsistensi/transaksi, API/komponen, pemulihan bila dibutuhkan, teknik pengujian; tanpa melemahkan makna dan safeguard yang nanti disetujui. |
+| **I2/I3 yang belum diuji** | Sumber Design, arsitektur, keamanan, protected paths, repository/ref/kode runtime dan consumer expectations harus disuplai dan diverifikasi terpisah saat assignment. Tidak ada klaim kesiapan Engineering dari draf ini. |
+
+**Pembatas pemaknaan:** Keberadaan node O1 di peta yang disetujui tidak membuktikan kemampuan runtime atau menjadi persyaratan bahwa seluruh J-ORG harus selesai sebelum Campaign bisa disiapkan.
+
+## 6. Pertanyaan Product OPEN dan Blockers Material
+
+Status `OPEN` di sini tidak otomatis berarti mendesak secara keseluruhan Product. Namun keputusan yang material terhadap **kontrak O1 ini** harus diselesaikan sebelum kontrak dapat menjadi `I1` yang mengikat.
+
+| Pertanyaan / konsekuensi yang belum disetujui | Pemilik | Status | Bagian terdampak / syarat pengesahan |
+| --- | --- | --- | --- |
+| **Paket kebijakan pembentukan O1**: siapakah aktor yang dapat memulai dan memperoleh `Owner` internal pertama, serta arti kewenangannya? | Anhar | **PD-O1-01 PROPOSED** | `SC-O1-01, R01/R02, AC01/AC02`; keputusan O1 mandiri diperlukan. |
+| **Satu hasil gabungan dan waktu atribusi**: organisasi dan `Owner` wajib terbentuk bersama pada saat efek berhasil? | Anhar | **PD-O1-02 PROPOSED** | `SC-O1-01, R02/R04, AC02/AC04`; belum ada kebijakan final. |
+| **Kejelasan akibat dan pemeriksaan durable**: apa klaim yang wajib dapat dipahami/diperiksa? | Anhar | **PD-O1-03 PROPOSED** | `SC-O1-02, R03/R05, AC03/AC05`; bentuk UI/penyimpanan didelegasikan. |
+| **Kegagalan dan sengketa yang benar-benar diketahui**: apakah klaim terdampak ditunda atau ditolak, dan bagaimana hubungan `Owner` efektif diperlakukan? | Anhar | **PD-O1-04 PROPOSED; dampak efektif sengketa perlu dipertegas** | `SC-O1-03, R07/R08, AC07/AC08`; jangan mengubah anjuran ketat sebelumnya menjadi aturan tanpa keputusan. |
+| **Pemisahan informasi organisasi dan hasil verifikasi**: apakah aplikasi ketentuan umum ini pada O1 diterima? | Anhar | **PD-O1-05 dalam paket PROPOSED**; pembedaan umum sudah didukung Product Intent | `SC-O1-04, R06, AC06/AC09`. |
+| **Sinyal sengketa yang tersedia, identity authority, persistence, dan constraint keamanan nyata** | Pemilik teknis/Design terkait pada assignment yang sah | **UNVERIFIED — bukan keputusan Product baru secara otomatis** | `I2/I3` harus dibuktikan sesuai scope; bila tidak tersedia, hentikan hanya klaim/pekerjaan terdampak. |
+
+**Satu keputusan Product terpadu yang direkomendasikan untuk review:** bahas `PD-O1-01..05` sebagai paket yang koheren, termasuk satu penegasan khusus sengketa; jangan melakukan approval parsial diam-diam hanya karena tabel terlihat lengkap.
+
+## 7. Kesiapan Konsumsi dan Batas Handoff
+
+| Pertanyaan kesiapan | Keadaan yang benar-benar diketahui |
+| --- | --- |
+| **Exact Product authority dan approval** | Product Intent dan Level 2 v0.3 disetujui sebagai sumber; **PD-O1-01..05, SC, requirements dan AC masih PROPOSED**, tidak ada approval exact revision kontrak O1. |
+| **Konsistensi outcome → SC → rules → AC** | Jejak antar-ID dirumuskan dalam draf ini dari proposal v0.1 untuk review. Ini **pemeriksaan penulisan berbasis dokumen**, belum independent fresh-reader validation. |
+| **Blocker Product tersembunyi** | Model pemberian `Owner`, keberhasilan gabungan, batas sebelum akibat, dan penanganan sengketa masih memerlukan keputusan Anhar; tidak boleh dianggap telah diselesaikan oleh template. |
+| **Syarat Product dan ketersediaan teknis** | Atribusi dan persistensi dibutuhkan pada akibat yang diusulkan; status kode/lingkungan, ketersediaan sinyal sengketa dan mekanisme autentikasi **UNVERIFIED**. |
+| **Rancang `I1` generic fit** | Struktur memuat outcome, aturan, acceptance, source revisions, exclusions dan delegated freedom. **Candidate only; belum diuji oleh consumer Rancang independen.** |
+| **Rancang project-bound fit** | **NOT CHECKED / BLOCKED for binding use** sampai Product approval exact revision dan pemeriksaan I2/I3/I4 secara terpisah, plus readiness Rancang. |
+| **Hasil handoff** | **DRAFT — NOT I1 READY.** Tidak ada izin menjalankan Rancang, tidak ada perubahan operational `main`, dan tidak ada bukti perilaku sudah delivered. |
+
+**Tindakan Product berikutnya:** Rekonsiliasi lima usulan `PD-O1-01..05` terhadap Product Intent dan Journey, putuskan hanya pertanyaan O1 yang material, lalu ajukan **revisi artefak tepat** untuk approval Anhar. Sesudahnya baru dapat dilakukan pemeriksaan calon `I1` consumer fit, terpisah dari I2/I3/I4.
+
+## 8. Informasi Material Tambahan (Kondisional)
+
+**Konteks penting yang tidak tertampung sebagai perilaku O1:** Dalam eksperimen sebelum jalur Journey saat ini, pernah ada PRD specimen yang dirakit dari paket requirement komitmen historis (label lama `C1`). Hasil penghitungan coverage spesimen tersebut **hanya membuktikan kesetiaan penyalinan paket historis**, bukan kesesuaian Product Contract O1 baru.
+
+- **Mengapa dicatat di bagian tambahan:** Ini **risiko pembacaan provenance** yang khas untuk consumer O1, bukan requirement atau Success Criteria O1 baru.
+- **Sumber dan standing:** [Selection and Product Output research](selection-and-handoff-research.md), working research yang menerima keputusan pemisahan historical requirements dari input Product baru.
+- **Konsekuensi bila diabaikan:** Consumer mungkin menyamakan contoh atau persyaratan `C1` dengan keputusan O1 yang baru, kemudian menganggap Product authority/acceptance telah terpenuhi padahal belum.
+- **Pemilik tindakan:** Product owner Kencleng menjaga keputusan O1 hanya dari authority yang berlaku; Rancang, jika kelak diinvokasi, harus membaca `I1` approved asli dan tidak mengisi celah semantik dari arsip.
+
+**Bagian tambahan ini tidak menjadi sumber aturan baru.** Keputusan Product yang masih blocking tetap dicatat di bagian 6; semua aturan yang diusulkan tetap di bagian 3.
+
+---
+
+**Status keseluruhan:** Draf O1 ini mematuhi **struktur usulan** Harscode v0.1 Bahasa Indonesia, tetapi **bukan kontrak Product yang approved** dan tidak boleh digunakan sebagai `I1` binding sampai persetujuan Product exact revision serta pemeriksaan consumer yang sesuai.
