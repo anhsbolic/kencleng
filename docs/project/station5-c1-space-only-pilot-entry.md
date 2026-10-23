@@ -1,5 +1,7 @@
 # Station 5 C1 — Space-Only Clean-Start Pilot Entry (2026-10-18)
 
+> **Current reading boundary (23 Oktober 2026):** This is an immutable-context historical Station 5 C1 entry, **not** the current Product entrypoint and not a new Engineering assignment. Its former C1 authority remains historical to this episode. For present Product use [Kencleng Product catalog](../product/README.md), [approved Product Contract ORG-01](../product/outcomes/org-01/product-contract.md) and [exact approval](../product/outcomes/org-01/approval.md). Do not conflate historical C1 and the newly approved ORG-01 semantics.
+>
 > **Status:** PILOT PREPARATION COMPLETE — baseline and effective scoped inputs settled by Anhar; first Space not yet selected or formed; no invocation or engineering implementation authorized.
 > **Scope:** Kencleng experimental Station 5 C1 episode on `pilot/station5-c1-space-only`. This document does not change Kencleng `main`, whole-product Product Authority, or operational Harscode policy.
 > **Authority:** Anhar approval for preparation Steps 1–2 (baseline selection, pilot branch, and this minimal entry record), 2026-10-18. Subsequent Space formation and invocation require separate decisions.
@@ -20,9 +22,9 @@ Read minimally and follow owning scope:
 
 1. `AGENTS.md` and relevant scoped `AGENTS.md`, plus applicable `docs/project/` technical constraints and `docs/ui-ux/` authority for the concern.
 2. `docs/product/product-intent.md` — whole-product intent in this selected project baseline.
-3. `docs/product/pilot-3-stage-5-c1-confirmed-behavior.md` — **existing Anhar-approved, binding C1-scoped behavior and invariants**.
-4. `docs/product/pilot-3-stage-6-c1-requirements.md` — **existing Anhar-approved, binding C1-scoped Experience and Engineering Requirements**.
-5. `docs/product/pilot-3-stage-7-c1-engineering-handoff.md` — approved **navigation/handoff package**, not an independent source of new product truth.
+3. [historical `docs/product/pilot-3-stage-5-c1-confirmed-behavior.md`](https://github.com/anhsbolic/kencleng/blob/757f715a1aca9f420b48919f03ff36e980a94ef0/docs/product/pilot-3-stage-5-c1-confirmed-behavior.md) — **existing Anhar-approved, binding C1-scoped behavior and invariants**.
+4. [historical `docs/product/pilot-3-stage-6-c1-requirements.md`](https://github.com/anhsbolic/kencleng/blob/757f715a1aca9f420b48919f03ff36e980a94ef0/docs/product/pilot-3-stage-6-c1-requirements.md) — **existing Anhar-approved, binding C1-scoped Experience and Engineering Requirements**.
+5. [historical `docs/product/pilot-3-stage-7-c1-engineering-handoff.md`](https://github.com/anhsbolic/kencleng/blob/757f715a1aca9f420b48919f03ff36e980a94ef0/docs/product/pilot-3-stage-7-c1-engineering-handoff.md) — approved **navigation/handoff package**, not an independent source of new product truth.
 6. Earlier pre-engineering material is supporting evidence on demand, not a reason to re-open settled C1 meaning.
 
 **Scoped adoption, not product re-approval.** A read-only entry assessment found no material semantic conflict between these C1 Stage 5/6 inputs and applicable clean-baseline Product Intent/guardrails. Preserve the previous Human approval; raise any newly evidenced material conflict to the owning Human/Product Authority rather than silently resolving it downstream. Do not invent new C1 requirements.
