@@ -14,7 +14,7 @@
 | Status Product Contract | **APPROVED / binding Product semantics untuk scoped ORG-01 (`I1` Product portion)**; exact canonical revision tersedia di [approval record](approval.md). |
 | Artefak saat ini | `docs/product/outcomes/org-01/product-contract.md` pada branch riset `pilot/station5-c1-space-only`; catatan approval memuat canonical blob. Draf sebelumnya disimpan sebagai historical approved-content snapshot. |
 | Approval | **APPROVED — Anhar, 23 Oktober 2026**, atas exact candidate blob `448a8082bcb9ac1c7e41a686f2e3fdd2e3988ac4`. Canonical version hanya memperbarui administrative standing; semua PD/SC/REQ/AC binding-content fields diaudit tidak berubah. Lihat [approval record](approval.md). |
-| Sumber utama | [Product Intent yang disetujui](../../product-intent.md), blob `18fafc31121b49277a6c1b45a7ff6ef57edf0825`; [Peta Journey Level 2 v0.3](../../interconnected-journeys/level-2-network.md), blob `5783fdb303e34ecef7988d6ec3c7fb8b15326a95` (node ORG-01 dan hubungan terkait) |
+| Sumber utama | [Product Intent yang disetujui](../../product-intent.md), blob `18fafc31121b49277a6c1b45a7ff6ef57edf0825`; [Peta Journey Level 2 v0.3](../../interconnected-journeys/level-2-network.md), blob `5783fdb303e34ecef7988d6ec3c7fb8b15326a95` (node Journey `J-ORG-01` dan hubungan terkait; ID outcome terpilih adalah `ORG-01`) |
 | Pendukung keputusan historis | [Selection and Product Output research](https://github.com/anhsbolic/kencleng/blob/bece0d86742b5bdaae3f0155f168cc4b80a79949/docs/product/interconnected-journeys/selection-and-handoff-research.md), blob `936d3d705b90f78691268ae67eaabe2c692b8286` pada commit `bece0d86742b5bdaae3f0155f168cc4b80a79949`, **historical working research**, bukan current selection artifact atau binding rules ORG-01 |
 | Yang tidak menjadi sumber ketentuan ORG-01 | Paket perilaku/requirements pilot historis dan draft PRD lama yang pernah dirakit dari komitmen tersebut |
 | Consumer yang dituju | Input Product semantics `I1` Rancang untuk ORG-01 **setelah** penugasan dan consumer-fit verification terpisah; `I2/I3/I4` tidak tersedia melalui approval ini dan tidak ada izin invocation. |
@@ -114,7 +114,7 @@ Acceptance ini adalah konsekuensi Product yang bisa diperiksa bila nanti diimple
 | **Kebebasan Engineering** | Mekanisme autentikasi, penyimpanan/data model, konsistensi/transaksi, API/komponen, pemulihan bila dibutuhkan, teknik pengujian; tanpa melemahkan makna dan safeguard yang nanti disetujui. |
 | **I2/I3 yang belum diuji** | Sumber Design, arsitektur, keamanan, protected paths, repository/ref/kode runtime dan consumer expectations harus disuplai dan diverifikasi terpisah saat assignment. Tidak ada klaim kesiapan Engineering dari draf ini. |
 
-**Pembatas pemaknaan:** Keberadaan node ORG-01 di peta yang disetujui tidak membuktikan kemampuan runtime atau menjadi persyaratan bahwa seluruh J-ORG harus selesai sebelum Campaign bisa disiapkan.
+**Pembatas pemaknaan:** Keberadaan node `J-ORG-01` di peta yang disetujui tidak membuktikan kemampuan runtime atau menjadi persyaratan bahwa seluruh J-ORG harus selesai sebelum Campaign bisa disiapkan.
 
 ## 6. Open Decisions & Blockers — Human Decision Gate
 
