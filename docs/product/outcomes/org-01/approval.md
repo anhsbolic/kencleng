@@ -9,7 +9,7 @@
 | --- | --- |
 | Human-approved Product content | Original [O1 v0.3 at commit `bece0d86742b5bdaae3f0155f168cc4b80a79949`](https://github.com/anhsbolic/kencleng/blob/bece0d86742b5bdaae3f0155f168cc4b80a79949/docs/product/interconnected-journeys/o1-product-contract-draft.md); **blob `448a8082bcb9ac1c7e41a686f2e3fdd2e3988ac4`** |
 | Previous approved canonical | Original exact blob `0a28f7431f749e608402711be704a3f065a1398a` (prior approved Product Contract location) |
-| Current Product Contract | [Product Contract — ORG-01](product-contract.md), blob `293bc59dbb738a17e763de361c412b42ca9cd565` |
+| Current Product Contract | [Product Contract — ORG-01](product-contract.md), blob `453e2f3eab62cf3dcf732272b9023123c5ad3e78` |
 | Identifier migration authority | Anhar explicitly approved phase/output coding and requested migration of existing Kencleng Product references on 23 Oktober 2026, while retaining Product meaning |
 | Crosswalk | [Identifier Migration Record](../../identifier-migration-2026-10-23.md) |
 | Semantic audit | **26/26 original normative rows preserved** after inverse mapping of IDs: 5 PD, 4 SC, 8 requirements, 9 AC. Includes actor/result/negative-path acceptance fields, not merely row counts |
