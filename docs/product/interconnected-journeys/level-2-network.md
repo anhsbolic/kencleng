@@ -1,6 +1,6 @@
 # Kencleng — Interconnected Product Journeys (Level 2)
 
-> **Authority:** DISETUJUI ANHAR — PRODUCT JOURNEY MAP LEVEL 2, 22 Oktober 2026, untuk branch `pilot/station5-c1-space-only`. Penulisan ulang Bahasa Indonesia menggantikan pengantar Level 2 Inggris pada lokasi dokumen ini, **tanpa mengubah makna dan batas persetujuan riset v0.3**.
+> **Authority:** Level 2 Interconnected Product Journeys approved by Anhar on 22 Oktober 2026, scoped to `pilot/station5-c1-space-only` (not operational `main`). Output type: `PROD-JOURNEYS`. Identifier migration on 23 Oktober 2026 was authorized as a structural change; [old/new mappings](../identifier-migration-2026-10-23.md) preserve source lineage.
 > **Riwayat dan sumber yang diaudit:** Level 2 Inggris terakhir, blob `4970ba936d107e50d8260c9e246816ba13d41a28`; draf Bahasa Indonesia yang disetujui Anhar, blob `2ae3ed81651fe3f56595128617edb5244cb9d86c`; sumber koreksi v0.3 awal yang disetujui sebelumnya, blob `87edca25b40017429d66aff4e22ad1f4aa7e013f`. Seluruh versi Inggris tetap dapat ditelusuri melalui riwayat Git.
 > **Authority dan lingkup:** [Product Intent](../product-intent.md) memiliki authority nilai dan prinsip. Journey map ini bukan Product Contract atau Engineering roadmap. Untuk node `J-ORG-01`, gunakan [approved Contract ORG-01](../outcomes/org-01/product-contract.md). Node lain tidak otomatis approved.
 > **Batas lingkungan:** Kencleng `main`, Harscode, Rancang, Product Specification Space, dan Engineering **tidak** berubah atau otomatis diaktifkan karena promosi editorial ini.
