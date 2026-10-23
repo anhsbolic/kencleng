@@ -1,6 +1,6 @@
-# Kencleng — Peta Journey Level 2 v0.3 (Bahasa Indonesia)
+# Kencleng — Interconnected Product Journeys (Level 2)
 
-> **Status:** DISETUJUI ANHAR — PETA RISET LEVEL 2 YANG BERLAKU, 22 Oktober 2026, **hanya pada branch `pilot/station5-c1-space-only`**. Penulisan ulang Bahasa Indonesia menggantikan pengantar Level 2 Inggris pada lokasi dokumen ini, **tanpa mengubah makna dan batas persetujuan riset v0.3**.
+> **Authority:** DISETUJUI ANHAR — PRODUCT JOURNEY MAP LEVEL 2, 22 Oktober 2026, untuk branch `pilot/station5-c1-space-only`. Penulisan ulang Bahasa Indonesia menggantikan pengantar Level 2 Inggris pada lokasi dokumen ini, **tanpa mengubah makna dan batas persetujuan riset v0.3**.
 > **Riwayat dan sumber yang diaudit:** Level 2 Inggris terakhir, blob `4970ba936d107e50d8260c9e246816ba13d41a28`; draf Bahasa Indonesia yang disetujui Anhar, blob `2ae3ed81651fe3f56595128617edb5244cb9d86c`; sumber koreksi v0.3 awal yang disetujui sebelumnya, blob `87edca25b40017429d66aff4e22ad1f4aa7e013f`. Seluruh versi Inggris tetap dapat ditelusuri melalui riwayat Git.
 > **Authority dan lingkup:** [Product Intent](../product-intent.md) memiliki authority nilai dan prinsip. Journey map ini bukan Product Contract atau Engineering roadmap. Untuk node `J-ORG-01`, gunakan [approved Contract ORG-01](../outcomes/org-01/product-contract.md). Node lain tidak otomatis approved.
 > **Batas lingkungan:** Kencleng `main`, Harscode, Rancang, Product Specification Space, dan Engineering **tidak** berubah atau otomatis diaktifkan karena promosi editorial ini.
@@ -124,7 +124,7 @@ Diagram **tidak** membuktikan urutan implementasi wajib, hubungan sebab-akibat y
 
 ```mermaid
 flowchart TB
-    ORG_01["J-ORG-01 Organisasi + kewenangan (aturan BELUM DIPUTUSKAN)"]
+    ORG_01["J-ORG-01 Konteks organisasi dan Owner internal"]
     ORG_02["J-ORG-02 Informasi organisasi jelas sumbernya"]
     ORG_03["J-ORG-03 Persoalan peninjauan organisasi"]
     ORG_04["J-ORG-04 Hasil peninjauan sesuai cakupan"]
@@ -281,6 +281,6 @@ Daftar ini mencatat pertanyaan yang **belum memiliki keputusan Product yang dise
 - Pemeriksaan diagram sebelumnya sempat menghasilkan ilustrasi **39 hubungan usulan** dan satu komponen yang saling terhubung secara tidak berarah. Itu hanya ilustrasi dalam sesi riset, **bukan bukti kausal yang divalidasi independen**, bukan bukti semua syarat development, dan bukan kepastian aturan Product sudah lengkap.
 - **Hasil checkpoint 21 Oktober:** peta cukup untuk membahas pemilihan titik awal. **Pembaruan 22 Oktober:** J-ORG-01 merupakan **satu arah awal yang direkomendasikan untuk percobaan riset**, bukan prioritas delivery, kontrak Product yang disetujui, atau tugas Engineering.
 - Persyaratan J-ORG-01 harus dirumuskan ulang dari Product Intent dan hubungan Journey yang berlaku. **Jangan mewarisi paket persyaratan/komitmen pilot lama** sebagai aturan Product yang mengikat untuk eksperimen baru ini.
-- **Batas langkah berikutnya:** selesaikan keputusan Product yang benar-benar dibutuhkan oleh J-ORG-01, lalu susun kontrak Product mandiri. Jangan otomatis memilih node lain, memanggil Rancang, atau menganggap kesiapan Engineering telah terbukti. Lihat [keputusan riset tentang pemilihan titik awal dan penyerahan hasil Product](selection-and-handoff-research.md).
+- **Batas langkah berikutnya:** selesaikan keputusan Product yang benar-benar dibutuhkan oleh J-ORG-01, lalu susun kontrak Product mandiri. Jangan otomatis memilih node lain, memanggil Rancang, atau menganggap kesiapan Engineering telah terbukti. Lihat [keputusan riset tentang pemilihan titik awal dan penyerahan hasil Product](../outcome-selection.md).
 
 **Batas persetujuan promosi Bahasa Indonesia:** Persetujuan hanya atas perubahan editorial dan kesetaraan makna peta riset. Ini bukan persetujuan baru atas aturan J-ORG-01, implementasi, atau perpindahan dari research branch ke Kencleng `main`.
