@@ -1,9 +1,9 @@
-# Kencleng — Product Contract O1: Pembentukan Organisasi dan Kewenangan `Owner` Internal Pertama (Draf v0.2)
+# Kencleng — Product Contract O1: Pembentukan Organisasi dan Kewenangan `Owner` Internal Pertama (Draf v0.3)
 
 > **Status:** DRAF PRODUCT CONTRACT / PROPOSED — **BELUM DISETUJUI SEBAGAI INPUT `I1` RANCANG**. Penulisan ulang Bahasa Indonesia menggunakan [template I1 Harscode — Bahasa Indonesia](https://github.com/anhsbolic/harscode-workspace/blob/00ed2881a608c47d3c0afde423252798f6ffe8f7/product/product-contract-template-id-draft.md) (template itu juga masih proposal riset).
 > **Lingkup:** Hanya Product O1 pada `anhsbolic/kencleng`, branch `pilot/station5-c1-space-only`. Bukan perubahan Kencleng `main`, bukan prioritas Engineering, dan bukan perintah menjalankan Rancang.
-> **Riwayat yang diadaptasi:** Draf Product O1 v0.1 Inggris, blob `00497ab3ab0a6183ff54e90089cf54131e560b08`. Pada awalnya semua `PD-O1-01..05`, `O1-R01..08`, dan `O1-AC01..09` adalah usulan. **Keputusan scoped atas `PD-O1-01/02/03/05` dan prinsip `PD-O1-04` disetujui Anhar pada 23 Oktober 2026**, sedangkan akibat konflik pada `PD-O1-04` tetap OPEN. Success Criteria, requirements, dan acceptance masih memerlukan rekonsiliasi dan approval Product Contract pada revisi tepat.
-> **Keputusan Human (23 Oktober 2026):** Anhar menyatakan **approve** terhadap usulan kebijakan pada Human Decision Gate. **PD-O1-01/02/03/05 dan prinsip kejujuran PD-O1-04 disetujui dalam cakupan Product O1**. Namun akibat Potential Conflicts terhadap efektivitas hubungan `Owner` **belum ditentukan**. Approval keputusan scoped ini **bukan approval final exact revision Product Contract/I1**; detail dan gate tersisa tercatat di **Section 6**.
+> **Riwayat dan standing:** Berasal dari draf O1 v0.1 Inggris (blob `00497ab3ab0a6183ff54e90089cf54131e560b08`). Anhar menyetujui keputusan Product scoped `PD-O1-01..05` pada 23 Oktober 2026, termasuk keputusan final bahwa `Owner` internal tidak menunggu approval Reviewer. SC/REQ/AC adalah rumusan kontrak yang masih memerlukan review dan approval **exact revision**.
+> **Keputusan Human (23 Oktober 2026):** Seluruh kebijakan Product `PD-O1-01..05` dalam scope O1 **DECIDED — scoped**. Hubungan `Owner` internal pertama efektif sejak keberhasilan pembentukan O1, sementara approval Reviewer menilai klaim/status organisasi secara terpisah. **Human policy decision gate CLOSED**; artefak tetap DRAFT, **belum final-approved sebagai `I1` Rancang**. Lihat Section 6.
 
 ## Identitas artefak dan authority
 
@@ -13,7 +13,7 @@
 | Product owner | Anhar |
 | Status Product Contract | **DRAFT / PROPOSED**; belum berlaku sebagai `I1` yang binding |
 | Artefak saat ini | `docs/product/interconnected-journeys/o1-product-contract-draft.md` pada `pilot/station5-c1-space-only`; rujuk blob/commit yang nyata saat review |
-| Approval | **Keputusan scoped disetujui Anhar, 23 Oktober 2026:** `PD-O1-01/02/03/05` dan safeguard kejujuran `PD-O1-04`; **konsekuensi konflik terhadap hubungan `Owner` masih OPEN**. Belum ada approval atas *exact revision* Product Contract beserta seluruh `SC`, requirements, dan acceptance sebagai `I1` binding. |
+| Approval | **Keputusan Product O1 `PD-O1-01..05` settled oleh Anhar, 23 Oktober 2026.** Approval Reviewer atas klaim organisasi bukan prasyarat `Owner` internal. **Approval final exact-revision Product Contract O1 belum diberikan**, sehingga SC/REQ/AC belum menjadi `I1` binding. |
 | Sumber utama | [Product Intent yang disetujui](../product-intent.md), blob `18fafc31121b49277a6c1b45a7ff6ef57edf0825`; [Peta Journey Level 2 v0.3](level-2-network.md), blob `5783fdb303e34ecef7988d6ec3c7fb8b15326a95` (node O1 dan hubungan terkait) |
 | Pendukung keputusan riset | [Selection and Product Output research](selection-and-handoff-research.md), blob `6323010a854aa4eb585500e462fdf5d42960add8`, **working research**, bukan aturan O1 yang disetujui |
 | Yang tidak menjadi sumber ketentuan O1 | Paket perilaku/requirements pilot historis dan draft PRD lama yang pernah dirakit dari komitmen tersebut |
@@ -35,14 +35,14 @@ Keempat SC berikut adalah **kandidat kondisi keberhasilan semantik**, bukan bukt
 | --- | --- | --- | --- |
 | **SC-O1-01** | Konteks organisasi **dan** hubungan `Owner` internal pertama **sama-sama sah dan benar-benar berlaku** sebagai satu hasil; tindakan dan hubungan `Owner` dapat diatribusikan kepada orang yang bertindak pada saat akibatnya efektif. | Tidak membuktikan kewenangan legal eksternal, tidak mengharuskan identitas sudah lengkap saat awal interaksi. | `PD-O1-01/02` **DECIDED scoped**; `SC` masih draf untuk approval final |
 | **SC-O1-02** | Sebelum akibat berlaku, aktor bisa memahami organisasi yang dibentuk, arti dan batas `Owner` internal; setelahnya hubungan aktual tetap dapat diperiksa, bukan hanya melalui pesan sukses sesaat. | Tidak menetapkan layar, waktu sign-in, bentuk persetujuan UI, atau teknologi penyimpanan. | `PD-O1-03` **DECIDED scoped**; `SC` masih draf untuk approval final |
-| **SC-O1-03** | Klaim keberhasilan sesuai fakta: keadaan tidak lengkap, gagal, tidak dapat diatribusikan, atau **Potential Conflicts yang material, sudah benar-benar diketahui, dan belum selesai terkait klaim kewenangan awal** tidak diperlakukan sebagai keberhasilan tanpa masalah. | Tidak mewajibkan deteksi seluruh kemungkinan konflik, maupun satu mekanisme penyelesaian konflik. | `PD-O1-04` **prinsip DECIDED scoped, akibat konflik OPEN**; `SC` masih draf |
+| **SC-O1-03** | Kegagalan, hasil parsial, atau tidak teratribusi tidak diklaim berhasil. Kesamaan nama/klaim atau **Potential Conflicts** antar-konteks dengan ID berbeda **tidak otomatis** menunda, menolak, menggabungkan, atau menutup pembentukan O1 maupun `Owner` internalnya. | Keberhasilan internal bukan bukti approval Reviewer atau validitas klaim organisasi di dunia nyata; tidak menuntut deteksi konflik universal. | `PD-O1-04` **DECIDED scoped**; `SC` masih draf |
 | **SC-O1-04** | Keberhasilan O1 **tidak menaikkan klaim organisasi** menjadi hasil peninjauan/verifikasi eksternal, kurasi Campaign, penayangan publik, atau kelayakan donasi. | Tidak menjamin kualitas organisasi atau kesiapan Campaign. | Batas umum Product Intent dan `PD-O1-05` **DECIDED scoped**; `SC` masih draf |
 
 **Definisi keberhasilan gabungan yang diusulkan:** `O1 berhasil = organisasi sah + hubungan Owner internal pertama yang sah dan teratribusi + makna/hasil yang jujur serta dapat dipahami dan diperiksa`. Perlindungan dari klaim sukses palsu tetap mengikat definisi keberhasilan proposal ini. Definisi tersebut **belum diputuskan Anhar**.
 
 ## 2. Pengalaman Aktor dan Makna Konsekuensinya
 
-Ini gambaran pengalaman bermakna, **bukan urutan layar** atau desain autentikasi. **Potential Conflicts** adalah label umum untuk kondisi konflik yang berpotensi mengubah kebenaran klaim Product; pada O1 yang dibahas hanya konflik yang **material terhadap klaim kewenangan awal, benar-benar diketahui Kencleng, dan belum terselesaikan**. Label ini tidak berarti setiap dugaan konflik otomatis menghalangi O1 atau Kencleng wajib mendeteksi semua konflik.
+Ini gambaran pengalaman bermakna, **bukan urutan layar** atau desain autentikasi. **Potential Conflicts** adalah istilah umum untuk kemungkinan pertentangan informasi atau klaim. Pada O1, kemiripan nama/klaim tidak otomatis menghalangi pembentukan konteks organisasi terpisah atau pemberian `Owner` internal. Penilaian klaim dan approval organisasi merupakan concern Reviewer yang berbeda dari O1.
 
 | Momen | Apa yang dialami atau dipahami aktor | Konsekuensi Product menurut usulan |
 | --- | --- | --- |
@@ -51,23 +51,23 @@ Ini gambaran pengalaman bermakna, **bukan urutan layar** atau desain autentikasi
 | **Tindakan** | Aktor melakukan pembentukan organisasi menurut kewenangan dan syarat Product yang berlaku. | Tindakan **tidak** otomatis menjadi bukti mewakili organisasi secara hukum atau hasil peninjauan. |
 | **Berhasil** | Aktor mendapat informasi keberhasilan yang tidak berlebihan; organisasi dan hubungan `Owner` internal benar-benar ada, kemudian tetap dapat diperiksa. | Satu keberhasilan gabungan yang bermakna; bukan pesan sukses untuk salah satu keadaan saja. |
 | **Gagal / tidak lengkap / belum pasti** | Aktor tidak menerima kesan keliru bahwa pembentukan sukses. | Atribusi tidak cukup, sebagian proses gagal/terputus, atau hasil tidak diketahui **tidak boleh** diperlakukan sebagai keberhasilan biasa. |
-| **Potential Conflicts yang diketahui** | Bila ada konflik material terkait klaim kewenangan awal yang benar-benar diketahui dan belum selesai, aktor tidak mendapat kesan keliru bahwa kewenangan tersebut tanpa konflik. | Klaim yang terdampak harus tetap belum terselesaikan atau ditolak secara jujur; **bentuk pembatasan hubungan `Owner` yang efektif belum diputuskan lebih jauh**. |
+| **Potential Conflicts / nama organisasi serupa** | User A dan User B dapat masing-masing membentuk konteks bernama organisasi K, sepanjang syarat O1 masing-masing terpenuhi. | Setiap konteks mempunyai ID sendiri, dengan `Owner` internal masing-masing yang efektif saat O1 berhasil. Tidak ada penggabungan, penolakan, penundaan, atau penutupan otomatis hanya karena kemiripan; tidak tersirat approval Reviewer. |
 
 ## 3. Perilaku Product, Kewenangan, dan Invariants
 
-### 3.1 Keputusan Product O1 dan satu rincian yang masih OPEN
+### 3.1 Keputusan Product O1 yang telah diselesaikan
 
-Anhar menyetujui arah kebijakan terpadu pada 23 Oktober 2026. Persetujuan yang benar-benar terdefinisi telah dicatat sebagai **DECIDED — scoped** di bawah. Satu rincian material terkait akibat Potential Conflicts terhadap hubungan `Owner` masih **OPEN**; seluruh hasil kontrak/acceptance tetap perlu rekonsiliasi dan approval final *exact revision* sebelum menjadi `I1` binding.
+Anhar menyelesaikan seluruh kebijakan Product O1 `PD-O1-01..05` pada 23 Oktober 2026. Semua keputusan di bawah adalah **DECIDED — scoped**; rumusan SC, requirements, dan AC tetap membutuhkan review dan approval final *exact revision* sebelum dapat menjadi `I1` binding.
 
 | ID | Kebijakan Product O1 | Standing keputusan Product |
 | --- | --- | --- |
 | **PD-O1-01** | Seseorang dapat memulai pembentukan konteks organisasi baru. **Jika pembentukan berhasil secara efektif**, orang yang bertindak dan dapat diatribusikan secara sah memperoleh hubungan `Owner` **internal Kencleng** yang pertama. Ini bukan hasil verifikasi perwakilan eksternal. Verifikasi hukum eksternal yang telah selesai **tidak menjadi syarat universal** untuk kewenangan internal terbatas ini. | **DECIDED — scoped**, Anhar 23 Oktober 2026; revisi kontrak final belum approved. |
 | **PD-O1-02** | Hasil berhasil merupakan **satu akibat gabungan**: konteks organisasi sah **dan** hubungan `Owner` awal sah/teratribusi. Atribusi aktor wajib tersedia saat akibat menjadi efektif, tidak harus saat awal interaksi. Satu komponen saja tidak boleh dinyatakan berhasil penuh. | **DECIDED — scoped**, Anhar 23 Oktober 2026; revisi kontrak final belum approved. |
 | **PD-O1-03** | Aktor dapat memahami akibat dan batas `Owner` sebelum efektif. Setelah berhasil, organisasi serta hubungan `Owner` aktual dapat diperiksa kembali secara durable, bukan hanya dari notifikasi sementara. | **DECIDED — scoped**, Anhar 23 Oktober 2026; revisi kontrak final belum approved. |
-| **PD-O1-04** | Pembentukan yang tidak lengkap, gagal, atau tak dapat diatribusikan **tidak boleh dinyatakan berhasil**. Jika **Potential Conflicts yang material bagi klaim kewenangan awal** benar-benar diketahui dan belum terselesaikan, Kencleng tidak boleh menyatakan keberhasilan kewenangan awal seolah tanpa konflik; klaim terkait tetap unresolved atau ditolak dengan makna yang jujur. | **DECIDED — scoped untuk larangan klaim palsu**, Anhar 23 Oktober 2026. **OPEN:** apakah hubungan `Owner` boleh efektif dengan pembatasan, ditunda, atau ditolak. Tidak ada mandat deteksi/penyelesaian konflik universal. |
+| **PD-O1-04** | Pembentukan yang gagal, parsial, atau tidak dapat diatribusikan **tidak boleh dinyatakan berhasil**. Kesamaan nama/klaim atau Potential Conflicts **tidak otomatis** menghalangi dua konteks organisasi dengan ID internal berbeda atau menunda/menolak/menggabungkan/menutup hubungan `Owner` internal masing-masing. Penilaian serta approval atas klaim/status organisasi dilakukan oleh Reviewer dalam proses terpisah dan **tidak menentukan efektivitas `Owner` internal pertama**. | **DECIDED — scoped**, Anhar 23 Oktober 2026. Tidak mewajibkan conflict detection, deduplication, adjudication, atau otomatisasi penutupan. |
 | **PD-O1-05** | Informasi yang diberikan organisasi tetap **informasi dari organisasi**. Pembentukan organisasi saja tidak melakukan atau menyiratkan peninjauan organisasi, verifikasi legal eksternal, kurasi Campaign, penayangan publik, atau izin menerima donasi. | **DECIDED — scoped**, Anhar 23 Oktober 2026; selaras prinsip Product Intent. Revisi kontrak final belum approved. |
 
-**Rincian yang masih OPEN:** Pada `PD-O1-04`, Anhar menyetujui larangan klaim sukses/kewenangan bebas konflik yang tidak berdasar, **bukan memilih satu akibat** dari tiga kemungkinan: hubungan `Owner` efektif dengan pembatasan, ditunda, atau ditolak. Rincian ini harus ditentukan sebelum kontrak O1 final dapat disetujui. Jangan mengartikan approval prinsip sebagai persetujuan otomatis atas opsi penundaan/penolakan.
+**Batas yang disetujui:** Dua konteks organisasi dengan ID berbeda tidak otomatis menjadi salah hanya karena nama/klaim yang sama. Jika kelak Reviewer menyetujui dua klaim organisasi yang ternyata merujuk pihak nyata yang sama, itu adalah masalah kualitas keputusan peninjauan/pengelolaan organisasi, **bukan kegagalan otomatis O1**. Mekanisme koreksi Reviewer atau conflict resolution tidak dibahas dalam O1.
 
 ### 3.2 Requirements dan invariants yang diusulkan
 
@@ -79,10 +79,10 @@ Anhar menyetujui arah kebijakan terpadu pada 23 Oktober 2026. Persetujuan yang b
 | **O1-R04** | Keberhasilan hanya diklaim jika organisasi **dan** `Owner` internal pertama sama-sama sah/efektif. | Kedua fakta Product benar-benar terjadi. | Satu keadaan yang baru sebagian tidak boleh diklaim sebagai sukses penuh. | `PD-O1-02` **DECIDED scoped**; requirement **DRAFT** |
 | **O1-R05** | Organisasi dan hubungan `Owner` saat ini dapat diperiksa kembali beserta makna internalnya. | Setelah keberhasilan nyata. | Pesan sukses sementara tidak menggantikan keadaan durable. | `PD-O1-03` **DECIDED scoped**; requirement **DRAFT** |
 | **O1-R06** | Klaim dari organisasi tidak otomatis meningkat menjadi hasil peninjauan, bukti eksternal, kurasi, atau kategori fakta independen. | Setiap kali klaim organisasi disajikan/ditafsirkan. | Pembentukan O1 bukan peninjauan organisasi atau legitimasi legal eksternal. | `PD-O1-05` **DECIDED scoped** + prinsip Product Intent; requirement **DRAFT** |
-| **O1-R07** | Kegagalan, keadaan parsial, hasil tidak teratribusi, atau interupsi dibedakan dari keberhasilan asli. | Ketika keadaan negatif atau belum pasti terjadi. | Retry/pemulihan bukan kewajiban sistem Product baru kecuali diputuskan kemudian; tidak boleh membuat sukses palsu. | `PD-O1-04` prinsip **DECIDED scoped** / akibat konflik **OPEN**; requirement **DRAFT** |
-| **O1-R08** | **Potential Conflicts** yang material bagi klaim kewenangan awal, benar-benar diketahui dan belum selesai tidak menghasilkan klaim kewenangan **seolah tanpa konflik**. | Hanya jika ada **sinyal material yang benar-benar diketahui**; asal/tersedianya sinyal belum diverifikasi. | Tidak mengharuskan deteksi atau penyelesaian konflik universal. | `PD-O1-04` prinsip **DECIDED scoped** / akibat konflik **OPEN**; requirement **DRAFT** |
+| **O1-R07** | Kegagalan, keadaan parsial, hasil tidak teratribusi, atau interupsi dibedakan dari keberhasilan asli. | Ketika keadaan negatif atau belum pasti terjadi. | Retry/pemulihan bukan kewajiban sistem Product baru kecuali diputuskan kemudian; tidak boleh membuat sukses palsu. | `PD-O1-04` **DECIDED scoped**; requirement **DRAFT** |
+| **O1-R08** | Kesamaan nama/klaim atau Potential Conflicts antar-konteks tidak otomatis menghalangi keberhasilan pembentukan O1 masing-masing; tiap konteks memiliki ID sendiri dan `Owner` internal yang efektif bila syarat internalnya terpenuhi. | Approval Reviewer atas klaim/status organisasi merupakan proses berbeda, bukan syarat `Owner` internal O1. | Tidak memaksa deteksi konflik, penggabungan, penundaan, penolakan, penutupan otomatis, atau klaim bahwa organisasi sudah disetujui Reviewer. | `PD-O1-04` **DECIDED scoped**; requirement **DRAFT** |
 
-**Invariants yang diusulkan:** Tidak ada `Owner` internal awal yang tidak dapat diatribusikan; tidak ada keberhasilan penuh dari pembentukan yang parsial; tidak ada klaim kewenangan awal seolah tanpa konflik ketika Potential Conflicts material yang belum selesai benar-benar diketahui; tidak ada label telah ditinjau/terverifikasi hanya karena O1.
+**Invariants Product O1 (rumusan untuk approval final):** Tidak ada `Owner` internal awal yang tidak dapat diatribusikan; tidak ada keberhasilan penuh dari hasil parsial; nama/klaim serupa tidak memicu penutupan atau pembatalan otomatis konteks/`Owner` internal yang berbeda ID; dan keberhasilan O1 tidak menjadi label telah ditinjau/diapprove Reviewer.
 
 ## 4. Acceptance Criteria dan Pemeriksaan Batas Makna
 
@@ -97,7 +97,7 @@ Semua AC berikut **PROPOSED / BELUM DIUJI DI RUNTIME**. ID tetap mengikuti draf 
 | **O1-AC05** | `R05 / SC-O1-02` | Setelah berhasil, pemeriksaan terpisah dari pesan sukses menampilkan hubungan organisasi/`Owner` terkini dan batas maknanya. | Menganggap notifikasi sementara bukti keadaan durable. |
 | **O1-AC06** | `R06 / SC-O1-04` | Klaim informasi organisasi tetap dapat diketahui asalnya, tidak otomatis menjadi hasil peninjauan, verifikasi eksternal, atau kurasi Campaign. | Klaim organisasi diangkat menjadi fakta independen. |
 | **O1-AC07** | `R07 / SC-O1-03` | Hasil tidak teratribusi, gagal, sebagian, atau belum pasti tidak tampak sebagai sukses biasa; opsi pemulihan tidak boleh mengubah keadaan parsial menjadi sukses palsu. | Menyamakan kegagalan/uncertain dengan berhasil. |
-| **O1-AC08** | `R08 / SC-O1-03` | Saat **Potential Conflicts** material terhadap klaim kewenangan awal **benar-benar diketahui** dan belum selesai, sistem tidak menyatakan kewenangan awal seolah tanpa konflik atau berpura-pura konflik telah tuntas. | Klaim `Owner` tanpa konflik yang tidak didukung keadaan nyata. |
+| **O1-AC08** | `R08 / SC-O1-03` | User A dan User B membentuk konteks bernama organisasi K dengan dua ID berbeda. Jika masing-masing memenuhi syarat O1, setiap konteks dan `Owner` internal efektif tanpa auto-merge, auto-close, atau conflict-based blocking; pembentukan tidak menciptakan status approval Reviewer. | Menyimpulkan nama serupa berarti satu ID, menentukan pemenang otomatis, atau menganggap organisasi telah disetujui Reviewer. |
 | **O1-AC09** | `R06 / SC-O1-04` | O1 selesai tidak otomatis menghasilkan persiapan Campaign, penayangan publik, izin menerima donasi, atau peninjauan organisasi. | Klaim side effect lintas-Journey yang tidak termasuk O1. |
 
 Acceptance ini adalah konsekuensi Product yang bisa diperiksa bila nanti diimplementasikan, **bukan** resep database transaction, daftar tes API, atau bukti pengujian yang sudah dijalankan.
@@ -107,10 +107,10 @@ Acceptance ini adalah konsekuensi Product yang bisa diperiksa bila nanti diimple
 | Hal | Keadaan untuk O1 |
 | --- | --- |
 | **Prasyarat Product** | Identitas/atribusi orang yang sah saat hasil efektif dan kemampuan menyatakan organisasi serta hubungan `Owner` internal yang nyata. **Ketersediaannya dalam implementasi sekarang belum diverifikasi.** |
-| **Sinyal penting lintas concern** | Akses pada sinyal Potential Conflicts yang **benar-benar diketahui dan material bagi klaim kewenangan awal**, bila ada; sumber dan keterjangkauannya belum diverifikasi. Juga butuh aturan identity/security proyek yang berlaku; bukan diciptakan oleh Product Contract. |
+| **Sinyal penting lintas concern** | Tiap konteks organisasi harus berbeda secara identitas internal dan memiliki atribusi `Owner` yang sah. **Sinyal Potential Conflicts dan approval Reviewer tidak menjadi prasyarat universal pembentukan O1.** Aturan identity/security proyek diperiksa terpisah saat Engineering. |
 | **Dalam cakupan** | Pembentukan konteks organisasi teratribusi, hubungan `Owner` internal pertama, pemahaman sebelum akibat, keberhasilan gabungan, pemeriksaan kembali, dan hasil negatif/unknown yang material. |
-| **Di luar cakupan** | Matriks permission lengkap `Owner`/`Staff`; undangan/perpindahan/delegasi staf; pembuktian representasi legal eksternal; peninjauan organisasi menyeluruh; Campaign; publikasi; kelayakan donasi; dana dan pertanggungjawaban; deteksi konflik/duplikasi universal; penyelesaian konflik formal; subsystem pemulihan wajib. |
-| **Kebebasan Design** | Formulir dan isinya sesuai pengenalan organisasi yang bermakna, penyampaian konsekuensi, alur identitas/sign-in, interaksi, copy, tampilan gagal/belum pasti serta penyampaian Potential Conflicts yang benar-benar diketahui. |
+| **Di luar cakupan** | Matriks permission lengkap `Owner`/`Staff`; perpindahan/delegasi staf; verifikasi legal eksternal; tata cara, standar serta koreksi keputusan Reviewer; Campaign; publikasi/donasi; dana/pertanggungjawaban; universal duplicate/conflict detection, penggabungan/penutupan otomatis, adjudikasi konflik, atau subsystem recovery wajib. |
+| **Kebebasan Design** | Formulir dan isinya, penyampaian konsekuensi, alur identitas/sign-in, interaksi, copy, serta keadaan gagal/belum pasti sesuai makna Product. Status peninjauan organisasi, bila ditampilkan, harus dibedakan dari keberhasilan O1 tanpa membuat proses Reviewer sebagai syarat pembentukan. |
 | **Kebebasan Engineering** | Mekanisme autentikasi, penyimpanan/data model, konsistensi/transaksi, API/komponen, pemulihan bila dibutuhkan, teknik pengujian; tanpa melemahkan makna dan safeguard yang nanti disetujui. |
 | **I2/I3 yang belum diuji** | Sumber Design, arsitektur, keamanan, protected paths, repository/ref/kode runtime dan consumer expectations harus disuplai dan diverifikasi terpisah saat assignment. Tidak ada klaim kesiapan Engineering dari draf ini. |
 
@@ -118,50 +118,44 @@ Acceptance ini adalah konsekuensi Product yang bisa diperiksa bila nanti diimple
 
 ## 6. Open Decisions & Blockers — Human Decision Gate
 
-> **WARNING — PRODUCT HANDOFF BLOCKED: SATU KEPUTUSAN MATERIAL MASIH OPEN**
+> **PRODUCT POLICY DECISIONS SETTLED — FINAL CONTRACT APPROVAL STILL REQUIRED**
 >
-> **Anhar telah menyetujui kebijakan inti O1 pada 23 Oktober 2026**, tetapi masih harus menentukan **akibat Potential Conflicts terhadap efektivitas hubungan `Owner` pertama** sebelum kontrak final boleh disetujui dan diserahkan sebagai input Product `I1` yang mengikat.
+> Anhar telah menyelesaikan keputusan Product `PD-O1-01..05` pada **23 Oktober 2026**. `Owner` internal pertama efektif sejak pembentukan O1 berhasil; **Reviewer menilai klaim/status organisasi, bukan memberikan `Owner` internal pertama**. Tidak ada Open Product decision material tersisa dalam scope O1 berdasarkan keputusan saat ini.
 >
-> Persetujuan keputusan Product yang sudah jelas **berbeda dari** persetujuan *exact revision* Product Contract. `I2/I3/I4` dan invocation Rancang juga tetap terpisah.
+> **WARNING — NOT READY FOR ENGINEERING HANDOFF:** Draf ini perlu konsistensi SC/REQ/AC dan **approval final exact revision** Product Contract sebelum diserahkan sebagai input `I1` binding. Keputusan Product tidak otomatis memenuhi `I2/I3/I4` atau mengizinkan invocation Rancang.
 
-### 6.1 Rekam keputusan Human dan satu item yang masih OPEN
+### 6.1 Keputusan Human yang sudah dituntaskan
 
-| ID | Keputusan Product yang telah diterima Anhar | Status |
+| ID | Keputusan Product | Status |
 | --- | --- | --- |
-| **PD-O1-01** | Seseorang dapat membentuk konteks organisasi dan menjadi `Owner` internal pertama setelah berhasil; bukan bukti representasi legal eksternal, tanpa syarat verifikasi eksternal universal. | **DECIDED — scoped / 23 Oktober 2026** |
-| **PD-O1-02** | Keberhasilan O1 mensyaratkan organisasi serta hubungan `Owner` yang sah/teratribusi bersama pada saat efektif. | **DECIDED — scoped / 23 Oktober 2026** |
-| **PD-O1-03** | Konsekuensi dan batas `Owner` dipahami sebelum efektif; hasil aktual dapat diperiksa kembali sesudah berhasil. | **DECIDED — scoped / 23 Oktober 2026** |
-| **PD-O1-04 — prinsip** | Gagal/parsial/unattributable tidak boleh dianggap sukses. Potential Conflicts material yang diketahui dan belum selesai tidak boleh digambarkan sebagai tanpa konflik. | **DECIDED — prinsip kejujuran / 23 Oktober 2026** |
-| **PD-O1-05** | Pembentukan organisasi tidak menyiratkan peninjauan, verifikasi eksternal, kurasi Campaign, publikasi, atau kelayakan menerima donasi. | **DECIDED — scoped / 23 Oktober 2026** |
-| **PD-O1-04 — akibat konflik** | Jika Potential Conflicts material benar-benar diketahui sebelum keberhasilan O1, apakah hubungan `Owner` boleh efektif **dengan pembatasan**, harus **ditunda**, atau **ditolak**? | **OPEN — BLOCKING untuk definisi keberhasilan O1 yang final** |
+| **PD-O1-01** | Pembentukan konteks organisasi menghasilkan `Owner` internal pertama yang teratribusi; bukan representasi legal eksternal. | **DECIDED — scoped / 23 Oktober 2026** |
+| **PD-O1-02** | O1 berhasil ketika konteks organisasi dan hubungan `Owner` internal sah dan efektif bersama. | **DECIDED — scoped / 23 Oktober 2026** |
+| **PD-O1-03** | Makna `Owner` dijelaskan sebelum efektif; hubungan aktual dapat diperiksa kembali setelah berhasil. | **DECIDED — scoped / 23 Oktober 2026** |
+| **PD-O1-04** | Dua konteks organisasi dengan nama/klaim sama dan ID internal berbeda boleh mempunyai `Owner` internal efektif masing-masing jika memenuhi syarat O1. Potential Conflicts tidak otomatis menunda/menolak/menggabungkan/menutup salah satu. Reviewer berwenang menilai klaim/status organisasi secara terpisah. | **DECIDED — scoped / 23 Oktober 2026** |
+| **PD-O1-05** | O1 bukan approval Reviewer, verifikasi legal eksternal, kurasi Campaign, publikasi, atau kelayakan donasi. | **DECIDED — scoped / 23 Oktober 2026** |
 
-**Potential Conflicts** tidak otomatis menuntut deteksi universal. Hanya keadaan konflik material yang benar-benar diketahui dan belum selesai yang relevan bagi pertanyaan O1 ini. Sumber sinyal dan mekanisme penerapannya bukan keputusan Product yang diselesaikan oleh dokumen ini.
+**Tidak ditambahkan ke O1:** conflict resolution engine, auto-deduplication, aturan koreksi approval Reviewer, atau perancangan seluruh pipeline Review. Hal tersebut tidak diperlukan untuk keputusan Product O1 sekarang.
 
-### 6.2 Kondisi penutupan Human Decision Gate
+### 6.2 Status gate dan persyaratan handoff
 
-Gate dinyatakan **CLOSED** hanya ketika:
-
-1. Anhar menetapkan **satu konsekuensi Product** atas `PD-O1-04` yang masih OPEN, tanpa menambahkan sistem penyelesaian konflik yang tidak diperlukan.
-2. Product menyelaraskan outcome, Success Criteria, pengalaman aktor, requirements, invariants, serta Acceptance Criteria terkait dengan keputusan tersebut. Approval atas arah kebijakan **tidak** otomatis merupakan approval seluruh baris turunan yang masih draf.
-3. Anhar menyetujui **exact revision** Product Contract O1 final dan bukti keputusan tersebut disimpan di repository Kencleng.
-
-**Status sekarang: PARTIALLY SETTLED / GATE OPEN / NOT READY FOR ENGINEERING HANDOFF.** Persetujuan kebijakan scoped sudah tercatat, tetapi keputusan `PD-O1-04` belum lengkap dan belum ada approval final pada exact revision Product Contract.
-
-**Bukan blocker keputusan Product O1:** fakta runtime identity, persistence, sumber sinyal konflik, constraint keamanan, `I2/I3/I4`, atau kesiapan Rancang. Hal-hal tersebut masih **UNVERIFIED** dan diperiksa pada concern Engineering sesuai waktunya.
+- **Human Product policy decisions:** **CLOSED** — `PD-O1-01..05` sudah diputuskan dalam scope O1.
+- **Product Contract final consistency review:** **PENDING** — cek outcome, `SC`, pengalaman aktor, `REQ`, invariant, dan `AC` pada revisi terbaru sebagai satu kontrak.
+- **Exact-revision Human Product Contract approval:** **PENDING** — Anhar perlu menyetujui artefak revisi tepat setelah final review.
+- **Engineering handoff:** **BLOCKED** sampai approval Product Contract final; `I2/I3/I4` serta kesiapan Rancang ditangani terpisah.
 
 ## 7. Kesiapan Konsumsi dan Batas Handoff
 
 | Pertanyaan kesiapan | Keadaan yang benar-benar diketahui |
 | --- | --- |
-| **Exact Product authority dan approval** | Product Intent dan Level 2 v0.3 telah disetujui. **PD-O1-01/02/03/05 serta prinsip kejujuran PD-O1-04 diputuskan Anhar 23 Oktober 2026**, tetapi konsekuensi konflik pada `PD-O1-04` masih OPEN. `SC`, requirements, dan `AC` tetap merupakan **draft contract obligations**, tanpa approval `I1` pada exact revision. |
+| **Exact Product authority dan approval** | Product Intent dan Level 2 v0.3 approved; `PD-O1-01..05` **DECIDED — scoped, Anhar 23 Oktober 2026**. Seluruh `SC`, requirements, dan `AC` telah direvisi agar selaras tetapi belum disetujui sebagai Product Contract pada exact revision. |
 | **Konsistensi outcome → SC → rules → AC** | Jejak antar-ID dirumuskan dalam draf ini dari proposal v0.1 untuk review. Ini **pemeriksaan penulisan berbasis dokumen**, belum independent fresh-reader validation. |
-| **Human Decision Gate** | **PARTIALLY SETTLED / OPEN — lihat Section 6**. Kebijakan Product yang jelas sudah mendapat scoped approval, tetapi akibat Potential Conflicts pada hubungan `Owner` masih menunggu keputusan Anhar. O1 **NOT READY FOR ENGINEERING HANDOFF**. |
-| **Syarat Product dan ketersediaan teknis** | Atribusi dan persistensi dibutuhkan pada akibat yang diusulkan; status kode/lingkungan, ketersediaan sinyal Potential Conflicts dan mekanisme autentikasi **UNVERIFIED**. |
+| **Human Decision Gate** | **POLICY DECISIONS CLOSED — lihat Section 6.** Final consistency review dan approval exact revision Product Contract **PENDING**. **NOT READY FOR ENGINEERING HANDOFF.** |
+| **Syarat Product dan ketersediaan teknis** | Atribusi dan persistensi diperlukan untuk keberhasilan internal O1. Keadaan kode/lingkungan dan autentikasi **UNVERIFIED**. Sinyal konflik dan proses Reviewer bukan dependency universal O1. |
 | **Rancang `I1` generic fit** | Struktur memuat outcome, aturan, acceptance, source revisions, exclusions dan delegated freedom. **Candidate only; belum diuji oleh consumer Rancang independen.** |
-| **Rancang project-bound fit** | **NOT CHECKED / BLOCKED for binding use** sampai Product approval exact revision dan pemeriksaan I2/I3/I4 secara terpisah, plus readiness Rancang. |
+| **Rancang project-bound fit** | **NOT CHECKED / BLOCKED for binding use** hingga Product Contract exact revision approved, input `I2/I3/I4` diperiksa terpisah, dan readiness Rancang terbukti. |
 | **Hasil handoff** | **DRAFT — NOT I1 READY.** Tidak ada izin menjalankan Rancang, tidak ada perubahan operational `main`, dan tidak ada bukti perilaku sudah delivered. |
 
-**Tindakan Product berikutnya:** Tentukan hanya konsekuensi Potential Conflicts yang masih OPEN pada `PD-O1-04` (Section 6). Selaraskan bagian terdampak, lalu ajukan **exact revision Product Contract O1 final** untuk approval Anhar. Jangan mengulang keputusan yang sudah disetujui tanpa evidence material baru; pemeriksaan `I1` dan `I2/I3/I4` tetap terpisah.
+**Tindakan Product berikutnya:** Lakukan final Product consistency review terhadap seluruh SC/REQ/AC draf v0.3, lalu minta approval Anhar untuk **exact revision Product Contract final**. Tidak perlu kembali membahas kebijakan `PD-O1-01..05` tanpa evidence baru. Engineering dimulai terpisah setelah Product selesai.
 
 ## 8. Informasi Material Tambahan (Kondisional)
 
@@ -185,4 +179,4 @@ Gate dinyatakan **CLOSED** hanya ketika:
 
 **Pemisahan pemeriksaan:** Larangan *upstream Product source re-check* **tidak** berarti melewati verifikasi persetujuan dan revisi tepat `I1`, pemeriksaan konsistensi kontrak yang diserahkan, `I2/I3`, keamanan, atau kewenangan `I4`. Ketidaksesuaian Product yang material harus dikembalikan kepada Anhar, bukan diperbaiki dengan melakukan Product discovery ulang. **Definisi Rancang v3 yang terbentuk saat ini masih mewajibkan source inspection**; pembatasan baru ini adalah arah usulan dan baru berlaku pada Rancang setelah revisi definisi dan approval yang sah.
 
-**Status kontrak saat ini tetap DRAFT / NOT I1 READY.** Persetujuan kebijakan scoped sudah dicatat pada Section 6, tetapi akibat konflik pada `PD-O1-04` dan approval final exact revision Product Contract masih terbuka. Catatan ini tidak menjadikan O1 input `I1` yang mengikat.
+**Status kontrak saat ini tetap DRAFT / NOT I1 READY.** Keputusan scoped `PD-O1-01..05` sudah settled. Konsistensi akhir dan approval final *exact revision* Product Contract masih pending. Catatan downstream tidak menjadikan draf otomatis `I1` binding.
