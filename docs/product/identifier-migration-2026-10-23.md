@@ -47,7 +47,7 @@
 | `A5` | `J-ACC-05` |
 | `A6` | `J-ACC-06` |
 
-**Original approved Journey source:** blob `5783fdb303e34ecef7988d6ec3c7fb8b15326a95` for [Level 2 map at the pre-migration checkpoint](https://github.com/anhsbolic/kencleng/blob/757f715a1aca9f420b48919f03ff36e980a94ef0/docs/product/interconnected-journeys/level-2-network.md). **Current mapped Journey blob:** `650fbaddac526963d56de12e42b36b3a603d969d`. Local Mermaid node aliases such as `ORG_01` are diagram syntax only, not canonical Product tracking identifiers.
+**Original approved Journey source:** blob `5783fdb303e34ecef7988d6ec3c7fb8b15326a95` for [Level 2 map at the pre-migration checkpoint](https://github.com/anhsbolic/kencleng/blob/757f715a1aca9f420b48919f03ff36e980a94ef0/docs/product/interconnected-journeys/level-2-network.md). **Current mapped Journey blob:** `22722bada1553aff6182bcb59e6823c79177f781`. Local Mermaid node aliases such as `ORG_01` are diagram syntax only, not canonical Product tracking identifiers.
 
 ## Approved Product Contract IDs — all 26 mapped
 
@@ -60,7 +60,7 @@
 
 Expansion is **one-to-one and order-preserving**. For example `PD-O1-01 → PD-ORG-01-01`, `SC-O1-03 → SC-ORG-01-03`, `O1-R08 → REQ-ORG-01-08`, and `O1-AC08 → AC-ORG-01-08`. Existing shorthand trace references to `R01` etc. become fully qualified IDs within the new contract.
 
-**Exact Human-approved Product content:** original approved candidate blob `448a8082bcb9ac1c7e41a686f2e3fdd2e3988ac4`; original canonical blob `0a28f7431f749e608402711be704a3f065a1398a`. **New canonical Product Contract:** `293bc59dbb738a17e763de361c412b42ca9cd565`. [New approval record](outcomes/org-01/approval.md) reconciles their authority.
+**Exact Human-approved Product content:** original approved candidate blob `448a8082bcb9ac1c7e41a686f2e3fdd2e3988ac4`; original canonical blob `0a28f7431f749e608402711be704a3f065a1398a`. **New canonical Product Contract:** `453e2f3eab62cf3dcf732272b9023123c5ad3e78`. [New approval record](outcomes/org-01/approval.md) reconciles their authority.
 
 The Product Contract was compared against the original Human-reviewed blob. **26/26 normative rows match after inverse ID mapping** (PD semantics, SC meanings/boundaries, REQ behavior/conditions/invariants, AC trace and expected result). No new internal `Owner`, Reviewer or Potential Conflicts behavior was introduced by this migration.
 
