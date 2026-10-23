@@ -47,11 +47,11 @@ The exact original Human-approved Product Contract blob is `448a8082bcb9ac1c7e41
 
 **Acuan istilah:** [Pilihan Istilah Product Kencleng](istilah.md) adalah satu tempat untuk padanan kata yang sudah disepakati; jangan menebak atau mengganti istilah secara massal.
 
-**Tahap pertama selesai (22 Oktober 2026):** [Product Intent Bahasa Indonesia](product-intent.md) telah disetujui sebagai sumber utama Product pada branch riset ini. [Draf sebelumnya](product-intent-id-draft.md) disimpan untuk riwayat penyuntingan, bukan sumber kedua. Dokumen pilot lama tetap menjadi arsip sejarah.
+**Tahap pertama selesai (22 Oktober 2026):** [Product Intent Bahasa Indonesia](product-intent.md) telah disetujui sebagai sumber utama Product pada branch riset ini. [Draf sebelumnya](history.md) disimpan untuk riwayat penyuntingan, bukan sumber kedua. Dokumen pilot lama tetap menjadi arsip sejarah.
 
-**Tahap kedua selesai (22 Oktober 2026):** [Pengantar Peta Journey Product — Bahasa Indonesia](interconnected-journeys/README.md) telah disetujui dan dipromosikan sebagai sumber pengantar riset. [Draf sebelumnya](interconnected-journeys/README-id-draft.md) hanya riwayat penyuntingan, bukan sumber kedua. Persetujuan Level 2 v0.3 dan aturan O1 tidak berubah.
+**Tahap kedua selesai (22 Oktober 2026):** [Pengantar Peta Journey Product — Bahasa Indonesia](interconnected-journeys/README.md) telah disetujui dan dipromosikan sebagai sumber pengantar riset. [Draf sebelumnya](history.md) hanya riwayat penyuntingan, bukan sumber kedua. Persetujuan Level 2 v0.3 dan aturan O1 tidak berubah.
 
-**Tahap ketiga selesai (22 Oktober 2026):** Anhar menyetujui dan mempromosikan [Peta Journey Level 2 v0.3 Bahasa Indonesia](interconnected-journeys/level-2-network.md) sebagai sumber riset Level 2 yang berlaku di branch ini. Peta tetap mencakup **26 node**, dua diagram, `EX-OPS`, **17 hubungan penting**, **17 pemeriksaan batas makna**, dan lima kelompok pertanyaan Product **OPEN**. OPEN **bukan** tuntutan untuk segera mengambil keputusan. [Draf Bahasa Indonesia sebelumnya](interconnected-journeys/level-2-network-id-draft.md) hanya riwayat penyuntingan. Persetujuan ini **bukan** persetujuan kontrak O1, delivery atau kesiapan Engineering.
+**Tahap ketiga selesai (22 Oktober 2026):** Anhar menyetujui dan mempromosikan [Peta Journey Level 2 v0.3 Bahasa Indonesia](interconnected-journeys/level-2-network.md) sebagai sumber riset Level 2 yang berlaku di branch ini. Peta tetap mencakup **26 node**, dua diagram, `EX-OPS`, **17 hubungan penting**, **17 pemeriksaan batas makna**, dan lima kelompok pertanyaan Product **OPEN**. OPEN **bukan** tuntutan untuk segera mengambil keputusan. [Draf Bahasa Indonesia sebelumnya](history.md) hanya riwayat penyuntingan. Persetujuan ini **bukan** persetujuan kontrak O1, delivery atau kesiapan Engineering.
 
 ## History and evidence
 
