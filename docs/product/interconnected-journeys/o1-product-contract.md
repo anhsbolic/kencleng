@@ -27,9 +27,9 @@
 
 Outcome ini membantu menyiapkan konteks kewenangan organisasi yang bermakna bagi tindakan berikutnya, **tanpa** mewajibkan peninjauan organisasi, persiapan Campaign, donasi, atau hasil Journey lain. Organisasi yang sudah memiliki konteks sah tidak perlu otomatis mengulangi O1.
 
-### Success Criteria yang diusulkan
+### Success Criteria yang disetujui
 
-Keempat SC berikut adalah **kandidat kondisi keberhasilan semantik**, bukan bukti runtime maupun syarat yang sudah disetujui. Untuk menyebut O1 berhasil sebagaimana diusulkan, kondisi materialnya harus berlaku **bersama**.
+Keempat SC berikut adalah **kondisi keberhasilan Product O1 yang disetujui**; semua kondisi materialnya harus terpenuhi **bersama**. Approval kriteria tidak berarti perilaku tersebut telah diverifikasi di runtime.
 
 | ID | Kapan outcome dapat dinyatakan berhasil menurut proposal | Batas makna yang tidak ikut dibuktikan | Dasar/status |
 | --- | --- | --- | --- |
@@ -38,7 +38,7 @@ Keempat SC berikut adalah **kandidat kondisi keberhasilan semantik**, bukan bukt
 | **SC-O1-03** | Kegagalan, hasil parsial, atau tidak teratribusi tidak diklaim berhasil. Kesamaan nama/klaim atau **Potential Conflicts** antar-konteks dengan ID berbeda **tidak otomatis** menunda, menolak, menggabungkan, atau menutup pembentukan O1 maupun `Owner` internalnya. | Keberhasilan internal bukan bukti approval Reviewer atau validitas klaim organisasi di dunia nyata; tidak menuntut deteksi konflik universal. | `PD-O1-04` **DECIDED scoped**; `SC` APPROVED dalam kontrak ini |
 | **SC-O1-04** | Keberhasilan O1 **tidak menaikkan klaim organisasi** menjadi hasil peninjauan/verifikasi eksternal, kurasi Campaign, penayangan publik, atau kelayakan donasi. | Tidak menjamin kualitas organisasi atau kesiapan Campaign. | Batas umum Product Intent dan `PD-O1-05` **DECIDED scoped**; `SC` APPROVED dalam kontrak ini |
 
-**Definisi keberhasilan gabungan yang diusulkan:** `O1 berhasil = organisasi sah + hubungan Owner internal pertama yang sah dan teratribusi + makna/hasil yang jujur serta dapat dipahami dan diperiksa`. Perlindungan dari klaim sukses palsu tetap mengikat definisi keberhasilan proposal ini. Definisi tersebut **belum diputuskan Anhar**.
+**Definisi keberhasilan gabungan yang disetujui:** `O1 berhasil = organisasi sah + hubungan Owner internal pertama yang sah dan teratribusi + makna/hasil yang jujur serta dapat dipahami dan diperiksa`. Perlindungan dari klaim sukses palsu tetap mengikat makna keberhasilan O1. **Disetujui Anhar, 23 Oktober 2026, untuk scope Product O1**.
 
 ## 2. Pengalaman Aktor dan Makna Konsekuensinya
 
@@ -61,17 +61,17 @@ Anhar telah menyetujui seluruh kebijakan Product O1 `PD-O1-01..05` pada 23 Oktob
 
 | ID | Kebijakan Product O1 | Standing keputusan Product |
 | --- | --- | --- |
-| **PD-O1-01** | Seseorang dapat memulai pembentukan konteks organisasi baru. **Jika pembentukan berhasil secara efektif**, orang yang bertindak dan dapat diatribusikan secara sah memperoleh hubungan `Owner` **internal Kencleng** yang pertama. Ini bukan hasil verifikasi perwakilan eksternal. Verifikasi hukum eksternal yang telah selesai **tidak menjadi syarat universal** untuk kewenangan internal terbatas ini. | **DECIDED — scoped**, Anhar 23 Oktober 2026; revisi kontrak final belum approved. |
-| **PD-O1-02** | Hasil berhasil merupakan **satu akibat gabungan**: konteks organisasi sah **dan** hubungan `Owner` awal sah/teratribusi. Atribusi aktor wajib tersedia saat akibat menjadi efektif, tidak harus saat awal interaksi. Satu komponen saja tidak boleh dinyatakan berhasil penuh. | **DECIDED — scoped**, Anhar 23 Oktober 2026; revisi kontrak final belum approved. |
-| **PD-O1-03** | Aktor dapat memahami akibat dan batas `Owner` sebelum efektif. Setelah berhasil, organisasi serta hubungan `Owner` aktual dapat diperiksa kembali secara durable, bukan hanya dari notifikasi sementara. | **DECIDED — scoped**, Anhar 23 Oktober 2026; revisi kontrak final belum approved. |
+| **PD-O1-01** | Seseorang dapat memulai pembentukan konteks organisasi baru. **Jika pembentukan berhasil secara efektif**, orang yang bertindak dan dapat diatribusikan secara sah memperoleh hubungan `Owner` **internal Kencleng** yang pertama. Ini bukan hasil verifikasi perwakilan eksternal. Verifikasi hukum eksternal yang telah selesai **tidak menjadi syarat universal** untuk kewenangan internal terbatas ini. | **DECIDED — scoped**, Anhar 23 Oktober 2026; revisi kontrak final sudah approved untuk Product O1. |
+| **PD-O1-02** | Hasil berhasil merupakan **satu akibat gabungan**: konteks organisasi sah **dan** hubungan `Owner` awal sah/teratribusi. Atribusi aktor wajib tersedia saat akibat menjadi efektif, tidak harus saat awal interaksi. Satu komponen saja tidak boleh dinyatakan berhasil penuh. | **DECIDED — scoped**, Anhar 23 Oktober 2026; revisi kontrak final sudah approved untuk Product O1. |
+| **PD-O1-03** | Aktor dapat memahami akibat dan batas `Owner` sebelum efektif. Setelah berhasil, organisasi serta hubungan `Owner` aktual dapat diperiksa kembali secara durable, bukan hanya dari notifikasi sementara. | **DECIDED — scoped**, Anhar 23 Oktober 2026; revisi kontrak final sudah approved untuk Product O1. |
 | **PD-O1-04** | Pembentukan yang gagal, parsial, atau tidak dapat diatribusikan **tidak boleh dinyatakan berhasil**. Kesamaan nama/klaim atau Potential Conflicts **tidak otomatis** menghalangi dua konteks organisasi dengan ID internal berbeda atau menunda/menolak/menggabungkan/menutup hubungan `Owner` internal masing-masing. Penilaian serta approval atas klaim/status organisasi dilakukan oleh Reviewer dalam proses terpisah dan **tidak menentukan efektivitas `Owner` internal pertama**. | **DECIDED — scoped**, Anhar 23 Oktober 2026. Tidak mewajibkan conflict detection, deduplication, adjudication, atau otomatisasi penutupan. |
-| **PD-O1-05** | Informasi yang diberikan organisasi tetap **informasi dari organisasi**. Pembentukan organisasi saja tidak melakukan atau menyiratkan peninjauan organisasi, verifikasi legal eksternal, kurasi Campaign, penayangan publik, atau izin menerima donasi. | **DECIDED — scoped**, Anhar 23 Oktober 2026; selaras prinsip Product Intent. Revisi kontrak final belum approved. |
+| **PD-O1-05** | Informasi yang diberikan organisasi tetap **informasi dari organisasi**. Pembentukan organisasi saja tidak melakukan atau menyiratkan peninjauan organisasi, verifikasi legal eksternal, kurasi Campaign, penayangan publik, atau izin menerima donasi. | **DECIDED — scoped**, Anhar 23 Oktober 2026; selaras prinsip Product Intent. Revisi kontrak final sudah approved untuk Product O1. |
 
 **Batas yang disetujui:** Dua konteks organisasi dengan ID berbeda tidak otomatis menjadi salah hanya karena nama/klaim yang sama. Jika kelak Reviewer menyetujui dua klaim organisasi yang ternyata merujuk pihak nyata yang sama, itu adalah masalah kualitas keputusan peninjauan/pengelolaan organisasi, **bukan kegagalan otomatis O1**. Mekanisme koreksi Reviewer atau conflict resolution tidak dibahas dalam O1.
 
-### 3.2 Requirements dan invariants yang diusulkan
+### 3.2 Requirements dan invariants yang disetujui
 
-| ID | Perilaku Product yang diusulkan | Syarat/kewenangan | Invariant / yang tidak otomatis dijamin | Dasar |
+| ID | Perilaku Product yang disetujui | Syarat/kewenangan | Invariant / yang tidak otomatis dijamin | Dasar |
 | --- | --- | --- | --- | --- |
 | **O1-R01** | Seseorang dapat memulai pembentukan tanpa produk menyatakan representasi legal eksternal telah dibuktikan. | Kelayakan aktor spesifik di luar batas ini memerlukan keputusan Product sendiri. | Memulai tidak otomatis berarti berwenang secara hukum atau berhasil menjadi `Owner`. | `PD-O1-01` **DECIDED scoped**; requirement **APPROVED** dalam kontrak ini |
 | **O1-R02** | Saat berhasil, orang yang bertindak benar-benar teratribusi ke organisasi dan hubungan `Owner` internal pertama. | Atribusi yang cukup tersedia **pada saat akibat efektif**. | Hubungan `Owner` tidak boleh tak bertuan/tidak teratribusi. | `PD-O1-01/02` **DECIDED scoped**; requirement **APPROVED** dalam kontrak ini |
