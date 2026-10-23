@@ -1,6 +1,6 @@
 # Kencleng — Product Identifier Migration (23 Oktober 2026)
 
-> **Status:** Approved structural/refactoring direction from Anhar, applied on `pilot/station5-c1-space-only`. This file is a durable old→new ID crosswalk, **not** a new Product behavior or approval for Engineering.
+> **Status:** Anhar-authorized identifier/path refactor on `pilot/station5-c1-space-only`, accompanied by reconciliation of the single Organization Journey node against separately approved `ORG-01` Product semantics. This document is a durable old→new ID crosswalk and reconciliation record, **not** a new Product policy decision or Engineering authorization.
 > **Output catalog:** Harscode Product phases `PROD-FND/JRN/SEL/DEF/APR/HND`; output kinds `PROD-INTENT`, `PROD-JOURNEYS`, `PROD-SELECTION`, `PROD-CONTRACT`, `PROD-APPROVAL`, `PROD-HANDOFF`. Human-facing labels remain in plain language.
 
 ## Active output IDs
@@ -47,7 +47,9 @@
 | `A5` | `J-ACC-05` |
 | `A6` | `J-ACC-06` |
 
-**Original approved Journey source:** blob `5783fdb303e34ecef7988d6ec3c7fb8b15326a95` for [Level 2 map at the pre-migration checkpoint](https://github.com/anhsbolic/kencleng/blob/757f715a1aca9f420b48919f03ff36e980a94ef0/docs/product/interconnected-journeys/level-2-network.md). **Current mapped Journey blob:** `22722bada1553aff6182bcb59e6823c79177f781`. Local Mermaid node aliases such as `ORG_01` are diagram syntax only, not canonical Product tracking identifiers.
+**Original approved Journey source:** blob `5783fdb303e34ecef7988d6ec3c7fb8b15326a95` for [Level 2 at its pre-migration checkpoint](https://github.com/anhsbolic/kencleng/blob/757f715a1aca9f420b48919f03ff36e980a94ef0/docs/product/interconnected-journeys/level-2-network.md). **Current mapped Journey blob:** `22722bada1553aff6182bcb59e6823c79177f781`. Local Mermaid node aliases such as `ORG_01` are diagram syntax only, not Product tracking IDs.
+
+**Migration classification verified:** After inverse ID mapping and direct comparison of the original and current 26 Journey table rows, **25 of 26 node descriptions are unchanged**; **`O1 → J-ORG-01` also received a Product-standing/semantic reconciliation**. The original `O1` row described the formation/first-Owner question as unresolved. The current `J-ORG-01` row describes the **separately approved** `ORG-01` Product outcome. This is **not a pure rename** of that row, nor a new business decision made by identifier migration. The basis is the [approved `ORG-01` Product Contract](outcomes/org-01/product-contract.md) and [exact-revision Human approval](outcomes/org-01/approval.md). No other node's Product policy has been newly approved by this change.
 
 ## Approved Product Contract IDs — all 26 mapped
 
@@ -60,7 +62,7 @@
 
 Expansion is **one-to-one and order-preserving**. For example `PD-O1-01 → PD-ORG-01-01`, `SC-O1-03 → SC-ORG-01-03`, `O1-R08 → REQ-ORG-01-08`, and `O1-AC08 → AC-ORG-01-08`. Existing shorthand trace references to `R01` etc. become fully qualified IDs within the new contract.
 
-**Exact Human-approved Product content:** original approved candidate blob `448a8082bcb9ac1c7e41a686f2e3fdd2e3988ac4`; original canonical blob `0a28f7431f749e608402711be704a3f065a1398a`. **New canonical Product Contract:** `453e2f3eab62cf3dcf732272b9023123c5ad3e78`. [New approval record](outcomes/org-01/approval.md) reconciles their authority.
+**Exact Human-approved Product content:** original approved candidate blob `448a8082bcb9ac1c7e41a686f2e3fdd2e3988ac4`; original canonical blob `0a28f7431f749e608402711be704a3f065a1398a`. **New canonical Product Contract:** `da19d8e7cdb9baac8cf4af1c5e6b61763607013e`. [New approval record](outcomes/org-01/approval.md) reconciles their authority.
 
 The Product Contract was compared against the original Human-reviewed blob. **26/26 normative rows match after inverse ID mapping** (PD semantics, SC meanings/boundaries, REQ behavior/conditions/invariants, AC trace and expected result). No new internal `Owner`, Reviewer or Potential Conflicts behavior was introduced by this migration.
 
