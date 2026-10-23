@@ -23,6 +23,10 @@
 
 **Tahap ketiga selesai (22 Oktober 2026):** Anhar menyetujui dan mempromosikan [Peta Journey Level 2 v0.3 Bahasa Indonesia](interconnected-journeys/level-2-network.md) sebagai sumber riset Level 2 yang berlaku di branch ini. Peta tetap mencakup **26 node**, dua diagram, `EX-OPS`, **17 hubungan penting**, **17 pemeriksaan batas makna**, dan lima kelompok pertanyaan Product **OPEN**. OPEN **bukan** tuntutan untuk segera mengambil keputusan. [Draf Bahasa Indonesia sebelumnya](interconnected-journeys/level-2-network-id-draft.md) hanya riwayat penyuntingan. Persetujuan ini **bukan** persetujuan kontrak O1, delivery atau kesiapan Engineering.
 
+## Usulan template handoff Product (belum disetujui)
+
+[Draf Product Contract Template v0.1](product-contract-template-draft.md) adalah **usulan Kencleng** untuk menyusun artefak Product yang dapat memenuhi kelas input **I1 Rancang**, dengan section **Informasi Material Tambahan** yang bersifat kondisional. Template ini **belum disetujui sebagai standar**, tidak mengubah kontrak Rancang `I1–I4`, tidak mengesahkan O1 Product Contract, dan tidak mengizinkan invocation Space. `I2/I3/I4` tetap berasal dari pemilik dan proses otorisasi masing-masing.
+
 ## Current entrypoints
 
 1. [Product Intent](product-intent.md) — tujuan dan prinsip produk yang disetujui pada branch riset ini; ditulis dalam Bahasa Indonesia.
