@@ -2,7 +2,7 @@
 
 > **Authority:** Product Journey introduction approved by Anhar 22 Oktober 2026. Output kind: `PROD-JOURNEYS`. Applies to branch `pilot/station5-c1-space-only`, not operational `main`. Identifier changes are traceable through [migration record](../identifier-migration-2026-10-23.md).
 > **Riwayat:** Versi Inggris sebelum penyesuaian kode: blob `73c8e509429ea456b09d4d85a75de0d44bd88dfd`; pengantar Inggris berkode baru: blob `a4a70735663acabefea6e69ed7468487285a3b4e`; draf Bahasa Indonesia yang disetujui: blob `f56a091e60755995e3a986a364489f509e5e2c87`. Riwayat tersedia melalui Git.
-> **Batas:** Persetujuan ini mencakup pengantar dan penulisan ulang yang telah diaudit, bukan aturan rinci J-ORG-01, rencana development, Rancang, atau izin menjalankan Engineering. [Level 2 v0.3](level-2-network.md) tetap sumber rincian peta yang sudah disetujui; [Product Intent](../product-intent.md) tetap sumber prinsip produk.
+> **Batas:** Approval peta pada 22 Oktober 2026 **tidak dengan sendirinya** mengesahkan aturan tiap node, rencana development, Rancang, atau Engineering. **Sesudah approval peta**, outcome `ORG-01` (node `J-ORG-01`) mendapat [Product Contract](../outcomes/org-01/product-contract.md) dan [approval exact-revision](../outcomes/org-01/approval.md) terpisah pada 23 Oktober 2026. [Level 2](level-2-network.md) tetap peta; [Product Intent](../product-intent.md) tetap sumber prinsip.
 > **Istilah:** Gunakan [daftar istilah Product Kencleng](../istilah.md).
 
 ## 1. Mengapa peta ini dibuat
@@ -67,9 +67,9 @@ Keputusan Product yang belum dibuat harus tetap terlihat sebagai **belum diputus
 ## 6. Sumber dan keputusan yang berlaku
 
 - [Product Intent](../product-intent.md) adalah sumber tujuan dan prinsip Product yang sudah disetujui **pada branch riset ini**.
-- [Level 2 v0.3](level-2-network.md) adalah peta riset yang disetujui. **Persetujuan peta bukan persetujuan aturan rinci setiap bagian.**
-- [Keputusan riset tentang titik awal dan hasil Product](../outcome-selection.md) mencatat alasan memilih arah percobaan **J-ORG-01**, sekaligus batas keputusan yang masih terbuka.
-- [Draf kebutuhan Product J-ORG-01](../outcomes/org-01/product-contract.md) berisi **usulan**, belum menjadi aturan J-ORG-01 yang disetujui atau masukan resmi bagi Rancang.
+- [Level 2](level-2-network.md) adalah peta Journey yang disetujui. Approval peta **tidak otomatis** menyetujui aturan rinci setiap node.
+- [Selected Product Outcome](../outcome-selection.md) menetapkan `ORG-01` sebagai outcome yang dipilih dari node Journey `J-ORG-01`; pemilihan outcome tidak otomatis berarti Engineering siap.
+- [Product Contract `ORG-01`](../outcomes/org-01/product-contract.md) **APPROVED** sebagai Product semantics scoped (`I1` Product portion), dengan [Human Approval Record](../outcomes/org-01/approval.md) pada exact revision. Tidak mengotorisasi Rancang invocation atau memenuhi `I2/I3/I4`.
 - [Rekonstruksi nilai bisnis](../history.md), [hasil riset pengguna dan perannya](../history.md), dan [contoh skenario riset](../history.md) adalah **riwayat bahan pembanding** yang mendasari pekerjaan riset sebelumnya. Persetujuan atau aturan lama tidak otomatis menjadi keputusan Product saat ini.
 
 Dokumen `pilot-3-*` mempertahankan catatan keputusan dan proses lama. Catatan itu **tidak otomatis menjadi dasar aturan atau prioritas** untuk pekerjaan Product saat ini.
@@ -84,9 +84,9 @@ Persetujuan atas peta ini **tidak** menetapkan:
 - pembentukan atau pelaksanaan Rancang;
 - izin mengubah produk di branch operasional.
 
-**Arah riset saat ini:** J-ORG-01, yaitu pendaftaran organisasi dan kewenangan internal pertamanya, merupakan satu calon titik awal untuk pendalaman kebutuhan Product. Aturan tentang siapa yang boleh mendaftar, kapan dianggap berhasil, dan penanganan masalah **masih membutuhkan keputusan Product**.
+**Keputusan yang sudah selesai:** `ORG-01`, berasal dari `J-ORG-01`, telah dipilih dan seluruh keputusan Product material dalam [Product Contract-nya](../outcomes/org-01/product-contract.md) telah mendapat [approval Human](../outcomes/org-01/approval.md). **Pertanyaan OPEN pada node Journey lain** tetap belum otomatis diputuskan. Finalisasi Product ini bukan bukti implementasi atau izin Engineering.
 
-Pemeriksaan kesiapan Engineering masih ditunda. Kemampuan Balad untuk memilih bagian berikutnya dan pembentukan Product Specification Space juga tetap ditunda. Tidak ada pekerjaan baru yang otomatis berjalan karena dokumen ini.
+Engineering readiness, consumer-fit Rancang, keputusan pelaksanaan berikutnya, dan pembentukan/invocation Space tetap membutuhkan concern serta otorisasi terpisah. Tidak ada pekerjaan Engineering yang otomatis dimulai oleh approval Product.
 
 ## 8. Riwayat persetujuan
 
@@ -95,7 +95,6 @@ Pemeriksaan kesiapan Engineering masih ditunda. Kemampuan Balad untuk memilih ba
 - **22 Oktober 2026:** Anhar menyetujui pengantar Journey Bahasa Indonesia yang sudah diperbaiki dan diaudit. Draf tersebut dipromosikan ke `README.md` ini; riwayat bahasa Inggris tetap terlacak melalui Git.
 - **22 Oktober 2026:** Anhar juga menyetujui dan mempromosikan [Level 2 v0.3 Bahasa Indonesia](level-2-network.md) setelah audit kesetaraan makna. Peta Level 2 Inggris sebelumnya tetap terlacak melalui Git; kode, hubungan, dan keputusan OPEN tidak diubah.
 
-Penyuntingan bahasa tidak boleh mengubah persetujuan atau membuka keputusan yang sengaja ditunda.
+- **23 Oktober 2026:** Outcome `ORG-01` (node `J-ORG-01`) dipilih dan [Product Contract](../outcomes/org-01/product-contract.md) mendapat [approval exact-revision](../outcomes/org-01/approval.md) secara terpisah. Approval peta sebelumnya tetap pada scope peta dan tidak berubah menjadi approval untuk node lain.
 
-
-**Current selected outcome:** `ORG-01` corresponds to Journey node `J-ORG-01`. Its [Product Contract](../outcomes/org-01/product-contract.md) and [approval](../outcomes/org-01/approval.md) are current scoped Product authority. The Journey map does not automatically approve any other node.
+Penyuntingan bahasa dan metadata tidak mengubah keputusan Product yang sudah disetujui atau membuka kembali pertanyaan yang sengaja ditunda.
