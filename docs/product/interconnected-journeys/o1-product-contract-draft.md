@@ -3,7 +3,7 @@
 > **Status:** DRAF PRODUCT CONTRACT / PROPOSED — **BELUM DISETUJUI SEBAGAI INPUT `I1` RANCANG**. Penulisan ulang Bahasa Indonesia menggunakan [template I1 Harscode — Bahasa Indonesia](https://github.com/anhsbolic/harscode-workspace/blob/00ed2881a608c47d3c0afde423252798f6ffe8f7/product/product-contract-template-id-draft.md) (template itu juga masih proposal riset).
 > **Lingkup:** Hanya Product O1 pada `anhsbolic/kencleng`, branch `pilot/station5-c1-space-only`. Bukan perubahan Kencleng `main`, bukan prioritas Engineering, dan bukan perintah menjalankan Rancang.
 > **Riwayat yang diadaptasi:** Draf Product O1 v0.1 Inggris, blob `00497ab3ab0a6183ff54e90089cf54131e560b08`. Semua `PD-O1-01..05`, `O1-R01..08`, dan `O1-AC01..09` tetap proposal menurut makna aslinya; Success Criteria dan trace antarbagian ditambahkan sebagai **struktur usulan untuk review**, bukan persetujuan aturan baru.
-> **Batas keputusan:** Persetujuan Anhar untuk **menulis draf mengikuti template** tidak berarti approval atas kebijakan pemberian `Owner` pertama, keberhasilan gabungan, atau perlakuan Potential Conflicts; keputusan itu tetap milik Anhar.
+> **Batas keputusan:** Anhar telah mereview format dan konten draf sebagai arah yang memadai, **tetapi belum menyetujui paket aturan O1 atau exact revision sebagai Product Contract yang binding**. Seluruh keputusan yang harus diselesaikan Human terkumpul di **Section 6 — Human Decision Gate**.
 
 ## Identitas artefak dan authority
 
@@ -116,20 +116,39 @@ Acceptance ini adalah konsekuensi Product yang bisa diperiksa bila nanti diimple
 
 **Pembatas pemaknaan:** Keberadaan node O1 di peta yang disetujui tidak membuktikan kemampuan runtime atau menjadi persyaratan bahwa seluruh J-ORG harus selesai sebelum Campaign bisa disiapkan.
 
-## 6. Open Decisions & Blockers
+## 6. Open Decisions & Blockers — Human Decision Gate
 
-Status `OPEN` di sini tidak otomatis berarti mendesak secara keseluruhan Product. Namun keputusan yang material terhadap **kontrak O1 ini** harus diselesaikan sebelum kontrak dapat menjadi `I1` yang mengikat.
+> **WARNING — HUMAN DECISION REQUIRED / PRODUCT HANDOFF BLOCKED**
+>
+> **Anhar harus menuntaskan seluruh keputusan Product O1 yang material dalam bagian ini dan menyetujui Product Contract pada revisi tepat sebelum dokumen boleh diserahkan sebagai input Product `I1` yang mengikat kepada Engineering/Rancang.** Selama satu saja keputusan yang menentukan makna keberhasilan, kewenangan, atau acceptance O1 masih `OPEN/PROPOSED`, status dokumen adalah **NOT READY FOR ENGINEERING HANDOFF**.
+>
+> Persetujuan **format dan kualitas tulisan** bukan persetujuan **aturan Product**. Keputusan ini dapat disahkan sebagai **satu paket kebijakan O1**; tidak perlu lima approval terpisah jika keseluruhan makna jelas dan diterima. Approval Product juga **tidak otomatis** memenuhi `I2/I3/I4` atau mengizinkan invocation Rancang.
 
-| Pertanyaan / konsekuensi yang belum disetujui | Pemilik | Status | Bagian terdampak / syarat pengesahan |
+### 6.1 Keputusan Product yang harus diselesaikan Anhar
+
+Seluruh butir di bawah bersumber dari usulan Section 3 dan **masih menunggu keputusan Human**. Anhar perlu menyatakan **approve paket**, atau mengoreksi/menolak butir yang terdampak. Bila ada koreksi, perbarui Section 1–5 dan acceptance yang terkait **sebelum** approval revisi dokumen final.
+
+| ID | Keputusan konkret yang perlu ditetapkan | Usulan saat ini (belum approved) | Cakupan yang harus diselaraskan |
 | --- | --- | --- | --- |
-| **Paket kebijakan pembentukan O1**: siapakah aktor yang dapat memulai dan memperoleh `Owner` internal pertama, serta arti kewenangannya? | Anhar | **PD-O1-01 PROPOSED** | `SC-O1-01, R01/R02, AC01/AC02`; keputusan O1 mandiri diperlukan. |
-| **Satu hasil gabungan dan waktu atribusi**: organisasi dan `Owner` wajib terbentuk bersama pada saat efek berhasil? | Anhar | **PD-O1-02 PROPOSED** | `SC-O1-01, R02/R04, AC02/AC04`; belum ada kebijakan final. |
-| **Kejelasan akibat dan pemeriksaan durable**: apa klaim yang wajib dapat dipahami/diperiksa? | Anhar | **PD-O1-03 PROPOSED** | `SC-O1-02, R03/R05, AC03/AC05`; bentuk UI/penyimpanan didelegasikan. |
-| **Kegagalan dan Potential Conflicts yang benar-benar diketahui**: apakah klaim terdampak ditunda atau ditolak, dan bagaimana hubungan `Owner` efektif diperlakukan? | Anhar | **PD-O1-04 PROPOSED; akibat konflik terhadap hubungan efektif perlu dipertegas** | `SC-O1-03, R07/R08, AC07/AC08`; jangan mengubah rekomendasi ketat sebelumnya menjadi aturan tanpa keputusan. |
-| **Pemisahan informasi organisasi dan hasil verifikasi**: apakah aplikasi ketentuan umum ini pada O1 diterima? | Anhar | **PD-O1-05 dalam paket PROPOSED**; pembedaan umum sudah didukung Product Intent | `SC-O1-04, R06, AC06/AC09`. |
-| **Sinyal Potential Conflicts yang tersedia, identity authority, persistence, dan constraint keamanan nyata** | Pemilik teknis/Design terkait pada assignment yang sah | **UNVERIFIED — bukan keputusan Product baru secara otomatis** | `I2/I3` harus dibuktikan sesuai scope; bila tidak tersedia, hentikan hanya klaim/pekerjaan terdampak. |
+| **PD-O1-01 — Pembentukan & `Owner` pertama** | Apakah seseorang boleh memulai pembentukan konteks organisasi dan, ketika berhasil, menjadi `Owner` internal pertamanya tanpa syarat universal verifikasi legal eksternal? | Ya; hanya kewenangan **internal Kencleng**, bukan bukti hak mewakili organisasi di luar aplikasi. | `SC-O1-01`, `O1-R01/R02`, `O1-AC01/AC02` |
+| **PD-O1-02 — Definisi sukses** | Apakah keberhasilan hanya sah jika organisasi dan hubungan `Owner` awal sama-sama efektif dan teratribusi, paling lambat pada saat akibat berlaku? | Ya; salah satu hasil saja tidak boleh disebut berhasil penuh. | `SC-O1-01`, `O1-R02/R04`, `O1-AC02/AC04` |
+| **PD-O1-03 — Pemahaman dan pemeriksaan kembali** | Apakah aktor wajib memahami arti/batas `Owner` sebelum efek berlaku dan dapat memeriksa kembali hubungan aktual setelah berhasil? | Ya; tanpa menentukan cara UI, timing login, atau storage. | `SC-O1-02`, `O1-R03/R05`, `O1-AC03/AC05` |
+| **PD-O1-04 — Kegagalan & Potential Conflicts** | Ketika pembentukan gagal/tidak lengkap/tak dapat diatribusikan, atau ada **Potential Conflicts material yang benar-benar diketahui dan belum selesai**, apa yang tidak boleh diklaim berhasil? **Khusus konflik:** apakah hubungan `Owner` boleh efektif dengan status/klaim terbatas, harus ditunda, atau ditolak? | Kegagalan tidak boleh diklaim sukses; konflik yang diketahui tidak boleh dianggap selesai atau tanpa konflik. **Efek konflik pada pemberian `Owner` masih OPEN**, tidak boleh dipilih diam-diam. | `SC-O1-03`, `O1-R07/R08`, `O1-AC07/AC08` |
+| **PD-O1-05 — Batas pembentukan organisasi** | Apakah pembentukan O1 harus tetap terpisah dari peninjauan/verifikasi eksternal, kurasi Campaign, publikasi, dan kelayakan menerima donasi? | Ya; klaim dari organisasi tetap dibedakan dari fakta/hasil peninjauan independen. | `SC-O1-04`, `O1-R06`, `O1-AC06/AC09` |
 
-**Satu keputusan Product terpadu yang direkomendasikan untuk review:** bahas `PD-O1-01..05` sebagai paket yang koheren, termasuk konsekuensi material Potential Conflicts; jangan melakukan approval parsial diam-diam hanya karena tabel terlihat lengkap.
+**Potential Conflicts bukan kewajiban memeriksa seluruh kemungkinan konflik.** Yang dibutuhkan dari Anhar adalah batas akibat Product jika konflik material *sudah benar-benar diketahui* dalam scope O1. Ketersediaan sumber sinyal, pemeriksaan keamanan, dan implementasi tetap concern terpisah.
+
+### 6.2 Kondisi untuk menutup Human Decision Gate
+
+Gate ini **baru CLOSED** jika semua hal berikut benar:
+
+1. Anhar memberi keputusan jelas atas **paket `PD-O1-01..05`**, termasuk konsekuensi Potential Conflicts yang masih OPEN; tidak ada aturan material yang masih ditebak oleh consumer.
+2. Outcome, `SC-O1-*`, `O1-R*`, invariants, pengalaman aktor, dan `O1-AC*` telah direkonsiliasi dengan keputusan tersebut. Apabila ada perubahan, artefak disunting **sebelum** approval.
+3. Product Contract final pada **exact path/revision** disetujui Anhar dalam lingkup O1, dan bukti persetujuan/statusnya dicatat secara durable di repository Kencleng.
+
+**Status gate saat ini: OPEN / BLOCKED untuk I1 binding.** Belum ada approval paket aturan O1 atau exact-revision approval Product Contract. Approval review format/konten tidak menutup gate ini.
+
+**Tidak termasuk gate keputusan Product ini:** status nyata layanan identity, persistence, sinyal konflik, ketentuan keamanan, serta kesiapan `I2/I3/I4`. Hal-hal tersebut tetap **UNVERIFIED** dan ditangani concern Design/Engineering setelah Product O1 selesai. Ketidaktersediaan teknis dapat membatasi kelayakan assignment, tetapi **bukan alasan menciptakan aturan Product baru atau menahan penyelesaian Product tanpa keputusan yang relevan**.
 
 ## 7. Kesiapan Konsumsi dan Batas Handoff
 
@@ -137,13 +156,13 @@ Status `OPEN` di sini tidak otomatis berarti mendesak secara keseluruhan Product
 | --- | --- |
 | **Exact Product authority dan approval** | Product Intent dan Level 2 v0.3 disetujui sebagai sumber; **PD-O1-01..05, SC, requirements dan AC masih PROPOSED**, tidak ada approval exact revision kontrak O1. |
 | **Konsistensi outcome → SC → rules → AC** | Jejak antar-ID dirumuskan dalam draf ini dari proposal v0.1 untuk review. Ini **pemeriksaan penulisan berbasis dokumen**, belum independent fresh-reader validation. |
-| **Blocker Product tersembunyi** | Model pemberian `Owner`, keberhasilan gabungan, batas sebelum akibat, dan penanganan Potential Conflicts masih memerlukan keputusan Anhar; tidak boleh dianggap telah diselesaikan oleh template. |
+| **Human Decision Gate** | **OPEN — lihat Section 6** untuk satu daftar lengkap keputusan yang wajib dituntaskan Anhar. Selama gate ini belum ditutup, Product O1 **NOT READY FOR ENGINEERING HANDOFF**. |
 | **Syarat Product dan ketersediaan teknis** | Atribusi dan persistensi dibutuhkan pada akibat yang diusulkan; status kode/lingkungan, ketersediaan sinyal Potential Conflicts dan mekanisme autentikasi **UNVERIFIED**. |
 | **Rancang `I1` generic fit** | Struktur memuat outcome, aturan, acceptance, source revisions, exclusions dan delegated freedom. **Candidate only; belum diuji oleh consumer Rancang independen.** |
 | **Rancang project-bound fit** | **NOT CHECKED / BLOCKED for binding use** sampai Product approval exact revision dan pemeriksaan I2/I3/I4 secara terpisah, plus readiness Rancang. |
 | **Hasil handoff** | **DRAFT — NOT I1 READY.** Tidak ada izin menjalankan Rancang, tidak ada perubahan operational `main`, dan tidak ada bukti perilaku sudah delivered. |
 
-**Tindakan Product berikutnya:** Rekonsiliasi lima usulan `PD-O1-01..05` terhadap Product Intent dan Journey, putuskan hanya pertanyaan O1 yang material, lalu ajukan **revisi artefak tepat** untuk approval Anhar. Sesudahnya baru dapat dilakukan pemeriksaan calon `I1` consumer fit, terpisah dari I2/I3/I4.
+**Tindakan Product berikutnya:** Gunakan **Human Decision Gate di Section 6** sebagai daftar tunggal keputusan Anhar; selaraskan semua konsekuensi pada Section 1–5 dan acceptance, kemudian ajukan **revisi Product Contract yang tepat** untuk approval. Pemeriksaan kesiapan consumer `I1` dan `I2/I3/I4` tetap berbeda dan tidak otomatis memicu Engineering.
 
 ## 8. Informasi Material Tambahan (Kondisional)
 
