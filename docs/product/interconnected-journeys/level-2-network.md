@@ -47,7 +47,7 @@ Kode `J-ORG-01–J-ORG-05`, `J-CAM-01–J-CAM-08`, `J-VIS-01–J-VIS-07`, dan `J
 - `Owner` dan `Staff` memiliki kewenangan berbeda. Kewenangan `Owner` tidak otomatis dimiliki `Staff`.
 - Peninjauan organisasi **tidak sama dengan** kurasi Campaign; informasi dari organisasi juga bukan hasil pemeriksaan independen.
 - Hubungan antara J-ORG-01/J-ORG-02 dan tindakan Campaign mempunyai syarat kewenangan atau informasi masing-masing; J-ORG-01 tidak otomatis menjadi prasyarat seluruh Journey Campaign.
-- Persetujuan atas peta **bukan persetujuan** aturan lengkap J-ORG-01 atau hasil peninjauan organisasi.
+- Persetujuan atas peta sendiri bukan approval Product Contract. **ORG-01** telah mendapat approval Product Contract terpisah dan tidak mengesahkan hasil peninjauan organisasi.
 - Hubungan antarnode dan keputusan yang belum dibuat pada J-ORG harus dibaca bersama **diagram (bagian 6), hubungan penting (bagian 7), dan pertanyaan OPEN (bagian 9)** pada peta ini.
 
 ## 3. J-CAM — Campaign, kurasi, dan keadaan sebenarnya
@@ -241,8 +241,8 @@ Bagian ini memeriksa apakah peta tetap menggambarkan keadaan Product secara bena
 
 | Skenario yang diperiksa | Makna yang harus tetap dijaga |
 | --- | --- |
-| Pembentukan organisasi tanpa asal informasi jelas atau kewenangan internal yang belum utuh | J-ORG-01 tidak boleh dinyatakan berhasil secara sah tanpa aturan keberhasilan yang disetujui khusus untuk hasil itu. Keadaan sebagian atau diperselisihkan tetap **BELUM DIPUTUSKAN**, bukan diwarisi dari aturan pilot lama. |
-| Perselisihan perwakilan organisasi yang belum terselesaikan | J-ORG-01 tidak boleh diam-diam dianggap membentuk organisasi tanpa sengketa; mekanisme penyelesaiannya belum ditetapkan. |
+| Pembentukan organisasi tanpa atribusi atau hasil efektif yang lengkap | Outcome `ORG-01` tidak boleh mengklaim keberhasilan dari organisasi atau `Owner` yang belum sah/teratribusi menurut [Product Contract approved](../outcomes/org-01/product-contract.md). Keadaan parsial bukan sukses penuh. |
+| Kemiripan nama/klaim antar-organisasi yang terdaftar | Dua konteks dengan ID internal terpisah boleh berhasil sendiri dan memiliki `Owner` internal masing-masing; Reviewer menilai klaim/status organisasi terpisah, tanpa auto-merge/block/close. |
 | `Staff` bertindak di luar kewenangan | J-ORG-02/J-CAM-01/J-CAM-04/J-ACC-02/J-ACC-03 tidak otomatis memiliki kewenangan `Owner`. |
 | Peninjau mempunyai `conflict of interest`, tidak cukup kewenangan atau bukti | J-ORG-03/J-ORG-04, J-CAM-02/J-CAM-03, dan J-ACC-05 tidak boleh menghasilkan penilaian sah yang sebenarnya tidak didukung. |
 | Peninjauan organisasi belum selesai, negatif, atau perlu dinilai ulang | J-ORG-04/J-ORG-05 tetap sesuai batas keputusannya; akibat terhadap Campaign **BELUM DIPUTUSKAN**. |
