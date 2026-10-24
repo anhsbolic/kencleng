@@ -61,6 +61,17 @@ Organize components by semantic ownership. Route-local composition stays route-l
 
 ## API boundary
 
+Development uses the Next.js server rewrite `/api/*` to the Go backend, removing
+the `/api` prefix. Browser entry is `http://localhost:3000`; the server-only
+`BACKEND_INTERNAL_URL` defaults to `http://127.0.0.1:8090` on the host and is
+`http://backend:8090` in app containers. This rewrite is active only during
+`next dev`. Production API routing is a separate deployment decision.
+
+Setup/run, pinned runtimes and provider selection are owned by
+[repository setup](kencleng-repo-setup.md) and
+[development modes](local-development-modes.md). The current local gateway is
+Next.js; Caddy is retained only in migration/troubleshooting notes.
+
 When an active OpenAPI contract exists, use generated types for the shapes it owns. Keep request functions focused and do not maintain a parallel handwritten model for the same contract.
 
 MSW may provide contract-faithful network mocks when parallel frontend work is justified, but production code must not contain a hidden mock-data branch presented as real backend behavior.

@@ -1,0 +1,9 @@
+.env
+.env.*
+bin
+tmp
+vendor
+coverage*
+*.log
+*.test
+*.out

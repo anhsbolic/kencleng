@@ -1,0 +1,43 @@
+# Optional capability. Choose and verify immutable image references before use.
+# This file is deliberately excluded from the default Compose invocation.
+x-podman:
+  in_pod: false
+
+services:
+  minio:
+    image: ${MINIO_IMAGE:?Set MINIO_IMAGE to a verified registry/repository@sha256 digest}
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: kencleng
+      MINIO_ROOT_PASSWORD: kencleng123
+    volumes:
+      - kencleng_miniodata:/data
+    ports:
+      - "127.0.0.1:9087:9000"
+      - "127.0.0.1:9088:9001"
+
+  minio-init:
+    image: ${MINIO_MC_IMAGE:?Set MINIO_MC_IMAGE to a verified registry/repository@sha256 digest}
+    depends_on:
+      - minio
+    environment:
+      MINIO_ROOT_USER: kencleng
+      MINIO_ROOT_PASSWORD: kencleng123
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        attempt=0
+        until mc alias set local http://minio:9000 "$$MINIO_ROOT_USER" "$$MINIO_ROOT_PASSWORD" >/dev/null 2>&1 && mc ls local >/dev/null 2>&1; do
+          attempt=$$((attempt + 1))
+          if [ "$$attempt" -ge 30 ]; then
+            echo "MinIO initialization failed after 30 connection attempts" >&2
+            exit 1
+          fi
+          sleep 2
+        done
+        mc mb --ignore-existing local/kencleng-public
+        mc mb --ignore-existing local/kencleng-private
+        mc anonymous set download local/kencleng-public
+
+volumes:
+  kencleng_miniodata:

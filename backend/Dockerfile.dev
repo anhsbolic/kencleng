@@ -1,0 +1,29 @@
+FROM docker.io/library/golang:1.27.3-bookworm
+
+ARG AIR_VERSION=v1.67.4
+ARG DEV_UID=1000
+ARG DEV_GID=1000
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && GOBIN=/usr/local/bin go install github.com/air-verse/air@${AIR_VERSION}
+
+RUN test "${DEV_UID}" -gt 0 && test "${DEV_GID}" -gt 0 \
+    && groupadd --gid "${DEV_GID}" kencleng \
+    && useradd --uid "${DEV_UID}" --gid "${DEV_GID}" --create-home kencleng \
+    && mkdir -p /workspace/backend/tmp /home/kencleng/.cache/go-build /home/kencleng/go/pkg/mod \
+    && chown -R "${DEV_UID}:${DEV_GID}" /workspace /home/kencleng
+
+ENV HOME=/home/kencleng \
+    GOTOOLCHAIN=local \
+    GOFLAGS=-mod=readonly \
+    GOCACHE=/home/kencleng/.cache/go-build \
+    GOMODCACHE=/home/kencleng/go/pkg/mod
+WORKDIR /workspace/backend
+COPY --chown=${DEV_UID}:${DEV_GID} go.mod go.sum ./
+USER ${DEV_UID}:${DEV_GID}
+RUN go mod download
+
+# Polling supports bind mounts on Desktop too. Keep the mounted tmp volume intact.
+CMD ["air", "-c", ".air.toml", "--build.poll=true", "--build.poll_interval=500", "--misc.clean_on_exit=false"]

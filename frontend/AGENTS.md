@@ -25,6 +25,19 @@ Release scope and delivery order are not defined at baseline. Do not infer them 
 
 If product meaning is missing, surface the product decision gap. If product meaning is clear but engineering/contract support is missing, surface the appropriate engineering gap rather than inventing backend behavior in React.
 
+## Setup and how to run
+
+- Follow `README.md` and `../docs/project/kencleng-repo-setup.md`. Use Node.js 24.22.1 via root `.nvmrc` and `nvm use`.
+- Work from `frontend/`; `nvm use` discovers the root `.nvmrc`. `make setup` preserves/creates `.env.local` from `.env.example` and installs dependencies with `npm ci`. Avoid incidental lockfile upgrades.
+- Start with `make nvm-run` from `frontend/` to source nvm, select the project `.nvmrc`, then run the dev server. It uses `NVM_DIR` or `~/.nvm` and only activates the child runner environment. `make run`, `make dev`, or `npm run dev` uses the already-active Node.js version. The development server binds to `127.0.0.1:3000` and uses Next.js Fast Refresh.
+- Container mode: `make docker-run COMPOSE=podman-compose` from `frontend/` (or `make docker-run` for Docker). It runs only the frontend service with Webpack/polling, named dependency/cache volumes, and server-side upstream `http://backend:8090`. Keep the Dockerfile Node version aligned with `.nvmrc`.
+- `make check-hot-reload` opt-in verifies both running apps in a real browser and temporarily edits/restores the FE page plus backend health handler. Read `../docs/project/local-development-modes.md`; do not include this source-mutating check in routine parallel UI tests or run it while someone edits its target files.
+- Browser entry is `http://localhost:3000`. Browser API calls use relative `/api/...`; the development rewrite removes `/api` and forwards to `BACKEND_INTERNAL_URL` (default `http://127.0.0.1:8090`).
+- `BACKEND_INTERNAL_URL` belongs to the Next.js server, without `NEXT_PUBLIC_`. Configure it in `.env.local`; restart `next dev` after changing the proxy destination.
+- Reserve `/api/*` for the Go backend in development. Do not create conflicting Next.js API routes or reintroduce Caddy/CORS workarounds without an actual requirement.
+- Proxy rewrites are development-only. `next build`/`next start` do not establish a production API gateway; that deployment decision remains separate.
+- With backend/database running, `curl --fail http://localhost:3000/api/healthz` checks forwarding. Verify Fast Refresh in a real browser when runtime access permits.
+
 ## Write boundaries
 
 A frontend-scoped implementation should not casually modify backend production code. Shared docs/API changes require explicit coordination with the concern they own.

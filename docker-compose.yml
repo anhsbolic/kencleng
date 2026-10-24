@@ -1,6 +1,10 @@
+# Keep service lifecycle independent, matching Docker Compose networking.
+x-podman:
+  in_pod: false
+
 services:
   postgres:
-    image: postgres:16
+    image: docker.io/library/postgres:16.15-trixie
     environment:
       POSTGRES_USER: kencleng
       POSTGRES_PASSWORD: kencleng
@@ -8,39 +12,13 @@ services:
     volumes:
       - kencleng_pgdata:/var/lib/postgresql/data
     ports:
-      - "5435:5432"
-
-  minio:
-    image: minio/minio:latest
-    command: server /data --console-address ":9001"
-    environment:
-      MINIO_ROOT_USER: kencleng
-      MINIO_ROOT_PASSWORD: kencleng123
-    volumes:
-      - kencleng_miniodata:/data
-    ports:
-      - "9087:9000"
-      - "9088:9001"
-
-  minio-init:
-    image: minio/mc:latest
-    depends_on:
-      - minio
-    entrypoint: >
-      /bin/sh -c "
-      until mc alias set local http://minio:9000 kencleng kencleng123; do sleep 1; done;
-      mc mb -p local/kencleng-public;
-      mc mb -p local/kencleng-private;
-      mc anonymous set download local/kencleng-public;
-      "
-
-  caddy:
-    image: caddy:2-alpine
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-    ports:
-      - "8080:80"
+      - "127.0.0.1:5435:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 5s
 
 volumes:
   kencleng_pgdata:
-  kencleng_miniodata:

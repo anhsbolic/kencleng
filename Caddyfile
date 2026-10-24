@@ -1,9 +1,0 @@
-localhost:80 {
-	handle_path /api/* {
-		reverse_proxy host.containers.internal:8090
-	}
-
-	handle {
-		reverse_proxy host.containers.internal:3000
-	}
-}

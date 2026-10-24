@@ -15,12 +15,21 @@ api/
 └── package-lock.json
 ```
 
-## Commands
+## Setup and commands
+
+Gunakan Node.js **24.22.1** melalui nvm, sesuai `.nvmrc` root dan `engines`
+di `package.json`. Dari direktori `api/`, dengan nvm sudah dimuat di shell:
 
 ```bash
-npm install
+nvm use
+npm ci
 npm run validate
 npm run bundle
 ```
+
+`npm ci` memasang dependency sesuai lockfile. Tooling ini tidak menjalankan
+service/API server dan tidak memerlukan Caddy, PostgreSQL, atau object storage.
+Untuk menjalankan aplikasi, ikuti [setup repo](../docs/project/kencleng-repo-setup.md),
+[backend](../backend/README.md), dan [frontend](../frontend/README.md).
 
 Do not reconstruct endpoints from historical contracts by inertia. Historical OpenAPI remains available in Git history as evidence only.

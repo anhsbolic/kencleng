@@ -15,7 +15,7 @@
 | Migrations | `golang-migrate` | Explicit SQL migration mechanism |
 | Architecture | Domain-oriented monolith | One deployable backend; product domains emerge from real delivery needs |
 | Testing | Go test + `httptest`, proportional integration/race/security checks | Evidence depth follows the active risk |
-| Object storage | MinIO/S3-compatible capability available locally | Use only when an active requirement needs object storage |
+| Object storage | Optional SeaweedFS through standard S3 APIs | [Setup and verification](local-object-storage-options.md); local Podman checks passed according to Human's report, deployment readiness remains separate. Use only when an active requirement needs object storage |
 
 A selected capability being available does not require every feature to use it. Do not create empty domain/platform layers merely to make the architecture look complete.
 

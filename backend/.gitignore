@@ -10,8 +10,7 @@ coverage.out
 # Dependency vendoring (not used unless explicitly needed)
 vendor/
  
-# Local env override (root .env is the canonical one; this covers
-# someone running backend/ standalone with its own override)
+# Backend runtime env (created from ../.env.example by make setup)
 .env
 .env.local
  

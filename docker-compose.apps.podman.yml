@@ -1,0 +1,6 @@
+# Passed only to an explicitly selected Podman provider; Docker uses the base file.
+services:
+  backend:
+    userns_mode: keep-id
+  frontend:
+    userns_mode: keep-id

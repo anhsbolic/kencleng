@@ -1,0 +1,63 @@
+# Local single-node S3 capability. Production topology has a separate readiness gate.
+x-podman:
+  in_pod: false
+
+services:
+  seaweedfs:
+    # 4.48 multi-platform index, verified in the upstream publisher's Docker Hub API.
+    image: docker.io/chrislusf/seaweedfs:4.48@sha256:4e61d15fd35994cb1e43e1e553dff106794841fd9a99ade2fc8c8bfce4d7872d
+    command:
+      - mini
+      - -dir=/data
+      - -ip=127.0.0.1
+      - -ip.bind=0.0.0.0
+      - -s3.port=8333
+      - -s3.port.iceberg=0
+      - -s3.port.lance=0
+      - -s3.allowedOrigins=http://localhost:3000,http://127.0.0.1:3000
+      - -webdav=false
+      - -admin.ui=false
+      - -s3.allowDeleteBucketNotEmpty=false
+      - -s3.autoCreateBucket=false
+    environment:
+      AWS_ACCESS_KEY_ID: ${STORAGE_ACCESS_KEY:-kencleng-local}
+      AWS_SECRET_ACCESS_KEY: ${STORAGE_SECRET_KEY:-kencleng-local-development-only}
+      S3_BUCKET: kencleng-public,kencleng-private
+    volumes:
+      - seaweedfs_data:/data
+    ports:
+      - "127.0.0.1:9087:8333"
+    networks:
+      - infrastructure
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'curl --fail --silent --show-error --max-time 3 --aws-sigv4 "aws:amz:us-east-1:s3" --user "$$AWS_ACCESS_KEY_ID:$$AWS_SECRET_ACCESS_KEY" http://127.0.0.1:8333/ >/dev/null'
+      interval: 5s
+      timeout: 5s
+      retries: 24
+      start_period: 20s
+    stop_grace_period: 30s
+
+  # Invoked only by explicit `compose run --rm`; no always-running client service.
+  storage-cli:
+    image: docker.io/amazon/aws-cli:2.38.5@sha256:c8156a0e74e13929a42d7e60f0d4e14e7d28d980cd21822505d4bff80e5460c1
+    environment:
+      AWS_ACCESS_KEY_ID: ${STORAGE_ACCESS_KEY:-kencleng-local}
+      AWS_SECRET_ACCESS_KEY: ${STORAGE_SECRET_KEY:-kencleng-local-development-only}
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_CONFIG_FILE: /config/aws-config
+      AWS_EC2_METADATA_DISABLED: "true"
+      AWS_MAX_ATTEMPTS: "1"
+    volumes:
+      - ./infra/storage:/config:ro
+    networks:
+      - infrastructure
+
+networks:
+  infrastructure:
+    external: true
+    name: ${KENCLENG_INFRA_NETWORK:-kencleng_default}
+
+volumes:
+  seaweedfs_data:

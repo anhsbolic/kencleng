@@ -4,6 +4,9 @@
 **Decision standing:** The drafts below are not accepted as final design, an API contract, or downstream implementation input.
 **Scope:** Experimental Station 5 C1 Space-only pilot on `pilot/station5-c1-space-only`; this report records the observed S1 episode and recommendations. It does not change product authority or authorize development.
 
+This is the historical S1 snapshot. Current local-development setup and subsequent
+verification are recorded in [repository setup](kencleng-repo-setup.md#status-pemeriksaan-24-oktober-2026).
+
 ## 1. Summary
 
 S1 produced a useful requirements map, solution drafts, and an independent review that exposed material cross-cutting design gaps. It did not produce a durable, independently reconstructable handoff, an accepted solution bundle, or evidence that the development environment is ready.

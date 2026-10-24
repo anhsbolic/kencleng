@@ -1,0 +1,73 @@
+# Separate project/config hash from the already-running database infrastructure.
+x-podman:
+  in_pod: false
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+      args:
+        DEV_UID: ${DEV_UID:-1000}
+        DEV_GID: ${DEV_GID:-1000}
+    environment:
+      APP_ENV: development
+      APP_HOST: 0.0.0.0
+      APP_PORT: "8090"
+      DATABASE_URL: postgres://kencleng:kencleng@postgres:5432/kencleng?sslmode=disable
+    volumes:
+      - ./backend:/workspace/backend
+      - backend_modules:/home/kencleng/go/pkg/mod
+      - backend_build:/home/kencleng/.cache/go-build
+      - backend_tmp:/workspace/backend/tmp
+    ports:
+      - "127.0.0.1:8090:8090"
+    networks:
+      - infrastructure
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://127.0.0.1:8090/healthz"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 30s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+      args:
+        DEV_UID: ${DEV_UID:-1000}
+        DEV_GID: ${DEV_GID:-1000}
+    environment:
+      BACKEND_INTERNAL_URL: http://backend:8090
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - ./frontend:/workspace/frontend
+      - frontend_modules:/workspace/frontend/node_modules
+      - frontend_next:/workspace/frontend/.next
+    ports:
+      - "127.0.0.1:3000:3000"
+    networks:
+      - infrastructure
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "require('node:http').get('http://127.0.0.1:3000',r=>{r.resume();process.exitCode=r.statusCode===200?0:1}).on('error',()=>process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+
+networks:
+  infrastructure:
+    external: true
+    name: ${KENCLENG_INFRA_NETWORK:-kencleng_default}
+
+volumes:
+  backend_modules:
+  backend_build:
+  backend_tmp:
+  frontend_modules:
+  frontend_next:

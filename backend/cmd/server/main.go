@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -40,7 +41,7 @@ func run() error {
 	mux.HandleFunc("GET /healthz", healthz)
 
 	srv := &http.Server{
-		Addr:              ":" + os.Getenv("APP_PORT"),
+		Addr:              net.JoinHostPort(os.Getenv("APP_HOST"), os.Getenv("APP_PORT")),
 		Handler:           mux,
 		ReadHeaderTimeout: 5 * time.Second,
 	}
@@ -70,11 +71,9 @@ func run() error {
 
 func loadEnvironment() error {
 	loadErr := godotenv.Load()
-	appEnv := os.Getenv("APP_ENV")
-	if appEnv == "" {
-		appEnv = "development"
-	}
-	if loadErr != nil && appEnv == "development" {
+	// Containers provide settings directly. A missing dotenv file is optional;
+	// malformed or unreadable files still fail instead of hiding configuration errors.
+	if loadErr != nil && !errors.Is(loadErr, os.ErrNotExist) {
 		return fmt.Errorf("load .env: %w", loadErr)
 	}
 	if os.Getenv("APP_PORT") == "" {
