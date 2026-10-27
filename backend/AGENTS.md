@@ -14,6 +14,7 @@ This backend is a neutral engineering substrate. No historical domain, route, mi
 - Engineering Standards index → `../docs/project/standards/README.md`;
 - backend architecture → `../docs/project/standards/backend.md`;
 - shared identity/authentication policy → `../docs/project/standards/identity-authentication.md`;
+- shared user/service authorization policy → `../docs/project/standards/authorization.md`;
 - reusable product-design concerns when relevant → `../docs/ui-ux/README.md`;
 - API contract → `../api/` only after an active contract exists;
 - generic lifecycle / engineering practice → current Harscode authority.
