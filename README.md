@@ -8,7 +8,8 @@ This branch is the **Pilot #3 clean delivery baseline candidate**. It preserves 
 
 - `docs/product/product-intent.md` — whole-product direction, actors, responsibilities, and trust commitments.
 - `docs/ui-ux/README.md` — reusable product-design authority.
-- `docs/project/` — repository and stack architecture.
+- [`docs/project/README.md`](docs/project/README.md) — repository/setup and Engineering Standards navigation.
+- [`docs/project/standards/README.md`](docs/project/standards/README.md) — current reusable Engineering authority (including T01/T02).
 - root/scoped `AGENTS.md` — agent routing, boundaries, and hard rules.
 
 Release goal, delivery slices, detailed requirements, API operations, and implementation state are intentionally **not selected yet**. Git history is evidence/archive, not active authority by inertia.

@@ -2,6 +2,7 @@
 
 > Status: Active clean-baseline architecture
 > Purpose: Define Kencleng-specific frontend technology and architectural constraints without preselecting routes or delivery scope.
+> Cross-cutting Engineering Standards: [index](README.md), including [Identity & Authentication](identity-authentication.md).
 
 ## Selected capabilities
 
@@ -68,8 +69,8 @@ the `/api` prefix. Browser entry is `http://localhost:3000`; the server-only
 `next dev`. Production API routing is a separate deployment decision.
 
 Setup/run, pinned runtimes and provider selection are owned by
-[repository setup](kencleng-repo-setup.md) and
-[development modes](local-development-modes.md). The current local gateway is
+[repository setup](../kencleng-repo-setup.md) and
+[development modes](../local-development-modes.md). The current local gateway is
 Next.js; Caddy is retained only in migration/troubleshooting notes.
 
 When an active OpenAPI contract exists, use generated types for the shapes it owns. Keep request functions focused and do not maintain a parallel handwritten model for the same contract.

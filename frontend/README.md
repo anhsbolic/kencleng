@@ -4,7 +4,7 @@
 
 This is a neutral Next.js engineering scaffold for Kencleng Pilot #3 delivery. No route, feature, release slice, or API capability is considered delivered at baseline.
 
-Product meaning is owned by `../docs/product/product-intent.md`. Reusable product-design authority is routed through `../docs/ui-ux/README.md`. Frontend architecture is owned by `../docs/project/kencleng-frontend-tech-stack.md`.
+Product meaning is owned by `../docs/product/product-intent.md`. Reusable product-design authority is routed through `../docs/ui-ux/README.md`. Frontend architecture is owned by `../docs/project/standards/frontend.md`.
 
 Historical frontend implementation remains available in Git history as evidence, not active implementation precedent.
 

@@ -16,7 +16,9 @@ Start from the concern that is active:
 
 - product/business meaning → `../docs/product/product-intent.md`;
 - reusable product-design / UX / visual guidance → `../docs/ui-ux/README.md`;
-- frontend architecture → `../docs/project/kencleng-frontend-tech-stack.md`;
+- Engineering Standards index → `../docs/project/standards/README.md`;
+- frontend architecture → `../docs/project/standards/frontend.md`;
+- shared identity/authentication policy → `../docs/project/standards/identity-authentication.md`;
 - reusable component governance → `components/README.md`;
 - shared API contract → `../api/` only after an active contract exists;
 - generic lifecycle / engineering practice → current Harscode authority.

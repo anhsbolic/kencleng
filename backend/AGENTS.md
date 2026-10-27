@@ -11,7 +11,9 @@ This backend is a neutral engineering substrate. No historical domain, route, mi
 ## Authority routing
 
 - product/business meaning → `../docs/product/product-intent.md`;
-- backend architecture → `../docs/project/kencleng-backend-tech-stack.md`;
+- Engineering Standards index → `../docs/project/standards/README.md`;
+- backend architecture → `../docs/project/standards/backend.md`;
+- shared identity/authentication policy → `../docs/project/standards/identity-authentication.md`;
 - reusable product-design concerns when relevant → `../docs/ui-ux/README.md`;
 - API contract → `../api/` only after an active contract exists;
 - generic lifecycle / engineering practice → current Harscode authority.

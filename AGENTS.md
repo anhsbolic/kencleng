@@ -13,8 +13,15 @@ whole-product purpose / actors / durable product truth
 reusable product-design / UX / visual guidance
 → docs/ui-ux/README.md
 
-repository/backend/frontend architecture
-→ docs/project/
+repository topology/setup
+→ docs/project/README.md
+
+project-wide and stack-specific Engineering Standards
+→ docs/project/standards/README.md
+
+backend/frontend architecture
+→ docs/project/standards/backend.md
+→ docs/project/standards/frontend.md
 
 shared API contract
 → api/ (only after an active contract exists)
