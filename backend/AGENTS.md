@@ -20,6 +20,7 @@ This backend is a neutral engineering substrate. No historical domain, route, mi
 - reusable product-design concerns when relevant → `../docs/ui-ux/README.md`;
 - API design/response/error conventions → `../docs/project/standards/api-contract.md`;
 - risk-based testing, coverage and Go table-driven verification → `../docs/project/standards/testing-verification.md`;
+- source code comment style (concise, non-ceremonial) → `../docs/project/standards/documentation-conventions.md` (T09-F);
 - MVP minimum runtime reliability, health/logging and production-readiness limits → `../docs/project/standards/operational-reliability.md`;
 - API contract → `../api/` only after an active contract exists;
 - generic lifecycle / engineering practice → current Harscode authority.

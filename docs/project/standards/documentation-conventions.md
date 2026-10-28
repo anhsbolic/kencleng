@@ -48,6 +48,23 @@
 - Tidak ada mandatory markdown linter, documentation CI, per-function documentation, blanket README creation, glossary proliferation, atau automated formatting migration hanya untuk memenuhi T09. Tambahkan tooling ketika ada recurring demonstrated defect yang layak dibayar dengan complexity.
 - Editorial update yang tidak mengubah meaning boleh ditangani secara ringan; material Product/Engineering semantics tetap membutuhkan scoped approval dan review sesuai owning standard.
 
+## T09-F — Code comment style (Go dan frontend)
+
+- **Default comments singkat, biasanya satu atau dua baris.** Jelaskan *apa yang dilakukan* dan *hasil/tujuan yang dapat diamati* bila tidak jelas dari kode. Jangan menarasikan setiap statement, mengulang function name tanpa informasi baru, atau menambahkan comment ceremonial. Jika kode sudah self-explanatory, comment tidak diperlukan.
+- Utamakan **prosedur dan expected result**, bukan uraian keputusan historis atau rationale panjang. Simpan penjelasan desain/trade-off yang memang perlu dipertahankan pada owning technical/design artifact yang sudah ada; **jangan membuat Techplan baru hanya untuk menampung rationale sebuah komentar**.
+- **Pengecualian dengan alasan nyata:** penjelasan lebih panjang boleh ketika diperlukan untuk menjaga correctness, public/external contracts, subtle security/privacy requirements, atau non-obvious business invariants yang rawan dilanggar saat code berubah. Jika invariant kritis tidak jelas tanpa membaca dokumentasi lain, pertahankan short essential safeguard di dekat kode; boleh tautkan owning doc. **Batas 1–2 baris adalah default, bukan hard cap yang menghapus informasi keselamatan.**
+- Pertahankan language dan technical vocabulary yang presisi sesuai konvensi source file; T09 Bahasa Indonesia untuk human-facing documents **tidak memaksa penerjemahan identifiers maupun seluruh source comments**. Pada Go, ikuti GoDoc conventions untuk exported declarations saat dokumentasi API diperlukan; jangan mengorbankan required contract detail demi panjang komentar.
+- **Pengecualian T07:** tiga comment markers `// GIVEN`, `// WHEN`, dan `// THEN` dalam subtests tetap wajib **sebagai tiga baris terpisah** menurut [T07-I](testing-verification.md#t07-i--unit-coverage-80-and-behavior-quality); aturan 1–2 baris ini tidak berlaku untuk markers tersebut.
+- Jangan membersihkan existing comments secara massal. Ketika logic berubah, perbarui/hapus komentar terdekat yang stale agar tidak mendeskripsikan behavior yang salah.
+
+Contoh singkat (ilustratif, bukan implementasi Kencleng):
+
+```go
+// indexRowsByField groups rows by field for duplicate checks.
+
+// Preserve the caller-provided value.
+```
+
 ## Consumption rule
 
 Jika Agent hendak menulis dokumentasi human-facing baru, cari *applicable project writing convention* secara proporsional melalui [Engineering Standards index](README.md), lalu ikuti more-specific rules untuk concern yang sedang diubah. **Jangan membaca semua dokumen lintas-folder hanya karena T09 ada.**

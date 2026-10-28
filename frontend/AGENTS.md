@@ -24,6 +24,7 @@ Start from the concern that is active:
 - reusable component governance → `components/README.md`;
 - API design/response/error and typed client conventions → `../docs/project/standards/api-contract.md`;
 - automated test selection, frontend coverage, selective Playwright/browser verification → `../docs/project/standards/testing-verification.md`;
+- source code comment style (concise, non-ceremonial) → `../docs/project/standards/documentation-conventions.md` (T09-F);
 - MVP minimum runtime/environment reliability and production-readiness limits → `../docs/project/standards/operational-reliability.md`;
 - shared API contract → `../api/` only after an active contract exists;
 - generic lifecycle / engineering practice → current Harscode authority.

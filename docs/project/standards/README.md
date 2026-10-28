@@ -16,7 +16,7 @@
 | T06 — REST/OpenAPI contracts, minimal success envelope, RFC 9457 errors, security, compatibility | [API & Contract](api-contract.md) | **Settled / persisted** |
 | T07 — Risk-based testing, independent suites, coverage ≥80%, table-driven Go tests | [Testing & Verification](testing-verification.md) | **Settled / persisted** |
 | T08 — Minimum MVP runtime configuration, lifecycle, basic logs/health, data safety | [Minimum Runtime Reliability](operational-reliability.md) | **Settled / persisted (MVP minimum; not production-ready)** |
-| T09 — Documentation language, terminology, authority, semantics preservation | [Documentation & Language](documentation-conventions.md) | **Settled / persisted** |
+| T09 — Documentation language, code comments, terminology, authority, semantics preservation | [Documentation & Language](documentation-conventions.md) | **Settled / persisted** |
 
 T01–T09 pada episode Engineering Standards ini telah **settled / persisted pada research branch ini**, bukan promosi ke `main` atau bukti seluruh mekanisme sudah diimplementasikan. Tambahkan owning document hanya jika ada keputusan baru dengan concern ownership nyata, bukan untuk melengkapi template folder.
 
