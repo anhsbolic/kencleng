@@ -82,3 +82,5 @@ MSW may provide contract-faithful network mocks when parallel frontend work is j
 `docs/ui-ux/README.md` routes to the approved reusable product-design standards. Illustrative design examples and selected visual references guide expression; they do not establish release scope, route commitments, or completed product state.
 
 Material UI work needs proportional rendered verification. Browser automation is an available capability, not a ritual for every change.
+
+For project-wide risk-based testing, 80% affected testable-scope unit coverage, targeted Vitest/RTL and optional Playwright policy, follow [Testing & Verification Standards (T07)](testing-verification.md). This architecture note does not require running every available test tool.
