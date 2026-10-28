@@ -4,6 +4,8 @@
 
 `api/` provides OpenAPI authoring, validation, and bundling capability. The baseline intentionally defines **no product operations**. Add contract surface only when an authorized delivery requirement is sufficiently clear.
 
+Reusable API design, minimal success response envelope, RFC 9457 errors, and verification conventions are owned by [T06 — API & Contract Standards](../docs/project/standards/api-contract.md). This tooling document does not establish any new API operation.
+
 ## Structure
 
 ```text

@@ -22,6 +22,7 @@ Start from the concern that is active:
 - shared user/service authorization policy → `../docs/project/standards/authorization.md`;
 - PII/cryptography and API/UI masking safeguards → `../docs/project/standards/privacy-data-protection.md`;
 - reusable component governance → `components/README.md`;
+- API design/response/error and typed client conventions → `../docs/project/standards/api-contract.md`;
 - shared API contract → `../api/` only after an active contract exists;
 - generic lifecycle / engineering practice → current Harscode authority.
 
