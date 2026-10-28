@@ -19,7 +19,7 @@ The output types identify **what kind of information exists**, not six required 
 
 ## Product value and Design boundary
 
-[Product Intent](product-intent.md) owns Kencleng's approved value direction, actor responsibilities and Product truth principles. Future Value Definition elaboration belongs to Product Foundation when a material gap is demonstrated and approved by Anhar; do not import unapproved business value narratives from historical experiments. Product Journey Mapping connects these values to actor experience. [Product Design Principles](../ui-ux/product-design-principles.md) owns the way approved Product meaning is expressed and understood in UI/UX; it does not independently create new business promises.
+[Product Intent](product-intent.md) owns Kencleng's approved value direction, actor responsibilities and Product truth principles. Future Value Definition elaboration belongs to Product Foundation when a material gap is demonstrated and approved by Anhar; do not import unapproved business value narratives from historical experiments. Product Journey Mapping connects these values to actor experience. [Product Design Principles](../design/product-design-principles.md) owns the way approved Product meaning is expressed and understood in UI/UX; it does not independently create new business promises.
 
 ## Product identity and approval
 
