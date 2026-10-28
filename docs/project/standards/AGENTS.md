@@ -7,6 +7,6 @@ Scope: `docs/project/standards/` only. Follow root `AGENTS.md` and read [Enginee
 - **Pertahankan batas authority.** Product meaning dan feature-level commitments tetap di Product/scoped artifacts; API operation detail dan runtime implementation tidak diciptakan dari Engineering Standards.
 - **Bedakan status.** Tulis secara eksplisit settled/persisted, proposed, not implemented, atau not verified. Approved design policy bukan bukti bahwa mekanismenya sudah bekerja.
 - **Change discipline.** Jangan merevisi settled policy tanpa Human-approved material decision atau material new evidence. Perubahan besar memerlukan review impact ke konsumennya; perbarui katalog, links, dan routing bila ownership berubah.
-- **Documentation style.** Gunakan Bahasa Indonesia yang lugas untuk dokumen baru di area ini; pertahankan technical terms, executable identifiers, dan code dalam English bila lebih presisi. Harmonisasi proyek penuh ditetapkan tersendiri pada T09.
+- **Documentation style.** Ikuti [T09 — Documentation & Language](documentation-conventions.md) untuk dokumen baru/yang disunting. Bahasa Indonesia adalah default human-facing; pertahankan technical terms dan identifiers ketika lebih presisi. Jangan melakukan mass translation atau mengubah approved semantics lewat editorial cleanup.
 
 File ini hanya mengatur perilaku Agent **ketika bekerja dalam direktori ini**. Agent yang mengedit `backend/` atau `frontend/` tetap mengikuti scoped `AGENTS.md` miliknya dan rujukan standards pada root routing.
