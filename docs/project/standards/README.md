@@ -11,8 +11,9 @@
 | Frontend technology dan state architecture | [Frontend stack & architecture](frontend.md) | **Existing active baseline** |
 | T02 — Google-only login, Kencleng-owned identity, HttpOnly JWT + rotating refresh | [Identity & Authentication](identity-authentication.md) | **Settled / persisted** |
 | T03 — Hybrid user RBAC/context policy, service identity, permission inventory scaffold | [Authorization](authorization.md) | **Settled / persisted** |
+| T04 — Data privacy, PII, encryption, key lifecycle, masking and reveal | [Privacy, PII & Cryptography](privacy-data-protection.md) | **Settled / persisted** |
 
-T04–T09 masih dalam pembahasan atau belum diputuskan; tidak ada standar baru yang berlaku hanya karena suatu topik tercantum pada agenda. Tambahkan owning document jika keputusan nyata membutuhkan ownership tersendiri, bukan untuk melengkapi template folder.
+T05–T09 masih dalam pembahasan atau belum diputuskan; tidak ada standar baru yang berlaku hanya karena suatu topik tercantum pada agenda. Tambahkan owning document jika keputusan nyata membutuhkan ownership tersendiri, bukan untuk melengkapi template folder.
 
 ## Batas authority dan konsumsi
 

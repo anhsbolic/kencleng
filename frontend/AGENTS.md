@@ -20,6 +20,7 @@ Start from the concern that is active:
 - frontend architecture → `../docs/project/standards/frontend.md`;
 - shared identity/authentication policy → `../docs/project/standards/identity-authentication.md`;
 - shared user/service authorization policy → `../docs/project/standards/authorization.md`;
+- PII/cryptography and API/UI masking safeguards → `../docs/project/standards/privacy-data-protection.md`;
 - reusable component governance → `components/README.md`;
 - shared API contract → `../api/` only after an active contract exists;
 - generic lifecycle / engineering practice → current Harscode authority.
