@@ -13,6 +13,7 @@ This backend is a neutral engineering substrate. No historical domain, route, mi
 - product/business meaning → `../docs/product/product-intent.md`;
 - Engineering Standards index → `../docs/project/standards/README.md`;
 - backend architecture → `../docs/project/standards/backend.md`;
+- PostgreSQL database design, SQL migrations, integrity and partitioning → `../docs/project/standards/database-data-model.md`;
 - shared identity/authentication policy → `../docs/project/standards/identity-authentication.md`;
 - shared user/service authorization policy → `../docs/project/standards/authorization.md`;
 - PII/cryptography and API/UI masking safeguards → `../docs/project/standards/privacy-data-protection.md`;
