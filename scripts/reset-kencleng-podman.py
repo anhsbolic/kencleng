@@ -55,7 +55,7 @@ def run(*args):
         if "rootless netns: kill network process: permission denied" in result.stderr:
             message += (
                 "\nCleanup jaringan rootless ditolak oleh host. Periksa log AppArmor/pasta; "
-                "lihat bagian troubleshooting reset di docs/project/kencleng-repo-setup.md. "
+                "lihat bagian troubleshooting reset di docs/engineering/development/kencleng-repo-setup.md. "
                 "Reset belum selesai dan sebagian container mungkin sudah dihapus. "
                 "Script tidak memakai sudo, mengubah policy, atau mengabaikan error ini. "
                 "Setelah host diperbaiki, jalankan preview lagi sebelum --apply."
