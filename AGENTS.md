@@ -11,17 +11,21 @@ whole-product purpose / actors / durable product truth
 → docs/product/product-intent.md
 
 reusable product-design / UX / visual guidance
-→ docs/ui-ux/README.md
+→ docs/design/README.md
+
+documentation concern routing (Product / Design / Engineering / historical research)
+→ docs/README.md
 
 repository topology/setup
-→ docs/project/README.md
+→ docs/engineering/README.md
+→ docs/engineering/development/kencleng-repo-setup.md
 
 project-wide and stack-specific Engineering Standards
-→ docs/project/standards/README.md
+→ docs/engineering/standards/README.md
 
 backend/frontend architecture
-→ docs/project/standards/backend.md
-→ docs/project/standards/frontend.md
+→ docs/engineering/standards/backend.md
+→ docs/engineering/standards/frontend.md
 
 shared API contract
 → api/ (only after an active contract exists)
@@ -37,11 +41,12 @@ generic lifecycle / engineering practice
 Release scope, delivery order, detailed delivery requirements, API operations, and implementation state are intentionally open at this baseline **unless a current Human-approved scoped artifact explicitly establishes them for a bounded active commitment**. Do not infer them from historical specs, contracts, code, migrations, handoffs, or Git history.
 
 Existing historical material may be useful evidence when an active decision/work item calls for it. It is not automatic authority.
+Historical Station 5 and unaccepted Rancang ORG-01 documentation is preserved via `docs/history/README.md` at an immutable Git checkpoint, not active Engineering standards or approved downstream input. Root/scoped `AGENTS.md` and project-owned current artifacts still control scope and permissions; path relocation does not grant new writes.
 
 ## Local development
 
-- Setup/topology authority: `docs/project/kencleng-repo-setup.md`; quick starts: root, backend and frontend `README.md`.
-- Default development runs FE and BE on the host, with PostgreSQL in Compose. Optional app-container configuration is in `docker-compose.apps.yml`; runtime compatibility/hot reload still require actual evidence. Follow `docs/project/local-development-modes.md`.
+- Setup/topology authority: `docs/engineering/development/kencleng-repo-setup.md`; quick starts: root, backend and frontend `README.md`.
+- Default development runs FE and BE on the host, with PostgreSQL in Compose. Optional app-container configuration is in `docker-compose.apps.yml`; runtime compatibility/hot reload still require actual evidence. Follow `docs/engineering/development/local-development-modes.md`.
 - Activate Go 1.27.3 with gvm using `.go-version` and Node.js 24.22.1 with `nvm use` using `.nvmrc` before setup or verification.
 - App setup and run belong to each app directory: `make setup` and `make run` from `backend/` or `frontend/`. From repo root, start infrastructure with `make COMPOSE=podman-compose up` (Podman) or `make up` (Docker Engine/Desktop).
 - Run `make gvm-run` from `backend/` and `make nvm-run` from `frontend/` in separate terminals to activate each pinned runtime and start its runner. Plain `make run` uses the already-active runtime. Browser entry is `http://localhost:3000`; development API requests use `/api/*` through Next.js, without Caddy.
@@ -49,7 +54,7 @@ Existing historical material may be useful evidence when an active decision/work
 - `frontend/: make check-hot-reload` is an opt-in verification that temporarily edits/restores the health handler and FE page. It requires both apps/browser tooling, refuses non-loopback targets, and must not run concurrently with edits to those files. Mock/static checks do not establish actual reload readiness.
 - Compose provider selection is explicit through `COMPOSE`; do not silently select or switch engines. Each engine owns its own containers and data volumes.
 - Preserve the PostgreSQL image OS family when reusing data: a prior volume reported collation 2.41, and the pinned image uses Trixie. `make up` checks recorded versus actual database collation; inspect current values rather than assuming a reset/new volume has historical metadata. Do not silence a mismatch by refreshing metadata without assessing affected objects.
-- Optional S3 storage is SeaweedFS in `docker-compose.storage.yml`: root `make storage-up`, `storage-check`, and `storage-persistence-check` with explicit `COMPOSE`. The last check restarts only SeaweedFS; checks create/delete their own UUID-scoped probe objects. See `docs/project/local-object-storage-options.md` for endpoints, image evidence, and deployment requirements. Human reported these Podman commands completed without error on 24 October 2026; logs were not attached. Do not present this as agent-executed evidence or Docker/production verification.
+- Optional S3 storage is SeaweedFS in `docker-compose.storage.yml`: root `make storage-up`, `storage-check`, and `storage-persistence-check` with explicit `COMPOSE`. The last check restarts only SeaweedFS; checks create/delete their own UUID-scoped probe objects. See `docs/engineering/development/local-object-storage-options.md` for endpoints, image evidence, and deployment requirements. Human reported these Podman commands completed without error on 24 October 2026; logs were not attached. Do not present this as agent-executed evidence or Docker/production verification.
 - Legacy MinIO remains in `docker-compose.minio.yml`; it is not selected by `storage-*`. Never mount its volume into SeaweedFS or infer format compatibility from S3 compatibility.
 - Optional storage uses its own Compose project (`kencleng-storage`) to avoid coupling PostgreSQL recreation to storage configuration changes. Never silently attach/migrate a legacy storage volume.
 - SeaweedFS is selected for optional local preparation. Storage is not required for the scaffold; production deployment/readiness is a separate decision with evidence.

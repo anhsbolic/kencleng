@@ -11,17 +11,17 @@ This backend is a neutral engineering substrate. No historical domain, route, mi
 ## Authority routing
 
 - product/business meaning → `../docs/product/product-intent.md`;
-- Engineering Standards index → `../docs/project/standards/README.md`;
-- backend architecture → `../docs/project/standards/backend.md`;
-- PostgreSQL database design, SQL migrations, integrity and partitioning → `../docs/project/standards/database-data-model.md`;
-- shared identity/authentication policy → `../docs/project/standards/identity-authentication.md`;
-- shared user/service authorization policy → `../docs/project/standards/authorization.md`;
-- PII/cryptography and API/UI masking safeguards → `../docs/project/standards/privacy-data-protection.md`;
-- reusable product-design concerns when relevant → `../docs/ui-ux/README.md`;
-- API design/response/error conventions → `../docs/project/standards/api-contract.md`;
-- risk-based testing, coverage and Go table-driven verification → `../docs/project/standards/testing-verification.md`;
-- source code comment style (concise, non-ceremonial) → `../docs/project/standards/documentation-conventions.md` (T09-F);
-- MVP minimum runtime reliability, health/logging and production-readiness limits → `../docs/project/standards/operational-reliability.md`;
+- Engineering Standards index → `../docs/engineering/standards/README.md`;
+- backend architecture → `../docs/engineering/standards/backend.md`;
+- PostgreSQL database design, SQL migrations, integrity and partitioning → `../docs/engineering/standards/database-data-model.md`;
+- shared identity/authentication policy → `../docs/engineering/standards/identity-authentication.md`;
+- shared user/service authorization policy → `../docs/engineering/standards/authorization.md`;
+- PII/cryptography and API/UI masking safeguards → `../docs/engineering/standards/privacy-data-protection.md`;
+- reusable product-design concerns when relevant → `../docs/design/README.md`;
+- API design/response/error conventions → `../docs/engineering/standards/api-contract.md`;
+- risk-based testing, coverage and Go table-driven verification → `../docs/engineering/standards/testing-verification.md`;
+- source code comment style (concise, non-ceremonial) → `../docs/engineering/standards/documentation-conventions.md` (T09-F);
+- MVP minimum runtime reliability, health/logging and production-readiness limits → `../docs/engineering/standards/operational-reliability.md`;
 - API contract → `../api/` only after an active contract exists;
 - generic lifecycle / engineering practice → current Harscode authority.
 
@@ -29,20 +29,20 @@ Release scope and delivery order are intentionally open. Do not infer them from 
 
 ## Setup and how to run
 
-- Follow `README.md` and `../docs/project/kencleng-repo-setup.md`. Work from `backend/`; activate Go 1.27.3 with `gvm use "$(cat ../.go-version)"`.
+- Follow `README.md` and `../docs/engineering/development/kencleng-repo-setup.md`. Work from `backend/`; activate Go 1.27.3 with `gvm use "$(cat ../.go-version)"`.
 - From `backend/`, `make setup` preserves/creates `.env` from `../.env.example` and installs pinned Air into ignored `bin/`; it does not start PostgreSQL.
 - Start the database from root with `make COMPOSE=podman-compose up` or `make up` for Docker Engine/Desktop. The command waits for PostgreSQL readiness.
 - `make up` also checks database collation compatibility. Keep the pinned Trixie image family for the existing data; do not run `REFRESH COLLATION VERSION`, reindex, or reset volumes as an automatic setup repair.
 - Start with `make gvm-run` from `backend/` to source gvm, select `../.go-version`, then run Air. It uses `GVM_ROOT` or `~/.gvm` and only activates the child runner environment. `make run` (`make dev` alias) uses the already-active Go version. Air rebuilds and restarts after Go/config changes. `go run ./cmd/server` is an alternative without automatic reload.
-- Container mode: `make docker-run COMPOSE=podman-compose` from `backend/` (or `make docker-run` for Docker) delegates infra preparation to root and runs only the backend app service. `make docker-stop` with the same provider stops that service. See `../docs/project/local-development-modes.md`; keep Dockerfile Go/Air versions aligned with project pins.
+- Container mode: `make docker-run COMPOSE=podman-compose` from `backend/` (or `make docker-run` for Docker) delegates infra preparation to root and runs only the backend app service. `make docker-stop` with the same provider stops that service. See `../docs/engineering/development/local-development-modes.md`; keep Dockerfile Go/Air versions aligned with project pins.
 - Container settings bind `0.0.0.0:8090` internally, publish only loopback on the host, and connect to `postgres:5432`. Explicit runtime env works without `.env`; malformed/unreadable dotenv remains fatal. Preserve exported-env precedence.
 - `.env` is loaded from the working directory; run backend commands from `backend/`. The host setup uses `APP_HOST=127.0.0.1`, `APP_PORT=8090`, and PostgreSQL at `127.0.0.1:5435`. Preserve existing credentials when updating local configuration.
 - After a Human-requested reset to an empty local database, compare `.env` connection settings with the current Compose user/database; reset preserves local env files. Exported environment takes precedence over `.env`. `env -u DATABASE_URL make run` from `backend/` starts one runner using the local file without clearing the parent shell's environment. Do not change loading precedence or recreate historical database roles to hide a stale-config error.
 - Direct health check: `curl --fail http://127.0.0.1:8090/healthz`; with frontend running, use `http://localhost:3000/api/healthz` to check the development proxy too.
 - Keep backend routes unprefixed by the development gateway's `/api`; Next.js strips that prefix. Do not add permissive CORS just to bypass local proxy setup.
-- `make verify` requires its lint/security tools separately; compile or `[no test files]` output is not runtime or behavioral evidence. Do not run migrations/resets as generic setup.
+- Existing `make verify` still aggregates optional race/contract/security suites. **Do not use default `make`/`make verify` as a mandatory gate**; select individually applicable tests per T07. Compile or `[no test files]` output is not runtime or behavioral evidence. Do not run migrations/resets as generic setup.
 
-- Optional SeaweedFS is prepared through root `make storage-up` with the same explicit Compose provider. Endpoint host: `http://127.0.0.1:9087`; container: `http://seaweedfs:8333`. No S3 client is implemented yet. Consult `../docs/project/local-object-storage-options.md` before integration; presign against the public endpoint without hostname replacement.
+- Optional SeaweedFS is prepared through root `make storage-up` with the same explicit Compose provider. Endpoint host: `http://127.0.0.1:9087`; container: `http://seaweedfs:8333`. No S3 client is implemented yet. Consult `../docs/engineering/development/local-object-storage-options.md` before integration; presign against the public endpoint without hostname replacement.
 
 ## Structure
 

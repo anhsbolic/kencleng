@@ -4,13 +4,13 @@
 
 Neutral Go backend engineering substrate for Kencleng Pilot #3. No product domain, authentication model, API operation, database migration, or background job is considered delivered at baseline.
 
-Product meaning is owned by `../docs/product/product-intent.md`. Backend architecture is owned by `../docs/project/standards/backend.md`.
+Product meaning is owned by `../docs/product/product-intent.md`. Backend architecture is owned by `../docs/engineering/standards/backend.md`.
 
 ## Setup
 
 Backend berjalan di host dengan Go **1.27.3** melalui gvm. PostgreSQL **16**
 berjalan melalui Compose; pilihan image dan topologi dimiliki oleh
-[panduan setup repo](../docs/project/kencleng-repo-setup.md).
+[panduan setup repo](../docs/engineering/development/kencleng-repo-setup.md).
 
 Dari direktori `backend/`, dengan gvm sudah dimuat di shell:
 
@@ -60,7 +60,7 @@ make COMPOSE=podman-compose up
 Perintah menunggu PostgreSQL menerima koneksi lalu memeriksa kecocokan collation
 database dengan image. Data lama project pernah mencatat versi 2.41; keluarga
 image Trixie dipertahankan dan `db-check` memeriksa nilai aktual. Jika pemeriksaan gagal, ikuti
-[panduan diagnosis](../docs/project/kencleng-repo-setup.md#pod-lama-dan-peringatan-collation)
+[panduan diagnosis](../docs/engineering/development/kencleng-repo-setup.md#pod-lama-dan-peringatan-collation)
 sebelum mengubah database. Lalu, dari direktori `backend/`, jalankan:
 
 ```bash
@@ -108,7 +108,7 @@ checkout. `make docker-stop COMPOSE=podman-compose` menghentikan backend contain
 Jalankan frontend container dari direktori frontend pada terminal terpisah.
 Untuk kembali ke mode host, jalankan root `make COMPOSE=podman-compose docker-down`
 terlebih dahulu; database dan volume cache dipertahankan. Detail UID, provider,
-dan pemeriksaan reload: [mode development](../docs/project/local-development-modes.md).
+dan pemeriksaan reload: [mode development](../docs/engineering/development/local-development-modes.md).
 
 ## Optional S3 storage
 
@@ -116,7 +116,7 @@ SeaweedFS lokal tersedia lewat root `make storage-up COMPOSE=podman-compose`.
 Endpoint host `http://127.0.0.1:9087`; endpoint container `http://seaweedfs:8333`.
 Scaffold belum mengonsumsi client S3. Setup, pemeriksaan S3 dan persistensi melalui
 Podman sudah dilaporkan berhasil oleh Human. Ikuti
-[setup storage dan batas deployment](../docs/project/local-object-storage-options.md)
+[setup storage dan batas deployment](../docs/engineering/development/local-object-storage-options.md)
 untuk kredensial lokal, perintah check, dan penanganan presigned URL.
 
 ## Verification

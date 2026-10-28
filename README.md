@@ -2,14 +2,14 @@
 
 Kencleng is a sandbox donation/crowdfunding project and a realistic full-stack learning environment.
 
-This branch is the **Pilot #3 clean delivery baseline candidate**. It preserves approved product/design truth and neutral engineering substrate while intentionally resetting active release scope, delivery sequencing, detailed contracts, feature implementation, and historical orchestration state.
+This **research/pilot branch** continues the Pilot #3 clean delivery baseline. It contains approved Product/Design guidance and settled **T01–T09 Engineering Standards** on this branch; that does not authorize feature implementation, establish complete runtime conformance, or promote the work to operational `main`. Active release scope, delivery sequencing, API operations and product feature implementations remain separate decisions.
 
 ## Current authority
 
 - `docs/product/product-intent.md` — whole-product direction, actors, responsibilities, and trust commitments.
-- `docs/ui-ux/README.md` — reusable product-design authority.
-- [`docs/project/README.md`](docs/project/README.md) — repository/setup and Engineering Standards navigation.
-- [`docs/project/standards/README.md`](docs/project/standards/README.md) — current reusable Engineering authority (including T01/T02).
+- `docs/design/README.md` — reusable product-design authority.
+- [`docs/README.md`](docs/README.md) — repository/setup and Engineering Standards navigation.
+- [`docs/engineering/standards/README.md`](docs/engineering/standards/README.md) — T01–T09 Engineering Standards (research branch only).
 - root/scoped `AGENTS.md` — agent routing, boundaries, and hard rules.
 
 Release goal, delivery slices, detailed requirements, API operations, and implementation state are intentionally **not selected yet**. Git history is evidence/archive, not active authority by inertia.
@@ -29,10 +29,10 @@ Availability of a technology or service does not mean an active delivery item mu
 Mode development saat ini: **FE dan BE di host**, PostgreSQL di container.
 Gunakan Go **1.27.3** melalui gvm, Node.js **24.22.1** melalui nvm, dan salah satu
 provider Compose: `podman-compose` atau `docker compose` (Docker Engine/Desktop).
-Instalasi runtime ada di [panduan setup](docs/project/kencleng-repo-setup.md#local-toolchain-ubuntu-24--nvm--gvm).
+Instalasi runtime ada di [panduan setup](docs/engineering/development/kencleng-repo-setup.md#local-toolchain-ubuntu-24--nvm--gvm).
 Workflow host dan storage Podman sudah dilaporkan berhasil oleh Human. Status
 terpisah untuk container aplikasi dan Docker Engine/Desktop ada di
-[catatan verifikasi](docs/project/kencleng-repo-setup.md#status-pemeriksaan-24-oktober-2026).
+[catatan verifikasi](docs/engineering/development/kencleng-repo-setup.md#status-pemeriksaan-24-oktober-2026).
 
 Setup aplikasi dilakukan sekali dari direktori masing-masing, dengan nvm/gvm
 sudah dimuat. Backend:
@@ -75,7 +75,7 @@ Air untuk rebuild/restart otomatis; frontend memakai Next.js Fast Refresh.
 
 Browser mengakses API lewat `/api/...`; Caddy tidak diperlukan. Panduan khusus:
 [backend](backend/README.md), [frontend](frontend/README.md), dan
-[infrastruktur](docs/project/kencleng-repo-setup.md).
+[infrastruktur](docs/engineering/development/kencleng-repo-setup.md).
 
 Storage S3 opsional memakai SeaweedFS. Dari root, jalankan `make
 COMPOSE=podman-compose storage-up`, lalu `make COMPOSE=podman-compose storage-check`.
@@ -84,7 +84,7 @@ COMPOSE=podman-compose storage-persistence-check` saat tidak ada upload aktif.
 Docker Engine/Desktop memakai target yang sama tanpa override `COMPOSE`.
 Endpoint host/browser: `http://127.0.0.1:9087`; backend container:
 `http://seaweedfs:8333`. Setup ini memakai volume baru dan mempertahankan data MinIO
-lama. [Panduan storage](docs/project/local-object-storage-options.md) menjelaskan
+lama. [Panduan storage](docs/engineering/development/local-object-storage-options.md) menjelaskan
 kredensial lokal, kompatibilitas, batas tes dan persyaratan deployment.
 
 `make COMPOSE=podman-compose status` melihat PostgreSQL dan `logs` mengikuti log
@@ -106,7 +106,7 @@ Untuk membuktikan hot reload kedua aplikasi, jalankan `nvm use` lalu `make
 check-hot-reload` dari `frontend/` pada masing-masing mode. Script memakai browser
 dan perubahan source sementara yang dipulihkan. Konfigurasi tersedia, tetapi
 runtime container/reload belum dinyatakan terverifikasi dari sesi agent.
-Lihat [mode development dan verifikasi](docs/project/local-development-modes.md).
+Lihat [mode development dan verifikasi](docs/engineering/development/local-development-modes.md).
 
 This baseline does not authorize Pilot #3 engineering by itself. Product selection and engineering entry remain explicit Human decisions.
 
@@ -133,4 +133,4 @@ dibutuhkan. `--delete-data` juga menghapus cache volume aplikasi yang terpilih;
 script tidak membuat backup otomatis. Tanpa `--delete-data`, volume dipertahankan sehingga
 database lama tidak menjadi kosong. Images, file project, env, nvm, dan gvm tetap
 tersedia. Pilihan target dan batas script dijelaskan di
-[panduan reset](docs/project/kencleng-repo-setup.md#reset-podman-terarah).
+[panduan reset](docs/engineering/development/kencleng-repo-setup.md#reset-podman-terarah).

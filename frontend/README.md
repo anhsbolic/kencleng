@@ -4,7 +4,7 @@
 
 This is a neutral Next.js engineering scaffold for Kencleng Pilot #3 delivery. No route, feature, release slice, or API capability is considered delivered at baseline.
 
-Product meaning is owned by `../docs/product/product-intent.md`. Reusable product-design authority is routed through `../docs/ui-ux/README.md`. Frontend architecture is owned by `../docs/project/standards/frontend.md`.
+Product meaning is owned by `../docs/product/product-intent.md`. Reusable product-design authority is routed through `../docs/design/README.md`. Frontend architecture is owned by `../docs/engineering/standards/frontend.md`.
 
 Historical frontend implementation remains available in Git history as evidence, not active implementation precedent.
 
@@ -25,7 +25,7 @@ make setup
 Setup membuat `.env.local` dari `.env.example` di direktori frontend
 hanya jika belum ada, lalu memasang dependency sesuai lockfile dengan `npm ci`.
 Jika runtime belum tersedia, ikuti
-[panduan toolchain](../docs/project/kencleng-repo-setup.md#local-toolchain-ubuntu-24--nvm--gvm).
+[panduan toolchain](../docs/engineering/development/kencleng-repo-setup.md#local-toolchain-ubuntu-24--nvm--gvm).
 
 Konfigurasi proxy lokal:
 
@@ -93,7 +93,7 @@ Jalankan backend container dari direktori backend pada terminal lain.
 `make docker-stop COMPOSE=podman-compose` menghentikan frontend container.
 Root `make COMPOSE=podman-compose docker-down` melepas kedua app container untuk
 beralih ke mode host, tanpa mereset database. Detail:
-[mode development](../docs/project/local-development-modes.md).
+[mode development](../docs/engineering/development/local-development-modes.md).
 
 ## Verification
 
@@ -107,7 +107,7 @@ make check-hot-reload
 
 Ini pemeriksaan opt-in yang membuka browser dan mengedit sementara dua file
 source, lalu mengembalikannya. Jangan edit file target selama tes. Baca
-[perilaku dan pemulihan probe](../docs/project/local-development-modes.md#pemeriksaan-hot-reload-yang-nyata)
+[perilaku dan pemulihan probe](../docs/engineering/development/local-development-modes.md#pemeriksaan-hot-reload-yang-nyata)
 sebelum menjalankan. Script tidak memulai/menutup runner yang sudah ada.
 
 Dari `frontend/`:

@@ -267,6 +267,6 @@ Reusable truth learned through implementation should be promoted here or into th
 
 ## 13. Relationship to the reboot
 
-`docs/project/frontend-reboot-plan.md` owns the one-time retirement/reset operation.
+The one-time frontend reboot plan was a historical migration artifact and is **not present in the active documentation tree**. Do not treat its old path as current authority. This document governs reusable component contracts in the current baseline; consult Git history only for specifically needed reboot provenance.
 
 Once the clean reboot baseline is frozen, this document governs reusable component contracts for the new generation.
