@@ -591,7 +591,7 @@ Do not normalize:
 Approved selected-direction visual references live under:
 
 ```text
-docs/ui-ux/visual-references/selected-direction/
+docs/design/visual-references/selected-direction/
 ```
 
 They establish character, hierarchy, relationship, system behavior, and expressive intensity.

@@ -69,8 +69,8 @@ the `/api` prefix. Browser entry is `http://localhost:3000`; the server-only
 `next dev`. Production API routing is a separate deployment decision.
 
 Setup/run, pinned runtimes and provider selection are owned by
-[repository setup](../kencleng-repo-setup.md) and
-[development modes](../local-development-modes.md). The current local gateway is
+[repository setup](../development/kencleng-repo-setup.md) and
+[development modes](../development/local-development-modes.md). The current local gateway is
 Next.js; Caddy is retained only in migration/troubleshooting notes.
 
 When an active OpenAPI contract exists, use generated types for the shapes it owns. Keep request functions focused and do not maintain a parallel handwritten model for the same contract.
@@ -79,7 +79,7 @@ MSW may provide contract-faithful network mocks when parallel frontend work is j
 
 ## Product design
 
-`docs/ui-ux/README.md` routes to the approved reusable product-design standards. Illustrative design examples and selected visual references guide expression; they do not establish release scope, route commitments, or completed product state.
+`docs/design/README.md` routes to the approved reusable product-design standards. Illustrative design examples and selected visual references guide expression; they do not establish release scope, route commitments, or completed product state.
 
 Material UI work needs proportional rendered verification. Browser automation is an available capability, not a ritual for every change.
 

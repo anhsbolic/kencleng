@@ -41,7 +41,7 @@
 ## T07-D — Selective real-browser, Playwright and Human opt-in
 
 - Playwright adalah **optional targeted browser/integration capability**, **bukan mandatory gate setiap frontend code generation**. Human dapat meminta automated integration test untuk selected flow/milestone; Agent juga dapat merekomendasikan/menjalankan scoped browser checks bila real-browser-only risk cukup material dan environment/authority mendukung.
-- Sebelum menjalankan browser integration, verifikasi readiness: local FE, BE, PostgreSQL, browser executable, trusted test data/auth/session, available ports, dan side effects. Gunakan [local development modes](../local-development-modes.md) serta current Playwright config, bukan asumsikan FE/BE/DB semua sudah berjalan.
+- Sebelum menjalankan browser integration, verifikasi readiness: local FE, BE, PostgreSQL, browser executable, trusted test data/auth/session, available ports, dan side effects. Gunakan [local development modes](../development/local-development-modes.md) serta current Playwright config, bukan asumsikan FE/BE/DB semua sudah berjalan.
 - Jangan mengubah DB volume, melakukan destructive fixture setup, reset secrets, menyalakan layanan eksternal, atau mengganti active local environment Human tanpa scope/approval yang sesuai.
 - `npm run test:browser`, headed/UI modes, dan existing opt-in `make check-hot-reload` hanya dijalankan bila relevan; hot-reload probe **mengubah source sementara** dan tidak boleh otomatis dijalankan di tengah edits.
 - Jika browser/runtime/dependency tidak tersedia, laporkan **Blocked/Not verified** beserta kondisi konkret. Mock-based component checks **tidak boleh** diberi label real FE↔BE integration.
@@ -102,7 +102,7 @@
 ## Reference & execution boundaries
 
 - [Frontend architecture](frontend.md), [Backend architecture](backend.md), [API contract standard](api-contract.md).
-- [Local development modes](../local-development-modes.md), [Frontend setup](../../../frontend/README.md), [Backend setup](../../../backend/README.md).
+- [Local development modes](../development/local-development-modes.md), [Frontend setup](../../../frontend/README.md), [Backend setup](../../../backend/README.md).
 - [Go testing](https://pkg.go.dev/testing), [Go race detector](https://go.dev/doc/articles/race_detector), [Vitest](https://vitest.dev/), [Playwright](https://playwright.dev/).
 
 **Status implementation:** T07 policy approved/persisted only. Backend `Makefile` optional-suite aggregation remains an observed follow-up; frontend coverage instrumentation/gate and first useful test cases require separate scoped implementation and evidence. Ini bukan perubahan `main` atau izin menjalankan destructive local integration.

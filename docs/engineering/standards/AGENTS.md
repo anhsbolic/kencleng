@@ -1,6 +1,6 @@
-# AGENTS.md — docs/project/standards/
+# AGENTS.md — docs/engineering/standards/
 
-Scope: `docs/project/standards/` only. Follow root `AGENTS.md` and read [Engineering Standards index](README.md) before writing here.
+Scope: `docs/engineering/standards/` only. Follow root `AGENTS.md` and read [Engineering Standards index](README.md) before writing here.
 
 - **Tulis hanya project-wide Engineering decisions yang memang sudah diotorisasi** atau koreksi non-semantik yang dapat dibuktikan. Discussion proposal, research, historical implementation, dan scoped Rancang output bukan authority otomatis.
 - **Satu owner per concern.** Backend/frontend stack tetap stack-specific; identity, authorization, data/privacy, API, dan testing lintas-komponen mendapat owning document tersendiri bila telah diputuskan. Gunakan link untuk cross-reference, jangan salin ulang rule normatif.

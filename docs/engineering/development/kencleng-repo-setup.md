@@ -278,7 +278,7 @@ reset volume, reindex, atau perubahan metadata yang dijalankan dalam perbaikan i
 ### Reset Podman terarah
 
 Atas permintaan Human untuk mulai ulang, tersedia
-[`scripts/reset-kencleng-podman.py`](../../scripts/reset-kencleng-podman.py).
+[`scripts/reset-kencleng-podman.py`](../../../scripts/reset-kencleng-podman.py).
 Script Python 3 ini tidak memakai dependency tambahan. Jalankan dari root repo,
 tanpa `sudo`, pada user/store Podman yang sama dengan setup sebelumnya. Hentikan
 FE/BE host terlebih dahulu melalui `Ctrl+C`.
@@ -456,7 +456,7 @@ full build tidak diulang pada pemeriksaan konfigurasi ini.
 Use:
 
 - `docs/product/product-intent.md` for whole-product direction and business/product truth;
-- `docs/ui-ux/README.md` for reusable product-design authority;
+- `docs/design/README.md` for reusable product-design authority;
 - this directory for engineering architecture and repository topology;
 - root/scoped `AGENTS.md` for agent routing and write boundaries;
 - Harscode for the active generic workflow when delivery work is authorized.

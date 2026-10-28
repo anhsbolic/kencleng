@@ -79,7 +79,7 @@ Document storage treatment (omit/protected plaintext/encrypted/hash), necessary 
 - A masked string is **not a canonical editable field**: saving an unchanged form must not overwrite the original with mask characters. Editing full values needs authorized read/write semantics.
 - Apply safeguards to aria/screen-reader labels, tooltips, HTML attributes, clipboard/copy, URLs, browser caches, CSV/PDF, email/SMS, errors and telemetry. Keep UI usable and accessible without leaking hidden values.
 - Verify raw **network/API payload and rendered UI**, denial/cross-scope accesses, reveal behavior, copy/edit/save, export/notification channels, and accessibility text. A screenshot of masking alone is insufficient.
-- Reusable mask components are optional and should be created only after real needs arise. [Product Design standards](../../ui-ux/README.md) own presentation/UX; T04 owns minimum data exposure/security boundaries.
+- Reusable mask components are optional and should be created only after real needs arise. [Product Design standards](../../design/README.md) own presentation/UX; T04 owns minimum data exposure/security boundaries.
 
 ## References / boundary
 

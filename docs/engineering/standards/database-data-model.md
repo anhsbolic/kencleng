@@ -56,7 +56,7 @@
 - `.down.sql` **tidak menjamin data dapat dipulihkan**. Jika reversal destructive/unsafe, tulis batasan dan recovery plan secara jujur; jangan mengemas drop data sebagai safe rollback.
 - **Critical existing hazard:** `backend/Makefile` memiliki `migrate-down` yang memanggil `down -all`. Target tersebut **tidak boleh dijalankan sebagai generic rollback/reset/verification command** pada database berdata. Explicit Human approval dan scope + backup/recovery inspection diperlukan sebelum destructive actions. Standar ini **tidak mengubah target Makefile** atau mengotorisasi migrasi apa pun.
 - Jika migration gagal atau history berstatus dirty, investigasi applied SQL dan actual DB state sebelum perbaikan; `force` bukan repair script yang boleh dipakai sembarangan. Jaga perbedaan antara verified schema, assumed schema dan failed attempt.
-- Database backup, volume deletion dan major collation changes tetap mengikuti existing [repository setup safeguards](../kencleng-repo-setup.md).
+- Database backup, volume deletion dan major collation changes tetap mengikuti existing [repository setup safeguards](../development/kencleng-repo-setup.md).
 
 ## T05-G — Indexes, query plans and operability
 

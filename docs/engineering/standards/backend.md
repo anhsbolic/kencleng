@@ -15,7 +15,7 @@
 | Migrations | `golang-migrate` | Explicit SQL migration mechanism |
 | Architecture | Modular Monolith | One Go backend codebase/module with independently executable REST API and optional Worker processes; product domains emerge from real delivery needs |
 | Testing | Go test + `httptest`, proportional integration/race/security checks | Evidence depth follows the active risk |
-| Object storage | Optional SeaweedFS through standard S3 APIs | [Setup and verification](../local-object-storage-options.md); local Podman checks passed according to Human's report, deployment readiness remains separate. Use only when an active requirement needs object storage |
+| Object storage | Optional SeaweedFS through standard S3 APIs | [Setup and verification](../development/local-object-storage-options.md); local Podman checks passed according to Human's report, deployment readiness remains separate. Use only when an active requirement needs object storage |
 
 A selected capability being available does not require every feature to use it. Do not create empty domain/platform layers merely to make the architecture look complete.
 
@@ -44,7 +44,7 @@ Historical backend implementation remains available in Git history as evidence. 
 
 ## Authority boundary
 
-Product meaning starts at `docs/product/product-intent.md`. Product-design concerns start at `docs/ui-ux/`. Detailed backend behavior, threat decisions, persistence shape, API contracts, and implementation choices are derived when the selected delivery work needs them.
+Product meaning starts at `docs/product/product-intent.md`. Product-design concerns start at `docs/design/`. Detailed backend behavior, threat decisions, persistence shape, API contracts, and implementation choices are derived when the selected delivery work needs them.
 
 Do not promote a technical convenience into product truth. If engineering exposes a material missing product decision, route it back to the Human product owner rather than inventing it in code.
 

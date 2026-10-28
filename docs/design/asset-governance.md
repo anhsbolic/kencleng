@@ -163,7 +163,7 @@ A file existing in the repository is not automatically canonical.
 The approved Sunlit Editorial public composition and Evidence Journal composition under:
 
 ```text
-docs/ui-ux/visual-references/selected-direction/
+docs/design/visual-references/selected-direction/
 ```
 
 are **Selected Direction References**.

@@ -2,7 +2,7 @@
 
 > **Status:** Project-wide Engineering standard T08 — **settled/persisted only on research branch** `pilot/station5-c1-space-only`. Approval ini hanya untuk **minimum MVP baseline**; **bukan** optimal architecture untuk production, production-readiness approval, bukti uptime/security/recovery, atau promosi ke `main`.
 > **Scope:** Minimum configuration safety, runtime lifecycle, basic logging/health, dan non-destructive data/operational safeguards pada tahap MVP Kencleng saat ini.
-> **Authority:** [Engineering Standards index](README.md); [Backend architecture](backend.md), [Identity & Authentication](identity-authentication.md), [Authorization](authorization.md), [Privacy & Data Protection](privacy-data-protection.md), [Database & Data Model](database-data-model.md), [API & Contract](api-contract.md), dan [Testing & Verification](testing-verification.md) tetap owning standards untuk concern masing-masing. [Local setup](../kencleng-repo-setup.md) tetap owner developer-environment commands/topology.
+> **Authority:** [Engineering Standards index](README.md); [Backend architecture](backend.md), [Identity & Authentication](identity-authentication.md), [Authorization](authorization.md), [Privacy & Data Protection](privacy-data-protection.md), [Database & Data Model](database-data-model.md), [API & Contract](api-contract.md), dan [Testing & Verification](testing-verification.md) tetap owning standards untuk concern masing-masing. [Local setup](../development/kencleng-repo-setup.md) tetap owner developer-environment commands/topology.
 
 ## Baseline scope dan production boundary
 
@@ -14,7 +14,7 @@
 ## T08-A — Configuration safety (minimum)
 
 - Required environment/configuration harus divalidasi pada startup/initialization boundary yang relevan. Invalid required configuration menyebabkan failure yang jelas/fail-closed; jangan silently fallback ke insecure production settings atau misrouted resources.
-- Credentials, tokens, signing/encryption keys, dan PII tidak boleh di-hardcode, di-commit, atau dicatat di logs. Gunakan existing local env/Compose mechanism sesuai [repo setup](../kencleng-repo-setup.md) dan secret-handling constraints T02/T04; jangan buat mandatory config/secrets service baru.
+- Credentials, tokens, signing/encryption keys, dan PII tidak boleh di-hardcode, di-commit, atau dicatat di logs. Gunakan existing local env/Compose mechanism sesuai [repo setup](../development/kencleng-repo-setup.md) dan secret-handling constraints T02/T04; jangan buat mandatory config/secrets service baru.
 - Local-only exceptions (terutama cookie security) **tidak boleh** ditransfer ke public/non-loopback environment. Penerimaan config local secara teknis bukan production-readiness proof.
 - Jangan mengubah existing environment files, credentials, port binding, container exposure, atau storage volumes sebagai incidental setup cleanup.
 

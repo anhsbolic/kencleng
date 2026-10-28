@@ -32,7 +32,7 @@ T01–T09 pada episode Engineering Standards ini telah **settled / persisted pad
 ## Batas authority dan konsumsi
 
 - **Product meaning dan kapan login diperlukan:** [Product Authority](../../product/README.md). Engineering Standards tidak menambahkan syarat Product yang belum disetujui.
-- **Product Design/UX reusable:** [Product Design Standards](../../ui-ux/README.md).
+- **Product Design/UX reusable:** [Product Design Standards](../../design/README.md).
 - **Kontrak API spesifik:** [API tooling dan source contract](../../../api/README.md); baseline OpenAPI masih kosong sampai ada authorized delivery requirement.
 - **Feature-level Engineering output:** `docs/engineering/` (misalnya Rancang ORG-01) adalah scoped proposal/evidence. Keputusan Agent di sana tidak otomatis berlaku lintas-feature.
 - **Executable code, configuration, dan current database state:** sumber evidence implementasi, bukan pengganti kebijakan atau Product authority. Hasil verifikasi harus dibedakan dari proposal.

@@ -19,8 +19,8 @@ eksplisit, karena masing-masing memakai store dan volume yang berbeda.
 
 ## Host
 
-Setup mengikuti README [backend](../../backend/README.md) dan
-[frontend](../../frontend/README.md). Mulai database dari root repo:
+Setup mengikuti README [backend](../../../backend/README.md) dan
+[frontend](../../../frontend/README.md). Mulai database dari root repo:
 
 ```bash
 make COMPOSE=podman-compose up
