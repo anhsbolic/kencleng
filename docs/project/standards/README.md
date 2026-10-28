@@ -15,8 +15,9 @@
 | T05 — PostgreSQL schema, migrations, integrity, transactions, ERD, conditional partitioning | [Database & Data Model](database-data-model.md) | **Settled / persisted** |
 | T06 — REST/OpenAPI contracts, minimal success envelope, RFC 9457 errors, security, compatibility | [API & Contract](api-contract.md) | **Settled / persisted** |
 | T07 — Risk-based testing, independent suites, coverage ≥80%, table-driven Go tests | [Testing & Verification](testing-verification.md) | **Settled / persisted** |
+| T08 — Minimum MVP runtime configuration, lifecycle, basic logs/health, data safety | [Minimum Runtime Reliability](operational-reliability.md) | **Settled / persisted (MVP minimum; not production-ready)** |
 
-T08–T09 masih dalam pembahasan atau belum diputuskan; tidak ada standar baru yang berlaku hanya karena suatu topik tercantum pada agenda. Tambahkan owning document jika keputusan nyata membutuhkan ownership tersendiri, bukan untuk melengkapi template folder.
+T09 masih dalam pembahasan atau belum diputuskan; tidak ada standar baru yang berlaku hanya karena suatu topik tercantum pada agenda. Tambahkan owning document jika keputusan nyata membutuhkan ownership tersendiri, bukan untuk melengkapi template folder.
 
 ## Batas authority dan konsumsi
 
