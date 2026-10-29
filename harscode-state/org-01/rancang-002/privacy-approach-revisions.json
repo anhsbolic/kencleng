@@ -1,0 +1,130 @@
+{
+  "decisionRevision": "PD-PRIV-01-r4",
+  "standing": "Human-approved policy direction/candidate basis mapping; controller and email supplied; notice v0.1 DRAFT; lawful-basis validation/providers/final release OPEN; real-person gate HELD",
+  "baselineCommit": "35f8c0fc31f1f2f21bdac36d4c24d521541263f0",
+  "authorityEvidence": [
+    "Human approved prior privacy approach: ya ak sepakat dengan rekomendasinya. gunakan pendekatan ini ya",
+    "Human approved subsequent explained Owner deletion flow and case boundaries: ya sepakat bro.",
+    "Human approved explained 48h receipt, family30d+cleanup24h, necessary logs14d, backup age14d and cleanup/restore safeguards: ya sepakat. lanjut",
+    "Human approved candidate purpose-basis mapping and notice approach, conditional validation unchanged: sepakat bro. lanjutkan",
+    "Human specified controller Yayasan Kencleng Indonesia; only Google Login chosen; other providers not determined",
+    "Human selected privacy email care@kencleng.dev; operational readiness not tested"
+  ],
+  "files": {
+    "docs/product/outcomes/org-01/privacy-decision.md": {
+      "sha256": "76dcc93116fd142433d1e3a86bbcf8726d0011f903b51cbea48697f352fa4b5f",
+      "gitBlobContentId": "5e0a43c1616f096436524f3faf512957f303e3a5"
+    },
+    "docs/product/outcomes/org-01/privacy-notice-draft.md": {
+      "sha256": "b1ebfcbadea720f48892a6add959bc41bc303f3afe35725f26b0c99df13373d8",
+      "gitBlobContentId": "7d3345edc2a180b556e55aae530db4f63bf26ff4"
+    },
+    "docs/product/README.md": {
+      "sha256": "e39f42f711e0735a4e6874d0cd2f03b7eedf636ea869acd0dd0fa7312ac98fb1",
+      "gitBlobContentId": "6f4c2efb423f44aca0dbd266c8532e1e3abc22f1"
+    },
+    "harscode-state/org-01/rancang-002/privacy-approach-follow-up.md": {
+      "sha256": "cda69c9c3104392f9fecd50922add22775a3ddda04ec1a8f3cf86772cc3e811e",
+      "gitBlobContentId": "faae6ee7e6373336cd4a9317de5d556d6478f743"
+    }
+  },
+  "previousPrivacyRecording": {
+    "decisionRevision": "PD-PRIV-01-r3",
+    "manifestSha256": "1558e44542a8014c4d3273f582317029b07c4c6cf110d0580d67515a21b5e2bc",
+    "fileRevisions": {
+      "docs/product/outcomes/org-01/privacy-decision.md": {
+        "sha256": "fc308c9ab48ca87c36c28e321d1761f777c41773296a217932ba830d020ffd5f",
+        "gitBlobContentId": "1615fa864aaec5c40889a3fb69287a35bca84f7a"
+      },
+      "docs/product/README.md": {
+        "sha256": "b1e9256ce2dbdc0095bbe94b04416dd8bf848cbf8aa250025f9aa524149c095e",
+        "gitBlobContentId": "b6c703e42aa631f1935df591f2ffaa8ac5f7a553"
+      },
+      "harscode-state/org-01/rancang-002/privacy-approach-follow-up.md": {
+        "sha256": "4de3ae9b418cce6f235dd4c0efda143b950dea65565fcde02c1e0f94b80dcf3e",
+        "gitBlobContentId": "ce48cff53e8bac2f7c87c5b80a4af350ea1ed0e3"
+      }
+    },
+    "earlierRecording": {
+      "decisionRevision": "PD-PRIV-01-r2",
+      "manifestSha256": "7fc384691fdc85fa42f082595014e06df1c740af1b10ee066fbbc950a4aa9adc",
+      "fileRevisions": {
+        "docs/product/outcomes/org-01/privacy-decision.md": {
+          "sha256": "2119975126d00ca6c5bf176ed673a2cafaa43d048d03bd06605aec8e8824bac7",
+          "gitBlobContentId": "25210574047a466012be9d6da06374c48fb7a310"
+        },
+        "docs/product/README.md": {
+          "sha256": "1d482528f1d1875b9c0db2d93c13be91ec19c1dfaf3d5728e69fbffb6e9be39a",
+          "gitBlobContentId": "b60c183f557eaec7011e7e1e771827399eb93972"
+        },
+        "harscode-state/org-01/rancang-002/privacy-approach-follow-up.md": {
+          "sha256": "9191a94f0c3a63a7d5fa2341329cd84f6bcdf361b2ea9b4c5c62ee988235a34d",
+          "gitBlobContentId": "5dafe8f231bbc26bd408405f5f099f25ea121666"
+        }
+      },
+      "earlierRecording": {
+        "decisionRevision": "PD-PRIV-01-r1",
+        "manifestSha256": "e5dbeae8e80a336b9fbb3d67bb30131d80d35b41993b8eab052357b020357407",
+        "fileRevisions": {
+          "docs/product/outcomes/org-01/privacy-decision.md": {
+            "sha256": "aa62f16af0effecf394a3cd4b8077716b7cb6864323ef8a0b7b064ae020bc746",
+            "gitBlobContentId": "ba4fcd84fe3fe02193674f450b9a5483e53dec86"
+          },
+          "docs/product/README.md": {
+            "sha256": "a649db5cb18b91b2cc623a93ecef50a9e7f882d8842b27565d026b901fcea7f3",
+            "gitBlobContentId": "9bcdefaabb1edc53c8fc87c5758791ea2cefcedb"
+          },
+          "harscode-state/org-01/rancang-002/privacy-approach-follow-up.md": {
+            "sha256": "954cef07072a931db56d53c4ee76775ea94a5c09679218a36727bf1462c26928",
+            "gitBlobContentId": "8144206084d427e6d3895fe37d9c965da6a5067e"
+          }
+        },
+        "intermediateBytesGitArchived": "NOT VERIFIED; lineage hashes only"
+      },
+      "intermediateBytesGitArchived": "NOT VERIFIED; lineage hashes only"
+    },
+    "intermediateBytesGitArchived": "NOT VERIFIED; lineage hashes only"
+  },
+  "priorSolutionBundle": {
+    "id": "ORG-01-rancang-002-r1",
+    "manifestSha256": "c5bab157fdb8d5dd4b4018490e635e2a2d772e1c8596ed2179d8a8370fde24f3",
+    "unchangedPayloadHashesVerified": 10,
+    "acceptance": "PENDING",
+    "independentReassessmentOfNewDecisions": "NOT RUN"
+  },
+  "executedDocumentationChecks": {
+    "localLinksWithExistingTargets": 28,
+    "brokenLinks": [],
+    "whitespaceAndGitDiffCheck": "PASSED",
+    "writeBoundary": "Only five scoped privacy-recording/notice documentation files",
+    "semanticReview": "Four approvals and supplied controller/contact/provider status recorded. Candidate basis remains subject to per-purpose validation; draft faithfully follows minimum data, deletion and retention decisions, and explicitly flags provider/location, request handling and final-text gaps. Original r1 producer/review bytes preserved."
+  },
+  "runtimeTests": "NOT RUN",
+  "selfHash": "Excluded; compute SHA-256 of this manifest for exact recording revision",
+  "operationalFacts": {
+    "controller": "Yayasan Kencleng Indonesia",
+    "privacyContact": "care@kencleng.dev",
+    "confirmedProviderChoice": [
+      "Google Login"
+    ],
+    "otherProviders": "NOT DETERMINED",
+    "providerLocationsAndRoles": "NOT DETERMINED",
+    "emailDeliveryAndRequestHandling": "NOT TESTED"
+  },
+  "noticeDraft": {
+    "path": "docs/product/outcomes/org-01/privacy-notice-draft.md",
+    "revision": "v0.1",
+    "standing": "DRAFT; text not yet approved/published; planned behavior not implemented evidence"
+  },
+  "externalReferenceReading": [
+    "https://jdih.komdigi.go.id/produk_hukum/view/id/832/t/undangundang%20nomor%2027%20tahun%202022",
+    "https://developers.google.com/identity/openid-connect/openid-connect"
+  ],
+  "notPerformed": [
+    "Runtime/security/browser/integration tests",
+    "Sending email or testing inbox delivery",
+    "Legal validation of applicability",
+    "Affected independent Security/Solution reassessment",
+    "Publishing the notice"
+  ]
+}

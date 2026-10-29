@@ -29,6 +29,8 @@ The exact original Human-approved Product Contract blob is `448a8082bcb9ac1c7e41
 
 ## Boundaries for consumers
 
+Keputusan privasi scoped ORG-01: [PD-PRIV-01 — pendekatan privasi dan lifecycle data](outcomes/org-01/privacy-decision.md). Prinsip data minimum, alur penghapusan konteks sederhana, retensi teknis/backup serta pemetaan kandidat dasar/arah pemberitahuan telah disetujui Human. Pengendali: Yayasan Kencleng Indonesia; kanal privasi: care@kencleng.dev. [Draf pemberitahuan](outcomes/org-01/privacy-notice-draft.md) menunggu rincian penyedia, validasi dasar dan review teks/kesiapan final. Gate penggunaan data orang nyata tetap ditahan; implementasi dan affected independent reassessment belum dilakukan.
+
 - Product Contract must be self-contained in behavior, authority, success, negative paths and acceptance; IDs are traceability metadata, not instructions to reconstruct upstream research.
 - Rancang revised vNext definition `47297c6f369dad4d4e4c4f90f0e81eb0310be7cf` has **FORMATION APPROVED / RESEARCH-ONLY** standing ([exact Human approval](https://github.com/anhsbolic/harscode-workspace/blob/04fd378cc1a4cab86c39368303f595b8b5a46ed9/engineering/spaces/feature-solution-design/formation-approval-2026-10-27.md)), including its consumer handoff boundary. This does not approve any specific ORG-01 solution bundle, downstream implementation, or Space invocation.
 - `I2/I3/I4`, technical constraints, current implementation/security evidence and Human-direct assignment remain separate. No Engineering or Space invocation is authorized here.

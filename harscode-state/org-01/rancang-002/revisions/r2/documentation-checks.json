@@ -1,0 +1,78 @@
+{
+  "standing": "PASSED scoped documentation checks; no runtime conformance claim",
+  "projectCommit": "35f8c0fc31f1f2f21bdac36d4c24d521541263f0",
+  "currentSourceHashesVerified": 34,
+  "privacyRecordingPayloadHashesVerified": 4,
+  "originalR1": {
+    "unchangedPayloadHashes": 9,
+    "navigation": "Original hash verified from Git35f8c0f; current owning navigation intentionally points current/r2",
+    "manifestSha256": "c5bab157fdb8d5dd4b4018490e635e2a2d772e1c8596ed2179d8a8370fde24f3"
+  },
+  "reviewedProducerAndSecurityHashes": {
+    "requirements.md": "5bf0175545fa7c6617759aeb020ed97a14c8fe722b4385745ddcab4645bf8da7",
+    "solution.md": "c284a9811f098127ea12873e08543e1a956f26a708f214fc134ef0275dc51acc",
+    "experience.md": "5546d4a6d670ae4e0dd07f7d895da2edc653fa3e62daeccc5274cb0b19db1e92",
+    "security-findings.md": "bc0e98ddae89b1c6dbdad13c214307b86b6dc57e3587ece74cba993fa6b8b571"
+  },
+  "markdownFilesChecked": 9,
+  "localLinksChecked": 110,
+  "brokenLinks": [],
+  "trailingWhitespace": [],
+  "technicalObligationIds": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12"
+  ],
+  "experienceObligationIds": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12"
+  ],
+  "trackedChanges": [
+    "docs/engineering/README.md",
+    "docs/product/README.md"
+  ],
+  "preexistingPrivacyFiles": [
+    "docs/product/outcomes/org-01/privacy-decision.md",
+    "docs/product/outcomes/org-01/privacy-notice-draft.md",
+    "harscode-state/org-01/rancang-002/privacy-approach-follow-up.md",
+    "harscode-state/org-01/rancang-002/privacy-approach-revisions.json"
+  ],
+  "actualR2UntrackedFiles": [
+    "harscode-state/org-01/rancang-002/current.md",
+    "harscode-state/org-01/rancang-002/revisions/r2/documentation-checks.json",
+    "harscode-state/org-01/rancang-002/revisions/r2/experience.md",
+    "harscode-state/org-01/rancang-002/revisions/r2/handoff.md",
+    "harscode-state/org-01/rancang-002/revisions/r2/output-revisions.json",
+    "harscode-state/org-01/rancang-002/revisions/r2/requirements.md",
+    "harscode-state/org-01/rancang-002/revisions/r2/security-findings.md",
+    "harscode-state/org-01/rancang-002/revisions/r2/solution-review.md",
+    "harscode-state/org-01/rancang-002/revisions/r2/solution.md",
+    "harscode-state/org-01/rancang-002/revisions/r2/source-revisions.json",
+    "harscode-state/org-01/rancang-002/revisions/r2/state.md"
+  ],
+  "writeBoundary": "Only current pointer, r2 output directory and authorized owning navigation added/changed; pre-existing privacy worktree bytes preserved",
+  "sameThreadResumption": "Observed hash recheck after connection interruption, not independent cold-resume proof",
+  "externalLinks": "NOT CHECKED by final local checks",
+  "runtimeTests": "NOT RUN",
+  "coldResumeProcessLossAndActualDownstreamDiscovery": "NOT RUN",
+  "implementation": "Python pathlib/hashlib/regex/subprocess source hashes, local target existence, O4 IDs, preserved r1/Git navigation, write-boundary inventory, git diff --check"
+}

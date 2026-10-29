@@ -1,0 +1,22 @@
+{
+  "bundleId": "ORG-01-rancang-002-r2",
+  "standing": "Documentation production COMPLETE; Human acceptance PENDING; PDEP-R2-01/real-data release HELD",
+  "projectCommit": "35f8c0fc31f1f2f21bdac36d4c24d521541263f0",
+  "spaceDefinitionCommit": "47297c6f369dad4d4e4c4f90f0e81eb0310be7cf",
+  "hashAlgorithm": "SHA-256",
+  "selfHash": "Excluded; compute SHA-256 of this manifest for exact bundle identity",
+  "originalR1ManifestSha256": "c5bab157fdb8d5dd4b4018490e635e2a2d772e1c8596ed2179d8a8370fde24f3",
+  "files": {
+    "harscode-state/org-01/rancang-002/revisions/r2/documentation-checks.json": "b8decf5cd71a1a71a63cf28fc426c21bdcf1f1eceef6d5f0566af7694aebd1a2",
+    "harscode-state/org-01/rancang-002/revisions/r2/experience.md": "5546d4a6d670ae4e0dd07f7d895da2edc653fa3e62daeccc5274cb0b19db1e92",
+    "harscode-state/org-01/rancang-002/revisions/r2/handoff.md": "79a143c73863f9915f42cf07cb3233a16b4414cf8f34991e926680d86845e2ba",
+    "harscode-state/org-01/rancang-002/revisions/r2/requirements.md": "5bf0175545fa7c6617759aeb020ed97a14c8fe722b4385745ddcab4645bf8da7",
+    "harscode-state/org-01/rancang-002/revisions/r2/security-findings.md": "bc0e98ddae89b1c6dbdad13c214307b86b6dc57e3587ece74cba993fa6b8b571",
+    "harscode-state/org-01/rancang-002/revisions/r2/solution-review.md": "3bc1892fe07b0cd9a9b939c6fa628bfbc1e3cdd443aba42f84a5c1d552e71005",
+    "harscode-state/org-01/rancang-002/revisions/r2/solution.md": "c284a9811f098127ea12873e08543e1a956f26a708f214fc134ef0275dc51acc",
+    "harscode-state/org-01/rancang-002/revisions/r2/source-revisions.json": "db7e24701f53534dfeee9c69549d6624acad9bb7b6e55e5b692b11cae58f7ca3",
+    "harscode-state/org-01/rancang-002/revisions/r2/state.md": "9bb07ecdb23115538dd0af9b635f3ff3fe9cd8f4def9c684bfed6f56123d85ce",
+    "harscode-state/org-01/rancang-002/current.md": "dd219e9cd6cdddb82ac5fa830c663cd181562cee389997eb8ca290085d118ee2",
+    "docs/engineering/README.md": "cf229cc6be12b224cfe68ae83b0194f86a34dc15fd9aed6dfee6acc61e9faf07"
+  }
+}
