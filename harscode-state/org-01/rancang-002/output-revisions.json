@@ -1,0 +1,20 @@
+{
+  "bundleId": "ORG-01-rancang-002-r1",
+  "standing": "Documentation production COMPLETE; Human acceptance PENDING; real-data lifecycle edge HELD",
+  "projectCommit": "d0d78fab26a976f9f48c6fc97a45c0adc5cec282",
+  "spaceDefinitionCommit": "47297c6f369dad4d4e4c4f90f0e81eb0310be7cf",
+  "hashAlgorithm": "SHA-256",
+  "selfHash": "Excluded to avoid self-reference; hash this manifest to identify exact bundle",
+  "files": {
+    "harscode-state/org-01/rancang-002/documentation-checks.json": "4aa524d5bef53469b88467ec857a629b9370897ea3c277992342a319e72b29d6",
+    "harscode-state/org-01/rancang-002/experience.md": "475683ebe5e94b83e0930ccdbc5c4f92a4c1368da17229c802fe2b6e2fad1604",
+    "harscode-state/org-01/rancang-002/handoff.md": "6d86771f0fb419d523ce29a532d7461118b23dcaa99241306c9b85bec07eab9b",
+    "harscode-state/org-01/rancang-002/requirements.md": "055eb247a004a724b130c79e6a07ce662e20f520bb9f44df11802037af8ff951",
+    "harscode-state/org-01/rancang-002/security-findings.md": "0b3ec3ecf0be352c54a54d58c1a1254307e7be3f4a0d51360646652b7b10fbce",
+    "harscode-state/org-01/rancang-002/solution-review.md": "8b4bc33ee2710f31463a0cf1fbb80288c6adcc97ec3c7a7fae27ed46c2d6d72e",
+    "harscode-state/org-01/rancang-002/solution.md": "058c4f00912ea41f882982109aa20b153a6ee983237655ccb3fc9bc04ee7945c",
+    "harscode-state/org-01/rancang-002/source-revisions.json": "394d0e8d86f9f3434ea796612bcb035fc17e53a85bd90dec966438bbc3edbeee",
+    "harscode-state/org-01/rancang-002/state.md": "e34a688bda8678bb573f49ea95df7a6855a6f26bfd705f4a770f80043f0e0f57",
+    "docs/engineering/README.md": "35bed4fc9aa356d106e652194e35f197b92d8453282b44bbe1799b579466290c"
+  }
+}
