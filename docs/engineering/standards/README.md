@@ -34,7 +34,7 @@ T01–T09 pada episode Engineering Standards ini telah **settled / persisted pad
 - **Product meaning dan kapan login diperlukan:** [Product Authority](../../product/README.md). Engineering Standards tidak menambahkan syarat Product yang belum disetujui.
 - **Product Design/UX reusable:** [Product Design Standards](../../design/README.md).
 - **Kontrak API spesifik:** [API tooling dan source contract](../../../api/README.md); baseline OpenAPI masih kosong sampai ada authorized delivery requirement.
-- **Feature-level Engineering output:** `docs/engineering/` (misalnya Rancang ORG-01) adalah scoped proposal/evidence. Keputusan Agent di sana tidak otomatis berlaku lintas-feature.
+- **Feature-level Engineering output dan Harscode state:** lokasi fisik working artifacts/assignment state mengikuti workspace-local `.harscode-local.yaml` (override `projects.kencleng.harscode_state_root`) dan exact destination yang disetujui untuk assignment terkait; `kencleng/harscode-state/` adalah lokasi yang direncanakan untuk pilot berikutnya, bukan izin write atau bukti bahwa direktori/config sudah tersedia. Lokasi penyimpanan tidak mengubah project authority: proposal Rancang tidak otomatis menjadi Engineering Standard, accepted handoff, atau canonical API.
 - **Executable code, configuration, dan current database state:** sumber evidence implementasi, bukan pengganti kebijakan atau Product authority. Hasil verifikasi harus dibedakan dari proposal.
 - **Agent instructions:** root serta stack-scoped `AGENTS.md` mengarahkan implementer ke dokumen ini; [scoped AGENTS](AGENTS.md) berlaku untuk penulis yang mengubah direktori standards ini.
 
