@@ -1,0 +1,877 @@
+{
+  "sourceChecks": [
+    {
+      "path": ".nvmrc",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "AGENTS.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "api/README.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "api/openapi/index.yaml",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "api/package-lock.json",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "api/package.json",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "backend/AGENTS.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "backend/cmd/server/main.go",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/design/README.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/design/asset-governance.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/design/brand-product-ui-brief.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/design/design-guidelines.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/design/patterns.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/design/product-design-principles.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/design/visual-references/selected-direction/README.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/engineering/standards/AGENTS.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/engineering/standards/README.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/engineering/standards/api-contract.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/engineering/standards/authorization.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/engineering/standards/backend.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/engineering/standards/database-data-model.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/engineering/standards/documentation-conventions.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/engineering/standards/frontend.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/engineering/standards/identity-authentication.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/engineering/standards/operational-reliability.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/engineering/standards/privacy-data-protection.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/engineering/standards/testing-verification.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/product/README.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/product/istilah.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/product/outcomes/org-01/approval.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/product/outcomes/org-01/privacy-decision.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/product/outcomes/org-01/privacy-notice-draft.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/product/outcomes/org-01/product-contract.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "docs/product/product-intent.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "frontend/AGENTS.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "frontend/app/page.tsx",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "frontend/package-lock.json",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "frontend/package.json",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/current.md",
+      "match": false,
+      "historicalNavigationMatch": true
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/experience.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/output-revisions.json",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/privacy-approach-revisions.json",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/requirements.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/documentation-checks.json",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/experience.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/handoff.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/output-revisions.json",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/requirements.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/security-findings.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/solution-review.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/solution.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/source-revisions.json",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/state.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/solution.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-state/org-01/rancang-002/source-revisions.json",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/contracts.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/coordination.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/formation-approval-2026-10-27.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/harness/runtime-binding.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/harness/rancang-pilot-posture-2026-10-27.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/agents/space-coordinator/agent.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/agents/space-coordinator/knowledge.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/agents/requirements-analyst/agent.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/agents/requirements-analyst/knowledge.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/agents/solution-architect/agent.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/agents/solution-architect/knowledge.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/agents/experience-specialist/agent.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/agents/experience-specialist/knowledge.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/agents/security-analyst/agent.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/agents/security-analyst/knowledge.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/agents/solution-reviewer/agent.md",
+      "match": true
+    },
+    {
+      "path": "harscode-workspace/engineering/spaces/feature-solution-design/agents/solution-reviewer/knowledge.md",
+      "match": true
+    },
+    {
+      "path": "frontend/node_modules/@redocly/openapi-core/package.json",
+      "match": true
+    },
+    {
+      "path": "frontend/node_modules/openapi-typescript/package.json",
+      "match": true
+    },
+    {
+      "path": "frontend/node_modules/typescript/package.json",
+      "match": true
+    }
+  ],
+  "sourceMatchCount": 74,
+  "historicalNavigationChecks": 1,
+  "historicalBundleChecks": [
+    {
+      "revision": "r1",
+      "path": "harscode-state/org-01/rancang-002/documentation-checks.json",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r1",
+      "path": "harscode-state/org-01/rancang-002/experience.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r1",
+      "path": "harscode-state/org-01/rancang-002/handoff.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r1",
+      "path": "harscode-state/org-01/rancang-002/requirements.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r1",
+      "path": "harscode-state/org-01/rancang-002/security-findings.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r1",
+      "path": "harscode-state/org-01/rancang-002/solution-review.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r1",
+      "path": "harscode-state/org-01/rancang-002/solution.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r1",
+      "path": "harscode-state/org-01/rancang-002/source-revisions.json",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r1",
+      "path": "harscode-state/org-01/rancang-002/state.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r1",
+      "path": "docs/engineering/README.md",
+      "match": false,
+      "historicalNavigationMatch": true
+    },
+    {
+      "revision": "r2",
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/documentation-checks.json",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r2",
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/experience.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r2",
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/handoff.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r2",
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/requirements.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r2",
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/security-findings.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r2",
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/solution-review.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r2",
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/solution.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r2",
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/source-revisions.json",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r2",
+      "path": "harscode-state/org-01/rancang-002/revisions/r2/state.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    },
+    {
+      "revision": "r2",
+      "path": "harscode-state/org-01/rancang-002/current.md",
+      "match": false,
+      "historicalNavigationMatch": true
+    },
+    {
+      "revision": "r2",
+      "path": "docs/engineering/README.md",
+      "match": true,
+      "historicalNavigationMatch": false
+    }
+  ],
+  "localLinks": [
+    {
+      "source": "consumer-fit.md",
+      "target": "source-revisions.json",
+      "exists": true
+    },
+    {
+      "source": "consumer-fit.md",
+      "target": "requirements.md",
+      "exists": true
+    },
+    {
+      "source": "consumer-fit.md",
+      "target": "openapi-handoff.yaml",
+      "exists": true
+    },
+    {
+      "source": "consumer-fit.md",
+      "target": "interface-decisions.md",
+      "exists": true
+    },
+    {
+      "source": "consumer-fit.md",
+      "target": "requirements.md",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "output-revisions.json",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "state.md",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "openapi-handoff.yaml",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "interface-decisions.md",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "interface-decisions.md#konsumsi-efektif-dan-rekonsiliasi-tepat",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "requirements.md",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "consumer-fit.md",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "interface-decisions.md#identity-conditional-proof-dan-precedence",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "interface-decisions.md#creation-receipt-dan-uncertainty",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "interface-decisions.md#confirmed-deletion-fencing-dan-erasure",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "consumer-fit.md",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "source-revisions.json",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "requirements.md",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "openapi-handoff.yaml",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "interface-decisions.md",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "consumer-fit.md",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "security-findings.md",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "solution-review.md",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "tooling-checks.json",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "example-checks.json",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "documentation-checks.json",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "check-contract.mjs",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "check-examples.py",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "check-documentation.py",
+      "exists": true
+    },
+    {
+      "source": "handoff.md",
+      "target": "../../current.md",
+      "exists": true
+    },
+    {
+      "source": "interface-decisions.md",
+      "target": "openapi-handoff.yaml",
+      "exists": true
+    },
+    {
+      "source": "interface-decisions.md",
+      "target": "source-revisions.json",
+      "exists": true
+    },
+    {
+      "source": "interface-decisions.md",
+      "target": "requirements.md",
+      "exists": true
+    },
+    {
+      "source": "requirements.md",
+      "target": "state.md",
+      "exists": true
+    },
+    {
+      "source": "requirements.md",
+      "target": "source-revisions.json",
+      "exists": true
+    },
+    {
+      "source": "requirements.md",
+      "target": "../../../../../docs/product/outcomes/org-01/product-contract.md",
+      "exists": true
+    },
+    {
+      "source": "requirements.md",
+      "target": "../../../../../docs/product/outcomes/org-01/approval.md",
+      "exists": true
+    },
+    {
+      "source": "requirements.md",
+      "target": "../../../../../docs/product/outcomes/org-01/privacy-decision.md",
+      "exists": true
+    },
+    {
+      "source": "requirements.md",
+      "target": "../../../../../docs/product/outcomes/org-01/privacy-notice-draft.md",
+      "exists": true
+    },
+    {
+      "source": "requirements.md",
+      "target": "../../../../../docs/engineering/standards/README.md",
+      "exists": true
+    },
+    {
+      "source": "requirements.md",
+      "target": "../../../../../docs/engineering/standards/api-contract.md",
+      "exists": true
+    },
+    {
+      "source": "requirements.md",
+      "target": "../../requirements.md",
+      "exists": true
+    },
+    {
+      "source": "requirements.md",
+      "target": "../r2/requirements.md",
+      "exists": true
+    },
+    {
+      "source": "requirements.md",
+      "target": "../../solution.md",
+      "exists": true
+    },
+    {
+      "source": "requirements.md",
+      "target": "../r2/solution.md",
+      "exists": true
+    },
+    {
+      "source": "security-findings.md",
+      "target": "requirements.md",
+      "exists": true
+    },
+    {
+      "source": "security-findings.md",
+      "target": "openapi-handoff.yaml",
+      "exists": true
+    },
+    {
+      "source": "security-findings.md",
+      "target": "interface-decisions.md",
+      "exists": true
+    },
+    {
+      "source": "security-findings.md",
+      "target": "consumer-fit.md",
+      "exists": true
+    },
+    {
+      "source": "solution-review.md",
+      "target": "requirements.md",
+      "exists": true
+    },
+    {
+      "source": "solution-review.md",
+      "target": "openapi-handoff.yaml",
+      "exists": true
+    },
+    {
+      "source": "solution-review.md",
+      "target": "interface-decisions.md",
+      "exists": true
+    },
+    {
+      "source": "solution-review.md",
+      "target": "consumer-fit.md",
+      "exists": true
+    },
+    {
+      "source": "solution-review.md",
+      "target": "security-findings.md",
+      "exists": true
+    },
+    {
+      "source": "solution-review.md",
+      "target": "handoff.md",
+      "exists": true
+    },
+    {
+      "source": "state.md",
+      "target": "source-revisions.json",
+      "exists": true
+    },
+    {
+      "source": "state.md",
+      "target": "handoff.md",
+      "exists": true
+    },
+    {
+      "source": "state.md",
+      "target": "output-revisions.json",
+      "exists": true
+    },
+    {
+      "source": "state.md",
+      "target": "source-revisions.json",
+      "exists": true
+    },
+    {
+      "source": "current.md",
+      "target": "revisions/r3/handoff.md",
+      "exists": true
+    },
+    {
+      "source": "current.md",
+      "target": "revisions/r3/state.md",
+      "exists": true
+    },
+    {
+      "source": "current.md",
+      "target": "revisions/r3/output-revisions.json",
+      "exists": true
+    },
+    {
+      "source": "current.md",
+      "target": "revisions/r2/handoff.md",
+      "exists": true
+    },
+    {
+      "source": "current.md",
+      "target": "revisions/r2/state.md",
+      "exists": true
+    },
+    {
+      "source": "current.md",
+      "target": "revisions/r2/output-revisions.json",
+      "exists": true
+    },
+    {
+      "source": "current.md",
+      "target": "../../../docs/product/outcomes/org-01/privacy-decision.md",
+      "exists": true
+    },
+    {
+      "source": "current.md",
+      "target": "../../../docs/product/outcomes/org-01/privacy-notice-draft.md",
+      "exists": true
+    },
+    {
+      "source": "current.md",
+      "target": "privacy-approach-follow-up.md",
+      "exists": true
+    },
+    {
+      "source": "current.md",
+      "target": "handoff.md",
+      "exists": true
+    },
+    {
+      "source": "current.md",
+      "target": "state.md",
+      "exists": true
+    },
+    {
+      "source": "current.md",
+      "target": "output-revisions.json",
+      "exists": true
+    }
+  ],
+  "localLinkCount": 71,
+  "localLinkFailures": [],
+  "changedPaths": [
+    "harscode-state/org-01/rancang-002/current.md",
+    "harscode-state/org-01/rancang-002/revisions/r3/check-contract.mjs",
+    "harscode-state/org-01/rancang-002/revisions/r3/check-documentation.py",
+    "harscode-state/org-01/rancang-002/revisions/r3/check-examples.py",
+    "harscode-state/org-01/rancang-002/revisions/r3/consumer-fit.md",
+    "harscode-state/org-01/rancang-002/revisions/r3/contract-dereferenced.json",
+    "harscode-state/org-01/rancang-002/revisions/r3/contract-parsed.json",
+    "harscode-state/org-01/rancang-002/revisions/r3/documentation-checks.json",
+    "harscode-state/org-01/rancang-002/revisions/r3/example-checks.json",
+    "harscode-state/org-01/rancang-002/revisions/r3/generated-api.d.ts",
+    "harscode-state/org-01/rancang-002/revisions/r3/generation-smoke.ts",
+    "harscode-state/org-01/rancang-002/revisions/r3/handoff.md",
+    "harscode-state/org-01/rancang-002/revisions/r3/interface-decisions.md",
+    "harscode-state/org-01/rancang-002/revisions/r3/openapi-handoff.yaml",
+    "harscode-state/org-01/rancang-002/revisions/r3/output-revisions.json",
+    "harscode-state/org-01/rancang-002/revisions/r3/requirements.md",
+    "harscode-state/org-01/rancang-002/revisions/r3/security-findings.md",
+    "harscode-state/org-01/rancang-002/revisions/r3/solution-review.md",
+    "harscode-state/org-01/rancang-002/revisions/r3/source-revisions.json",
+    "harscode-state/org-01/rancang-002/revisions/r3/state.md",
+    "harscode-state/org-01/rancang-002/revisions/r3/tooling-checks.json"
+  ],
+  "scopeCheck": true,
+  "limits": [
+    "Link existence only, no automatic semantic or section-anchor assurance.",
+    "Git/source checks document observed writes; sandbox is broader than authorized r3 scope.",
+    "No application/runtime/provider/legal/email/recovery checks."
+  ]
+}

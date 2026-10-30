@@ -1,0 +1,1305 @@
+{
+  "contractSha256": "741b227ca58fe2bccddf39e0c2b7ebfd54ce7fe07283045df3ba3073a63ea2eb",
+  "validator": "jsonschema Draft4 + OAS3.0 nullable conversion; dereferenced schemas; format checking enabled",
+  "checks": [
+    {
+      "case": "/paths//auth/google/attempts/post/responses/201/content/application/json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/responses/201/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/responses/400/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/responses/400/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/responses/401/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/responses/401/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/responses/403/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/responses/403/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/responses/429/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/responses/429/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/responses/503/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/responses/503/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/requestBody/content/application/json/normal",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/requestBody/content/application/json/deletionProof",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/requestBody/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/session/get/responses/200/content/application/json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/session/get/responses/200/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/session/get/responses/400/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/session/get/responses/400/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/session/get/responses/401/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/session/get/responses/401/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/session/get/responses/503/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/session/get/responses/503/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/refresh/post/responses/400/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/refresh/post/responses/400/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/refresh/post/responses/401/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/refresh/post/responses/401/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/refresh/post/responses/403/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/refresh/post/responses/403/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/refresh/post/responses/503/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/refresh/post/responses/503/content/application/problem+json/variant2",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/refresh/post/responses/503/content/application/problem+json/schema/oneOf/0/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/refresh/post/responses/503/content/application/problem+json/schema/oneOf/1/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/refresh/post/requestBody/content/application/json/valid",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/refresh/post/requestBody/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/logout/post/responses/400/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/logout/post/responses/400/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/logout/post/responses/401/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/logout/post/responses/401/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/logout/post/responses/403/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/logout/post/responses/403/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/logout/post/responses/503/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/logout/post/responses/503/content/application/problem+json/variant2",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/logout/post/responses/503/content/application/problem+json/schema/oneOf/0/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/logout/post/responses/503/content/application/problem+json/schema/oneOf/1/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/logout/post/requestBody/content/application/json/valid",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/logout/post/requestBody/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/200/content/application/json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/200/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/200/content/application/json/schema/properties/data/properties/organization/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/200/content/application/json/schema/properties/data/properties/owner/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/201/content/application/json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/201/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/201/content/application/json/schema/properties/data/properties/organization/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/201/content/application/json/schema/properties/data/properties/owner/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/400/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/400/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/401/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/401/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/403/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/403/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/409/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/409/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/410/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/410/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/422/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/422/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/429/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/429/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/503/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/503/content/application/problem+json/variant2",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/503/content/application/problem+json/variant3",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/503/content/application/problem+json/schema/oneOf/0/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/503/content/application/problem+json/schema/oneOf/1/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/responses/503/content/application/problem+json/schema/oneOf/2/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/requestBody/content/application/json/valid",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/requestBody/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/get/responses/200/content/application/json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/get/responses/200/content/application/json/empty",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/get/responses/200/content/application/json/paginated",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/get/responses/200/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/get/responses/200/content/application/json/schema/properties/data/items/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/get/responses/200/content/application/json/schema/properties/data/items/properties/organization/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/get/responses/200/content/application/json/schema/properties/data/items/properties/owner/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/get/responses/400/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/get/responses/400/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/get/responses/401/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/get/responses/401/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/get/responses/503/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/get/responses/503/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organization-creation-requests/{requestId}/get/responses/200/content/application/json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organization-creation-requests/{requestId}/get/responses/200/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organization-creation-requests/{requestId}/get/responses/200/content/application/json/schema/properties/data/properties/organization/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organization-creation-requests/{requestId}/get/responses/200/content/application/json/schema/properties/data/properties/owner/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organization-creation-requests/{requestId}/get/responses/400/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organization-creation-requests/{requestId}/get/responses/400/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organization-creation-requests/{requestId}/get/responses/401/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organization-creation-requests/{requestId}/get/responses/401/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organization-creation-requests/{requestId}/get/responses/404/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organization-creation-requests/{requestId}/get/responses/404/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organization-creation-requests/{requestId}/get/responses/503/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organization-creation-requests/{requestId}/get/responses/503/content/application/problem+json/variant2",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organization-creation-requests/{requestId}/get/responses/503/content/application/problem+json/schema/oneOf/0/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organization-creation-requests/{requestId}/get/responses/503/content/application/problem+json/schema/oneOf/1/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/200/content/application/json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/200/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/200/content/application/json/schema/properties/data/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/200/content/application/json/schema/properties/data/properties/organization/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/200/content/application/json/schema/properties/data/properties/owner/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/400/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/400/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/401/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/401/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/404/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/404/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/503/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/503/content/application/problem+json/variant2",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/503/content/application/problem+json/schema/oneOf/0/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/{organizationId}/get/responses/503/content/application/problem+json/schema/oneOf/1/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/201/content/application/json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/201/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/400/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/400/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/401/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/401/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/403/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/403/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/409/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/409/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/422/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/422/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/429/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/429/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/503/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/responses/503/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/requestBody/content/application/json/valid",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/requestBody/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/200/content/application/json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/200/content/application/json/noCopiesVerified",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/200/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/400/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/400/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/401/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/401/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/403/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/403/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/409/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/409/content/application/problem+json/variant2",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/409/content/application/problem+json/variant3",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/409/content/application/problem+json/schema/oneOf/0/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/409/content/application/problem+json/schema/oneOf/1/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/409/content/application/problem+json/schema/oneOf/2/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/422/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/422/content/application/problem+json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/503/content/application/problem+json/variant1",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/503/content/application/problem+json/variant2",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/503/content/application/problem+json/variant3",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/503/content/application/problem+json/schema/oneOf/0/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/503/content/application/problem+json/schema/oneOf/1/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/responses/503/content/application/problem+json/schema/oneOf/2/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/requestBody/content/application/json/valid",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/requestBody/content/application/json/schema/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/Empty/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/GoogleAttempt/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/Organization/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/Owner/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/OrganizationPair/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/OrganizationPair/properties/organization/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/OrganizationPair/properties/owner/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/OrganizationResponse/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/OrganizationResponse/properties/data/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/OrganizationResponse/properties/data/properties/organization/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/OrganizationResponse/properties/data/properties/owner/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/CreationResponse/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/CreationResponse/properties/data/properties/organization/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/CreationResponse/properties/data/properties/owner/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/OrganizationList/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/OrganizationList/properties/data/items/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/OrganizationList/properties/data/items/properties/organization/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/OrganizationList/properties/data/items/properties/owner/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/SessionResponse/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/AttemptResponse/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/CreateOrganization/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/DeletionPreviewResponse/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/DeleteAccount/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/DeletionResponse/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemInvalidRequest/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemUnauthenticated/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemForbidden/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemResourceUnavailable/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemResultNotObserved/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemIdempotencyMismatch/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemDeletionProofRequired/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemDeletionScopeChanged/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemDeletionPreviewInvalid/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemRequestWindowExpired/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemValidation/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemManualReviewRequired/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemRateLimited/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemUnavailable/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemResultUnavailable/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemRequestBusy/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemResultUnknown/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/components/schemas/ProblemDeletionPending/schema-example",
+      "expected": "valid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/requestBody/content/application/json/reject-unknown-field",
+      "expected": "invalid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/requestBody/content/application/json/reject-unknown-field",
+      "expected": "invalid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/google/attempts/post/requestBody/content/application/json/reject-null-purpose",
+      "expected": "invalid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/refresh/post/requestBody/content/application/json/reject-unknown-field",
+      "expected": "invalid",
+      "passed": true
+    },
+    {
+      "case": "/paths//auth/logout/post/requestBody/content/application/json/reject-unknown-field",
+      "expected": "invalid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/requestBody/content/application/json/reject-unknown-field",
+      "expected": "invalid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/requestBody/content/application/json/reject-missing-name",
+      "expected": "invalid",
+      "passed": true
+    },
+    {
+      "case": "/paths//organizations/post/requestBody/content/application/json/reject-null-name",
+      "expected": "invalid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletion-previews/post/requestBody/content/application/json/reject-unknown-field",
+      "expected": "invalid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/requestBody/content/application/json/reject-unknown-field",
+      "expected": "invalid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/requestBody/content/application/json/reject-missing-previewId",
+      "expected": "invalid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/requestBody/content/application/json/reject-missing-closeOrganizations",
+      "expected": "invalid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/requestBody/content/application/json/reject-null-previewId",
+      "expected": "invalid",
+      "passed": true
+    },
+    {
+      "case": "/paths//account-deletions/post/requestBody/content/application/json/reject-null-closeOrganizations",
+      "expected": "invalid",
+      "passed": true
+    }
+  ],
+  "failures": [],
+  "requestExampleCount": 7,
+  "operationCoverage": [
+    {
+      "operation": "POST /auth/google/attempts",
+      "operationId": "createGoogleAttempt",
+      "security": [
+        {},
+        {
+          "AccessCookie": []
+        }
+      ],
+      "statuses": [
+        "201",
+        "400",
+        "401",
+        "403",
+        "429",
+        "503"
+      ],
+      "bodyRequired": true
+    },
+    {
+      "operation": "GET /auth/google/callback",
+      "operationId": "completeGoogleAttempt",
+      "security": [
+        {
+          "AttemptCookie": []
+        }
+      ],
+      "statuses": [
+        "303"
+      ],
+      "bodyRequired": false
+    },
+    {
+      "operation": "GET /auth/session",
+      "operationId": "getSession",
+      "security": [
+        {
+          "AccessCookie": []
+        },
+        {
+          "RefreshCookie": []
+        }
+      ],
+      "statuses": [
+        "200",
+        "400",
+        "401",
+        "503"
+      ],
+      "bodyRequired": false
+    },
+    {
+      "operation": "POST /auth/refresh",
+      "operationId": "refreshSession",
+      "security": [
+        {
+          "RefreshCookie": []
+        }
+      ],
+      "statuses": [
+        "204",
+        "400",
+        "401",
+        "403",
+        "503"
+      ],
+      "bodyRequired": true
+    },
+    {
+      "operation": "POST /auth/logout",
+      "operationId": "logoutSession",
+      "security": [
+        {
+          "AccessCookie": []
+        },
+        {
+          "RefreshCookie": []
+        },
+        {}
+      ],
+      "statuses": [
+        "204",
+        "400",
+        "401",
+        "403",
+        "503"
+      ],
+      "bodyRequired": true
+    },
+    {
+      "operation": "POST /organizations",
+      "operationId": "createOrganization",
+      "security": [
+        {
+          "AccessCookie": []
+        }
+      ],
+      "statuses": [
+        "200",
+        "201",
+        "400",
+        "401",
+        "403",
+        "409",
+        "410",
+        "422",
+        "429",
+        "503"
+      ],
+      "bodyRequired": true
+    },
+    {
+      "operation": "GET /organizations",
+      "operationId": "listOrganizations",
+      "security": [
+        {
+          "AccessCookie": []
+        }
+      ],
+      "statuses": [
+        "200",
+        "400",
+        "401",
+        "503"
+      ],
+      "bodyRequired": false
+    },
+    {
+      "operation": "GET /organization-creation-requests/{requestId}",
+      "operationId": "getOrganizationCreationResult",
+      "security": [
+        {
+          "AccessCookie": []
+        }
+      ],
+      "statuses": [
+        "200",
+        "400",
+        "401",
+        "404",
+        "503"
+      ],
+      "bodyRequired": false
+    },
+    {
+      "operation": "GET /organizations/{organizationId}",
+      "operationId": "getOrganization",
+      "security": [
+        {
+          "AccessCookie": []
+        }
+      ],
+      "statuses": [
+        "200",
+        "400",
+        "401",
+        "404",
+        "503"
+      ],
+      "bodyRequired": false
+    },
+    {
+      "operation": "POST /account-deletion-previews",
+      "operationId": "createAccountDeletionPreview",
+      "security": [
+        {
+          "AccessCookie": []
+        }
+      ],
+      "statuses": [
+        "201",
+        "400",
+        "401",
+        "403",
+        "409",
+        "422",
+        "429",
+        "503"
+      ],
+      "bodyRequired": true
+    },
+    {
+      "operation": "POST /account-deletions",
+      "operationId": "deleteAccount",
+      "security": [
+        {
+          "AccessCookie": []
+        }
+      ],
+      "statuses": [
+        "200",
+        "400",
+        "401",
+        "403",
+        "409",
+        "422",
+        "503"
+      ],
+      "bodyRequired": true
+    }
+  ],
+  "additionalChecks": "Required no-store headers on every branch; mandatory cookie headers; no-body204/303; every error variant required discriminator/title/status and HTTP/status equality.",
+  "limits": [
+    "No runtime behavior asserted. Conditional auth, canonical Unicode normalization, transport/header/cookie attributes, timing, atomicity, journal/restore require normative conformance cases.",
+    "OAS3.0 is not full JSON Schema; Redocly separately checks OpenAPI document structure. These checks validate instances under the explicitly documented schema conversion."
+  ]
+}

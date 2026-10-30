@@ -1,0 +1,81 @@
+{
+  "contractSha256": "741b227ca58fe2bccddf39e0c2b7ebfd54ce7fe07283045df3ba3073a63ea2eb",
+  "node": "v24.22.1",
+  "versions": {
+    "redocly": "1.34.19",
+    "openapiTypescript": "7.13.0",
+    "typescript": "5.9.3"
+  },
+  "oasVersion": "3.0.3",
+  "refCount": 79,
+  "externalRefCount": 0,
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/auth/google/attempts",
+      "operationId": "createGoogleAttempt"
+    },
+    {
+      "method": "GET",
+      "path": "/auth/google/callback",
+      "operationId": "completeGoogleAttempt"
+    },
+    {
+      "method": "GET",
+      "path": "/auth/session",
+      "operationId": "getSession"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/refresh",
+      "operationId": "refreshSession"
+    },
+    {
+      "method": "POST",
+      "path": "/auth/logout",
+      "operationId": "logoutSession"
+    },
+    {
+      "method": "POST",
+      "path": "/organizations",
+      "operationId": "createOrganization"
+    },
+    {
+      "method": "GET",
+      "path": "/organizations",
+      "operationId": "listOrganizations"
+    },
+    {
+      "method": "GET",
+      "path": "/organization-creation-requests/{requestId}",
+      "operationId": "getOrganizationCreationResult"
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/{organizationId}",
+      "operationId": "getOrganization"
+    },
+    {
+      "method": "POST",
+      "path": "/account-deletion-previews",
+      "operationId": "createAccountDeletionPreview"
+    },
+    {
+      "method": "POST",
+      "path": "/account-deletions",
+      "operationId": "deleteAccount"
+    }
+  ],
+  "lint": [],
+  "bundleProblems": [],
+  "limitations": [
+    "Static documentation/tooling checks only; no backend, browser, service, OAuth, DB, journal or restore conformance executed.",
+    "Installed Redocly core1.34.19 used directly; canonical api tooling2.47.0 is not installed and was not run."
+  ],
+  "typescriptGeneration": {
+    "operationCount": 11,
+    "typedExamples": 77,
+    "diagnostics": [],
+    "status": "PASS"
+  }
+}

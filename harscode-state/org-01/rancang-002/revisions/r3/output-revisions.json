@@ -1,0 +1,40 @@
+{
+  "bundleId": "ORG-01-rancang-002-r3",
+  "standing": "Documentation production COMPLETE; Human acceptance PENDING; PDEP-R2-01 and real-data/public release HELD",
+  "projectCommit": "4db1612281a311e188722af984efb163783435b1",
+  "spaceDefinitionCommit": "47297c6f369dad4d4e4c4f90f0e81eb0310be7cf",
+  "hashAlgorithm": "SHA-256",
+  "selfHash": "Excluded; compute SHA-256 of manifest for exact bundle identity",
+  "historicalManifestSha256": {
+    "r1": "c5bab157fdb8d5dd4b4018490e635e2a2d772e1c8596ed2179d8a8370fde24f3",
+    "r2": "2ebbe7e4fa817b2f614dd07b54e7fbb98affd5c6f517058e25a5c661e8d61fd8"
+  },
+  "contract": {
+    "path": "harscode-state/org-01/rancang-002/revisions/r3/openapi-handoff.yaml",
+    "sha256": "741b227ca58fe2bccddf39e0c2b7ebfd54ce7fe07283045df3ba3073a63ea2eb",
+    "normativeCompanionSha256": "5491a5d36058d79106cb39a88cfcd6163063c528ca9007e37ab362117b5f80eb"
+  },
+  "derivedEvidence": "contract-parsed.json, contract-dereferenced.json and generated-api.d.ts/generation-smoke.ts are generated verification views, not editable contract authorities. Check reports bind contract SHA.",
+  "files": {
+    "harscode-state/org-01/rancang-002/revisions/r3/check-contract.mjs": "34568c28427b15e749329eee0da005cc64e6acb6f1e2badb15335347d98232b7",
+    "harscode-state/org-01/rancang-002/revisions/r3/check-documentation.py": "5fcda080eace5578fef56944da5c332efd8975636cfa527a968eff54af1c5719",
+    "harscode-state/org-01/rancang-002/revisions/r3/check-examples.py": "72b8fea8e8b6e28b6da0d2a2fa1a5e44f0387190b044bd028234f6a4630fccd2",
+    "harscode-state/org-01/rancang-002/revisions/r3/consumer-fit.md": "98351060e8bdaa40ca3e5153617f6f2e88f952c3114e565cdd241eb387156ca8",
+    "harscode-state/org-01/rancang-002/revisions/r3/contract-dereferenced.json": "3b16aced78b2ec7c751515fdd473707cc0d0b27257675330ee6a4392cf990b36",
+    "harscode-state/org-01/rancang-002/revisions/r3/contract-parsed.json": "5397eff7292abe15fc262254968d5acbec7d57558070faca0dc8cb28651d8d1e",
+    "harscode-state/org-01/rancang-002/revisions/r3/documentation-checks.json": "734262d2bbd0b75186755af3caae49d571b7159f95f054f3e5d3a693ddac45b6",
+    "harscode-state/org-01/rancang-002/revisions/r3/example-checks.json": "ffc99d3f174daf71a3c4ad6fcbcdb7e8090fb9c8ceb6044cdad77d83cdf8ae74",
+    "harscode-state/org-01/rancang-002/revisions/r3/generated-api.d.ts": "29ab9cc4a3c8dd96ceb78852abfd0e9a96f4b8abd8828b3981ac7caf1ceda268",
+    "harscode-state/org-01/rancang-002/revisions/r3/generation-smoke.ts": "00a15aec27b0abc8616b75027842f0de8e8995cfc32686be270d53b9bfb611b7",
+    "harscode-state/org-01/rancang-002/revisions/r3/handoff.md": "865012f890347d75a40828fd2fa7f65c34ac9ba1b92fb24d69ba964beacb169d",
+    "harscode-state/org-01/rancang-002/revisions/r3/interface-decisions.md": "5491a5d36058d79106cb39a88cfcd6163063c528ca9007e37ab362117b5f80eb",
+    "harscode-state/org-01/rancang-002/revisions/r3/openapi-handoff.yaml": "741b227ca58fe2bccddf39e0c2b7ebfd54ce7fe07283045df3ba3073a63ea2eb",
+    "harscode-state/org-01/rancang-002/revisions/r3/requirements.md": "97cae3165ca3502b2d0f711b977063bd52286fd64c7e425ffa7350eb932d56d5",
+    "harscode-state/org-01/rancang-002/revisions/r3/security-findings.md": "a1816fb5822ee3c173cc2227341b051e614ee2d4e0420f27fd6a300e22f1c991",
+    "harscode-state/org-01/rancang-002/revisions/r3/solution-review.md": "c5a9cebea39cfc48985a7ed2f44be45e6a7e1495583d9ea26e8861cff3b0910a",
+    "harscode-state/org-01/rancang-002/revisions/r3/source-revisions.json": "cbb79e36d6356b5007e946cce85533b33fa870c68cd92c11f056cc462ff579ab",
+    "harscode-state/org-01/rancang-002/revisions/r3/state.md": "ce0d9fa1eb1b4fe6f327c7d01f3ec0f9bb8a77c7ee343cbba79dd903b06c3b4a",
+    "harscode-state/org-01/rancang-002/revisions/r3/tooling-checks.json": "3f1c10d6bed947f3004b5defd3f7feb96b33b3535dfb686e89f9daee6cc34788",
+    "harscode-state/org-01/rancang-002/current.md": "0ecb2169526f73cf8e259edc8dda49dc6dbb55f84da0abb493328f17fc441044"
+  }
+}
