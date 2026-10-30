@@ -126,5 +126,7 @@
     "Legal validation of applicability",
     "Affected independent Security/Solution reassessment",
     "Publishing the notice"
-  ]
+  ],
+  "recordedFilesRootCommit": "6ba8ebcf1a41373ba9ddea441a3659a591c07cb5",
+  "recordedFilesResolution": "The files map records original owner-decision/follow-up checkpoint bytes resolved at immutable recordedFilesRootCommit. Packaging only annotates historical standing and repairs the old r1 manifest link in the current follow-up. Current file hashes are in root output-revisions.json; no Product decision changed."
 }

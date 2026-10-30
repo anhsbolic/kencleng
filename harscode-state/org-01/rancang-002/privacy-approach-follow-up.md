@@ -1,3 +1,5 @@
+> Catatan packaging: ini project-owned checkpoint keputusan/follow-up 29 Oktober2026, dipertahankan sebagai rekaman owner. Pernyataan belum direview/belum diintegrasikan merujuk saat pencatatan tersebut; standing Rancang sekarang mengikuti [handoff](handoff.md) dan [state](state.md), dengan exact original r4 sudah diterima Human. Keputusan privasi dan remaining legal/provider/request/restore gates tidak diubah.
+
 # ORG-01 / rancang-002 — Tindak lanjut persetujuan pendekatan privasi
 
 **Status: pencatatan keputusan owner dan draf pemberitahuan selesai; prinsip, alur konteks sederhana, retensi serta pemetaan kandidat dasar/arah pemberitahuan approved / validasi dan teks final OPEN; real-person data edge HELD.** Catatan Koordinator, 29 Oktober 2026. Ini checkpoint tambahan sesudah bundle `ORG-01-rancang-002-r1`, bukan revisi producer atau independent review baru.
@@ -19,7 +21,7 @@ Owning decision: [PD-PRIV-01-r4](../../../docs/product/outcomes/org-01/privacy-d
 ## Perubahan baseline dan standing bundle sebelumnya
 
 - Saat pencatatan prinsip awal, repository ditemukan bersih pada `35f8c0fc31f1f2f21bdac36d4c24d521541263f0`, branch `pilot/station5-c1-space-only`. Selisih dari baseline desain `d0d78fab26a976f9f48c6fc97a45c0adc5cec282` hanya menambahkan rancang-002-r1 dan tautan Engineering. Pada pencatatan r2, HEAD tetap sama; hanya empat file pencatatan privasi dari tindak lanjut sebelumnya yang modified/untracked. Tidak ada source drift pada Product Contract/approval, Design atau Engineering Standards yang dipakai desain.
-- [Manifest r1](output-revisions.json) dan seluruh sepuluh hash payload/navigation-nya diverifikasi kembali. Bundle r1 tetap tersedia sebagai exact checkpoint yang semula dinilai; file r1, state/handoff, findings dan manifest tidak ditulis ulang untuk memberi kesan review mencakup keputusan baru ini.
+- [Manifest r1](https://github.com/anhsbolic/kencleng/blob/6ba8ebcf1a41373ba9ddea441a3659a591c07cb5/harscode-state/org-01/rancang-002/output-revisions.json) dan seluruh sepuluh hash payload/navigation-nya diverifikasi kembali. Bundle r1 tetap tersedia sebagai exact checkpoint yang semula dinilai; file r1, state/handoff, findings dan manifest tidak ditulis ulang untuk memberi kesan review mencakup keputusan baru ini.
 - Independent Security dan Solution Review sebelumnya menilai r1. **Keputusan Product baru ini belum mendapat affected-edge reassessment independen.** Tidak ada klaim review atau runtime PASS baru.
 
 ## Dampak dan bagian yang tetap ditahan

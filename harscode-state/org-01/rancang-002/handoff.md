@@ -1,72 +1,35 @@
-# ORG-01 / rancang-002 — Engineering Solution Handoff
+# ORG-01 / rancang-002 — Engineering Solution Handoff final
 
-**Produksi dokumentasi COMPLETE — bundle `ORG-01-rancang-002-r1`; Human acceptance PENDING.** Pemilik assembly dan standing: Koordinator Rancang. Exact final file revisions dipin pada [output-revisions.json](output-revisions.json); artifact tetap proposal untuk pertimbangan Human, dengan external held edges di bawah.
+**Satu set dokumen efektif di root assignment. Exact original r4 sudah HUMAN ACCEPTED; identitas/hash packaging final dicatat terpisah.** [State/acceptance](state.md), [source provenance](source-revisions.json) dan [packaging manifest](output-revisions.json) mengikat scope. Tidak ada canonical adoption, implementasi atau commit/push dalam pekerjaan ini.
 
-## Ringkasan keputusan
+## Dokumen efektif
 
-Outcome approved adalah pembentukan organisasi bersama hubungan `Owner` internal pertama yang teratribusi, dengan pemahaman sebelum efek, pemeriksaan kembali setelah berhasil, dan penyampaian hasil negatif/unknown secara jujur. Ini tidak memberi status legal verification, approval Reviewer, publikasi atau kelayakan donasi.
-
-Pilihan utama berada pada [solution.md](solution.md), bagian **O1 — Keputusan bersama dan batas** dan seluruh bagian O2; kontrak pengalaman berada pada [experience.md](experience.md):
-
-1. Google login dilakukan eksplisit sebelum field nama, dilanjutkan review konteks/akun dan submit eksplisit. Experience dan Architect memilih ini setelah membandingkan popup/draft preservation: biaya login lebih dini diterima untuk mengurangi state lintas-window dan penyimpanan nama sebelum login. Login sendiri tidak membentuk organisasi.
-2. Satu transaksi PostgreSQL membentuk organisasi, relasi initial Owner melalui `first_owner_account_id`, dan account-bound creation receipt. Model ini cukup untuk initial Owner scoped; perpindahan/multi-Owner/full RBAC memerlukan desain baru saat diotorisasi. Nama tidak unique dan tidak menjadi bukti identitas/legal.
-3. Same-key replay dan lookup menjaga hasil unknown agar tidak menjadi sukses palsu atau otomatis menciptakan konteks baru. UUIDv7, bounded new-effect window 24 jam dan penolakan expired absent key mencegah receipt cleanup membuka ulang efek lama. Ini pilihan teknis retry; bukan kebijakan retensi bisnis.
-4. Bounded own-org discovery/detail memberi pemeriksaan keadaan terkini setelah toast atau browser marker hilang. Receipt membuktikan event pembentukan, sementara current reads memeriksa hubungan sekarang. Nama serupa tidak membuktikan bahwa suatu unknown attempt committed.
-5. Identity/session prerequisite mengikuti T02, dengan trusted internal account, JWT HttpOnly, rotating refresh dan backend effective authorization. Data diperkecil menjadi kebutuhan atribusi/konteks; tidak menyimpan email/profil Google. Parallel refresh dapat berakhir pada pencabutan session dan login ulang sebagai trade-off fail-safe; seamless recovery tidak dijanjikan.
-
-Source-level review dan planned verification belum membuktikan aplikasi bekerja. **PD-PRIV-01 masih keputusan Product/privacy owner** untuk retensi/penghapusan/basis pemrosesan data nyata dan backup. Rincian serta alternatif ada pada solution, bagian **PD-PRIV-01 — precise owner edge, not an invented lifecycle rule**. Dampaknya menahan real-person persistence release serta lifecycle/cleanup readiness; tidak menambah kebijakan privasi melalui output Engineering. Tidak ada perubahan standar yang diusulkan.
-
-## Identitas, sumber dan standing
-
-- Assignment/otorisasi/runtime: [state](state.md).
-- Kencleng baseline `d0d78fab26a976f9f48c6fc97a45c0adc5cec282`, branch `pilot/station5-c1-space-only`.
-- [Product Contract](../../../docs/product/outcomes/org-01/product-contract.md), blob `da19d8e7cdb9baac8cf4af1c5e6b61763607013e`; [approval](../../../docs/product/outcomes/org-01/approval.md).
-- [Engineering Standards](../../../docs/engineering/standards/README.md), [Design authority](../../../docs/design/README.md), [exact source revisions](source-revisions.json).
-- Rancang formed definition `47297c6f369dad4d4e4c4f90f0e81eb0310be7cf` pada repo Harscode; formation approval terpisah dari invocation, runtime verification dan acceptance bundle ini.
-
-## Consumer entrypoints
-
-| Consumer diketahui | Owning sections yang harus dibaca saat tersedia | Project-bound dependency dan next permitted action |
-| --- | --- | --- |
-| Pemilik implementasi backend | [X1](requirements.md), [solution](solution.md) bagian O1, O2 identity/permission/data/transaction/API dan O4 TECH; [experience](experience.md) tabel intent dan state; [Security](security-findings.md) dan [Solution Review](solution-review.md) | Root/backend AGENTS, T01–T08 dan baseline source telah diperiksa sebagai design constraints. Fit **CONDITIONAL**: canonical OpenAPI/SQL belum diadopsi, protected auth/session/authz/key implementation belum diotorisasi, PD-PRIV-01 dan deployment prerequisites tetap terbuka. Next permitted action: inspeksi/assessment proposal ini; tidak ada izin menulis implementasi dari handoff. |
-| Pemilik implementasi frontend | [X1](requirements.md), [experience](experience.md) bagian kontrak intent/state, auth/reload/accessibility dan EXP01–08; [solution](solution.md) API/result certainty, current reads dan TECH02/04/05/06/07; Design originals dan independent findings | Frontend AGENTS, state ownership, Design dan T02/T04/T06/T07 diperiksa sebagai design constraints. Fit **CONDITIONAL**: typed active OpenAPI belum ada, cookie integration dan rendered/accessibility/FE↔BE evidence NOT RUN. Next permitted action: inspeksi kebutuhan komponen/alur terhadap proposal; canonical contract/implementation memerlukan acceptance dan otorisasi terpisah. |
-| Pemilik verifikasi | [X1 coverage](requirements.md), [TECH01–09](solution.md), [EXP01–08](experience.md), seluruh independent findings | T07 dan sumber consumer diperiksa; 17 O4 punya producer tunggal dan intended downstream verifier. Fit **CONDITIONAL** terhadap actual implemented contract/environment yang belum tersedia. Next permitted action: menilai kecukupan kewajiban yang sudah ditulis; aplikasi/DB/browser/services tidak dijalankan atau diotorisasi oleh assignment ini. |
-
-**Generic compatibility:** NOT APPLICABLE untuk tiga pemilik langsung di atas karena tidak ada declared reusable Space Input Contract mereka yang diidentifikasi. **Project-bound compatibility:** selalu diperiksa, berdasar artifact/revisi asli di atas; design constraints checked, consumer adoption/implementation fit CONDITIONAL sebagaimana tabel. Pemeriksaan ini tidak merupakan executed receiver acceptance. Future/unknown consumer fit NOT CHECKED. Reviewer navigation discovery adalah observer evidence; real downstream F-01/cold-resume probe tetap NOT RUN.
-
-## Index producer dan review
-
-| Payload / owner | Revisi dan standing |
+| Concern / accountability | Dokumen dalam folder ini |
 | --- | --- |
-| X1 / Requirements Analyst `/root/requirements` | [requirements.md](requirements.md); SHA-256 `055eb247a004a724b130c79e6a07ce662e20f520bb9f44df11802037af8ff951`; 4 SC / 8 REQ / 9 AC terpetakan |
-| O1/O2 dan O4 TECH / Architect `/root/architect` | [solution.md](solution.md); reviewed SHA-256 `058c4f00912ea41f882982109aa20b153a6ee983237655ccb3fc9bc04ee7945c` |
-| O3 dan O4 EXP / Experience `/root/experience` | [experience.md](experience.md); SHA-256 `475683ebe5e94b83e0930ccdbc5c4f92a4c1368da17229c802fe2b6e2fad1604`; current-state/retry/auth sudah direkonsiliasi |
-| Security Findings / `/root/security` | [security-findings.md](security-findings.md), SHA-256 `0b3ec3ecf0be352c54a54d58c1a1254307e7be3f4a0d51360646652b7b10fbce`; independent bounded design assessment selesai |
-| Independent Solution Review / `/root/reviewer` | [solution-review.md](solution-review.md), verdict **ELIGIBLE** untuk bounded design completion/Human consideration; exact report revision mengikuti output manifest |
+| X1 / Requirements Analyst | [requirements.md](requirements.md): complete creation/constraints/negative/privacy/handoff obligations, tanpa carry-forward assembly lintas versi |
+| O1/O2/O4 TECH / Architect | [interface-decisions.md](interface-decisions.md): ownership/data/auth/concurrency/creation/retry/deletion/journal/retention/restore, TECH01–12 |
+| Exact machine interface | [openapi-handoff.yaml](openapi-handoff.yaml): OpenAPI3.0.3,11ops,18fixedUUID Problem Types; bytes identik accepted r4 |
+| O3/O4 EXP / Experience | [experience.md](experience.md): complete actor/consumer/lifecycle/accessibility/discriminator joins, EXP01–12 |
+| Original independent assurance | [security-findings.md](security-findings.md), [solution-review.md](solution-review.md): original r4 reports verbatim dengan explicit packaging/acceptance wrapper |
+| Executed evidence dan current sanity | [verification-summary.md](verification-summary.md) |
+| Project-owned records | [privacy-approach-follow-up.md](privacy-approach-follow-up.md), [privacy-approach-revisions.json](privacy-approach-revisions.json) |
 
-Koordinator mengonfirmasi Architect sebagai producer seluruh TECH01–09 dan Experience sebagai producer EXP01–08. Intended verifier pada O4 bukan dispatch/otorisasi tes. Temuan material harus dikoreksi producer dan dinilai ulang oleh pemilik review; Koordinator tidak menulis ulang findings.
+Accepted r4 menyelesaikan API-R3-01 MEDIUM melalui fixed UUID URNs di registered namespace. Exact mapping/allocation/compatibility tetap di companion. Consumer memakai current literal types, bukan title/status/UUID-fragment parsing. HTTP statuses, error meanings,11operations dan seluruh settled mechanisms tidak berubah. Tidak ada endpoint/trust-boundary/Product decision baru dari packaging.
 
-Disposition Security: **SEC01 ADDRESSED AT DESIGN LEVEL** setelah Architect memperjelas CSRF nonce/HMAC derivation dan Security menilai ulang actual bytes; runtime closure tetap NOT VERIFIED. **SEC02 OPEN / AFFECTED EDGE HELD**: PD-PRIV-01 tetap keputusan owner untuk real-person persistence/lifecycle release, bukan waiver. Security menyatakan tidak ada material safeguard defect yang menghalangi proposal dokumentasi scoped dengan dependency tersebut tetap eksplisit. Original findings tetap dimiliki Security dan tidak digantikan ringkasan ini.
+## Exact original acceptance versus packaging
 
-Independent Solution Reviewer memeriksa source fidelity dua arah, trade-off Experience/Engineering, 17 O4, actual Security findings/disposition dan consumer constraints, lalu menilai **tidak ada material producer blocker** untuk scoped documentation completion. PD-PRIV-01 dinilai external release/lifecycle gate yang telah diidentifikasi cukup konkret, sehingga tetap OPEN dan HELD tanpa menambah authority. Final administrative status/reference/manifest changes diizinkan report; perubahan mekanisme, source authority, gate atau consumer claim membuka ulang affected review.
+Human menyatakan “Human acceptance atas exact r4 sudah aku berikan.” Exact accepted original adalah manifest SHA256 **`7e0d408f2e438c79149fd3c00e65e25fb4c62a5539c11e379c979ee12e6cd0ba`** pada [immutable Git6ba8ebc](https://github.com/anhsbolic/kencleng/blob/6ba8ebcf1a41373ba9ddea441a3659a591c07cb5/harscode-state/org-01/rancang-002/revisions/r4/output-revisions.json). Original/current API SHA256 **`a2d21ee3ca4ea93c7e691a53255ab825b784da00f45baeeb88115e76564df9aa`** identik.
 
-## Evidence dan batas runtime
+Pemindahan/header/navigation, complete X1/O3 dan manifest baru mengubah packaging hashes. Original acceptance tidak dilabeli ulang seolah mengikat hash yang sama, dan tidak digunakan untuk new semantics; tidak ada new semantics. Original report hashes/status adalah assessed r4 checkpoint pada Git6ba8ebc; current hashes ada dalam root output manifest. Ini authorized packaging, bukan permintaan acceptance/desain ulang.
 
-Executed: source inspection oleh producer; X1 coverage check; role package diff terhadap approved definition; source SHA checks (Analyst 21/21, Architect 20/20, Experience 14/14; Koordinator 31 baseline sources, hanya authorized README navigation berubah). Security/Reviewer mempunyai fresh contexts tanpa inherited producer conversation dan harus membuka original serta final producer bytes sendiri. Exact independent findings/checks dilaporkan pemiliknya, bukan diasumsikan dari label.
+Revisions/ dan obsolete duplicates diretire dari working tree. R1/r2/accepted original r4 tetap pada Git6ba8ebcf1a41373ba9ddea441a3659a591c07cb5; r3 pada Git8a3e38a713491bfb6a6198ff9e1f5598c2749e9a. Exact paths/hashes disimpan source manifest untuk audit; reader tidak perlu membuka history untuk melengkapi current contract. Tidak ada temporary validation framework/generated views permanen.
 
-R2 scoped deviation diotorisasi: tool write surface lebih luas daripada assignment, sehingga narrow writes bergantung pada instruksi/supervisi. R5/R6 cold-resume/process-loss/backup dan comprehensive native gate enforcement belum dibuktikan. Specialist model `gpt-6.1-sol / medium`; Security pernah menerima capacity error, kemudian dilanjutkan pada konteks/model sama tanpa fallback. Overall Harness standing tetap PARTIAL.
+## Downstream boundaries
 
-NOT RUN: application/unit/coverage/DB/session/security/browser/accessibility/integration tests, actual downstream acceptance/discovery probe, production recovery. Source/link/hash checks tidak dianggap runtime conformance. Tidak ada canonical API/code/schema/standards/env/service/deploy/commit/push perubahan dalam assignment.
+Backend membaca current X1/O2/O3 serta original independent findings; canonical API adoption/protected implementation/runtime conformance tetap memerlukan authorization/evidence terpisah. Frontend boleh memakai immutable accepted interface untuk separately authorized parallel types/mocks/development; integrasi kemudian memakai semantically verified project canonical contract, tanpa rival editable DTO/schema. Consumer yang memakai r3 literals membutuhkan regeneration/exhaustive-discriminator updates; deployed-consumer inventory/rollout belum diuji.
 
-Hasil pemeriksaan dokumentasi final dicatat pada [documentation-checks.json](documentation-checks.json). Output manifest mengikat final bytes seluruh payload, state, handoff, findings, checks dan navigation; manifest tidak meng-hash dirinya sendiri. Intermediate checkpoint yang disebut producer/review adalah riwayat pembacaan yang terpisah dari final artifact hashes, bukan circular final-hash dependency. Tidak ada klaim semua intermediate bytes telah diarsipkan Git; cold-resume/process-loss/backup tetap NOT RUN.
+Generic reusable Backend/Frontend Space Input Contract tidak ditemukan. Direct implementation owners memiliki project-bound documentary fit atas accepted content dan packaging sanity, bukan certification receiving Space. Actual F-01/cold-discovery NOT RUN. Accountable O4 producers tetap Architect TECH01–12 dan Experience EXP01–12; execution NOT RUN. Tidak ada fresh independent assurance atas packaging atau perubahan original findings.
 
-## Gate dan keputusan Human
+PDEP-R2-01 **OPEN/HELD**: actual legal applicability, providers/roles/locations, final notice, privacy inbox/verification/follow-up, independent deletion journal durability/coverage/custody, actual retention/all-copy disposal dan representative restore. Controller/contact/Google given; provider lain belum dipilih dan complex lifecycle/transfer tetap owning decisions. Acceptance dokumen tidak memberi runtime/security/privacy/public-readiness clearance.
 
-1. Exact-bundle acceptance PENDING. Final revision manifest dan review disposition harus dibaca sebelum menerima bundle.
-2. PD-PRIV-01 PENDING pada owning Product/privacy source; tidak ada periode retensi atau erasure exception yang diputuskan Engineering. Resolusi memerlukan scope owning-source persistence terpisah dan revalidation affected output/review.
-3. Canonical API adoption, migration dan protected implementation authorization PENDING; penerimaan bundle tidak membuka izin tersebut.
-4. Real-user/public deployment memerlukan privacy, security, ingress/key custody dan actual verification/recovery evidence tersendiri.
-
-## Batas penggunaan
-
-Rancang COMPLETE (bila tercapai), Human acceptance pada exact bundle, canonical contract adoption, implementation authorization dan actual runtime evidence adalah status terpisah. Pilot runtime PARTIAL dengan scoped R2 deviation; application/security/browser/integration verification NOT RUN. Review independence akan dilaporkan berdasarkan konteks dan source inspection aktual, bukan role label.
+Packaging selesai untuk ditinjau sebelum commit/push. Canonical api/code/migrations/Engineering Standards/Product/Formation tidak diubah. Tidak ada downstream dispatch atau service/email action.

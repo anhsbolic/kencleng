@@ -1,6 +1,6 @@
-# ORG-01 r4 — keputusan antarmuka dan konformansi normatif
+# ORG-01 — keputusan antarmuka dan konformansi normatif
 
-**Candidate reviewable; Human acceptance PENDING.** Architect adalah producer O1/O2 dan TECH-01..12. Dokumen ini bersama [OpenAPI](openapi-handoff.yaml) adalah handoff r4 lengkap untuk 11 operasi, bukan canonical `api/`, implementasi, persetujuan bundle, atau runtime evidence. Kata wajib/tidak boleh menyatakan kontrak proposal yang diuji downstream. Tidak ada perubahan Product/Design/Engineering Standards. Source pins: [manifest](source-revisions.json); X1: [pinned r3 requirements](https://github.com/anhsbolic/kencleng/blob/8a3e38a713491bfb6a6198ff9e1f5598c2749e9a/harscode-state/org-01/rancang-002/revisions/r3/requirements.md). Current scope/status: [state r4](state.md). Semua pengujian aplikasi/DB/browser/security/cleanup/restore **NOT RUN**.
+**Konten accepted r4; packaging final di root assignment.** Architect tetap producer O1/O2 dan TECH01–12. Human menerima exact original r4, manifest SHA256 `7e0d408f2e438c79149fd3c00e65e25fb4c62a5539c11e379c979ee12e6cd0ba`; identitas packaging dicatat terpisah pada [state](state.md) dan [output manifest](output-revisions.json). [X1 efektif](requirements.md), [O3/EXP efektif](experience.md), [OpenAPI](openapi-handoff.yaml) dan [source pins](source-revisions.json) tersedia di folder ini. Isi normatif setelah header dipertahankan; checkpoint/provenance r3/r4 di bawah merekam production asli, bukan acceptance yang masih pending saat ini. Seluruh runtime conformance tetap NOT RUN.
 
 ## Konsumsi efektif dan rekonsiliasi tepat
 

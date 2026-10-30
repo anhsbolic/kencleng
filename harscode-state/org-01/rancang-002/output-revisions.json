@@ -1,20 +1,37 @@
 {
-  "bundleId": "ORG-01-rancang-002-r1",
-  "standing": "Documentation production COMPLETE; Human acceptance PENDING; real-data lifecycle edge HELD",
-  "projectCommit": "d0d78fab26a976f9f48c6fc97a45c0adc5cec282",
+  "bundleId": "ORG-01-rancang-002-final-packaging",
+  "standing": "Original exact r4 HUMAN ACCEPTED; authorized root packaging; hashes distinguish original acceptance from current representation; no new semantics or implementation authority",
+  "projectBaselineCommit": "6ba8ebcf1a41373ba9ddea441a3659a591c07cb5",
   "spaceDefinitionCommit": "47297c6f369dad4d4e4c4f90f0e81eb0310be7cf",
   "hashAlgorithm": "SHA-256",
-  "selfHash": "Excluded to avoid self-reference; hash this manifest to identify exact bundle",
+  "selfHash": "Excluded; compute SHA-256 of this manifest to identify final packaging",
+  "acceptedOriginal": {
+    "bundleId": "ORG-01-rancang-002-r4",
+    "standing": "HUMAN ACCEPTED exact original r4; not a claim that packaging hashes equal original hashes",
+    "humanEvidence": "Human acceptance atas exact r4 sudah aku berikan.",
+    "commit": "6ba8ebcf1a41373ba9ddea441a3659a591c07cb5",
+    "manifestPath": "harscode-state/org-01/rancang-002/revisions/r4/output-revisions.json",
+    "manifestSha256": "7e0d408f2e438c79149fd3c00e65e25fb4c62a5539c11e379c979ee12e6cd0ba"
+  },
+  "contract": {
+    "path": "harscode-state/org-01/rancang-002/openapi-handoff.yaml",
+    "sha256": "a2d21ee3ca4ea93c7e691a53255ab825b784da00f45baeeb88115e76564df9aa",
+    "byteIdenticalToAcceptedR4": true
+  },
+  "packagingChanges": "flat root; full applicable X1/O3 consolidation; header/navigation/provenance only elsewhere; reports preserve original independent bodies verbatim; historical commits unchanged",
   "files": {
-    "harscode-state/org-01/rancang-002/documentation-checks.json": "4aa524d5bef53469b88467ec857a629b9370897ea3c277992342a319e72b29d6",
-    "harscode-state/org-01/rancang-002/experience.md": "475683ebe5e94b83e0930ccdbc5c4f92a4c1368da17229c802fe2b6e2fad1604",
-    "harscode-state/org-01/rancang-002/handoff.md": "6d86771f0fb419d523ce29a532d7461118b23dcaa99241306c9b85bec07eab9b",
-    "harscode-state/org-01/rancang-002/requirements.md": "055eb247a004a724b130c79e6a07ce662e20f520bb9f44df11802037af8ff951",
-    "harscode-state/org-01/rancang-002/security-findings.md": "0b3ec3ecf0be352c54a54d58c1a1254307e7be3f4a0d51360646652b7b10fbce",
-    "harscode-state/org-01/rancang-002/solution-review.md": "8b4bc33ee2710f31463a0cf1fbb80288c6adcc97ec3c7a7fae27ed46c2d6d72e",
-    "harscode-state/org-01/rancang-002/solution.md": "058c4f00912ea41f882982109aa20b153a6ee983237655ccb3fc9bc04ee7945c",
-    "harscode-state/org-01/rancang-002/source-revisions.json": "394d0e8d86f9f3434ea796612bcb035fc17e53a85bd90dec966438bbc3edbeee",
-    "harscode-state/org-01/rancang-002/state.md": "e34a688bda8678bb573f49ea95df7a6855a6f26bfd705f4a770f80043f0e0f57",
-    "docs/engineering/README.md": "35bed4fc9aa356d106e652194e35f197b92d8453282b44bbe1799b579466290c"
+    "harscode-state/org-01/rancang-002/experience.md": "b37eca0e18d9f24814e23ae1aeb6f92d6047f6b789c9eb401bd643014c8f169a",
+    "harscode-state/org-01/rancang-002/handoff.md": "a6ce43f2076a1d36111df033e9c0caed6320d04a4398516faf75e3c3493cb012",
+    "harscode-state/org-01/rancang-002/interface-decisions.md": "7749daa5f7641590408efc78bc99eb3fa5a47d07a42f83f6e71c63381d70504a",
+    "harscode-state/org-01/rancang-002/openapi-handoff.yaml": "a2d21ee3ca4ea93c7e691a53255ab825b784da00f45baeeb88115e76564df9aa",
+    "harscode-state/org-01/rancang-002/privacy-approach-follow-up.md": "55786418bbea16d7d622f22307c4fa5aef98331e803f4c89ee0b4bbf4297cfc3",
+    "harscode-state/org-01/rancang-002/privacy-approach-revisions.json": "4e492434f961b723415871047482da608de0f19ecc2bd4aa1379ae9aefd632c9",
+    "harscode-state/org-01/rancang-002/requirements.md": "e2cd635db128c92bb2d8e3c329fead0f605d4ead3c0a5825df59415471101a40",
+    "harscode-state/org-01/rancang-002/security-findings.md": "6e431e4ad683a3d174bd02309cbae91686af1df2d2a865a3137ae6fdf27c666d",
+    "harscode-state/org-01/rancang-002/solution-review.md": "ce4dc07591aed63a21b010e583ade591eef86b5462fababe28c571cf3545c686",
+    "harscode-state/org-01/rancang-002/source-revisions.json": "4250099a91b9f3cc3596068e2304e18dcd842547e3349878ea967bc01623e5b7",
+    "harscode-state/org-01/rancang-002/state.md": "f3f3f5813f901135862a394e0fae9dc0433961e4b0b2cbc3c34faec69ce385d6",
+    "harscode-state/org-01/rancang-002/verification-summary.md": "070c7af5d70d8dd44a6144a53848dffd1803143b38932664c55a3a75f855f925",
+    "docs/engineering/README.md": "a7006161c4965291f8c44a2e924ac63333100fd5952865efe48259a966eca721"
   }
 }
