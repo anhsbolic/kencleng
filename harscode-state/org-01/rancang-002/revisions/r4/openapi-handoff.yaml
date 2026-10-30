@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Kencleng ORG-01 r3 proposed handoff",
-    "version": "org-01-rancang-002-r3",
+    "title": "Kencleng ORG-01 r4 proposed handoff",
+    "version": "org-01-rancang-002-r4",
     "description": "Reviewable documentation candidate; Human acceptance pending. Not canonical API/adoption/implementation/runtime authority. Exactly11 effective operations. All stateful semantics and technical conformance obligations in sibling interface-decisions.md are normative companion requirements, not a custom extension language. JSON syntax is YAML1.2 compatible. Every object closed, fields required unless explicitly optional, none nullable. No generic code field on problems; type URI is stable machine identifier. No real-user/privacy/vendor/legal/readiness claim."
   },
   "servers": [
@@ -84,7 +84,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:invalid-request",
+                      "type": "urn:uuid:9ed32605-5d10-4f59-b811-042f45fdffed",
                       "title": "Invalid request",
                       "status": 400
                     }
@@ -115,7 +115,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unauthenticated",
+                      "type": "urn:uuid:0c56be0a-40a6-45c9-bb49-c20b075ba28b",
                       "title": "Authentication required",
                       "status": 401
                     }
@@ -146,7 +146,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:forbidden",
+                      "type": "urn:uuid:142cb767-7ce1-403f-88b4-b1fe7c6c2f82",
                       "title": "Request forbidden",
                       "status": 403
                     }
@@ -186,7 +186,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:rate-limited",
+                      "type": "urn:uuid:364a031e-17d4-42d0-af70-06c79716e98e",
                       "title": "Too many requests",
                       "status": 429
                     }
@@ -217,7 +217,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unavailable",
+                      "type": "urn:uuid:bc32fcd9-a6ce-4c42-bfa2-d09431017922",
                       "title": "Service unavailable",
                       "status": 503
                     }
@@ -433,7 +433,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unauthenticated",
+                      "type": "urn:uuid:0c56be0a-40a6-45c9-bb49-c20b075ba28b",
                       "title": "Authentication required",
                       "status": 401
                     }
@@ -464,7 +464,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unavailable",
+                      "type": "urn:uuid:bc32fcd9-a6ce-4c42-bfa2-d09431017922",
                       "title": "Service unavailable",
                       "status": 503
                     }
@@ -495,7 +495,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:invalid-request",
+                      "type": "urn:uuid:9ed32605-5d10-4f59-b811-042f45fdffed",
                       "title": "Invalid request",
                       "status": 400
                     }
@@ -562,7 +562,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:invalid-request",
+                      "type": "urn:uuid:9ed32605-5d10-4f59-b811-042f45fdffed",
                       "title": "Invalid request",
                       "status": 400
                     }
@@ -593,7 +593,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unauthenticated",
+                      "type": "urn:uuid:0c56be0a-40a6-45c9-bb49-c20b075ba28b",
                       "title": "Authentication required",
                       "status": 401
                     }
@@ -624,7 +624,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:forbidden",
+                      "type": "urn:uuid:142cb767-7ce1-403f-88b4-b1fe7c6c2f82",
                       "title": "Request forbidden",
                       "status": 403
                     }
@@ -662,14 +662,14 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:result-unknown",
+                      "type": "urn:uuid:f67a74ed-f3a2-45bb-a2ee-8b14e9c4c96c",
                       "title": "Result unknown",
                       "status": 503
                     }
                   },
                   "variant2": {
                     "value": {
-                      "type": "urn:kencleng:problem:unavailable",
+                      "type": "urn:uuid:bc32fcd9-a6ce-4c42-bfa2-d09431017922",
                       "title": "Service unavailable",
                       "status": 503
                     }
@@ -780,7 +780,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:invalid-request",
+                      "type": "urn:uuid:9ed32605-5d10-4f59-b811-042f45fdffed",
                       "title": "Invalid request",
                       "status": 400
                     }
@@ -811,7 +811,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unauthenticated",
+                      "type": "urn:uuid:0c56be0a-40a6-45c9-bb49-c20b075ba28b",
                       "title": "Authentication required",
                       "status": 401
                     }
@@ -842,7 +842,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:forbidden",
+                      "type": "urn:uuid:142cb767-7ce1-403f-88b4-b1fe7c6c2f82",
                       "title": "Request forbidden",
                       "status": 403
                     }
@@ -880,14 +880,14 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unavailable",
+                      "type": "urn:uuid:bc32fcd9-a6ce-4c42-bfa2-d09431017922",
                       "title": "Service unavailable",
                       "status": 503
                     }
                   },
                   "variant2": {
                     "value": {
-                      "type": "urn:kencleng:problem:result-unknown",
+                      "type": "urn:uuid:f67a74ed-f3a2-45bb-a2ee-8b14e9c4c96c",
                       "title": "Result unknown",
                       "status": 503
                     }
@@ -1062,7 +1062,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:invalid-request",
+                      "type": "urn:uuid:9ed32605-5d10-4f59-b811-042f45fdffed",
                       "title": "Invalid request",
                       "status": 400
                     }
@@ -1093,7 +1093,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unauthenticated",
+                      "type": "urn:uuid:0c56be0a-40a6-45c9-bb49-c20b075ba28b",
                       "title": "Authentication required",
                       "status": 401
                     }
@@ -1124,7 +1124,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:forbidden",
+                      "type": "urn:uuid:142cb767-7ce1-403f-88b4-b1fe7c6c2f82",
                       "title": "Request forbidden",
                       "status": 403
                     }
@@ -1155,7 +1155,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:idempotency-mismatch",
+                      "type": "urn:uuid:144ea3b4-83cc-4b0f-961a-892f3fc09b86",
                       "title": "Request identity conflict",
                       "status": 409
                     }
@@ -1186,7 +1186,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:request-window-expired",
+                      "type": "urn:uuid:22166aa9-86c0-4033-a5c6-49f7cb83f9ff",
                       "title": "Request window expired",
                       "status": 410
                     }
@@ -1217,7 +1217,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:validation",
+                      "type": "urn:uuid:1b1d2eb4-2c68-4809-8910-f40bd94e1e42",
                       "title": "Validation failed",
                       "status": 422,
                       "errors": [
@@ -1263,7 +1263,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:rate-limited",
+                      "type": "urn:uuid:364a031e-17d4-42d0-af70-06c79716e98e",
                       "title": "Too many requests",
                       "status": 429
                     }
@@ -1304,21 +1304,21 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unavailable",
+                      "type": "urn:uuid:bc32fcd9-a6ce-4c42-bfa2-d09431017922",
                       "title": "Service unavailable",
                       "status": 503
                     }
                   },
                   "variant2": {
                     "value": {
-                      "type": "urn:kencleng:problem:result-unknown",
+                      "type": "urn:uuid:f67a74ed-f3a2-45bb-a2ee-8b14e9c4c96c",
                       "title": "Result unknown",
                       "status": 503
                     }
                   },
                   "variant3": {
                     "value": {
-                      "type": "urn:kencleng:problem:request-busy",
+                      "type": "urn:uuid:cc31e0af-5ded-4ccd-afe6-cb0c592323cc",
                       "title": "Request busy",
                       "status": 503
                     }
@@ -1482,7 +1482,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:invalid-request",
+                      "type": "urn:uuid:9ed32605-5d10-4f59-b811-042f45fdffed",
                       "title": "Invalid request",
                       "status": 400
                     }
@@ -1513,7 +1513,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unauthenticated",
+                      "type": "urn:uuid:0c56be0a-40a6-45c9-bb49-c20b075ba28b",
                       "title": "Authentication required",
                       "status": 401
                     }
@@ -1544,7 +1544,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unavailable",
+                      "type": "urn:uuid:bc32fcd9-a6ce-4c42-bfa2-d09431017922",
                       "title": "Service unavailable",
                       "status": 503
                     }
@@ -1654,7 +1654,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:invalid-request",
+                      "type": "urn:uuid:9ed32605-5d10-4f59-b811-042f45fdffed",
                       "title": "Invalid request",
                       "status": 400
                     }
@@ -1685,7 +1685,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unauthenticated",
+                      "type": "urn:uuid:0c56be0a-40a6-45c9-bb49-c20b075ba28b",
                       "title": "Authentication required",
                       "status": 401
                     }
@@ -1716,7 +1716,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:result-not-observed",
+                      "type": "urn:uuid:cbf15221-1fdb-47ca-8b8a-8285b9e031b1",
                       "title": "Result not observed",
                       "status": 404
                     }
@@ -1754,14 +1754,14 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:result-unavailable",
+                      "type": "urn:uuid:59625f7b-1a32-46af-aae7-c42ddf7be1fd",
                       "title": "Result unavailable",
                       "status": 503
                     }
                   },
                   "variant2": {
                     "value": {
-                      "type": "urn:kencleng:problem:unavailable",
+                      "type": "urn:uuid:bc32fcd9-a6ce-4c42-bfa2-d09431017922",
                       "title": "Service unavailable",
                       "status": 503
                     }
@@ -1858,7 +1858,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:invalid-request",
+                      "type": "urn:uuid:9ed32605-5d10-4f59-b811-042f45fdffed",
                       "title": "Invalid request",
                       "status": 400
                     }
@@ -1889,7 +1889,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unauthenticated",
+                      "type": "urn:uuid:0c56be0a-40a6-45c9-bb49-c20b075ba28b",
                       "title": "Authentication required",
                       "status": 401
                     }
@@ -1920,7 +1920,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:resource-unavailable",
+                      "type": "urn:uuid:5ed0b852-a063-4c56-85a7-a0d7c1775000",
                       "title": "Resource unavailable",
                       "status": 404
                     }
@@ -1958,14 +1958,14 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:result-unavailable",
+                      "type": "urn:uuid:59625f7b-1a32-46af-aae7-c42ddf7be1fd",
                       "title": "Result unavailable",
                       "status": 503
                     }
                   },
                   "variant2": {
                     "value": {
-                      "type": "urn:kencleng:problem:unavailable",
+                      "type": "urn:uuid:bc32fcd9-a6ce-4c42-bfa2-d09431017922",
                       "title": "Service unavailable",
                       "status": 503
                     }
@@ -2061,7 +2061,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:invalid-request",
+                      "type": "urn:uuid:9ed32605-5d10-4f59-b811-042f45fdffed",
                       "title": "Invalid request",
                       "status": 400
                     }
@@ -2092,7 +2092,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unauthenticated",
+                      "type": "urn:uuid:0c56be0a-40a6-45c9-bb49-c20b075ba28b",
                       "title": "Authentication required",
                       "status": 401
                     }
@@ -2123,7 +2123,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:forbidden",
+                      "type": "urn:uuid:142cb767-7ce1-403f-88b4-b1fe7c6c2f82",
                       "title": "Request forbidden",
                       "status": 403
                     }
@@ -2154,7 +2154,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:deletion-proof-required",
+                      "type": "urn:uuid:0ddfd153-87b2-4619-a11e-f48418401c21",
                       "title": "Fresh account proof required",
                       "status": 409
                     }
@@ -2185,7 +2185,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:manual-review-required",
+                      "type": "urn:uuid:5a799183-67f6-49a9-90cd-ae9e06af1cf2",
                       "title": "Manual review required",
                       "status": 422
                     }
@@ -2225,7 +2225,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:rate-limited",
+                      "type": "urn:uuid:364a031e-17d4-42d0-af70-06c79716e98e",
                       "title": "Too many requests",
                       "status": 429
                     }
@@ -2256,7 +2256,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unavailable",
+                      "type": "urn:uuid:bc32fcd9-a6ce-4c42-bfa2-d09431017922",
                       "title": "Service unavailable",
                       "status": 503
                     }
@@ -2390,7 +2390,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:invalid-request",
+                      "type": "urn:uuid:9ed32605-5d10-4f59-b811-042f45fdffed",
                       "title": "Invalid request",
                       "status": 400
                     }
@@ -2421,7 +2421,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unauthenticated",
+                      "type": "urn:uuid:0c56be0a-40a6-45c9-bb49-c20b075ba28b",
                       "title": "Authentication required",
                       "status": 401
                     }
@@ -2452,7 +2452,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:forbidden",
+                      "type": "urn:uuid:142cb767-7ce1-403f-88b4-b1fe7c6c2f82",
                       "title": "Request forbidden",
                       "status": 403
                     }
@@ -2493,21 +2493,21 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:deletion-proof-required",
+                      "type": "urn:uuid:0ddfd153-87b2-4619-a11e-f48418401c21",
                       "title": "Fresh account proof required",
                       "status": 409
                     }
                   },
                   "variant2": {
                     "value": {
-                      "type": "urn:kencleng:problem:deletion-scope-changed",
+                      "type": "urn:uuid:bd8b4ade-aaef-4ea9-9d73-2585c7b31ea6",
                       "title": "Deletion scope changed",
                       "status": 409
                     }
                   },
                   "variant3": {
                     "value": {
-                      "type": "urn:kencleng:problem:deletion-preview-invalid",
+                      "type": "urn:uuid:25c9699d-d474-496b-8214-65ceb830f197",
                       "title": "Deletion preview invalid",
                       "status": 409
                     }
@@ -2538,7 +2538,7 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:manual-review-required",
+                      "type": "urn:uuid:5a799183-67f6-49a9-90cd-ae9e06af1cf2",
                       "title": "Manual review required",
                       "status": 422
                     }
@@ -2579,21 +2579,21 @@
                 "examples": {
                   "variant1": {
                     "value": {
-                      "type": "urn:kencleng:problem:unavailable",
+                      "type": "urn:uuid:bc32fcd9-a6ce-4c42-bfa2-d09431017922",
                       "title": "Service unavailable",
                       "status": 503
                     }
                   },
                   "variant2": {
                     "value": {
-                      "type": "urn:kencleng:problem:result-unknown",
+                      "type": "urn:uuid:f67a74ed-f3a2-45bb-a2ee-8b14e9c4c96c",
                       "title": "Result unknown",
                       "status": 503
                     }
                   },
                   "variant3": {
                     "value": {
-                      "type": "urn:kencleng:problem:deletion-pending",
+                      "type": "urn:uuid:6d143e2a-e3ba-4e71-8c67-1c8f7d4bae85",
                       "title": "Deletion pending",
                       "status": 503
                     }
@@ -3135,7 +3135,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:invalid-request"
+              "urn:uuid:9ed32605-5d10-4f59-b811-042f45fdffed"
             ]
           },
           "title": {
@@ -3158,7 +3158,7 @@
         ],
         "description": "Malformed JSON, duplicate keys, unknown/missing fields, invalid type/UUID/header/query, unsupported content type, or input size bound exceeded. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:invalid-request",
+          "type": "urn:uuid:9ed32605-5d10-4f59-b811-042f45fdffed",
           "title": "Invalid request",
           "status": 400
         }
@@ -3170,7 +3170,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:unauthenticated"
+              "urn:uuid:0c56be0a-40a6-45c9-bb49-c20b075ba28b"
             ]
           },
           "title": {
@@ -3193,7 +3193,7 @@
         ],
         "description": "Required authority is absent, expired, invalid, revoked, mismatched or fenced. Does not determine prior mutation outcome. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:unauthenticated",
+          "type": "urn:uuid:0c56be0a-40a6-45c9-bb49-c20b075ba28b",
           "title": "Authentication required",
           "status": 401
         }
@@ -3205,7 +3205,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:forbidden"
+              "urn:uuid:142cb767-7ce1-403f-88b4-b1fe7c6c2f82"
             ]
           },
           "title": {
@@ -3228,7 +3228,7 @@
         ],
         "description": "Missing/null/wrong exact Origin or required session CSRF token. No protected effect. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:forbidden",
+          "type": "urn:uuid:142cb767-7ce1-403f-88b4-b1fe7c6c2f82",
           "title": "Request forbidden",
           "status": 403
         }
@@ -3240,7 +3240,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:resource-unavailable"
+              "urn:uuid:5ed0b852-a063-4c56-85a7-a0d7c1775000"
             ]
           },
           "title": {
@@ -3263,7 +3263,7 @@
         ],
         "description": "Organization absent or not currently owned; identical safe response for both. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:resource-unavailable",
+          "type": "urn:uuid:5ed0b852-a063-4c56-85a7-a0d7c1775000",
           "title": "Resource unavailable",
           "status": 404
         }
@@ -3275,7 +3275,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:result-not-observed"
+              "urn:uuid:cbf15221-1fdb-47ca-8b8a-8285b9e031b1"
             ]
           },
           "title": {
@@ -3298,7 +3298,7 @@
         ],
         "description": "No visible unexpired complete creation receipt. Does not prove original failure or cancellation. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:result-not-observed",
+          "type": "urn:uuid:cbf15221-1fdb-47ca-8b8a-8285b9e031b1",
           "title": "Result not observed",
           "status": 404
         }
@@ -3310,7 +3310,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:idempotency-mismatch"
+              "urn:uuid:144ea3b4-83cc-4b0f-961a-892f3fc09b86"
             ]
           },
           "title": {
@@ -3333,7 +3333,7 @@
         ],
         "description": "Same account/key has unexpired receipt for different canonical name; no new effect. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:idempotency-mismatch",
+          "type": "urn:uuid:144ea3b4-83cc-4b0f-961a-892f3fc09b86",
           "title": "Request identity conflict",
           "status": 409
         }
@@ -3345,7 +3345,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:deletion-proof-required"
+              "urn:uuid:0ddfd153-87b2-4619-a11e-f48418401c21"
             ]
           },
           "title": {
@@ -3368,7 +3368,7 @@
         ],
         "description": "Live session lacks purpose-specific same-account proof or proof age exceeds bound. Start explicit special flow; no intent. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:deletion-proof-required",
+          "type": "urn:uuid:0ddfd153-87b2-4619-a11e-f48418401c21",
           "title": "Fresh account proof required",
           "status": 409
         }
@@ -3380,7 +3380,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:deletion-scope-changed"
+              "urn:uuid:bd8b4ade-aaef-4ea9-9d73-2585c7b31ea6"
             ]
           },
           "title": {
@@ -3403,7 +3403,7 @@
         ],
         "description": "Current complete dependency set or simple eligibility differs from preview; invalidate preview, no intent. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:deletion-scope-changed",
+          "type": "urn:uuid:bd8b4ade-aaef-4ea9-9d73-2585c7b31ea6",
           "title": "Deletion scope changed",
           "status": 409
         }
@@ -3415,7 +3415,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:deletion-preview-invalid"
+              "urn:uuid:25c9699d-d474-496b-8214-65ceb830f197"
             ]
           },
           "title": {
@@ -3438,7 +3438,7 @@
         ],
         "description": "Preview missing, expired, replaced, wrong account/session or already invalidated without confirmed intent; safe uniform body; no intent. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:deletion-preview-invalid",
+          "type": "urn:uuid:25c9699d-d474-496b-8214-65ceb830f197",
           "title": "Deletion preview invalid",
           "status": 409
         }
@@ -3450,7 +3450,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:request-window-expired"
+              "urn:uuid:22166aa9-86c0-4033-a5c6-49f7cb83f9ff"
             ]
           },
           "title": {
@@ -3473,7 +3473,7 @@
         ],
         "description": "No replayable receipt and key timestamp+24h <= current time; no new effect, original may still be unknown. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:request-window-expired",
+          "type": "urn:uuid:22166aa9-86c0-4033-a5c6-49f7cb83f9ff",
           "title": "Request window expired",
           "status": 410
         }
@@ -3485,7 +3485,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:validation"
+              "urn:uuid:1b1d2eb4-2c68-4809-8910-f40bd94e1e42"
             ]
           },
           "title": {
@@ -3538,7 +3538,7 @@
         ],
         "description": "Canonical organization name empty, over200 code points or contains Cc controls. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:validation",
+          "type": "urn:uuid:1b1d2eb4-2c68-4809-8910-f40bd94e1e42",
           "title": "Validation failed",
           "status": 422,
           "errors": [
@@ -3556,7 +3556,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:manual-review-required"
+              "urn:uuid:5a799183-67f6-49a9-90cd-ae9e06af1cf2"
             ]
           },
           "title": {
@@ -3579,7 +3579,7 @@
         ],
         "description": "Simple closure cannot safely include complete dependency set within64KiB or supported dependency registry. Before accepted intent only; no actionable preview/erase. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:manual-review-required",
+          "type": "urn:uuid:5a799183-67f6-49a9-90cd-ae9e06af1cf2",
           "title": "Manual review required",
           "status": 422
         }
@@ -3591,7 +3591,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:rate-limited"
+              "urn:uuid:364a031e-17d4-42d0-af70-06c79716e98e"
             ]
           },
           "title": {
@@ -3614,7 +3614,7 @@
         ],
         "description": "Admission refused before this request creates a new effect; Retry-After seconds. Original concurrent request may remain unknown. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:rate-limited",
+          "type": "urn:uuid:364a031e-17d4-42d0-af70-06c79716e98e",
           "title": "Too many requests",
           "status": 429
         }
@@ -3626,7 +3626,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:unavailable"
+              "urn:uuid:bc32fcd9-a6ce-4c42-bfa2-d09431017922"
             ]
           },
           "title": {
@@ -3649,7 +3649,7 @@
         ],
         "description": "Required DB, journal, provider/configuration or integrity evidence unavailable; no success claim. After possible consequential commit use result-unknown instead. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:unavailable",
+          "type": "urn:uuid:bc32fcd9-a6ce-4c42-bfa2-d09431017922",
           "title": "Service unavailable",
           "status": 503
         }
@@ -3661,7 +3661,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:result-unavailable"
+              "urn:uuid:59625f7b-1a32-46af-aae7-c42ddf7be1fd"
             ]
           },
           "title": {
@@ -3684,7 +3684,7 @@
         ],
         "description": "Receipt/pair integrity cannot be established; never partial success. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:result-unavailable",
+          "type": "urn:uuid:59625f7b-1a32-46af-aae7-c42ddf7be1fd",
           "title": "Result unavailable",
           "status": 503
         }
@@ -3696,7 +3696,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:request-busy"
+              "urn:uuid:cc31e0af-5ded-4ccd-afe6-cb0c592323cc"
             ]
           },
           "title": {
@@ -3719,7 +3719,7 @@
         ],
         "description": "Bounded creation lock wait exceeded; this request rolled back; another request may commit. Keep same key. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:request-busy",
+          "type": "urn:uuid:cc31e0af-5ded-4ccd-afe6-cb0c592323cc",
           "title": "Request busy",
           "status": 503
         }
@@ -3731,7 +3731,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:result-unknown"
+              "urn:uuid:f67a74ed-f3a2-45bb-a2ee-8b14e9c4c96c"
             ]
           },
           "title": {
@@ -3754,7 +3754,7 @@
         ],
         "description": "Refresh issuance, create commit, journal append acknowledgment or deletion commit outcome unknown. Never infer rollback or automatically change key/login. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:result-unknown",
+          "type": "urn:uuid:f67a74ed-f3a2-45bb-a2ee-8b14e9c4c96c",
           "title": "Result unknown",
           "status": 503
         }
@@ -3766,7 +3766,7 @@
           "type": {
             "type": "string",
             "enum": [
-              "urn:kencleng:problem:deletion-pending"
+              "urn:uuid:6d143e2a-e3ba-4e71-8c67-1c8f7d4bae85"
             ]
           },
           "title": {
@@ -3789,7 +3789,7 @@
         ],
         "description": "Durable confirmed intent known accepted/fenced; active erase not yet verified. No automatic cancellation, repeat login or public status. No detail, instance, code, correlation ID, payload echo or additional members on this bounded interface; match type, never parse title.",
         "example": {
-          "type": "urn:kencleng:problem:deletion-pending",
+          "type": "urn:uuid:6d143e2a-e3ba-4e71-8c67-1c8f7d4bae85",
           "title": "Deletion pending",
           "status": 503
         }

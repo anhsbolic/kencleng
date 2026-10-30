@@ -1,7 +1,7 @@
 {
-  "projectCommit": "4db1612281a311e188722af984efb163783435b1",
+  "projectCommit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
   "spaceDefinitionCommit": "47297c6f369dad4d4e4c4f90f0e81eb0310be7cf",
-  "sources": {
+  "projectSources": {
     ".nvmrc": {
       "sha256": "d9f318747a126ce2247661af67852b185def7789492eabfad7bba322be087c33",
       "gitBlob": "ce62013c39aed63f656bb7ae41bdd45d81163ffe"
@@ -155,8 +155,8 @@
       "gitBlob": "f4ee696d669ec531b38b7eb5b77d101f5beb64f5"
     },
     "harscode-state/org-01/rancang-002/current.md": {
-      "sha256": "dd219e9cd6cdddb82ac5fa830c663cd181562cee389997eb8ca290085d118ee2",
-      "gitBlob": "8de41de30683ed601b9b9b124d63849b97f7e8ca"
+      "sha256": "0ecb2169526f73cf8e259edc8dda49dc6dbb55f84da0abb493328f17fc441044",
+      "gitBlob": "8fedb9cdfdf1bca397ebaca6361bce0e1e65270b"
     },
     "harscode-state/org-01/rancang-002/experience.md": {
       "sha256": "475683ebe5e94b83e0930ccdbc5c4f92a4c1368da17229c802fe2b6e2fad1604",
@@ -223,8 +223,88 @@
       "gitBlob": "5df3f459a7ddbccdbeb256f2c022d2abf4dca8db"
     }
   },
-  "note": "current.md is pre-r3 navigation checkpoint; production sources immutable. Historical r2 source standing retained in original manifest.",
-  "harscodeCheckoutCommit": "f53e85096790c6442960526b0c0d25019b9d8dd3",
+  "historicalR3": {
+    "harscode-state/org-01/rancang-002/revisions/r3/check-contract.mjs": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "34568c28427b15e749329eee0da005cc64e6acb6f1e2badb15335347d98232b7"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/check-documentation.py": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "5fcda080eace5578fef56944da5c332efd8975636cfa527a968eff54af1c5719"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/check-examples.py": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "72b8fea8e8b6e28b6da0d2a2fa1a5e44f0387190b044bd028234f6a4630fccd2"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/consumer-fit.md": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "98351060e8bdaa40ca3e5153617f6f2e88f952c3114e565cdd241eb387156ca8"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/contract-dereferenced.json": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "3b16aced78b2ec7c751515fdd473707cc0d0b27257675330ee6a4392cf990b36"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/contract-parsed.json": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "5397eff7292abe15fc262254968d5acbec7d57558070faca0dc8cb28651d8d1e"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/documentation-checks.json": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "734262d2bbd0b75186755af3caae49d571b7159f95f054f3e5d3a693ddac45b6"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/example-checks.json": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "ffc99d3f174daf71a3c4ad6fcbcdb7e8090fb9c8ceb6044cdad77d83cdf8ae74"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/generated-api.d.ts": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "29ab9cc4a3c8dd96ceb78852abfd0e9a96f4b8abd8828b3981ac7caf1ceda268"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/generation-smoke.ts": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "00a15aec27b0abc8616b75027842f0de8e8995cfc32686be270d53b9bfb611b7"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/handoff.md": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "865012f890347d75a40828fd2fa7f65c34ac9ba1b92fb24d69ba964beacb169d"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/interface-decisions.md": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "5491a5d36058d79106cb39a88cfcd6163063c528ca9007e37ab362117b5f80eb"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/openapi-handoff.yaml": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "741b227ca58fe2bccddf39e0c2b7ebfd54ce7fe07283045df3ba3073a63ea2eb"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/output-revisions.json": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "40577b769160d2d39d6fdb9e5ba1a597ac03e635d80465f4e3cff33460db1b4b"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/requirements.md": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "97cae3165ca3502b2d0f711b977063bd52286fd64c7e425ffa7350eb932d56d5"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/security-findings.md": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "a1816fb5822ee3c173cc2227341b051e614ee2d4e0420f27fd6a300e22f1c991"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/solution-review.md": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "c5a9cebea39cfc48985a7ed2f44be45e6a7e1495583d9ea26e8861cff3b0910a"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/source-revisions.json": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "cbb79e36d6356b5007e946cce85533b33fa870c68cd92c11f056cc462ff579ab"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/state.md": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "ce0d9fa1eb1b4fe6f327c7d01f3ec0f9bb8a77c7ee343cbba79dd903b06c3b4a"
+    },
+    "harscode-state/org-01/rancang-002/revisions/r3/tooling-checks.json": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "sha256": "3f1c10d6bed947f3004b5defd3f7feb96b33b3535dfb686e89f9daee6cc34788"
+    }
+  },
   "harscodeFiles": {
     "engineering/spaces/feature-solution-design/contracts.md": "74d7d31b9451eb5eb32f13c729cb35346f05d70a89e62376c586c600da795084",
     "engineering/spaces/feature-solution-design/coordination.md": "5cfcec92d7bce965444756c95ad74281693113694c618d219b9026b12ee088d8",
@@ -249,11 +329,31 @@
     "frontend/node_modules/openapi-typescript/package.json": "70bb8b789fadedb1c1d0923907a5b9b9fdf64e727e8182d9fa9128bc5723769b",
     "frontend/node_modules/typescript/package.json": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
   },
-  "externalTechnicalReferences": [
-    "https://spec.openapis.org/oas/v3.0.3",
-    "https://www.rfc-editor.org/rfc/rfc9457.html",
-    "https://openapi-ts.dev/node",
-    "https://developers.google.com/identity/openid-connect/openid-connect"
-  ],
-  "externalReferenceInspectionDate": "2026-10-30; external pages are protocol references, not immutable project authority or runtime evidence"
+  "externalTechnicalReferences": {
+    "inspectedOn": "2026-10-30",
+    "sources": [
+      "https://www.rfc-editor.org/rfc/rfc8141.html",
+      "https://www.rfc-editor.org/rfc/rfc9457.html",
+      "https://www.iana.org/assignments/urn-namespaces/urn-namespaces.xhtml",
+      "https://www.rfc-editor.org/rfc/rfc9562.html"
+    ],
+    "standing": "Normative protocol references; mutable IANA observation, not domain ownership evidence."
+  },
+  "note": "Pre-r4 navigation pinned at baseline. Historical artifacts resolve through explicit immutable commit even if retired from current tree; no reclassification of prior review into current review.",
+  "projectSourceRootCommit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+  "historicalResolution": "historicalR3 entries always resolve via their explicit immutable commit, not current filesystem. Current navigation preimage also resolves at projectCommit.",
+  "reusedBehavioralInputs": {
+    "X1": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "path": "harscode-state/org-01/rancang-002/revisions/r3/requirements.md",
+      "sha256": "97cae3165ca3502b2d0f711b977063bd52286fd64c7e425ffa7350eb932d56d5",
+      "standing": "unchanged historical obligation translation; not fresh r4 Analyst review"
+    },
+    "O3_EXP": {
+      "commit": "8a3e38a713491bfb6a6198ff9e1f5598c2749e9a",
+      "path": "harscode-state/org-01/rancang-002/revisions/r3/consumer-fit.md",
+      "sha256": "98351060e8bdaa40ca3e5153617f6f2e88f952c3114e565cdd241eb387156ca8",
+      "standing": "unchanged historical behavioral input; affected r4 consumer mapping assessed by Architect and independent reviewers, not fresh Experience sign-off"
+    }
+  }
 }
