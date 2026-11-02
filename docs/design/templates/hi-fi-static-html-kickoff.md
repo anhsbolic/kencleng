@@ -37,7 +37,7 @@ Hasil akhir yang ingin kita capai: **feature-specific hi-fidelity UX/UI design**
 Temukan dan baca sources yang efektif serta relevan, secara proporsional:
 
 1. **Product:** current approved scoped Product Contract, approval, actor goals, consequences, negative paths. Do not invent Product/domain/privacy decisions or make a held production release gate into a blanket blocker for synthetic design.
-2. **Kencleng Design:** `docs/design/README.md`, `product-design-principles.md`, `patterns.md`, `brand-product-ui-brief.md`, `design-guidelines.md`, `asset-governance.md`, and `visual-references/selected-direction/`.
+2. **Kencleng Design:** `docs/design/README.md`, canonical `product-design-principles.md`, `patterns.md`, `brand-product-ui-brief.md`, `design-guidelines.md`, `asset-governance.md`, and `visual-references/selected-direction/`. Also use the **working supplemental guidance** `information-architecture.md` and `copywriting-id.md` for disclosure placement and natural Indonesian UX writing; they do **not** override canonical project authority.
 3. **Actual attached reference images:** inspect and use the PNG files **sent by Human with this kickoff** as approved-direction evidence, together with their repository README and canonical guidelines. If no image is attached or its actual pixels cannot be inspected, **tell Human and request the images before making the visual-direction decision**. Do not pretend to have viewed images merely from filenames/README. Attached images are **not** pixel-perfect screen specs, canonical logos, or permissions to invent factual imagery.
 4. **Accepted Engineering solution, if available:** current Rancang handoff and relevant experience/interaction/interface/state obligations. Those constraints ensure design is truthful and implementation-consumable, but do not make Engineering the owner of visual design.
 5. **Existing frontend and screenshots (if any):** observation/critique evidence, **not Design Authority**. Harscode research `design/README.md`, `exploration.md`, and `authority-and-handoff.md` may provide supporting guidance without overriding Kencleng.
@@ -53,13 +53,15 @@ For the specific user's **current decision** and journey stage, explain concisel
 - Which information should be **always visible** (brief, comprehensible, action-relevant), **available on demand**, **shown at a later journey step**, or **omitted** from this screen. Preserve easy access to consequential information rather than dumping everything above the CTA.
 - Recommended placement/treatment per material information class: inline summary, link to a dedicated detail page, expandable section, contextual modal/dialog, or tooltip/help text. **Choose by content length, importance, timing, revisitability, mobile/keyboard accessibility and interruption cost**; don't prescribe one control universally.
 - Keep trust-critical information, critical uncertainty, required action, and necessary pre-effect consequences visible/accessible at the correct time. **Do not hide mandatory disclosure or essential decision information inside hover-only tooltips**.
+- Propose **natural Indonesian candidate copy** for the main heading, primary CTA, and one disclosure/error message. Avoid literal contract/English translations, verbose caveats and legalistic UI language; preserve scoped truth.
+- If lengthy explanation competes with the current action, recommend whether a **meaningful icon, labeled diagram, illustration, or sourced photo** would communicate its relationship/context better. Explain its role and whether an approved asset exists; do not generate filler or fabricate evidence.
 - For sign-in, distinguish **login itself** from later organization creation/commit. E.g., a short pre-login processing summary plus easy access to the complete notice **before Google sign-in** can satisfy accepted ORG-01 requirements without displaying the full policy or creation consequences on the login screen. Do not assume this example is global policy for other features.
 
 Give **one recommended IA/interaction direction** with the key trade-off and a compact page/surface map. Ask me to assess it. Then **stop**. Don't run ahead to prototype or persist.
 
 ### After I approve the IA direction: create the hi-fi design
 
-Translate **Sunlit Editorial / Evidence-Led Optimism** into actual page composition: purposeful visual hierarchy, editorial typography, restrained colors, brand character, spacing, navigation, interaction clarity, responsive priorities, and appropriate accessibility. **Good IA matters as much as good-looking CSS.**
+Translate **Sunlit Editorial / Evidence-Led Optimism** into actual page composition: purposeful visual hierarchy, editorial typography, restrained colors, brand character, spacing, navigation, interaction clarity, responsive priorities, and appropriate accessibility. **Good IA and idiomatic Indonesian UX copy matter as much as good-looking CSS.** Before filling unused space with explanations, challenge information priority and consider a justified meaningful visual. Recommend/brief missing material illustration rather than silently inventing brand or fake evidence.
 
 Produce **one HTML file for each actual page/surface in the agreed scope**, **not one HTML document toggling entire pages through JavaScript**. Keep ordinary state variations in the relevant page where appropriate; additional page files only if a distinct page is genuinely useful.
 
@@ -119,5 +121,6 @@ Current ORG-01 discovery candidates (verify current standing rather than hardcod
 - `harscode-state/org-01/rancang-002/handoff.md`, `experience.md`, relevant `interface-decisions.md`.
 - Two approved `docs/design/visual-references/selected-direction/*.png` images **attached directly to the chat by Human**.
 - `docs/design/outcomes/org-01/` may already contain an **unapproved candidate**; treat it as prior exploration/evidence, not authoritative design, and do not overwrite without explicit permission.
+- `docs/design/information-architecture.md` and `docs/design/copywriting-id.md` are working project-level aids for review; apply them without displacing canonical Product/Design authority.
 
 **Design Guidelines already include "Ordered Transparency, Not Information Dumping" and the UX Pattern System covers Progressive Disclosure.** Evaluate application of these established principles before proposing a new canonical IA standard.

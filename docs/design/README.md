@@ -9,6 +9,8 @@ These standards preserve approved reusable design direction. They do not select 
 | Brand and Product UI direction | [Brand/Product UI brief](brand-product-ui-brief.md) |
 | Visual-system guidance | [Design guidelines](design-guidelines.md) |
 | Reusable interaction behavior | [Patterns](patterns.md) |
+| Supplemental information-architecture / disclosure heuristics (working) | [Information Architecture](information-architecture.md) |
+| Supplemental Indonesian UX writing and terminology heuristics (working) | [Copywriting Bahasa Indonesia](copywriting-id.md) |
 | Asset selection and governance | [Asset governance](asset-governance.md) |
 | Direction-level visual evidence, not production specifications | [Selected-direction visual references](visual-references/selected-direction/README.md) |
 

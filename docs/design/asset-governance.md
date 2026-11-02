@@ -197,6 +197,24 @@ Whitespace and typography are valid when no meaningful asset is required.
 
 When an expressive asset is materially required but unresolved, record the asset need rather than hiding it behind filler.
 
+### Visual support versus explanatory prose
+
+Before filling an onboarding, empty, waiting, or explanatory surface with another paragraph, ask **what the person must understand at this step** (see [Information Architecture](information-architecture.md)) and whether a visual would convey a meaningful **relationship, sequence, orientation, or human context** more efficiently.
+
+Choose proportionately:
+
+| Need | First candidate | Constraint |
+| --- | --- | --- |
+| Recognize a familiar action/state | Approved **Phosphor** utility icon + clear label | Icon cannot be the sole accessible meaning or a fake verified/safe badge |
+| Explain relationship, process, or responsibility | Simple labeled diagram or editorial explanatory illustration | Must preserve Product truth and make conceptual-vs-operational meaning explicit |
+| Provide human context/story | Real, attributable and privacy-appropriate photography | Never invent documentary evidence, beneficiary identity, legitimacy or results |
+| Add brand character/empty-state orientation | Approved or reviewed mature editorial illustration/abstract geometry | Not decorative filler or an unapproved logo/identity precedent |
+| Already clear from hierarchy and one sentence | **No asset** | Whitespace and typography are legitimate design decisions |
+
+**Prefer an image when it adds understanding—not when a page merely feels empty.** Reduce or relocate secondary prose first. Material mandatory disclosures, identity/financial facts, uncertainty, user consent and destructive effects still require plain accessible wording.
+
+For a justified but unavailable asset, produce a concise **asset recommendation/brief** (purpose, placement, meaning, style reference, size/crop, provenance, proposed approval standing). If a suitable generation tool is authorized, its output remains a reviewable candidate; otherwise do not silently substitute long text or fake imagery. Exact layout/asset decisions still require feature-specific Human review when material; the selected-direction PNGs are references, not production assets.
+
 ## 11. Agent asset decision path
 
 An agent may identify, recommend, brief, or generate an asset when the active surface materially benefits from one. Tool availability must not silently dictate the design direction.
