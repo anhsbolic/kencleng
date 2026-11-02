@@ -10,12 +10,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest run --passWithNoTests",
+    "test": "vitest run",
     "test:browser": "playwright test",
     "test:browser:headed": "playwright test --headed",
     "test:browser:ui": "playwright test --ui",
     "browser:install": "playwright install chromium",
-    "verify": "npm run lint && npm run test"
+    "verify": "npm run lint && npm run test",
+    "generate:org": "node scripts/generate-org-contract.mjs",
+    "typecheck": "tsc --noEmit",
+    "dev:mock": "NEXT_PUBLIC_MSW_ENABLED=true next dev --hostname 127.0.0.1",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
@@ -36,6 +40,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.1.0",
+    "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^9",
     "eslint-config-next": "16.2.12",
     "jsdom": "^30.0.1",
@@ -44,5 +49,10 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.11"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

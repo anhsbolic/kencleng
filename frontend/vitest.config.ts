@@ -16,8 +16,7 @@ export default defineConfig({
     // Playwright owns committed real-browser tests. Keep them out of
     // Vitest even though both runners intentionally use *.spec.ts.
     exclude: [...configDefaults.exclude, "tests/browser/**"],
-    // No component tests exist at the clean baseline. Tooling verification
-    // should still pass before the first production behavior is introduced.
-    passWithNoTests: true,
+    coverage: {provider: 'v8', include: ['features/org-01/{attempt,client,workspace,deletion,provider}.{ts,tsx}', 'app/privacy/page.tsx'], reporter: ['text', 'json-summary'], thresholds: {statements: 80}},
+    passWithNoTests: false,
   },
 });
