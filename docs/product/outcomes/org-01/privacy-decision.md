@@ -97,6 +97,14 @@ Arah pemberitahuan yang disetujui:
 
 Prinsip, alur penghapusan konteks sederhana, durasi teknis/backup serta pemetaan kandidat dasar/arah pemberitahuan telah disepakati. Langkah berikutnya adalah melengkapi informasi operasional dan menilai draf/validasi yang masih terbuka. Kasus pengalihan/aktivitas tambahan memerlukan keputusan terkait ketika scope tersebut dipilih.
 
+## Release gate ORG-01
+
+Atas keputusan Human, penyelesaian gap privasi PD-PRIV-01 ditunda sebagai **release gate sebelum ORG-01 digunakan di production**. Pekerjaan fitur ORG-01 dapat dilanjutkan dalam scope yang telah diotorisasi tanpa menunggu seluruh gate privasi ditutup, dengan data sintetis untuk development dan pengujian. Penundaan ini bukan penutupan gap, persetujuan teks pemberitahuan, validasi hukum, atau bukti kesiapan mekanisme.
+
+Sebelum production menggunakan data orang nyata, pemilik harus menutup dan membuktikan gate yang masih terbuka: validasi dasar pemrosesan terhadap operasi aktual; inventaris penyedia/penerima dan lokasi; kesiapan kanal serta prosedur permintaan; pemberitahuan final; dan mekanisme retensi, penghapusan, backup/restore yang menjaga keputusan penghapusan. Bagian desain yang terdampak perlu dinilai ulang secara independen. Jika kebutuhan legal atau risiko operasional memerlukan penyelesaian lebih awal, gate terkait harus ditangani sebelum itu.
+
+Status ini merupakan urutan prioritas: privasi adalah **gate pra-production**, bukan requirement fitur yang menahan seluruh pekerjaan ORG-01. Ia tidak menyatakan bahwa privasi harus menjadi satu-satunya atau secara literal item terakhir dalam seluruh checklist release.
+
 ## Batas penggunaan dan kaitan Rancang
 
 **PD-PRIV-01 TERSELESAIKAN SEBAGIAN PADA KEPUTUSAN DAN ARAH PEMETAAN; GATE DATA ORANG NYATA TETAP DITAHAN.** Development dan pengujian dapat direncanakan dengan data sintetis. Pernyataan ini tidak mengotorisasi implementasi, menjalankan layanan/tes, canonical API adoption, publikasi pemberitahuan atau penggunaan data orang nyata.
