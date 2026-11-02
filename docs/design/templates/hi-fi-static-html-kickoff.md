@@ -1,111 +1,123 @@
-# Template — Kickoff Hi-Fi UI/UX Design (Static HTML)
+# Template — Kickoff Hi-Fi UI/UX Design (Multi-Page Static HTML)
 
-> **Standing:** Reusable **optional session prompt**, not an approved feature design, new project Design Standard, reusable Space formation, or execution authorization.
-> **Owner:** Kencleng Product Design guidance (`docs/design/`).
-> **Use for:** Bounded feature-specific visual/interaction design when current approved design is not sufficient for implementation.
-> **Method:** ChatGPT design discussion + hi-fi HTML/CSS prototype + rendered review + explicit Human design acceptance.
+> **Standing:** Optional reusable **session prompt** for bounded Kencleng Product Design work. Not a new Design Standard, Product/Design approval, Space formation, or repository-write authorization.
+> **Method:** Human–AI IA discussion → hi-fi **separate HTML page files** → rendered feedback → optional project-owned Design Candidate persistence after explicit Human authorization.
+> **Authority:** Current Kencleng Product and Design sources, not this prompt. Harscode `design/` is supporting research guidance only.
 
 ## How to use
 
-1. Copy **only** the prompt between the delimiters below into a new ChatGPT session in Project Kencleng.
-2. Fill `{{OUTCOME_ID}}`, `{{TARGET_BRANCH}}`, `{{INITIAL_SURFACE}}`, `{{SCOPE_NOTES}}` and `{{PERSISTENCE_AUTHORIZATION}}`. Do not assume example commit SHAs remain current.
-3. Let the new session discover effective Product, Design and accepted Engineering sources from the current repository. Give the session repository access explicitly if needed.
-4. Start with a single representative screen and material states. Extend scope after inspecting actual rendered evidence.
-5. Decide whether to **persist a Design Candidate** and, separately, whether to **commit/push**. The template alone grants neither. Human approval of the exact design revision is a later decision.
+1. Open a **new ChatGPT session in Project Kencleng**. Copy the prompt between the markers below and fill `{{OUTCOME_ID}}`, `{{OUTCOME_ID_LOWER}}`, `{{TARGET_BRANCH}}`, `{{INITIAL_SURFACE}}`, `{{SCOPE_NOTES}}`.
+2. **Attach the actual selected-direction PNG reference images with the kickoff message.** GitHub textual connector access alone may not expose image pixels. Add prior UI screenshots only if useful as *existing-implementation evidence*.
+3. The **first reply** must propose bounded information architecture (IA) and one recommended visual approach, then **stop for Human feedback**. It must not create/persist a full prototype or commit/push.
+4. After Human accepts the IA direction, make one or a few **separate static HTML pages** for the agreed scope, present rendered views/preview files, critique and iterate with Human. **Stop again before any repository write.**
+5. A later **explicit Human authorization** controls writing candidate files, and separate explicit authorization controls committing/pushing. Accepted design standing also needs a distinct exact-revision Human decision. **Neither images nor this template grant write/commit/push permission.**
+
+The two review stops apply to this **material feature-specific design experiment**, not every routine micro-decision or technical UI fix.
 
 ---
 
 ## BEGIN COPY-PASTE KICKOFF PROMPT
 
-Bro, kita mulai sesi **Product UI/UX Design — `{{OUTCOME_ID}}`** dalam Project Kencleng.
+Bro, kita mulai **Product UI/UX Design — `{{OUTCOME_ID}}`** dalam Project Kencleng. Kita akan berdiskusi dan menguji desain secara visual, bukan menyerahkan satu hasil jadi tanpa Human review.
 
-### Objective
+### Goal and scope
 
-Hasilkan **feature-specific high-fidelity UI/UX design** yang kuat secara visual, implementable, accessible dan benar secara Product meaning; **static HTML/CSS** menjadi primary prototype medium. Fokus pada *design quality and experience*, bukan engineering production.
+Hasil akhir yang ingin kita capai: **feature-specific hi-fidelity UX/UI design** yang enak dipakai, jelas secara Information Architecture (IA), konsisten dengan approved Kencleng visual direction, dan cukup matang untuk dijadikan input NextJS Builder.
 
-Kita sedang menyiapkan **Design Candidate** untuk direview Human. Ini bukan Next.js implementation, bukan Rancang, dan bukan authorization untuk mengubah canonical Product atau Engineering semantics.
+- Repository: `anhsbolic/kencleng`.
+- Target branch: `{{TARGET_BRANCH}}`; discover actual current HEAD and original authority, jangan bergantung pada stale commit.
+- Outcome: `{{OUTCOME_ID}}`.
+- Initial surface/page: `{{INITIAL_SURFACE}}`.
+- Boundaries and goals: `{{SCOPE_NOTES}}`.
 
-### Current context dan authority discovery
+**Ini sesi Product Design, bukan Next.js implementation, Rancang, backend, auth integration, ataupun produksi.**
 
-- Project repository: `anhsbolic/kencleng`.
-- Target branch: `{{TARGET_BRANCH}}`. Verifikasi actual HEAD dan current authority sebelum mengubah file; jangan menebak checkpoint.
-- Outcome/work identifier: `{{OUTCOME_ID}}`.
-- Initial design surface: `{{INITIAL_SURFACE}}`.
-- Scope/exclusions/constraints tambahan: `{{SCOPE_NOTES}}`.
+### Authoritative inputs
 
-Baca hanya authoritative originals yang relevan:
+Temukan dan baca sources yang efektif serta relevan, secara proporsional:
 
-1. **Product:** accepted scoped Product Contract, approval/status, actor journey dan critical acceptance for `{{OUTCOME_ID}}`; temukan melalui current `docs/product/` routing. Product owns *what and why*, including legal/security/privacy claims and consequences.
-2. **Kencleng Design:** `docs/design/README.md`, `product-design-principles.md`, `brand-product-ui-brief.md`, `design-guidelines.md`, `patterns.md`, `asset-governance.md` dan relevant approved `visual-references/`. **Lihat actual visual reference images**, bukan sekadar membaca deskripsi; bila tool tidak bisa membukanya, laporkan limitation dan minta gambar dari Human bila diperlukan.
-3. **Accepted Engineering/Rancang:** jika sudah tersedia dan relevan, temukan exact accepted handoff dan baca experience obligations, material interface/state/error/unknown/auth constraints. Ini membatasi desain agar truthful dan implementable; bukan undangan mendesain API baru.
-4. **Existing frontend:** boleh dilihat sebagai *implementation/evidence of current state*, bukan visual Design Authority atau source of new Product semantics.
-5. **Harscode Design research guidance** (jika tersedia): `anhsbolic/harscode-workspace`, current research `design/README.md`, `design/exploration.md`, `design/authority-and-handoff.md`. Ini supporting collaboration guidance, bukan authority di atas current Kencleng Design.
+1. **Product:** current approved scoped Product Contract, approval, actor goals, consequences, negative paths. Do not invent Product/domain/privacy decisions or make a held production release gate into a blanket blocker for synthetic design.
+2. **Kencleng Design:** `docs/design/README.md`, `product-design-principles.md`, `patterns.md`, `brand-product-ui-brief.md`, `design-guidelines.md`, `asset-governance.md`, and `visual-references/selected-direction/`.
+3. **Actual attached reference images:** inspect and use the PNG files **sent by Human with this kickoff** as approved-direction evidence, together with their repository README and canonical guidelines. If no image is attached or its actual pixels cannot be inspected, **tell Human and request the images before making the visual-direction decision**. Do not pretend to have viewed images merely from filenames/README. Attached images are **not** pixel-perfect screen specs, canonical logos, or permissions to invent factual imagery.
+4. **Accepted Engineering solution, if available:** current Rancang handoff and relevant experience/interaction/interface/state obligations. Those constraints ensure design is truthful and implementation-consumable, but do not make Engineering the owner of visual design.
+5. **Existing frontend and screenshots (if any):** observation/critique evidence, **not Design Authority**. Harscode research `design/README.md`, `exploration.md`, and `authority-and-handoff.md` may provide supporting guidance without overriding Kencleng.
 
-Distinguish **approved/current**, **working/proposed**, **visual reference/evidence**, dan **unverified**. Jika satu material Product decision tidak tersedia, jangan mengarangnya. Jangan memperluas scope ke fitur lain secara otomatis.
+Distinguish binding project decisions, approved visual direction, working Design Candidate, historical examples, and unverified implementation behavior.
 
-### Quality expectation
+### First decision: Information Architecture before visuals
 
-Terjemahkan approved **Sunlit Editorial / Evidence-Led Optimism** sebagaimana berlaku untuk surface ini. Jangan hanya menyalin warna kuning, font, dan rounded cards. Perhatikan:
+**FIRST RESPONSE ONLY:** after source discovery, perform a focused IA audit for `{{INITIAL_SURFACE}}` and stop for my feedback. No final multi-page HTML, no repository writes, no commit/push in this first reply.
 
-- Clear hierarchy, purposeful editorial composition, visual rhythm, typography roles, warm restrained palette, action emphasis, truthful copy, accessible controls, and realistic content.
-- Perbedaan ekspresi public vs authenticated/operational surfaces. Visual references memberi *character and relationships*, bukan pixel-perfect geometry atau permission memakai data/figur ilustratif sebagai product truth.
-- Relevant loading, empty, error, denied, pending, uncertain, recovery dan consequential confirmation states **hanya bila relevan** terhadap current surface.
-- Responsive intent: desktop dan narrow mobile; jangan menghilangkan material information/action di mobile.
-- Assets/iconography sesuai current approved project authority; jangan membuat arbitrary logo, trust badge, documentary image atau verification claim. Synthetic demo content harus terlihat sebagai demo, bukan bukti operasional.
+For the specific user's **current decision** and journey stage, explain concisely:
+- What the person wants to accomplish **now**, what they must know **before this specific action**, and which implications belong at a **later consequential step**.
+- Which information should be **always visible** (brief, comprehensible, action-relevant), **available on demand**, **shown at a later journey step**, or **omitted** from this screen. Preserve easy access to consequential information rather than dumping everything above the CTA.
+- Recommended placement/treatment per material information class: inline summary, link to a dedicated detail page, expandable section, contextual modal/dialog, or tooltip/help text. **Choose by content length, importance, timing, revisitability, mobile/keyboard accessibility and interruption cost**; don't prescribe one control universally.
+- Keep trust-critical information, critical uncertainty, required action, and necessary pre-effect consequences visible/accessible at the correct time. **Do not hide mandatory disclosure or essential decision information inside hover-only tooltips**.
+- For sign-in, distinguish **login itself** from later organization creation/commit. E.g., a short pre-login processing summary plus easy access to the complete notice **before Google sign-in** can satisfy accepted ORG-01 requirements without displaying the full policy or creation consequences on the login screen. Do not assume this example is global policy for other features.
 
-Pilih satu desain yang kuat berdasarkan authority. Explore alternatif hanya jika ada trade-off yang betul-betul material.
+Give **one recommended IA/interaction direction** with the key trade-off and a compact page/surface map. Ask me to assess it. Then **stop**. Don't run ahead to prototype or persist.
 
-### Prototype and feedback
+### After I approve the IA direction: create the hi-fi design
 
-- Deliver **single bounded hi-fi static HTML/CSS prototype** untuk `{{INITIAL_SURFACE}}` terlebih dahulu, dengan ringan JavaScript hanya untuk demo state/navigation bila perlu.
-- Tidak memakai Next.js production structure, API calls, backend, database, OAuth, MSW, cookies atau real user data.
-- Buat prototype **bisa dibuka secara lokal** dan tidak menggantung pada layanan remote tanpa kebutuhan; jika fonts/assets external dipakai, beri fallback dan jelaskan dependencies/provenance.
-- **Render dan lihat** hasil aktual jika tool mendukung; inspeksi composition, typography, overflow, realistic content, responsive and meaningful UX states. Jangan claim visual verification jika belum melihat rendering.
-- Tunjukkan hasil dan kritik visual yang spesifik terhadap Kencleng design authority, lalu iterasi bersama Human sebelum memperluas ke surface lain.
-- Hi-fi pada **material representative states**, cukup fidelity pada sisanya. Tidak perlu ratusan screenshot atau semua layar sekaligus.
+Translate **Sunlit Editorial / Evidence-Led Optimism** into actual page composition: purposeful visual hierarchy, editorial typography, restrained colors, brand character, spacing, navigation, interaction clarity, responsive priorities, and appropriate accessibility. **Good IA matters as much as good-looking CSS.**
 
-### Candidate persistence and handoff
+Produce **one HTML file for each actual page/surface in the agreed scope**, **not one HTML document toggling entire pages through JavaScript**. Keep ordinary state variations in the relevant page where appropriate; additional page files only if a distinct page is genuinely useful.
 
-**Authorization supplied for this particular session:** `{{PERSISTENCE_AUTHORIZATION}}`
+Possible *candidate* structure if later persisted (adapt to actual scope, do not create every example):
 
-Jika Human memberi izin repository write/commit, proposed project-owned location:
+```text
+docs/design/outcomes/{{OUTCOME_ID_LOWER}}/
+  pages/
+    onboarding.html
+    privacy-information.html    # only if designed as a distinct page
+    auth-failure.html           # only if in scope
+  prototype.css                 # optional shared styles
+  handoff.md                     # only at authorized candidate persistence
+  assets/                        # only if necessary, with provenance
+```
 
-`docs/design/outcomes/{{OUTCOME_ID_LOWER}}/`
+The prototype must work as local static pages with relative links/navigation; **lightweight JS only for disclosure or illustrative non-business UI interactions**. No Next.js implementation, real API, OAuth, cookies, backend, MSW, personal data, invented product claims or fake live operations. No mandatory design tooling such as Figma.
 
-Suggested minimal deliverables (use only if useful):
-- `prototype.html`: runnable static design prototype.
-- `handoff.md`: scope, original authority/revisions, exact prototype identity, material design/interaction decisions, representative states/responsive intent, evidence/limitations, open Human decisions and freedom for NextJS Builder.
-- `assets/` and/or `screenshots/` only when they add real evidence/value.
+Use correct page-level content priorities on desktop and narrow mobile. Show meaningful states with truthful synthetic text. Prefer deliberate, minimal design complexity; avoid new visual assets when existing expression suffices.
 
-Ini **proposed path, bukan mandatory layout**. Periksa existing project location/convention before creating it. Jangan menyalin Product Contract atau Rancang API sebagai duplicate design authority. Jangan menulis ke `frontend/`, `api/`, shared Product/Rancang sources, atau project-wide Design Standards dalam assignment ini.
+**Render and inspect** the actual HTML if possible. Provide preview/screenshots or accessible temporary artifact files to Human for review. If rendering fails, clearly label `NOT VISUALLY VERIFIED`, supply locally openable files where possible, and invite Human screenshots. Do not substitute source inspection for visual approval.
 
-Semua output bermula sebagai **DESIGN CANDIDATE / NOT HUMAN APPROVED**, sekalipun prototipe sudah dirender atau committed. Human akan menentukan acceptance terhadap **exact design revision** secara terpisah. Tanpa explicit Human write permission, hasilkan prototype di chat/attachment dan usulkan persist action; jangan mengklaim telah menulis repo.
+**SECOND REVIEW STOP:** present the designed pages and specific critique/limitations to me, then **wait for my visual/IA feedback and revision requests**. Do not silently treat a generated design as approved, and do not write to GitHub merely to make the prototype inspectable. Iterate until Human is satisfied; no need to request approval for minor CSS tweaks.
 
-### Working style and first action
+### Persistence and exact-revision acceptance — only after separate Human instruction
 
-Gunakan **Challenge first, then commit**. Tetap aktif sebagai UI/UX Designer; jangan sekadar menerjemahkan source ke daftar requirement. Pertanyakan masalah visual/interaction material, tetapi jangan reopen accepted Product/Rancang decisions tanpa new evidence.
+The kickoff **does not authorize repository writes, creating commits, or pushing**. You may inspect sources and create temporary chat/downloadable prototype artifacts for review. A user saying "start", "lanjut" or "buat prototipe" is permission for the design step being discussed, **not automatic persistence permission**.
 
-Mulai dengan current authoritative source discovery yang proporsional, lalu **langsung buat dan render hi-fi initial prototype untuk `{{INITIAL_SURFACE}}`**. Jangan berhenti pada read-only assessment atau planning ceremony jika input cukup. Tutup dengan apa yang benar-benar terlihat/teruji, keputusan yang masih diminta dari Human, dan tindakan berikutnya.
+After visual review, **ask for the specific repository action** only if it is needed. Human may authorize:
+- Writing Design Candidate files within a verified project-owned destination (proposed `docs/design/outcomes/{{OUTCOME_ID_LOWER}}/`; confirm existing convention and current HEAD).
+- Committing, and separately pushing, that exact candidate scope. Never infer this from the template, GitHub access, or earlier examples.
+
+Maintain `DESIGN CANDIDATE / NOT HUMAN APPROVED` until Human explicitly accepts the **exact design revision**. A commit/push only persists a candidate and is **not** design approval. No write to `frontend/`, `api/`, Product Contract, Rancang sources, or canonical Design Standards under this assignment. If approved later, record discoverable exact-revision Design handoff and Engineering freedom, without duplicating Product/Engineering source of truth.
+
+### Collaboration
+
+Use **Challenge first, then commit**. Challenge information overload, poor action hierarchy, premature disclosure, hidden consequences, misleading language and gratuitous visual decoration. Do not be contrarian without concrete UX consequence. Be a collaborative Designer who brings one strong recommendation and waits at meaningful Human review boundaries.
+
+**Start now with the FIRST RESPONSE ONLY: current-source verification + recommended IA and page-level disclosure strategy for `{{INITIAL_SURFACE}}`. Do not generate/push the full HTML in the first answer.**
 
 ## END COPY-PASTE KICKOFF PROMPT
 
 ---
 
-## Example filling — ORG-01 (illustrative; verify live state)
+## Example filling — ORG-01 (illustrative, not implicit authorization)
 
 | Placeholder | Example |
 | --- | --- |
 | `{{OUTCOME_ID}}` | `ORG-01` |
 | `{{OUTCOME_ID_LOWER}}` | `org-01` |
 | `{{TARGET_BRANCH}}` | `pilot/station5-c1-space-only` |
-| `{{INITIAL_SURFACE}}` | `Organization Onboarding / Entry Experience` |
-| `{{SCOPE_NOTES}}` | `Mulai dari public entry, pre-Google disclosure dan significant error/unavailable states; jangan sekaligus redesign account deletion/privacy; preserve accepted ORG-01 and Rancang semantics.` |
-| `{{PERSISTENCE_AUTHORIZATION}}` | `Contoh: hanya candidate files di docs/design/outcomes/org-01/, termasuk commit/push ke target research branch; tanpa writes ke frontend/api/Product/Rancang.` **Only when Human explicitly grants this scope.** |
+| `{{INITIAL_SURFACE}}` | `Organization Onboarding / Entry and Google sign-in` |
+| `{{SCOPE_NOTES}}` | `Prioritize a fast, clear login decision: concise upfront data-processing summary and link to full DRAFT notice before Google login; defer organization/Owner creation consequences until their appropriate review step. Discuss IA first. No direct GitHub writes at kickoff.` |
 
-For ORG-01 the session can discover:
-- `docs/product/outcomes/org-01/product-contract.md` and `approval.md`.
-- `harscode-state/org-01/rancang-002/handoff.md`, `experience.md`, and material `interface-decisions.md`.
-- `docs/design/visual-references/selected-direction/` (public and evidence-journal PNG references, **not production assets**).
-- Existing implementation under `frontend/features/org-01/` as observation only.
+Current ORG-01 discovery candidates (verify current standing rather than hardcode):
+- `docs/product/outcomes/org-01/product-contract.md`, `approval.md`, `privacy-decision.md` and `privacy-notice-draft.md` (notice still draft until approved).
+- `harscode-state/org-01/rancang-002/handoff.md`, `experience.md`, relevant `interface-decisions.md`.
+- Two approved `docs/design/visual-references/selected-direction/*.png` images **attached directly to the chat by Human**.
+- `docs/design/outcomes/org-01/` may already contain an **unapproved candidate**; treat it as prior exploration/evidence, not authoritative design, and do not overwrite without explicit permission.
 
-Do **not** turn the example branch/paths/authority standing into universal conventions or silently grant write permission through this file.
+**Design Guidelines already include "Ordered Transparency, Not Information Dumping" and the UX Pattern System covers Progressive Disclosure.** Evaluate application of these established principles before proposing a new canonical IA standard.
