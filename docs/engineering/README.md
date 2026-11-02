@@ -11,4 +11,4 @@
 
 Product truth remains in [Product](../product/README.md), reusable product-design authority in [Design](../design/README.md). The earlier Rancang ORG-01 unaccepted proposal and Station 5 pilot evidence have been archived from the active tree; see [History](../history/README.md). Do not reconstruct old solutions as effective Engineering policy.
 
-Assignment ORG-01: [Rancang `rancang-002` — handoff final dan dokumen efektif](../../harscode-state/org-01/rancang-002/handoff.md). Exact original r4 telah diterima Human; identitas packaging final, provenance dan remaining implementation/runtime gates dicatat terpisah pada state dan manifest assignment.
+Assignment ORG-01: [Rancang `rancang-002` — handoff final dan dokumen efektif](../../harscode-state/org-01/rancang-002/handoff.md). Exact original r4 telah diterima Human; identitas packaging final, provenance dan remaining implementation/runtime gates dicatat terpisah pada state dan manifest assignment. Adopsi API kanonis telah disetujui tetapi penerapan ke `api/` ditahan Human; lihat [keputusan adopsi API](org-01-api-adoption.md).
