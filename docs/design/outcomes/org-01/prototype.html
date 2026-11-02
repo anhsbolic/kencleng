@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Kencleng — Memulai organisasi · ORG-01 design candidate</title>
+  <meta name="description" content="Design candidate ORG-01: organization onboarding / entry. Static illustrative prototype, not a working account or organization creation flow.">
+  <style>
+    /* Design Candidate only. The specified font pair uses offline-capable system fallbacks. */
+    :root { --canvas:#FFFDF7; --warm:#FFF8E8; --subtle:#F6F0E3; --ink:#24211D; --muted:#5F5A52; --border:#E2D8C7; --sun:#F6C945; --sun-strong:#E5B62E; --berry:#A63B57; --berry-soft:#F7E8EC; --error:#B74343; --ui:'Instrument Sans',Arial,Helvetica,sans-serif; --editorial:'Newsreader',Georgia,'Times New Roman',serif; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--canvas); color:var(--ink); font-family:var(--ui); font-size:16px; -webkit-font-smoothing:antialiased; }
+    button, a { -webkit-tap-highlight-color:transparent; }
+    button { font:inherit; cursor:pointer; }
+    a { color:inherit; text-underline-offset:4px; }
+    button:focus-visible, a:focus-visible, summary:focus-visible { outline:3px solid #426B8E; outline-offset:4px; }
+    button:disabled { cursor:not-allowed; opacity:.55; }
+    .sr-only { position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .candidate-strip { display:flex; justify-content:center; align-items:center; gap:10px; min-height:29px; background:#26231F; color:#FFF9EB; font-size:10px; letter-spacing:.145em; text-transform:uppercase; font-weight:600; padding:6px 18px; text-align:center; }
+    .candidate-strip .sep { color:#AC9A7B; }
+    .site-header { height:86px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 clamp(24px,5.15vw,90px); background:var(--canvas); }
+    .wordmark { font-family:var(--ui); font-size:25px; letter-spacing:-.095em; font-weight:700; line-height:1; text-decoration:none; display:inline-flex; align-items:center; gap:12px; }
+    .wordmark .mark { display:block; height:18px; width:18px; background:var(--sun); border-radius:50% 50% 50% 4px; transform:rotate(-18deg); border:1.5px solid var(--ink); }
+    .wordmark .mark, .wordmark .word { opacity:1; }
+    .brand-caption { margin-left:14px; border-left:1px solid var(--border); padding-left:15px; font-size:11px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.13em; }
+    .site-nav { display:flex; align-items:center; gap:34px; font-size:13px; font-weight:600; }
+    .site-nav a { text-decoration:none; }
+    .site-nav a:hover { text-decoration:underline; }
+    .nav-quiet { color:var(--muted); }
+    .header-index { font-size:12px; color:var(--muted); display:flex; align-items:center; gap:10px; font-variant-numeric:tabular-nums; }
+    .header-index::before { content:''; width:27px; height:1px; background:var(--ink); }
+    .view { display:none; }
+    .view.active { display:block; }
+    .main-grid { min-height:690px; display:grid; grid-template-columns:minmax(0,1.18fr) minmax(440px,.82fr); border-bottom:1px solid var(--border); }
+    .editorial-side { padding:62px clamp(38px,5.15vw,90px) 35px; display:flex; flex-direction:column; min-width:0; }
+    .eyebrow { color:var(--muted); text-transform:uppercase; font-size:11px; letter-spacing:.18em; font-weight:700; display:flex; align-items:center; gap:13px; }
+    .eyebrow::before { content:''; width:23px; height:2px; background:var(--berry); }
+    .hero-title { margin:29px 0 26px; font-family:var(--editorial); font-size:clamp(56px,5.1vw,89px); font-weight:400; letter-spacing:-.056em; line-height:.99; max-width:780px; }
+    .hero-title .br { display:block; }
+    .hero-title em { color:var(--berry); font-weight:400; }
+    .hero-lead { margin:0; font-size:clamp(17px,1.42vw,20px); line-height:1.62; max-width:520px; color:#48443D; letter-spacing:-.014em; }
+    .editorial-art { margin-top:auto; display:grid; grid-template-columns:1fr 73px 1fr; align-items:center; max-width:650px; padding:58px 0 38px; gap:0; }
+    .art-cell { position:relative; min-height:142px; padding:22px 18px 18px; border-top:1px solid #988D7B; border-left:1px solid #988D7B; border-bottom:1px solid #988D7B; display:flex; flex-direction:column; justify-content:space-between; }
+    .art-cell:first-child { background:var(--warm); }
+    .art-cell:last-child { border-right:1px solid #988D7B; background:var(--subtle); }
+    .art-number { font-family:var(--editorial); font-size:57px; line-height:.9; letter-spacing:-.06em; }
+    .art-number.accent { color:var(--berry); }
+    .art-caption { font-size:10px; text-transform:uppercase; letter-spacing:.13em; font-weight:700; line-height:1.45; max-width:130px; }
+    .art-link { position:relative; height:1px; background:#988D7B; }
+    .art-link::before, .art-link::after { content:''; position:absolute; width:10px; height:10px; border:1px solid var(--ink); border-radius:50%; background:var(--canvas); top:-5px; }
+    .art-link::before { left:-5px; } .art-link::after { right:-5px; background:var(--sun); }
+    .art-note { font-size:12px; color:var(--muted); padding-top:14px; border-top:1px solid var(--border); display:flex; gap:12px; justify-content:space-between; line-height:1.55; }
+    .art-note span:last-child { white-space:nowrap; color:var(--berry); font-weight:600; }
+    .action-side { background:var(--warm); border-left:1px solid var(--border); padding:64px clamp(35px,5.1vw,81px) 48px; display:flex; flex-direction:column; }
+    .rail-top { display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #D7CBB6; padding-bottom:17px; gap:10px; }
+    .rail-top span:first-child { font-size:11px; letter-spacing:.16em; font-weight:700; text-transform:uppercase; }
+    .rail-index { font-family:var(--editorial); font-size:22px; color:var(--muted); }
+    .rail-title { margin:36px 0 10px; font-family:var(--editorial); font-weight:400; letter-spacing:-.04em; font-size:clamp(33px,2.55vw,44px); line-height:1.15; }
+    .rail-description { font-size:15px; line-height:1.65; color:var(--muted); margin:0 0 24px; }
+    .steps { padding:0; margin:0; list-style:none; }
+    .steps li { display:grid; grid-template-columns:33px 1fr; gap:15px; padding:18px 0; border-top:1px solid #DDD2C0; }
+    .step-n { font-family:var(--editorial); font-size:24px; line-height:1; color:var(--berry); }
+    .step-title { font-size:14px; font-weight:700; margin-bottom:4px; }
+    .step-copy { color:#615B51; font-size:13px; line-height:1.55; }
+    .privacy-summary { padding:19px 0 0; border-top:1px solid #C9BBA4; margin-top:6px; }
+    .privacy-heading { font-size:11px; font-weight:700; letter-spacing:.15em; text-transform:uppercase; display:flex; align-items:center; gap:11px; }
+    .privacy-heading::before { content:''; display:block; background:var(--sun); border-radius:50%; height:10px; width:10px; border:1px solid var(--ink); }
+    .privacy-copy { font-size:13px; color:#5B564E; line-height:1.64; margin:11px 0 7px; }
+    .text-link { background:none; border:0; padding:0; font-size:13px; text-decoration:underline; text-underline-offset:4px; font-weight:700; color:var(--ink); }
+    .primary-action { margin-top:24px; padding:16px 19px; border:1px solid var(--ink); border-radius:6px; width:100%; min-height:58px; background:var(--sun); color:var(--ink); font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:4px 4px 0 #D9B43E; transition:transform .18s,box-shadow .18s,background .18s; }
+    .primary-action:hover { background:var(--sun-strong); transform:translate(-1px,-1px); box-shadow:5px 5px 0 #C69D27; }
+    .primary-action:active { transform:translate(2px,2px); box-shadow:1px 1px 0 #D9B43E; }
+    .action-icon { font-size:23px; font-weight:400; line-height:1; }
+    .action-foot { margin:15px 0 0; color:#746D61; font-size:11px; line-height:1.55; }
+    .bottom-band { padding:32px clamp(24px,5.15vw,90px) 37px; display:grid; grid-template-columns:.68fr 1fr 1fr; gap:45px; }
+    .bottom-intro { font-size:11px; text-transform:uppercase; font-weight:700; letter-spacing:.16em; color:var(--berry); padding-top:5px; }
+    .bottom-item { display:grid; grid-template-columns:35px 1fr; gap:10px; }
+    .bottom-item strong { display:block; font-size:13px; margin-bottom:6px; }
+    .bottom-item p { margin:0; color:var(--muted); font-size:13px; line-height:1.62; }
+    .mini-num { font-family:var(--editorial); font-size:27px; line-height:1; color:#8D8171; }
+    .site-footer { border-top:1px solid var(--border); padding:18px clamp(24px,5.15vw,90px); display:flex; gap:20px; align-items:center; justify-content:space-between; color:var(--muted); font-size:11px; line-height:1.5; }
+    .site-footer a { text-decoration:underline; }
+    .screen { max-width:1260px; min-height:668px; margin:0 auto; padding:65px clamp(24px,5.15vw,90px) 82px; }
+    .back-link { border:0; background:none; color:var(--muted); padding:0; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:12px; }
+    .back-link:hover { color:var(--ink); }
+    .screen-grid { margin-top:54px; display:grid; grid-template-columns:minmax(0,.85fr) minmax(410px,1fr); gap:clamp(50px,9vw,150px); align-items:start; }
+    .screen h1 { font-family:var(--editorial); font-size:clamp(49px,4.4vw,75px); font-weight:400; letter-spacing:-.052em; line-height:1.04; margin:22px 0 25px; }
+    .screen .lede { font-size:18px; color:var(--muted); line-height:1.65; max-width:430px; }
+    .quote-line { border-left:3px solid var(--sun); padding-left:19px; font-family:var(--editorial); font-size:25px; line-height:1.28; margin-top:45px; }
+    .info-document { border-top:3px solid var(--ink); background:var(--warm); padding:28px 32px 35px; }
+    .doc-meta { display:flex; justify-content:space-between; font-size:11px; letter-spacing:.12em; text-transform:uppercase; font-weight:700; border-bottom:1px solid #D3C5AF; padding-bottom:17px; }
+    .doc-meta span:last-child { color:var(--berry); }
+    .info-document h2 { font-family:var(--editorial); font-size:34px; font-weight:400; letter-spacing:-.035em; margin:26px 0 18px; }
+    .info-document p { font-size:14px; line-height:1.68; color:#4E493F; margin:0 0 16px; }
+    .info-document h3 { font-size:12px; letter-spacing:.12em; text-transform:uppercase; margin:27px 0 9px; }
+    .doc-rule { height:1px; background:#D3C5AF; margin:25px 0 0; }
+    .doc-note { background:var(--canvas); border-left:2px solid var(--berry); padding:13px 16px; font-size:12px; line-height:1.6; color:#554D45; }
+    .doc-link { font-size:13px; font-weight:700; display:inline-block; margin-top:8px; }
+    .doc-link small { font-weight:400; }
+    .document-action { margin-top:24px; }
+    .error-surface { background:var(--canvas); }
+    .error-art { border:1px solid var(--border); background:var(--warm); width:166px; height:140px; position:relative; overflow:hidden; margin-bottom:34px; }
+    .error-art::before { content:''; position:absolute; width:106px; height:106px; border:1px solid var(--ink); border-radius:50%; top:-42px; right:-25px; background:var(--sun); }
+    .error-art::after { content:''; position:absolute; width:180px; height:1px; background:var(--ink); left:-8px; bottom:44px; transform:rotate(-25deg); }
+    .error-rail { padding:28px 32px; border-top:3px solid var(--error); background:var(--warm); }
+    .error-rail h2 { font-family:var(--editorial); font-weight:400; font-size:32px; margin:4px 0 15px; }
+    .error-rail p { font-size:14px; line-height:1.68; color:#4E493F; }
+    .error-rail .primary-action { max-width:360px; }
+    .outline-action { margin-top:12px; display:inline-flex; gap:9px; align-items:center; background:none; border:0; padding:8px 0; font-weight:700; text-decoration:underline; text-underline-offset:4px; font-size:13px; }
+    .sample-caption { display:block; font-size:11px; color:var(--muted); margin-top:28px; }
+    .preview-tools { position:fixed; right:22px; bottom:20px; z-index:10; background:#28241F; color:#FFF9EC; padding:9px; display:flex; align-items:center; gap:3px; border:1px solid #777063; border-radius:12px; box-shadow:0 9px 25px #24211D33; }
+    .preview-tools span { color:#D8CBB7; font-size:9px; text-transform:uppercase; letter-spacing:.11em; padding:0 12px; font-weight:700; }
+    .preview-tools button { padding:9px 10px; color:#EFE9DB; font-size:11px; font-weight:600; background:transparent; border:1px solid transparent; border-radius:6px; }
+    .preview-tools button:hover { background:#454038; }
+    .preview-tools button[aria-pressed="true"] { background:var(--sun); color:var(--ink); }
+    .toast { position:fixed; z-index:20; top:115px; right:25px; max-width:440px; background:var(--canvas); border:1px solid var(--ink); box-shadow:6px 6px 0 #D7CBB6; padding:20px 42px 20px 21px; font-size:14px; line-height:1.6; display:none; }
+    .toast.visible { display:block; }
+    .toast strong { display:block; margin-bottom:5px; }
+    .toast button { border:0; background:transparent; position:absolute; right:13px; top:10px; font-size:20px; }
+    @media (min-width:1500px) { .main-grid { grid-template-columns:minmax(0,1.18fr) minmax(520px,.82fr); } .editorial-side { padding-bottom:38px; } }
+    @media (max-width:1100px) { .main-grid { grid-template-columns:minmax(0,1fr) minmax(390px,.86fr); } .editorial-side { padding-left:43px; padding-right:43px; } .action-side { padding:57px 37px 45px; } .hero-title { font-size:66px; } .editorial-art { grid-template-columns:1fr 42px 1fr; } .art-note span:last-child { display:none; } .bottom-band { gap:25px; } }
+    @media (max-width:790px) {
+      .site-header { height:68px; padding:0 23px; } .wordmark { font-size:22px; } .wordmark .mark { width:15px; height:15px; } .brand-caption { font-size:10px; } .site-nav { gap:18px; } .header-index, .site-nav .nav-quiet { display:none; }
+      .main-grid { display:flex; flex-direction:column; } .editorial-side { padding:43px 25px 31px; } .hero-title { max-width:580px; margin:25px 0 19px; font-size:clamp(58px,11vw,83px); } .hero-lead { max-width:600px; }
+      .editorial-art { margin-top:17px; padding:32px 0 22px; max-width:580px; } .action-side { border-left:0; border-top:1px solid var(--border); padding:34px 25px 42px; } .rail-title { margin-top:23px; } .steps { display:grid; grid-template-columns:1fr 1fr 1fr; gap:13px; } .steps li { display:block; border:0; border-top:1px solid #DDD2C0; padding-top:14px; } .step-n { display:block; margin-bottom:9px; } .privacy-summary { margin-top:15px; } .bottom-band { padding:29px 25px 35px; gap:20px; grid-template-columns:1fr 1fr; } .bottom-intro { grid-column:1/-1; } .screen { padding:43px 25px 80px; } .screen-grid { grid-template-columns:1fr; gap:27px; margin-top:35px; } .screen h1 { max-width:610px; } .quote-line { margin-top:25px; } .site-footer { padding:19px 25px 92px; }
+    }
+    @media (max-width:520px) {
+      .candidate-strip { font-size:8px; min-height:25px; gap:7px; letter-spacing:.075em; }
+      .site-header { height:64px; padding:0 20px; } .wordmark { font-size:22px; letter-spacing:-.095em; gap:8px; } .brand-caption { margin-left:5px; padding-left:9px; font-size:9px; letter-spacing:.06em; } .site-nav { gap:0; font-size:12px; }
+      .editorial-side { padding:33px 21px 25px; } .eyebrow { font-size:10px; } .hero-title { font-size:clamp(53px,14vw,67px); margin:23px 0 18px; letter-spacing:-.058em; } .hero-lead { font-size:16px; line-height:1.55; } .editorial-art { padding:30px 0 14px; grid-template-columns:1fr 35px 1fr; } .art-cell { min-height:112px; padding:14px 13px 11px; } .art-number { font-size:44px; } .art-caption { font-size:9px; } .art-note { font-size:11px; }
+      .action-side { padding:29px 21px 33px; } .rail-top { padding-bottom:12px; } .rail-title { font-size:35px; margin:22px 0 9px; } .rail-description { font-size:14px; margin-bottom:12px; } .steps { display:block; } .steps li { display:grid; grid-template-columns:30px 1fr; padding:13px 0; border-top:1px solid #DDD2C0; gap:12px; } .step-n { margin:0; font-size:22px; } .step-copy { font-size:12px; } .privacy-summary { margin-top:3px; padding-top:15px; } .privacy-copy { font-size:13px; } .primary-action { margin-top:20px; min-height:56px; }
+      .bottom-band { display:block; padding:28px 21px 27px; } .bottom-intro { margin-bottom:21px; } .bottom-item + .bottom-item { margin-top:20px; } .site-footer { display:block; padding:18px 21px 100px; } .site-footer span:last-child { display:block; margin-top:8px; }
+      .screen { padding:34px 21px 105px; min-height:auto; } .screen-grid { margin-top:32px; } .screen h1 { font-size:52px; margin:18px 0; } .screen .lede { font-size:16px; } .info-document { padding:23px 21px 27px; } .info-document h2 { font-size:31px; } .quote-line { font-size:22px; } .error-rail { padding:25px 21px; }
+      .preview-tools { bottom:10px; left:10px; right:10px; justify-content:space-between; padding:5px; border-radius:10px; } .preview-tools span { display:none; } .preview-tools button { padding:10px 7px; font-size:11px; flex:1; } .toast { top:79px; left:15px; right:15px; max-width:none; }
+    }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .primary-action { transition:none; } }
+  </style>
+</head>
+<body>
+  <!-- The word 'kencleng' is a text-only placeholder, not a proposed final logo or wordmark. -->
+  <div class="candidate-strip">ORG-01 / Design exploration <span class="sep">•</span> Static prototype <span class="sep">•</span> Not human approved</div>
+  <header class="site-header">
+    <a class="wordmark" href="#entry" data-goto="entry" aria-label="Kencleng, kembali ke awal"><span class="word">kencleng</span></a>
+    <span class="brand-caption">Organisasi</span>
+    <nav class="site-nav" aria-label="Navigasi prototipe"><a href="#principles" data-goto="entry" data-scroll="principles" class="nav-quiet">Tentang alur ini</a><a href="#disclosure" data-goto="disclosure">Privasi & data <span aria-hidden="true">↗</span></a></nav>
+  </header>
+
+  <main id="main">
+    <section id="entry" class="view active" data-view="entry" aria-labelledby="entry-title">
+      <div class="main-grid">
+        <div class="editorial-side">
+          <div class="eyebrow">Kencleng untuk organisasi</div>
+          <h1 id="entry-title" class="hero-title">Sebuah awal<br><span class="br">yang <em>jelas.</em></span></h1>
+          <p class="hero-lead">Bentuk ruang organisasi di Kencleng, dengan identitas dan tanggung jawab internal yang bisa dipahami sejak awal.</p>
+          <div class="editorial-art" aria-label="Ilustrasi konseptual: organisasi dan Owner internal pertama harus sama-sama tercatat saat pembentukan berhasil" role="img">
+            <div class="art-cell"><span class="art-number">01</span><span class="art-caption">Konteks organisasi</span></div>
+            <span class="art-link" aria-hidden="true"></span>
+            <div class="art-cell"><span class="art-number accent">01</span><span class="art-caption">Owner internal pertama</span></div>
+          </div>
+          <div class="art-note"><span>Satu pembentukan yang bermakna: organisasi dan Owner internal awal sama-sama berlaku.</span><span>Prinsip ORG-01</span></div>
+        </div>
+        <div class="action-side">
+          <div class="rail-top"><span>Mulai di sini</span><span class="rail-index">3 HAL</span></div>
+          <h2 class="rail-title">Sebelum membentuk organisasi.</h2>
+          <p class="rail-description">Tiga hal penting agar langkah berikutnya tidak menimbulkan salah pengertian.</p>
+          <ol class="steps" id="principles">
+            <li><span class="step-n">01</span><div><div class="step-title">Kenali akun yang bertindak</div><div class="step-copy">Masuk dengan Google untuk menghubungkan tindakan ke akun. Masuk belum membuat organisasi.</div></div></li>
+            <li><span class="step-n">02</span><div><div class="step-title">Tinjau nama dan peran</div><div class="step-copy">Setelah masuk, isi nama organisasi dan pahami bahwa Anda akan menjadi Owner pertama <strong>di Kencleng</strong>.</div></div></li>
+            <li><span class="step-n">03</span><div><div class="step-title">Bentuk secara eksplisit</div><div class="step-copy">Anda akan meninjau akibatnya sebelum membuat. Ini bukan verifikasi kewenangan hukum atau persetujuan Reviewer.</div></div></li>
+          </ol>
+          <div class="privacy-summary">
+            <div class="privacy-heading">Ringkasan penggunaan data</div>
+            <p class="privacy-copy"><strong>Yayasan Kencleng Indonesia</strong> menggunakan pengenal Google untuk akun, lalu mengaitkan nama organisasi yang Anda berikan dengan hubungan Owner internal. Kanal privasi: <strong>care@kencleng.dev</strong>.</p>
+            <button type="button" class="text-link" data-goto="disclosure">Baca informasi privasi sebelum masuk <span aria-hidden="true">↗</span></button>
+          </div>
+          <button type="button" class="primary-action" data-demo-auth><span>Lanjutkan dengan Google</span><span class="action-icon" aria-hidden="true">↗</span></button>
+          <p class="action-foot">Masuk bukan persetujuan menyeluruh atas pemrosesan data. Prototipe ini tidak terhubung ke Google.</p>
+        </div>
+      </div>
+      <div class="bottom-band">
+        <div class="bottom-intro">Yang penting dipahami</div>
+        <div class="bottom-item"><span class="mini-num">A.</span><div><strong>Hubungan internal, bukan pengesahan</strong><p>Owner awal adalah kewenangan di Kencleng, bukan bukti hak mewakili organisasi nyata.</p></div></div>
+        <div class="bottom-item"><span class="mini-num">B.</span><div><strong>Identitas organisasi tetap terpisah</strong><p>Nama yang serupa tidak otomatis membuat dua konteks menjadi satu organisasi.</p></div></div>
+      </div>
+    </section>
+
+    <section id="disclosure" class="view" data-view="disclosure" aria-labelledby="disclosure-title">
+      <div class="screen">
+        <button class="back-link" type="button" data-goto="entry">← Kembali ke awal</button>
+        <div class="screen-grid">
+          <div>
+            <div class="eyebrow">Sebelum masuk dengan Google</div>
+            <h1 id="disclosure-title">Informasi yang perlu Anda <em>tahu.</em></h1>
+            <p class="lede">Identitas akun diperlukan untuk menghubungkan pembentukan organisasi dengan orang yang bertindak. Kami menempatkan penjelasan ini sebelum langkah masuk.</p>
+            <div class="quote-line">Pahami apa yang digunakan, sebelum memutuskan melanjutkan.</div>
+            <span class="sample-caption">DESIGN CANDIDATE • Bukan pemberitahuan hukum final</span>
+          </div>
+          <div class="info-document">
+            <div class="doc-meta"><span>Ringkasan pemrosesan</span><span>Draf / belum final</span></div>
+            <h2>Akun dan organisasi</h2>
+            <p><strong>Pengendali:</strong> Yayasan Kencleng Indonesia.</p>
+            <p>Kencleng berencana menggunakan pengenal akun Google untuk sign-in dan atribusi akun. Jika Anda membentuk organisasi, nama yang Anda isi dicatat sebagai informasi dari Anda, bersama hubungan akun Anda sebagai Owner internal pertama.</p>
+            <p>Data digunakan untuk layanan akun/organisasi, keamanan, dan pemulihan sesuai batas yang dijelaskan dalam draf pemberitahuan.</p>
+            <h3>Batas yang perlu jelas</h3>
+            <p>Sign-in tidak membentuk organisasi, tidak membuktikan hak mewakili organisasi secara hukum, dan bukan persetujuan menyeluruh untuk setiap tujuan pemrosesan.</p>
+            <div class="doc-rule"></div>
+            <h3>Hubungi pengendali</h3>
+            <p><strong>care@kencleng.dev</strong> adalah kanal yang ditetapkan; kesiapan operasionalnya belum diverifikasi.</p>
+            <div class="doc-note"><strong>Pemberitahuan lengkap belum final.</strong> Teks draf, dasar pemrosesan, penyedia/lokasi, serta prosedur hak pengguna masih memerlukan penyelesaian sebelum production. Ini hanya ringkasan untuk mengevaluasi desain; bukan pemberitahuan lengkap yang siap dipublikasi.</div>
+            <a class="doc-link" href="https://github.com/anhsbolic/kencleng/blob/pilot/station5-c1-space-only/docs/product/outcomes/org-01/privacy-notice-draft.md" target="_blank" rel="noopener noreferrer">Lihat sumber draf pemberitahuan lengkap <small>↗</small></a>
+            <button type="button" class="primary-action document-action" data-demo-auth><span>Lanjutkan dengan Google</span><span class="action-icon" aria-hidden="true">↗</span></button>
+            <p class="action-foot">Tidak ada auth atau data yang dikirim dari prototype ini.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="unavailable" class="view error-surface" data-view="unavailable" aria-labelledby="unavailable-title">
+      <div class="screen">
+        <button class="back-link" type="button" data-goto="entry">← Kembali ke awal</button>
+        <div class="screen-grid">
+          <div>
+            <div class="error-art" aria-hidden="true"></div>
+            <div class="eyebrow">Contoh state / layanan tidak tersedia</div>
+            <h1 id="unavailable-title">Belum bisa lanjut <em>sekarang.</em></h1>
+            <p class="lede">Langkah masuk tidak dapat dimulai pada contoh kondisi ini. Anda belum membentuk organisasi lewat halaman ini.</p>
+            <span class="sample-caption">SIMULATED UI STATE • Bukan hasil permintaan nyata</span>
+          </div>
+          <div class="error-rail" role="region" aria-label="Penjelasan dan pemulihan">
+            <div class="doc-meta"><span>Gangguan saat memulai masuk</span><span>Belum ada akibat</span></div>
+            <h2>Apa yang bisa dilakukan?</h2>
+            <p>Anda bisa kembali ke awal untuk membaca informasi dan mencoba langkah masuk di lain waktu. Contoh ini terjadi <strong>sebelum</strong> permintaan pembentukan organisasi—bukan status atas permintaan yang sudah dikirim.</p>
+            <p>Jika gangguan berlanjut pada layanan nyata, jelaskan keadaan tanpa menyimpulkan bahwa suatu tindakan telah berhasil atau gagal jika hasilnya belum diketahui.</p>
+            <button type="button" class="primary-action" data-goto="entry"><span>Kembali ke awal</span><span class="action-icon" aria-hidden="true">→</span></button>
+            <button type="button" class="outline-action" data-goto="disclosure">Baca informasi privasi <span aria-hidden="true">↗</span></button>
+            <p class="action-foot">Tombol di sini hanya mengubah preview. Tidak ada retry request.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><span>Kencleng / ORG-01 — organisasi & Owner internal pertama.</span><span>Prototype konten sintetis · <a href="#disclosure" data-goto="disclosure">Informasi privasi (draf)</a> · Bukan situs production</span></footer>
+  <div class="preview-tools" role="group" aria-label="Pilih state prototype"><span>Preview state</span><button type="button" data-goto="entry" aria-pressed="true">Awal</button><button type="button" data-goto="disclosure" aria-pressed="false">Pre-login disclosure</button><button type="button" data-goto="unavailable" aria-pressed="false">Unavailable</button></div>
+  <div id="demo-toast" class="toast" role="status" aria-live="polite"><button type="button" aria-label="Tutup keterangan" id="toast-close">×</button><strong>Hanya demonstrasi interaction boundary</strong>Prototipe statis tidak memulai Google sign-in atau membentuk organisasi. Di produk nyata, pengisian nama dan review terjadi setelah sesi akun terkonfirmasi.</div>
+  <script>
+    (() => {
+      const supported = ['entry','disclosure','unavailable'];
+      const toast = document.querySelector('#demo-toast');
+      const top = () => window.scrollTo({top:0,behavior:'instant'});
+      function show(id, updateHash = true, scrollId = null) {
+        if (!supported.includes(id)) return;
+        document.querySelectorAll('[data-view]').forEach(node => { const current=node.dataset.view===id; node.classList.toggle('active',current); node.setAttribute('aria-hidden',String(!current)); });
+        document.querySelectorAll('.preview-tools [data-goto]').forEach(node => node.setAttribute('aria-pressed',String(node.dataset.goto===id)));
+        toast.classList.remove('visible');
+        if (updateHash) history.replaceState(null,'','#'+id);
+        if (scrollId) { requestAnimationFrame(() => document.getElementById(scrollId)?.scrollIntoView()); }
+        else { top(); requestAnimationFrame(() => document.getElementById(id+'-title')?.focus({preventScroll:true})); }
+      }
+      document.querySelectorAll('h1').forEach(h=>h.setAttribute('tabindex','-1'));
+      document.querySelectorAll('[data-goto]').forEach(el=>el.addEventListener('click',e=>{ e.preventDefault(); show(el.dataset.goto, true, el.dataset.scroll||null); }));
+      document.querySelectorAll('[data-demo-auth]').forEach(el=>el.addEventListener('click',()=>{ toast.classList.add('visible'); toast.querySelector('#toast-close').focus(); }));
+      document.getElementById('toast-close').addEventListener('click',()=>toast.classList.remove('visible'));
+      document.addEventListener('keydown',e=>{if(e.key==='Escape') toast.classList.remove('visible');});
+      const initial = location.hash.replace('#',''); if(supported.includes(initial)) show(initial,false);
+    })();
+  </script>
+</body>
+</html>
