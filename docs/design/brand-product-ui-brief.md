@@ -273,21 +273,31 @@ Rejected as selected palette territory because it risked an AI/startup feel, gra
 
 ## 12. Open Decisions
 
-The following remain intentionally open until separately derived and approved:
+**Decision timeline / current standing.** This Brand/Product UI Brief was approved on **2026-09-15**, when several implementation-level visual decisions were intentionally left open. **Later separately approved project-owned sources have since resolved some of those questions.** The original selection-time open list is not permission to reopen decisions already settled by the effective Visual Design Guidelines or Asset Governance.
 
-- exact typefaces;
-- exact font licensing approach;
-- exact color values;
-- final secondary accent;
-- final iconography family;
-- final illustration style specification;
-- final wordmark;
-- final truth-state terminology;
-- detailed campaign photography rules;
-- campaign placeholder system;
-- final motion specification;
-- exact progress / milestone visual grammar;
-- final evidence-source labeling language.
+**Derived and established after the selected-direction approval:**
+
+| Initially open in this brief | Current established project source / scope |
+| --- | --- |
+| Exact core/semantic color values | [Visual Design Guidelines §4](design-guidelines.md#4-color-system) — effective Sunlit Editorial palette, including Sun/Berry roles and semantic colors |
+| Typeface selection / UI vs editorial usage | [Visual Design Guidelines §5](design-guidelines.md#5-typography) — **Newsreader** editorial/display and **Instrument Sans** operational/UI roles; production font bundling/licensing is separate and not implied |
+| Secondary accent selection | [Visual Design Guidelines §4](design-guidelines.md#4-color-system) — **Berry** as the selected secondary visual accent, with contextual usage limits |
+| Utility icon library | [Visual Design Guidelines §12](design-guidelines.md#12-iconography) — **Phosphor** utility-icon baseline; project-specific icon tuning remains open if real use warrants it |
+| Reusable progress and evidence grammar | [Visual Design Guidelines §13–14](design-guidelines.md#13-provenance-and-truth-grammar) and [UX Pattern System](patterns.md) establish **provenance distinction** and separation of funding, operational progress and reported outcomes. Exact later component/label implementations are not all thereby final |
+
+**Still open, without reselecting the established direction:**
+
+- exact production font licensing and bundling/integration; fallback font rendering is not proof of equivalence;
+- final wordmark/logo and full production illustration-family detail;
+- detailed photography governance, campaign placeholder implementation and any future material key art;
+- motion timing/easing details and production motion assets;
+- final production truth-state terminology and evidence-source labeling copy where not separately accepted;
+- individual progress/milestone component treatments beyond the established truthful semantic grammar;
+- project-specific Phosphor refinements, only if warranted by actual implementation evidence.
+
+[Asset Governance §16](asset-governance.md#16-current-open-asset-decisions) is the project-owned reference for **current asset-related open/resolved standing**. Reconcile changes in their owning sources rather than treating the September 15 brief as a competing current token, icon or asset decision register.
+
+**Scope of this clarification:** A retrospective *cross-document status reconciliation*, **not** new brand direction, new Product/UX behavior, final asset approval, or evidence of visual/runtime verification. Existing Human approvals of the downstream Visual Design Guidelines and Asset Governance are not replaced.
 
 ## 13. Engineering Invariants
 
