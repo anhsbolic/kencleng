@@ -5,6 +5,8 @@
 > Core thesis: **Evidence-Led Optimism**
 > Upstream authority: `brand-product-ui-brief.md`
 > Human approval: Approved 2026-09-16
+> **Owns:** Concrete reusable visual-system expression (palette/semantic color usage, typography, spacing, visual state/provenance grammar and design-level component appearance).
+> **Does not own:** Business/financial/domain truth, feature-specific UX routes/interaction decisions, final brand/asset approval, production CSS/DOM/framework/component APIs or automatic accessibility/runtime verification.
 >
 > This document defines the concrete visual-system language derived from the approved Kencleng brand and product UI direction. It does not define business/domain semantics, API contracts, frontend component architecture, or implementation-specific CSS mechanics.
 

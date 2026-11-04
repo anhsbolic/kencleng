@@ -3,6 +3,8 @@
 > Status: Canonical
 > Purpose: Reusable interaction behavior and state semantics.
 > Boundary: This document does not define visual tokens, component APIs, frontend architecture, or business rules.
+> **Owns:** Recurring experience interactions and user-facing state/recovery patterns across actual applicable use cases.
+> **Does not own:** Product/legal/domain effects, material feature-specific UX flow/IA/page routes or Lo-Fi, concrete visual-system styling, and production React component architecture.
 
 ## 1. Pattern Rule
 

@@ -4,6 +4,8 @@
 > Selected direction: **Sunlit Editorial**
 > Core thesis: **Evidence-Led Optimism**
 > Human approval: Approved 2026-09-15
+> **Owns:** Selected Kencleng brand/Product UI thesis, attributes and directional expression. Approved downstream implementation-level design decisions are owned in the concrete Visual Design Guidelines and Asset Governance.
+> **Does not own:** A competing Product Design Principles rulebook, exact current tokens/icon selection, reusable UX pattern behavior, accepted feature flows/IA, Product truth or production frontend mechanics.
 
 ## 1. Design Thesis
 
@@ -50,6 +52,8 @@ The product should feel intentional and high-quality without becoming exclusive,
 
 ## 3. Operational Design Principles
 
+**Brand-direction applications, not a second principles authority.** The reusable rules for design judgment are owned by [Product Design Principles](product-design-principles.md); the following summarize how those principles shape the selected Sunlit Editorial / Evidence-Led Optimism direction. Resolve changes to the principle at its owning source, and changes to brand expression here.
+
 ### Confidence Before Conversion
 Users should receive enough context to make an informed decision before being pushed toward donation. CTA clarity is important; CTA pressure is not.
 
@@ -82,7 +86,7 @@ Use a mixed typography model:
 - expressive human/editorial display typography for public headings, campaign editorial moments, selected milestones, and key brand statements;
 - calm, highly readable typography for forms, navigation, metadata, status, body copy, data, and operational surfaces.
 
-Exact typefaces remain intentionally open until the concrete production visual system is derived.
+**Current concrete selection:** [Visual Design Guidelines §5](design-guidelines.md#5-typography) subsequently established **Newsreader** for editorial/display and **Instrument Sans** for operational/UI roles. This paragraph records the original directional intent; font licensing, bundling and rendered equivalence remain separate open implementation evidence.
 
 ### Color Strategy
 Selected territory: **Sunlit Editorial**.
@@ -96,7 +100,7 @@ Preferred posture:
 
 The visual system should remain light and avoid excessive saturation. Yellow is brand energy and optimism; it is not trust proof, a universal success state, or a body-text color.
 
-Exact color values remain intentionally open.
+**Current concrete selection:** [Visual Design Guidelines §4](design-guidelines.md#4-color-system) subsequently established the approved palette and semantic roles, including **Berry** as the secondary accent. The directional description above is not a competing current token/color register.
 
 ### Surface / Shape Language
 Use mixed editorial surfaces with a structured foundation, selective softness, varied grouping, spacing-led hierarchy, tonal sections, selective borders/rules, and selective card containers.

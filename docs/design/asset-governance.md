@@ -4,6 +4,8 @@
 > Last updated: 2026-09-17
 > Purpose: Govern truthfulness, approval, lifecycle, reuse, and change impact for visual assets.
 > Relationship: `brand-product-ui-brief.md` owns the approved direction; `design-guidelines.md` owns the concrete visual system; this document owns how assets enter and evolve within that system.
+> **Owns:** Asset classes, provenance/truthfulness, approval/use scope, visual-asset lifecycle, reusability and change impact.
+> **Does not own:** Brand-direction selection, core color/type tokens, feature-specific UI/UX acceptance, Product/domain evidence or engineering asset-delivery mechanics.
 
 ## 1. Asset classes
 

@@ -3,6 +3,8 @@
 > Status: Canonical
 > Purpose: Stable decision framework for product-design judgment when exact UI has not yet been specified.
 > Relationship: `brand-product-ui-brief.md` owns the selected brand/Product UI direction; this document owns reusable experience principles.
+> **Owns:** Cross-feature design judgment (trust, information priority, truthful states, consequential actions, dignity, evaluation), not specific Product decisions.
+> **Does not own:** Business/domain/legal rules, accepted feature UX routes/flows, concrete visual tokens, brand-direction selection or frontend component implementation. Reuse its principles; do not create a second canonical principle set in the Brand Brief.
 
 ## Context
 
