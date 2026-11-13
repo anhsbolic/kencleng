@@ -1,8 +1,24 @@
 # ORG-01 — Concept C UX research checkpoint (2026-11-13)
 
-> **Standing:** HUMAN-POSITIVE REVIEW / ACCEPTED AS BOUNDED EXPERIMENTAL CHECKPOINT. Not exact-revision Product/UX/Hi-Fi acceptance, user-tested usability, operational implementation, release approval or Harscode framework promotion.
+> **Standing:** BOUNDED EXPERIMENTAL CHECKPOINT / POSITIVE HUMAN REVIEW OF SCOPED UX / SUBSEQUENT MATERIAL ACTOR-JOURNEY MISMATCH IDENTIFIED. UX v1.1 investigation paused for now; this is not exact-revision Product/UX/Hi-Fi acceptance, user-tested usability, operational implementation, release approval or Harscode framework promotion.
 > **Owner:** Anhar (Human qualitative reviewer); target-project research only, Kencleng `pilot/station5-c1-space-only`. **Scope:** Step 1A–1E actor discovery and Step 2A–2E Concept C exploration with inspectable structural Lo-Fi v1.
 > **Prior project baseline inspected:** `e43bc0276a9d027813e07d19099d86a5ee9e8c49`. No changes to Kencleng Product Contract, privacy policy, Rancang, accepted UI handoff/prototype, application code, or `main` in this checkpoint.
+
+## Post-checkpoint Human clarification — actor-journey mismatch (2026-11-13)
+
+**Evidence:** After the positive scoped Lo-Fi review, Anhar clarified that the produced UX was coherent and the translation was acceptable for the **narrow task**, but **did not match the intended broader human experience**. The target actor was envisioned as a person whose **goal is to raise funds via Kencleng**, not someone whose intrinsic goal is to establish an internal organization/Owner relationship. This feedback is **new, material Human product-intent/context evidence**; it does not retroactively negate the previous favorable assessment of the bounded Lo-Fi execution.
+
+**Human-envisioned experience (illustrative direction, not newly approved Product scope):** a public Kencleng landing experience that earns justified trust; a clear way to discover how to fundraise and enter via fundraising CTA or organization menu; straightforward explanation of the process and its requirements; initial organization registration; the necessary identity/login binding; then an authenticated organization context/dashboard showing the actor's actual organization/Owner relationship and truthful available next actions. The actor's fundraising goal is the overarching motivation; ORG-01 may be one enabling outcome. These are **Human expectations / investigation input**, not a mandate to build every screen, add mandatory data, claim verified status, or automatically grant fundraising capability.
+
+**Boundary to investigate:**
+- Product Intent already covers fundraising generally. The approved ORG-01 Product Contract intentionally covers a narrower, attributable organization + internal first-Owner outcome; Campaign eligibility, public visibility and donations remain distinct. Therefore **"Product input was wrong" is a hypothesis**, not a demonstrated defect in the approved ORG-01 contract.
+- The gap could arise from **parent actor journey/value framing, division of Product outcomes, selection/packaging of input for UX, or UX discovery's failure to challenge a too-narrow task boundary**. Audit the actual formation/decision chronology and current project authority before assigning causality.
+- Anhar's illustrative "register, then login, then dashboard" must not bypass ORG-01's binding identity-attribution-before-effect requirement or pre-Google-login privacy explanation. Any sequence can be explored only within those safeguards. Initial organization data beyond scoped minimum and actual dashboard capabilities require Product/Engineering authority where material.
+- This new feedback is **not representative user research, implementation evidence, release approval, or rejection of the previously checkpointed Concept C Lo-Fi as a bounded experiment**.
+
+**Research disposition (Human-directed):** UX v1.1 investigation is **paused/concluded for now without framework promotion or final generalized success claim**. Preserve the artifact and positive review as scoped evidence **alongside** this newly discovered end-to-end experience mismatch. Move to **Product-level ORG-01 revisit and formation audit**, starting with Product Intent → parent actor/journey intent → outcome decomposition/ORG-01 Contract → decision and handoff trail. Do not preemptively amend approved Product policy or create a new roadmap. No changes to runtime, Hi-Fi candidate or `main` are authorized by this checkpoint.
+
+**Authority/standing:** This section is the **latest working research interpretation** and supersedes the earlier “compare old/new Lo-Fi and pursue UX refinement next” suggestion below; the original earlier review/notes remain as dated evidence.
 
 ## Human feedback — observed
 
