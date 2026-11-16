@@ -4,7 +4,7 @@
 
 Neutral Go backend engineering substrate for Kencleng Pilot #3. No product domain, authentication model, API operation, database migration, or background job is considered delivered at baseline.
 
-Product meaning is owned by `../docs/product/product-intent.md`. Backend architecture is owned by `../docs/engineering/standards/backend.md`.
+Product discovery is currently OPEN at `../docs/product/README.md`; newly accepted project Product sources will own actual consequential meaning. Backend architecture is owned by `../docs/engineering/standards/backend.md`.
 
 ## Setup
 

@@ -14,7 +14,7 @@
 - [Original Space-only pilot entry](https://github.com/anhsbolic/kencleng/blob/875074914474ee07790fb2704a806a3d077c8ffb/docs/project/station5-c1-space-only-pilot-entry.md)
 - [Original interim closeout report](https://github.com/anhsbolic/kencleng/blob/875074914474ee07790fb2704a806a3d077c8ffb/docs/project/station5-c1-s1-interim-closeout.md)
 
-These are historical experiment/decision evidence, **not active Product or Engineering instructions**. The Product-owned [history/crosswalk](../product/history.md) and [identifier migration](../product/identifier-migration-2026-10-23.md) remain in Product because their owning concern is Product provenance. Do not infer an approved Engineering handoff or current feature contract from old C1 records.
+These are historical experiment/decision evidence, **not active Product or Engineering instructions**. The former Product-owned history/crosswalk and identifier migration were also cleared from the **active** reset branch; their original bytes remain at [the pre-reset pinned Product tree](https://github.com/anhsbolic/kencleng/tree/e43bc0276a9d027813e07d19099d86a5ee9e8c49/docs/product) as historical Product provenance, not a current outcome-selection or implementation source. Do not infer an approved Engineering handoff or current feature contract from old C1 records.
 
 
 ## Product / ORG-01 research progress reset — 16 November 2026
