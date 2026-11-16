@@ -31,7 +31,8 @@ Availability is not obligation. A dependency or directory should be used only wh
 Frontend is not product/business authority.
 
 ```text
-docs/product/README.md → exact approved Product source when established
+docs/product/product-intent.md (approved whole-product scope)
++ docs/product/README.md (accepted scoped Product decisions as available)
 + applicable docs/design/ authority
         ↓
 Human-selected delivery outcome / sufficiently clear requirement

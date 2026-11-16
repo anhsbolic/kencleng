@@ -267,6 +267,6 @@ Would we want the next ten similar surfaces to inherit this behavior?
 - `patterns.md` — reusable interaction behavior
 - `asset-governance.md` — asset truthfulness, lifecycle, approval, reuse
 - `visual-references/selected-direction/` — approved direction-level visual evidence
-- `docs/product/README.md` — current Product authority/discovery routing; actual binding Product decisions must be separately established
+- `docs/product/product-intent.md` — approved whole-product purpose and principles; detailed requirements remain separately owned
 
 Concrete production visual-system values are intentionally not defined here.

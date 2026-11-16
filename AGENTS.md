@@ -8,12 +8,13 @@ Read this file before writing code. More-specific `AGENTS.md` files apply within
 
 ```text
 whole-product purpose / actors / durable product truth
-→ docs/product/README.md (Product discovery OPEN; do not infer retired decisions)
+→ docs/product/product-intent.md (approved whole-product purpose; under reassessment)
+→ docs/product/README.md (current Product decisions and scope)
 
 reusable product-design / UX / visual guidance
 → docs/design/README.md
 
-documentation concern routing (Product / Design / Engineering / historical research)
+documentation concern routing (Product / Design / Engineering)
 → docs/README.md
 
 repository topology/setup
@@ -38,7 +39,7 @@ generic lifecycle / engineering practice
 → current Harscode authority
 ```
 
-Release scope, delivery order, detailed delivery requirements, API operations, and implementation state are intentionally open at this baseline **unless a current Human-approved scoped artifact explicitly establishes them for a bounded active commitment**. Do not infer them from historical specs, contracts, code, migrations, handoffs, or Git history.
+Release scope, delivery order, detailed feature requirements, API operations and implementation state remain undecided **unless a current Human-approved scoped artifact explicitly establishes them**. Whole-product Product Intent remains approved at its original exact revision. Do not infer them from historical specs, contracts, code, migrations, handoffs, or Git history.
 
 Existing historical material may be useful evidence when an active decision/work item calls for it. It is not automatic authority.
 Historical Pilot/Station 5 and ORG-01 Product/Rancang/Builder/Design/implementation evidence remain reconstructable at the pinned pre-reset Git checkpoint in `docs/history/README.md`; none is an active work order or downstream Product authority. Root/scoped `AGENTS.md` and project-owned current artifacts still control scope and permissions; path relocation does not grant new writes.
@@ -74,7 +75,7 @@ Historical Pilot/Station 5 and ORG-01 Product/Rancang/Builder/Design/implementat
 
 ## Authority separation
 
-Product owner / new accepted Product sources own whole-product meaning once explicitly established; at this reset baseline Product remains OPEN. Product-design authority owns reusable experience/visual guidance. Engineering architecture owns technical constraints. Human-approved commitment-specific product behavior and requirements may be **binding within that bounded commitment** without becoming whole-product canonical Product Authority. Detailed contracts and implementation are derived only when active delivery work needs them.
+Approved Product Intent owns whole-product purpose and principles at its existing exact revision, under reassessment; detailed Product decisions still require actual scope and legitimate Human/domain authority. Product-design authority owns reusable experience/visual guidance. Engineering architecture owns technical constraints. Human-approved commitment-specific product behavior and requirements may be **binding within that bounded commitment** without becoming whole-product canonical Product Authority. Detailed contracts and implementation are derived only when active delivery work needs them.
 
 An implementation agent must follow the current scoped owning artifacts identified by the active handoff and must not change higher-level requirements merely to make code pass. If authority appears wrong or incomplete, report the contradiction/gap and route it to the owner of that concern.
 

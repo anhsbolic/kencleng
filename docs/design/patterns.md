@@ -334,4 +334,4 @@ Production component boundaries are an engineering concern.
 - `product-design-principles.md` — stable design judgment
 - `brand-product-ui-brief.md` — selected brand/Product UI direction
 - `asset-governance.md` — visual asset governance
-- `docs/product/README.md` — current Product authority/discovery routing; actual binding Product decisions must be separately established
+- `docs/product/product-intent.md` — approved whole-product direction; specific Product rules require separately accepted scoped decisions

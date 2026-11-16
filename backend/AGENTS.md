@@ -10,7 +10,7 @@ This backend is a neutral engineering substrate. No historical domain, route, mi
 
 ## Authority routing
 
-- product/business meaning → `../docs/product/README.md (Product currently OPEN; no old ORG-01 commitments inherited)`;
+- product/business meaning → `../docs/product/product-intent.md (approved whole-product purpose, under reassessment); ../docs/product/README.md (scoped decisions)`;
 - Engineering Standards index → `../docs/engineering/standards/README.md`;
 - backend architecture → `../docs/engineering/standards/backend.md`;
 - PostgreSQL database design, SQL migrations, integrity and partitioning → `../docs/engineering/standards/database-data-model.md`;

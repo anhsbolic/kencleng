@@ -455,7 +455,7 @@ full build tidak diulang pada pemeriksaan konfigurasi ini.
 
 Use:
 
-- `docs/product/README.md` for current Product discovery and exact approved Product sources when available;
+- `docs/product/product-intent.md` for approved whole-product purpose and principles; `docs/product/README.md` for scoped decisions;
 - `docs/design/README.md` for reusable product-design authority;
 - this directory for engineering architecture and repository topology;
 - root/scoped `AGENTS.md` for agent routing and write boundaries;
