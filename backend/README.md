@@ -2,9 +2,9 @@
 
 > Status: clean delivery baseline
 
-Neutral Go backend engineering substrate for Kencleng Pilot #3. No product domain, authentication model, API operation, database migration, or background job is considered delivered at baseline.
+Neutral Go backend engineering substrate for Kencleng. No product domain, authentication model, API operation, database migration, or background job is considered delivered at baseline.
 
-Product discovery is currently OPEN at `../docs/product/README.md`; newly accepted project Product sources will own actual consequential meaning. Backend architecture is owned by `../docs/engineering/standards/backend.md`.
+Whole-product meaning is grounded in the approved `../docs/product/product-intent.md` (under reassessment); scoped decisions are routed by `../docs/product/README.md`. Backend architecture is owned by `../docs/engineering/standards/backend.md`.
 
 ## Setup
 

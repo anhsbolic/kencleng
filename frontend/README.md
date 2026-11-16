@@ -1,10 +1,8 @@
 # Kencleng Frontend
 
-> **Status:** Neutral frontend scaffold after Anhar-authorized Product / ORG-01 progress reset on `research/cross-stage-mapping` (2026-11-16). **No active feature/ORG-01 implementation or mock flow is selected**, and no runtime or design acceptance is implied.
+> **Status:** Neutral frontend scaffold. No feature-specific Product/UX/UI implementation is selected or verified for delivery.
 
-Product discovery remains OPEN at `../docs/product/README.md` until legitimate project-owned Product meaning is newly accepted. Reusable product-design authority is routed through `../docs/design/README.md`. Frontend architecture is owned by `../docs/engineering/standards/frontend.md`.
-
-Previous ORG-01 frontend implementation, tests, generated client and mock scenarios remain reconstructable from pre-reset `e43bc0276a9d027813e07d19099d86a5ee9e8c49`; they are not active implementation precedent.
+Whole-product meaning: `../docs/product/product-intent.md` (approved, under reassessment). Scoped decisions: `../docs/product/README.md`. Design guidance: `../docs/design/README.md`. Frontend architecture: `../docs/engineering/standards/frontend.md`.
 
 ## Available capabilities
 
@@ -116,20 +114,20 @@ npm run verify
 npm run build
 ```
 
-`verify` menjalankan lint dan Vitest. **No active feature test is selected at the reset baseline**; Vitest permits no tests, which must not be reported as validated functionality or meaningful coverage. Re-establish scoped coverage expectations when real implementation/tests are selected.
+`verify` menjalankan lint dan Vitest. **No feature behavior tests are currently selected**; Vitest permits no tests, which must not be presented as verification of Product functionality or meaningful coverage. Re-establish scoped coverage expectations when real implementation/tests are selected.
 Build memakai font sistem Arial/Georgia sebagai fallback offline; typeface Instrument Sans/Newsreader belum diverifikasi secara rendered. Tidak ada font eksternal yang diunduh pada build.
 Playwright tersedia melalui `npm run test:browser` ketika test browser dan
 binary browser yang diperlukan sudah tersedia. Use verification proportional
 to the active work and record only checks that actually ran.
 
 
-## Intentionally empty Product/feature baseline
+## Current application scope
 
-The route `/` is a neutral development placeholder, **not Product/UX/UI truth or a selected release outcome**. The former routes for organization creation, authentication continuation, account deletion and the ORG-01 draft privacy notice were removed with their feature implementation because their original Product/Engineering/Privacy commitments are not active on this reset research branch.
+The route `/` is a neutral development placeholder, not an approved Product/UX/UI surface or selected release outcome.
 
-- Tooling remains available: Next.js, React, TypeScript, Tailwind, form and query libraries, Vitest, Playwright, MSW, OpenAPI generators and local development proxy. **Dependencies do not imply those feature capabilities are implemented.**
-- `public/mockServiceWorker.js` is retained as reusable vendor tooling, not loaded into any current feature. There is no `dev:mock` script or active ORG-01 generator/contract.
-- `api/openapi.yaml` and `api/openapi/index.yaml` remain neutral baseline stubs; accepted ORG-01 OpenAPI was never adopted to `api/` and its historical source remains pinned to Git.
-- No Product approval, current frontend business feature, security integration, completed auth, successful runtime, accessibility audit or delivery acceptance is implied by this scaffold.
+- Next.js, React, TypeScript, Tailwind, form/query libraries, Vitest, Playwright, MSW, OpenAPI tooling and the development proxy remain available. **Tool availability does not mean a feature exists.**
+- `public/mockServiceWorker.js` is retained as vendor tooling but not loaded by an active feature.
+- `api/openapi.yaml` and `api/openapi/index.yaml` remain neutral API baseline stubs without feature operations.
+- No live authentication, privacy notice, API integration, browser UX acceptance, independent security review or release readiness has been established by the scaffold.
 
-Follow current [Product discovery](../docs/product/README.md), [Design](../docs/design/README.md) and [Engineering Standards](../docs/engineering/standards/README.md) after a new owner decision. Maintain exact source/approval boundaries. Historic frontend progress is available for research at [pre-reset feature tree](https://github.com/anhsbolic/kencleng/tree/e43bc0276a9d027813e07d19099d86a5ee9e8c49/frontend/features/org-01), **not a default implementation to resume**.
+Use [Product](../docs/product/README.md), [Design](../docs/design/README.md) and [Engineering](../docs/engineering/standards/README.md) when a legitimate scoped task is selected.

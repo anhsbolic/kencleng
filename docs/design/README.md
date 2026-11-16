@@ -7,7 +7,7 @@
 
 | Concern / responsibility | Owning source | Standing in this branch | Authority boundary |
 | --- | --- | --- | --- |
-| Whole-product purpose, actor/domain meaning and business commitments | [Current Product discovery router](../product/README.md) and any future genuinely accepted project Product source(s) | **Product authority — outside Design; currently OPEN in this reset branch** | Product determines substantive truth, permissions, financial/legal/privacy consequences; Design cannot infer or amend these |
+| Whole-product purpose, actor/domain meaning and broad commitments | [Approved Product Intent](../product/product-intent.md) and [Product decision index](../product/README.md) | **Product Intent APPROVED; under reassessment** | Product owns substantive value, rights, financial/legal/privacy meaning and consequential truth; Design does not independently approve or amend them |
 | Reusable principles for design judgment and human decision quality | [Product Design Principles](product-design-principles.md) | **Canonical Design** | Owns evaluative experience principles; not a second Product Contract, exact interaction flow, palette or brand selection |
 | Selected brand character and Product UI direction | [Brand/Product UI Brief](brand-product-ui-brief.md) | **Canonical Design** | Owns Sunlit Editorial / Evidence-Led Optimism thesis and directional expression; concrete tokens, reusable UX patterns and assets have separate owners |
 | Reusable concrete visual-system rules | [Visual Design Guidelines](design-guidelines.md) | **Canonical Design** | Owns color roles/values, typography roles, visual hierarchy and visual expression; not backend/domain status truth, production CSS/component APIs or feature UX decisions |
@@ -25,7 +25,7 @@
 
 ## Feature-specific evidence and optional assistance
 
-- Prior ORG-01 feature Design candidate/prototype is **historical only** at [pre-reset commit](https://github.com/anhsbolic/kencleng/tree/e43bc0276a9d027813e07d19099d86a5ee9e8c49/docs/design/outcomes/org-01). No current feature-specific UI/UX output has been accepted.
+- No feature-specific UX/UI deliverable is currently selected as accepted input for a new Product outcome.
 - [Static HTML Hi-Fi kickoff template](templates/hi-fi-static-html-kickoff.md) is an **optional session prompt** for appropriately bounded project UI design when existing accepted evidence is insufficient; not a formed Space, required phase, implementation permission, design approval or new project standard.
 
 Use actual current project Product/Design original sources directly. This index does **not** choose features, webpage routes, release scope, delivery order, or implementation rights.
