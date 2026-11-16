@@ -44,7 +44,7 @@ Historical backend implementation remains available in Git history as evidence. 
 
 ## Authority boundary
 
-Product meaning starts at `docs/product/product-intent.md`. Product-design concerns start at `docs/design/`. Detailed backend behavior, threat decisions, persistence shape, API contracts, and implementation choices are derived when the selected delivery work needs them.
+Product meaning starts at current project-approved Product source(s) as routed by `docs/product/README.md`; during the intentional research reset, Product decisions are OPEN and must not be inherited from history. Product-design concerns start at `docs/design/`. Detailed backend behavior, threat decisions, persistence shape, API contracts, and implementation choices are derived when the selected delivery work needs them.
 
 Do not promote a technical convenience into product truth. If engineering exposes a material missing product decision, route it back to the Human product owner rather than inventing it in code.
 

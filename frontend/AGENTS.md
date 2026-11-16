@@ -14,7 +14,7 @@ Git history is evidence/archive, not active implementation precedent.
 
 Start from the concern that is active:
 
-- product/business meaning → `../docs/product/product-intent.md`;
+- product/business meaning → `../docs/product/README.md (Product currently OPEN; no feature commitment inferred from history)`;
 - reusable product-design / UX / visual guidance → `../docs/design/README.md`;
 - Engineering Standards index → `../docs/engineering/standards/README.md`;
 - frontend architecture → `../docs/engineering/standards/frontend.md`;

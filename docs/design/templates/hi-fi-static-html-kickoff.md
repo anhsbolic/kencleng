@@ -106,21 +106,8 @@ Use **Challenge first, then commit**. Challenge information overload, poor actio
 
 ---
 
-## Example filling — ORG-01 (illustrative, not implicit authorization)
+## New-session input caution (project-neutral)
 
-| Placeholder | Example |
-| --- | --- |
-| `{{OUTCOME_ID}}` | `ORG-01` |
-| `{{OUTCOME_ID_LOWER}}` | `org-01` |
-| `{{TARGET_BRANCH}}` | `pilot/station5-c1-space-only` |
-| `{{INITIAL_SURFACE}}` | `Organization Onboarding / Entry and Google sign-in` |
-| `{{SCOPE_NOTES}}` | `Prioritize a fast, clear login decision: concise upfront data-processing summary and link to full DRAFT notice before Google login; defer organization/Owner creation consequences until their appropriate review step. Discuss IA first. No direct GitHub writes at kickoff.` |
+Fill the placeholders with the **actually selected, current project outcome and exact original accepted sources**. When Product discovery is OPEN, do not pretend there is a selected Product Contract, accepted UX flow, formed Engineering Space, feature-specific Hi-Fi, or implementation authorization. Work on the owner-authorized bounded exploration only; return Product/UX gaps rather than borrowing past examples.
 
-Current ORG-01 discovery candidates (verify current standing rather than hardcode):
-- `docs/product/outcomes/org-01/product-contract.md`, `approval.md`, `privacy-decision.md` and `privacy-notice-draft.md` (notice still draft until approved).
-- `harscode-state/org-01/rancang-002/handoff.md`, `experience.md`, relevant `interface-decisions.md`.
-- Two approved `docs/design/visual-references/selected-direction/*.png` images **attached directly to the chat by Human**.
-- `docs/design/outcomes/org-01/` may already contain an **unapproved candidate**; treat it as prior exploration/evidence, not authoritative design, and do not overwrite without explicit permission.
-- `docs/design/information-architecture.md` and `docs/design/copywriting-id.md` are working project-level aids for review; apply them without displacing canonical Product/Design authority.
-
-**Design Guidelines already include "Ordered Transparency, Not Information Dumping" and the UX Pattern System covers Progressive Disclosure.** Evaluate application of these established principles before proposing a new canonical IA standard.
+The pre-reset ORG-01-specific example can be inspected in historical Git at `e43bc0276a9d027813e07d19099d86a5ee9e8c49` when historical research is explicitly needed. It is not a default kickoff configuration.

@@ -50,26 +50,13 @@ Do not rely on a fixed word limit. Use the **first-read burden** test: can a new
 
 All interactive disclosures require discoverable labels and meaningful keyboard, focus, dismissal and return behavior. **A small link that says “Baca informasi privasi” is more useful than a vague “Selengkapnya.”** Do not make dark-pattern disclosure: the route to important details must be genuine and available before the relevant action.
 
-## 4. Example: ORG-01 is two different decisions
-
-The example below interprets the current approved ORG-01 scope; confirm exact effective sources for any later implementation.
-
-| Journey moment | Make immediately clear | Defer / provide on demand |
-| --- | --- | --- |
-| **Before Google login** | Why sign-in is needed; that sign-in alone does **not** form an organization; concise data-use/controller context as approved; **accessible full DRAFT notice before sign-in** | Long account/Owner creation explanation, complete legal-policy text, organization creation recovery mechanics; link to the draft for detail without claiming production readiness |
-| **Before organization creation commit** | Proposed organization name, the currently acting account, first **internal** Owner role, what this does **not** verify, and an explicit “buat” action | Background explanation of earlier login and long policy text already available elsewhere |
-| **After uncertain creation result** | Effect is **not confirmed failed or successful**; original request reference and allowed inspection/recovery; do not create fresh unintended effects | Unrelated onboarding storytelling; never replace uncertainty with a generic success or retry prompt |
-| **Before account deletion commit** | Actual complete scope, account/context consequences, confirmation and any relevant copy/retention uncertainty specified by accepted contract | General introductory explanations that distract from the destructive decision |
-
-**Illustrative visual design, not new ORG-01 semantics.** The UX task is to express accepted meaning with lower cognitive load, not to weaken disclosure requirements.
-
-## 5. Balance text with evidence and visual support
+## 4. Balance text with evidence and visual support
 
 When the page becomes text-heavy, first audit repetition and timing. Then ask whether a labeled process illustration, meaningful icon, status graphic or properly sourced image would communicate structure faster than an extra paragraph. Follow [Asset Governance](asset-governance.md) for truth, provenance and asset standing. Never use imagery in place of required precise wording or as fake evidence.
 
 A visual can replace **redundant explanation**; it cannot replace **consequential facts**.
 
-## 6. Review against actual screens
+## 5. Review against actual screens
 
 Check the rendered desktop and narrow-mobile experience where possible, including initial, focused, expanded, error, pending, and recovery states as applicable. Inspect:
 
@@ -84,4 +71,4 @@ When actual rendering is unavailable, label visual validation **NOT VERIFIED**. 
 
 ## Authority and handoff
 
-Current Kencleng Product authority and canonical Design principles/patterns prevail over this working guidance. Record only material page-level IA decisions in a **feature-specific Design Candidate/Handoff**, with Human acceptance and exact revision when required. Do not silently change Product semantics, canonical guidance, or production code by treating an exploratory HTML prototype as binding.
+Current legitimate Kencleng Product decisions (when established) and canonical Design principles/patterns prevail over this working guidance. The previous ORG-01 example is available only in pre-reset Git history; it is not an active accepted feature-flow precedent. Record only material page-level IA decisions in a **feature-specific Design Candidate/Handoff**, with Human acceptance and exact revision when required. Do not silently change Product semantics, canonical guidance, or production code by treating an exploratory HTML prototype as binding.
