@@ -1,12 +1,12 @@
 # Kencleng — Documentation
 
-> **Standing:** Concern routing for Kencleng `research/cross-stage-mapping` after intentional Product/ORG-01 working-progress reset; not operational `main` or evidence of delivered features. Read only the owning concern necessary for the task.
+Project documentation is organized by owning concern. Read the relevant original authority and its accepted scope rather than treating an index as another specification.
 
 | Concern | Owning entrypoint |
 | --- | --- |
-| Product discovery, current accepted decisions (none yet) and historical decision routing | [Product](product/README.md) |
-| Reusable Product Design/UX, brand, visual patterns and assets | [Design](design/README.md) |
-| Engineering architecture, cross-cutting standards and local development | [Engineering](engineering/README.md) |
-| Past research/pilot evidence, not current implementation authority | [History](history/README.md) |
+| Whole-product purpose and principles | [Product Intent](product/product-intent.md) |
+| Product discovery and scoped decisions | [Product](product/README.md) |
+| UX, UI, brand direction, patterns and assets | [Design](design/README.md) |
+| Engineering architecture, standards and development | [Engineering](engineering/README.md) |
 
-Do not treat documented research findings or unaccepted solution bundles as current requirements. Product approval is currently OPEN on this research branch; existing Design and Engineering Standards remain separately owned; actual implementation/testing requires its own authority and evidence.
+Product Intent is approved at its existing revision and under reassessment. Subsequent outcome selection, delivery requirements and implementation need separate legitimate decisions.

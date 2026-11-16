@@ -2,17 +2,17 @@
 
 Kencleng is a sandbox donation/crowdfunding project and a realistic full-stack learning environment.
 
-This **research branch** intentionally resets **Product and ORG-01 active progress to an open discovery baseline** (Anhar, 2026-11-16). Existing project-wide Design and Engineering Standards, visual direction, tooling and neutral application scaffolds remain; old Product/ORG-01 decisions and feature implementation are historical evidence at pre-reset `e43bc027`, not current work. Nothing here changes operational `main` or proves runtime/release readiness.
+Kencleng's whole-product purpose and principles are defined in the approved [Product Intent](docs/product/product-intent.md), currently under reassessment. Design and Engineering Standards, visual direction, tooling and application scaffolds retain their own authority. No delivery outcome or feature implementation is selected by this documentation.
 
 ## Current authority
 
-- [`docs/product/README.md`](docs/product/README.md) — Product discovery intentionally OPEN; no active Product Intent or selected outcome on this reset research branch.
+- [Product Intent](docs/product/product-intent.md) — approved whole-product purpose and principles, under reassessment; [Product index](docs/product/README.md) routes current decisions.
 - `docs/design/README.md` — reusable product-design authority.
 - [`docs/README.md`](docs/README.md) — repository/setup and Engineering Standards navigation.
 - [`docs/engineering/standards/README.md`](docs/engineering/standards/README.md) — T01–T09 Engineering Standards (research branch only).
 - root/scoped `AGENTS.md` — agent routing, boundaries, and hard rules.
 
-Release goal, delivery slices, detailed requirements, API operations, and implementation state are intentionally **not selected yet**. Git history is evidence/archive, not active authority by inertia.
+Next Product outcome, release scope, delivery sequence and feature implementation remain **undecided**. An approved Product foundation does not authorize implementation.
 
 ## Engineering substrate
 
