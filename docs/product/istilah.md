@@ -29,4 +29,4 @@
 
 ## Penerapan bertahap
 
-**Tahap pertama, kedua, dan ketiga selesai (22 Oktober 2026):** [Product Intent](product-intent.md), [pengantar Peta Journey](interconnected-journeys/README.md), dan [Level 2 v0.3](interconnected-journeys/level-2-network.md) telah disetujui dalam Bahasa Indonesia pada branch riset. Draf lama hanya menjadi riwayat penyuntingan. Persetujuan penulisan ulang **tidak** menambah aturan bisnis Product atau mengubah kewenangan di Kencleng `main`.
+**Riwayat (22 Oktober 2026):** Pilihan istilah ini pernah digunakan dalam Product Intent dan Journey yang disetujui pada scope historisnya. File-file tersebut sekarang **tidak menjadi active Product progress** di branch reset. Sumber asli dan approval-nya tetap dapat dibaca pada [pinned pre-reset checkpoint](https://github.com/anhsbolic/kencleng/tree/e43bc0276a9d027813e07d19099d86a5ee9e8c49/docs/product). Pilihan kata ini tidak menentukan ulang aturan atau feature yang harus dibangun.

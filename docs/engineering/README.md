@@ -1,6 +1,6 @@
 # Kencleng — Engineering
 
-> **Scope:** Effective Engineering constraints and development-environment guidance on research branch `pilot/station5-c1-space-only`. Does not establish Product semantics, delivery scope, feature implementations or production readiness.
+> **Scope:** Effective Engineering constraints and development-environment guidance on research branch `research/cross-stage-mapping`. Does not establish Product semantics, delivery scope, feature implementations or production readiness.
 
 | Concern | Owner |
 | --- | --- |
@@ -11,4 +11,4 @@
 
 Product truth remains in [Product](../product/README.md), reusable product-design authority in [Design](../design/README.md). The earlier Rancang ORG-01 unaccepted proposal and Station 5 pilot evidence have been archived from the active tree; see [History](../history/README.md). Do not reconstruct old solutions as effective Engineering policy.
 
-Assignment ORG-01: [Rancang `rancang-002` — handoff final dan dokumen efektif](../../harscode-state/org-01/rancang-002/handoff.md). Exact original r4 telah diterima Human; identitas packaging final, provenance dan remaining implementation/runtime gates dicatat terpisah pada state dan manifest assignment. Adopsi API kanonis telah disetujui tetapi penerapan ke `api/` ditahan Human; lihat [keputusan adopsi API](org-01-api-adoption.md).
+Previous ORG-01 Rancang/Builder handoff, exact historical Human decisions and deferred API adoption are preserved at [pre-reset evidence](https://github.com/anhsbolic/kencleng/tree/e43bc0276a9d027813e07d19099d86a5ee9e8c49/harscode-state/org-01). **No active ORG-01 Engineering assignment or adopted ORG-01 API** remains selected on this reset research branch.

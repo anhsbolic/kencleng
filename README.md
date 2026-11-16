@@ -2,11 +2,11 @@
 
 Kencleng is a sandbox donation/crowdfunding project and a realistic full-stack learning environment.
 
-This **research/pilot branch** continues the Pilot #3 clean delivery baseline. It contains approved Product/Design guidance and settled **T01–T09 Engineering Standards** on this branch; that does not authorize feature implementation, establish complete runtime conformance, or promote the work to operational `main`. Active release scope, delivery sequencing, API operations and product feature implementations remain separate decisions.
+This **research branch** intentionally resets **Product and ORG-01 active progress to an open discovery baseline** (Anhar, 2026-11-16). Existing project-wide Design and Engineering Standards, visual direction, tooling and neutral application scaffolds remain; old Product/ORG-01 decisions and feature implementation are historical evidence at pre-reset `e43bc027`, not current work. Nothing here changes operational `main` or proves runtime/release readiness.
 
 ## Current authority
 
-- `docs/product/product-intent.md` — whole-product direction, actors, responsibilities, and trust commitments.
+- [`docs/product/README.md`](docs/product/README.md) — Product discovery intentionally OPEN; no active Product Intent or selected outcome on this reset research branch.
 - `docs/design/README.md` — reusable product-design authority.
 - [`docs/README.md`](docs/README.md) — repository/setup and Engineering Standards navigation.
 - [`docs/engineering/standards/README.md`](docs/engineering/standards/README.md) — T01–T09 Engineering Standards (research branch only).

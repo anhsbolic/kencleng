@@ -1,57 +1,25 @@
-# Kencleng — Product
+# Kencleng — Product Discovery (Research Reset)
 
-> **Authority:** Current Product artifacts for branch `pilot/station5-c1-space-only` only; Kencleng operational `main` is unchanged. Product owner: Anhar.
-> **Tracking:** Use the phase/output types of [Harscode Product](https://github.com/anhsbolic/harscode-workspace/blob/refactor/harscode-foundation/product/README.md); project identifiers and exact approvals are recorded in [Identifier Migration](identifier-migration-2026-10-23.md).
-> **Boundary:** Product-semantic approval is not an Engineering work order or Rancang invocation.
+> **Standing:** **OPEN / NO ACTIVE PRODUCT DEFINITION, OUTCOME SELECTION OR ORG-01 COMMITMENT** on Kencleng `research/cross-stage-mapping`, by Anhar's explicit 2026-11-16 decision to begin Product discovery from zero. **Not an instruction to discard historical evidence or undo previous Human approvals retroactively.** The project `main` is not changed by this research reset.
+> **Human Product owner:** Anhar. A new Product decision, approval or substantive commitment must be established within its own explicit scope and exact source before downstream work treats it as binding.
 
-## Product phases and current outputs
+## Current position
 
-| Phase | Phase ID | Output type | Current Kencleng artifact | Standing |
-| --- | --- | --- | --- | --- |
-| Product Foundation | `PROD-FND` | `PROD-INTENT` | [Product Intent](product-intent.md): purpose, actor value, responsibilities, truth boundaries | **APPROVED** (22 Oktober 2026) |
-| Product Journey Mapping | `PROD-JRN` | `PROD-JOURNEYS` | [Interconnected Product Journeys](interconnected-journeys/README.md) and [Level 2](interconnected-journeys/level-2-network.md) | **APPROVED map**, with node IDs migrated structurally |
-| Outcome Selection | `PROD-SEL` | `PROD-SELECTION` | [Selected Outcome ORG-01](outcome-selection.md) | **SETTLED**, specific to ORG-01 |
-| Outcome Definition | `PROD-DEF` | `PROD-CONTRACT` | [Product Contract — ORG-01](outcomes/org-01/product-contract.md) | **APPROVED**, with new tracking IDs |
-| Product Review & Approval | `PROD-APR` | `PROD-APPROVAL` | [Approval Record — ORG-01](outcomes/org-01/approval.md) | **CLOSED / pinned revision** |
-| Product Handoff | `PROD-HND` | `PROD-HANDOFF` | Refer to approved Contract + Approval Record when authorized | **NOT INVOKED**; no separate packet created |
+- No active approved **Product Intent**, Product outcome, Journey map, ORG-01 Contract, privacy decision or release commitment is selected on this **reset research branch**. **Do not infer them** from code, past transcripts, archived Product outputs or the previous `pilot/station5-c1-space-only` lineage.
+- Product work should restart with **value, legitimate affected actors, commitments, constraints, uncertainty and evidence**, not by mechanically replaying old phases. The selected reusable research guidance is [Harscode Product Definition](https://github.com/anhsbolic/harscode-workspace/blob/0e82022e6a1cb321f4fbcb7a6df0ccc7d67015b4/product/product-definition.md) (exact research source; not Kencleng Product authority).
+- [Existing editorial terminology](istilah.md) is retained as a writing aid, **not** a commitment that any domain role/feature/release from history remains selected.
+- [Existing Design guidance](../design/README.md), [Engineering Standards](../engineering/standards/README.md), approved brand/direction assets, toolchain/scaffolds and local setup **remain in place**. Product discovery may challenge a real conflict, but should not silently rewrite another concern's standard.
+- Real original Kencleng Product sources and exact historical approvals can be reconstructed from [reset/history evidence](../history/README.md) at the pinned pre-reset Git commit `e43bc0276a9d027813e07d19099d86a5ee9e8c49`. Those prior decisions stay true about **their historical scope**, but **are not selected as current branch work** unless Anhar explicitly reconfirms/adapts them.
+- There is no active Engineering/UX/UI task/Space invocation, ORG-01 implementation approval, canonical ORG-01 API or release scope implied here.
 
-The output types identify **what kind of information exists**, not six required files, separate runtime stages or a universal delivery sequence. The Product Contract for `ORG-01` is authoritative within its scope. Other Journey nodes are not approved Product Contracts by implication.
+## Product intake — intentionally undecided
 
-## Product value and Design boundary
+| Question | Current decision |
+| --- | --- |
+| For whom and why should Kencleng create value? | OPEN — investigate with Human/domain authority and evidence |
+| What is worth promising now, and what is excluded? | OPEN |
+| Which consequential rights, roles, privacy/financial constraints and risk owners apply? | OPEN; preserve applicable external/project security/privacy standards |
+| What is the first bounded Product outcome, if any? | NOT SELECTED |
+| What would count as sufficient Product truth and acceptance for UX/Engineering? | TO BE DETERMINED per actual consumer decision |
 
-[Product Intent](product-intent.md) owns Kencleng's approved value direction, actor responsibilities and Product truth principles. Future Value Definition elaboration belongs to Product Foundation when a material gap is demonstrated and approved by Anhar; do not import unapproved business value narratives from historical experiments. Product Journey Mapping connects these values to actor experience. [Product Design Principles](../design/product-design-principles.md) owns the way approved Product meaning is expressed and understood in UI/UX; it does not independently create new business promises.
-
-## Product identity and approval
-
-Current selected Product outcome is **`ORG-01`**, corresponding to Journey node `J-ORG-01`. Track artifacts as `PROD-SELECTION-ORG-01`, `PROD-CONTRACT-ORG-01`, and `PROD-APPROVAL-ORG-01`. The **26 Journey nodes and 26 approved Contract identifiers** have explicit old→new mapping in the [migration record](identifier-migration-2026-10-23.md).
-
-The exact original Human-approved Product Contract blob is `448a8082bcb9ac1c7e41a686f2e3fdd2e3988ac4`. The approved meaning was preserved during the identifier migration; the current canonical content/revision is pinned by its [approval record](outcomes/org-01/approval.md). Historic codes belong to historical snapshots only.
-
-## Boundaries for consumers
-
-Keputusan privasi scoped ORG-01: [PD-PRIV-01 — pendekatan privasi dan lifecycle data](outcomes/org-01/privacy-decision.md). Prinsip data minimum, alur penghapusan konteks sederhana, retensi teknis/backup serta pemetaan kandidat dasar/arah pemberitahuan telah disetujui Human. Pengendali: Yayasan Kencleng Indonesia; kanal privasi: care@kencleng.dev. [Draf pemberitahuan](outcomes/org-01/privacy-notice-draft.md) menunggu rincian penyedia, validasi dasar dan review teks/kesiapan final. Gate penggunaan data orang nyata tetap ditahan; implementasi dan affected independent reassessment belum dilakukan.
-
-- Product Contract must be self-contained in behavior, authority, success, negative paths and acceptance; IDs are traceability metadata, not instructions to reconstruct upstream research.
-- Rancang revised vNext definition `47297c6f369dad4d4e4c4f90f0e81eb0310be7cf` has **FORMATION APPROVED / RESEARCH-ONLY** standing ([exact Human approval](https://github.com/anhsbolic/harscode-workspace/blob/04fd378cc1a4cab86c39368303f595b8b5a46ed9/engineering/spaces/feature-solution-design/formation-approval-2026-10-27.md)), including its consumer handoff boundary. This does not approve any specific ORG-01 solution bundle, downstream implementation, or Space invocation.
-- `I2/I3/I4`, technical constraints, current implementation/security evidence and Human-direct assignment remain separate. No Engineering or Space invocation is authorized here.
-- No change to the Kencleng Product Intent's approved semantics, operational `main`, Product Design authority, or the applicable Harscode `main` baseline.
-
-## Standar penulisan dokumen Product Kencleng
-
-> **Disetujui Anhar: 22 Oktober 2026.** Berlaku untuk penyusunan dan penyuntingan **dokumen Product Kencleng yang aktif**, dari tujuan produk hingga dokumen kebutuhan untuk tim berikutnya. **Tidak mengubah Harscode**, aturan Product, atau keputusan yang telah disetujui.
-
-1. **Utamakan Bahasa Indonesia yang umum.** Ikuti [pilihan istilah Product Kencleng](istilah.md), termasuk istilah Inggris yang sengaja disepakati (misalnya `Campaign`, `Donatur`, `Journey`, `development`, dan `conflict of interest`). Untuk istilah lain, gunakan bahasa Inggris hanya bila nama resminya harus dipertahankan atau padanan Indonesianya kurang jelas. Jelaskan istilah teknis ketika pertama dipakai.
-2. **Tulis langsung dan ringkas.** Satu gagasan utama per kalimat. Hindari pengulangan, pengantar panjang, dan istilah yang tidak diperlukan.
-3. **Susun agar mudah dicari.** Pisahkan tujuan, pengguna, aturan, syarat keberhasilan, kondisi gagal, batas pekerjaan, dan hal yang belum diputuskan sesuai kebutuhan dokumen. Jangan memaksakan format panjang.
-4. **Jelaskan batas kata yang bisa ditafsirkan berbeda.** Jika memakai kata seperti *sah, cukup, relevan, jelas,* atau *berhasil* untuk suatu keputusan penting, sebutkan kondisi yang dapat diperiksa dan akibat jika tidak terpenuhi. Jangan menciptakan angka atau skor tanpa dasar pengukuran.
-5. **Bedakan fakta, usulan, dan keputusan.** Jangan menaikkan kesimpulan riset atau pernyataan yang belum disetujui menjadi aturan yang mengikat.
-6. **Jaga makna ketika menyunting.** Terjemahan tidak boleh menambah/mengurangi aturan, mengganti kewenangan, mengubah cakupan, atau menentukan cara teknis. Revisi dokumen yang sudah disetujui perlu dibandingkan dengan sumbernya dan ditinjau sebelum menggantikan sumber yang berlaku.
-
-**Acuan istilah:** [Pilihan Istilah Product Kencleng](istilah.md) adalah satu tempat untuk padanan kata yang sudah disepakati; jangan menebak atau mengganti istilah secara massal.
-
-
-
-
-## History and evidence
-
-Older Product experiments, prior journey drafts, previous contract IDs, and discarded historical commitment rules are Git evidence only. The [identifier mapping](identifier-migration-2026-10-23.md) and immutable approved commits preserve their lineage. Historical approvals retain only their original scope and are not automatic instructions to future Product work.
+These are **questions for Product work, not placeholders accepted as domain policy**. Record new decisions in explicit project-owned sources only when there is an actual accepted meaning; avoid reconstructing old ORG-01 progression as default.

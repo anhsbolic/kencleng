@@ -8,7 +8,7 @@ Read this file before writing code. More-specific `AGENTS.md` files apply within
 
 ```text
 whole-product purpose / actors / durable product truth
-→ docs/product/product-intent.md
+→ docs/product/README.md (Product discovery OPEN; do not infer retired decisions)
 
 reusable product-design / UX / visual guidance
 → docs/design/README.md
@@ -41,7 +41,7 @@ generic lifecycle / engineering practice
 Release scope, delivery order, detailed delivery requirements, API operations, and implementation state are intentionally open at this baseline **unless a current Human-approved scoped artifact explicitly establishes them for a bounded active commitment**. Do not infer them from historical specs, contracts, code, migrations, handoffs, or Git history.
 
 Existing historical material may be useful evidence when an active decision/work item calls for it. It is not automatic authority.
-Historical Station 5 and unaccepted Rancang ORG-01 documentation is preserved via `docs/history/README.md` at an immutable Git checkpoint, not active Engineering standards or approved downstream input. Root/scoped `AGENTS.md` and project-owned current artifacts still control scope and permissions; path relocation does not grant new writes.
+Historical Pilot/Station 5 and ORG-01 Product/Rancang/Builder/Design/implementation evidence remain reconstructable at the pinned pre-reset Git checkpoint in `docs/history/README.md`; none is an active work order or downstream Product authority. Root/scoped `AGENTS.md` and project-owned current artifacts still control scope and permissions; path relocation does not grant new writes.
 
 ## Local development
 
@@ -74,7 +74,7 @@ Historical Station 5 and unaccepted Rancang ORG-01 documentation is preserved vi
 
 ## Authority separation
 
-Product intent owns whole-product meaning. Product-design authority owns reusable experience/visual guidance. Engineering architecture owns technical constraints. Human-approved commitment-specific product behavior and requirements may be **binding within that bounded commitment** without becoming whole-product canonical Product Authority. Detailed contracts and implementation are derived only when active delivery work needs them.
+Product owner / new accepted Product sources own whole-product meaning once explicitly established; at this reset baseline Product remains OPEN. Product-design authority owns reusable experience/visual guidance. Engineering architecture owns technical constraints. Human-approved commitment-specific product behavior and requirements may be **binding within that bounded commitment** without becoming whole-product canonical Product Authority. Detailed contracts and implementation are derived only when active delivery work needs them.
 
 An implementation agent must follow the current scoped owning artifacts identified by the active handoff and must not change higher-level requirements merely to make code pass. If authority appears wrong or incomplete, report the contradiction/gap and route it to the owner of that concern.
 

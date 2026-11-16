@@ -1,13 +1,13 @@
 # Product Design Standards
 
-> **Standing:** Project-owned Design concern map for Kencleng **pilot/station5-c1-space-only**. This index is a **router**, not a second source of visual rules, Product truth, feature UX/UI acceptance, Engineering design or release scope. The operational `main` branch has separate authority; do not infer cross-branch adoption.
+> **Standing:** Project-owned Design concern map for Kencleng **research/cross-stage-mapping**. This index is a **router**, not a second source of visual rules, Product truth, feature UX/UI acceptance, Engineering design or release scope. The operational `main` branch has separate authority; do not infer cross-branch adoption.
 > **Scope:** Approved reusable project Design direction and patterns, current working supplements, supporting visual evidence and optional authoring assistance. Read the **smallest actual owning source** for the decision.
 
 ## Design authority map
 
 | Concern / responsibility | Owning source | Standing in this branch | Authority boundary |
 | --- | --- | --- | --- |
-| Whole-product purpose, actor/domain meaning and business commitments | [Product Intent](../product/product-intent.md) plus applicable approved scoped Product sources | **Product authority — outside Design** | Product determines substantive truth, permissions, financial/legal/privacy consequences; Design cannot infer or amend these |
+| Whole-product purpose, actor/domain meaning and business commitments | [Current Product discovery router](../product/README.md) and any future genuinely accepted project Product source(s) | **Product authority — outside Design; currently OPEN in this reset branch** | Product determines substantive truth, permissions, financial/legal/privacy consequences; Design cannot infer or amend these |
 | Reusable principles for design judgment and human decision quality | [Product Design Principles](product-design-principles.md) | **Canonical Design** | Owns evaluative experience principles; not a second Product Contract, exact interaction flow, palette or brand selection |
 | Selected brand character and Product UI direction | [Brand/Product UI Brief](brand-product-ui-brief.md) | **Canonical Design** | Owns Sunlit Editorial / Evidence-Led Optimism thesis and directional expression; concrete tokens, reusable UX patterns and assets have separate owners |
 | Reusable concrete visual-system rules | [Visual Design Guidelines](design-guidelines.md) | **Canonical Design** | Owns color roles/values, typography roles, visual hierarchy and visual expression; not backend/domain status truth, production CSS/component APIs or feature UX decisions |
@@ -25,7 +25,7 @@
 
 ## Feature-specific evidence and optional assistance
 
-- [ORG-01 Hi-Fi candidate and handoff](outcomes/org-01/handoff.md) is a **bounded Design Candidate / NOT HUMAN APPROVED**, not canonical standards or proof of rendered/browser/actor outcomes.
+- Prior ORG-01 feature Design candidate/prototype is **historical only** at [pre-reset commit](https://github.com/anhsbolic/kencleng/tree/e43bc0276a9d027813e07d19099d86a5ee9e8c49/docs/design/outcomes/org-01). No current feature-specific UI/UX output has been accepted.
 - [Static HTML Hi-Fi kickoff template](templates/hi-fi-static-html-kickoff.md) is an **optional session prompt** for appropriately bounded project UI design when existing accepted evidence is insufficient; not a formed Space, required phase, implementation permission, design approval or new project standard.
 
 Use actual current project Product/Design original sources directly. This index does **not** choose features, webpage routes, release scope, delivery order, or implementation rights.
