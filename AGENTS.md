@@ -39,10 +39,9 @@ generic lifecycle / engineering practice
 → current Harscode authority
 ```
 
-Release scope, delivery order, detailed feature requirements, API operations and implementation state remain undecided **unless a current Human-approved scoped artifact explicitly establishes them**. Whole-product Product Intent remains approved at its original exact revision. Do not infer them from historical specs, contracts, code, migrations, handoffs, or Git history.
+Release scope, delivery order, detailed feature requirements, API operations and implementation state remain undecided **unless a current Human-approved scoped artifact explicitly establishes them**. Whole-product Product Intent remains approved at its original exact revision. Do not infer new Product commitments from unapproved documents, code, migrations or handoffs.
 
-Existing historical material may be useful evidence when an active decision/work item calls for it. It is not automatic authority.
-Historical Pilot/Station 5 and ORG-01 Product/Rancang/Builder/Design/implementation evidence remain reconstructable at the pinned pre-reset Git checkpoint in `docs/history/README.md`; none is an active work order or downstream Product authority. Root/scoped `AGENTS.md` and project-owned current artifacts still control scope and permissions; path relocation does not grant new writes.
+**Default context for routine Product work:** inspect the current effective owning project sources and applicable standards. Do **not** proactively load or narrate superseded work, earlier project episodes, archival indexes or repository cleanup events. Consult previous source revisions only on explicit Human request or where a specific material authority conflict/provenance question cannot be resolved from the current sources. In that case, report only what matters to the current decision, rather than offering an unsolicited chronology. Preserve exact evidence and approval provenance without promoting old artifacts into active authority. Root/scoped `AGENTS.md` and current project-owned artifacts control scope and permissions; file relocation grants no additional writes.
 
 ## Local development
 
@@ -94,14 +93,14 @@ Explicit Human authorization is required before an agent introduces or materiall
 - authentication token/session/MFA core security logic;
 - privileged authorization rules whose failure could grant or exercise materially elevated access.
 
-This is a semantic safety boundary, not a commitment to historical file paths or architecture. Agents may inspect, critique, test, or propose changes without treating old implementations as current precedent.
+This is a semantic safety boundary, not tied to a particular file path or architecture. Agents may inspect, critique, test, or propose changes; earlier implementations do not establish current authority.
 
 ## Security scrutiny
 
-Security gets proportional scrutiny. Do not copy historical authentication, encryption, authorization, or data-protection mechanisms into a new active path merely because they existed before. Reuse only when current data semantics and risk justify it.
+Security gets proportional scrutiny. Reuse authentication, encryption, authorization, or data-protection mechanisms only where current data semantics, effective standards and risk justify them; existing code alone does not establish permission.
 
 ## Evidence
 
 Distinguish verified, assumed, deferred, and not tested. Never claim a check ran when it did not.
 
-Git history and prior Harscode artifacts are evidence/history. Promote reusable truth into the current source that owns the concern rather than treating process artifacts as project-wide precedent.
+Use current approved project sources for effective meaning. Inspect source provenance proportionally when it is necessary for a material decision; process artifacts and previous revisions are not independent project-wide authority.
