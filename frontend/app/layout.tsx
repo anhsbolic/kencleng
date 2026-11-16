@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Provider } from "@/features/org-01/provider";
+
 export const metadata: Metadata = {
-    title: "Kencleng",
-    description: "Konteks organisasi dan tanggung jawab Owner internal Kencleng",
+  title: "Kencleng",
+  description: "Kencleng research scaffold; Product discovery belum menetapkan fitur aktif.",
 };
-export default function RootLayout({ children, }: Readonly<{
-    children: React.ReactNode;
-}>) {
-    return (<html lang="id">
-      <body>
-        <Provider>{children}</Provider>
-      </body>
-    </html>);
+
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="id">
+      <body>{children}</body>
+    </html>
+  );
 }

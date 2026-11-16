@@ -16,9 +16,7 @@
     "test:browser:ui": "playwright test --ui",
     "browser:install": "playwright install chromium",
     "verify": "npm run lint && npm run test",
-    "generate:org": "node scripts/generate-org-contract.mjs",
     "typecheck": "tsc --noEmit",
-    "dev:mock": "NEXT_PUBLIC_MSW_ENABLED=true next dev --hostname 127.0.0.1",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
