@@ -29,4 +29,4 @@
 
 ## Penerapan bertahap
 
-**Riwayat (22 Oktober 2026):** Pilihan istilah ini pernah digunakan dalam Product Intent dan Journey yang disetujui pada scope historisnya. File-file tersebut sekarang **tidak menjadi active Product progress** di branch reset. Sumber asli dan approval-nya tetap dapat dibaca pada [pinned pre-reset checkpoint](https://github.com/anhsbolic/kencleng/tree/e43bc0276a9d027813e07d19099d86a5ee9e8c49/docs/product). Pilihan kata ini tidak menentukan ulang aturan atau feature yang harus dibangun.
+**Penerapan:** Istilah ini digunakan dalam [Product Intent](product-intent.md) dan dokumen Product berikutnya. Makna dan approval Product Intent berada pada dokumen aslinya; panduan istilah tidak menetapkan outcome, prioritas atau kewenangan baru.
