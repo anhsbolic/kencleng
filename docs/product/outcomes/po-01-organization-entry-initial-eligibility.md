@@ -40,11 +40,11 @@
 
 **Effective whole-product foundation:** [Kencleng Product Intent](https://github.com/anhsbolic/kencleng/blob/7778d66d91ba81fff08a6ae1ee0aac9ef71905f8/docs/product/product-intent.md), original blob `cc98e46dd1d8d9e32b8718eb3b95ad9a6ffc2312`, approved 22 Oktober 2026 within its stated whole-product scope.
 
-**Prior working-domain context (not binding):** [Organization Eligibility — Working Product Definition](organization-eligibility-working.md), pre-selection checkpoint, blob `e2f65984bb39a3d6d0b6b2d31c6240180be22964`. Its broader ongoing-eligibility decisions are context and boundary constraints, not automatically in-scope delivery requirements for PO-01.
+**Prior working-domain context (not binding):** [Organization Eligibility — Working Product Definition](../organization-eligibility-working.md), pre-selection checkpoint, blob `e2f65984bb39a3d6d0b6b2d31c6240180be22964`. Its broader ongoing-eligibility decisions are context and boundary constraints, not automatically in-scope delivery requirements for PO-01.
 
 **Research guidance, not Kencleng authority:** Harscode [Product Definition](https://github.com/anhsbolic/harscode-workspace/blob/302bedae43563a66d2ef914191c18139440c0c30/product/product-definition.md), [Consumer Handoff](https://github.com/anhsbolic/harscode-workspace/blob/302bedae43563a66d2ef914191c18139440c0c30/product/consumer-handoff.md), and [Authority & Approval](https://github.com/anhsbolic/harscode-workspace/blob/302bedae43563a66d2ef914191c18139440c0c30/product/authority-and-approval.md); selected research guidance, still pending its own human exact-revision review.
 
-**Other owning inputs:** [Design Authority](../design/README.md), [Engineering Standards](../engineering/standards/README.md), and applicable legal/privacy/security authorities when relevant. These are separately owned sources; their factual or operational approval is not supplied by this document.
+**Other owning inputs:** [Design Authority](../../design/README.md), [Engineering Standards](../../engineering/standards/README.md), and applicable legal/privacy/security authorities when relevant. These are separately owned sources; their factual or operational approval is not supplied by this document.
 
 A future binding Product Contract, if selected, must express the material approved rules directly. The original approved content and a separate approval reference must identify exact immutable bytes/scope. This checkpoint does **not** itself grant that approval.
 
