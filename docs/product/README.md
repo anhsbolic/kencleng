@@ -9,6 +9,7 @@
 | --- | --- | --- |
 | [Product Intent](product-intent.md) | **APPROVED — 22 October 2026; under reassessment** | Whole-product purpose, intended beneficiaries, broad actor/domain relationships, integrity principles and commitments within its stated scope |
 | [Product terminology](istilah.md) | **Approved editorial guidance** | Consistent wording; not a source of new business rules, rights or delivery authorizations |
+| [Organization Eligibility — Working Product Definition](organization-eligibility-working.md) | **WORKING / NOT APPROVED** | Discovery checkpoint for Organization Eligibility: Human-agreed working directions, candidate behavior, unresolved decisions, and consumer sufficiency; not binding Product scope or implementation authorization |
 
 The approved Product Intent remains the current whole-product foundation **at its original exact revision**. Reassessment under the [selected Harscode Product research definition](https://github.com/anhsbolic/harscode-workspace/blob/0e82022e6a1cb321f4fbcb7a6df0ccc7d67015b4/product/product-definition.md) may challenge or propose changes, but **does not automatically revise or revoke accepted Kencleng meaning**. Any substantive change requires an explicit Product owner decision and newly accepted exact source.
 
