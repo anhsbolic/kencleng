@@ -256,3 +256,46 @@ These are **Product-level acceptance targets**, not measured system performance,
 - **Responsibility boundary:** Product defines what is necessary and who may legitimately receive it; human Reviewer/Decision-Maker owns legal/evidence judgment; Engineering owns technical data protection, authorization, protected audit and security logging in accordance with effective standards. Security logs, business records and raw evidence have distinct purposes; IP/device/user-agent are not universal PO-01 business audit requirements.
 
 **Next Product inquiry:** consolidate OA-01..05 acceptance wording and minimum clarification/closure exception behavior, then reassess remaining Product/legal/privacy blockers and prepare an exact-revision Product Contract candidate. Keep DoD and downstream handoff acceptance separate.
+## 9. Agreed minimum OA commitments and exception behavior — 18 November 2026
+
+> **Standing:** Anhar explicitly agreed to the minimum OA-01..05 wording and single organizational acceptance model, then agreed to the bounded clarification/withdrawal/closure behavior in the Product working session. **Working Product decisions only:** not external legal sign-off, an approved enforceable contract, Product DoD completion, UX flow, or Engineering authorization. This is the latest working interpretation of §5.5–5.6 where wording differs.
+
+### 9.1 Organizational accountability commitments — plain meaning
+
+| ID | Working organizational commitment | Meaningful limit |
+| --- | --- | --- |
+| **OA-01 — Truthful Information** | Organisasi memberikan informasi material yang benar, tidak menyesatkan, dan memperbaiki ketidakakuratan material setelah diketahui. | Bukan jaminan tanpa kesalahan atau verifikasi otomatis oleh Kencleng. |
+| **OA-02 — Valid Representation** | Organisasi memastikan tindakan, penerimaan komitmen, dan penunjukan perwakilan/First Owner di Kencleng dilakukan pihak yang berwenang sesuai cakupan mandatnya. | Applicant tidak otomatis menjadi perwakilan atau Owner. |
+| **OA-03 — Material Change Disclosure** | Organisasi memberitahu Kencleng perubahan yang diketahui dan secara material memengaruhi eligibility atau kewenangan perwakilan. | Tidak mewajibkan pelaporan setiap perubahan administratif kecil. |
+| **OA-04 — Proportionate Cooperation** | Organisasi bersedia memberi klarifikasi dan bekerja sama secara wajar dalam pemeriksaan/pengawasan Kencleng yang sah dan relevan. | Bukan akses tanpa batas ke seluruh informasi/dokumen pribadi atau organisasi. |
+| **OA-05 — Continuing Accountability** | Apabila organisasi melakukan Campaign atau kegiatan dana melalui Kencleng, organisasi memenuhi komitmen accountability yang dinyatakan berlaku untuk kegiatan tersebut, termasuk setelah fundraising berakhir. | Bukan izin Campaign/donasi/dana dan bukan persetujuan otomatis atas seluruh persyaratan baru/masa depan yang belum dikomunikasikan. Campaign-specific duties remain owned by the applicable future Product Outcome. |
+
+**Single authorized organizational acceptance:** OA-01..05 accepted as **one identifiable, versioned package** by a party sufficiently authorized to bind the organization for this act. No universal five separate acceptance steps, mandatory on-product legal signatory account, mandatory digital-signature method, or required screen/checkbox pattern. External acceptance evidence may be assessed if sufficiently traceable and lawful.
+
+**Keep the acts distinct:** (a) Applicant application terms/submission; (b) authorized organization acceptance of the OA package; (c) proposed First Owner's separate explicit personal role acceptance; (d) Kencleng human judgment and eligibility decision. One human may perform multiple acts only where actually authorized, but none is silently inferred from another.
+
+**Minimum traceability:** identity of the legal entity, authorized accepting person/organ and capacity, *actual* OA package/version, attributable acceptance act and when it occurred, relevant evidence link, Reviewer attestation and eventual authorized decision. This is one consequential business event with connected decision evidence, not machine legal-document understanding or a required database schema.
+
+**Change handling:** Material OA version changes before approval require acceptance of the version applicable to the decision. Later material versions cannot silently inherit previously granted acceptance; detailed post-approval amendment/renewal handling is adjacent. The legal effectiveness of a particular form of acceptance and the effect of an application withdrawn before approval remain case-specific legal/Product questions; retain the historical acceptance act without claiming more than it established.
+
+### 9.2 Minimal exception and recovery behavior
+
+| Condition | Required Product behavior / bounded consequence |
+| --- | --- |
+| **Clarification Required** | Authorized Reviewer requests information relevant to an unresolved material requirement. The application remains undecided; the Applicant receives an access-appropriate explanation of what is missing and what may be done next. Clarification is a process condition, **not rejection**. |
+| **Closed Inconclusive** | After reasonable opportunity to clarify, necessary evidence or authority still cannot be established. An authorized, reasoned closure conveys **no initial eligibility / First Owner rights**, without asserting proven legal ineligibility, misconduct or fraud. |
+| **Rejected** | Authorized decision based on sufficiently established material ineligibility or a proven relevant failed requirement. A clearly evidenced refusal of baseline OA by a party authorized to bind the organization may support rejection; Applicant's unsupported refusal or an unverifiable claim does **not** automatically establish the organization's refusal. |
+| **Withdrawn before effective approval** | A party legitimately entitled to manage their application may request withdrawal in a valid context. Withdrawal ends that application without granting organizational rights. It does not automatically rescind separate authorized organizational acts/acceptance, erase material decision history, or override rights of the organization or other parties. Record any unresolved consequential effects rather than inventing a universal revocation outcome. |
+| **After effective approval** | Applicant withdrawal is **not** a mechanism to revoke an eligible organization or its Owner rights. Post-approval eligibility/authority changes belong to relevant separately authorized lifecycle processes. |
+| **New evidence / resubmission** | Material new evidence may justify a legitimate subsequent review; it does not automatically change or overwrite a prior decision, bypass restrictions, or confer rights without a new authorized decision. |
+
+**No arbitrary Product timeout:** Fair clarification opportunity, notification and case closure must be proportionate; do not silently create an indefinite pending state or an automated closure deadline without a legitimate scoped operational decision. A credible material authority conflict holds the affected decision and requires authorized independent handling without exposing another Applicant's private evidence.
+
+**Minimum consequential audit:** for clarification, closure, rejection, withdrawal, material correction or reassessment, preserve what/when/in which application/organization context/who/for whom/result and material reason/evidence reference where needed. Do not require raw-document interpretation, exhaustive procedural logs, or infinite retention. Rights and disclosure follow §5.4 and §8.
+
+### 9.3 Standing and next review
+
+- O2.6 and exception edges of O2.7/O2.9 now have **agreed working behavior**; their DoD checkboxes are **not** automatically complete or binding.
+- Still OPEN: legal sufficiency of specific mandate and OA acceptance; privacy lawful bases/notice and purpose-specific retention; fair operational clarification/closure boundaries, detailed post-approval OA version changes and exceptional authority dispute routing; exact-revision Product acceptance and downstream consumer sufficiency.
+- **Next:** review the separate [consolidated PO-01 Product Contract candidate](po-01-product-contract-candidate.md) as *one* bounded draft. That candidate does not promote these working agreements into approved Product Authority by being written.
+
