@@ -299,3 +299,36 @@ These are **Product-level acceptance targets**, not measured system performance,
 - Still OPEN: legal sufficiency of specific mandate and OA acceptance; privacy lawful bases/notice and purpose-specific retention; fair operational clarification/closure boundaries, detailed post-approval OA version changes and exceptional authority dispute routing; exact-revision Product acceptance and downstream consumer sufficiency.
 - **Next:** review the separate [consolidated PO-01 Product Contract candidate](po-01-product-contract-candidate.md) as *one* bounded draft. That candidate does not promote these working agreements into approved Product Authority by being written.
 
+## 10. Consolidated review clarification — 18 November 2026
+
+> **Standing:** Anhar explicitly agreed to the bounded First Owner minimum capabilities, **private-by-default eligibility**, time-contextual evidence traceability and separated approval/readiness levels during consolidated Product review, then authorized revising PO-01 and its candidate. **Agreed WORKING Product meaning, not binding exact-revision approval, legal/privacy clearance, completed DoD, or implementation permission.** This later scoped clarification resolves only the affected ambiguity in §5.8 and other earlier working text; historical checkpoints remain historical.
+
+### 10.1 Minimum First Owner behavior at effective initial approval
+
+The legitimate recognized First Owner, **only after** effective initial Organization Eligibility approval and subject to current mandate/authorization, must be able to:
+
+1. **View** the recognized organization's relevant eligibility decision, context and applicable organizational accountability commitments.
+2. **Provide** relevant eligibility clarification or correction on behalf of the organization within the applicable mandate; providing material evidence/corrections does not itself alter a prior approval or bypass authorized review.
+3. **Receive** material eligibility-related Kencleng communication as an authorized organization contact. This is a responsibility/ability to receive relevant information, **not** a prescribed notification channel, guaranteed delivery mechanism, or exclusive right to all organization correspondence.
+
+These three capabilities do **not** confer Campaign creation/publication, donation acceptance, fund control, Staff/Owner administration, universal evidence access, or organizational power beyond valid mandate. The detailed operational permission model remains Engineering-owned and other Owner functions remain downstream Product decisions.
+
+### 10.2 Eligibility disclosure — private by default
+
+Initial Organization Eligibility decision/status and its evidence are **not automatically public**. Only legitimately authorized applicants, organizational actors and Kencleng reviewers/decision actors may receive the information permitted for their specific purposes and rights. Necessary internal downstream Product decisions can use truthful, access-bounded eligibility meaning; that is **not** authorization to expose it to visitors or donors.
+
+Any public profile, badge, public-facing status, publication of reasons or evidence requires a **separate explicit Product disclosure decision** covering audience, allowed claim, timing and privacy consequences. No public surface or status text is specified by PO-01. Private-by-default is a Product disclosure rule, not a requirement for any particular UI/technical protection.
+
+### 10.3 Evidence at decision time — proportionate traceability
+
+For consequential Reviewer attestation or eligibility decisions, evidence references must identify **what sources/material were actually relied on at the time of the decision** well enough to reconstruct the then-known basis and its limitations, even if a live source later changes. If raw evidence is lawfully no longer retained, the record must not imply it remains available or independently verifiable. This is **not** a universal requirement for snapshots, content hashes, immutable documents, exhaustive per-claim findings, or indefinite original-file storage; Engineering selects the proportionate mechanism under privacy/legal constraints.
+
+### 10.4 Separate Product acceptance, legal clearance and delivery readiness
+
+- **WORKING behavior settled:** substantive scenario-based Product direction agreed by Anhar and durably recorded; **not binding contract acceptance**.
+- **Binding Product semantics (future):** requires a separately approved, **exact immutable revision and explicitly bounded Product scope** by Anhar, including clear conditional assumptions and remaining legal/domain validation; acceptance does **not** declare any real mandate, OA contract or personal-data processing legally sufficient.
+- **Legal/privacy and operational clearance (future):** before real use of affected evidence, acceptances and personal data, qualified review must establish applicable lawful basis, notice, retention/deletion limits and case-specific legal sufficiency. UX/Engineering consumer sufficiency, delivery/deployment authority and any runtime security claims remain separate later gates.
+
+**Not resolved by this clarification:** case-specific Yayasan/Perkumpulan representative authority and legal enforceability of OA acceptance; lawful basis/notice, third-party personal data and retention terms; detailed post-approval authority lifecycle, appeals/escalation rules and future public disclosure. Do not mark the original DoD complete merely because this clarification is written.
+
+**Minimum scenario checks for future Product acceptance:** after approval the legitimate First Owner can see the decision/obligations, provide an authorized correction and receive relevant communications; an unrelated Applicant cannot take those rights; a visitor cannot see a private eligibility status without later authorized public-disclosure rules; evidence changed or deleted after a decision cannot silently rewrite what was relied upon; exact-revision Product approval cannot be mistaken for legal/privacy or Engineering clearance.

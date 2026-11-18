@@ -46,13 +46,15 @@ A person providing external evidence of authority need not automatically become 
 
 First Owner recognition cannot be treated as an unrestricted grant to publish Campaigns, receive donations, move funds, replace Owners unilaterally, or bypass independent downstream decisions.
 
+**Latest PO-01 working clarification (18 November 2026):** After effective initial eligibility approval, a recognized First Owner with valid mandate can (a) view relevant organization eligibility decision/context/OA obligations; (b) submit legitimate eligibility clarification or correction on the organization's behalf without self-approving the changed decision; and (c) receive material eligibility-related communication in an authorized organizational capacity. No particular UI/notification mechanism or broader Owner management power is implied. See [PO-01 §10](outcomes/po-01/po-01-organization-entry-initial-eligibility.md#10-consolidated-review-clarification--18-november-2026).
+
 ## 4. Kencleng decision authority and accountability — PO-01 working decision
 
 Initial Organization Eligibility uses **manual, human-led assessment and approval** by authorized Kencleng actors. Evidence completeness, document submission, or any auxiliary automated check cannot grant eligibility automatically.
 
 Reviewer and Decision-Maker are distinguishable responsibilities; for routine cases, the same authorized person may carry both when there is no disqualifying conflict of interest. Materially contradictory mandates, credible takeover risk, or material decision-authority/independence concerns require holding the affected decision and authorized, independent escalation. Escalation is **not** a waiver of substantive evidence requirements. A reviewer with a disqualifying conflict cannot assess that case.
 
-The record must allow legitimate reconstruction of: application and legal entity; assigned examiner and decision actor with relevant authority; examined claims/evidence and provenance; substantive findings and limitations; decision criteria and rationale; chronology of material acts and effective consequences; and subsequent corrections/history. No silent overwrite of consequential decision history. Disclosure is limited by legitimate need and privacy rights.
+The record must allow legitimate reconstruction of application/legal entity, authorized human Reviewer and Decision-Maker, their concise attestation/material rationale, **evidence identifiable as relied upon at the decision time**, consequential acts and later corrections. No silent overwrite or false claim that lawfully deleted raw evidence remains available. This is a proportionate Product accountability outcome, **not** mandatory per-document findings, per-claim technical modeling, indefinite document retention or a universal audit-log schema. Disclosure is limited by legitimate need and privacy rights.
 
 Human Product decision authority over these rules is separate from operational Kencleng authority to decide individual organization applications.
 
@@ -61,11 +63,12 @@ Human Product decision authority over these rules is separate from operational K
 - Applicant access follows the specific application relationship and necessary permissions, not automatic access to organization-wide evidence, disputed authority documents, or another applicant's file.
 - If several applicants assert relationships to the same legal entity, Kencleng must avoid duplicating recognized organizational identity or giving priority-based ownership. Conflicting, material authority claims block affected rights pending adequate assessment.
 - Every actor gets a truthful explanation of their own permissible next steps without unauthorized disclosure of others' personal data, mandates, or confidential evidence.
-- Account identity and application-specific sensitive evidence have different data purposes; required collection, public disclosure, access, retention/deletion, and legal/privacy basis remain bounded Product/privacy work, not invented universal consent or mandatory personal-document collection.
+- Account identity and application-specific sensitive evidence have different data purposes; required collection, access, retention/deletion, and legal/privacy basis remain bounded Product/privacy work, not invented universal consent or mandatory personal-document collection.
+- **PO-01 private by default:** initial eligibility status/decision, private mandate evidence and audit history are not automatically public; a public eligibility claim/profile/badge needs a later explicit Product disclosure decision. Legitimately authorized internal downstream use is not automatic public exposure.
 
 ## 6. Not settled; cannot be inferred from this model
 
-- Exact First Owner management actions/limits, number of Owners, later Owner delegation/replacement and Staff permissions.
+- First Owner actions **beyond PO-01's agreed minimum eligibility-context, correction/clarification and communication capabilities**, number of Owners, later Owner delegation/replacement and Staff permissions.
 - Technical role/permission inventory, storage model, authentication, audit implementation, and admin tooling.
 - Detailed dispute resolution and appeal process, platform assignment policy, material escalation thresholds beyond representative scenarios, and exceptional separation-of-duties requirements.
 - Legal sufficiency and privacy/legal clearance of any particular identity/mandate document.
