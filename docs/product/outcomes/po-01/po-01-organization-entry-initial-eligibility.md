@@ -1,11 +1,11 @@
 # PO-01 — Organization Entry & Initial Eligibility Decision
 
-> **Standing:** SELECTED PRODUCT OUTCOME / WORKING DEFINITION OF DONE — NOT APPROVED AS BINDING PRODUCT CONTRACT  
+> **Standing:** SELECTED PRODUCT OUTCOME / **BOUNDED BINDING PRODUCT SEMANTICS APPROVED AT EXACT REVISION** (see [approval record](po-01-bounded-product-approval-2026-11-18.md)); **WORKING DoD — NOT PRODUCT DONE, LEGAL-CLEARED OR ENGINEERING-AUTHORIZED**  
 > **Selection:** Anhar, Product working session, 17 November 2026  
 > **Product decision-maker:** Anhar  
 > **Owning concern:** Kencleng Product (Product Harscode phase)  
 > **Purpose:** Durable bounded outcome and completion checklist for Product Definition; not an MVP/release plan, UX deliverable, implementation specification, or Engineering authorization.  
-> **Interpretation:** Selection and permission to checkpoint are confirmed. Detailed Product semantics and the DoD checklist below remain candidate criteria until substantively reviewed/accepted at exact revision. Checking a box requires supporting accepted evidence, not just authoring text.
+> **Interpretation:** Earlier working checkpoints preserve their original historical standing. Subsequent **bounded Product semantics** were explicitly approved at the immutable revision in the [separate Human approval record](po-01-bounded-product-approval-2026-11-18.md). Unvalidated legal/privacy assumptions, full Product DoD, downstream consumer sufficiency and Engineering permission remain outstanding.
 
 ## 1. Label and intended Product outcome
 
@@ -46,7 +46,7 @@
 
 **Other owning inputs:** [Design Authority](../../../design/README.md), [Engineering Standards](../../../engineering/standards/README.md), and applicable legal/privacy/security authorities when relevant. These are separately owned sources; their factual or operational approval is not supplied by this document.
 
-A future binding Product Contract, if selected, must express the material approved rules directly. The original approved content and a separate approval reference must identify exact immutable bytes/scope. This checkpoint does **not** itself grant that approval.
+The [separate bounded Human approval record](po-01-bounded-product-approval-2026-11-18.md) identifies the accepted original immutable Product semantics, scoped conditions and excluded authority. The earlier working checkpoints do not themselves grant that approval. The overall PO-01 DoD, legally dependent facts and downstream delivery readiness remain separately open.
 
 ## 3. Definition of Done — checklist
 
@@ -75,7 +75,7 @@ A future binding Product Contract, if selected, must express the material approv
 
 - [ ] **O3.1 — Project/external authority reconciled:** Identify effective exact source revisions, applicable legal/privacy/security constraints, and decisions that require external/domain validation; do not assert unverified Indonesian regulatory details as settled.
 - [ ] **O3.2 — Decision ownership documented:** Human Product owner, scope of any delegation, responsibility for review/approval and resolution of consequential ambiguities.
-- [ ] **O3.3 — Explicit bounded Product approval:** Anhar approves exact substantive Product content and scope; original accepted source and external approval evidence/reference identify exact immutable revision. Working-chat agreement or this checklist alone is not sufficient.
+- [x] **O3.3 — Explicit bounded Product approval:** Anhar approved bounded Product semantics of immutable blob 66063ea04ae05cbb01c2f4746d4d20ae5f85ce7c; [approval record](po-01-bounded-product-approval-2026-11-18.md) captures the exact source, Human exchange, scoped conditions and exclusions. **Not approval of legal/privacy sufficiency, overall Product DoD or Engineering delivery.**
 - [ ] **O3.4 — Exclusions and freedoms explicit:** Clarify what UX, UI, and Engineering may decide independently, and what consequential Product questions must return to Product.
 
 ### O4 — Uncertainty, evidence standing, and continuity
@@ -95,13 +95,13 @@ A future binding Product Contract, if selected, must express the material approv
 
 - [x] **C.1 — Earlier working discovery is durable:** Wider Organization Eligibility working checkpoint exists in Kencleng repo and is distinguishable from binding Product authority.
 - [x] **C.2 — PO-01 selected for Product Definition:** Explicit session agreement, not a Product behavior acceptance.
-- [ ] **C.3 — Actual approved PO-01 Product contract/revision recorded:** Not yet applicable as an accomplished checkpoint; will require separate exact-content approval.
+- [x] **C.3 — Exact-revision bounded Product semantics approval recorded:** The [Human approval record](po-01-bounded-product-approval-2026-11-18.md) identifies accepted immutable Product source and its limits. This checkpoint **does not mean full PO-01 Product Done, legal clearance or implementation authorization**.
 
 ## 4. Completion rule and current standing
 
 **PO-01 Product Definition is DONE only when:** material O1–O4 and relevant consumer-sufficiency criteria above have supporting accepted information; any unfulfilled criterion is demonstrably non-blocking for the intended receiver/decision or explicitly resolved; substantive accepted Product meaning is self-contained in its actual owning source(s) and references exact effective authority and approved immutable revision. No false claim of consumer verification, legal clearance, Engineering readiness, or deployed capability.
 
-**Current outcome standing:** **SELECTED FOR PRODUCT DEFINITION, NOT PRODUCT DONE**. This checklist is the working completion contract for planning/review, **not yet an approved binding Product Contract**.
+**Current outcome standing:** **BOUNDED BINDING PRODUCT SEMANTICS APPROVED; NOT PRODUCT DONE**. The [approval record](po-01-bounded-product-approval-2026-11-18.md) sets exact scope and conditions. DoD, legal/privacy validation, consumer sufficiency and Engineering authorization remain independently outstanding.
 
 **Open decisions requiring near-term Product work:** Eligibility Decision Basis; required evidence and sufficiency threshold for Yayasan/Perkumpulan; legitimate review/approval authority; First Owner mandate; organization accountability obligations; result semantics when evidence is insufficient or contradictory; and consequential rights after the initial decision.
 
@@ -349,3 +349,14 @@ A recognized First Owner with valid organizational mandate may submit a material
 - **Delivery readiness:** consumer-specific sufficiency, Engineering implementation permission, legal/privacy clearance for production handling and deployment verification remain separate future decisions, irrespective of bounded approval of Product semantics.
 
 **Next review input:** [PO-01 Contract Candidate](po-01-product-contract-candidate.md) and [minimum legal/privacy source review](po-01-minimum-legal-privacy-evidence.md). Original unchecked DoD items remain unchecked. No legal thresholds, retention durations or technical workflows are invented by these clarifications.
+
+## 12. Subsequent bounded Human Product approval — 18 November 2026
+
+> **Decision:** Anhar explicitly approved the immutable original candidate as **binding bounded Product semantics only**, with legal/privacy and operational clearance unapproved. See the [durable scoped approval record](po-01-bounded-product-approval-2026-11-18.md).
+>
+> **Accepted original:** [PO-01 candidate at immutable commit 3b613d5](https://github.com/anhsbolic/kencleng/blob/3b613d5a7a4dfce74b4df9fe8c5b159f3a779ca7/docs/product/outcomes/po-01/po-01-product-contract-candidate.md); Git blob SHA 66063ea04ae05cbb01c2f4746d4d20ae5f85ce7c.
+>
+> The original candidate's “NOT APPROVED” label was its historical authoring state. This later separately recorded Human decision supersedes that label **only in the explicitly approved semantic scope**. The original accepted bytes are unchanged; no legal sufficiency, privacy consent/lawful processing, full Product Done or Engineering handoff is implied.
+
+O3.3 and C.3 in §3 are checked for **this bounded approval and exact-revision record only**. Other DoD items require separate evidence and acceptance; historical checkpoint statements are not silently rewritten.
+
