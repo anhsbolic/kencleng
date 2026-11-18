@@ -40,11 +40,11 @@
 
 **Effective whole-product foundation:** [Kencleng Product Intent](https://github.com/anhsbolic/kencleng/blob/7778d66d91ba81fff08a6ae1ee0aac9ef71905f8/docs/product/product-intent.md), original blob `cc98e46dd1d8d9e32b8718eb3b95ad9a6ffc2312`, approved 22 Oktober 2026 within its stated whole-product scope.
 
-**Prior working-domain context (not binding):** [Organization Eligibility — Working Product Definition](../organization-eligibility-working.md), pre-selection checkpoint, blob `e2f65984bb39a3d6d0b6b2d31c6240180be22964`. Its broader ongoing-eligibility decisions are context and boundary constraints, not automatically in-scope delivery requirements for PO-01.
+**Prior working-domain context (not binding):** [Organization Eligibility — Working Product Definition](../../organization-eligibility-working.md), pre-selection checkpoint, blob `e2f65984bb39a3d6d0b6b2d31c6240180be22964`. Its broader ongoing-eligibility decisions are context and boundary constraints, not automatically in-scope delivery requirements for PO-01.
 
 **Research guidance, not Kencleng authority:** Harscode [Product Definition](https://github.com/anhsbolic/harscode-workspace/blob/302bedae43563a66d2ef914191c18139440c0c30/product/product-definition.md), [Consumer Handoff](https://github.com/anhsbolic/harscode-workspace/blob/302bedae43563a66d2ef914191c18139440c0c30/product/consumer-handoff.md), and [Authority & Approval](https://github.com/anhsbolic/harscode-workspace/blob/302bedae43563a66d2ef914191c18139440c0c30/product/authority-and-approval.md); selected research guidance, still pending its own human exact-revision review.
 
-**Other owning inputs:** [Design Authority](../../design/README.md), [Engineering Standards](../../engineering/standards/README.md), and applicable legal/privacy/security authorities when relevant. These are separately owned sources; their factual or operational approval is not supplied by this document.
+**Other owning inputs:** [Design Authority](../../../design/README.md), [Engineering Standards](../../../engineering/standards/README.md), and applicable legal/privacy/security authorities when relevant. These are separately owned sources; their factual or operational approval is not supplied by this document.
 
 A future binding Product Contract, if selected, must express the material approved rules directly. The original approved content and a separate approval reference must identify exact immutable bytes/scope. This checkpoint does **not** itself grant that approval.
 
@@ -114,7 +114,7 @@ A future binding Product Contract, if selected, must express the material approv
 ## 5. Checkpoint #2 — agreed working direction (18 November 2026)
 
 > **Standing:** HUMAN-AUTHORIZED WORKING CHECKPOINT ONLY. Anhar approved persisting the discussion's agreed working decisions on 18 November 2026, **not** these exact bytes as a binding PO-01 Product Contract, legal sign-off, Engineering handoff, or implementation authorization.
-> **Scope:** Selected PO-01, representative Yayasan scenario; differences for Perkumpulan still to be tested. The shared [Actor & Authority Model](../actor-authority-model.md) supplies reusable Product meaning. The wider [Organization Eligibility working checkpoint](../organization-eligibility-working.md) remains historical/adjacent discovery and is not a second competing authority.
+> **Scope:** Selected PO-01, representative Yayasan scenario; differences for Perkumpulan still to be tested. The shared [Actor & Authority Model](../../actor-authority-model.md) supplies reusable Product meaning. The wider [Organization Eligibility working checkpoint](../../organization-eligibility-working.md) remains historical/adjacent discovery and is not a second competing authority.
 > **Status:** DoD in §3 remains uncompleted unless evidence and exact-revision acceptance independently support completion. Working agreements below are retained to prevent a fresh-chat durability gap.
 
 ### 5.1 Actor outcomes, invariants, and initial eligibility gates
@@ -247,7 +247,7 @@ These are **Product-level acceptance targets**, not measured system performance,
 
 ## 8. Agreed minimum privacy baseline — 18 November 2026
 
-> **Standing:** Anhar agreed to this **minimal PO-01 Product privacy direction** in the working session; persisted with the Actor Value / Success Conditions checkpoint. It establishes necessary purpose/access boundaries, **not** legal clearance of a particular lawful basis, retention period, data subject notice, or feature implementation. Read with [minimum legal/privacy source review](po-01-minimum-legal-privacy-evidence.md) and current Engineering [Privacy Standard T04](../../engineering/standards/privacy-data-protection.md).
+> **Standing:** Anhar agreed to this **minimal PO-01 Product privacy direction** in the working session; persisted with the Actor Value / Success Conditions checkpoint. It establishes necessary purpose/access boundaries, **not** legal clearance of a particular lawful basis, retention period, data subject notice, or feature implementation. Read with [minimum legal/privacy source review](po-01-minimum-legal-privacy-evidence.md) and current Engineering [Privacy Standard T04](../../../engineering/standards/privacy-data-protection.md).
 
 - **Purpose-driven minimum information:** (a) Applicant account attribution, necessary contact and declared organizational relationship; (b) legal organization identity and reviewable supporting references; (c) sufficient representative/First Owner attribution, mandate and acceptance; and (d) material decision and audit-event references. No universal KTP/NIK, full ID scans, personal NPWP, bank account data or system understanding of legal documents. Additional sensitive data only where a real material purpose justifies it.
 - **Audience-specific disclosure:** Applicant sees their own application as authorized, not every competing Applicant's private file; authorized Reviewer sees evidence needed for assigned review; Decision-Maker receives information necessary for a valid decision; First Owner receives organization information/obligations within effective rights; public disclosure is restricted to specifically authorized, truthful organization/eligibility claims. Business audit trail and private mandate evidence are **not public by default**.

@@ -3,7 +3,7 @@
 > **Standing:** WORKING / NOT APPROVED AS BINDING PRODUCT CONTRACT. Checkpoint #2, 18 November 2026; Human approval authorizes persistence of the agreed working checkpoint, not approval of these exact bytes as a binding contract.
 > **Owning concern:** Kencleng Product. Human Product decision-maker: Anhar.
 > **Purpose:** Living, reusable meaning for actor identity, organizational mandates, and consequential rights. PO-01 is the first representative application; future Product Outcomes must validate any additional scope. This is not a global technical role matrix.
-> **Authority:** [Approved Product Intent](product-intent.md) governs whole-product purpose/principles. [Selected PO-01 working outcome](outcomes/po-01-organization-entry-initial-eligibility.md) owns the bounded initial-eligibility exploration. Engineering implements authorization mechanisms under its own standards.
+> **Authority:** [Approved Product Intent](product-intent.md) governs whole-product purpose/principles. [Selected PO-01 working outcome](outcomes/po-01/po-01-organization-entry-initial-eligibility.md) owns the bounded initial-eligibility exploration. Engineering implements authorization mechanisms under its own standards.
 
 ## 1. Core distinctions
 

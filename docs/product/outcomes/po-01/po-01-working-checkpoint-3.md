@@ -3,7 +3,7 @@
 > **Standing:** HUMAN-AGREED WORKING DIRECTION / PERSISTENCE CHECKPOINT, **NOT** exact-revision binding Product Contract, legal/privacy sign-off, DoD completion, engineering handoff, or permission to implement.
 > **Date:** 18 November 2026. **Product decision-maker:** Anhar.
 > **Authorization:** Anhar explicitly agreed to the decisions in the working session and authorized a repository checkpoint when necessary before minimum legal/privacy validation. This permission is **only** for working-state persistence.
-> **Owner:** [PO-01 Organization Entry & Initial Eligibility Decision](po-01-organization-entry-initial-eligibility.md). Read with [checkpoint #2 in PO-01 §5](po-01-organization-entry-initial-eligibility.md#5-checkpoint-2--agreed-working-direction-18-november-2026) and [Actor & Authority Model](../actor-authority-model.md). The approved [Product Intent](../product-intent.md) retains its higher, bounded authority.
+> **Owner:** [PO-01 Organization Entry & Initial Eligibility Decision](po-01-organization-entry-initial-eligibility.md). Read with [checkpoint #2 in PO-01 §5](po-01-organization-entry-initial-eligibility.md#5-checkpoint-2--agreed-working-direction-18-november-2026) and [Actor & Authority Model](../../actor-authority-model.md). The approved [Product Intent](../../product-intent.md) retains its higher, bounded authority.
 
 ## 1. Agreed working behavior after checkpoint #2
 

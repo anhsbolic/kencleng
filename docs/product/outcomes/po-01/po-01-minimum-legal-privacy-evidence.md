@@ -2,7 +2,7 @@
 
 > **Standing:** SOURCE-CHECKED RESEARCH EVIDENCE + PRODUCT IMPLICATIONS; **NOT legal opinion, privacy sign-off, complete compliance mapping, binding PO-01 rules, or authorization to implement**.
 > **Reviewed:** 18 November 2026; limited to initial Yayasan/Perkumpulan eligibility, representative authority, and minimal personal-data processing. **Human Product decision-maker:** Anhar.
-> **Owner:** [PO-01](po-01-organization-entry-initial-eligibility.md), read with [working checkpoint #3](po-01-working-checkpoint-3.md), [working Actor & Authority Model](../actor-authority-model.md), and [approved Product Intent](../product-intent.md).
+> **Owner:** [PO-01](po-01-organization-entry-initial-eligibility.md), read with [working checkpoint #3](po-01-working-checkpoint-3.md), [working Actor & Authority Model](../../actor-authority-model.md), and [approved Product Intent](../../product-intent.md).
 > **Evidence standing key:** **SOURCE-CHECKED** = the cited statute/regulation or official status record says the narrow stated fact; **PRODUCT IMPLICATION** = Kencleng-specific interpretation, not itself statutory law; **OPEN** = legal, privacy or case-specific fact not established by source review.
 
 ## 1. Minimum legal identity and applicable source
