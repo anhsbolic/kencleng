@@ -214,3 +214,9 @@ Acceptance traceability includes legal entity, acting person and authority, acce
 - **OPEN EXPERIENCE/DESIGN DECISION:** How actors understand, exercise, and recover within these meaningful decisions; no screens, fixed status vocabulary, or flow is prescribed.
 - **OPEN ENGINEERING CONSTRAINT / IMPLEMENTATION:** Permission matrix, backend mechanisms, verification tooling, and audit storage. None is approved for delivery by this checkpoint.
 - **Next Product inquiry:** O2.8 cross-outcome invariants and negative/misuse case consistency, then O2.9 falsifiable behavioral acceptance and remaining legal/domain validation before marking DoD or seeking binding exact-revision acceptance.
+
+## 6. Checkpoint #3 and minimum legal/privacy evidence — 18 November 2026
+
+- [Working checkpoint #3 — post-#2 decisions](po-01-working-checkpoint-3.md): records explicitly agreed working directions on duplicate/existing organization claims, bounded First Owner rights, organization eligibility policy, claim-based evidence, auditability, privacy minimization and purpose-based retention. **Not binding Product acceptance.**
+- [Minimum Legal / Privacy Evidence](po-01-minimum-legal-privacy-evidence.md): source-linked statutory and official status review for Yayasan, Perkumpulan and UU PDP; separates narrow source-checked facts, Kencleng Product implications and remaining legal/privacy validation blockers. **Not legal sign-off.**
+- **Standing unchanged:** original Product DoD checkboxes remain uncompleted; exact-revision binding Product Contract, consumer sufficiency and implementation authorization remain outstanding. Read this section with original checkpoint #2 in §5; neither checkpoint silently supersedes original accepted Product Intent.
