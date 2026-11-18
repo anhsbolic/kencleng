@@ -370,3 +370,11 @@ O3.3 and C.3 in §3 are checked for **this bounded approval and exact-revision r
 
 **Next bounded work:** Focused interaction exploration of Applicant submission/review, negative/inconclusive outcome and recovery, and Approved → First Owner → material correction. **No Product Contract revision, legal/privacy sign-off, Engineering authorization or DoD checkbox changes are made by this checkpoint.**
 
+## 14. Product phase DoD interpretation checkpoint — 18 November 2026
+
+> **Standing:** [Product DoD & Phase Boundary checkpoint](po-01-product-phase-dod-boundary-checkpoint-2026-11-18.md) records the Human-requested clarification of **Product vs UX/UI/Engineering responsibility**, local DoD count/status and next Product inquiry. **Interpretation/work-priority evidence only**, not approved Contract revision, completed DoD, legal clearance or new implementation authority.
+
+The Harscode Product research has **four logical output groups**; the **27 checklist entries here are local PO-01 criteria** (24 Product/consumer-readiness items + 3 provenance checkpoints), not a prescribed Harscode package. **6 are checked, 21 pending** at the checkpoint. D.3 is **conditionally consumable Product information** for Engineering even while **implementation handoff is not authorized**. D.4 records that an **assisted source-based Product-side consumer sufficiency assessment occurred**, but no independent receiver sign-off occurred or was universally required. D.1–D.4 remain unchecked pending their evidence review.
+
+**Next substantive Product focus:** O2.1–O2.3 legal/entity qualification, stage-appropriate minimum information and human evidence sufficiency for a representative Yayasan, then material Perkumpulan differences. UX journey/flow/Lo-Fi belong to UX, not a required Product exploration phase.
+

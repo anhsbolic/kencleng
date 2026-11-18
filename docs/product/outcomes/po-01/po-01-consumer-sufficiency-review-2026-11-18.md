@@ -47,7 +47,7 @@
 
 **Recommendation:** **Proceed to focused Interaction Exploration**, not Engineering handoff. Start with the three representative workflows in §3; identify experience evidence or consequential Product ambiguity only as it arises. If exploration reveals a *materially new Product rule*, route it back to Product and obtain new bounded authority rather than silently changing the approved blob.
 
-**Readiness disposition:** D.1 = CONDITIONAL; D.2 = CONDITIONAL; D.3 = BLOCKED **for Engineering handoff**; D.4 = UNVERIFIED **for independent receiver validation**. This is one assisted review checkpoint, **not four independently conducted reviews**.
+**Readiness disposition (historical interpretation at review time):** D.1 = CONDITIONAL; D.2 = CONDITIONAL; D.3 = BLOCKED **for Engineering handoff**; D.4 = UNVERIFIED **for independent receiver validation**. This is one assisted review checkpoint, **not four independently conducted reviews**. **Later scoped clarification:** [Product DoD/phase-boundary checkpoint](po-01-product-phase-dod-boundary-checkpoint-2026-11-18.md) identifies D.3 **Product information** as conditionally consumable while Engineering handoff remains not authorized, and D.4 **Product-side source assessment** as performed (not independently signed off). DoD checkboxes remain unchecked.
 
 **DoD discipline:** Leave **D.1–D.4 unchecked** and do not mark other O1–O4 items complete on the basis of this checkpoint. Source-level review and accepted Product semantics are meaningful progress, but do not prove downstream acceptance, legal/privacy clearance or deployable behavior.
 
