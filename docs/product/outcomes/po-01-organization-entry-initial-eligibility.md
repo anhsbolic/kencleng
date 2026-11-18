@@ -110,3 +110,107 @@ A future binding Product Contract, if selected, must express the material approv
 **Out-of-scope retained:** Ongoing monitoring, suspension, revocation, and recovery remain relevant boundary context in the broader working checkpoint, not a promise to fully define or implement their lifecycles within PO-01.
 
 **Non-authorizations:** This document does not approve Harscode reusable policy, design deliverables, Engineering solutions, protected writes, API adoption, implementation, transactions, deployment, or real-world evidence claims.
+
+## 5. Checkpoint #2 — agreed working direction (18 November 2026)
+
+> **Standing:** HUMAN-AUTHORIZED WORKING CHECKPOINT ONLY. Anhar approved persisting the discussion's agreed working decisions on 18 November 2026, **not** these exact bytes as a binding PO-01 Product Contract, legal sign-off, Engineering handoff, or implementation authorization.
+> **Scope:** Selected PO-01, representative Yayasan scenario; differences for Perkumpulan still to be tested. The shared [Actor & Authority Model](../actor-authority-model.md) supplies reusable Product meaning. The wider [Organization Eligibility working checkpoint](../organization-eligibility-working.md) remains historical/adjacent discovery and is not a second competing authority.
+> **Status:** DoD in §3 remains uncompleted unless evidence and exact-revision acceptance independently support completion. Working agreements below are retained to prevent a fresh-chat durability gap.
+
+### 5.1 Actor outcomes, invariants, and initial eligibility gates
+
+- An Applicant with a valid authenticated Kencleng account can initiate and manage a bounded application, even before holding a proven organizational mandate. Application submission, account existence, and applicant priority never grant Owner, Staff, or organizational control.
+- One underlying legal entity should have one recognized organization identity. Multiple applicants and materially conflicting authority claims must not cause automatic takeover or unauthorized exposure of others' evidence.
+- Initial eligibility requires **all three substantive gates**: (A) organization legal/nonprofit qualification and applicable Kencleng criteria evidenced sufficiently; (B) organizational baseline accountability obligations validly accepted by a sufficiently authorized party; and (C) adequately mandated First Owner with a valid Kencleng account, explicit acceptance, and Kencleng recognition. All require a legitimate Kencleng decision.
+- The First Owner can be a non-chair/non-management individual where a truly authorized organizational party has sufficient power to delegate that scope. Evidence of authority to file an application alone is insufficient. No implicit acceptance or right assignment.
+- Organization qualification, applicant relationship, representative authority, Owner rights, and organization eligibility remain independently meaningful; a partial positive finding is not final eligibility.
+- Eligibility does **not** imply Campaign approval/publication, permission to receive donations, fund settlement, verified use of funds, or real-world impact.
+
+### 5.2 Start, submission, and approval: different thresholds
+
+| Stage | Minimum Product meaning | Not implied |
+| --- | --- | --- |
+| Start/draft | Valid account; claimed organization name, applicant contact/identity needed to continue, and self-declared relationship | Proven entity identity, organizational mandate, or reviewable evidence |
+| Formal submission | Reviewable identification of the claimed Yayasan/legal entity; document or inspectable official/legal reference relevant to status; applicant attribution; initial identification of claimed authorized representative and basis; applicant acknowledgement of submission's limited meaning | Completed verification, accepted organizational accountability obligations, First Owner acceptance, eligibility, or organizational control |
+| Initial eligibility approval | Manual authorized Kencleng decision grounded in sufficient checked evidence for legal identity, Kencleng criteria/nonprofit qualification, representative mandate, valid organizational obligations acceptance, and First Owner authorization/acceptance | Any downstream Campaign or monetary privilege |
+
+Evidence minimum is **source-neutral**: an inspectable official reference may be sufficient for submission without mandatory upload; a submitted reference is not automatically verified. One evidence item may support multiple claims. A formal submission asks Kencleng to assess claims; it does not itself bind the legal entity.
+
+**Reconciliation of earlier candidate:** §5 of the wider 16 November Organization Eligibility working note listed accepted obligations among *candidate formal-submission requirements*. For the bounded PO-01 working direction, **authorized organizational acceptance and First Owner acceptance are approval prerequisites, not automatic submission prerequisites**. This later scoped decision supersedes that earlier candidate solely for PO-01; it does not rewrite historical evidence or finalize a platform-wide rule.
+
+### 5.3 Evidence domains and assessment outcomes
+
+| Evidence domain | Material question to substantiate for approval |
+| --- | --- |
+| EB-01 — Legal identity | Is the specific Yayasan legally identifiable and sufficiently established as a legal entity? |
+| EB-02 — Kencleng eligibility | Does the organization meet applicable nonprofit/domain and Kencleng eligibility criteria? |
+| EB-03 — Representative authority | Does the person/org binding the entity have valid authority for that act? |
+| EB-04 — First Owner authorization | Are appointing authority, mandate scope/current validity, candidate identity, explicit acceptance, and Kencleng recognition sufficiently supported? |
+| EB-05 — Organizational commitment | Were the relevant accountability obligations validly accepted for the legal entity, with traceable actor/authority/version/time? |
+
+Reviewer may classify a *material claim/evidence finding*, not the entire organization, as:
+
+- **Sufficient:** reliable support for the material claim following appropriate assessment.
+- **Insufficient:** evidence not yet adequate; seek relevant clarification or support.
+- **Unverifiable:** evidence exists but its material assertion cannot be established from available inspection; do not assert fraud or verified truth.
+- **Contradictory:** materially conflicting evidence; hold affected decisions and escalate where risk requires.
+- **Disqualifying:** adequate evidence establishes that a material eligibility criterion is not satisfied; can support a reasoned substantive rejection.
+
+Product needs evidence source/provenance, relevant freshness, examiner, what was actually checked, limitations, and relationship to decision. This does not mandate a specific document-upload method or technical verification mechanism. Required legal document sets, source authority, and precise sufficiency thresholds for Yayasan/Perkumpulan remain OPEN for proportional legal/domain review.
+
+### 5.4 Human-led decision authority and traceable review
+
+- Kencleng uses **manual human approval** for initial eligibility. Completing fields, submitting documents, or automated completeness checks cannot automatically grant eligibility.
+- Reviewer and Decision-Maker are separate responsibilities, not necessarily separate people: an appropriately authorized person may perform both in normal, non-conflicted cases.
+- Disqualifying conflicts of interest prohibit that actor's assessment; material authority disputes, credible unauthorized-takeover risk, or decision-authority concerns require a hold/independent authorized escalation. An escalated reviewer still cannot waive material evidence sufficiency.
+- Every consequential decision must allow reconstructing the application/organization, examiner, decision-maker and applicable authority, evidence and findings, reasoning/criteria, timestamps of material events and effective consequences, and subsequent corrections without silently replacing history.
+- Privacy-appropriate disclosure is part of legitimate decision meaning. Product states *what must be traceable*; Engineering chooses audit-log, authorization, and storage mechanisms. No blanket two-person approval or automated document-verification requirement is implied.
+
+### 5.5 Distinct application outcomes and rights
+
+| Resolution | Required Product meaning | Consequence |
+| --- | --- | --- |
+| **Approved** | All eligibility gates supported; authorized human decision recorded | Initial organization eligibility can become effective; recognized First Owner rights only within valid mandate/defined scope |
+| **Rejected** | Material eligibility criterion demonstrably not met; substantive, reasoned authorized decision | No initial eligibility or Owner privileges from this application; rejection does not automatically allege fraud |
+| **Closed Inconclusive** | Evidence remains unestablished/unverifiable following reasonable notice and opportunity to clarify; reasoned process closure | No eligibility or Owner grant; does **not** assert that the organization has been proven unlawful or disqualified |
+| **Withdrawn** | Valid applicant-initiated withdrawal in an allowed context; relevant consequential actions and authority still require checking | No eligibility from withdrawal; existing history/evidence obligations are not silently erased |
+
+Clarification Required and Authority Conflict are blocking **process/evidence conditions**, not automatic final rejections. Closing an unresolved application is distinct from finding a proven negative: never keep a request open forever by default, nor invent an arbitrary closure timeout. A fresh assessment may be sought on materially changed facts/new evidence subject to legitimate restrictions; refiling does not itself restore/grant rights. Applicant and authorized actors receive truthful, access-bounded reasons and permitted next steps; third-party confidential application evidence is not automatically exposed.
+
+### 5.6 Baseline organizational accountability obligations
+
+Before initial eligibility, a legitimately authorized representative must accept the applicable, identifiable **version** of the organization's obligations; acceptance must be distinct from Applicant terms and the First Owner's personal role acceptance.
+
+| Candidate ID | Minimum organization-level commitment |
+| --- | --- |
+| OA-01 — Truthful Information | Supply truthful material information and correct material inaccuracies when known |
+| OA-02 — Valid Representation | Ensure organizational acts and appointments are within valid authority and mandate scope |
+| OA-03 — Material Change Disclosure | Proactively disclose material changes affecting organization eligibility or representative authority, even without an active Campaign |
+| OA-04 — Assessment & Oversight Cooperation | Cooperate reasonably with legitimate, proportionate Kencleng assessments and follow-up; no unrestricted request for unrelated personal or organizational records |
+| OA-05 — Continuing Accountability | Commit to applicable Campaign-specific reporting, funds-use, and post-fundraising accountability **when relevant**; details are owned by future Campaign/fund accountability decisions |
+
+Acceptance traceability includes legal entity, acting person and authority, accepted terms/version, meaningful act/evidence, time, and Kencleng assessment. Future substantial changes to obligations cannot silently inherit blanket acceptance. Specific Campaign reporting cadence, financial operations, fund verification, sanctions, monitoring/reassessment and suspension mechanics remain adjacent, not PO-01 specifications. A suspected breach is not an automatic revocation or proven fraud claim.
+
+### 5.7 Representative behavior tests to carry into O2.8/O2.9
+
+| Scenario | Expected Product invariant |
+| --- | --- |
+| Applicant starts draft with no proven mandate | Draft may exist; no organization rights or false verified claim |
+| Applicant submits reviewable source-neutral legal reference | Formal review may begin; provenance and verification remain separate |
+| Legal identity is sufficient, but First Owner mandate or acceptance is pending | Partial finding remains truthful; no effective initial eligibility or First Owner activation |
+| Two materially conflicting First Owner mandates | No first-filer privilege; affected authority decision held; independent authorized handling and bounded disclosure |
+| Routine complete case with one authorized unconflicted reviewer/decision-maker | Human decision can be legitimate with accountable evidence, rationale and chronology; two-person approval is not universally required |
+| Applicant fails to clarify unverifiable evidence after fair opportunity | Closure can be inconclusive without substantive legal rejection; reason/history preserved |
+| Entity definitively fails a material eligibility criterion | Substantive rejection supported with evidence and authorized reason; no fraud allegation by default |
+| Eligible organization requests Campaign publication or receives an attempted donation | No implied Campaign/donation/funds approval from organization eligibility alone |
+
+### 5.8 OPEN / not yet ready for binding Product handoff
+
+- **OPEN PRODUCT DECISION:** Specific eligibility criteria and proportionate, legally sufficient sources/document requirements for Yayasan and Perkumpulan (including material differences); distinction between law and Kencleng policy.
+- **OPEN PRODUCT DECISION:** Exact scope of initial First Owner privileges, detailed duplicate-claim reconciliation and ownership conflict/appeal routes, withdrawal after material organizational action, and consequential access boundaries.
+- **OPEN PRODUCT DECISION:** Material escalation thresholds/authority assignment exceptions, fairness of notification/opportunity for inconclusive closure, and resubmission restrictions.
+- **OPEN PRODUCT DECISION:** Detailed organizational obligations language and version-change handling; applicable Campaign-specific duties remain for later Product Outcomes.
+- **OPEN PRODUCT / PRIVACY-LEGAL DECISION:** Purpose, minimum sensitive data, lawful basis, disclosure, retention/deletion and verified legal/regulatory requirements. No universal KTP, NPWP, bank account, file upload, or mandatory identity-document collection is assumed.
+- **OPEN EXPERIENCE/DESIGN DECISION:** How actors understand, exercise, and recover within these meaningful decisions; no screens, fixed status vocabulary, or flow is prescribed.
+- **OPEN ENGINEERING CONSTRAINT / IMPLEMENTATION:** Permission matrix, backend mechanisms, verification tooling, and audit storage. None is approved for delivery by this checkpoint.
+- **Next Product inquiry:** O2.8 cross-outcome invariants and negative/misuse case consistency, then O2.9 falsifiable behavioral acceptance and remaining legal/domain validation before marking DoD or seeking binding exact-revision acceptance.
