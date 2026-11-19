@@ -378,3 +378,36 @@ The Harscode Product research has **four logical output groups**; the **27 check
 
 **Next substantive Product focus:** O2.1–O2.3 legal/entity qualification, stage-appropriate minimum information and human evidence sufficiency for a representative Yayasan, then material Perkumpulan differences. UX journey/flow/Lo-Fi belong to UX, not a required Product exploration phase.
 
+## 15. Minimal Product sufficiency working checkpoint — 19 November 2026
+
+> **Standing:** On 19 November 2026 Anhar approved persistence of this **limited WORKING checkpoint** after review of O1–O4 and D.1–D.4. OPD-01–04 are **HUMAN-AGREED WORKING DECISIONS**, not a new exact-revision binding Product Contract, qualified legal/privacy sign-off, Product Done, downstream acceptance or Engineering authorization. The [approved original Contract](po-01-product-contract-candidate.md), its [separate Human approval](po-01-bounded-product-approval-2026-11-18.md) (original blob 66063ea04ae05cbb01c2f4746d4d20ae5f85ce7c) and §3 DoD remain unchanged: **6 checked / 21 pending**. Legal/privacy source review remains SOURCE-CHECKED RESEARCH, not independent legal clearance.
+
+### 15.1 O2.1–O2.3 — agreed minimal Product working meaning
+
+- **OPD-01 — Legitimate eligibility criteria (AGREED):** Initial eligibility decisions may rely only on applicable legal/domain requirements or legitimate, explicitly established and effective Kencleng criteria. Reviewers judge evidence; they cannot invent ad-hoc policy during a review. No case-specific legal sufficiency is certified.
+- **OPD-02 — Additional Kencleng criteria (AGREED WORKING DIRECTION):** Do not propose new unconditional organization-level criteria for this minimal PO-01 iteration without material demonstrated need not met by existing gates or later Campaign decisions. Representative Yayasan/Perkumpulan cases revealed no such need. **OPEN PRODUCT DECISION:** this does not establish that no existing effective Kencleng criteria apply; Anhar must disposition the applicable policy basis before concluding O2.1 is complete. Approved non-exclusion boundaries remain effective.
+- **OPD-03 — Reviewable formal submission (AGREED):** Formal submission needs a reviewable attributable legal-entity claim, relevant legal document or inspectable official reference, and initial claimed representative/basis. Completed verification, organizational OA acceptance and First Owner acceptance are approval—not universal submission—prerequisites. Unverifiable evidence requires honest unresolved handling, not automatic substantive rejection. No universal file format, KTP or full-AD upload.
+- **OPD-04 — Human evidence sufficiency (AGREED):** For a material claim, authorized human Reviewer considers specific claim supported, relevant/competent source, validity for the relevant entity/act/mandate/time, unresolved material contradictions and proportionate decision-time provenance. Concise attributable attestation and relevant evidence references suffice for routine positive cases; exceptions need material reasons. This is not a five-field automated test, parser, document checklist or technical status taxonomy. EB-01..05 remain human-facing guidance.
+
+**Representative check:** Yayasan legal-person evidence alone does not establish OA or First Owner authority; conflicting credible mandates hold only affected authority decision; unresolved evidence after reasonable clarification may lead to Closed Inconclusive rather than Rejected. Member-serving Perkumpulan is not universally excluded; its actual organ/AD/ART and delegation require case-specific legal/domain assessment. No real-world organizational status or actual mandate was independently verified.
+
+### 15.2 O1/O2 — proportional consistency assessment
+
+Existing §7 Actor Value and SC-01..06 provide reasoned affected-actor value, trade-offs and falsifiable Product targets, **not independently observed demand or executed tests** (O1.3–O1.4). Existing approved/owning meanings cover act-specific representative and First Owner mandate, authorized non-conflicted human review/decision, OA-01..05 versioned organizational acceptance, truthful distinct outcomes, no unsupported takeover or Campaign/funds rights, and positive/negative/unknown acceptance probes (O2.4–O2.9). Owning §5.4 explicitly permits Reviewer and Decision-Maker responsibilities to be held by one authorized non-conflicted person; this detail is **not explicit text of the immutable approved Contract**. No material contradiction surfaced in sampled representative cases. **Assessment only:** each DoD criterion still requires separate completion disposition.
+
+### 15.3 O3/O4 — authority, uncertainty and blocking
+
+Product owner Anhar retains consequential Product decisions. Original approved semantics, exact approval, accepted whole-product intent, relevant Design/Engineering ownership and legal/privacy boundaries are discoverable (O3). Keep **APPROVED**, **WORKING**, **SOURCE-CHECKED RESEARCH**, **ASSISTED ASSESSMENT**, and **OPEN/UNVERIFIED** explicitly distinct (O4). Persisting this checkpoint closes the chat-only working-state durability gap but does not automatically complete O4.1–O4.3.
+
+**Affected-edge OPEN items:** (1) applicable existing/effective Kencleng eligibility criteria — Product/Anhar; blocks full Gate A policy disposition where material; (2) case-specific Yayasan/Perkumpulan representative mandate, First Owner delegation and OA enforceability — qualified legal/domain; blocks real legal-sufficiency reliance; (3) personal-data lawful basis, third-party notice, authorized recipients, retention/deletion — qualified privacy/legal; blocks affected real personal-data processing and final legal-sensitive notices. Ongoing revocation, complete dispute/appeals, Owner replacement, public eligibility badges and Campaign/funds approval remain adjacent unless separately selected.
+
+### 15.4 D.1–D.4 — decision-specific downstream Product input
+
+| Item | Assisted assessment | Explicit boundary |
+| --- | --- | --- |
+| **D.1 UX** | **CONDITIONAL:** goals, roles, stages, outcomes, rights and uncertainty allow scoped experience exploration. | UX owns journeys, interaction flows and validation; cannot invent Product rules. |
+| **D.2 UI/Content** | **CONDITIONAL:** truthful statuses, evidence/decision distinctions and private-by-default disclosure are usable. | Final legal OA wording, privacy notice and feature copy require owning authority. |
+| **D.3 Engineering** | **CONDITIONALLY CONSUMABLE Product information:** accepted invariants, rights, outcomes and SC/AC can be inspected and challenged. | **Implementation handoff NOT READY / NOT AUTHORIZED**; legally dependent and delivery prerequisites remain. |
+| **D.4 Sufficiency assessment** | **PERFORMED as assisted Product-side source review** (not independent consumer sign-off). | Receiving-team acceptance has not occurred and is not a universal mandatory ritual. |
+
+**Next minimal closure:** Anhar dispositions effective Kencleng eligibility policy basis; review each O1–O4 and D.1–D.4 criterion against accepted and durable evidence or explicit justified non-blocking scope under §4; separately authorize any newly binding Product text and DoD checkbox changes. No UX deliverable, technical architecture, real processing or repository mutation is authorized beyond this checkpoint.
