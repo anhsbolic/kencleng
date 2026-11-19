@@ -1,11 +1,11 @@
 # PO-01 — Organization Entry & Initial Eligibility Decision
 
-> **Standing:** SELECTED PRODUCT OUTCOME / **BOUNDED BINDING PRODUCT SEMANTICS APPROVED AT EXACT REVISION** (see [approval record](po-01-bounded-product-approval-2026-11-18.md)); **WORKING DoD — NOT PRODUCT DONE, LEGAL-CLEARED OR ENGINEERING-AUTHORIZED**  
+> **Standing:** SELECTED PRODUCT OUTCOME / **BOUNDED BINDING PRODUCT SEMANTICS APPROVED AT EXACT SUCCESSOR REVISION** (see [19 November approval](po-01-successor-product-approval-2026-11-19.md)); **WORKING DoD — NOT PRODUCT DONE, LEGAL-CLEARED OR ENGINEERING-AUTHORIZED**  
 > **Selection:** Anhar, Product working session, 17 November 2026  
 > **Product decision-maker:** Anhar  
 > **Owning concern:** Kencleng Product (Product Harscode phase)  
 > **Purpose:** Durable bounded outcome and completion checklist for Product Definition; not an MVP/release plan, UX deliverable, implementation specification, or Engineering authorization.  
-> **Interpretation:** Earlier working checkpoints preserve their original historical standing. Subsequent **bounded Product semantics** were explicitly approved at the immutable revision in the [separate Human approval record](po-01-bounded-product-approval-2026-11-18.md). Unvalidated legal/privacy assumptions, full Product DoD, downstream consumer sufficiency and Engineering permission remain outstanding.
+> **Interpretation:** Earlier working checkpoints and the [18 November original approval](po-01-bounded-product-approval-2026-11-18.md) remain historical evidence. The **currently effective** bounded Product semantics are the immutable [19 November successor blob](po-01-product-contract-successor-candidate-2026-11-19.md) `fb0c098178030b4325e7e349d46e05aa0634bec0` with its [separate Human approval](po-01-successor-product-approval-2026-11-19.md); the source's historical draft label is superseded within that bounded approval. Legal/privacy verification, full Product DoD, consumer acceptance and Engineering permission remain independently open.
 
 ## 1. Label and intended Product outcome
 
@@ -46,7 +46,7 @@
 
 **Other owning inputs:** [Design Authority](../../../design/README.md), [Engineering Standards](../../../engineering/standards/README.md), and applicable legal/privacy/security authorities when relevant. These are separately owned sources; their factual or operational approval is not supplied by this document.
 
-The [separate bounded Human approval record](po-01-bounded-product-approval-2026-11-18.md) identifies the accepted original immutable Product semantics, scoped conditions and excluded authority. The earlier working checkpoints do not themselves grant that approval. The overall PO-01 DoD, legally dependent facts and downstream delivery readiness remain separately open.
+The **current binding PO-01 Product source** is [successor candidate at immutable commit `5bbad8d`](https://github.com/anhsbolic/kencleng/blob/5bbad8db1b927019cf283d31f3650cd58b73a9e7/docs/product/outcomes/po-01/po-01-product-contract-successor-candidate-2026-11-19.md), exact blob `fb0c098178030b4325e7e349d46e05aa0634bec0`, made binding **only for its bounded Product semantics** by [Anhar's 19 November approval record](po-01-successor-product-approval-2026-11-19.md). It supersedes [original approved blob `66063ea...`](po-01-bounded-product-approval-2026-11-18.md) only in that same Product scope; original approved bytes and Human decision remain historical. Working checkpoints do not grant approval. Overall PO-01 DoD, legally dependent facts and downstream delivery readiness remain separately open.
 
 ## 3. Definition of Done — checklist
 
@@ -101,7 +101,7 @@ The [separate bounded Human approval record](po-01-bounded-product-approval-2026
 
 **PO-01 Product Definition is DONE only when:** material O1–O4 and relevant consumer-sufficiency criteria above have supporting accepted information; any unfulfilled criterion is demonstrably non-blocking for the intended receiver/decision or explicitly resolved; substantive accepted Product meaning is self-contained in its actual owning source(s) and references exact effective authority and approved immutable revision. No false claim of consumer verification, legal clearance, Engineering readiness, or deployed capability.
 
-**Current outcome standing:** **BOUNDED BINDING PRODUCT SEMANTICS APPROVED; NOT PRODUCT DONE**. The [approval record](po-01-bounded-product-approval-2026-11-18.md) sets exact scope and conditions. DoD, legal/privacy validation, consumer sufficiency and Engineering authorization remain independently outstanding.
+**Current outcome standing:** **LATEST BOUNDED BINDING PRODUCT SEMANTICS APPROVED; NOT PRODUCT DONE**. The [19 November successor approval](po-01-successor-product-approval-2026-11-19.md) governs the exact successor blob and continued legal/privacy exclusions. The §3 checklist still carries **6 checked / 21 pending**; criterion-specific completion, legal/privacy validation, consumer sufficiency and Engineering authorization remain independently outstanding.
 
 **Open decisions requiring near-term Product work:** Eligibility Decision Basis; required evidence and sufficiency threshold for Yayasan/Perkumpulan; legitimate review/approval authority; First Owner mandate; organization accountability obligations; result semantics when evidence is insufficient or contradictory; and consequential rights after the initial decision.
 
@@ -411,3 +411,11 @@ Product owner Anhar retains consequential Product decisions. Original approved s
 | **D.4 Sufficiency assessment** | **PERFORMED as assisted Product-side source review** (not independent consumer sign-off). | Receiving-team acceptance has not occurred and is not a universal mandatory ritual. |
 
 **Next minimal closure:** Anhar dispositions effective Kencleng eligibility policy basis; review each O1–O4 and D.1–D.4 criterion against accepted and durable evidence or explicit justified non-blocking scope under §4; separately authorize any newly binding Product text and DoD checkbox changes. No UX deliverable, technical architecture, real processing or repository mutation is authorized beyond this checkpoint.
+
+## 16. Subsequent exact-revision successor Product semantics approval — 19 November 2026
+
+> **Current authority update, not a new DoD disposition:** Anhar explicitly approved the exact self-contained [PO-01 successor Product Contract candidate](https://github.com/anhsbolic/kencleng/blob/5bbad8db1b927019cf283d31f3650cd58b73a9e7/docs/product/outcomes/po-01/po-01-product-contract-successor-candidate-2026-11-19.md), Git blob `fb0c098178030b4325e7e349d46e05aa0634bec0`, as binding **bounded Product semantics**, retaining its legal/privacy conditions and non-authorizations. The [separate approval record](po-01-successor-product-approval-2026-11-19.md) preserves Anhar's exact-revision Human decision and supersession rule. The successor's historically written “review draft/not approved” heading is superseded by that separate approval for its scoped Product meaning only.
+
+This approval supersedes the [18 November approved predecessor](po-01-bounded-product-approval-2026-11-18.md) **only for the same bounded PO-01 Product semantics**. No original approved bytes, historical approval evidence or source-linked legal/privacy research is rewritten. Relevant new clarifications cover applicable policy without new discretionary organization-level criteria, human claim-specific evidence sufficiency, and an appropriately authorized non-conflicted Reviewer/Decision-Maker who may be the same human. Existing minimum submission meaning remains unchanged.
+
+**DoD and handoff separation:** O1–O4 and D.1–D.4 still require explicit criterion-specific sufficiency/disposition according to §4. §3 checkboxes remain **6 checked / 21 pending**. Qualified legal/privacy validation is still outstanding for actual mandates, OA enforceability and personal-data handling; no real-use clearance, feature UX/UI acceptance, Engineering implementation authorization or deployment permission is implied.
