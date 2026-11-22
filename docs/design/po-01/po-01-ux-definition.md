@@ -48,7 +48,7 @@ The following six groups are **the agreed evaluation criteria**. No group is cla
 - **Draft ≠ submitted ≠ Approved.** No first-filer Owner rights. Gate A/B/C and legitimate authorized human decision precede Approved; no Campaign, funds or public visibility follows automatically.
 - Harscode research definitions and these local criteria do not confer legal/privacy, UI/Hi-Fi, Engineering or deployment approval.
 
-## 5. O1 inquiry starting point — WORKING / NOT YET VALIDATED
+## 5. O1 initial inquiry starting point — HISTORICAL WORKING BASELINE (superseded by §7 scope progression)
 
 **Selected first exploration context:** first-time **Yayasan Applicant** approaching initial organization eligibility. This is **one starting scenario**, not adoption of Applicant as the sole UX PoV or approval of any page, invitation channel or form flow.
 
@@ -64,7 +64,7 @@ The following six groups are **the agreed evaluation criteria**. No group is cla
 
 **Priority inquiry before committing interaction design:** Investigate the actor's **entry intention and expectation of consequence**: what do they think “mendaftarkan organisasi” accomplishes, whose authority do they believe they represent, and what information would make starting a truthful, proportionate choice? Challenge with contrast scenarios: the actor is just an administrative helper; the actor is actually authorized; they have partial legal evidence; an already-recognized organization or rival claim exists. These are **inquiry probes**, not approved behaviors or mandatory screens.
 
-**Next UX activity:** P1–P2 deepen actor-in-context framing, evaluate meaningful alternatives for the first-contact experience, identify high-value evidence and genuine Product gaps, then proceed iteratively to experience concept and inspectable interactions when justified. No page inventory, Lo-Fi, actor comprehension claim or acceptance is established in this section.
+**Original next UX activity at this initial baseline (not current state):** P1–P2 deepen actor-in-context framing, evaluate meaningful alternatives for the first-contact experience, identify high-value evidence and genuine Product gaps, then proceed iteratively. This initial section established no page inventory, Lo-Fi, actor comprehension claim or acceptance. **Current bounded exploration and next activity are in §7**; this historical baseline is retained to show progression.
 
 ## 6. Decision provenance and next review
 
@@ -72,3 +72,104 @@ The following six groups are **the agreed evaluation criteria**. No group is cla
 - **Standing distinction:** **DoD criteria approved in conversation; this durable transcription is newly persisted and not yet independently byte-reviewed. UX execution/results still open.** Separate Human approval is needed for material confirmed UX behaviors and eventual bounded completion; neither can be inferred from the DoD approval.
 - **Mutation boundary:** This file is a feature-specific UX artifact. It does **not** modify binding Product Contract or approval records, reusable Design Standards, Harscode research files, Engineering plans or code. A later improvement proposal belongs first in [UX Improvement Log](ux-improvement-log.md), and only after validation/approval in its actual owning standard.
 
+## 7. First Encounter & Readiness — Working UX Exploration Checkpoint (22 November 2026)
+
+> **Standing:** WORKING UX DECISIONS + HYPOTHESES + EXPERIMENTAL INSPECTABLE-INTENT SUMMARY; **NOT UX-ACCEPTED, USER-TESTED, UI-ACCEPTED, LEGAL/PRIVACY-CLEARED, OR ENGINEERING-READY**. Anhar approved **persisting this scoped checkpoint** on 22 Nov 2026, **not** accepting its candidate screens, copy, visual assets, or specific flow choices as final. This section brings §5's starting point up to date without changing approved DoD §3 or Product semantics. Interactive in-chat Lo-Fi controls are not a durable, functioning repository prototype; the below reconstructs their material meaning, copy, and explored branches for a fresh session.
+
+### 7.1 Inquiry boundary and actor context (O1; scenario-centered)
+
+- **First-contact boundary chosen:** exploration starts **when a person discovers Kencleng**, not from an invented upstream motivation or an assumed already-committed Applicant. This early experience may be public and unauthenticated; never imply that the visitor has a verified organizational role.
+- **Scenario B — primary PO-01 entry probe (HYPOTHESIS):** a person intentionally discovers/searches Kencleng as a possible fundraising service for an Indonesian Yayasan. They need to understand relevance, the evidence/accountability approach, entry requirements and what action they personally may take. This is a **hypothetical situation**, not measured traffic or proven motivation.
+- **Scenario A — contrast (HYPOTHESIS):** a person encounters Kencleng through a Campaign link and may later explore information for organizations. Campaign presentation, availability, donations, and real settlement were **not prototyped/authorized**; any illustrative Campaign slot was explicitly non-operational. Do not derive Campaign product requirements from the contrast.
+- **B1 — experienced organizational participant (HYPOTHESIS):** familiar with some organizational activity, looking for fit and a low-friction way to check readiness. Their formal authority, actual digital proficiency and knowledge of Kencleng are **not assumed**.
+- **B2 — person helping find information (HYPOTHESIS):** may be a volunteer/staff/helper asked to explore options without proven mandate. Main possible confusion: whether they can initiate a draft without authority, and when a legitimately authorized party must act. Not presumed digitally inexperienced.
+- **No fabricated demographic persona:** job title, skill, mandate, age, device and accessibility context are independent and currently mostly **UNKNOWN**. B1 and B2 are situational *evaluation lenses*, **not visitor-facing role selection**.
+- **Actor continuity:** Applicant, legally authorized organizational representative, First Owner Candidate and Kencleng Reviewer/Decision-Maker remain meaningfully distinct; the first filer does not gain legal authority. One natural person may hold more than one capacity only with valid act-specific authority.
+
+### 7.2 Agreed working approach — meaning-complete Lo-Fi
+
+On 22 Nov 2026, Anhar agreed these **working UX exploration refinements** beyond the previously persisted three §2 refinements; they are **not a blanket new cross-project Standard or an approval of any individual Lo-Fi**:
+
+1. **Meaning-complete UX proof**, not copy-and-boxes-only: inspect material actor-facing copy, information hierarchy, *information sequence*, entry/exit and action/disclosure behavior, and meaningful visual communication intent where needed.
+2. **Information priority + sequence + access:** ask what matters *now*, what must be known *before a later consequence*, what is genuinely useful *on demand*, and what should not be on this surface. The unit is **one meaningful understanding/decision focus per experience moment**, **not** a universal rule of one value per physical viewport. Scroll, navigation, action, accordion, or dedicated page are candidate mechanisms to choose proportionately. Preserve a discoverable direct path for already-ready people; never hide trust-critical facts to enforce visual storytelling.
+3. **Visual/media intent:** UX describes why a visual matters, intended meaning, suggested media type (e.g., real documentary photography, editorial illustration, vector/explanatory diagram, animation), placement in the experience, non-negotiable truth constraints, and UI creative freedom. UX does **not** require an icon/image/animation on every surface or own final rendering, composition, licensing or production. Choose the medium based on comprehension needs; real photography used as factual context/evidence requires appropriate provenance/permission. Generated/synthetic imagery must not masquerade as real beneficiaries, organizations, Campaigns, evidence, verification or impact.
+4. **UI boundary:** UI/Content owns final expression and final copy, and may propose media alternatives that preserve confirmed meaning. Material UX sequencing/action semantics and Product rights/truth remain with their respective owners. A motion candidate must not make information inaccessible without motion (e.g., reduced-motion/accessible static alternative).
+
+### 7.3 Candidate experience concept, hierarchy and flow (O2–O4)
+
+**Contextual Orientation** is the current **preferred experiment**, not accepted UX. Avoid forcing a role gate, registration merely to read, or a mandatory educational tour. Allow people to explore *and* already-ready people to go directly to readiness, with relevant facts before consequential actions.
+
+| Moment/surface | Main actor question and needed-now message | Candidate presentation / progression |
+| --- | --- | --- |
+| **M1 — Organization Orientation / Recognition** | What is Kencleng, and is it relevant for a Yayasan or Perkumpulan? Kencleng is *designed* as a donation/fundraising service with clear information/evidence and post-donation accountability. | Public first-read hero, concise context, direct CTA **`Lihat persiapan untuk mulai`**, plus optional scroll exploration. Expose that organizational eligibility is **not** Campaign/donation authorization; do not assert an operational service or guaranteed fundraising result. |
+| **M2 — Value Understanding** | What does Kencleng's evidence-led approach mean, before and after donation? | Scroll-reachable explanatory graphic/editorial treatment, with copy distinguishing intent/source info, subsequent reporting, uncertainty, verified outcomes and real-world impact. **No automatic temporal workflow** or assertion that reports/outcomes already exist. Not required to scroll through M2 before opening readiness. |
+| **M3 — Consider Action** | Learn the process, or inspect what is needed to start? | Two contextual options: **`Lihat persiapan untuk mulai`** (main) / **`Pelajari proses pengajuan`**. This is a proposed moment within organization orientation, **not** a mandated full-height viewport. |
+| **Readiness (candidate separate surface)** | Can I start a draft, and with what minimum information? | **Copy-first**. Account, initial org identity/name, Applicant contact, stated relationship. Explain no proven mandate is needed **to initiate a draft**, but a draft is neither formal submission, authorization nor approval. Primary action **`Masuk ke akun untuk mulai draf`** stops at a marked conceptual authentication boundary in the prototype; secondary **`Pelajari proses setelah draf`**. |
+| **Authority explanation (candidate in-page detail)** | What differs between beginning a draft and lawfully representing an organization? | Discoverable, descriptively labeled near the confusing sentence, candidate **`Apa bedanya memulai draf dan mewakili organisasi?`**, expandable within readiness. Distinguish draft starter, legitimate OA-accepting organizational authority, appointed/consenting First Owner Candidate. **Not** three required distinct humans or three universal submission gates. |
+| **Process explanation (candidate separate surface)** | What happens after initiating the draft? | Explain draft vs **reviewable formal submission** vs human decision. Gate A eligible entity, Gate B authorized OA acceptance, Gate C separately valid/consenting First Owner Candidate, all before Approved. Clarification and honest unknown/inconclusive states; approval does not grant Campaign or donation rights. Preserve a route back to readiness. |
+| **Account/draft handoff** | Where does the draft actually begin? | **Prototype stops** before real sign-in, data entry/persistence or transmission. No fake authenticated state, submitted case, processing, success or permissions. The authenticated draft experience remains the **next inquiry**, not confirmed UI. |
+
+**Candidate page/surface inventory (first encounter only):** Organization Orientation, Readiness, Process Explanation; Authority Explanation as on-demand in-page content; Account Entry as bounded next context. These are **not** accepted routes, a full PO-01 page inventory, mandated component decomposition, or Campaign UX. Scenario A remains under-explored.
+
+**Material navigation constraint:** from orientation to readiness/process; readiness to process; process back to readiness; in-context authority disclosure expand/collapse. Return to origin/reading position and keyboard/focus continuity were **not verified**; do not claim scroll restoration merely because a back control was drawn.
+
+### 7.4 Representative candidate Bahasa Indonesia communication
+
+The following samples convey **material UX copy intent** from the v0.6 integrated proof and v0.6.1 targeted readiness refinement, **not final UI O7 or legally cleared disclosures**:
+
+- **Recognition headline:** “Penggalangan dana yang mengutamakan kejelasan dan pertanggungjawaban.”
+- **Recognition description:** “Kencleng dirancang sebagai layanan donasi dan penggalangan dana untuk organisasi nirlaba di Indonesia.”
+- **Material first-encounter caveat:** “Persetujuan organisasi tidak otomatis mengizinkan penerbitan Campaign atau penerimaan donasi.”
+- **Value:** “Pertanggungjawaban tidak berhenti saat donasi diberikan.” Supporting meaning: tujuan dan dasar informasi dipahami sebelum donasi; setelahnya perkembangan, laporan, dan hal yang belum diketahui perlu dinyatakan jujur. Jangan samakan funding, operational progress, reported outcomes, verification, impact.
+- **Readiness heading:** “Apa yang diperlukan untuk mulai mengisi draf?” Required-now copy: “Untuk mulai, Anda perlu masuk ke akun Kencleng dan menyiapkan informasi awal berikut: [nama dan identitas awal organisasi; informasi kontak; keterangan hubungan Anda dengan organisasi].”
+- **Readiness clarification:** “Anda belum harus membuktikan kewenangan mewakili organisasi untuk mulai mengisi draf.” **Paired constraint:** “Draf belum merupakan pengajuan formal, tidak memberikan kewenangan atas organisasi, dan bukan persetujuan kelayakan organisasi.” The pair is material: never shorten the first sentence into a blanket permission to represent the organization.
+- **Disclosure trigger:** “Apa bedanya memulai draf dan mewakili organisasi?” Under expansion, distinguish draft starter, party authorized to bind organization to OA, and valid/consenting First Owner. One person may validly hold several capacities; formal submission's reviewable claim does not require these approvals to be already complete.
+- **Progressive route labels:** “Lihat persiapan untuk mulai”, “Pelajari proses pengajuan”, “Pelajari proses setelah draf”, “Masuk ke akun untuk mulai draf”.
+- **Prototype notice:** no actual login, saving, submission, verified evidence, real donation or Campaign processing. Any displayed authorization/receipt/status is illustrative only.
+
+### 7.5 Visual communication recommendation and standing
+
+- **VC-01 candidate for M2:** a **static explanatory editorial graphic** preferred over a generic icon-only treatment, with possible human editorial expression. Distinguish **before-donation purpose and traceable basis** from **post-donation progress/reporting and valid unknowns**. Do **not** imply that three concepts form a mandatory automatically completed “Tujuan → Bukti → Laporan” pipeline. Funding, operational progress, reported outcome, verification, and real-world impact remain separate.
+- **Why not documentary photo by default here?** The task is to explain a *concept*, not prove a beneficiary's or organization’s actual activity. Real photography is potentially appropriate for genuinely attributable human context, not a substitute for missing evidence.
+- **Motion:** optional comparative exploration only where a static explanation does not adequately convey a material relation; not a required asset or hidden mandatory explanation.
+- **Authority-capacities visual:** considered, **not selected as a default requirement**; a concise copy-first readiness and on-demand authority distinction currently appear more proportionate. Revisit if actual comprehension evidence demonstrates benefit.
+- **UI freedom:** own actual visual composition, media finalization, responsive expression and asset provenance/rights according to Kencleng Brand/Asset Governance. Illustrations are never evidence of a real Campaign, settlement, verification or impact.
+
+### 7.6 Candidate sequence revisions and expert critique history
+
+| Experiment/evaluation | Actual finding / change | Evidence standing |
+| --- | --- | --- |
+| First Encounter v0.1–v0.2 | Initial application/process-centric exposition did not adequately communicate why Kencleng might matter to a nonprofit. Consider value before bureaucracy; retain fast and learn paths. | **Expert critique only** |
+| v0.3–v0.4 | Prototype scroll sequence exposes recognition → value → choice; direct CTA renamed **`Lihat persiapan untuk mulai`** so label matches a non-authenticated informational stop. Avoid strict viewport-height rules. | **Structural concept proof; comprehension unknown** |
+| v0.5 | Integrated B1/B2 paths; too many competing readiness options; recap-for-pengurus was an unsupported new surface need and removed from primary flow. | **Expert critique; recap is not a feature** |
+| v0.6 | Simplified readiness to one primary next action, one process route, authority detail on demand. Preferred first-contact integrated **candidate**. | **Experimental in-chat clickable proof** |
+| v0.6.1 targeted refinement | Position the authority-disclosure trigger adjacent to “belum harus membuktikan kewenangan” and pair its promise with explicit no-authority/no-submission/no-approval meaning. **This is a readiness amendment to v0.6, not a separately fully integrated tested flow.** | **Expert comprehension-risk walkthrough** |
+
+**B1 efficiency probe (hypothetical):** orientation → readiness → simulated account boundary without required long-reading gate. **B2 uncertainty probe (hypothetical):** orientation → value/process → readiness → in-context authority explanation. Same underlying surface can serve both; no assumed roles or capacity selection. No participant in either profile was actually observed.
+
+### 7.7 Comprehension validation when feasible; known gaps
+
+**Candidate protocol prepared in conversation, not executed:** moderated tasks: first impression, assess relevance, find start requirements, evaluate action with no proof of mandate, explain what follows draft, navigate back/choose. Neutral follow-ups; evaluate own-words understanding of draft vs formal submission vs Approved, authority limits, separate Campaign rights, and unknown/clarification. Observe actual words/actions, assistance, misunderstandings and context recovery rather than ask leading Product-knowledge questions. Suggested 2–3 participants per situational context is an exploratory starting possibility **only**, not research validity, a project-wide requirement or evidence that participants were recruited.
+
+- **UNVERIFIED:** actual user comprehension/value relevance, discoverability, efficacy of VC-01, realistic mobile/desktop responsive and accessibility, keyboard/focus, browser back and scroll restoration, cross-device state, and real login-to-draft continuity.
+- **KNOWN source constraints:** actual Product contract in §1, including distinct draft/formal submission/Approved and legitimate authority. No assumptions that the research prototype authorizes campaign availability, document processing or data collection.
+- **OPEN EXPERIENCE/DESIGN DECISIONS:** final first encounter/page-vs-in-page choices, exact information placement/labels, long-content navigation and scroll continuity, whether authority graphic or recap is justified after evidence, final media treatment.
+- **OPEN PRODUCT/LEGAL/PRIVACY DEPENDENCIES:** real legal/privacy notices, personal/third-party information purposes, handling authority/OA sufficiency, actual Campaign-related disclosures outside PO-01. Do not invent requirements while exploring UX.
+- **No user study occurred.** Expert/Human critique, prototype behavior and real actor findings must remain separated. User-testing absence does not automatically block every scoped UX exploration, nor does it justify claiming usability success or UX DONE.
+
+### 7.8 Next bounded scenario — Draft → Reviewable Formal Submission
+
+Continue **O1–O4** with B2 as a stress lens and B1 as efficiency lens **after conceptual authentication**: starting the draft, initial information capture, uncertain or incomplete organization references, support/recovery, readiness to make a **reviewable formal submission**, and accurate pre-submit consequence. Preserve act-specific organizational authority, Applicant attribution and no first-filer privileges. Examine interruption/return as an experience question; **do not invent persisted save/resume, edit permissions, invitation mechanisms, validation rules, uploading mandates or sign-in mechanics**.
+
+**Required next exploration questions:**
+1. What can the actor truthfully do while the entity identity/reference or relationship basis is incomplete?
+2. What distinguishes **draft data collection** from **submission** in user-facing communication, without inventing Gate B/C as submission requirements?
+3. What information and consequences must be understood immediately before formal submission, especially by a helper without proven mandate?
+4. Who else may need to act for later approval, and how do we explain the dependency without fabricating account invites, external notifications or a complete case workflow?
+5. What does the actor see if something is unknown, contradictory, or requires clarification? Escalate any true Product gap to its owner.
+
+**Durability/readiness:** this checkpoint is scoped documentation of work completed so far. It does not constitute accepted UX acceptance, validated behavioral evidence or functional prototype hosting. A later material UX decision requires its own Human disposition and canonicalization before being treated as confirmed for UI/Engineering consumers.
+
+### 7.9 Checkpoint authorization
+
+- **22 November 2026 — Anhar:** explicitly approved a **scoped working UX checkpoint and repository persistence** before moving from First Encounter/Readiness into Draft Creation/Formal Submission. Scope limited to PO-01 design documentation on `research/cross-stage-mapping`; no mutation of Product Authority, signed approvals, Harscode, UI, code or Engineering work. This approval **does not accept any candidate UX flow as final**.
