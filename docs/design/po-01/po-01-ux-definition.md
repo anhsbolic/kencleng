@@ -276,3 +276,103 @@ Build **one connected and inspectable in-chat experiential proof** for three bou
 ### 8.8 Checkpoint provenance
 
 - **22 November 2026 — Anhar:** explicitly replied **“approve bro. lanjut”** to the proposed **PO-01 Cross-Scenario UX Synthesis Checkpoint** and next integrated proof, following synthesis review. Approval is **for persistence of working research and proceeding with exploration**, **not** approval of candidate flow/screens, changed Product semantics, design standard, UX DoD completion, Engineering plan/code or real-data processing. Previous §7 checkpoint remains intact.
+
+## 9. Consolidated UX Direction — Scoped Human Decision Checkpoint (22 November 2026)
+
+> **Human decision / provenance:** On 22 November 2026 (Asia/Jakarta), after reviewing the complete **“PO-01 — Consolidated UX Decision Proposal v0.1”**, Anhar explicitly replied **“approve bro”**. This authorizes the **bounded provisional PO-01 UX direction and its persistence in this owning UX artifact**, under all limits below.
+>
+> **Effective standing:** **SCOPED WORKING UX DIRECTION — HUMAN-APPROVED AS DIRECTION / NOT UX ACCEPTED OR UX DONE**. This decision is not an acceptance of every in-chat Lo-Fi or candidate page, final navigation, UI/Content wording, legal/domain/privacy evidence, production behavior, engineering handoff/execution, any real-case decision or any individual D1–D6 completion. It does not change the six approved UX DoD groups in §3, the Product Contract, Design/Brand standards or any Engineering owner decision.
+>
+> **Exact Product grounding:** the bounded Product successor exact Git blob \`fb0c098178030b4325e7e349d46e05aa0634bec0\`, read with Anhar's separate **19 November 2026 Product-semantic approval record**, as referenced in §1. The approved Product source's original “draft” label is historical and superseded **only for that explicitly approved bounded meaning**. **Source at UX review:** this file prior to this appended checkpoint at blob \`c5a3cfd013e553115c90785a2e3a7bd12731ef36\` and §7–§8. No new Product rule is created here.
+
+### 9.1 Decision meaning and traceability
+
+The consolidated proposal derives from three **hypothetical / experimental in-chat integrated scenario runs**, not actual user observations:
+
+- **R1** — Visitor B1/B2 → readiness → Applicant draft → reviewable formal submission → Reviewer clarification → Applicant response.
+- **R2** — Applicant → authorized organizational OA receiving party → First Owner Candidate personal acceptance → human review/decision → bounded Approved experience.
+- **R3** — Clarification Required / Closed Inconclusive / Rejected / Withdrawn and Approved → traceable post-approval material correction.
+
+The **31 review entries** (12 RETAIN, 11 REVISE, 8 LEAVE OPEN) are **decision-review trace IDs, not 31 features, screens or independent Product requirements**. RETAIN means keep a provisional UX direction stable absent materially new evidence, **not final visual/behavioral approval**; REVISE means a specific material UX improvement is required before scoped acceptance; LEAVE OPEN means no UX mechanism or business outcome may be silently locked. The exact groupings below govern this bounded decision.
+
+### 9.2 RETAIN — 12 provisional UX directions
+
+| IDs | Retained candidate direction | Boundary / standing |
+| --- | --- | --- |
+| **R1-01, R1-02** | **Contextual Orientation**: before login, visitors can understand Kencleng's relevance/evidence-led intent and choose a direct readiness path or optional deeper exploration; B1/B2 are **hypothetical evaluation lenses, not a persona gate**. | The §7 preferred experiment stands; no accepted public page, Campaign service or tested comprehension. |
+| **R1-03** | **Draft readiness**: authenticated Applicant can start a draft using initial organization identity/name, contact and stated relationship without already-proven legal mandate. | A draft grants no organizational authority or reviewable formal submission by itself; later claims must remain truthful. |
+| **R1-08** | **Clarification meaning**: targeted relevant questions, permission to truthfully say “belum dapat memastikan”; no auto-rejection, auto-validation or false certainty. | Actual channel, feedback and recovery not accepted. |
+| **R2-01, R2-02, R2-04, R2-07** | **Capacity-aware cross-actor experience**: Applicant understands consequential dependency without receiving rights; relevant org party understands one identifiable versioned OA-01..05 package; First Owner Candidate understands bounded personal role before own authenticated explicit acceptance; one human may hold multiple capacities only with **distinct valid act-specific authority and attributable acts**. | No assumed forced org signatory Kencleng account, universal digital signature, invitation or mandatory separate humans. |
+| **R3-01, R3-02, R3-06, R3-08** | **Truthful outcome and effective-right meaning**: Clarification Required ≠ terminal outcome; Closed Inconclusive ≠ Rejected ≠ Withdrawn; credible mandate conflict does not grant unsupported rival veto; only legitimate authorized Approved establishes initial organization eligibility and recognized First Owner's bounded rights. | No automatic fraud label, Campaign/donation/funds permission, unlimited Owner powers, or public badge. |
+
+These are **four consolidated experience themes, covering twelve trace entries**, not four mandatory views.
+
+### 9.3 REVISE — 11 required material UX refinements
+
+| ID | Required revision before scoped completion | Proposed UX evidence / consequence |
+| --- | --- | --- |
+| **R1-05** | Explain **stated relationship on draft** separately from **initial claimed representative/basis on formal submission**. | B2 helper is never pushed to fabricate authority; formal submission remains reviewable and attributable, without prior proven mandate as a blanket prerequisite. |
+| **R1-06** | Make pre-submit a **consequential review**, not mere form recap. | Inspect legal entity/reference, Applicant/capacity and claimed initial representative basis, unverified assertions and exact effect of submission. |
+| **R1-07** | Show distinction between **not sent**, **confirmed recorded**, and **outcome unknown**. | No fabricated success/failed state; recovery and safe result checking remain open pending actual technical constraints. |
+| **R2-03** | Distinguish **OA acceptance evidence submitted** from **valid acceptance assessed**. | Identify organization, receiving person/organ and capacity, version and provenance; external acceptance evidence supported conceptually, not automatic verification. |
+| **R2-08** | Reviewer's information hierarchy prioritizes **material claim, actor authority, relevant source/provenance, contradictions and human rationale**, not a mandatory five-gate status machine. | Review/Decision-Maker can be one legitimate non-conflicted human; exceptional case rationale proportionate. |
+| **R2-09** | Explain **material OA package version change before approval**. | Prior acceptance must not silently extend to material changed commitments; applicable version requires appropriate authorized acceptance. |
+| **R2-10** | Separate **sufficient basis for positive consideration** from **effective authorized Approved**. | No eligibility/First Owner rights before human recognition and authorized decision; after Approved clearly communicate bounded rights and no Campaign/funds/public status. |
+| **R3-03** | Communicate decisions as **outcome → specific factual basis → actual consequence → truthful available next step**. | No generic failure notice; no fabricated appeal/re-file pathway or disclosure of unauthorized evidence. |
+| **R3-04** | Distinguish the **decision-time evidence and rationale** from later changes, and preserve proportionate human attribution/history. | Historical basis remains reconstructable; no promise that raw evidence is retained or still accessible. |
+| **R3-05** | Separate **withdrawal intention → valid entitled actor and unapproved case → effective Withdrawn**. | No button-tap success fiction; post-Approved Applicant withdrawal has no power to revoke existing eligibility/Owner rights. |
+| **R3-09** | Present a legitimate First Owner's **post-Approved material correction as new, attributable information** rather than an edit to the old decision. | Correction received/traced/available for authorized handling; **no automatic approval change, suspension, revocation or rights mutation**. |
+
+**Working Indonesian candidate-copy meaning** (not final UI/legal text):
+- Pre-submit: “Pengajuan ini akan disampaikan untuk ditinjau. Informasi dan kewenangan yang Anda nyatakan belum otomatis diakui oleh Kencleng.”
+- OA pending review: “Bukti penerimaan kewajiban organisasi tersedia untuk ditinjau. Kewenangan pihak yang menerima dan kesesuaian versi masih perlu dipastikan.”
+- First Owner: “Penerimaan peran Anda telah dinyatakan. Penunjukan dan pengakuan First Owner masih memerlukan penilaian yang sah.” **Only use where actual personal acceptance is attributable and recorded.**
+- Inconclusive: “Permohonan ditutup tanpa kesimpulan kelayakan. Informasi material yang diperlukan masih belum dapat dipastikan setelah kesempatan klarifikasi.”
+- Correction: “Informasi koreksi diterima untuk penanganan lebih lanjut. Penerimaan ini tidak otomatis mengubah keputusan kelayakan organisasi.” **Only use after actual receipt is confirmed.**
+
+UI/Content retains final copywriting and visual expression; Product and UX meaning cannot be silently rewritten. Pending/unknown/negative copy must not claim an unperformed act occurred.
+
+### 9.4 LEAVE OPEN — eight bounded decisions, with legitimate owners
+
+| ID | Still open | Responsible boundary |
+| --- | --- | --- |
+| **R1-04** | First Encounter → authenticated Applicant draft transition and continuity | UX; Engineering security/auth constraints, no assumed login or persistence architecture |
+| **R1-09** | Clarification submission/receipt, interruption, return and recovery | UX; real Engineering capability and truthful unknown behavior |
+| **R2-05** | First Owner Candidate's legitimate discovery of appointment context and permitted entry | UX + Privacy/Engineering; do not invent invitation/role link |
+| **R2-06** | Meaningful consequences of a Candidate being unwilling and alternatives before initial approval | **OPEN PRODUCT DECISION**; no automatic Rejected/Withdrawn or unapproved replacement procedure |
+| **R2-11** | Cross-actor visibility of org OA, candidate personal data and internal review information | Product disclosure/Privacy → UX, authorized need and capacity |
+| **R3-07** | Exact case reasons/evidence visible to different legitimate parties | Product disclosure/Privacy → UX; initial eligibility private by default |
+| **R3-10** | Appeal, refile, reopen, fair clarification windows and related handling | **OPEN PRODUCT DECISION**, no invented SLA/timer/CTA |
+| **R3-11** | Reassessment, suspension/revocation, rights changes after Approved | **Separate downstream Product lifecycle**, expressly outside initial PO-01 |
+
+Qualified **legal/domain** validation for Yayasan/Perkumpulan specific representation, First Owner appointment and organizational OA enforceability, and qualified **privacy/legal** validation for actual processing/disclosure/retention remain **BLOCKERS for affected real-world reliance and personal-data processing**. They are not solved by approving a UX direction. Engineering alone owns implementation mechanisms; no schema, endpoint, role system or persistence decision follows.
+
+### 9.5 Derived experience groups and non-authorizations
+
+Retain the **seven candidate experience groups** in §8.4 for ongoing exploration (Orientation/Readiness/Process; Draft/Pre-submit; Applicant Case/Clarification/Outcome; OA Commitment; First Owner Personal Acceptance; Human Review/Decision; Eligibility Context/Correction). **They are not seven accepted pages, routes, frontend components or fixed workflows.** Page-vs-state, cross-actor navigation/return, responsive/mobile, keyboard/focus and material access variants require inspectable proof.
+
+This checkpoint does **not** authorize:
+- formal electronic signature flow, five obligatory OA checkboxes or universal organization signatory account;
+- gate checklists as machine status objects, automated document understanding, policy scoring or mandatory additional eligibility criteria;
+- universal role invitations, Owner replacement, automatic case closeout or automatic eligibility suspension;
+- Campaign publication, funds movement, public eligibility badge, settlement/verification/impact claim;
+- new Product Contract semantics, revised Product/Brand/UX DoD standards, final UI or Engineering implementation.
+
+### 9.6 D1–D6 / evidence disposition and next bounded action
+
+**Evidence at approval:** in-chat interactive Lo-Fi and expert/Human conversational critique only; **not** observed B1/B2 users, realistic authenticated/authorized runtime, signed organizational OA, legally sufficient governance documents, actual Reviewer decisions, verified mobile accessibility or UI/Engineering receiving-consumer acceptance.
+
+| DoD group | Standing at this checkpoint | Required next bounded evidence |
+| --- | --- | --- |
+| **D1 Actor Understanding** | Partial hypothetical actor scenarios, no real observed motivation/comprehension | Challenge B1/B2/Perkumpulan representativeness; mark any new observation honestly |
+| **D2 Experience Concept** | Human-approved **provisional direction**, not accepted full design | Inspect trade-offs and alternate/contrary cases where material |
+| **D3 Interaction Design/Proof** | Material candidate branches and surface inventory; **not completed** | Targeted consequential feedback, actor entry/return, access/authority variants, mobile/keyboard/focus and recovery proof |
+| **D4 Quality Evaluation** | Expert critique available, **not user usability** | Q1–Q6 systematic review, actual deficiencies and revisions, Human disposition |
+| **D5 Authority/Evidence Integrity** | Exact Product binding and open owner boundaries preserved; **no legal/privacy clearance** | Reconcile material decisions with true authority, no real-data reliance until validated |
+| **D6 Consumer Sufficiency** | Not accepted for UI/Content or Engineering | Demonstrate inspectable, copy-meaning-complete connected experience and targeted receiving-consumer review |
+
+**Next recommended work:** targeted structural proof and critique for **R1-05/06/07, R2-03/08/09/10, R3-03/04/05/09**, prioritizing shared consequential transitions without making eleven separate screens or artifacts; then scoped D3/D4/D5 assessment and consumer-readiness review. Continue read-first; **no additional repository changes without scoped Human authorization**.
+
+### 9.7 Human decision scope and durability
+
+**22 November 2026 — Anhar:** “approve bro” in direct response to the exact **Consolidated UX Decision Proposal v0.1** (covering the retained, revised and open R1–R3 items, proposed scope and non-authorizations). This approval **accepts the proposal as a provisional scoped UX direction and authorizes persisting this checkpoint**. It **does not** accept final UX/Lo-Fi, grant Product/Legal/Privacy/UI/Engineering approval, close outstanding questions, or complete D1–D6. No separate byte-by-byte Human review of the persisted file is claimed. The prior §7–§8 working checkpoints and §3 approved DoD remain intact.
