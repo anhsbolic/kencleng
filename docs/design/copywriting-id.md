@@ -10,6 +10,16 @@ Mulai dari situasi pembaca: **“Saya ada di mana, perlu melakukan apa, apa akib
 
 Suara Kencleng: **jelas, manusiawi, tenang, dapat dipercaya, tidak menggurui**. Hormati keseriusan identitas, donasi dan penghapusan; tidak perlu seruan dramatis, klaim “aman/terverifikasi” yang tidak didukung, jargon legal/Engineering, atau kelucuan pada failure state.
 
+### Berangkat dari tujuan actor saat mengajak memulai
+
+Pada **orientasi, kesiapan, dan langkah awal**, jika orang sedang mempertimbangkan untuk bertindak, utamakan **tujuan atau manfaat yang relevan dan secara sah mungkin mereka capai** sebelum membebankan daftar kewajiban administratif. Jawab dahulu *“Saya ingin mencapai apa, dan mengapa informasi ini diperlukan?”*, lalu jelaskan tindakan yang dibutuhkan. **Bahasa yang bertanggung jawab tidak harus terdengar seperti pemeriksaan.** Jangan menghapus konsekuensi penting; tempatkan dekat keputusan yang memerlukannya.
+
+- **Motivasi yang jujur:** boleh menghubungkan langkah hari ini dengan aspirasi yang lebih besar, tetapi bedakan *langkah menuju tujuan* dari *hak/hasil yang sudah diperoleh*. Jangan menjanjikan kelayakan, kecepatan, izin Campaign/penggalangan dana, verifikasi, atau impact yang belum menjadi fakta. Kata seperti **“memastikan”**, **“segera”**, atau **“pasti bisa”** perlu dasar Product/evidence yang nyata, bukan sekadar daya tarik copy.
+- **Tepat actor dan kapasitas:** sebut orang/organisasi sesuai hubungan yang diketahui. Seorang pembantu pengajuan bukan otomatis pengurus, wakil sah, Owner, atau pihak yang berwenang. Hindari sapaan posesif seperti **“Yayasan Anda”** ketika hubungannya belum jelas.
+- **Proporsional dengan momen:** framing aspiratif cocok untuk ajakan dan persiapan. Pada konfirmasi konsekuensial, klarifikasi, *unknown*, penolakan, privasi atau keputusan, utamakan **fakta yang diketahui, batas kewenangan, akibat, dan langkah sah berikutnya**; jangan menyamarkan keadaan sulit dengan bahasa promosi.
+
+**Ilustrasi PO-01 (candidate, bukan copy final atau Product decision):** alih-alih menjadikan **“Siapkan informasi yang bisa kamu pertanggungjawabkan”** sebagai headline utama, pertimbangkan **“Bantu Yayasan yang kamu dampingi mengambil langkah awal menuju penggalangan dana.”** Lanjutkan dengan **“Lengkapi informasi awal agar Kencleng dapat meninjau pengajuan kelayakannya.”** Di tempat konsekuensi relevan, jelaskan bahwa **persetujuan kelayakan organisasi tidak otomatis mengizinkan penggalangan dana**. Kalimat ketelitian/kejujuran informasi tetap dapat digunakan sebagai petunjuk input atau pada tinjauan sebelum pengajuan. Uji keterpahaman, kebenaran, konteks dan kewenangan actor sebelum memakai contoh ini.
+
 Utamakan kata kerja dan istilah yang lazim:
 - **Masuk**, bukan “melakukan proses autentikasi” atau “sign in” bila tidak perlu.
 - **Buat organisasi**, bukan “inisiasi proses pembentukan entitas” (tetapi gunakan hanya pada tombol yang **benar-benar** mengirim creation request).
@@ -91,6 +101,7 @@ Lihat [Asset Governance](asset-governance.md); foto dan ilustrasi bukan bukti re
 Gunakan pemeriksaan singkat, bukan checklist panjang untuk setiap microcopy:
 
 - **Natural:** Apakah ini terasa ditulis orang Indonesia, bukan terjemahan mesin atau bahasa kontrak?
+- **Berorientasi tujuan:** Pada momen ajakan/persiapan, apakah pembaca memahami manfaat atau tujuan sah dari langkah ini sebelum kewajiban administratif, tanpa janji hasil atau waktu?
 - **Relevant:** Apakah kalimat membantu keputusan **sekarang**, bukan memindahkan semua policy ke layar?
 - **Truthful:** Dapatkah tiap klaim dan status dipertanggungjawabkan dari current authority/evidence?
 - **Actionable:** Setelah membaca, tahu apa yang bisa dilakukan dan apa akibatnya?
