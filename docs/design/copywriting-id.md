@@ -57,7 +57,7 @@ Jangan mengadopsi contoh di atas mentah-mentah. Misalnya, **“Owner”** merupa
 
 ## 4. Istilah, sapaan, dan konsistensi
 
-- Gunakan **Anda** bila perlu menyapa pembaca atau menunjuk tanggung jawab pribadi secara jelas. Tidak perlu mengulang “Anda” di setiap kalimat.
+- Gunakan **Anda** sebagai **default sapaan langsung** pada UI Kencleng secara konsisten, dengan nada **profesional, hangat, jelas, dan tepercaya**. Hindari **“kamu”** dan bentuk posesif **“-mu”** dalam copy antarmuka. Tidak perlu mengulang “Anda” jika subjek sudah jelas; pilih kalimat aktif dan alami, bukan istilah birokratis atau kesan kaku. Pengecualian gaya harus diputuskan secara sadar untuk konteks yang benar-benar memerlukannya, tanpa mengubah makna Product/Legal atau mencampur sapaan dalam satu alur.
 - Gunakan **kami** hanya bila speaker dan organisasi yang bertanggung jawab jelas. Jangan mewakili regulator, Google, atau organisasi yang dibuat user secara implisit.
 - Gunakan **akun**, **masuk**, **organisasi**, **nama organisasi**, **Owner pertama di Kencleng** (dengan penjelasan internal yang relevan), dan **Reviewer** sesuai scoped authority. Periksa apakah istilah yang lebih ramah tetap mempertahankan distinction hukum/role.
 - Pilih satu istilah per konsep dalam satu flow. Jangan berganti antara “permintaan”, “proses”, “aksi”, “transaksi” tanpa alasan makna.
