@@ -790,3 +790,67 @@ Previous illustrative addresses for P06–P09 remain **unselected historical can
 - **DoD status:** §3's approved six groups still apply with this corrected D6 interpretation. **D1–D6 NOT COMPLETE; D6 not yet accepted.** Next is a **source-based final D1–D6 contract compliance audit**, not a compulsory search for receiving owners or their signatures.
 
 **Scope of mutation:** only feature UX owning artifact `docs/design/po-01/po-01-ux-definition.md` on `research/cross-stage-mapping`; no Product, Design Standard, Harscode, UI/Content or Engineering authority is modified.
+
+## 22. Final UX Closure — Deliverable Clarification and Working Tracker (26 November 2026)
+
+> **Standing: HUMAN-APPROVED PO-01 UX COMPLETION CLARIFICATION AND WORKING CLOSURE TRACKER; UX REMAINS PARTIAL.** Following the agreement on a complete experience-level Lo-Fi (pages, paths, content, interactions and material states), the revised tracker and the explicit request to persist the D3/D4/D6 clarification and begin RD-01, Anhar replied **“approve bro. lanjutkan”**. This authorizes this scoped persistence and RD-01 exploration, not acceptance of any newly proposed behavior or final Lo-Fi. Existing Product and bounded UX decisions remain intact. §3's six DoD groups and §21's contract-based interpretation remain effective. This section is the current closure worklist; earlier checkpoint worklists are historical.
+
+### 22.1 Clarification of existing D3, D4 and D6 (not new DoD groups)
+
+- **D3 — Interaction Design & Inspectable Proof:** the final experience deliverable is a **Final Integrated Lo-Fi Design**, covering the entire in-scope experience: selected pages/surfaces, human-facing paths, page purpose, actor/capacity, content and IA/hierarchy, mature contextual Indonesian copy, navigation and connected flows, material input/action/validation/feedback, positive/negative/pending/unknown states, interruption/return/recovery, and structural responsive/accessibility obligations. Material shared-surface variants must be inspectable. Representative structural screens plus clear state/branch specifications, accepted equivalents or justified scoped exceptions may suffice; no exhaustive actor × page × state screen matrix or mandatory clickable version of every state. Targeted experimental proofs are inputs, not automatic final design acceptance.
+- **D4 — Quality Evaluation & Refinement:** evaluate the current integrated experience against Q1–Q6, resolve material defects, and retain proportionate evidence and limits. Earlier targeted critiques may be reused where applicable; do not confuse expert/synthetic review with observed user comprehension or production accessibility.
+- **D6 — Consumer Sufficiency:** assess actual outputs against applicable UI/Content and Engineering Solution Input Contracts under §21. UI must be able to translate accepted UX into Hi-Fi without inventing material experience meaning; UI retains final visual expression, detailed visual adaptation and final wording, and Engineering retains technical solution decisions. No named recipient sign-off, implementation or blanket production clearance gate.
+
+**Logical final deliverables (not mandatory separate files):** (1) Effective UX Definition, a coherent current experience/decision source rather than a chronology consumers must reconstruct; (2) Final Integrated Lo-Fi Design, the inspectable structural experience with material branches/states; (3) Quality & Completion Assessment, Q1–Q6, D1–D6, relevant input compatibility, evidence limits and scoped Human acceptance. The latter may be part of the Effective UX Definition. Preserve the provenance of earlier accepted decisions and retain relevant supporting evidence without redundant artifacts.
+
+### 22.2 Working closure tracker
+
+Unchecked means final closure has not been confirmed, not that no prior work exists. This is a remaining-work tracker, not a percentage of all UX work, new Product scope, or a sequence of mandatory independent passes. Evidence and legitimate disposition, not checking boxes alone, determine completion.
+
+**A. Resolve remaining UX decisions**
+
+- [ ] RD-01 — Applicant entry, return & recovery (P02/P04/P05; R1-04/07/09, DEP-01/03, ER-01–03, P0-A).
+- [ ] RD-02 — Organizational OA experience (P06; R2-03/09, M04, §20.2).
+- [ ] RD-03 — First Owner Candidate experience (P07; R2-05/06, DEP-02, ER-04, Product P-02A/B).
+- [ ] RD-04 — Actor-specific disclosure (P05–P09 as applicable; R2-11/R3-07, DEP-03/05, P0-B).
+- [ ] RD-05 — Review & case resolution (P05/P08; R2-08/R3-10, DEP-04).
+- [ ] RD-06 — Recognized First Owner experience (P09; R3-04/09, DEP-05, M04, §20.2; all three bounded Product capabilities).
+
+**B. Finalize Effective UX Definition**
+
+- [ ] Actor understanding & experience concept.
+- [ ] Confirmed interaction behavior & flows.
+- [ ] Final page inventory, paths & navigation.
+- [ ] Material states, variants & constraints.
+
+**C. Finalize Integrated Lo-Fi Design**
+
+- [ ] Complete in-scope page & surface designs.
+- [ ] Page paths, navigation & connected flows.
+- [ ] Content, IA & information hierarchy.
+- [ ] Copy-complete Bahasa Indonesia.
+- [ ] Forms, actions & interaction behavior.
+- [ ] Material states, feedback & validation.
+- [ ] Negative, unknown & recovery experience.
+- [ ] Responsive structure & accessibility.
+
+**D. Evaluate final experience**
+
+- [ ] Integrated Q1–Q6 quality evaluation.
+- [ ] Material defect resolution.
+
+**E. UX completion & handoff**
+
+- [ ] D1–D6 compliance.
+- [ ] UI Input Contract sufficiency.
+- [ ] Engineering Input Contract sufficiency.
+- [ ] Final Human acceptance.
+- [ ] Durable artifact persistence.
+
+### 22.3 Execution and authority boundaries
+
+Begin RD-01, then prioritize cross-cutting RD-04 before RD-02/03/05/06 where useful; iterate Effective UX Definition and final Lo-Fi together. Reuse accepted meanings and recover relevant existing proofs where available; if not accessible, establish a current inspectable equivalent without recreating every historical experiment. No new mandatory proposal, prototype, approval checkpoint or file per RD. P03 is not selected; legitimate return remains required independently. P06–P09 are distinct actor experiences, not automatically separate web pages. R3-11 remains outside PO-01.
+
+Resolve material UX decisions and genuine upstream inputs before declaring the affected scope sufficient; explicitly route Product/Privacy/Legal and Engineering/Operations questions to their legitimate owners. P0-A actual safe continuation and legitimate return remain unproven, and P0-B lawful disclosure remains open. Neither is waived by this tracker; no fictional recovery or consent, no new legal or technical mechanism, and no blanket requirement to finish downstream implementation before UX completion. A separately authorized scope exclusion must identify its consequence and cannot be silently called complete. No requirement to eliminate unrelated downstream open items. Original conversation-local rendered proofs have not been recovered for direct inspection in this closure audit; historical summaries are not substitutes for current inspectable evidence.
+
+**Next action:** resolve RD-01 at the actor-visible behavior level with Product P-01A and §§13, 14, 18, 20, 21 as constraints; do not reopen accepted direction. Final UX completion remains unaccepted. No other repository authority is changed.
